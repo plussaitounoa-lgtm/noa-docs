@@ -449,17 +449,17 @@
       background: white;
       border-radius: 10px;
       overflow: hidden;
-      min-width: 180px;
-      max-width: 180px;
+      min-width: 200px;
+      max-width: 200px;
       flex-shrink: 0;
       box-shadow: 0 1px 4px rgba(0,0,0,0.1);
       display: flex;
       flex-direction: column;
     }
     .pr-card-illust {
-      height: 90px;
+      height: 60px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 32px;
+      font-size: 24px;
     }
     .pr-card-illust.c1 { background: linear-gradient(135deg, #fef3c7, #fde68a); }
     .pr-card-illust.c2 { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
@@ -469,8 +469,31 @@
 
     .pr-card-body { padding: 10px 10px 0; flex: 1; }
     .pr-card-num  { font-size:10px; font-weight:700; color:#aaa; margin-bottom:3px; }
-    .pr-card-title { font-size:12px; font-weight:800; color:#1a1a1a; line-height:1.4; margin-bottom:6px; }
+    .pr-card-title { font-size:12px; font-weight:800; color:#1a1a1a; line-height:1.4; margin-bottom:8px; }
     .pr-card-desc  { font-size:11px; color:#555; line-height:1.5; }
+
+    /* PRカード内コンテンツ */
+    .pr-tag-list { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:6px; }
+    .pr-tag { font-size:10px; background:#f0fdf4; color:#16a34a; border:1px solid #bbf7d0; border-radius:4px; padding:2px 6px; font-weight:600; }
+    .pr-compare-table { width:100%; border-collapse:collapse; font-size:10px; margin-bottom:4px; }
+    .pr-compare-table th { background:#f5f5f5; padding:3px 5px; text-align:left; font-weight:700; color:#555; }
+    .pr-compare-table td { padding:3px 5px; border-top:1px solid #f0f0f0; color:#333; }
+    .pr-compare-table .good { color:#16a34a; font-weight:700; }
+    .pr-cost-row { display:flex; align-items:center; gap:6px; margin-bottom:6px; }
+    .pr-cost-label { font-size:10px; color:#888; min-width:52px; }
+    .pr-cost-num { font-size:13px; font-weight:800; color:#dc2626; }
+    .pr-cost-sub { font-size:9px; color:#888; }
+    .pr-cost-good { font-size:13px; font-weight:800; color:#16a34a; }
+    .pr-steps { display:flex; flex-direction:column; gap:4px; margin-bottom:6px; }
+    .pr-step { display:flex; align-items:center; gap:5px; font-size:10px; color:#333; }
+    .pr-step-num { background:#5b21b6; color:white; border-radius:50%; width:16px; height:16px; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:800; flex-shrink:0; }
+    .pr-stat-row { margin-bottom:5px; }
+    .pr-stat-pct { font-size:18px; font-weight:800; color:#1e3a8a; }
+    .pr-stat-label { font-size:10px; color:#555; }
+    .pr-stat-note { font-size:10px; color:#888; line-height:1.4; margin-top:3px; }
+    .pr-satisfaction { background:#f0fdf4; border-radius:6px; padding:5px 8px; text-align:center; margin-bottom:6px; }
+    .pr-satisfaction-num { font-size:16px; font-weight:800; color:#16a34a; }
+    .pr-satisfaction-label { font-size:10px; color:#555; }
 
     .pr-card-cta {
       margin: 10px 10px 10px;
@@ -897,7 +920,13 @@
           <div class="pr-card-body">
             <div class="pr-card-num">01</div>
             <div class="pr-card-title">こんな人に向いてる</div>
-            <div class="pr-card-desc">コンタクトやめたい / 強度近視・乱視 / ドライアイ / 角膜が薄い</div>
+            <div class="pr-tag-list">
+              <span class="pr-tag">コンタクトをやめたい</span>
+              <span class="pr-tag">強度近視・乱視</span>
+              <span class="pr-tag">ドライアイがひどい</span>
+              <span class="pr-tag">角膜が薄い</span>
+              <span class="pr-tag">レーシック不適応</span>
+            </div>
           </div>
           <div class="pr-card-cta">無料適応検査を予約する →</div>
         </div>
@@ -908,7 +937,13 @@
           <div class="pr-card-body">
             <div class="pr-card-num">02</div>
             <div class="pr-card-title">レーシックとICLの違いは？</div>
-            <div class="pr-card-desc">術式・可逆性・対象・ドライアイへの影響を比較</div>
+            <table class="pr-compare-table">
+              <tr><th></th><th>ICL</th><th>レーシック</th></tr>
+              <tr><td>術式</td><td class="good">レンズ挿入</td><td>角膜を削る</td></tr>
+              <tr><td>可逆性</td><td class="good">取り出せる</td><td>不可</td></tr>
+              <tr><td>ドライアイ</td><td class="good">影響少</td><td>悪化リスク</td></tr>
+              <tr><td>強度近視</td><td class="good">対応○</td><td>△</td></tr>
+            </table>
           </div>
           <div class="pr-card-cta">無料適応検査を予約する →</div>
         </div>
@@ -919,7 +954,20 @@
           <div class="pr-card-body">
             <div class="pr-card-num">03</div>
             <div class="pr-card-title">コンタクトの年間費用は？</div>
-            <div class="pr-card-desc">10年で60万円以上。ICLは一度の投資で。</div>
+            <div class="pr-cost-row">
+              <div class="pr-cost-label">コンタクト</div>
+              <div>
+                <div class="pr-cost-num">6万円/年</div>
+                <div class="pr-cost-sub">10年で60万円以上</div>
+              </div>
+            </div>
+            <div class="pr-cost-row">
+              <div class="pr-cost-label">ICL</div>
+              <div>
+                <div class="pr-cost-good">一生分の投資</div>
+                <div class="pr-cost-sub">約40〜80万円（一回）</div>
+              </div>
+            </div>
           </div>
           <div class="pr-card-cta">無料適応検査を予約する →</div>
         </div>
@@ -930,7 +978,16 @@
           <div class="pr-card-body">
             <div class="pr-card-num">04</div>
             <div class="pr-card-title">手術までの流れ</div>
-            <div class="pr-card-desc">検査→予約→手術10〜15分→翌日回復。満足度96%。</div>
+            <div class="pr-steps">
+              <div class="pr-step"><div class="pr-step-num">1</div>無料適応検査（目の状態確認）</div>
+              <div class="pr-step"><div class="pr-step-num">2</div>手術日を予約</div>
+              <div class="pr-step"><div class="pr-step-num">3</div>手術（約10〜15分・点眼麻酔）</div>
+              <div class="pr-step"><div class="pr-step-num">4</div>翌日から回復・視界クリア</div>
+            </div>
+            <div class="pr-satisfaction">
+              <div class="pr-satisfaction-num">満足度 96%</div>
+              <div class="pr-satisfaction-label">受術者257件アンケート</div>
+            </div>
           </div>
           <div class="pr-card-cta">無料適応検査を予約する →</div>
         </div>
@@ -941,7 +998,11 @@
           <div class="pr-card-body">
             <div class="pr-card-num">05</div>
             <div class="pr-card-title">副作用は？正直にお伝えします</div>
-            <div class="pr-card-desc">副作用なし38% / 多くは1〜3ヶ月で落ち着く</div>
+            <div class="pr-stat-row">
+              <span class="pr-stat-pct">38%</span>
+              <span class="pr-stat-label"> 副作用なし</span>
+            </div>
+            <div class="pr-stat-note">残りの多くはハログレア（光のにじみ）など。1〜3ヶ月で落ち着くケースが大半です。</div>
           </div>
           <div class="pr-card-cta">無料適応検査を予約する →</div>
         </div>
