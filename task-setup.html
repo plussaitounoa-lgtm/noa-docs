@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>タスク管理セットアップ — Noa Docs</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; line-height: 1.7; }
+    header { background: #1a1a2e; color: white; padding: 32px; }
+    header a { color: #aaa; text-decoration: none; font-size: 13px; }
+    header a:hover { color: white; }
+    header h1 { font-size: 24px; font-weight: 700; margin-top: 12px; }
+    header p { color: #aaa; font-size: 13px; margin-top: 4px; }
+    main { max-width: 760px; margin: 40px auto; padding: 0 24px 80px; }
+    h2 { font-size: 18px; font-weight: 700; margin: 40px 0 12px; padding-bottom: 8px; border-bottom: 2px solid #e8e8e8; }
+    h3 { font-size: 15px; font-weight: 600; margin: 24px 0 8px; color: #333; }
+    p { font-size: 14px; color: #444; margin-bottom: 12px; }
+    pre { background: #1e1e2e; color: #cdd6f4; border-radius: 8px; padding: 16px 20px; font-size: 13px; overflow-x: auto; margin: 8px 0 20px; line-height: 1.6; }
+    code { font-family: 'Fira Code', 'Courier New', monospace; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 24px; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e8e8e8; }
+    th { background: #f0f0f0; padding: 10px 14px; text-align: left; font-weight: 600; color: #555; }
+    td { padding: 10px 14px; border-top: 1px solid #efefef; color: #333; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+    .badge-write { background: #dbeafe; color: #1d4ed8; }
+    .badge-read { background: #f0fdf4; color: #166534; }
+    .note { background: #fffbeb; border-left: 3px solid #f59e0b; padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 13px; color: #92400e; margin-bottom: 20px; }
+    .danger { background: #fef2f2; border-left: 3px solid #ef4444; padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 13px; color: #991b1b; margin-bottom: 20px; }
+    ul { font-size: 14px; color: #444; padding-left: 20px; margin-bottom: 16px; }
+    li { margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html">← Noa Docs</a>
+    <h1>📋 タスク管理セットアップ</h1>
+    <p>tasks.json の操作方法・manage.py コマンド一覧</p>
+  </header>
+  <main>
+
+    <h2>リポジトリ構成</h2>
+    <table>
+      <tr><th>リポジトリ</th><th>権限</th><th>用途</th></tr>
+      <tr><td>Ren-japan/line-team</td><td><span class="badge badge-write">Write</span></td><td>tasks.json の追加・更新・push</td></tr>
+      <tr><td>Ren-japan/claude-projects</td><td><span class="badge badge-read">Read-only</span></td><td>スキル・knowledge の参照のみ</td></tr>
+    </table>
+    <div class="danger">⚠️ claude-projects には git add / commit / push 禁止。やると743ファイル消える（過去事故）</div>
+
+    <h2>基本の流れ</h2>
+    <p>操作のたびに <code>git pull → 操作 → git push</code> を守る。</p>
+    <pre><code># 1. リポジトリに移動
+cd ~/OneDrive/デスクトップ/project-noa/line-team
+
+# 2. 最新を取得（毎回必須）
+git pull
+
+# 3. manage.py で操作
+python3 manage.py &lt;コマンド&gt;
+
+# 4. pushして同期（tasks.json だけ add する）
+git add data/tasks.json
+git commit -m "update: 内容 (Noa)"
+git push</code></pre>
+    <div class="note">💡 git add する前に <code>git status</code> で差分確認。想定外のファイルが含まれてたら止まる。</div>
+
+    <h2>コマンド一覧</h2>
+
+    <h3>確認系</h3>
+    <pre><code># 自分のタスクだけ確認
+python3 manage.py list --assignee Noa
+
+# 全タスク確認
+python3 manage.py list
+
+# タスクの詳細を見る
+python3 manage.py show t5</code></pre>
+
+    <h3>更新系</h3>
+    <pre><code># ステータス変更（todo / in_progress / watching / done）
+python3 manage.py update t5 --column done
+
+# メモを追加
+python3 manage.py note t5 "作業メモ"
+
+# 担当者を変更
+python3 manage.py update t5 --assignee Ren</code></pre>
+
+    <h3>追加系</h3>
+    <pre><code># 自分のタスクを追加
+python3 manage.py add --title "タイトル" --purpose "目的・ゴール状態" --assignee Noa --created-by Noa
+
+# Renにタスクを振る
+python3 manage.py add --title "タイトル" --purpose "目的" --assignee Ren --created-by Noa</code></pre>
+
+    <h2>列（column）の意味</h2>
+    <table>
+      <tr><th>列</th><th>意味</th></tr>
+      <tr><td>todo</td><td>まだ着手してない</td></tr>
+      <tr><td>in_progress</td><td>作業中</td></tr>
+      <tr><td>watching</td><td>データ蓄積待ち・効果検証中</td></tr>
+      <tr><td>done</td><td>完了</td></tr>
+    </table>
+
+    <h2>チームメンバー</h2>
+    <table>
+      <tr><th>名前</th><th>担当</th></tr>
+      <tr><td>Ren</td><td>リーダー・判断・承認</td></tr>
+      <tr><td>Noa</td><td>常駐。Renの実作業を巻き取る</td></tr>
+      <tr><td>Kate</td><td>週3。SNS運用・リサーチ・LINE導線</td></tr>
+      <tr><td>Rinon</td><td>週1。品質チェック・依頼書確認</td></tr>
+    </table>
+
+    <h2>ルール</h2>
+    <ul>
+      <li>操作前に必ず <code>git pull</code></li>
+      <li>操作後は必ず <code>git push</code>（data/tasks.json だけ add）</li>
+      <li>自分のタスクだけステータス変更する。他人のは触らない</li>
+      <li><code>needs_approval: true</code> のタスクはRenの承認が必要。勝手に完了にしない</li>
+    </ul>
+
+    <h2>クラウドボード</h2>
+    <p>タスクの状況はブラウザからも確認できる。</p>
+    <pre><code>https://line-team-board.streamlit.app/noa</code></pre>
+
+  </main>
+</body>
+</html>
