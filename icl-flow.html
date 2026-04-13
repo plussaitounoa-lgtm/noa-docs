@@ -9,8 +9,11 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: #4e7d96;
-      padding: 40px 20px 80px;
+      padding: 40px 0 80px;
       min-height: 100vh;
+    }
+    .flow-wrap {
+      padding: 0 20px;
     }
     .back-link {
       display: inline-block;
@@ -495,14 +498,17 @@
 </head>
 <body>
 
+<div style="padding: 0 20px;">
 <a class="back-link" href="icl-shindan.html">← 設計書に戻る</a>
 
 <div class="page-header">
   <h1>🔷 LINEワークフロー設計図 | 視力改善診断</h1>
   <p>ICL | PU → 友だち追加 → 診断 → 結果カルーセル（4タイプ分岐）→ CTA</p>
 </div>
+</div>
 
 <!-- ══ メインフロー ══ -->
+<div class="flow-wrap">
 <div class="flow">
 
   <!-- STEP 00: PU -->
@@ -664,8 +670,11 @@
 </div><!-- /flow -->
 
 
+</div><!-- /flow-wrap -->
+
 <!-- ══ 4列分岐エリア ══ -->
-<div class="branch-area" style="max-width:960px; margin:12px auto 0; padding:0 20px;">
+<div class="flow-wrap">
+<div class="branch-area" style="max-width:960px; margin:12px auto 0;">
   <div class="branch-cols">
 
     <!-- Type A -->
@@ -867,9 +876,10 @@
   </div><!-- /branch-cols -->
   <div class="merge-bar"></div>
 </div><!-- /branch-area -->
-
+</div><!-- /flow-wrap -->
 
 <!-- ══ 合流後フロー ══ -->
+<div class="flow-wrap">
 <div class="flow" style="max-width:400px; margin:0 auto;">
 
   <div class="merge-note">← 4タイプ合流 | C1・C3は全タイプ共通、C2・C4はタイプ別コピー</div>
@@ -958,6 +968,7 @@
   </div>
 
 </div><!-- /flow -->
+</div><!-- /flow-wrap -->
 
 </body>
 </html>
