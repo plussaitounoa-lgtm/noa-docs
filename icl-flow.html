@@ -331,14 +331,52 @@
     .result-type-name { font-size: 13px; font-weight: 800; color: #1a1a1a; margin-bottom: 3px; }
     .result-trigger   { font-size: 11px; color: #666; line-height: 1.4; }
 
-    /* カードチップ */
-    .card-chips { display: flex; gap: 3px; flex-wrap: wrap; padding: 2px 0; }
-    .chip {
-      font-size: 10px; font-weight: 700;
-      padding: 3px 6px; border-radius: 5px;
+    /* 結果カルーセル（横スクロール） */
+    .result-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: thin;
     }
-    .chip-common { background: rgba(255,255,255,0.9); color: #1a1a2e; }
-    .chip-unique { background: rgba(255,255,255,0.25); color: white; border: 1px solid rgba(255,255,255,0.3); }
+    .result-scroll::-webkit-scrollbar { height: 3px; }
+    .result-scroll::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+    .result-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 2px; }
+
+    .result-card {
+      background: white;
+      border-radius: 8px;
+      min-width: 150px;
+      max-width: 150px;
+      flex-shrink: 0;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+    .result-card-top {
+      height: 6px;
+    }
+    .rc-common { background: #3b82f6; }
+    .rc-unique  { background: #f59e0b; }
+
+    .result-card-body { padding: 8px 10px; flex: 1; }
+    .rc-label {
+      font-size: 9px; font-weight: 700;
+      padding: 1px 6px; border-radius: 10px;
+      display: inline-block; margin-bottom: 5px;
+    }
+    .rc-label.common { background: #dbeafe; color: #1e40af; }
+    .rc-label.unique  { background: #fef3c7; color: #92400e; }
+    .rc-title { font-size: 11px; font-weight: 800; color: #1a1a1a; line-height: 1.4; margin-bottom: 4px; }
+    .rc-copy  { font-size: 10px; color: #555; line-height: 1.5; }
+    .rc-cta {
+      font-size: 10px; font-weight: 700;
+      background: #06c755; color: white;
+      text-align: center; padding: 6px;
+      margin: 6px 8px 8px;
+      border-radius: 5px;
+    }
 
     /* 結合線 */
     .merge-bar {
@@ -639,15 +677,41 @@
           <div class="type-name-text">視力改善診断</div>
         </div>
         <div class="type-body">
-          <div class="result-bubble-box">
-            <div class="result-type-name">あなたは「自力探索タイプ」</div>
-            <div class="result-trigger">視力、できれば自力でなんとかしたい。あなたの目に合った選択肢を、正直にお伝えします。</div>
-          </div>
-          <div class="card-chips">
-            <span class="chip chip-common">C1 結果表示</span>
-            <span class="chip chip-unique">C2 不安喚起</span>
-            <span class="chip chip-common">C3 ものさし</span>
-            <span class="chip chip-unique">C4 欲求</span>
+          <div class="pr-scroll-hint">← スワイプ →</div>
+          <div class="result-scroll">
+            <div class="result-card">
+              <div class="result-card-top rc-common"></div>
+              <div class="result-card-body">
+                <span class="rc-label common">C1 共通</span>
+                <div class="rc-title">あなたは「自力探索タイプ」</div>
+                <div class="rc-copy">視力、できれば自力でなんとかしたい。あなたの目に合った選択肢を、正直にお伝えします。</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-unique"></div>
+              <div class="result-card-body">
+                <span class="rc-label unique">C2 別</span>
+                <div class="rc-title">「ちゃんと続けてるのに、なぜ変わらないんだろう」</div>
+                <div class="rc-copy">仮性近視→改善の可能性あり。軸性近視→トレーニングでは戻らない。成人の大半は軸性近視。</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-common"></div>
+              <div class="result-card-body">
+                <span class="rc-label common">C3 共通</span>
+                <div class="rc-title">続かないのは、意志の問題じゃない</div>
+                <div class="rc-copy">近視は目の構造の問題。医療なら変えられる。角膜を削らない・取り出せる・10〜15分。</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-unique"></div>
+              <div class="result-card-body">
+                <span class="rc-label unique">C4 別</span>
+                <div class="rc-title">朝起きたらすぐ見える生活、諦めなくていいかも</div>
+                <div class="rc-copy">自力では変えられない。でも医療なら変えられる。無料・強制なし。今すぐ決めなくていい。</div>
+              </div>
+              <div class="rc-cta">LINEで選択肢を確認する →</div>
+            </div>
           </div>
         </div>
       </div>
@@ -662,15 +726,41 @@
           <div class="type-name-text">視力改善診断</div>
         </div>
         <div class="type-body">
-          <div class="result-bubble-box">
-            <div class="result-type-name">あなたは「矯正チェンジタイプ」</div>
-            <div class="result-trigger">ドライアイ、目の疲れ、運動するときの邪魔さ。でも手術は怖い。その迷い、多くの人が持っています。</div>
-          </div>
-          <div class="card-chips">
-            <span class="chip chip-common">C1 結果表示</span>
-            <span class="chip chip-unique">C2 不安喚起</span>
-            <span class="chip chip-common">C3 ものさし</span>
-            <span class="chip chip-unique">C4 欲求</span>
+          <div class="pr-scroll-hint">← スワイプ →</div>
+          <div class="result-scroll">
+            <div class="result-card">
+              <div class="result-card-top rc-common"></div>
+              <div class="result-card-body">
+                <span class="rc-label common">C1 共通</span>
+                <div class="rc-title">あなたは「矯正チェンジタイプ」</div>
+                <div class="rc-copy">ドライアイ、目の疲れ、運動するときの邪魔さ。でも手術は怖い。その迷い、多くの人が持っています。</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-unique"></div>
+              <div class="result-card-body">
+                <span class="rc-label unique">C2 別</span>
+                <div class="rc-title">「手術なし」でコンタクトをやめるのは、実は難しい</div>
+                <div class="rc-copy">オルソケラトロジーあるが強い近視・乱視には対応できないことも。「手術なし」でやめられる人は限られている。</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-common"></div>
+              <div class="result-card-body">
+                <span class="rc-label common">C3 共通</span>
+                <div class="rc-title">続かないのは、意志の問題じゃない</div>
+                <div class="rc-copy">近視は目の構造の問題。医療なら変えられる。角膜を削らない・取り出せる・10〜15分。</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-unique"></div>
+              <div class="result-card-body">
+                <span class="rc-label unique">C4 別</span>
+                <div class="rc-title">コンタクトを探さない朝が来るかもしれない</div>
+                <div class="rc-copy">「翌朝、視界がクリアで感動した」「人生が変わった」実際に受けた人の言葉です。</div>
+              </div>
+              <div class="rc-cta">LINEで選択肢を整理する →</div>
+            </div>
           </div>
         </div>
       </div>
@@ -685,15 +775,41 @@
           <div class="type-name-text">視力改善診断</div>
         </div>
         <div class="type-body">
-          <div class="result-bubble-box">
-            <div class="result-type-name">あなたは「手術なし探索タイプ」</div>
-            <div class="result-trigger">できれば手術はしたくない。あなたの目に合った選択肢を、正直にお伝えします。</div>
-          </div>
-          <div class="card-chips">
-            <span class="chip chip-common">C1 結果表示</span>
-            <span class="chip chip-unique">C2 不安喚起</span>
-            <span class="chip chip-common">C3 ものさし</span>
-            <span class="chip chip-unique">C4 欲求</span>
+          <div class="pr-scroll-hint">← スワイプ →</div>
+          <div class="result-scroll">
+            <div class="result-card">
+              <div class="result-card-top rc-common"></div>
+              <div class="result-card-body">
+                <span class="rc-label common">C1 共通</span>
+                <div class="rc-title">あなたは「手術なし探索タイプ」</div>
+                <div class="rc-copy">できれば手術はしたくない。あなたの目に合った選択肢を、正直にお伝えします。</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-unique"></div>
+              <div class="result-card-body">
+                <span class="rc-label unique">C2 別</span>
+                <div class="rc-title">手術なしの選択肢、正直に言います</div>
+                <div class="rc-copy">オルソケラトロジーあるが限界も。「手術なし」で探し続けても、答えが出ないケースがあります。</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-common"></div>
+              <div class="result-card-body">
+                <span class="rc-label common">C3 共通</span>
+                <div class="rc-title">続かないのは、意志の問題じゃない</div>
+                <div class="rc-copy">近視は目の構造の問題。医療なら変えられる。角膜を削らない・取り出せる・10〜15分。</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-unique"></div>
+              <div class="result-card-body">
+                <span class="rc-label unique">C4 別</span>
+                <div class="rc-title">目の疲れ・乾燥から解放される日は来るかも</div>
+                <div class="rc-copy">コンタクトの不快感がなくなったら、どんな毎日になるだろう。ICLは大がかりな手術とは違います。</div>
+              </div>
+              <div class="rc-cta">LINEで選択肢を整理する →</div>
+            </div>
           </div>
         </div>
       </div>
@@ -708,15 +824,41 @@
           <div class="type-name-text">視力改善診断</div>
         </div>
         <div class="type-body">
-          <div class="result-bubble-box">
-            <div class="result-type-name">あなたは「根本解決タイプ」</div>
-            <div class="result-trigger">視力を、根本から治したい。あなたの目に合った選択肢を、正直にお伝えします。</div>
-          </div>
-          <div class="card-chips">
-            <span class="chip chip-common">C1 結果表示</span>
-            <span class="chip chip-unique">C2 不安喚起</span>
-            <span class="chip chip-common">C3 ものさし</span>
-            <span class="chip chip-unique">C4 欲求</span>
+          <div class="pr-scroll-hint">← スワイプ →</div>
+          <div class="result-scroll">
+            <div class="result-card">
+              <div class="result-card-top rc-common"></div>
+              <div class="result-card-body">
+                <span class="rc-label common">C1 共通</span>
+                <div class="rc-title">あなたは「根本解決タイプ」</div>
+                <div class="rc-copy">視力を、根本から治したい。あなたの目に合った選択肢を、正直にお伝えします。</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-unique"></div>
+              <div class="result-card-body">
+                <span class="rc-label unique">C2 別</span>
+                <div class="rc-title">選択肢はあるけど、全部自分に合うわけじゃない</div>
+                <div class="rc-copy">角膜の厚さ・度数・乱視の有無によって、できる手術が変わります。情報だけでは答えは出ません。</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-common"></div>
+              <div class="result-card-body">
+                <span class="rc-label common">C3 共通</span>
+                <div class="rc-title">続かないのは、意志の問題じゃない</div>
+                <div class="rc-copy">近視は目の構造の問題。医療なら変えられる。角膜を削らない・取り出せる・10〜15分。</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-unique"></div>
+              <div class="result-card-body">
+                <span class="rc-label unique">C4 別</span>
+                <div class="rc-title">目のことを気にせず過ごせる日は、意外と近い</div>
+                <div class="rc-copy">「話を聞くだけ」でも、選択肢の解像度がまったく変わります。強制なし。費用もかかりません。</div>
+              </div>
+              <div class="rc-cta">LINEで選択肢を確認する →</div>
+            </div>
           </div>
         </div>
       </div>
