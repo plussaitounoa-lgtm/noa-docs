@@ -9,8 +9,13 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: #4e7d96;
-      padding: 40px 20px 80px;
+      padding: 40px 0 80px;
       min-height: 100vh;
+    }
+    .page-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
     .back-link {
       display: inline-block;
@@ -494,6 +499,7 @@
   </style>
 </head>
 <body>
+<div class="page-wrap">
 
 <a class="back-link" href="icl-shindan.html">← 設計書に戻る</a>
 
@@ -664,7 +670,7 @@
 </div><!-- /flow -->
 
 <!-- ══ 4列分岐エリア ══ -->
-<div class="branch-area" style="max-width:960px; margin:12px auto 0;">
+<div class="branch-area" style="margin-top:12px;">
   <div class="branch-cols">
 
     <!-- Type A -->
@@ -868,7 +874,7 @@
 </div><!-- /branch-area -->
 
 <!-- ══ 合流後フロー ══ -->
-<div class="flow" style="max-width:400px; margin:0 auto;">
+<div class="flow">
 
   <div class="merge-note">← 4タイプ合流 | C1・C3は全タイプ共通、C2・C4はタイプ別コピー</div>
 
@@ -957,5 +963,6 @@
 
 </div><!-- /flow -->
 
+</div><!-- /page-wrap -->
 </body>
 </html>
