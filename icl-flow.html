@@ -12,7 +12,6 @@
       padding: 40px 20px 80px;
       min-height: 100vh;
     }
-
     .back-link {
       display: inline-block;
       color: rgba(255,255,255,0.6);
@@ -21,34 +20,24 @@
       margin-bottom: 20px;
     }
     .back-link:hover { color: white; }
-
     .page-header {
       text-align: center;
       margin-bottom: 40px;
     }
-    .page-header h1 {
-      font-size: 20px;
-      font-weight: 700;
-      color: white;
-    }
-    .page-header p {
-      font-size: 13px;
-      color: rgba(255,255,255,0.65);
-      margin-top: 6px;
-    }
+    .page-header h1 { font-size: 20px; font-weight: 700; color: white; }
+    .page-header p  { font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 6px; }
 
-    /* ────── 縦フロー（中央列） ────── */
+    /* ── メインフロー（縦） ── */
     .flow {
-      max-width: 520px;
+      max-width: 400px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-    .flow.wide {
-      max-width: 960px;
-    }
+    .flow.wide { max-width: 960px; }
 
+    /* STEPラベル */
     .step-label {
       background: rgba(255,255,255,0.2);
       color: white;
@@ -60,6 +49,7 @@
       white-space: nowrap;
     }
 
+    /* 矢印 */
     .arrow {
       width: 2px;
       height: 36px;
@@ -70,210 +60,306 @@
     .arrow::after {
       content: '';
       position: absolute;
-      bottom: -7px;
-      left: 50%;
+      bottom: -7px; left: 50%;
       transform: translateX(-50%);
       border-left: 7px solid transparent;
       border-right: 7px solid transparent;
       border-top: 8px solid rgba(255,255,255,0.4);
     }
 
-    /* ────── 白カード共通 ────── */
-    .card {
-      background: white;
-      border-radius: 14px;
-      width: 100%;
-      padding: 20px 22px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-    }
-    .card-title {
+    /* ステップ説明 */
+    .step-note {
       font-size: 12px;
-      font-weight: 700;
-      color: #aaa;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 10px;
+      color: rgba(255,255,255,0.65);
+      text-align: center;
+      margin-top: 8px;
     }
 
-    /* ────── PUカード ────── */
+    /* ────── PUカード（専用） ────── */
+    .pu-wrap {
+      width: 100%;
+      background: white;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.18);
+    }
+    .pu-label { font-size: 11px; font-weight: 700; color: #aaa; letter-spacing: 0.06em; margin-bottom: 10px; }
     .pu-inner {
       background: #fff0f5;
       border: 1.5px solid #f9a8c9;
       border-radius: 10px;
-      padding: 16px 20px;
+      padding: 16px;
       text-align: center;
     }
-    .pu-headline { font-size: 17px; font-weight: 800; color: #e0427a; margin-bottom: 8px; }
-    .pu-copy { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 4px; }
-    .pu-badge { font-size: 11px; color: #999; margin: 8px 0 14px; }
-    .pu-buttons { display: flex; gap: 8px; }
-    .btn-yes { flex:1; background:#06c755; color:white; border:none; border-radius:6px; padding:10px; font-size:14px; font-weight:700; }
-    .btn-no  { flex:1; background:#f0f0f0; color:#666; border:none; border-radius:6px; padding:10px; font-size:14px; font-weight:700; }
+    .pu-headline { font-size: 16px; font-weight: 800; color: #e0427a; margin-bottom: 6px; }
+    .pu-copy     { font-size: 12px; color: #555; line-height: 1.6; }
+    .pu-badge    { font-size: 11px; color: #999; margin: 8px 0 12px; }
+    .pu-buttons  { display: flex; gap: 8px; }
+    .btn-yes { flex:1; background:#06c755; color:white; border:none; border-radius:6px; padding:9px; font-size:13px; font-weight:700; }
+    .btn-no  { flex:1; background:#f0f0f0; color:#666;  border:none; border-radius:6px; padding:9px; font-size:13px; font-weight:700; }
 
     /* ────── 友だち追加 ────── */
     .friend-card {
       background: #06c755;
       border-radius: 14px;
       width: 100%;
-      padding: 28px 22px;
+      padding: 26px 20px;
       text-align: center;
       box-shadow: 0 2px 12px rgba(0,0,0,0.15);
     }
-    .friend-icon  { font-size: 32px; margin-bottom: 8px; }
+    .friend-icon  { font-size: 30px; margin-bottom: 6px; }
     .friend-title { font-size: 20px; font-weight: 800; color: white; margin-bottom: 4px; }
     .friend-sub   { font-size: 13px; color: rgba(255,255,255,0.8); }
-    .friend-goal  { display:inline-block; background:rgba(255,255,255,0.25); color:white; font-size:12px; font-weight:700; padding:3px 12px; border-radius:20px; margin-top:10px; }
+    .friend-goal  { display:inline-block; background:rgba(255,255,255,0.25); color:white; font-size:12px; font-weight:700; padding:3px 12px; border-radius:20px; margin-top:8px; }
 
-    /* ────── Q設計 ────── */
-    .q-list { display:flex; flex-direction:column; gap:10px; }
-    .q-item { border:1px solid #eee; border-radius:8px; padding:12px 14px; }
-    .q-num  { font-size:11px; font-weight:700; color:#3b82f6; margin-bottom:3px; }
-    .q-text { font-size:13px; font-weight:600; color:#222; margin-bottom:6px; }
-    .q-choices-mini { display:flex; flex-wrap:wrap; gap:4px; }
-    .choice-pill { font-size:11px; background:#f5f5f5; color:#555; padding:2px 8px; border-radius:20px; }
-    .choice-pill.branch { background:#eff6ff; color:#3b82f6; font-weight:600; }
-    .q-note { font-size:11px; color:#f59e0b; font-weight:700; margin-top:6px; }
+    /* ────── LINEモック共通 ────── */
+    .line-mock {
+      width: 100%;
+      background: #c8e0f4;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.18);
+    }
+    .line-mock-header {
+      background: #06c755;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .line-mock-icon {
+      width: 28px; height: 28px;
+      background: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .line-mock-name { font-size: 13px; font-weight: 700; color: white; }
+    .line-mock-body { padding: 14px 12px; display: flex; flex-direction: column; gap: 10px; }
+
+    /* メッセージバブル */
+    .line-bubble {
+      background: white;
+      border-radius: 0 10px 10px 10px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: #222;
+      line-height: 1.6;
+      max-width: 90%;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .line-bubble strong { font-size: 14px; font-weight: 800; display: block; margin-bottom: 4px; }
+
+    /* 診断スタートカード */
+    .line-shindan-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    .shindan-card-header {
+      background: #f5f5f5;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #333;
+      border-bottom: 1px solid #eee;
+    }
+    .shindan-card-body {
+      padding: 12px 14px;
+    }
+    .shindan-card-body .shindan-inner {
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    .shindan-inner .shindan-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #222;
+      margin-bottom: 4px;
+    }
+    .shindan-badge {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #2e7d32;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-top: 4px;
+    }
+    .shindan-start-btn {
+      width: 100%;
+      background: #06c755;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 11px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    /* Q設問カード */
+    .line-q-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    .q-card-question {
+      padding: 12px 14px 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #111;
+      border-bottom: 1px solid #f0f0f0;
+      line-height: 1.5;
+    }
+    .q-card-answers { padding: 8px 10px; display: flex; flex-direction: column; gap: 6px; }
+    .q-answer-btn {
+      border: 1.5px solid #06c755;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #06c755;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+    }
+    .q-answer-btn.branch-btn {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+    .q-answer-key {
+      background: #06c755;
+      color: white;
+      width: 20px; height: 20px;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .q-answer-key.branch { background: #3b82f6; }
+    .q-answer-branch {
+      margin-left: auto;
+      font-size: 10px;
+      font-weight: 700;
+      color: #3b82f6;
+      white-space: nowrap;
+    }
+    .q-branch-note {
+      text-align: center;
+      font-size: 11px;
+      color: #f59e0b;
+      font-weight: 700;
+      padding: 6px 0 8px;
+    }
 
     /* ────── 分岐ラベル ────── */
     .branch-label {
       background: rgba(255,255,255,0.15);
-      border: 1px dashed rgba(255,255,255,0.4);
+      border: 1px dashed rgba(255,255,255,0.45);
       color: white;
       font-size: 13px;
       font-weight: 700;
       padding: 8px 24px;
       border-radius: 20px;
-      margin: 12px 0;
+      margin: 4px 0;
       text-align: center;
     }
 
     /* ────── 4列分岐エリア ────── */
-    .branch-area {
-      width: 100%;
-      max-width: 960px;
-      margin: 0 auto;
-    }
+    .branch-area { width: 100%; max-width: 960px; margin: 0 auto; }
     .branch-cols {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
       align-items: start;
     }
-
-    /* タイプカード */
-    .type-col { display:flex; flex-direction:column; align-items:center; }
+    .type-col { display: flex; flex-direction: column; align-items: center; }
     .type-badge {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 14px;
-      border-radius: 20px;
-      margin-bottom: 10px;
-      white-space: nowrap;
+      font-size: 11px; font-weight: 700;
+      padding: 4px 14px; border-radius: 20px;
+      margin-bottom: 10px; white-space: nowrap;
     }
     .badge-a { background: #f59e0b; color: #1a1a1a; }
     .badge-b { background: #1e3a8a; color: white; }
     .badge-c { background: #7c3aed; color: white; }
     .badge-d { background: #065f46; color: white; }
 
-    .type-card-box {
-      border-radius: 12px;
-      padding: 14px;
+    .type-line-mock {
       width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
-    .box-a { background: #92400e; }
-    .box-b { background: #1e3a8a; }
-    .box-c { background: #5b21b6; }
-    .box-d { background: #064e3b; }
-
-    .line-header {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 10px;
+    .type-header {
+      padding: 9px 12px;
+      display: flex; align-items: center; gap: 7px;
     }
-    .line-icon {
-      width: 22px; height: 22px;
-      background: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      flex-shrink: 0;
-    }
-    .line-name { font-size: 12px; font-weight: 700; color: white; }
+    .th-a { background: #92400e; }
+    .th-b { background: #1e3a8a; }
+    .th-c { background: #5b21b6; }
+    .th-d { background: #064e3b; }
 
-    .result-bubble {
+    .type-icon { width:24px;height:24px; background:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+    .type-name-text { font-size:12px; font-weight:700; color:white; }
+
+    .type-body { background: #c8e0f4; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+
+    /* 結果バブル */
+    .result-bubble-box {
       background: white;
-      border-radius: 8px;
+      border-radius: 0 8px 8px 8px;
       padding: 10px 12px;
-      margin-bottom: 10px;
+      font-size: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
     }
-    .result-type-name { font-size: 12px; font-weight: 800; color: #1a1a1a; margin-bottom: 2px; }
+    .result-type-name { font-size: 13px; font-weight: 800; color: #1a1a1a; margin-bottom: 3px; }
     .result-trigger   { font-size: 11px; color: #666; line-height: 1.4; }
 
-    /* 4枚カードラベル */
-    .card-chips { display:flex; gap:4px; flex-wrap:wrap; }
+    /* カードチップ */
+    .card-chips { display: flex; gap: 3px; flex-wrap: wrap; padding: 2px 0; }
     .chip {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 3px 7px;
-      border-radius: 5px;
-      color: white;
+      font-size: 10px; font-weight: 700;
+      padding: 3px 6px; border-radius: 5px;
     }
-    .chip-common { background: rgba(255,255,255,0.3); color: white; }
-    .chip-unique { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.75); border: 1px solid rgba(255,255,255,0.25); }
+    .chip-common { background: rgba(255,255,255,0.9); color: #1a1a2e; }
+    .chip-unique { background: rgba(255,255,255,0.25); color: white; border: 1px solid rgba(255,255,255,0.3); }
 
-    /* 4列の結合線 */
+    /* 結合線 */
     .merge-bar {
-      width: 100%;
-      height: 24px;
-      position: relative;
-      margin-top: 8px;
+      width: 100%; height: 28px; position: relative; margin-top: 6px;
     }
     .merge-bar::before {
       content: '';
-      position: absolute;
-      top: 0;
-      left: 12%;
-      right: 12%;
+      position: absolute; top: 0;
+      left: 12%; right: 12%;
       height: 2px;
       background: rgba(255,255,255,0.4);
     }
     .merge-bar::after {
       content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
+      position: absolute; top: 0; left: 50%;
       transform: translateX(-50%);
-      width: 2px;
-      height: 24px;
+      width: 2px; height: 28px;
       background: rgba(255,255,255,0.4);
     }
 
-    /* ────── PRカルーセル ────── */
-    .pr-cards { display:flex; flex-direction:column; gap:8px; margin-top:4px; }
-    .pr-card-item { border:1px solid #eee; border-radius:8px; padding:10px 14px; display:flex; align-items:flex-start; gap:10px; }
-    .pr-num { font-size:12px; font-weight:700; background:#1a1a2e; color:white; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
-    .pr-text { font-size:13px; color:#333; line-height:1.5; }
-    .pr-text strong { font-weight:700; display:block; margin-bottom:2px; }
-
-    /* ────── CTA ────── */
-    .cta-card {
-      background: #1a1a2e;
-      border-radius: 14px;
-      width: 100%;
-      padding: 24px 22px;
-      text-align: center;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-    }
-    .cta-label { font-size:11px; color:rgba(255,255,255,0.5); margin-bottom:6px; letter-spacing:0.06em; }
-    .cta-title { font-size:16px; font-weight:800; color:white; margin-bottom:8px; }
-    .cta-sub   { font-size:12px; color:rgba(255,255,255,0.55); margin-bottom:16px; }
-    .cta-btn   { display:inline-block; background:#06c755; color:white; font-size:14px; font-weight:700; padding:12px 28px; border-radius:8px; }
-
-    /* merge note */
+    /* mergeノート */
     .merge-note {
       background: rgba(255,255,255,0.15);
       border: 1px dashed rgba(255,255,255,0.4);
@@ -283,6 +369,38 @@
       border-radius: 20px;
       text-align: center;
       margin: 4px 0;
+    }
+
+    /* ────── PRカルーセル ────── */
+    .pr-cards { display:flex; flex-direction:column; gap:8px; margin-top:4px; }
+    .pr-card-item {
+      border:1px solid #eee; border-radius:8px; padding:10px 14px;
+      display:flex; align-items:flex-start; gap:10px;
+      background: white;
+    }
+    .pr-num { font-size:12px; font-weight:700; background:#1a1a2e; color:white; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+    .pr-text { font-size:13px; color:#333; line-height:1.5; }
+    .pr-text strong { font-weight:700; display:block; margin-bottom:2px; }
+
+    /* ────── CTAカード ────── */
+    .cta-card {
+      background: #1a1a2e;
+      border-radius: 14px; width: 100%;
+      padding: 24px 22px; text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    }
+    .cta-label { font-size:11px; color:rgba(255,255,255,0.5); margin-bottom:6px; letter-spacing:0.06em; }
+    .cta-title { font-size:16px; font-weight:800; color:white; margin-bottom:8px; }
+    .cta-sub   { font-size:12px; color:rgba(255,255,255,0.55); margin-bottom:16px; }
+    .cta-btn   { display:inline-block; background:#06c755; color:white; font-size:14px; font-weight:700; padding:12px 28px; border-radius:8px; }
+
+    /* PRカード外枠 */
+    .pr-wrap {
+      background: white;
+      border-radius: 14px;
+      padding: 18px 18px 14px;
+      width: 100%;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.15);
     }
   </style>
 </head>
@@ -295,17 +413,17 @@
   <p>ICL | PU → 友だち追加 → 診断 → 結果カルーセル（4タイプ分岐）→ CTA</p>
 </div>
 
-<!-- ══════ 縦メインフロー ══════ -->
-<div class="flow" style="max-width:520px; margin:0 auto;">
+<!-- ══ メインフロー ══ -->
+<div class="flow">
 
   <!-- STEP 00: PU -->
-  <div class="step-label">STEP 00 · PU（ポップアップ）</div>
-  <div class="card">
-    <div class="card-title">PU IMAGE</div>
+  <div class="step-label">STEP 00 · プッシュ通知 / 記事内バナー</div>
+  <div class="pu-wrap">
+    <div class="pu-label">PU IMAGE</div>
     <div class="pu-inner">
       <div class="pu-headline">その目、なんとかなる？</div>
       <div class="pu-copy">眼鏡・コンタクト・レーシック・ICL、<br>あなたに合うのはどれ？</div>
-      <div class="pu-copy" style="margin-top:6px;">今の目の状態から、自分に合う矯正方法が<br>30秒でわかる</div>
+      <div class="pu-copy" style="margin-top:4px;">今の目の状態から、自分に合う矯正方法が<br>30秒でわかる</div>
       <div class="pu-badge">匿名！LINEで簡単</div>
       <div class="pu-buttons">
         <button class="btn-yes">はい</button>
@@ -327,170 +445,248 @@
 
   <div class="arrow"></div>
 
-  <!-- STEP 02: Q1〜Q4 -->
-  <div class="step-label">STEP 02 · 診断（LINE内・4問）</div>
-  <div class="card">
-    <div class="card-title">Q設計</div>
-    <div class="q-list">
-      <div class="q-item">
-        <div class="q-num">Q1 — 入口・自分ごと化</div>
-        <div class="q-text">今、視力矯正をどうしていますか？</div>
-        <div class="q-choices-mini">
-          <span class="choice-pill">コンタクト</span>
-          <span class="choice-pill">メガネ</span>
-          <span class="choice-pill">使い分け</span>
-          <span class="choice-pill">裸眼</span>
-        </div>
+  <!-- STEP 02: 初期メッセージ -->
+  <div class="step-label">STEP 02 · 初期メッセージ（友だち追加直後に自動送信）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">👁</div>
+      <div class="line-mock-name">視力改善診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-bubble">
+        <strong>視力改善診断</strong>
+        あなたに合った視力矯正の選択肢をお伝えします。<br>30秒で完了！まずは診断をスタートしてください。
       </div>
-      <div class="q-item">
-        <div class="q-num">Q2 — ペイン把握</div>
-        <div class="q-text">目のことで一番困っていることは？</div>
-        <div class="q-choices-mini">
-          <span class="choice-pill">視力悪化</span>
-          <span class="choice-pill">不便・面倒</span>
-          <span class="choice-pill">疲れ・乾燥</span>
-          <span class="choice-pill">左右差</span>
+      <div class="line-shindan-card">
+        <div class="shindan-card-header">
+          📋 視力改善診断
         </div>
-      </div>
-      <div class="q-item">
-        <div class="q-num">Q3 — 分岐キー ⭐</div>
-        <div class="q-text">視力矯正について、今の気持ちに近いのは？</div>
-        <div class="q-choices-mini">
-          <span class="choice-pill branch">A: 自力でなんとかしたい → TypeA</span>
-          <span class="choice-pill branch">B: やめたいが手術が不安 → TypeB</span>
-          <span class="choice-pill branch">C: 手術以外を探したい → TypeC</span>
-          <span class="choice-pill branch">D: 根本的に治したい → TypeD</span>
-        </div>
-        <div class="q-note">↑ この回答で結果タイプが分岐</div>
-      </div>
-      <div class="q-item">
-        <div class="q-num">Q4 — 理想の未来</div>
-        <div class="q-text">解決したら、一番変わってほしいことは？</div>
-        <div class="q-choices-mini">
-          <span class="choice-pill">朝すぐ見える</span>
-          <span class="choice-pill">スポーツ・旅行</span>
-          <span class="choice-pill">疲れ・乾燥から解放</span>
-          <span class="choice-pill">気にせず過ごす</span>
+        <div class="shindan-card-body">
+          <div class="shindan-inner">
+            <div class="shindan-title">あなたに合う矯正方法がわかる</div>
+            眼鏡・コンタクト・レーシック・ICLの中から、今の目の状態に合った選択肢を30秒で診断します
+            <br><span class="shindan-badge">匿名・無料</span>
+          </div>
+          <button class="shindan-start-btn">診断スタート ▶</button>
         </div>
       </div>
     </div>
   </div>
+  <div class="step-note">診断表紙カード＋スタートボタン</div>
+
+  <div class="arrow"></div>
+  <div class="branch-label">——— 診断フロー ———</div>
+  <div class="arrow"></div>
+
+  <!-- STEP 03: Q1 -->
+  <div class="step-label">STEP 03 · Q1（結果分岐なし）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">👁</div>
+      <div class="line-mock-name">視力改善診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-q-card">
+        <div class="q-card-question">Q1. 今、視力矯正をどうしていますか？</div>
+        <div class="q-card-answers">
+          <div class="q-answer-btn"><div class="q-answer-key">A</div>コンタクトレンズを使っている</div>
+          <div class="q-answer-btn"><div class="q-answer-key">B</div>メガネを使っている</div>
+          <div class="q-answer-btn"><div class="q-answer-key">C</div>コンタクトとメガネを使い分けている</div>
+          <div class="q-answer-btn"><div class="q-answer-key">D</div>何もしていない（裸眼）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="step-note">最軽入口・即答・フリクションゼロ</div>
 
   <div class="arrow"></div>
 
-  <!-- 分岐ラベル -->
+  <!-- STEP 04: Q2 -->
+  <div class="step-label">STEP 04 · Q2（結果分岐なし）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">👁</div>
+      <div class="line-mock-name">視力改善診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-q-card">
+        <div class="q-card-question">Q2. 目のことで一番困っていることは？</div>
+        <div class="q-card-answers">
+          <div class="q-answer-btn"><div class="q-answer-key">A</div>視力がどんどん悪くなっている気がする</div>
+          <div class="q-answer-btn"><div class="q-answer-key">B</div>コンタクト・メガネが面倒・不便</div>
+          <div class="q-answer-btn"><div class="q-answer-key">C</div>目が疲れやすい・乾く</div>
+          <div class="q-answer-btn"><div class="q-answer-key">D</div>左右で見え方が違う・ピントが合いにくい</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="step-note">ペイン把握・自分ごと化</div>
+
+  <div class="arrow"></div>
+
+  <!-- STEP 05: Q3 分岐キー -->
+  <div class="step-label">STEP 05 · Q3（結果タイプ分岐）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">👁</div>
+      <div class="line-mock-name">視力改善診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-q-card">
+        <div class="q-card-question">Q3. 視力矯正について、今の気持ちに近いのは？</div>
+        <div class="q-card-answers">
+          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">A</div>できれば自力でなんとかしたい<span class="q-answer-branch">→ TypeA</span></div>
+          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">B</div>眼鏡・コンタクトをやめたいが手術は不安<span class="q-answer-branch">→ TypeB</span></div>
+          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">C</div>手術以外の選択肢を探したい<span class="q-answer-branch">→ TypeC</span></div>
+          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">D</div>手術も含めて根本的に治したい<span class="q-answer-branch">→ TypeD</span></div>
+        </div>
+        <div class="q-branch-note">⭐ この回答で結果タイプが分岐</div>
+      </div>
+    </div>
+  </div>
+  <div class="step-note">ニーズ・温度感の把握 → 結果タイプ分岐キー</div>
+
+  <div class="arrow"></div>
+
+  <!-- STEP 06: Q4 -->
+  <div class="step-label">STEP 06 · Q4（結果分岐なし）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">👁</div>
+      <div class="line-mock-name">視力改善診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-q-card">
+        <div class="q-card-question">Q4. もし目の悩みが解決したら、一番変わってほしいことは？</div>
+        <div class="q-card-answers">
+          <div class="q-answer-btn"><div class="q-answer-key">A</div>朝起きたらすぐ見える生活がしたい</div>
+          <div class="q-answer-btn"><div class="q-answer-key">B</div>スポーツや旅行・温泉をメガネなしで楽しみたい</div>
+          <div class="q-answer-btn"><div class="q-answer-key">C</div>ドライアイや目の疲れから解放されたい</div>
+          <div class="q-answer-btn"><div class="q-answer-key">D</div>目のことを気にせず過ごしたい</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="step-note">理想の未来・感情接続</div>
+
+  <div class="arrow"></div>
   <div class="branch-label">——— 結果分岐（4タイプ） ———</div>
 
 </div><!-- /flow -->
 
 
-<!-- ══════ 4列分岐エリア ══════ -->
-<div class="branch-area" style="max-width:960px; margin:0 auto;">
+<!-- ══ 4列分岐エリア ══ -->
+<div class="branch-area" style="max-width:960px; margin:12px auto 0;">
   <div class="branch-cols">
 
     <!-- Type A -->
     <div class="type-col">
-      <div class="type-badge badge-a">TYPE A</div>
-      <div class="type-card-box box-a">
-        <div class="line-header">
-          <div class="line-icon">👁</div>
-          <div class="line-name">視力改善診断</div>
+      <div class="type-badge badge-a">TYPE A · 自力探索タイプ</div>
+      <div class="type-line-mock">
+        <div class="type-header th-a">
+          <div class="type-icon">👁</div>
+          <div class="type-name-text">視力改善診断</div>
         </div>
-        <div class="result-bubble">
-          <div class="result-type-name">自力探索タイプ</div>
-          <div class="result-trigger">「できれば自力でなんとかしたい」</div>
-        </div>
-        <div class="card-chips">
-          <span class="chip chip-common">C1 結果表示</span>
-          <span class="chip chip-unique">C2 不安喚起</span>
-          <span class="chip chip-common">C3 ものさし</span>
-          <span class="chip chip-unique">C4 欲求</span>
+        <div class="type-body">
+          <div class="result-bubble-box">
+            <div class="result-type-name">あなたは「自力探索タイプ」</div>
+            <div class="result-trigger">視力、できれば自力でなんとかしたい。あなたの目に合った選択肢を、正直にお伝えします。</div>
+          </div>
+          <div class="card-chips">
+            <span class="chip chip-common">C1 結果表示</span>
+            <span class="chip chip-unique">C2 不安喚起</span>
+            <span class="chip chip-common">C3 ものさし</span>
+            <span class="chip chip-unique">C4 欲求</span>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Type B -->
     <div class="type-col">
-      <div class="type-badge badge-b">TYPE B</div>
-      <div class="type-card-box box-b">
-        <div class="line-header">
-          <div class="line-icon">👁</div>
-          <div class="line-name">視力改善診断</div>
+      <div class="type-badge badge-b">TYPE B · 矯正チェンジタイプ</div>
+      <div class="type-line-mock">
+        <div class="type-header th-b">
+          <div class="type-icon">👁</div>
+          <div class="type-name-text">視力改善診断</div>
         </div>
-        <div class="result-bubble">
-          <div class="result-type-name">矯正チェンジタイプ</div>
-          <div class="result-trigger">「やめたいが手術は不安」</div>
-        </div>
-        <div class="card-chips">
-          <span class="chip chip-common">C1 結果表示</span>
-          <span class="chip chip-unique">C2 不安喚起</span>
-          <span class="chip chip-common">C3 ものさし</span>
-          <span class="chip chip-unique">C4 欲求</span>
+        <div class="type-body">
+          <div class="result-bubble-box">
+            <div class="result-type-name">あなたは「矯正チェンジタイプ」</div>
+            <div class="result-trigger">ドライアイ、目の疲れ、運動するときの邪魔さ。でも手術は怖い。その迷い、多くの人が持っています。</div>
+          </div>
+          <div class="card-chips">
+            <span class="chip chip-common">C1 結果表示</span>
+            <span class="chip chip-unique">C2 不安喚起</span>
+            <span class="chip chip-common">C3 ものさし</span>
+            <span class="chip chip-unique">C4 欲求</span>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Type C -->
     <div class="type-col">
-      <div class="type-badge badge-c">TYPE C</div>
-      <div class="type-card-box box-c">
-        <div class="line-header">
-          <div class="line-icon">👁</div>
-          <div class="line-name">視力改善診断</div>
+      <div class="type-badge badge-c">TYPE C · 手術なし探索タイプ</div>
+      <div class="type-line-mock">
+        <div class="type-header th-c">
+          <div class="type-icon">👁</div>
+          <div class="type-name-text">視力改善診断</div>
         </div>
-        <div class="result-bubble">
-          <div class="result-type-name">手術なし探索タイプ</div>
-          <div class="result-trigger">「手術以外の選択肢を探したい」</div>
-        </div>
-        <div class="card-chips">
-          <span class="chip chip-common">C1 結果表示</span>
-          <span class="chip chip-unique">C2 不安喚起</span>
-          <span class="chip chip-common">C3 ものさし</span>
-          <span class="chip chip-unique">C4 欲求</span>
+        <div class="type-body">
+          <div class="result-bubble-box">
+            <div class="result-type-name">あなたは「手術なし探索タイプ」</div>
+            <div class="result-trigger">できれば手術はしたくない。あなたの目に合った選択肢を、正直にお伝えします。</div>
+          </div>
+          <div class="card-chips">
+            <span class="chip chip-common">C1 結果表示</span>
+            <span class="chip chip-unique">C2 不安喚起</span>
+            <span class="chip chip-common">C3 ものさし</span>
+            <span class="chip chip-unique">C4 欲求</span>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Type D -->
     <div class="type-col">
-      <div class="type-badge badge-d">TYPE D</div>
-      <div class="type-card-box box-d">
-        <div class="line-header">
-          <div class="line-icon">👁</div>
-          <div class="line-name">視力改善診断</div>
+      <div class="type-badge badge-d">TYPE D · 根本解決タイプ</div>
+      <div class="type-line-mock">
+        <div class="type-header th-d">
+          <div class="type-icon">👁</div>
+          <div class="type-name-text">視力改善診断</div>
         </div>
-        <div class="result-bubble">
-          <div class="result-type-name">根本解決タイプ</div>
-          <div class="result-trigger">「手術も含めて根本的に治したい」</div>
-        </div>
-        <div class="card-chips">
-          <span class="chip chip-common">C1 結果表示</span>
-          <span class="chip chip-unique">C2 不安喚起</span>
-          <span class="chip chip-common">C3 ものさし</span>
-          <span class="chip chip-unique">C4 欲求</span>
+        <div class="type-body">
+          <div class="result-bubble-box">
+            <div class="result-type-name">あなたは「根本解決タイプ」</div>
+            <div class="result-trigger">視力を、根本から治したい。あなたの目に合った選択肢を、正直にお伝えします。</div>
+          </div>
+          <div class="card-chips">
+            <span class="chip chip-common">C1 結果表示</span>
+            <span class="chip chip-unique">C2 不安喚起</span>
+            <span class="chip chip-common">C3 ものさし</span>
+            <span class="chip chip-unique">C4 欲求</span>
+          </div>
         </div>
       </div>
     </div>
 
   </div><!-- /branch-cols -->
-
-  <!-- 結合線 -->
   <div class="merge-bar"></div>
-
 </div><!-- /branch-area -->
 
 
-<!-- ══════ 合流後フロー ══════ -->
-<div class="flow" style="max-width:520px; margin:0 auto;">
+<!-- ══ 合流後フロー ══ -->
+<div class="flow" style="max-width:400px; margin:0 auto;">
 
   <div class="merge-note">← 4タイプ合流 | C1・C3は全タイプ共通、C2・C4はタイプ別コピー</div>
 
   <div class="arrow"></div>
 
-  <!-- STEP 04: PRカルーセル -->
-  <div class="step-label">STEP 04 · PRカルーセル（全タイプ共通・3枚）</div>
-  <div class="card">
-    <div class="card-title">PRカルーセル</div>
+  <!-- PRカルーセル -->
+  <div class="step-label">STEP 07 · PRカルーセル（全タイプ共通・3枚）</div>
+  <div class="pr-wrap">
+    <div class="card-title" style="margin-bottom:12px;">PR CAROUSEL</div>
     <div class="pr-cards">
       <div class="pr-card-item">
         <div class="pr-num">1</div>
@@ -518,8 +714,8 @@
 
   <div class="arrow"></div>
 
-  <!-- STEP 05: CTA -->
-  <div class="step-label">STEP 05 · CTA</div>
+  <!-- CTA -->
+  <div class="step-label">STEP 08 · CTA</div>
   <div class="cta-card">
     <div class="cta-label">FINAL CTA</div>
     <div class="cta-title">無料適応検査を受ける</div>
