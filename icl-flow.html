@@ -371,16 +371,76 @@
       margin: 4px 0;
     }
 
-    /* ────── PRカルーセル ────── */
-    .pr-cards { display:flex; flex-direction:column; gap:8px; margin-top:4px; }
-    .pr-card-item {
-      border:1px solid #eee; border-radius:8px; padding:10px 14px;
-      display:flex; align-items:flex-start; gap:10px;
-      background: white;
+    /* ────── PRカルーセル（カード風） ────── */
+    .pr-carousel-wrap {
+      width: 100%;
+      background: #c8e0f4;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.18);
     }
-    .pr-num { font-size:12px; font-weight:700; background:#1a1a2e; color:white; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
-    .pr-text { font-size:13px; color:#333; line-height:1.5; }
-    .pr-text strong { font-weight:700; display:block; margin-bottom:2px; }
+    .pr-carousel-header {
+      background: #06c755;
+      padding: 10px 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .pr-carousel-icon { width:28px; height:28px; background:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+    .pr-carousel-name { font-size:13px; font-weight:700; color:white; }
+    .pr-carousel-body { padding: 12px; }
+    .pr-scroll-hint { font-size:11px; color:rgba(0,0,0,0.4); text-align:right; margin-bottom:8px; }
+
+    /* カルーセルスクロールエリア */
+    .pr-cards-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+    }
+    .pr-cards-scroll::-webkit-scrollbar { height: 4px; }
+    .pr-cards-scroll::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); border-radius: 2px; }
+    .pr-cards-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 2px; }
+
+    /* 個別PRカード */
+    .pr-line-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      min-width: 180px;
+      max-width: 180px;
+      flex-shrink: 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+    .pr-card-illust {
+      height: 90px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+    }
+    .pr-card-illust.c1 { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+    .pr-card-illust.c2 { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .pr-card-illust.c3 { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+    .pr-card-illust.c4 { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
+    .pr-card-illust.c5 { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+
+    .pr-card-body { padding: 10px 10px 0; flex: 1; }
+    .pr-card-num  { font-size:10px; font-weight:700; color:#aaa; margin-bottom:3px; }
+    .pr-card-title { font-size:12px; font-weight:800; color:#1a1a1a; line-height:1.4; margin-bottom:6px; }
+    .pr-card-desc  { font-size:11px; color:#555; line-height:1.5; }
+
+    .pr-card-cta {
+      margin: 10px 10px 10px;
+      background: #06c755;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+      display: block;
+    }
 
     /* ────── CTAカード ────── */
     .cta-card {
@@ -393,15 +453,6 @@
     .cta-title { font-size:16px; font-weight:800; color:white; margin-bottom:8px; }
     .cta-sub   { font-size:12px; color:rgba(255,255,255,0.55); margin-bottom:16px; }
     .cta-btn   { display:inline-block; background:#06c755; color:white; font-size:14px; font-weight:700; padding:12px 28px; border-radius:8px; }
-
-    /* PRカード外枠 */
-    .pr-wrap {
-      background: white;
-      border-radius: 14px;
-      padding: 18px 18px 14px;
-      width: 100%;
-      box-shadow: 0 2px 14px rgba(0,0,0,0.15);
-    }
   </style>
 </head>
 <body>
@@ -685,44 +736,71 @@
 
   <!-- PRカルーセル -->
   <div class="step-label">STEP 07 · PRカルーセル（全タイプ共通・5枚）</div>
-  <div class="pr-wrap">
-    <div class="card-title" style="margin-bottom:12px;">PR CAROUSEL ※各カードにCTA設置</div>
-    <div class="pr-cards">
-      <div class="pr-card-item">
-        <div class="pr-num">1</div>
-        <div class="pr-text">
-          <strong>こんな人に向いてる</strong>
-          コンタクト・メガネをやめたい / 強度近視・乱視 / ドライアイ / 角膜が薄くてレーシックを断られた
+  <div class="pr-carousel-wrap">
+    <div class="pr-carousel-header">
+      <div class="pr-carousel-icon">👁</div>
+      <div class="pr-carousel-name">先進会眼科</div>
+    </div>
+    <div class="pr-carousel-body">
+      <div class="pr-scroll-hint">← スワイプ →</div>
+      <div class="pr-cards-scroll">
+
+        <!-- Card 1 -->
+        <div class="pr-line-card">
+          <div class="pr-card-illust c1">👓</div>
+          <div class="pr-card-body">
+            <div class="pr-card-num">01</div>
+            <div class="pr-card-title">こんな人に向いてる</div>
+            <div class="pr-card-desc">コンタクトやめたい / 強度近視・乱視 / ドライアイ / 角膜が薄い</div>
+          </div>
+          <div class="pr-card-cta">無料適応検査を予約する →</div>
         </div>
-      </div>
-      <div class="pr-card-item">
-        <div class="pr-num">2</div>
-        <div class="pr-text">
-          <strong>レーシックとICLの違いは？</strong>
-          術式・可逆性・対象・ドライアイへの影響を比較表で整理
+
+        <!-- Card 2 -->
+        <div class="pr-line-card">
+          <div class="pr-card-illust c2">⚖️</div>
+          <div class="pr-card-body">
+            <div class="pr-card-num">02</div>
+            <div class="pr-card-title">レーシックとICLの違いは？</div>
+            <div class="pr-card-desc">術式・可逆性・対象・ドライアイへの影響を比較</div>
+          </div>
+          <div class="pr-card-cta">無料適応検査を予約する →</div>
         </div>
-      </div>
-      <div class="pr-card-item">
-        <div class="pr-num">3</div>
-        <div class="pr-text">
-          <strong>コンタクトの年間費用は？</strong>
-          年間3.6〜6万円＋諸費用 → 10年で60万円以上。ICLは一度の投資で。
+
+        <!-- Card 3 -->
+        <div class="pr-line-card">
+          <div class="pr-card-illust c3">💰</div>
+          <div class="pr-card-body">
+            <div class="pr-card-num">03</div>
+            <div class="pr-card-title">コンタクトの年間費用は？</div>
+            <div class="pr-card-desc">10年で60万円以上。ICLは一度の投資で。</div>
+          </div>
+          <div class="pr-card-cta">無料適応検査を予約する →</div>
         </div>
-      </div>
-      <div class="pr-card-item">
-        <div class="pr-num">4</div>
-        <div class="pr-text">
-          <strong>手術までの流れ</strong>
-          無料適応検査 → 予約 → 手術10〜15分 → 翌日から回復。満足度96%。
+
+        <!-- Card 4 -->
+        <div class="pr-line-card">
+          <div class="pr-card-illust c4">📋</div>
+          <div class="pr-card-body">
+            <div class="pr-card-num">04</div>
+            <div class="pr-card-title">手術までの流れ</div>
+            <div class="pr-card-desc">検査→予約→手術10〜15分→翌日回復。満足度96%。</div>
+          </div>
+          <div class="pr-card-cta">無料適応検査を予約する →</div>
         </div>
-      </div>
-      <div class="pr-card-item">
-        <div class="pr-num">5</div>
-        <div class="pr-text">
-          <strong>副作用は？正直にお伝えします</strong>
-          副作用なし38% / 一時的症状で改善16% / 多くは1〜3ヶ月で落ち着く
+
+        <!-- Card 5 -->
+        <div class="pr-line-card">
+          <div class="pr-card-illust c5">🩺</div>
+          <div class="pr-card-body">
+            <div class="pr-card-num">05</div>
+            <div class="pr-card-title">副作用は？正直にお伝えします</div>
+            <div class="pr-card-desc">副作用なし38% / 多くは1〜3ヶ月で落ち着く</div>
+          </div>
+          <div class="pr-card-cta">無料適応検査を予約する →</div>
         </div>
-      </div>
+
+      </div><!-- /pr-cards-scroll -->
     </div>
   </div>
 
