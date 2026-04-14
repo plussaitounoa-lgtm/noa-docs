@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>視力改善診断 設計書 Ver.2 — Noa Docs</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; line-height: 1.7; }
+
+    header { background: #1a1a2e; color: white; padding: 32px; }
+    header a { color: #aaa; text-decoration: none; font-size: 13px; }
+    header a:hover { color: white; }
+    header .meta { margin-top: 12px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    header h1 { font-size: 22px; font-weight: 700; margin-top: 4px; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .badge-yellow { background: #fbbf24; color: #1a1a1a; }
+    .badge-blue  { background: #3b82f6; color: white; }
+    .badge-gray  { background: #555; color: white; }
+
+    main { max-width: 820px; margin: 40px auto; padding: 0 24px 80px; }
+
+    /* セクション */
+    section { margin-bottom: 48px; }
+    h2 { font-size: 17px; font-weight: 700; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #e0e0e0; }
+    h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #333; }
+    p { font-size: 14px; color: #444; margin-bottom: 12px; }
+
+    /* テーブル */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 20px; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e8e8e8; }
+    th { background: #f0f0f0; padding: 10px 14px; text-align: left; font-weight: 600; color: #555; }
+    td { padding: 10px 14px; border-top: 1px solid #f0f0f0; color: #333; vertical-align: top; }
+    tr:hover td { background: #fafafa; }
+
+    /* ノート・ハイライト */
+    .note { background: #eff6ff; border-left: 3px solid #3b82f6; padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 13px; color: #1e40af; margin-bottom: 16px; }
+    .highlight { background: #fefce8; border-left: 3px solid #eab308; padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 13px; color: #713f12; margin-bottom: 16px; }
+
+    /* フロー */
+    .flow { background: white; border: 1px solid #e8e8e8; border-radius: 10px; padding: 20px 24px; margin-bottom: 20px; }
+    .flow-step { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+    .flow-step:last-child { margin-bottom: 0; }
+    .flow-num { background: #1a1a2e; color: white; font-size: 12px; font-weight: 700; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .flow-arrow { text-align: center; color: #ccc; font-size: 18px; padding-left: 38px; margin-bottom: 14px; }
+    .flow-label { font-size: 14px; font-weight: 600; }
+    .flow-sub { font-size: 12px; color: #888; margin-top: 2px; }
+
+    /* Q設計 */
+    .q-block { background: white; border: 1px solid #e8e8e8; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; }
+    .q-label { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+    .q-title { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+    .q-purpose { font-size: 12px; color: #3b82f6; background: #eff6ff; padding: 4px 10px; border-radius: 20px; display: inline-block; margin-bottom: 12px; }
+    .q-choices { list-style: none; }
+    .q-choices li { font-size: 13px; color: #444; padding: 6px 0; border-bottom: 1px solid #f5f5f5; display: flex; gap: 8px; }
+    .q-choices li:last-child { border-bottom: none; }
+    .choice-key { font-weight: 700; color: #1a1a2e; min-width: 20px; }
+    .choice-branch { font-size: 11px; color: #888; margin-left: auto; }
+
+    /* 結果タイプ */
+    .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .type-grid { grid-template-columns: 1fr; } }
+    .type-card { background: white; border: 1px solid #e8e8e8; border-radius: 10px; padding: 20px; }
+    .type-name { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .type-trigger { font-size: 12px; color: #666; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #f0f0f0; }
+    .type-section { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; margin: 10px 0 4px; }
+    .type-copy { font-size: 13px; color: #333; line-height: 1.6; }
+
+    /* KPI */
+    .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+    @media (max-width: 500px) { .kpi-row { grid-template-columns: 1fr; } }
+    .kpi-box { background: white; border: 1px solid #e8e8e8; border-radius: 10px; padding: 16px 20px; }
+    .kpi-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+    .kpi-val { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+    .kpi-sub { font-size: 11px; color: #aaa; }
+
+    /* ステータスバー */
+    .phase-bar { display: flex; gap: 0; margin-bottom: 24px; border-radius: 8px; overflow: hidden; border: 1px solid #e8e8e8; }
+    .phase-item { flex: 1; text-align: center; padding: 10px 4px; font-size: 12px; background: #f5f5f5; color: #aaa; }
+    .phase-item.done { background: #d1fae5; color: #065f46; }
+    .phase-item.current { background: #fbbf24; color: #1a1a1a; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html">← Noa Docs</a>
+  <div class="meta">
+    <span class="badge badge-yellow">設計完了 → 制作待ち</span>
+    <span class="badge badge-blue">ICL</span>
+    <span class="badge badge-gray">Ver.2 · 2026-04-14 更新</span>
+    <span class="badge" style="background:#065f46; color:white;"><a href="icl-flow-v2.html" style="color:white; text-decoration:none;">フロー図 Ver.2 →</a></span>
+  </div>
+  <h1>視力改善診断 設計書 Ver.2</h1>
+</header>
+
+<main>
+
+  <!-- フェーズ -->
+  <section>
+    <div class="phase-bar">
+      <div class="phase-item done">①分析</div>
+      <div class="phase-item current">②設計</div>
+      <div class="phase-item">③制作</div>
+      <div class="phase-item">④入稿</div>
+      <div class="phase-item">⑤検証</div>
+    </div>
+  </section>
+
+  <!-- 期待効果 -->
+  <section>
+    <h2>期待効果</h2>
+    <div class="kpi-row">
+      <div class="kpi-box">
+        <div class="kpi-label">対象記事PV合計</div>
+        <div class="kpi-val">11,559</div>
+        <div class="kpi-sub">11記事（除外後）</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label">月間友だち（基準値）</div>
+        <div class="kpi-val">83人</div>
+        <div class="kpi-sub">PVFR 0.72%</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label">月間友だち（改善時）</div>
+        <div class="kpi-val">147人</div>
+        <div class="kpi-sub">PVFR 1.27%</div>
+      </div>
+    </div>
+    <table>
+      <tr><th>シナリオ</th><th>PU表示率</th><th>PU CTR</th><th>友追率</th><th>月間友だち</th><th>PVFR</th></tr>
+      <tr><td>保守（下限）</td><td>40%</td><td>10%</td><td>9%</td><td>42人</td><td>0.36%</td></tr>
+      <tr><td><strong>基準（推奨）</strong></td><td><strong>50%</strong></td><td><strong>13%</strong></td><td><strong>11%</strong></td><td><strong>83人</strong></td><td><strong>0.72%</strong></td></tr>
+      <tr><td>改善（上振れ）</td><td>65%</td><td>15%</td><td>13%</td><td>147人</td><td>1.27%</td></tr>
+    </table>
+    <div class="highlight">PVFR基準（0.80%）達成条件: PU CTR 15%、または記事上部設置でPU表示率60%（99人・0.86%）</div>
+  </section>
+
+  <!-- PU文言 -->
+  <section>
+    <h2>PU文言</h2>
+    <div class="flow">
+      <h3 style="margin-top:0; font-size:18px;">「その目、なんとかなる？」</h3>
+      <p style="margin-top:8px; color:#555;">30秒で視力改善方法がわかる</p>
+      <hr style="border:none; border-top:1px solid #f0f0f0; margin:16px 0;">
+      <table style="margin:0;">
+        <tr><th>項目</th><th>内容</th></tr>
+        <tr><td>診断名</td><td>視力矯正タイプ診断</td></tr>
+        <tr><td>フック</td><td>眼鏡・コンタクト・レーシック・ICL、あなたに合うのはどれ？</td></tr>
+        <tr><td>コピー</td><td>今の目の状態から、自分に合う矯正方法が30秒でわかる</td></tr>
+        <tr><td>バッジ</td><td>匿名！LINEで簡単</td></tr>
+        <tr><td>ボタン</td><td>はい / いいえ</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 全体フロー -->
+  <section>
+    <h2>全体フロー</h2>
+    <div class="flow">
+        <div class="flow-step"><div class="flow-num">1</div><div><div class="flow-label">記事</div><div class="flow-sub">ICLジャンル横断 11記事</div></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">2</div><div><div class="flow-label">PU表示</div><div class="flow-sub">「その目、なんとかなる？」タップ</div></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">3</div><div><div class="flow-label">LINE 友だち追加</div><div class="flow-sub">← 初動ゴール</div></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">4</div><div><div class="flow-label">LINE内 Q1〜Q5（5問）</div><div class="flow-sub">Q5の回答で眼鏡／コンタクト／レーシック／ICL に分岐</div></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">5</div><div><div class="flow-label">結果カルーセル（タイプ別）</div><div class="flow-sub">眼鏡・コンタクト: 5枚 → ICL/レーシック分岐診断へ｜レーシック・ICL: 4枚 → 教育②へ直接</div></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">6</div><div><div class="flow-label">教育②（6枚・全タイプ共通）</div><div class="flow-sub">ICL vs レーシック比較教育 + ブリッジカード（CTAなし）</div></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">7</div><div><div class="flow-label">PRカルーセル（5枚・先進会眼科）</div><div class="flow-sub">カバー → 総額比較 → 信頼性 → 費用 → CTA誘導（全カードCTA付き）</div></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">8</div><div><div class="flow-label">CTA</div><div class="flow-sub">まず、無料検査を受けてみる</div></div></div>
+    </div>
+  </section>
+
+  <!-- Q設計 -->
+  <section>
+    <h2>診断設計（Q1〜Q5）</h2>
+    <p style="color:#888; font-size:13px; margin-bottom:20px;">所要時間: 約30秒（5問）／ Q5の回答で結果タイプが分岐</p>
+
+    <div class="q-block">
+      <div class="q-label">Q1 — データ収集</div>
+      <div class="q-title">あなたの裸眼視力はどのくらいですか？</div>
+      <div class="q-purpose">視力レベル把握・ユーザー分析 / 矯正方法分岐の精度向上</div>
+      <ul class="q-choices">
+        <li><span class="choice-key">A</span> 裸眼だと数メートル先がほぼ見えない（0.05未満）<span class="choice-branch">→ ICL濃厚</span></li>
+        <li><span class="choice-key">B</span> 手元は見えるが1〜2m先の文字が読めない（0.05〜0.1）<span class="choice-branch">→ ICL/レーシック両候補</span></li>
+        <li><span class="choice-key">C</span> 遠くの看板・黒板が読めない（0.1〜0.3）<span class="choice-branch">→ レーシック寄り</span></li>
+        <li><span class="choice-key">D</span> 少し悪い程度、日常はなんとかなる（0.3以上）<span class="choice-branch">→ 眼鏡・コンタクト寄り</span></li>
+        <li><span class="choice-key">E</span> わからない / 測ったことがない<span class="choice-branch">→ 中間扱い</span></li>
+      </ul>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q2</div>
+      <div class="q-title">今、視力矯正をどうしていますか？</div>
+      <div class="q-purpose">最軽入口・自分ごと化</div>
+      <ul class="q-choices">
+        <li><span class="choice-key">A</span> コンタクトレンズを使っている</li>
+        <li><span class="choice-key">B</span> メガネを使っている</li>
+        <li><span class="choice-key">C</span> コンタクトとメガネを使い分けている</li>
+        <li><span class="choice-key">D</span> 何もしていない（裸眼）</li>
+      </ul>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q3</div>
+      <div class="q-title">目のことで一番困っていることは？</div>
+      <div class="q-purpose">ペイン把握・自分ごと化</div>
+      <ul class="q-choices">
+        <li><span class="choice-key">A</span> 視力がどんどん悪くなっている気がする</li>
+        <li><span class="choice-key">B</span> コンタクト・メガネが面倒・不便</li>
+        <li><span class="choice-key">C</span> 目が疲れやすい・乾く</li>
+        <li><span class="choice-key">D</span> 左右で見え方が違う・ピントが合いにくい</li>
+      </ul>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q4</div>
+      <div class="q-title">もし目の悩みが解決したら、一番変わってほしいことは？</div>
+      <div class="q-purpose">理想の未来・感情接続</div>
+      <ul class="q-choices">
+        <li><span class="choice-key">A</span> 朝起きたらすぐ見える生活がしたい</li>
+        <li><span class="choice-key">B</span> スポーツや旅行・温泉を、コンタクトやメガネなしで楽しみたい</li>
+        <li><span class="choice-key">C</span> ドライアイや目の疲れから解放されたい</li>
+        <li><span class="choice-key">D</span> 目のことを気にせず過ごしたい</li>
+      </ul>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q5 — 分岐キー</div>
+      <div class="q-title">視力矯正に求めることで、一番近いのは？</div>
+      <div class="q-purpose">矯正方法の直指定 → 結果タイプ分岐</div>
+      <ul class="q-choices">
+        <li><span class="choice-key">A</span> 今のスタイルのまま、もっと快適に管理したい <span class="choice-branch">→ 眼鏡タイプ</span></li>
+        <li><span class="choice-key">B</span> メガネなしで動き回れる自由が欲しい <span class="choice-branch">→ コンタクトタイプ</span></li>
+        <li><span class="choice-key">C</span> 根本から解決したい。コスパ重視 <span class="choice-branch">→ レーシックタイプ</span></li>
+        <li><span class="choice-key">D</span> 根本から解決したい。目への負担を最小限にしたい <span class="choice-branch">→ ICLタイプ</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 結果タイプ -->
+  <section>
+    <h2>結果カルーセル（Ver.2: 眼鏡5枚・コンタクト5枚・レーシック4枚・ICL4枚 = 計18枚）</h2>
+    <div class="note">眼鏡・コンタクトタイプはCard5のCTAでICL/レーシック分岐診断へ。レーシック・ICLタイプはCard4のCTAで教育②へ直接。</div>
+
+    <div class="type-grid">
+
+      <div class="type-card">
+        <div class="type-name" style="color:#92400e;">TYPE A — 眼鏡タイプ（5枚）</div>
+        <div class="type-trigger">Q5: 「今のスタイルのまま、もっと快適に管理したい」</div>
+        <div class="type-section">Card1</div>
+        <div class="type-copy">今の状況には、眼鏡が一番向いています</div>
+        <div class="type-section">Card2</div>
+        <div class="type-copy">でも眼鏡って、じつは結構不便ですよね</div>
+        <div class="type-section">Card3</div>
+        <div class="type-copy">眼鏡をかけ続けても、視力は戻らない<br><small style="color:#888;">→ 仮性近視 vs 軸性近視。成人の大半は軸性近視。</small></div>
+        <div class="type-section">Card4</div>
+        <div class="type-copy">眼鏡・コンタクト以外の選択肢が、あります</div>
+        <div class="type-section">Card5 — CTA</div>
+        <div class="type-copy">あなたの目に合った方法を、一緒に探してみませんか<br><small style="color:#888;">CTA: ICL/レーシック診断へ →</small></div>
+      </div>
+
+      <div class="type-card">
+        <div class="type-name" style="color:#1e3a8a;">TYPE B — コンタクトタイプ（5枚）</div>
+        <div class="type-trigger">Q5: 「メガネなしで動き回れる自由が欲しい」</div>
+        <div class="type-section">Card1</div>
+        <div class="type-copy">今の状況には、コンタクトが一番向いています</div>
+        <div class="type-section">Card2</div>
+        <div class="type-copy">でも、コンタクトにも限界があります</div>
+        <div class="type-section">Card3</div>
+        <div class="type-copy">コンタクトを使い続けると、目はじわじわ傷んでいく<br><small style="color:#888;">→ 角膜内皮細胞減少リスク。将来ICL不可になるケースも。</small></div>
+        <div class="type-section">Card4</div>
+        <div class="type-copy">コンタクトを卒業できる方法が、あります</div>
+        <div class="type-section">Card5 — CTA</div>
+        <div class="type-copy">今の目の状態で、どんな選択肢が取れるか知っておきませんか<br><small style="color:#888;">CTA: ICL/レーシック診断へ →</small></div>
+      </div>
+
+      <div class="type-card">
+        <div class="type-name" style="color:#5b21b6;">TYPE C — レーシックタイプ（4枚）</div>
+        <div class="type-trigger">Q5: 「根本から解決したい。コスパ重視」</div>
+        <div class="type-section">Card1</div>
+        <div class="type-copy">あなたの目には、レーシックが一番向いています</div>
+        <div class="type-section">Card2</div>
+        <div class="type-copy">コンタクト・眼鏡、一生で何十万使いますか？<br><small style="color:#888;">→ コンタクト20年で60〜100万 vs レーシック一回</small></div>
+        <div class="type-section">Card3</div>
+        <div class="type-copy">30年以上の実績。世界で最も選ばれている視力矯正</div>
+        <div class="type-section">Card4 — CTA</div>
+        <div class="type-copy">裸眼で走れる、泳げる、どこでも動ける<br><small style="color:#888;">CTA: 先進会眼科・PRへ →</small></div>
+      </div>
+
+      <div class="type-card">
+        <div class="type-name" style="color:#065f46;">TYPE D — ICLタイプ（4枚）</div>
+        <div class="type-trigger">Q5: 「根本から解決したい。目への負担を最小限にしたい」</div>
+        <div class="type-section">Card1</div>
+        <div class="type-copy">あなたの目には、ICLが一番向いています</div>
+        <div class="type-section">Card2</div>
+        <div class="type-copy">角膜を削らずに、裸眼になれる<br><small style="color:#888;">→ レンズを挿入するだけ。取り出せる。</small></div>
+        <div class="type-section">Card3</div>
+        <div class="type-copy">手術は約10〜15分。思ってたより、全然怖くない<br><small style="color:#888;">→ 点眼麻酔のみ。翌日から日常生活。満足度95%。</small></div>
+        <div class="type-section">Card4 — CTA</div>
+        <div class="type-copy">朝起きたら、何もしなくてもクリアに見える<br><small style="color:#888;">CTA: 先進会眼科・PRへ →</small></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 教育② -->
+  <section>
+    <h2>教育②（STEP 08・6枚・全タイプ共通）</h2>
+    <div class="note">ICL・レーシック比較教育。CTAなし。Card6でPRカルーセルへブリッジ。</div>
+
+    <h3>Card 1 — どんな人に向いてる？</h3>
+    <div class="flow">
+      <p style="font-size:13px; color:#555;">
+        ICLが向いてる人: 強度近視（-6D以上）・ドライアイがひどい・角膜が薄い<br>
+        レーシックが向いてる人: 軽〜中程度近視・費用を抑えたい・コンタクトが不便
+      </p>
+    </div>
+
+    <h3>Card 2 — レーシックとICLの違いは？</h3>
+    <table>
+      <tr><th></th><th>ICL</th><th>レーシック</th></tr>
+      <tr><td>角膜</td><td>削らない</td><td>削る</td></tr>
+      <tr><td>可逆性</td><td>取り出せる</td><td>不可</td></tr>
+      <tr><td>ドライアイ</td><td>影響少</td><td>悪化リスク</td></tr>
+      <tr><td>強度近視</td><td>-18Dまで対応</td><td>-8D程度まで</td></tr>
+      <tr><td>費用</td><td>やや高め</td><td>やや安め</td></tr>
+    </table>
+
+    <h3>Card 3 — コンタクトの年間費用は？</h3>
+    <div class="flow">
+      <p style="font-size:13px; color:#555;">
+        コンタクト代: 年間約3.6〜6万円 → 10年で60万円以上<br><br>
+        先進会眼科（税込）:<br>
+        レーシック 約20〜29万円（一回・3年アフターケア付）<br>
+        ICL 約39〜87万円（一生分・取り出せる）
+      </p>
+    </div>
+
+    <h3>Card 4 — 手術までの流れ</h3>
+    <div class="flow">
+      <div class="flow-step"><div class="flow-num">1</div><div><div class="flow-label">無料適応検査</div><div class="flow-sub">目の状態・適応術式を確認</div></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">2</div><div><div class="flow-label">手術日を予約</div></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">3</div><div><div class="flow-label">手術（約10〜15分）</div><div class="flow-sub">点眼麻酔のみ・痛みなし</div></div></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step"><div class="flow-num">4</div><div><div class="flow-label">翌日から回復・裸眼で見える</div></div></div>
+    </div>
+    <div class="highlight">満足度96%（受術者257件アンケート）</div>
+
+    <h3>Card 5 — 副作用・ダウンタイム、正直に伝えます</h3>
+    <div class="flow">
+      <p style="font-size:13px; color:#555;">
+        副作用なし: 38% / 一時的な症状のみ・今は問題なし: 16%<br>
+        ダウンタイム3日以内: 82%<br>
+        主な症状: ドライアイ・光のにじみ（ハロー・グレア）<br>
+        ※「1〜3ヶ月で回復」の表記は出典不明のため削除。再調査要。
+      </p>
+    </div>
+
+    <h3>Card 6 — ブリッジ（PRカルーセルへ）</h3>
+    <div class="flow">
+      <p style="font-size:13px; color:#555;">
+        見出し: では、どこで受ければいい？<br>
+        コピー: ICL・レーシック・PRK すべてに対応し、安心の保証制度が揃っているクリニックをご紹介します<br>
+        CTA: 次のカードへ →（ネイビー）
+      </p>
+    </div>
+  </section>
+
+  <!-- PRカルーセル -->
+  <section>
+    <h2>PRカルーセル（STEP 09・5枚・先進会眼科）</h2>
+    <div class="note">全カードにCTA設置。クライアントLP（senshinkai-clinic.jp/icl_lp_rev1/）をメインに構成。訴求軸：「診断結果を受けた人が先進会で全部対応できる」「総額での安心感」。</div>
+
+    <h3>Card 1 — カバー</h3>
+    <div class="flow">
+      <p style="font-size:13px; color:#555;">その診断結果、先進会なら全部対応できます<br>ICL・レーシック・PRK — 3種類から、あなたの目の状態に合った術式を専門医が提案します</p>
+    </div>
+
+    <h3>Card 2 — 懸念先制</h3>
+    <div class="flow">
+      <p style="font-size:13px; color:#555;">総額で比較してください<br>追加オプションで総額が跳ね上がるケースも。先進会は再手術保証・無料検診・点眼薬まですべて込みの総額表示</p>
+    </div>
+
+    <h3>Card 3 — 信頼性</h3>
+    <div class="flow">
+      <p style="font-size:13px; color:#555;">厚生労働省承認機器 × 眼科専門医<br>タグ: 厚生労働省承認機器 / 眼科専門医 / 東京・名古屋・大阪・福岡</p>
+    </div>
+
+    <h3>Card 4 — 費用総額</h3>
+    <div class="flow">
+      <p style="font-size:13px; color:#555;">ICL 38.9万〜 / レーシック 20万〜<br>再手術保証・検診・点眼薬込み。隠れコストなし。</p>
+    </div>
+
+    <h3>Card 5 — CTA誘導</h3>
+    <div class="flow">
+      <p style="font-size:13px; color:#555;">土日祝OK・全国4拠点<br>平均100分の相談時間 / 東京・名古屋・大阪・福岡<br>CTA: 無料検査を予約する →</p>
+    </div>
+  </section>
+
+  <!-- ものさし変換 -->
+  <section>
+    <h2>ものさし変換</h2>
+    <table>
+      <tr><th>今のものさし（壊す）</th><th>新しいものさし（叩き込む）</th></tr>
+      <tr>
+        <td>目が悪いのは仕方ない。眼鏡・コンタクトで一生付き合っていくもの</td>
+        <td>視力は治せる。角膜を削らず・取り出せる・10分で終わる。眼鏡・コンタクト以外の選択肢がある</td>
+      </tr>
+    </table>
+    <div class="highlight">ハンマー: 近視は目の構造の問題なので、トレーニングや目薬では変わらない。視力は医療の力で治せる。</div>
+  </section>
+
+</main>
+</body>
+</html>
