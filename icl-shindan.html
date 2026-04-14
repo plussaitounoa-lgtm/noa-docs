@@ -162,7 +162,7 @@
       <div class="flow-arrow">↓</div>
       <div class="flow-step"><div class="flow-num">3</div><div><div class="flow-label">LINE 友だち追加</div><div class="flow-sub">← 初動ゴール</div></div></div>
       <div class="flow-arrow">↓</div>
-      <div class="flow-step"><div class="flow-num">4</div><div><div class="flow-label">LINE内 Q1〜Q4（4問）</div><div class="flow-sub">Q3の回答でタイプA〜D分岐</div></div></div>
+      <div class="flow-step"><div class="flow-num">4</div><div><div class="flow-label">LINE内 Q1〜Q5（5問）</div><div class="flow-sub">Q4の回答でタイプA〜D分岐</div></div></div>
       <div class="flow-arrow">↓</div>
       <div class="flow-step"><div class="flow-num">5</div><div><div class="flow-label">結果カルーセル（4枚 × 4タイプ）</div><div class="flow-sub">結果表示 → 不安喚起 → ものさし変換 → 欲求</div></div></div>
       <div class="flow-arrow">↓</div>
@@ -174,11 +174,24 @@
 
   <!-- Q設計 -->
   <section>
-    <h2>診断設計（Q1〜Q4）</h2>
-    <p style="color:#888; font-size:13px; margin-bottom:20px;">所要時間: 約30秒（4問）／ Q3の回答で結果タイプが分岐</p>
+    <h2>診断設計（Q1〜Q5）</h2>
+    <p style="color:#888; font-size:13px; margin-bottom:20px;">所要時間: 約30秒（5問）／ Q4の回答で結果タイプが分岐</p>
 
     <div class="q-block">
-      <div class="q-label">Q1</div>
+      <div class="q-label">Q1 — データ収集</div>
+      <div class="q-title">あなたの裸眼視力はどのくらいですか？</div>
+      <div class="q-purpose">視力レベル把握・ユーザー分析 / 矯正方法分岐の精度向上</div>
+      <ul class="q-choices">
+        <li><span class="choice-key">A</span> 裸眼だと数メートル先がほぼ見えない（0.05未満）<span class="choice-branch">→ ICL濃厚</span></li>
+        <li><span class="choice-key">B</span> 手元は見えるが1〜2m先の文字が読めない（0.05〜0.1）<span class="choice-branch">→ ICL/レーシック両候補</span></li>
+        <li><span class="choice-key">C</span> 遠くの看板・黒板が読めない（0.1〜0.3）<span class="choice-branch">→ レーシック寄り</span></li>
+        <li><span class="choice-key">D</span> 少し悪い程度、日常はなんとかなる（0.3以上）<span class="choice-branch">→ 眼鏡・コンタクト寄り</span></li>
+        <li><span class="choice-key">E</span> わからない / 測ったことがない<span class="choice-branch">→ 中間扱い</span></li>
+      </ul>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q2</div>
       <div class="q-title">今、視力矯正をどうしていますか？</div>
       <div class="q-purpose">最軽入口・自分ごと化</div>
       <ul class="q-choices">
@@ -190,7 +203,7 @@
     </div>
 
     <div class="q-block">
-      <div class="q-label">Q2</div>
+      <div class="q-label">Q3</div>
       <div class="q-title">目のことで一番困っていることは？</div>
       <div class="q-purpose">ペイン把握・自分ごと化</div>
       <ul class="q-choices">
@@ -202,7 +215,7 @@
     </div>
 
     <div class="q-block">
-      <div class="q-label">Q3 — 分岐キー</div>
+      <div class="q-label">Q4 — 分岐キー</div>
       <div class="q-title">視力矯正について、今の気持ちに近いのは？</div>
       <div class="q-purpose">ニーズ・温度感の把握 → 結果タイプ分岐</div>
       <ul class="q-choices">
@@ -214,7 +227,7 @@
     </div>
 
     <div class="q-block">
-      <div class="q-label">Q4</div>
+      <div class="q-label">Q5</div>
       <div class="q-title">もし目の悩みが解決したら、一番変わってほしいことは？</div>
       <div class="q-purpose">理想の未来・感情接続</div>
       <ul class="q-choices">
@@ -235,7 +248,7 @@
 
       <div class="type-card">
         <div class="type-name">Type A — 自力探索タイプ</div>
-        <div class="type-trigger">Q3: 「できれば自力でなんとかしたい」</div>
+        <div class="type-trigger">Q4: 「できれば自力でなんとかしたい」</div>
         <div class="type-section">Card2 見出し</div>
         <div class="type-copy">「ちゃんと続けてるのに、なぜ変わらないんだろう」<br><small style="color:#888;">→ 仮性近視と軸性近視の違いを解説。成人の大半は軸性近視でトレーニングでは戻らない。</small></div>
         <div class="type-section">Card4 見出し</div>
@@ -244,7 +257,7 @@
 
       <div class="type-card">
         <div class="type-name">Type B — 矯正チェンジタイプ</div>
-        <div class="type-trigger">Q3: 「眼鏡・コンタクトをやめたいが手術は不安」</div>
+        <div class="type-trigger">Q4: 「眼鏡・コンタクトをやめたいが手術は不安」</div>
         <div class="type-section">Card2 見出し</div>
         <div class="type-copy">「手術せずにコンタクトをやめる方法」は、実は少ない<br><small style="color:#888;">→ オルソK・眼内コンタクト等の選択肢と限界を整理。</small></div>
         <div class="type-section">Card4 見出し</div>
@@ -253,7 +266,7 @@
 
       <div class="type-card">
         <div class="type-name">Type C — 手術なし探索タイプ</div>
-        <div class="type-trigger">Q3: 「手術以外の選択肢を探したい」</div>
+        <div class="type-trigger">Q4: 「手術以外の選択肢を探したい」</div>
         <div class="type-section">Card2 見出し</div>
         <div class="type-copy">「手術なし」で視力を根本改善できる方法は、今のところない<br><small style="color:#888;">→ オルソKの限界・コンタクト長期リスク（角膜内皮細胞減少）を提示。</small></div>
         <div class="type-section">Card4 見出し</div>
@@ -262,7 +275,7 @@
 
       <div class="type-card">
         <div class="type-name">Type D — 根本解決タイプ</div>
-        <div class="type-trigger">Q3: 「手術も含めて根本的に治したい」</div>
+        <div class="type-trigger">Q4: 「手術も含めて根本的に治したい」</div>
         <div class="type-section">Card2 見出し</div>
         <div class="type-copy">根本的に治す選択肢はある。でも全部が自分に合うわけじゃない<br><small style="color:#888;">→ レーシック・ICL・PRKの違いと適応条件を整理。</small></div>
         <div class="type-section">Card4 見出し</div>
