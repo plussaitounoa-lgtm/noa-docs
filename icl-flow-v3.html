@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LINEワークフロー設計図 v2.1 | 視力改善診断</title>
+  <title>LINEワークフロー設計図 v3.0 | 視力改善診断</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -155,7 +156,7 @@
 
     /* ─── 4列分岐エリア ─── */
     .branch-area { width:100%; max-width:980px; margin:0 auto; }
-    .branch-cols { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; align-items:start; }
+    .branch-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; align-items:start; }
     .type-col { display:flex; flex-direction:column; align-items:center; }
     .type-badge { font-size:11px; font-weight:700; padding:4px 14px; border-radius:20px; margin-bottom:10px; white-space:nowrap; }
     .badge-a { background:#f59e0b; color:#1a1a1a; }
@@ -296,7 +297,7 @@
 <div class="page-header">
   <h1>🔷 LINEワークフロー設計図 | 視力改善診断</h1>
   <p>PU → 友だち追加 → 診断（Q1〜Q5）→ 結果分岐（4タイプ）→ 教育カルーセル → CTA</p>
-  <span class="version-badge">Ver 2.1 — 設計書兼実装仕様</span>
+  <span class="version-badge">Ver 3.0 — 設計書兼実装仕様</span>
 </div>
 
 <!-- ══ フロー概要サマリー ══ -->
@@ -528,34 +529,32 @@
       <div class="line-q-card">
         <div class="q-card-question">Q5. 視力矯正に求めることで、一番近いのは？</div>
         <div class="q-card-answers">
-          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">A</div>今のスタイルのまま、もっと快適に管理したい<span class="q-answer-branch">→ TYPE A 眼鏡</span></div>
-          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">B</div>メガネなしで動き回れる自由が欲しい<span class="q-answer-branch">→ TYPE B コンタクト</span></div>
-          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">C</div>根本から解決したい。コスパ重視<span class="q-answer-branch">→ TYPE C レーシック</span></div>
-          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">D</div>根本から解決したい。目への負担を最小限にしたい<span class="q-answer-branch">→ TYPE D ICL</span></div>
+          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">A</div>今より見えやすくなること<span class="q-answer-branch">→ TYPE A 眼鏡</span></div>
+          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">B</div>目のストレスをなくすこと<span class="q-answer-branch">→ TYPE B コンタクト</span></div>
+          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">C</div>眼鏡やコンタクトから解放されること<span class="q-answer-branch">→ TYPE C レーシック</span></div>
         </div>
         <div class="q-branch-note">⭐ この回答のみで結果タイプが決定します</div>
       </div>
     </div>
   </div>
-  <div class="step-note">目的：ニーズ把握・4タイプへのルーティング</div>
+  <div class="step-note">目的：ニーズ把握・3パターンへのルーティング（Q1視力レベルと組み合わせでA/B振り分け）</div>
   <div class="impl-note">
     <strong>⚙ 実装メモ（分岐ロジック）</strong>
     <ul>
-      <li>Q5=A → TYPE A（眼鏡）結果カルーセル送信 → STEP 08へ</li>
-      <li>Q5=B → TYPE B（コンタクト）結果カルーセル送信 → STEP 08へ</li>
-      <li>Q5=C → TYPE C（レーシック）結果カルーセル送信 → STEP 08へ</li>
-      <li>Q5=D → TYPE D（ICL）結果カルーセル送信 → STEP 08へ</li>
+      <li>Q5=A → Q1視力レベルで TYPE A（眼鏡）or TYPE B（コンタクト）に振り分け → 結果カルーセル送信 → STEP 08へ</li>
+      <li>Q5=B → Q1視力レベルで TYPE A（眼鏡）or TYPE B（コンタクト）に振り分け → 結果カルーセル送信 → STEP 08へ</li>
+      <li>Q5=C → TYPE C/D共通・ICL/レーシック結果カルーセル送信 → STEP 08へ</li>
     </ul>
-    ※ Q1〜Q4 の回答は現バージョンでは分岐に影響しない（将来的な最適化候補）
+    ※ Q5を4択→3択に変更。TYPE C/Dは統合。Q1視力レベルとQ5の組み合わせで眼鏡/コンタクト振り分けを行う。
   </div>
 
   <div class="arrow"></div>
-  <div class="branch-label">——— 結果分岐（4タイプ）———</div>
+  <div class="branch-label">——— 結果分岐（3パターン）———</div>
 
 </div><!-- /flow -->
 
 <!-- ══ 4列分岐エリア ══ -->
-<div class="section-divider"><span>STEP 07 → 結果カルーセル（タイプ別）</span></div>
+<div class="section-divider"><span>STEP 07 → 結果カルーセル（3パターン）</span></div>
 <div class="branch-area">
   <div class="branch-cols">
 
@@ -570,52 +569,43 @@
         <div class="type-body">
           <div class="pr-scroll-hint">← スワイプ →</div>
           <div class="result-scroll">
+            <!-- カード1：結果と説明 -->
             <div class="result-card" style="min-width:180px;max-width:180px;">
               <div style="background:#92400e;padding:10px 12px;text-align:center;border-radius:8px 8px 0 0;">
                 <div style="font-size:10px;color:rgba(255,255,255,0.75);font-weight:600;margin-bottom:4px;">あなたに最適な視力改善方法は…</div>
                 <div style="font-size:22px;font-weight:900;color:white;">👓 眼鏡</div>
               </div>
               <div class="result-card-body">
-                <div style="font-size:10px;font-weight:700;color:#92400e;margin-bottom:6px;">眼鏡の特徴</div>
-                <div style="display:flex;flex-direction:column;gap:4px;">
-                  <div style="display:flex;gap:4px;font-size:10px;color:#333;align-items:flex-start;"><span style="color:#16a34a;flex-shrink:0;font-weight:700;">✓</span>リスクなし・すぐ始められる</div>
-                  <div style="display:flex;gap:4px;font-size:10px;color:#333;align-items:flex-start;"><span style="color:#16a34a;flex-shrink:0;font-weight:700;">✓</span>費用最小限（数千円〜）</div>
-                  <div style="display:flex;gap:4px;font-size:10px;color:#333;align-items:flex-start;"><span style="color:#16a34a;flex-shrink:0;font-weight:700;">✓</span>度数に合わせて自由に調整</div>
-                </div>
+                <div style="font-size:10px;color:#333;line-height:1.6;">リスクなし・費用最小限・すぐ始められる。今の目の状態に合った度数で、まず快適に見える環境を整えましょう。</div>
               </div>
             </div>
+            <!-- カード2：特徴 -->
             <div class="result-card">
               <div class="result-card-top rc-unique"></div>
               <div class="result-card-body">
                 <span class="rc-label unique">カード 2</span>
-                <div class="rc-title">でも眼鏡って、じつは結構不便ですよね</div>
-                <div class="rc-copy">雨で曇る。スポーツに邪魔。マスクで曇る。起き抜けはぼんやり——慣れてるけど、結構不便です。</div>
+                <div class="rc-title">眼鏡という選択肢</div>
+                <div class="rc-copy">リスクなし・費用数千円〜・度数調整が自由。ただし目に直接触れないぶん、ズレる・曇る・視野が狭くなるなどの特性もあります。</div>
               </div>
             </div>
+            <!-- カード3：デメリット・限界 -->
             <div class="result-card">
               <div class="result-card-top rc-unique"></div>
               <div class="result-card-body">
                 <span class="rc-label unique">カード 3</span>
-                <div class="rc-title">眼鏡をかけ続けても、視力は戻らない</div>
-                <div class="rc-copy">①仮性近視→休息で戻る可能性あり。②軸性近視→元には戻らない。成人の大半は②。眼鏡は「矯正」であって「治療」ではありません。</div>
+                <div class="rc-title">ただ、眼鏡では解決できないことがある</div>
+                <div class="rc-copy">雨・マスクで曇る。スポーツに邪魔。起き抜けはぼんやり。そして眼鏡は「矯正」であって「治療」ではないため、視力そのものは変わりません。</div>
               </div>
             </div>
+            <!-- カード4：それ以外の選択肢へ -->
             <div class="result-card">
               <div class="result-card-top rc-unique"></div>
               <div class="result-card-body">
                 <span class="rc-label unique">カード 4</span>
-                <div class="rc-title">眼鏡・コンタクト以外の選択肢が、あります</div>
-                <div class="rc-copy">ICL・レーシックで、視力そのものを変える方法があります。まずそこを知るだけで選択肢が広がります。</div>
+                <div class="rc-title">眼鏡以外の選択肢を知っておくと、判断が変わるかもしれません</div>
+                <div class="rc-copy">ICL・レーシックは視力そのものを変える方法。次のカードで詳しく解説します。</div>
               </div>
-            </div>
-            <div class="result-card">
-              <div class="result-card-top rc-unique"></div>
-              <div class="result-card-body">
-                <span class="rc-label unique">カード 5</span>
-                <div class="rc-title">あなたの目に合った方法を、一緒に探してみませんか</div>
-                <div class="rc-copy">眼鏡・コンタクト・ICL・レーシック——どれが本当に合うかは目の状態によって変わります。</div>
-              </div>
-              <div class="rc-cta">ICL/レーシック診断へ →</div>
+              <div class="rc-cta">詳しく見る →</div>
             </div>
           </div>
         </div>
@@ -633,53 +623,52 @@
         <div class="type-body">
           <div class="pr-scroll-hint">← スワイプ →</div>
           <div class="result-scroll">
+            <!-- カード1：結果と説明 -->
             <div class="result-card" style="min-width:180px;max-width:180px;">
               <div style="background:#1e3a8a;padding:10px 12px;text-align:center;border-radius:8px 8px 0 0;">
                 <div style="font-size:10px;color:rgba(255,255,255,0.75);font-weight:600;margin-bottom:4px;">あなたに最適な視力改善方法は…</div>
                 <div style="font-size:22px;font-weight:900;color:white;">👁 コンタクト</div>
               </div>
               <div class="result-card-body">
-                <div style="font-size:10px;font-weight:700;color:#1e3a8a;margin-bottom:6px;">コンタクトの特徴</div>
-                <div style="display:flex;flex-direction:column;gap:4px;">
-                  <div style="display:flex;gap:4px;font-size:10px;color:#333;align-items:flex-start;"><span style="color:#16a34a;flex-shrink:0;font-weight:700;">✓</span>メガネなしで自由に動ける</div>
-                  <div style="display:flex;gap:4px;font-size:10px;color:#333;align-items:flex-start;"><span style="color:#16a34a;flex-shrink:0;font-weight:700;">✓</span>スポーツ・日常生活に最適</div>
-                  <div style="display:flex;gap:4px;font-size:10px;color:#333;align-items:flex-start;"><span style="color:#16a34a;flex-shrink:0;font-weight:700;">✓</span>多様な種類から選べる</div>
-                </div>
+                <div style="font-size:10px;color:#333;line-height:1.6;">メガネなしで自由に動ける。スポーツや日常生活に最適な矯正方法です。</div>
               </div>
             </div>
+            <!-- カード2：特徴 -->
             <div class="result-card">
               <div class="result-card-top rc-unique"></div>
               <div class="result-card-body">
                 <span class="rc-label unique">カード 2</span>
-                <div class="rc-title">コンタクトの「見えない」コストが、意外と大きい</div>
-                <div class="rc-copy">1日使い捨て月3,000〜5,000円×12ヶ月＝年4〜6万円。10年で60万円以上になるケースも。</div>
+                <div class="rc-title">コンタクトという選択肢</div>
+                <div class="rc-copy">メガネなしで自由に動ける・スポーツや日常生活に支障なし・種類が豊富。ただし毎日の装着・管理が必要で、目に直接触れるため長期使用によるリスクもあります。</div>
               </div>
             </div>
+            <!-- カード3：デメリット・限界 -->
             <div class="result-card">
               <div class="result-card-top rc-unique"></div>
               <div class="result-card-body">
                 <span class="rc-label unique">カード 3</span>
-                <div class="rc-title">目の乾燥・充血は「コンタクトのせい」かもしれない</div>
-                <div class="rc-copy">コンタクト装用者の約60%がドライアイ症状を経験。目の疲れを「仕方ない」と放置していませんか？</div>
+                <div class="rc-title">コンタクトを続けることのリスク</div>
+                <div class="rc-copy">装用者の約60%がドライアイ症状を経験。長期使用で角膜内皮細胞が減少し、将来ICLが受けられなくなるケースも。年4〜6万円のコストは10年で60万円超になります。</div>
               </div>
             </div>
+            <!-- カード4：それ以外の選択肢へ -->
             <div class="result-card">
               <div class="result-card-top rc-unique"></div>
               <div class="result-card-body">
                 <span class="rc-label unique">カード 4</span>
-                <div class="rc-title">コンタクトを「卒業」できる選択肢があります</div>
-                <div class="rc-copy">ICL・レーシックは一度の手術で裸眼生活が可能。朝起きたらすぐ見える——その生活を一度体験してみませんか？</div>
+                <div class="rc-title">コンタクトを卒業できる選択肢があります</div>
+                <div class="rc-copy">ICL・レーシックなら毎日の装着・管理・コストがまるごとなくなります。次のカードで詳しく解説します。</div>
               </div>
-              <div class="rc-cta">ICL/レーシック診断へ →</div>
+              <div class="rc-cta">詳しく見る →</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- TYPE C レーシック -->
+    <!-- TYPE C ICL/レーシック統合 -->
     <div class="type-col">
-      <div class="type-badge badge-c">TYPE C · レーシックタイプ</div>
+      <div class="type-badge badge-c">TYPE C · ICL / レーシックタイプ</div>
       <div class="type-line-mock">
         <div class="type-header th-c">
           <div class="type-icon">👁</div>
@@ -688,99 +677,49 @@
         <div class="type-body">
           <div class="pr-scroll-hint">← スワイプ →</div>
           <div class="result-scroll">
+            <!-- カード1：結果と説明 -->
             <div class="result-card" style="min-width:180px;max-width:180px;">
-              <div style="background:#5b21b6;padding:10px 12px;text-align:center;border-radius:8px 8px 0 0;">
+              <div style="background:linear-gradient(135deg,#5b21b6,#065f46);padding:10px 12px;text-align:center;border-radius:8px 8px 0 0;">
                 <div style="font-size:10px;color:rgba(255,255,255,0.75);font-weight:600;margin-bottom:4px;">あなたに最適な視力改善方法は…</div>
-                <div style="font-size:22px;font-weight:900;color:white;">⚡ レーシック</div>
+                <div style="font-size:18px;font-weight:900;color:white;">⚡💎 ICL・レーシック</div>
               </div>
               <div class="result-card-body">
-                <div style="font-size:10px;font-weight:700;color:#5b21b6;margin-bottom:6px;">レーシックの特徴</div>
-                <div style="display:flex;flex-direction:column;gap:4px;">
-                  <div style="display:flex;gap:4px;font-size:10px;color:#333;align-items:flex-start;"><span style="color:#16a34a;flex-shrink:0;font-weight:700;">✓</span>ICLより費用を抑えられる（20万〜）</div>
-                  <div style="display:flex;gap:4px;font-size:10px;color:#333;align-items:flex-start;"><span style="color:#16a34a;flex-shrink:0;font-weight:700;">✓</span>実績が豊富・歴史ある術式</div>
-                  <div style="display:flex;gap:4px;font-size:10px;color:#333;align-items:flex-start;"><span style="color:#16a34a;flex-shrink:0;font-weight:700;">✓</span>翌日から日常生活に戻れる</div>
-                </div>
+                <div style="font-size:10px;font-weight:700;color:#5b21b6;margin-bottom:4px;">ICL・レーシックとは</div>
+                <div style="font-size:10px;color:#333;line-height:1.6;">眼鏡・コンタクトの不便さを根本からなくす選択肢です。毎朝の装着、ドライアイ、管理の手間——そのストレスごとなくせます。</div>
               </div>
             </div>
+            <!-- カード2：なぜそれがベストか（ベネフィット） -->
             <div class="result-card">
               <div class="result-card-top rc-unique"></div>
               <div class="result-card-body">
                 <span class="rc-label unique">カード 2</span>
-                <div class="rc-title">レーシックが「向いてる人」の条件</div>
-                <div class="rc-copy">角膜の厚みが十分・近視度数-8D以内・ドライアイが軽度——この3条件を満たせば最もコスパよく裸眼になれます。</div>
+                <div class="rc-title">眼鏡・コンタクトは「治療」ではない</div>
+                <div class="rc-copy">近視には仮性近視（休息で戻る可能性あり）と軸性近視（元に戻らない）の2種類があります。成人の大半は軸性近視。眼鏡・コンタクトはあくまで「矯正」であって、視力そのものは変わりません。</div>
+                <div style="font-size:9px;color:#e0427a;font-weight:700;margin-top:5px;">「見えやすくする」ことと「治す」ことは、まったく別の話です。</div>
               </div>
             </div>
+            <!-- カード3：受術者の声・満足度 -->
             <div class="result-card">
               <div class="result-card-top rc-unique"></div>
               <div class="result-card-body">
                 <span class="rc-label unique">カード 3</span>
-                <div class="rc-title">コンタクト代と比べると、実はお得</div>
-                <div class="rc-copy">コンタクト10年分＝約60万円。レーシックは20万〜の一回払い。検診・保証込みの総額で比べるのが正解です。</div>
-              </div>
-            </div>
-            <div class="result-card">
-              <div class="result-card-top rc-unique"></div>
-              <div class="result-card-body">
-                <span class="rc-label unique">カード 4</span>
-                <div class="rc-title">まず「自分の目が対象かどうか」を無料で確認できます</div>
-                <div class="rc-copy">適応検査（無料）で、あなたの目がレーシックに向いているかどうかを専門医が診断します。</div>
-              </div>
-              <div class="rc-cta">先進会眼科・PRへ →</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TYPE D ICL -->
-    <div class="type-col">
-      <div class="type-badge badge-d">TYPE D · ICLタイプ</div>
-      <div class="type-line-mock">
-        <div class="type-header th-d">
-          <div class="type-icon">👁</div>
-          <div class="type-name-text">視力改善診断</div>
-        </div>
-        <div class="type-body">
-          <div class="pr-scroll-hint">← スワイプ →</div>
-          <div class="result-scroll">
-            <div class="result-card" style="min-width:180px;max-width:180px;">
-              <div style="background:#065f46;padding:10px 12px;text-align:center;border-radius:8px 8px 0 0;">
-                <div style="font-size:10px;color:rgba(255,255,255,0.75);font-weight:600;margin-bottom:4px;">あなたに最適な視力改善方法は…</div>
-                <div style="font-size:22px;font-weight:900;color:white;">💎 ICL</div>
-              </div>
-              <div class="result-card-body">
-                <div style="font-size:10px;font-weight:700;color:#065f46;margin-bottom:6px;">ICLの特徴</div>
-                <div style="display:flex;flex-direction:column;gap:4px;">
-                  <div style="display:flex;gap:4px;font-size:10px;color:#333;align-items:flex-start;"><span style="color:#16a34a;flex-shrink:0;font-weight:700;">✓</span>角膜を削らない</div>
-                  <div style="display:flex;gap:4px;font-size:10px;color:#333;align-items:flex-start;"><span style="color:#16a34a;flex-shrink:0;font-weight:700;">✓</span>元に戻せる（取り出せる）</div>
-                  <div style="display:flex;gap:4px;font-size:10px;color:#333;align-items:flex-start;"><span style="color:#16a34a;flex-shrink:0;font-weight:700;">✓</span>強度近視・ドライアイも対応</div>
+                <div class="rc-title">矯正をやめた人が口をそろえて言うこと</div>
+                <div class="rc-copy">「翌朝、何もつけてないのに視界がクリアで超感動」「朝起きて眼鏡を探さなくていい」「人生が変わった」——裸眼の生活は、慣れた不便さがまるごと消える体験です。</div>
+                <div style="background:#f0fdf4;border-radius:6px;padding:5px 8px;margin-top:6px;text-align:center;">
+                  <div style="font-size:13px;font-weight:800;color:#16a34a;">満足度 96%</div>
+                  <div style="font-size:9px;color:#555;">受術者257件アンケートより（先進会眼科調べ）</div>
                 </div>
               </div>
             </div>
-            <div class="result-card">
-              <div class="result-card-top rc-unique"></div>
-              <div class="result-card-body">
-                <span class="rc-label unique">カード 2</span>
-                <div class="rc-title">角膜を削らずに、裸眼になれる</div>
-                <div class="rc-copy">ICLは薄いレンズを目の中に入れるだけ。目そのものを傷つけないから、万が一のときはレンズを取り出すことができます。</div>
-              </div>
-            </div>
-            <div class="result-card">
-              <div class="result-card-top rc-unique"></div>
-              <div class="result-card-body">
-                <span class="rc-label unique">カード 3</span>
-                <div class="rc-title">手術は約10〜15分。思ってたより、全然怖くない</div>
-                <div class="rc-copy">痛みはほぼなし（点眼麻酔のみ）。翌日から日常生活に戻れます。受術した人の満足度は95%以上（先進会眼科調べ）。</div>
-              </div>
-            </div>
+            <!-- カード4：教育カルーセルへの誘導 -->
             <div class="result-card">
               <div class="result-card-top rc-unique"></div>
               <div class="result-card-body">
                 <span class="rc-label unique">カード 4</span>
-                <div class="rc-title">朝起きたら、何もしなくてもクリアに見える</div>
-                <div class="rc-copy">「翌朝、視界がクリアで感動した」「人生が変わった」——受術者の声より</div>
+                <div class="rc-title">ICLとレーシック、どちらが自分に合う？</div>
+                <div class="rc-copy">費用・リスク・向いてる目の条件——あなたに合う術式を次のカードで詳しく解説します。</div>
               </div>
-              <div class="rc-cta">先進会眼科・PRへ →</div>
+              <div class="rc-cta">詳しく見る →</div>
             </div>
           </div>
         </div>
@@ -792,7 +731,7 @@
 
 <!-- ══ 合流 → STEP 08 ══ -->
 <div class="flow" style="margin-top:0;">
-  <div class="merge-note" style="max-width:560px;">← 全タイプ（A / B / C / D）合流 → STEP 08 へ</div>
+  <div class="merge-note" style="max-width:560px;">← 全タイプ（A / B / C）合流 → STEP 08 へ</div>
   <div class="arrow"></div>
 
   <!-- STEP 08: 教育カルーセル -->
