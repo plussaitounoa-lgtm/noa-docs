@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PU改善分析：日本人1番痩せる（こいずみ）2026-04-22</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header p { color: #aaa; font-size: 14px; }
+    .update-banner { background: #1a2e2e; color: #7effd4; font-size: 13px; padding: 10px 32px; }
+    main { max-width: 860px; margin: 40px auto; padding: 0 24px 60px; }
+
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; color: #333; }
+    h4 { font-size: 13px; font-weight: 600; margin: 16px 0 8px; color: #555; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 8px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; }
+    tr:last-child td { border-bottom: none; }
+
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+    .red { background: #fff0f0; color: #c0392b; }
+    .yellow { background: #fffbea; color: #b7860b; }
+    .green { background: #f0fff4; color: #27ae60; }
+    .blue { background: #f0f4ff; color: #2c52b0; }
+
+    .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .alert { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .info { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f7f7f7; border-radius: 8px; padding: 16px; text-align: center; }
+    .kpi-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+    .kpi-value { font-size: 22px; font-weight: 700; }
+    .kpi-note { font-size: 11px; color: #aaa; margin-top: 2px; }
+    .kpi-bad .kpi-value { color: #e74c3c; }
+    .kpi-ok .kpi-value { color: #f39c12; }
+    .kpi-good .kpi-value { color: #27ae60; }
+
+    .insight-block { background: #f9f9ff; border-radius: 8px; padding: 20px; margin: 16px 0; border: 1px solid #e0e4ff; }
+    .insight-block h4 { color: #2c52b0; margin-top: 0; font-size: 14px; }
+    .insight-block p { font-size: 14px; margin-bottom: 6px; }
+
+    .recommend-block { background: #f0fff8; border-radius: 8px; padding: 20px; margin: 16px 0; border: 2px solid #27ae60; }
+    .recommend-block h4 { color: #1a6e3e; margin-top: 0; font-size: 15px; }
+    .recommend-block .copy-main { font-size: 22px; font-weight: 700; color: #1a1a2e; margin: 12px 0; line-height: 1.4; }
+    .recommend-block .copy-sub { font-size: 13px; color: #555; }
+
+    .alt-block { background: #f9f9f9; border-radius: 8px; padding: 16px; margin: 12px 0; border: 1px solid #e0e0e0; }
+    .alt-block h4 { color: #555; margin-top: 0; font-size: 14px; }
+    .alt-block .copy-main { font-size: 17px; font-weight: 600; color: #333; margin: 8px 0; }
+
+    .flow-box { background: #1a1a2e; color: #eee; border-radius: 8px; padding: 16px 20px; font-family: monospace; font-size: 13px; line-height: 1.9; margin: 12px 0; }
+    .bridge-box { background: #fff8f0; border: 1px solid #f0c060; border-radius: 8px; padding: 18px; margin: 16px 0; font-size: 13px; line-height: 1.9; }
+    .bridge-box .label { font-weight: 700; color: #b07000; }
+    .bridge-row { margin-bottom: 10px; }
+    .bridge-check { color: #27ae60; font-weight: 700; font-size: 15px; }
+
+    .realword { background: #fafafa; border: 1px solid #eee; border-radius: 6px; padding: 12px 16px; font-size: 13px; line-height: 1.9; color: #333; margin: 10px 0; }
+    .realword span { background: #fff3cd; padding: 0 3px; border-radius: 2px; }
+
+    .step-row { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+    .step-row:last-child { border-bottom: none; }
+    .step-num { min-width: 28px; height: 28px; border-radius: 50%; background: #1a1a2e; color: white; font-size: 12px; font-weight: 700; text-align: center; line-height: 28px; }
+    .step-body { flex: 1; font-size: 14px; line-height: 1.7; }
+    .step-body strong { display: block; margin-bottom: 2px; }
+
+    .pending-box { background: #fff8f0; border: 1px solid #f0c060; border-radius: 8px; padding: 16px 20px; }
+    .pending-box h4 { color: #b07000; margin-bottom: 12px; font-size: 14px; }
+
+    footer { text-align: center; padding: 40px; color: #bbb; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>PU改善分析：こいずみ「日本人1番痩せる」</h1>
+  <p>LINEマーケ｜2026-04-22｜分析担当: Noa｜Type A（PU改善）</p>
+</header>
+<div class="update-banner">⏳ ステータス：推奨文言確定 → Ren承認待ち（t55）</div>
+
+<main>
+
+  <!-- 記事概要 -->
+  <div class="section">
+    <div class="section-title">対象記事</div>
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>URL</td><td>https://koizumi-seikei.jp/obesity/diet-japanese/</td></tr>
+      <tr><td>H1</td><td>日本人が一番痩せるダイエットとは！食事・運動・医療それぞれの効果を解説</td></tr>
+      <tr><td>記事の内容</td><td>食事・運動・医療（GLP-1等）の3方法を比較。「自分に合った方法を選べ」と締める。記事内に同名CTAリンクあり</td></tr>
+      <tr><td>現在のPU</td><td>「結局自分に1番合うダイエット方法が知りたい！」（はい/いいえ形式）1本のみ</td></tr>
+    </table>
+  </div>
+
+  <!-- ファネル状況 -->
+  <div class="section">
+    <div class="section-title">ファネル分析</div>
+    <h2>現状の数値</h2>
+    <div class="kpi-grid">
+      <div class="kpi-card kpi-bad">
+        <div class="kpi-label">CTR</div>
+        <div class="kpi-value">11.9%</div>
+        <div class="kpi-note">基準 13.0%</div>
+      </div>
+      <div class="kpi-card kpi-bad">
+        <div class="kpi-label">追加率</div>
+        <div class="kpi-value">7.1%</div>
+        <div class="kpi-note">基準 11.0%</div>
+      </div>
+      <div class="kpi-card kpi-bad">
+        <div class="kpi-label">PU本数</div>
+        <div class="kpi-value">1本</div>
+        <div class="kpi-note">改善余地あり</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">改善ポテンシャル</div>
+        <div class="kpi-value">+11人</div>
+        <div class="kpi-note">/20日</div>
+      </div>
+    </div>
+
+    <h3>ボトルネックの構造</h3>
+    <table>
+      <tr><th>ステップ</th><th>現状</th><th>基準</th><th>GAP</th><th>原因</th></tr>
+      <tr><td>PU表示 → クリック（CTR）</td><td>11.9%</td><td>13.0%</td><td class="red">-1.1pt</td><td>コピーのフレームがズレている</td></tr>
+      <tr><td>クリック → 友だち追加（追加率）</td><td>7.1%</td><td>11.0%</td><td class="red">-3.9pt</td><td>LP/追加画面の問題（別軸で調査中 → t56）</td></tr>
+    </table>
+    <div class="info">
+      両方ボトルネックだが、CTRはコピー改善で動かせる。追加率はLP構造の問題なのでコピー変更と並行して別調査（t56）で対処。
+    </div>
+  </div>
+
+  <!-- リサーチ：リアルワード -->
+  <div class="section">
+    <div class="section-title">Researcher 収集 | Yahoo!知恵袋・リアルワード</div>
+    <h2>検索者のリアルな言葉</h2>
+    <p>「日本人 痩せる」「ダイエット 方法 比較」「食事 運動 痩せない」などのKWで収集。</p>
+
+    <h3>挫折・原因不明系</h3>
+    <div class="realword">
+      「運動もしてるし我慢してるのに<span>増えたりします。何ででしょうか</span>」<br>
+      「<span>継続すれば痩せることはわかってる。でも続かない</span>」<br>
+      「食事制限も運動もしてるのに<span>全く痩せません</span>」<br>
+      「朝ご飯食べない、夜少なくしてるのになぜか体重が落ちない」<br>
+      「カロリー計算してちゃんと食べてるのに体重が変わらない。<span>何かが間違ってる？</span>」
+    </div>
+
+    <h3>方法迷い系</h3>
+    <div class="realword">
+      「糖質制限と脂質制限どっちが痩せるか結局どっちなんですか」<br>
+      「有酸素運動と筋トレ、ダイエットに効果的なのは？」<br>
+      「GLP-1って普通の人でも使っていいんですか」<br>
+      「食事だけで痩せようとしてたけど限界。運動も足すべき？」
+    </div>
+
+    <h3>インサイトの抽出</h3>
+    <div class="flow-box">
+「ダイエット方法を調べている」のではなく
+  ↓
+「やってるのに痩せない → なぜ？」という疑問を抱えている
+  ↓
+「方法の選択」の前に「自分がなぜ痩せないかの原因」を知りたい状態
+    </div>
+
+    <div class="highlight">
+      <strong>気づき：</strong>「方法選択（食事・運動・医療どれにするか）」はすでにやり尽くした人が多い。検索者の本当の問いは<strong>「自分はなぜ痩せられないのか（原因究明）」</strong>に移行している。
+    </div>
+  </div>
+
+  <!-- インサイト仮説 -->
+  <div class="section">
+    <div class="section-title">CEO + Researcher 確定 | 核心仮説</div>
+    <h2>フレームのズレ</h2>
+
+    <table>
+      <tr><th></th><th>現状PU（×）</th><th>検索者の本音（○）</th></tr>
+      <tr>
+        <td>フレーム</td>
+        <td><strong>方法選択フレーム</strong><br>「どの方法が自分に合うか」</td>
+        <td><strong>原因究明フレーム</strong><br>「なぜ自分は痩せられないのか」</td>
+      </tr>
+      <tr>
+        <td>前提</td>
+        <td>まだ方法を選んでいない人向け</td>
+        <td>方法はすでに試したが結果が出ない人</td>
+      </tr>
+      <tr>
+        <td>ユーザーの反応</td>
+        <td>「それはもうやった」「そういう話じゃない」</td>
+        <td>「それを知りたかった」「それが問題だと思ってた」</td>
+      </tr>
+    </table>
+
+    <div class="alert">
+      現状コピー「結局自分に1番合うダイエット方法が知りたい！」は<strong>方法選択フレーム</strong>で話しかけている。
+      しかし検索者はすでに複数の方法を試して失敗した人。「方法よりも自分の体質・原因を知りたい」段階にいる。
+      このフレームのズレがCTR 11.9%（基準-1.1pt）を生んでいる。
+    </div>
+
+    <h3>なぜ「はい/いいえ」CTAに影響するか</h3>
+    <p>「はい/いいえ」形式のCTAは、コピー文が<strong>ユーザー自身の欲求の言語化</strong>になっている時に初めて機能する。</p>
+    <div class="flow-box">
+コピー = 「自分に1番合うダイエット方法が知りたい！」
+  → 「はい（方法を知りたい）」? → すでに調べた、特に刺さらない → CTR低
+
+コピー = 「痩せない理由、自分の体質から知りたい！」
+  → 「はい（原因・体質を知りたい）」→ まさに今悩んでいること → 自然に「はい」が成立
+    </div>
+  </div>
+
+  <!-- CMOブリッジテスト -->
+  <div class="section">
+    <div class="section-title">CMO | ブリッジテスト</div>
+    <h2>診断体験 ↔ 検索者の気持ち の整合確認</h2>
+
+    <div class="bridge-box">
+      <div class="bridge-row">
+        <span class="label">①  診断が実際に提供する体験：</span><br>
+        「質問に答えると、あなたの太りやすさのタイプ（体質）を判定して、そのタイプに合ったダイエットアプローチを提案する」<br>
+        <span style="font-size:12px; color:#888;">※ 太りやすさタイプ診断v6。設計書未確認のため整合チェックは実装前に必須</span>
+      </div>
+      <div class="bridge-row">
+        <span class="label">②  このKWで検索した人の今の気持ち：</span><br>
+        「食事制限も運動もしてるのに痩せない。もう何が悪いのか自分ではわからない。自分の体に何か問題があるの？体質のせい？」
+      </div>
+      <div class="bridge-row">
+        <span class="label">③  ①を②の言葉で表現すると：</span><br>
+        「痩せない理由、自分の体質から知りたい！」
+      </div>
+      <div style="margin-top: 12px; font-size: 14px;">
+        ①と③は同じ体験を指しているか？ <span class="bridge-check">✅ YES</span><br>
+        <span style="font-size:12px; color:#555;">①は「体質タイプを特定して方法提案」、③は「体質から知る」= 同じ体験を検索者の言葉で包んでいる</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 推奨PU文言 -->
+  <div class="section">
+    <div class="section-title">CMO | 施策設計 — PU文言候補</div>
+    <h2>推奨PU文言</h2>
+
+    <div class="recommend-block">
+      <h4>★ 推奨 — 案A</h4>
+      <div class="copy-main">「痩せない理由、自分の体質から知りたい！」</div>
+      <div class="copy-sub">CTA形式: はい / いいえ</div>
+      <br>
+      <p><strong>なぜこれか：</strong></p>
+      <ul style="font-size:14px; line-height:1.9; padding-left:20px;">
+        <li>リアルワード「やってるのに痩せない→なぜ？」に直接共鳴する欲求の言語化</li>
+        <li>「体質から」= 原因究明フレームをそのまま言葉にしている</li>
+        <li>「知りたい！」という主体的な動詞で終わるため「はい（知りたい）」が自然に成立</li>
+        <li>診断体験（体質タイプ判定→方法提案）とブリッジが成立</li>
+      </ul>
+    </div>
+
+    <div class="alt-block">
+      <h4>案B — 共感起点アプローチ</h4>
+      <div class="copy-main">「食事も運動もしてるのに、痩せない体質？」</div>
+      <div style="font-size:13px; color:#666;">CTA形式: はい / いいえ</div>
+      <p style="font-size:13px; color:#555; margin-top:8px;">リアルワードをほぼそのまま引用。「はい（そう思ってる）」が非常に自然に出る。ただし「体質？」という問いかけ形式で終わるため、診断への誘導感がやや弱い。</p>
+    </div>
+
+    <div class="alt-block">
+      <h4>案C — 診断体験訴求アプローチ</h4>
+      <div class="copy-main">「痩せにくい原因、体質タイプで分かる？」</div>
+      <div style="font-size:13px; color:#666;">CTA形式: はい / いいえ</div>
+      <p style="font-size:13px; color:#555; margin-top:8px;">「体質タイプ」という診断の概念を前面に出した構成。原因究明フレームは維持しているが「タイプで分かる？」という問いが若干情報提供型になりCTAのノリが弱くなる可能性あり。</p>
+    </div>
+
+    <h3>3案の比較</h3>
+    <table>
+      <tr><th>案</th><th>コピー</th><th>強み</th><th>懸念</th></tr>
+      <tr style="background:#f0fff4;">
+        <td><span class="badge green">★ 推奨</span> 案A</td>
+        <td>「痩せない理由、自分の体質から知りたい！」</td>
+        <td>欲求の言語化・はい/いいえCTA最も自然</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>案B</td>
+        <td>「食事も運動もしてるのに、痩せない体質？」</td>
+        <td>リアルワード直結・共感強い</td>
+        <td>診断への誘導感が案Aより弱い</td>
+      </tr>
+      <tr>
+        <td>案C</td>
+        <td>「痩せにくい原因、体質タイプで分かる？」</td>
+        <td>診断体験を明示</td>
+        <td>問いかけ形式でCTAノリがやや弱い</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 実装前チェック -->
+  <div class="section">
+    <div class="section-title">実装前に必須の確認</div>
+    <h2>ブロッカー事項</h2>
+
+    <div class="pending-box">
+      <h4>⏳ Ren確認待ち</h4>
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>太りやすさタイプ診断（v6）の設計書共有</strong>
+          診断が実際に「痩せない原因を体質タイプから提示する」体験を提供しているか確認が必要。
+          設計書なしで文言を最終確定させない。→ t55承認と合わせてRenに確認
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>t55承認（PU差し替え実施 GO/NG）</strong>
+          案A文言で既存PUと差し替え。WINUTでのPU設定変更はRen承認後に実施
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>追加率7.1%の原因特定（t56）</strong>
+          LP側かLINE追加画面側か。コピー改善とは独立した問題。並行調査が必要
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 次のアクション -->
+  <div class="section">
+    <h2>次のアクション</h2>
+    <table>
+      <tr><th>タスク</th><th>タスクID</th><th>ステータス</th><th>条件</th></tr>
+      <tr><td>案A PU差し替え実施（WINUTでPU設定変更）</td><td>t55</td><td><span class="badge yellow">承認待ち</span></td><td>Ren承認後 + 診断v6設計書確認後</td></tr>
+      <tr><td>追加率7.1%の原因調査（LP or 追加画面）</td><td>t56</td><td><span class="badge blue">調査中</span></td><td>Ren確認後</td></tr>
+    </table>
+
+    <div class="good" style="margin-top:16px;">
+      <strong>両方揃ったら：</strong><br>
+      CTRが13%まで改善 × 追加率が11%まで改善 → PVFR 0.80%達成 → +11人/20日
+    </div>
+  </div>
+
+</main>
+
+<footer>Noa Docs｜LINEマーケチーム｜作成 2026-04-22</footer>
+
+</body>
+</html>
