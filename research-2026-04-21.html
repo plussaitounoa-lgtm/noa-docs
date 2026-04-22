@@ -3,19 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>数値分析レポート 2026-04-21</title>
+  <title>数値分析レポート 2026-04-21（04-22更新）</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
     header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
     header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
     header p { color: #aaa; font-size: 14px; }
+    .update-banner { background: #1a3a2e; color: #7effc4; font-size: 13px; padding: 10px 32px; }
     main { max-width: 860px; margin: 40px auto; padding: 0 24px 60px; }
 
     .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
     .section-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
     h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
     h3 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; color: #333; }
+    h4 { font-size: 13px; font-weight: 600; margin: 16px 0 8px; color: #555; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
 
     table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 16px; }
     th { background: #f7f7f7; text-align: left; padding: 8px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; }
@@ -26,10 +29,12 @@
     .red { background: #fff0f0; color: #c0392b; }
     .yellow { background: #fffbea; color: #b7860b; }
     .green { background: #f0fff4; color: #27ae60; }
+    .blue { background: #f0f4ff; color: #2c52b0; }
 
     .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
     .alert { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
     .good { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .info { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
 
     .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
     .kpi-card { background: #f7f7f7; border-radius: 8px; padding: 16px; text-align: center; }
@@ -42,7 +47,15 @@
 
     .priority-num { display: inline-block; width: 24px; height: 24px; border-radius: 50%; background: #1a1a2e; color: white; font-size: 12px; font-weight: 700; text-align: center; line-height: 24px; margin-right: 8px; }
 
+    .insight-block { background: #f9f9ff; border-radius: 8px; padding: 20px; margin: 16px 0; border: 1px solid #e0e4ff; }
+    .insight-block h4 { color: #2c52b0; margin-top: 0; font-size: 14px; }
+    .insight-block p { font-size: 14px; margin-bottom: 0; }
+
+    .flow-box { background: #1a1a2e; color: #eee; border-radius: 8px; padding: 16px 20px; font-family: monospace; font-size: 13px; line-height: 1.9; margin: 12px 0; }
+
     .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 12px; color: #555; margin: 2px; }
+    .realword { background: #fafafa; border: 1px solid #eee; border-radius: 6px; padding: 12px 16px; font-size: 13px; line-height: 1.8; color: #333; margin: 10px 0; }
+    .realword span { background: #fff3cd; padding: 0 3px; border-radius: 2px; }
 
     footer { text-align: center; padding: 40px; color: #bbb; font-size: 12px; }
   </style>
@@ -53,6 +66,7 @@
   <h1>📊 数値分析レポート</h1>
   <p>LINEマーケ｜2026/04/01〜2026/04/20（20日間）｜分析担当: Noa</p>
 </header>
+<div class="update-banner">🔄 2026-04-22 更新：BMI記事 インサイト分析を追加（全期間データ 04/01〜04/30）</div>
 
 <main>
 
@@ -147,7 +161,7 @@
       <tr style="background:#f0fff4;"><td>脂肪のつき方気になる</td><td>91</td><td>158</td><td>35</td></tr>
     </table>
     <div class="highlight">
-      「体型・太り系」は3サイル全部でCTR 7〜11%。BMI検索者の意図とミスマッチ。<br>
+      「体型・太り系」は3サイト全部でCTR 7〜11%。BMI検索者の意図とミスマッチ。<br>
       「脂肪のつき方・体の状態系」が相対的に高CTRだが、impは30〜170しか割り当てられておらず検証不十分。
     </div>
 
@@ -155,6 +169,103 @@
     <div class="good">
       「体型・太り系」PUのimpを削減し、「脂肪のつき方・体の状態系」に配分を移す。追加率問題（LP/追加画面）は別軸で並行対処。
     </div>
+  </div>
+
+  <!-- BMI インサイト分析（2026-04-22追加） -->
+  <div class="section">
+    <div class="section-title">2026-04-22 追加 | 全期間データ（04/01〜04/30）</div>
+    <h2>BMI記事 インサイト分析</h2>
+
+    <h3>更新データ：PU別パフォーマンス（全期間）</h3>
+
+    <h4>体型系PU</h4>
+    <table>
+      <tr><th>PU訴求</th><th>サイト</th><th>pu-imp</th><th>CTR</th><th>FB</th><th>追加率</th></tr>
+      <tr><td>太りやすい人間か</td><td>こいずみ</td><td>344</td><td>8.4%</td><td>1</td><td>3.4%</td></tr>
+      <tr><td>体型気になる</td><td>こいずみ</td><td>350</td><td>9.4%</td><td>0</td><td>0%</td></tr>
+      <tr><td>太りすぎチェック</td><td>こいずみ</td><td>309</td><td>7.1%</td><td>0</td><td>0%</td></tr>
+      <tr><td>太りやすい人間か</td><td>小田</td><td>716</td><td>8.9%</td><td>4</td><td>6.3%</td></tr>
+      <tr><td>体型気になる</td><td>小田</td><td>676</td><td>7.4%</td><td>0</td><td>0%</td></tr>
+      <tr><td>太りすぎチェック</td><td>小田</td><td>775</td><td>10.6%</td><td>1</td><td>1.2%</td></tr>
+    </table>
+    <div class="alert">全PU・全サイトでCTR 7〜11%。基準13%未満。サンプル十分（300〜775 pu-imp）で確度高い。</div>
+
+    <h4>体の状態系PU</h4>
+    <table>
+      <tr><th>PU訴求</th><th>サイト</th><th>pu-imp</th><th>CTR</th><th>FB</th><th>追加率</th></tr>
+      <tr style="background:#f0fff4;"><td>体のつき方気になる</td><td>こいずみ</td><td>58</td><td>12.1%</td><td>0</td><td>0%</td></tr>
+      <tr style="background:#f0fff4;"><td>体質タイプ知りたい</td><td>こいずみ</td><td>63</td><td>12.7%</td><td>0</td><td>0%</td></tr>
+      <tr style="background:#fff0f0;"><td><strong>本当の体の状態気になる</strong></td><td><strong>こいずみ</strong></td><td>74</td><td><strong>5.4%</strong></td><td>0</td><td>0%</td></tr>
+      <tr style="background:#f0fff4;"><td>体のつき方気になる</td><td>小田</td><td>134</td><td>14.2%</td><td>0</td><td>0%</td></tr>
+      <tr style="background:#f0fff4;"><td>体質タイプ知りたい</td><td>小田</td><td>156</td><td>12.8%</td><td>1</td><td>5%</td></tr>
+      <tr style="background:#f0fff4;"><td>本当の体の状態気になる</td><td>小田</td><td>135</td><td>11.9%</td><td>1</td><td>6.3%</td></tr>
+    </table>
+    <div class="good">小田では体の状態系が12〜14%で体型系（7〜11%）を明確に上回る。</div>
+    <div class="alert">こいずみの「本当の体の状態気になる」だけ5.4%と異常に低い。pu-imp=74で一定サンプルあり、誤差とは言いにくい。</div>
+
+    <h3>Researcher発見</h3>
+
+    <h4>こいずみ BMI記事 H1（実確認）</h4>
+    <div class="info">
+      H1：「BMIの計算方法と基準！平均値・理想値を男女別に解説」<br>
+      記事の性質：純粋情報収集型。計算方法・基準値・年代別平均値の解説が中心。<br>
+      読者モード：<strong>「自分のBMI数値を知りたい」= 数値確認で完結したい人。</strong>
+    </div>
+
+    <h4>BMI記事読者のリアルワード（Yahoo!知恵袋）</h4>
+    <div class="realword">
+      「BMI標準なのに明らかに太っている」<br>
+      「おなかお肉にあるし、足も太いし。数値的には痩せなのに<span>信じられない</span>」<br>
+      「ぼよんぼよんでも計算したら標準に入る」<br>
+      「BMIっておかしくないですか？<span>体脂肪率を無視している</span>」<br>
+      「<span>イライラします</span>」「気持ちが滅入ってます」<br>
+      「スキニーファット」「隠れ肥満」「<span>脂肪のつき方によって違う</span>」「体脂肪率は？」
+    </div>
+
+    <h4>確認されたユーザー行動フロー</h4>
+    <div class="flow-box">
+BMIを計算する
+  ↓
+「標準」と出る
+  ↓
+「でも見た目が気になる」「なぜこうなっている？」という次の疑問が発生
+  ↓
+「体脂肪率」「脂肪のつき方」「自分の体質」への関心が移行
+    </div>
+
+    <h3>インサイト仮説</h3>
+
+    <div class="insight-block">
+      <h4>仮説① 体型系が刺さらない本質 ＝「鏡の前に立たせる」問題</h4>
+      <p>「太りすぎチェック」「体型が気になる」は、ユーザーが既に抱えている自己認識をそのまま突きつける。BMI記事を読んでいる人はすでに「見たくない現実をうっすら認識している」人。その人に「太りすぎチェック」と言うのは傷口に塩を塗る行為に近く、防衛反応でスルーするのは心理的に自然。また、BMIを検索した時点で「太っているか確認したい」という動機は持っている。PUで同じことを聞かれても「それを調べるために来たんだけど」で終わる。<strong>既知の悩みを繰り返しているだけで、新しい価値を提示できていない。</strong></p>
+    </div>
+
+    <div class="insight-block">
+      <h4>仮説② 体の状態系が刺さる本質 ＝「出口を見せる」問題</h4>
+      <p>「体のつき方気になる」「体質タイプ知りたい」は、悩みを客観視できるフレームを提供している。「太ってる自分」ではなく「体のタイプとして分析できる自分」への視点の切り替え。自責から分析へのシフト。知恵袋でも「脂肪のつき方によって違う」「体脂肪率は？」という言葉が出ており、ユーザー自身が既にこのシフトをしようとしている。PUがそのシフト先を示しているから刺さる。<br><br>ものさしフレームワーク的に言えば、体型系は「今のものさし（太っている）」を繰り返すだけ。体の状態系は「新しいものさし（体質・体の仕組み）」を提示している。</p>
+    </div>
+
+    <div class="insight-block">
+      <h4>仮説③ こいずみで「本当の体の状態気になる」だけ5.4%の理由</h4>
+      <p>「体のつき方」「体質タイプ」はどちらも覗き見感のある軽い問い。クリックのハードルが低い。一方「本当の体の状態」は構造が違う。<strong>「本当の」という修飾語が「今あなたは自分の体の状態を誤解している」という含意を持つ。</strong>情報収集モードで来ているこいずみ読者に「あなたはまだ本当のことを知らない」と言うのは、関与レベルを一段飛ばしている。小田では11.9%と機能しているのは、小田のBMI読者が「体の実態」に関心を持つKWで来ている可能性がある（H1未確認）。</p>
+    </div>
+
+    <h4>3仮説の共通する根っこ</h4>
+    <div class="flow-box">
+BMI記事読者のモード：「数値を確認する」という知的・中立的な行動
+
+体型系PU    → 感情（自責・不安）を直撃       → モードと合わない → スルー
+体の状態系   → 知的好奇心を刺激（分析・タイプ知りたい）→ モードと合う   → クリック
+「本当の」系  → 関与レベルを飛ばす            → 準備できてない人には重い → こいずみで特に顕著
+    </div>
+
+    <h3>施策設計前の確認事項</h3>
+    <table>
+      <tr><th>確認項目</th><th>理由</th></tr>
+      <tr><td>小田のBMI記事 H1・KW</td><td>こいずみとの読者モードの違いを確認するため</td></tr>
+      <tr><td>太りやすさタイプ診断（v6）の中身</td><td>新PU文言を作る前に診断体験との整合を確認するため</td></tr>
+      <tr><td>追加率問題の根本（LP or 追加画面）</td><td>PU改善と並行して対処が必要なため（Ren確認待ち）</td></tr>
+    </table>
   </div>
 
   <!-- 課題② ワークマン -->
@@ -219,13 +330,6 @@
         <td>—</td>
         <td>調査次第</td>
       </tr>
-      <tr>
-        <td><span class="badge yellow">🟡④</span></td>
-        <td>shibuya（PVFR 0.16%）</td>
-        <td>未調査</td>
-        <td>+24人（推定）</td>
-        <td>不明</td>
-      </tr>
     </table>
   </div>
 
@@ -243,7 +347,7 @@
 
 </main>
 
-<footer>Noa Docs｜LINEマーケチーム</footer>
+<footer>Noa Docs｜LINEマーケチーム｜最終更新 2026-04-22</footer>
 
 </body>
 </html>
