@@ -282,6 +282,57 @@ BMIを計算する
     </table>
   </div>
 
+  <!-- 施策設計 -->
+  <div class="section">
+    <div class="section-title">2026-04-22 追加 | 施策設計（Type A: PU改善）</div>
+    <h2>BMI記事 PU差し替え方針</h2>
+
+    <h3>差し替え判定</h3>
+    <table>
+      <tr><th>PU訴求</th><th>判定</th><th>理由</th></tr>
+      <tr><td>太りやすい人間か</td><td><span class="badge red">❌ 削除</span></td><td>「人間か」という断定が判定構造。インサイトと逆方向</td></tr>
+      <tr><td>体型気になる</td><td><span class="badge red">❌ 削除</span></td><td>外見・体型への言及がインサイトと合わない</td></tr>
+      <tr><td>太りすぎチェック</td><td><span class="badge red">❌ 削除</span></td><td>「チェック」が判定される受動構造。最もNGに近い</td></tr>
+      <tr><td>体のつき方気になる</td><td><span class="badge green">✅ 継続</span></td><td>ブリッジ合致・CTR 12〜14%</td></tr>
+      <tr><td>体質タイプ知りたい</td><td><span class="badge green">✅ 継続</span></td><td>ブリッジ合致・CTR 12〜13%</td></tr>
+      <tr><td>本当の体の状態気になる</td><td><span class="badge yellow">⚠️ こいずみ削除・小田観察</span></td><td>こいずみ：情報収集完了後に重い（5.4%）。小田：11.9%で機能中</td></tr>
+    </table>
+
+    <h3>新規テスト候補（ブリッジテスト済み）</h3>
+
+    <div class="insight-block">
+      <h4>候補A：「体重より体質、気になる？」 — 両サイト向け</h4>
+      <p>体重（外見・数値）から体質（内側）への視点の切り替えを一言で表す。軽い覗き見感があり、情報収集完了後のこいずみ読者にも刺さりやすい。</p>
+      <p style="font-size:12px; color:#888;">ブリッジ：①太りやすさタイプがわかる ②「体重数値より体質を知りたい」→③体重でなく体質で理解 ✅</p>
+    </div>
+
+    <div class="insight-block">
+      <h4>候補B：「BMI標準でも、太りやすい体質はある」 — 小田向け優先</h4>
+      <p>知恵袋リアルワード「BMI標準なのに腑に落ちない」を直接拾う。BMI数値では見えない体質の違いに橋渡しする。肥満判定の人にはフィットしない可能性あり。</p>
+      <p style="font-size:12px; color:#888;">ブリッジ：①太りやすさタイプがわかる ②「BMI標準なのに腑に落ちない」→③BMIで見えない体質の話 ✅</p>
+    </div>
+
+    <div class="insight-block">
+      <h4>候補C：「なぜ脂肪がつくのか、体質でわかる」 — 両サイト向け（要確認）</h4>
+      <p>リアルワード「脂肪のつき方が気になる」を最も直接的に拾う。ただし「脂肪のつき方」を診断が結果として返せるか、設計書確認後に実装可否を判定。</p>
+      <p style="font-size:12px; color:#888;">ブリッジ：①太りやすさタイプがわかる ②「脂肪のつき方が気になる」→③脂肪のつき方＝体質タイプ ✅（診断内容確認後）</p>
+    </div>
+
+    <h3>サイト別推奨</h3>
+    <table>
+      <tr><th></th><th>こいずみ</th><th>小田</th></tr>
+      <tr><td>継続</td><td>体のつき方気になる・体質タイプ知りたい</td><td>体のつき方気になる・体質タイプ知りたい・本当の体の状態気になる</td></tr>
+      <tr><td>削除</td><td>体型系3本・本当の体の状態気になる</td><td>体型系3本</td></tr>
+      <tr><td>新規テスト</td><td>候補A「体重より体質、気になる？」</td><td>候補B「BMI標準でも、太りやすい体質はある」</td></tr>
+    </table>
+
+    <div class="alert" style="margin-top:16px;">
+      <strong>実装前に必ず確認：</strong><br>
+      ① 太りやすさタイプ診断（v6）の設計書を読み、候補Cの「脂肪のつき方」が診断で返せるか確認<br>
+      ② 削除対象PUのimpを継続・新規テスト候補へ再配分する段取りをRenと確認
+    </div>
+  </div>
+
   <!-- 課題② ワークマン -->
   <div class="section">
     <h2>課題② ワークマン口コミ</h2>
