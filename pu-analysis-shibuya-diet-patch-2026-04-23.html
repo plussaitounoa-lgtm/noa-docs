@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PU改善分析：ダイエットパッチ（渋谷）2026-04-23</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header p { color: #aaa; font-size: 14px; }
+    .update-banner { background: #1a2e2e; color: #7effd4; font-size: 13px; padding: 10px 32px; }
+    main { max-width: 860px; margin: 40px auto; padding: 0 24px 60px; }
+
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; color: #333; }
+    h4 { font-size: 13px; font-weight: 600; margin: 16px 0 8px; color: #555; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 8px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; }
+    tr:last-child td { border-bottom: none; }
+
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+    .red { background: #fff0f0; color: #c0392b; }
+    .yellow { background: #fffbea; color: #b7860b; }
+    .green { background: #f0fff4; color: #27ae60; }
+    .blue { background: #f0f4ff; color: #2c52b0; }
+
+    .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .alert { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .info { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f7f7f7; border-radius: 8px; padding: 16px; text-align: center; }
+    .kpi-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+    .kpi-value { font-size: 22px; font-weight: 700; }
+    .kpi-note { font-size: 11px; color: #aaa; margin-top: 2px; }
+    .kpi-bad .kpi-value { color: #e74c3c; }
+    .kpi-ok .kpi-value { color: #f39c12; }
+    .kpi-good .kpi-value { color: #27ae60; }
+
+    .insight-block { background: #f9f9ff; border-radius: 8px; padding: 20px; margin: 16px 0; border: 1px solid #e0e4ff; }
+    .insight-block h4 { color: #2c52b0; margin-top: 0; font-size: 14px; }
+
+    .recommend-block { background: #f0fff8; border-radius: 8px; padding: 20px; margin: 16px 0; border: 2px solid #27ae60; }
+    .recommend-block h4 { color: #1a6e3e; margin-top: 0; font-size: 15px; }
+    .recommend-block .copy-main { font-size: 22px; font-weight: 700; color: #1a1a2e; margin: 12px 0; line-height: 1.4; }
+    .recommend-block .copy-sub { font-size: 13px; color: #555; }
+
+    .alt-block { background: #f9f9f9; border-radius: 8px; padding: 16px; margin: 12px 0; border: 1px solid #e0e0e0; }
+    .alt-block h4 { color: #555; margin-top: 0; font-size: 14px; }
+    .alt-block .copy-main { font-size: 17px; font-weight: 600; color: #333; margin: 8px 0; }
+
+    .flow-box { background: #1a1a2e; color: #eee; border-radius: 8px; padding: 16px 20px; font-family: monospace; font-size: 13px; line-height: 1.9; margin: 12px 0; }
+    .bridge-box { background: #fff8f0; border: 1px solid #f0c060; border-radius: 8px; padding: 18px; margin: 16px 0; font-size: 13px; line-height: 1.9; }
+    .bridge-box .label { font-weight: 700; color: #b07000; }
+    .bridge-row { margin-bottom: 10px; }
+    .bridge-check { color: #27ae60; font-weight: 700; font-size: 15px; }
+
+    .realword { background: #fafafa; border: 1px solid #eee; border-radius: 6px; padding: 12px 16px; font-size: 13px; line-height: 1.9; color: #333; margin: 10px 0; }
+    .realword span { background: #fff3cd; padding: 0 3px; border-radius: 2px; }
+
+    .step-row { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+    .step-row:last-child { border-bottom: none; }
+    .step-num { min-width: 28px; height: 28px; border-radius: 50%; background: #1a1a2e; color: white; font-size: 12px; font-weight: 700; text-align: center; line-height: 28px; }
+    .step-body { flex: 1; font-size: 14px; line-height: 1.7; }
+    .step-body strong { display: block; margin-bottom: 2px; }
+
+    .pending-box { background: #fff8f0; border: 1px solid #f0c060; border-radius: 8px; padding: 16px 20px; }
+    .pending-box h4 { color: #b07000; margin-bottom: 12px; font-size: 14px; }
+
+    footer { text-align: center; padding: 40px; color: #bbb; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>PU改善分析：渋谷「ダイエットパッチ」</h1>
+  <p>LINEマーケ｜2026-04-23｜分析担当: Noa｜Type A（PU改善）</p>
+</header>
+<div class="update-banner">⏳ ステータス：推奨文言確定 → Ren承認待ち（t57）</div>
+
+<main>
+
+  <!-- 対象記事 -->
+  <div class="section">
+    <div class="section-title">対象記事</div>
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>URL</td><td>https://www.shibuya-bunkamuradori-ladies.jp/medicine/menopause/diet-patch/</td></tr>
+      <tr><td>サイト</td><td>渋谷（医療ダイエット GLP-1）</td></tr>
+      <tr><td>記事の内容</td><td>「ダイエットパッチに科学的根拠なし」と医師監修で明言する検証記事。消費者庁の景表法違反措置命令・皮膚吸収の限界・部分痩せの非現実性を解説後、GLP-1医療への相談を促す構成</td></tr>
+      <tr><td>現在のPU①</td><td>「楽に痩せられる方法」CTR 9.1%</td></tr>
+      <tr><td>現在のPU②</td><td>「自分に1番合う方法」CTR 11.5%</td></tr>
+    </table>
+  </div>
+
+  <!-- ファネル分析 -->
+  <div class="section">
+    <div class="section-title">ファネル分析</div>
+    <h2>現状の数値（2026-04-01〜04-20・20日間）</h2>
+    <div class="kpi-grid">
+      <div class="kpi-card kpi-bad">
+        <div class="kpi-label">CTR（合算）</div>
+        <div class="kpi-value">10.6%</div>
+        <div class="kpi-note">基準 13.0%</div>
+      </div>
+      <div class="kpi-card kpi-good">
+        <div class="kpi-label">追加率</div>
+        <div class="kpi-value">14.0%</div>
+        <div class="kpi-note">基準 11.0% ✅</div>
+      </div>
+      <div class="kpi-card kpi-bad">
+        <div class="kpi-label">PVFR</div>
+        <div class="kpi-value">0.52%</div>
+        <div class="kpi-note">基準 0.80%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">改善ポテンシャル</div>
+        <div class="kpi-value">+4人</div>
+        <div class="kpi-note">/月</div>
+      </div>
+    </div>
+
+    <h3>ボトルネックの構造</h3>
+    <table>
+      <tr><th>ステップ</th><th>現状</th><th>基準</th><th>GAP</th><th>原因</th></tr>
+      <tr><td>PU表示 → クリック（CTR）</td><td>10.6%</td><td>13.0%</td><td class="red">-2.4pt</td><td>コピーが検索後の状態とズレている</td></tr>
+      <tr><td>クリック → 友だち追加（追加率）</td><td>14.0%</td><td>11.0%</td><td class="green">+3.0pt</td><td>問題なし</td></tr>
+    </table>
+    <div class="good">
+      追加率は正常。<strong>CTRのみがボトルネック。</strong>PU文言を1本変えるだけで解決できる構造。
+    </div>
+
+    <h3>PU別CTRの内訳</h3>
+    <table>
+      <tr><th>PU文言</th><th>CTR</th><th>判定</th></tr>
+      <tr><td>楽に痩せられる方法</td><td>9.1%</td><td><span class="badge red">基準割れ</span></td></tr>
+      <tr><td>自分に1番合う方法</td><td>11.5%</td><td><span class="badge yellow">惜しい</span></td></tr>
+    </table>
+    <div class="info">
+      PU②「自分に1番合う方法」は方向性は正しいが、<strong>「どうやって分かるの？」が不明確</strong>でクリック決断コストが残っている。そこを解消する文言に変えることがCTR改善の核心。
+    </div>
+  </div>
+
+  <!-- 検索意図リサーチ -->
+  <div class="section">
+    <div class="section-title">Intent Dive | 検索意図の深掘り</div>
+    <h2>検索者のリアルな声</h2>
+
+    <h3>「ダイエットパッチ」で検索した人の声</h3>
+    <div class="realword">
+      「<span>体力的な負担なく補助的に使えると思った</span>。主な方法と組み合わせるつもりだった」<br>
+      「1ヶ月使っても<span>体重変わらず。お金の無駄</span>だった」<br>
+      「TikTok広告で見かけて<span>興味本位で調べた。本当に効果あるの？</span>」<br>
+      「<span>SNS話題で気になった。貼るだけで痩せる技術があるなら試したい</span>」<br>
+      「貼るだけで痩せるなんてうまい話はない、とわかった。<span>では現実的な組み合わせは？</span>」<br>
+      「久光製薬から訴えられるレベルの嘘。<span>信頼できる情報源を探したい</span>」
+    </div>
+
+    <h3>検索後の状態の分析</h3>
+    <div class="flow-box">
+「ダイエットパッチが効くか確認したい（半信半疑）」で検索
+  ↓
+記事を読む →「やっぱり科学的根拠がない」と分かる
+  ↓
+失望するが、痩せたい欲求は消えていない
+  ↓
+「では自分に本当に効く方法は何か？」という状態になる
+    </div>
+
+    <div class="highlight">
+      <strong>気づき：</strong>記事を読み終えた検索者は<strong>「失望 → 反動で次の本物を探す」</strong>状態にある。
+      「楽に痩せたい」という欲求はそのまま残っており、「どれが自分に効くか」という答えを短時間で出したいフェーズにいる。
+    </div>
+
+    <h3>現行PUが弱い理由</h3>
+    <div class="flow-box">
+PU①「楽に痩せられる方法」(CTR 9.1%)
+  → 検索者は「楽に痩せたい」のはもう知っている。新情報ゼロ → 刺さらない
+
+PU②「自分に1番合う方法」(CTR 11.5%)
+  → 方向は正しいが「どうやって分かるの？」が答えられていない
+  → クリック決断の障壁が残る
+    </div>
+  </div>
+
+  <!-- ブリッジテスト -->
+  <div class="section">
+    <div class="section-title">CMO | ブリッジテスト</div>
+    <h2>診断体験 ↔ 検索者の気持ち の整合確認</h2>
+
+    <div class="bridge-box">
+      <div class="bridge-row">
+        <span class="label">① 診断が実際に提供する体験：</span><br>
+        「質問に答えると自分の太りやすさタイプ（体質）が分かり、タイプ別に"あなたに合うダイエット方法"が提示される」
+      </div>
+      <div class="bridge-row">
+        <span class="label">② このKWで検索した人の今の気持ち：</span><br>
+        「パッチが効かないと分かった。次に自分に効く方法が知りたい。できれば短時間で答えを出したい」
+      </div>
+      <div class="bridge-row">
+        <span class="label">③ ①を②の言葉で翻訳すると：</span><br>
+        「あなたに効く方法、60秒で特定できる」
+      </div>
+      <div style="margin-top: 12px; font-size: 14px;">
+        ①と③は同じ体験を指しているか？ <span class="bridge-check">✅ YES</span><br>
+        <span style="font-size:12px; color:#555;">①は「体質タイプを判定して方法提示」、③は「効く方法を60秒で特定できる」= 同じ体験を検索者の感情で包んでいる</span>
+      </div>
+    </div>
+
+    <div class="insight-block">
+      <h4>「60秒」というワードの役割</h4>
+      <p>追加率14%は正常 = LINE追加後の体験は機能している。問題はクリックするかどうかの<strong>決断コスト</strong>。「60秒」という時間の明示がその障壁を取り除く。</p>
+    </div>
+  </div>
+
+  <!-- PU文言案 -->
+  <div class="section">
+    <div class="section-title">CMO | 施策設計 — PU文言候補</div>
+    <h2>推奨PU文言</h2>
+
+    <div class="recommend-block">
+      <h4>★ 推奨 — 案A</h4>
+      <div class="copy-main">「あなたに効く方法、60秒で特定できる」</div>
+      <div class="copy-sub">サブコピー: 体質タイプを診断 → あなたに合ったダイエット法を提案</div>
+      <div class="copy-sub" style="margin-top:6px;">CTA形式: はい、気になる / いいえ</div>
+      <br>
+      <p><strong>なぜこれか：</strong></p>
+      <ul style="font-size:14px; line-height:1.9; padding-left:20px;">
+        <li>「効く方法」がパッチ失望後の「次こそ本物を」という感情タイミングと直結</li>
+        <li>「60秒」で時間コストゼロを明示 → クリック決断コストを解消</li>
+        <li>「特定できる」で診断体験（タイプ判定→方法提示）を正確に約束</li>
+        <li>既存PU②「自分に1番合う方法」の「どうやって？」という曖昧さを解消した構造</li>
+      </ul>
+    </div>
+
+    <div class="alt-block">
+      <h4>案B — 失望の反動 × 信頼性アプローチ</h4>
+      <div class="copy-main">「なぜパッチで痩せなかったか、体質から分かる」</div>
+      <div style="font-size:13px; color:#666;">サブコピー: 医師監修。あなたの太りやすさタイプと合う方法を診断</div>
+      <p style="font-size:13px; color:#555; margin-top:8px;">
+        「失望後の反動」と「医師監修への信頼」を活かす訴求。ただし「なぜパッチで痩せなかったか」の答えは記事本文にすでに書いてある（科学的根拠がないから）。PUに来た時点で「それは読んだ」になるリスクあり → <strong>A案を推奨</strong>
+      </p>
+    </div>
+
+    <h3>2案の比較</h3>
+    <table>
+      <tr><th>案</th><th>コピー</th><th>強み</th><th>懸念</th></tr>
+      <tr style="background:#f0fff4;">
+        <td><span class="badge green">★ 推奨</span> 案A</td>
+        <td>「あなたに効く方法、60秒で特定できる」</td>
+        <td>感情タイミング一致・決断コスト解消・ブリッジ完璧</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>案B</td>
+        <td>「なぜパッチで痩せなかったか、体質から分かる」</td>
+        <td>失望感情に直撃・医師監修で信頼性</td>
+        <td>記事本文で答え済みの問いを繰り返すリスク</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 期待効果 -->
+  <div class="section">
+    <div class="section-title">期待効果</div>
+    <h2>改善後の試算</h2>
+
+    <table>
+      <tr><th>指標</th><th>改善前</th><th>改善後（目標CTR 13%）</th></tr>
+      <tr><td>月間PV</td><td>3,452</td><td>3,452</td></tr>
+      <tr><td>PU表示率</td><td>35.1%</td><td>35.1%（変化なし）</td></tr>
+      <tr><td>CTR</td><td>10.6%</td><td>13.0%</td></tr>
+      <tr><td>追加率</td><td>14.0%</td><td>14.0%（正常維持）</td></tr>
+      <tr><td>PVFR</td><td>0.52%</td><td>0.64%</td></tr>
+      <tr style="background:#f0fff4;"><td><strong>月間友だち</strong></td><td>18人</td><td><strong>22人（+4人/月）</strong></td></tr>
+    </table>
+
+    <div class="info">
+      PV 3,452は相対的に少ないため絶対インパクトは+4人/月。ただし工数は文言1本の差し替えのみで完結するため、費用対効果は高い。
+    </div>
+  </div>
+
+  <!-- 次のアクション -->
+  <div class="section">
+    <h2>次のアクション</h2>
+    <table>
+      <tr><th>タスク</th><th>タスクID</th><th>ステータス</th><th>条件</th></tr>
+      <tr><td>案A PU差し替え実施（WINUTでPU設定変更）</td><td>t57</td><td><span class="badge yellow">承認待ち</span></td><td>Ren承認後</td></tr>
+    </table>
+
+    <div class="good" style="margin-top:16px;">
+      <strong>CTR 13%達成後：</strong><br>
+      PVFR 0.52% → 0.64%。追加率は正常なため、文言1本で完結する最も工数が低い改善。
+    </div>
+  </div>
+
+</main>
+
+<footer>Noa Docs｜LINEマーケチーム｜作成 2026-04-23</footer>
+
+</body>
+</html>
