@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PU改善設計：包茎（kanton/hiyo/sapporo/shinsei）2026-04-30</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header p { color: #aaa; font-size: 14px; }
+    .update-banner { background: #1a2e2e; color: #7effd4; font-size: 13px; padding: 10px 32px; }
+    main { max-width: 860px; margin: 40px auto; padding: 0 24px 60px; }
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; color: #333; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 8px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+    .red { background: #fff0f0; color: #c0392b; }
+    .yellow { background: #fffbea; color: #b7860b; }
+    .green { background: #f0fff4; color: #27ae60; }
+    .blue { background: #f0f4ff; color: #2c52b0; }
+    .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .alert { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .info { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f7f7f7; border-radius: 8px; padding: 16px; text-align: center; }
+    .kpi-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+    .kpi-value { font-size: 22px; font-weight: 700; }
+    .kpi-note { font-size: 11px; color: #aaa; margin-top: 2px; }
+    .kpi-bad .kpi-value { color: #e74c3c; }
+    .kpi-ok .kpi-value { color: #f39c12; }
+    .kpi-good .kpi-value { color: #27ae60; }
+    .bridge-box { background: #1a1a2e; color: #eee; border-radius: 8px; padding: 20px 24px; font-size: 13px; line-height: 2; margin: 12px 0; }
+    .bridge-box .label { color: #7effd4; font-weight: 700; }
+    .site-block { border: 1px solid #e8e8e8; border-radius: 10px; padding: 20px; margin: 16px 0; }
+    .site-block.best { border-color: #27ae60; }
+    .site-name { font-size: 13px; font-weight: 700; color: #555; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .site-block.best .site-name { color: #1a6e3e; }
+    .pu-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; font-size: 13px; border-bottom: 1px solid #f5f5f5; }
+    .pu-row:last-child { border-bottom: none; }
+    .pu-text { flex: 1; }
+    .pu-ctr { font-weight: 700; min-width: 55px; text-align: right; }
+    .pu-ctr.ok { color: #27ae60; }
+    .pu-ctr.ng { color: #e74c3c; }
+    .arrow { color: #aaa; font-size: 18px; margin: 8px 0 8px 24px; }
+    .new-pu { background: #f0fff4; border: 1px solid #27ae60; border-radius: 8px; padding: 12px 16px; margin: 8px 0; font-size: 14px; font-weight: 600; color: #1a6e3e; }
+    .new-pu-reason { font-size: 12px; color: #555; margin-top: 6px; font-weight: 400; line-height: 1.5; }
+    .delete-pu { background: #fff0f0; border: 1px dashed #e74c3c; border-radius: 8px; padding: 10px 14px; margin: 6px 0; font-size: 13px; color: #c0392b; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PU改善設計：包茎（kanton / hiyo / sapporo / shinsei）</h1>
+    <p>t61｜設計日: 2026-04-30｜担当: CMO → CEO確認済み｜kasei・tohaはRen担当（t8）につき対象外</p>
+  </header>
+  <div class="update-banner">⚠️ ブラッシュアップ待ち — Renレビュー前の初稿</div>
+
+  <main>
+
+    <!-- 現状 -->
+    <div class="section">
+      <p class="section-title">現状数値（4/1〜4/28）</p>
+      <h2>全サイト CTR 基準割れ。shinsei だけが唯一クリア</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-bad">
+          <div class="kpi-label">平均CTR</div>
+          <div class="kpi-value">10.9%</div>
+          <div class="kpi-note">基準13% 🔴</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">ポテンシャル</div>
+          <div class="kpi-value">+11人</div>
+          <div class="kpi-note">/月（13%到達時）</div>
+        </div>
+        <div class="kpi-card kpi-good">
+          <div class="kpi-label">shinsei 唯一クリア</div>
+          <div class="kpi-value">13.2%</div>
+          <div class="kpi-note">「自分にぴったり」系 ✅</div>
+        </div>
+      </div>
+
+      <!-- サイト別現状 -->
+      <h3>サイト別 PU現状</h3>
+
+      <div class="site-block best">
+        <div class="site-name">✅ shinsei（真性包茎）— 唯一の成功例</div>
+        <div class="pu-row"><span class="pu-text">自分にぴったりの包茎の直し方を見つける!</span><span class="pu-ctr ok">13.2%</span><span class="badge green">基準クリア</span></div>
+        <div class="pu-row"><span class="pu-text">包茎を治して自分に自信を</span><span class="pu-ctr ng">9.2%</span></div>
+        <div class="pu-row"><span class="pu-text">包茎を治して夜の自信を</span><span class="pu-ctr ng">7.9%</span></div>
+      </div>
+
+      <div class="site-block">
+        <div class="site-name">❌ kanton（カントン包茎）</div>
+        <div class="pu-row"><span class="pu-text">放っておいて不安</span><span class="pu-ctr ng">9.6%</span><span class="badge red">要削除</span></div>
+        <div class="pu-row"><span class="pu-text">治し方が知りたい</span><span class="pu-ctr ng">8.8%</span></div>
+      </div>
+
+      <div class="site-block">
+        <div class="site-name">❌ hiyo（費用）</div>
+        <div class="pu-row"><span class="pu-text">包茎を治して夜の自信をつけたい!</span><span class="pu-ctr ng">9.3%</span></div>
+        <div class="pu-row"><span class="pu-text">包茎を治して自分に自信をつけたい!</span><span class="pu-ctr ng">11.2%</span></div>
+        <div class="pu-row"><span class="pu-text">自分にぴったりの包茎の直し方を見つける!</span><span class="pu-ctr ng">10.9%</span></div>
+      </div>
+
+      <div class="site-block">
+        <div class="site-name">△ sapporo（参考値・imp少）</div>
+        <div class="pu-row"><span class="pu-text">包茎を治して夜の自信を（imp17）</span><span class="pu-ctr ok">17.6%</span><span class="badge yellow">参考値</span></div>
+        <div class="pu-row"><span class="pu-text">包茎を治して自分に自信（imp9）</span><span class="pu-ctr ng">0.0%</span><span class="badge yellow">参考値</span></div>
+      </div>
+    </div>
+
+    <!-- 仮説 -->
+    <div class="section">
+      <p class="section-title">設計根拠</p>
+      <h2>ブリッジテスト + 仮説</h2>
+
+      <div class="bridge-box">
+        <div><span class="label">① 診断が実際に提供する体験：</span><br>
+        「自分の包茎タイプ・状態に合った治し方・直し方を提案する」</div>
+        <br>
+        <div><span class="label">② 各記事検索者の今の気持ち：</span><br>
+        shinsei: 「自分は真性かも。手術しかない？怖い。自分の状態に合った選択肢を知りたい」<br>
+        kanton:  「カントン包茎かも。重症なの？自分はどのくらい？どうすれば治る？」<br>
+        hiyo:    「手術を検討中。費用が気になる。自分のタイプで費用は変わるの？」</div>
+        <br>
+        <div><span class="label">③ ①を②の言葉で翻訳 = PU文言の核心：</span><br>
+        shinsei: 「自分の包茎、手術が必要なレベル？ 30秒で自分に合った治し方が分かる」<br>
+        kanton:  「カントン包茎、自分はどのくらい？ 30秒で対処法が分かる」<br>
+        hiyo:    「包茎手術、自分に合う方法と費用が30秒で分かる」<br>
+        → ①と③が一致 ✅</div>
+      </div>
+
+      <div class="highlight">
+        <strong>仮説の核心：</strong><br>
+        包茎検索者は「判断・答えを求めている段階」。「治った後のベネフィット（自信・夜の自信）」より「今の疑問に答えが出る」訴求が動機に直結する。<br><br>
+        shinsei「自分にぴったり」成功の理由 = 「画一的な情報じゃなく、自分の状態に合った答えが欲しい」という欲求に直撃しているから。
+      </div>
+
+      <div class="alert">
+        <strong>失敗パターン（削除推奨）：</strong><br>
+        「夜の自信・自分に自信」系 → 治った後の話。まだ治す決断ができていない人に届かない<br>
+        「放っておいて不安」 → 不安煽りで終わり。行動への橋渡しがない（anti-patterns掲載済み）
+      </div>
+    </div>
+
+    <!-- 改善設計 -->
+    <div class="section">
+      <p class="section-title">改善設計</p>
+      <h2>サイト別 差し替え案</h2>
+
+      <!-- shinsei -->
+      <h3>shinsei（真性包茎）— CTR 13.2% から上積み</h3>
+      <div class="good">現状の「自分にぴったりの包茎の直し方を見つける!」は基準クリア済み。上積みを狙う。</div>
+      <div class="delete-pu">🗑 削除: 「包茎を治して自分に自信を」（9.2%）・「包茎を治して夜の自信を」（7.9%）→ imp集約</div>
+      <div class="arrow">↓ 新PU追加</div>
+      <div class="new-pu">
+        「真性包茎、手術しかない？ 30秒で自分に合う選択肢が分かる」
+        <div class="new-pu-reason">理由: 「手術しかないと思っている」という真性包茎特有の不安に直撃。「選択肢がある」という示唆で診断へのモチベーションを作る。</div>
+      </div>
+
+      <!-- kanton -->
+      <h3>kanton（カントン包茎）— 両PUとも全滅。全差し替え</h3>
+      <div class="delete-pu">🗑 削除: 「放っておいて不安」（9.6%）→ anti-patterns掲載済み問題PU・即削除</div>
+      <div class="delete-pu">🗑 削除: 「治し方が知りたい」（8.8%）→ 検索者がすでに知っている内容の繰り返し</div>
+      <div class="arrow">↓ 新PU</div>
+      <div class="new-pu">
+        推奨A: 「カントン包茎、自分はどのくらい？ 30秒で対処法が分かる」
+        <div class="new-pu-reason">理由: 「どのくらい？」という重症度確認ニーズに直撃。自己診断欲求を刺激する。</div>
+      </div>
+      <div class="new-pu" style="background:#f7f7f7; border-color:#ccc; color:#333;">
+        案B: 「自分にぴったりのカントン包茎の直し方を見つける!」
+        <div class="new-pu-reason">理由: shinsei成功パターンの横展開。リスク低。ただし「カントン特有の不安」には案Aの方が刺さる。</div>
+      </div>
+
+      <!-- hiyo -->
+      <h3>hiyo（費用）— 「自信」訴求を全廃・費用文脈に合わせる</h3>
+      <div class="delete-pu">🗑 削除: 「包茎を治して夜の自信をつけたい!」（9.3%）</div>
+      <div class="delete-pu">🗑 削除: 「包茎を治して自分に自信をつけたい!」（11.2%）</div>
+      <div class="arrow">↓ 新PU（「自分にぴったり」は継続＋追加）</div>
+      <div class="new-pu">
+        新規: 「包茎手術、自分に合う方法と費用が30秒で分かる」
+        <div class="new-pu-reason">理由: 費用記事の検索者は治療検討が具体的。タイプ診断→費用感まで示す流れが検索意図に一致する。</div>
+      </div>
+
+      <!-- sapporo -->
+      <h3>sapporo（地域・imp少）— 実績パターン横展開で様子見</h3>
+      <div class="new-pu" style="background:#f7f7f7; border-color:#ccc; color:#333;">
+        「自分にぴったりの包茎の直し方を見つける!」（shinsei成功パターン横展開）
+        <div class="new-pu-reason">imp少なく検証困難。shinsei実績の横展開でリスク最小。imp蓄積後に判断。</div>
+      </div>
+    </div>
+
+    <!-- まとめ -->
+    <div class="section">
+      <p class="section-title">実装</p>
+      <h2>進め方</h2>
+      <table>
+        <tr>
+          <th>優先度</th>
+          <td>kanton 最優先（両PUとも問題あり。anti-patterns掲載の「放っておいて不安」を即削除）</td>
+        </tr>
+        <tr>
+          <th>工数</th>
+          <td>文言変更のみ。サイト4本で1〜2営業日</td>
+        </tr>
+        <tr>
+          <th>判定タイミング</th>
+          <td>差し替え後5〜7日でCTR確認（目標: 各サイト13%以上）</td>
+        </tr>
+        <tr>
+          <th>担当</th>
+          <td>Noa（文言確定・依頼書作成）→ Ren / インターン（実装）</td>
+        </tr>
+        <tr>
+          <th>ステータス</th>
+          <td><span class="badge yellow">Renレビュー待ち</span></td>
+        </tr>
+      </table>
+      <div class="info">
+        <strong>Renへの確認事項：</strong><br>
+        ① kanton「放っておいて不安」の即削除 GO/NG<br>
+        ② hiyo・shinsei 新PU追加 GO/NG<br>
+        ③ sapporo は imp少なく後回しでいいか確認
+      </div>
+    </div>
+
+  </main>
+</body>
+</html>
