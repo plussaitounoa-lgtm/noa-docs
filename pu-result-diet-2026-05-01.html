@@ -13,7 +13,9 @@
     .update-banner { background: #1a2e2e; color: #7effd4; font-size: 13px; padding: 10px 32px; }
     main { max-width: 860px; margin: 40px auto; padding: 0 24px 60px; }
     .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-sub { background: #f9f9f9; border-radius: 10px; border: 1px solid #e8e8e8; padding: 20px; margin-bottom: 24px; }
     .section-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .sub-label { font-size: 12px; font-weight: 600; color: #aaa; margin-bottom: 12px; }
     h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
     h3 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; color: #333; }
     p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
@@ -22,10 +24,6 @@
     td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
     tr:last-child td { border-bottom: none; }
     .badge { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
-    .red { background: #fff0f0; color: #c0392b; }
-    .yellow { background: #fffbea; color: #b7860b; }
-    .green { background: #f0fff4; color: #27ae60; }
-    .blue { background: #f0f4ff; color: #2c52b0; }
     .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
     .alert { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
     .good { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
@@ -61,115 +59,99 @@
     .val-ok { color: #f39c12; }
     .next-action { border: 1px solid #e8e8e8; border-radius: 8px; padding: 14px 18px; margin: 8px 0; font-size: 14px; display: flex; gap: 10px; align-items: flex-start; }
     .next-action-num { background: #1a1a2e; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-    .prev-link { display: inline-block; font-size: 13px; color: #2c52b0; text-decoration: none; margin-bottom: 20px; }
-    .prev-link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <header>
     <h1>PU施策結果：ダイエット（t55・t57）6日間再分析</h1>
-    <p>計測期間: 2026-04-25〜04-30（6日分）｜集計日: 2026-05-01｜4/30データ反映後</p>
+    <p>計測期間: 施策前7日（4/18〜4/24）vs 施策後6日（4/25〜4/30）｜集計日: 2026-05-01</p>
   </header>
-  <div class="update-banner">🔄 4/30データ反映確認後・再集計版｜5日間版は <a href="pu-result-diet-2026-04-30.html" style="color:#7effd4;">こちら</a></div>
+  <div class="update-banner">🔄 4/30データ反映後・最終版｜5日間版は <a href="pu-result-diet-2026-04-30.html" style="color:#7effd4;">こちら</a></div>
 
   <main>
 
     <!-- t55 -->
     <div class="section">
       <p class="section-title">t55 — こいずみ「日本人1番痩せる」</p>
-      <h2>6日間再分析（4/25〜4/30）</h2>
+      <h2>施策前後 比較（前7日 vs 後6日）</h2>
 
       <div class="verdict ng">
         <div class="verdict-icon">⚠️</div>
         <div>
-          <div class="verdict-title">当たり確定 → 要継続観察に判定見直し</div>
-          <div class="verdict-desc">CTRは16.5%に改善。ただし6日目データ込みでFRが11.1%→9.5%に低下し基準11%を下回った。旧PU並走中でサンプルが分散しているため、旧PU削除後に再判断が必要。</div>
+          <div class="verdict-title">CTR当たり・FR基準未達・要継続観察</div>
+          <div class="verdict-desc">CTRは12.4%→16.5%に大幅改善。FRは8.6%→9.5%と改善傾向だが基準11%未達。旧PU並走中でサンプルが分散しており、旧PU削除後の再計測が必要。</div>
         </div>
       </div>
 
-      <h3>5日間 vs 6日間 比較（新PU単体）</h3>
+      <h3>施策前後 比較</h3>
       <div class="compare-block">
         <div class="compare-before">
-          <div class="compare-title">5日間（4/25-29）</div>
-          <div class="metric-row"><span>imp</span><span class="metric-val">116</span></div>
-          <div class="metric-row"><span>CTR</span><span class="metric-val val-good">15.5%</span></div>
-          <div class="metric-row"><span>FR（追加率）</span><span class="metric-val val-good">11.1% ✅</span></div>
-          <div class="metric-row"><span>IMPFR</span><span class="metric-val">1.72%</span></div>
-          <div class="metric-row"><span>PVFR</span><span class="metric-val val-ok">0.730%</span></div>
-          <div class="metric-row"><span>click / 友だち</span><span class="metric-val">18 / 2</span></div>
+          <div class="compare-title">施策前（4/18〜4/24・7日間）旧PU</div>
+          <div class="metric-row"><span>PU</span><span class="metric-val">自分に合ったダイエット方法</span></div>
+          <div class="metric-row"><span>PV</span><span class="metric-val">656</span></div>
+          <div class="metric-row"><span>imp</span><span class="metric-val">283</span></div>
+          <div class="metric-row"><span>CTR</span><span class="metric-val val-bad">12.4%</span></div>
+          <div class="metric-row"><span>FR（追加率）</span><span class="metric-val val-bad">8.6%</span></div>
+          <div class="metric-row"><span>IMPFR</span><span class="metric-val">1.06%</span></div>
+          <div class="metric-row"><span>PVFR</span><span class="metric-val val-bad">0.457%</span></div>
+          <div class="metric-row"><span>click / 友だち</span><span class="metric-val">35 / 3</span></div>
         </div>
         <div class="compare-after warn">
-          <div class="compare-title">6日間（4/25-30）</div>
+          <div class="compare-title">施策後（4/25〜4/30・6日間）新PU単体</div>
+          <div class="metric-row"><span>PU</span><span class="metric-val">痩せない理由知りたい！</span></div>
+          <div class="metric-row"><span>PV</span><span class="metric-val">293</span></div>
           <div class="metric-row"><span>imp</span><span class="metric-val">127</span></div>
           <div class="metric-row"><span>CTR</span><span class="metric-val val-good">16.5% ↑</span></div>
-          <div class="metric-row"><span>FR（追加率）</span><span class="metric-val val-bad">9.5% ↓ 🔴</span></div>
-          <div class="metric-row"><span>IMPFR</span><span class="metric-val val-ok">1.57%</span></div>
-          <div class="metric-row"><span>PVFR</span><span class="metric-val val-bad">0.683% ↓</span></div>
+          <div class="metric-row"><span>FR（追加率）</span><span class="metric-val val-bad">9.5% ↑</span></div>
+          <div class="metric-row"><span>IMPFR</span><span class="metric-val val-ok">1.57% ↑</span></div>
+          <div class="metric-row"><span>PVFR</span><span class="metric-val val-ok">0.683% ↑</span></div>
           <div class="metric-row"><span>click / 友だち</span><span class="metric-val">21 / 2</span></div>
         </div>
       </div>
 
-      <h3>PU別内訳（6日間）</h3>
+      <h3>PU別内訳（施策後6日間）</h3>
       <table>
         <tr>
-          <th>PU名</th><th>imp</th><th>CTR</th><th>友だち</th><th>FR</th><th>IMPFR</th><th>PVFR</th><th>判定</th>
+          <th>PU名</th><th>imp</th><th>CTR</th><th>友だち</th><th>FR</th><th>IMPFR</th><th>PVFR</th><th>状態</th>
         </tr>
         <tr>
           <td>痩せない理由知りたい！（新）</td><td>127</td><td><strong>16.5%</strong></td><td>2</td>
-          <td><span class="badge yellow">9.5% ⚠️</span></td><td>1.57%</td><td>0.683%</td>
-          <td><span class="badge yellow">CTR当たり・FR要観察</span></td>
+          <td><span class="badge" style="background:#fffbea;color:#b7860b;">9.5% ⚠️</span></td>
+          <td>1.57%</td><td>0.683%</td>
+          <td><span class="badge" style="background:#fffbea;color:#b7860b;">CTR当たり・FR要観察</span></td>
         </tr>
         <tr>
           <td>自分に合ったダイエット方法（旧・並走中）</td><td>142</td><td>10.6%</td><td>4</td>
           <td>26.7%</td><td>2.82%</td><td>1.329%</td>
-          <td><span class="badge yellow">⚠️ 削除要確認</span></td>
+          <td><span class="badge" style="background:#fffbea;color:#b7860b;">⚠️ 削除要確認</span></td>
         </tr>
         <tr style="background:#f0f4ff;">
           <td><strong>LP全体合算</strong></td><td><strong>269</strong></td><td><strong>13.4%</strong></td><td><strong>6</strong></td>
           <td><strong>16.7%</strong></td><td><strong>2.23%</strong></td><td><strong>1.010%</strong></td>
-          <td><span class="badge green">✅ PVFR基準超え（旧PU込み）</span></td>
+          <td><span class="badge" style="background:#f0fff4;color:#27ae60;">✅ PVFR基準超え（旧PU込み）</span></td>
         </tr>
       </table>
 
       <div class="highlight">
-        <strong>FRが下がった理由：</strong>6日目（4/30）でimp+11・click+3・友だち+0。クリック3人が全員友達追加しなかった日があり、FRの分母（click数）だけ増えた。click 21という少サンプルでは1人の増減で結論が変わる。<br><br>
-        <strong>旧PUの問題：</strong>旧PUがimp 142と新PU（127）より多く表示されており、LP訪問者を半分ずつ分散させている。旧PUを削除すれば新PUのサンプルが倍近く積まれ、FRの実態が見えてくる。<br><br>
-        → <strong>旧PU「自分に合ったダイエット方法」を削除し、7日以上で再計測することを推奨。</strong>
+        <strong>旧PUを削除すべき理由：</strong>旧PU（imp 142）が新PU（imp 127）より多く表示されており、LPのimpを半分ずつ分散させている。新PU単体のclick数は21回しかなく、1人の差でFRが大きく変わる少サンプル状態。旧PU削除で全impが新PUに集中すれば、FRの実態が正確に把握できる。<br><br>
+        → <strong>旧PU削除後7日以上で再計測。FRが11%を安定して取れれば当たり確定。</strong>
       </div>
     </div>
 
     <!-- t57 -->
     <div class="section">
       <p class="section-title">t57 — 渋谷「ダイエットパッチ」</p>
-      <h2>6日間再分析（4/25〜4/30）</h2>
+      <h2>施策後6日間の結果</h2>
+
+      <div class="info" style="margin-bottom:16px;">
+        <strong>施策前との比較について：</strong>施策前の同タグのimp=15（参考値にならない）のため、施策後6日間の絶対値で判断する。
+      </div>
 
       <div class="verdict bad">
         <div class="verdict-icon">🔴</div>
         <div>
-          <div class="verdict-title">全指標悪化・友達追加画面問題（変わらず）</div>
-          <div class="verdict-desc">6日間でFR 2.1%・PVFR 0.107%。5日時点より全指標悪化。CTRは基準クリアのままだが、それ以外は機能していない。友達追加画面の改善が急務。</div>
-        </div>
-      </div>
-
-      <h3>5日間 vs 6日間 比較</h3>
-      <div class="compare-block">
-        <div class="compare-before">
-          <div class="compare-title">5日間（4/25-29）</div>
-          <div class="metric-row"><span>imp</span><span class="metric-val">309</span></div>
-          <div class="metric-row"><span>CTR</span><span class="metric-val val-good">13.9%</span></div>
-          <div class="metric-row"><span>FR（追加率）</span><span class="metric-val val-bad">2.3% 🔴</span></div>
-          <div class="metric-row"><span>IMPFR</span><span class="metric-val val-bad">0.32%</span></div>
-          <div class="metric-row"><span>PVFR</span><span class="metric-val val-bad">0.115%</span></div>
-          <div class="metric-row"><span>click / 友だち</span><span class="metric-val">43 / 1</span></div>
-        </div>
-        <div class="compare-after warn">
-          <div class="compare-title">6日間（4/25-30）</div>
-          <div class="metric-row"><span>imp</span><span class="metric-val">344</span></div>
-          <div class="metric-row"><span>CTR</span><span class="metric-val val-good">13.7% →</span></div>
-          <div class="metric-row"><span>FR（追加率）</span><span class="metric-val val-bad">2.1% ↓ 🔴</span></div>
-          <div class="metric-row"><span>IMPFR</span><span class="metric-val val-bad">0.29% ↓</span></div>
-          <div class="metric-row"><span>PVFR</span><span class="metric-val val-bad">0.107% ↓</span></div>
-          <div class="metric-row"><span>click / 友だち</span><span class="metric-val">47 / 1</span></div>
+          <div class="verdict-title">CTRのみ当たり・友達追加画面が構造的にNG</div>
+          <div class="verdict-desc">6日間でCTR 13.7%（基準クリア）。ただしFR 2.1%・PVFR 0.107%と基準から大幅乖離。click 47に対して友だち1人。サンプル不足ではなく友達追加画面の問題。</div>
         </div>
       </div>
 
@@ -196,44 +178,80 @@
         </div>
         <div class="kpi-card">
           <div class="kpi-label">PV / imp / click / 友</div>
-          <div class="kpi-value" style="font-size:15px;">932 / 344 / 47 / 1</div>
+          <div class="kpi-value" style="font-size:14px;">932 / 344 / 47 / 1</div>
           <div class="kpi-note">6日間の実数</div>
         </div>
       </div>
 
       <div class="alert">
-        <strong>t55との違い：</strong>t57はclick 47で友だち1人。t55（click 21・友だち2人）と違い、サンプルが十分積まれても改善していない。これはサンプル不足の問題ではなく、<strong>友達追加画面が構造的にNG</strong>であることを示している。<br><br>
-        PVFRは0.107%で基準0.80%の7分の1以下。LP訪問者のほぼ全員が友達追加まで至っていない状態。<br><br>
+        <strong>t55との違い：</strong>t55はclick 21で少サンプルのため「旧PU削除後に再判断」。<br>
+        t57はclick 47が積まれても友だち1人。サンプル不足の問題ではなく、<strong>友達追加画面が構造的にNG</strong>であることが確定。<br><br>
+        PVFRは0.107%で基準0.80%の約7分の1。LP訪問者のほぼ全員が友達追加まで至っていない。<br><br>
         ※ 同じ構造: t60（EDバイアグラ飲み方）。設計書 → <a href="friend-add-screen-ed-viagra-2026-04-30.html">docs参照</a>
       </div>
+    </div>
+
+    <!-- 補足：5日→6日差分 -->
+    <div class="section-sub">
+      <p class="sub-label">補足 — 5日間（4/25-29）vs 6日間（4/25-30）の差分</p>
+      <table>
+        <tr>
+          <th>タスク</th><th>指標</th><th>5日間</th><th>6日間</th><th>変化</th>
+        </tr>
+        <tr>
+          <td rowspan="4"><strong>t55</strong> 新PU単体</td>
+          <td>CTR</td><td>15.5%</td><td>16.5%</td><td style="color:#27ae60;">↑ +1.0pt</td>
+        </tr>
+        <tr>
+          <td>FR</td><td>11.1%</td><td>9.5%</td><td style="color:#e74c3c;">↓ −1.6pt</td>
+        </tr>
+        <tr>
+          <td>IMPFR</td><td>1.72%</td><td>1.57%</td><td style="color:#e74c3c;">↓ −0.15pt</td>
+        </tr>
+        <tr>
+          <td>PVFR</td><td>0.730%</td><td>0.683%</td><td style="color:#e74c3c;">↓ −0.047pt</td>
+        </tr>
+        <tr style="border-top: 2px solid #e8e8e8;">
+          <td rowspan="4"><strong>t57</strong> 新PU</td>
+          <td>CTR</td><td>13.9%</td><td>13.7%</td><td style="color:#e74c3c;">↓ −0.2pt</td>
+        </tr>
+        <tr>
+          <td>FR</td><td>2.3%</td><td>2.1%</td><td style="color:#e74c3c;">↓ −0.2pt</td>
+        </tr>
+        <tr>
+          <td>IMPFR</td><td>0.32%</td><td>0.29%</td><td style="color:#e74c3c;">↓ −0.03pt</td>
+        </tr>
+        <tr>
+          <td>PVFR</td><td>0.115%</td><td>0.107%</td><td style="color:#e74c3c;">↓ −0.008pt</td>
+        </tr>
+      </table>
+      <p style="font-size:13px; color:#666;">t55はCTR改善・FR微低下。t57は全指標で微悪化。どちらも大きな変動はなく、5日間時点の傾向が継続している。</p>
     </div>
 
     <!-- 総括・次のアクション -->
     <div class="section">
       <p class="section-title">総括・次のアクション</p>
-      <h2>6日間まとめ</h2>
+      <h2>2施策まとめ（前7日 vs 後6日）</h2>
 
       <table>
         <tr>
-          <th>タスク</th><th>CTR</th><th>FR</th><th>IMPFR</th><th>PVFR</th><th>5日→6日</th><th>判定</th>
+          <th>タスク</th><th>CTR 前→後</th><th>FR 前→後</th><th>PVFR 前→後</th><th>判定</th><th>次のアクション</th>
         </tr>
         <tr>
           <td><strong>t55</strong><br>こいずみ_日本人1番痩せる</td>
-          <td><span class="badge green">16.5% ✅</span></td>
-          <td><span class="badge yellow">9.5% ⚠️</span></td>
-          <td><span class="badge yellow">1.57%</span></td>
-          <td><span class="badge yellow">0.683%</span></td>
-          <td>CTR↑ / FR↓ / PVFR↓</td>
-          <td><span class="badge yellow">要継続観察</span></td>
+          <td><span class="badge" style="background:#f0fff4;color:#27ae60;">12.4%→16.5% ✅</span></td>
+          <td><span class="badge" style="background:#fffbea;color:#b7860b;">8.6%→9.5% ⚠️</span></td>
+          <td><span class="badge" style="background:#fffbea;color:#b7860b;">0.46%→0.68% ⚠️</span></td>
+          <td><span class="badge" style="background:#fffbea;color:#b7860b;">要継続観察</span></td>
+          <td>旧PU削除→7日以上再計測</td>
         </tr>
         <tr>
           <td><strong>t57</strong><br>渋谷_ダイエットパッチ</td>
-          <td><span class="badge green">13.7% ✅</span></td>
-          <td><span class="badge red">2.1% 🔴</span></td>
-          <td><span class="badge red">0.29% 🔴</span></td>
-          <td><span class="badge red">0.107% 🔴</span></td>
-          <td>全指標悪化</td>
-          <td><span class="badge red">友達追加画面改善急務</span></td>
+          <td><span class="badge" style="background:#f0fff4;color:#27ae60;">（前サンプル不足）→13.7% ✅</span></td>
+          <td><span class="badge" style="background:#fff0f0;color:#c0392b;">→2.1% 🔴</span></td>
+          <td><span class="badge" style="background:#fff0f0;color:#c0392b;">→0.107% 🔴</span></td>
+          <td><span class="badge" style="background:#fff0f0;color:#c0392b;">友達追加画面改善急務</span></td>
+          <td>t60と同アプローチで改善設計</td>
         </tr>
       </table>
 
@@ -244,7 +262,7 @@
       </div>
       <div class="next-action">
         <div class="next-action-num">2</div>
-        <div><strong>t57 友達追加画面改善のGO確認：</strong>「ダイエットパッチ、6日間でもFR 2.1%・PVFR 0.107%で改善なし。t60（EDバイアグラ）と同じ構造（友達追加画面の問題）。t60の設計と同じ方向で改善案を作っていい？」</div>
+        <div><strong>t57 友達追加画面改善のGO確認：</strong>「ダイエットパッチ、6日間でFR 2.1%・PVFR 0.107%で改善なし。t60（EDバイアグラ）と同じ構造（友達追加画面の問題）と判断。t60の設計と同じ方向で改善案を作っていい？」</div>
       </div>
       <div class="next-action">
         <div class="next-action-num">3</div>
