@@ -26,7 +26,6 @@
     .badge { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
     .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
     .alert { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
-    .good { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
     .info { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
     .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
     .kpi-card { background: #f7f7f7; border-radius: 8px; padding: 16px; text-align: center; }
@@ -48,15 +47,18 @@
     .compare-before { background: #f7f7f7; border-radius: 8px; padding: 16px; }
     .compare-after { background: #f0fff4; border: 2px solid #27ae60; border-radius: 8px; padding: 16px; }
     .compare-after.warn { background: #fff8f0; border-color: #f39c12; }
+    .compare-after.bad { background: #fff0f0; border-color: #e74c3c; }
     .compare-title { font-size: 12px; font-weight: 700; color: #888; margin-bottom: 10px; }
     .compare-after .compare-title { color: #1a6e3e; }
     .compare-after.warn .compare-title { color: #b7860b; }
+    .compare-after.bad .compare-title { color: #c0392b; }
     .metric-row { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
     .metric-row:last-child { border-bottom: none; }
     .metric-val { font-weight: 700; }
     .val-good { color: #27ae60; }
     .val-bad { color: #e74c3c; }
     .val-ok { color: #f39c12; }
+    .val-gray { color: #aaa; }
     .next-action { border: 1px solid #e8e8e8; border-radius: 8px; padding: 14px 18px; margin: 8px 0; font-size: 14px; display: flex; gap: 10px; align-items: flex-start; }
     .next-action-num { background: #1a1a2e; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
   </style>
@@ -78,8 +80,8 @@
       <div class="verdict ng">
         <div class="verdict-icon">⚠️</div>
         <div>
-          <div class="verdict-title">CTR当たり・FR基準未達・要継続観察</div>
-          <div class="verdict-desc">CTRは12.4%→16.5%に大幅改善。FRは8.6%→9.5%と改善傾向だが基準11%未達。旧PU並走中でサンプルが分散しており、旧PU削除後の再計測が必要。</div>
+          <div class="verdict-title">CTR当たり・友だち追加率基準未達・要継続観察</div>
+          <div class="verdict-desc">CTRは12.4%→16.5%に大幅改善。友だち追加率は8.6%→9.5%と改善傾向だが基準11%未達。旧PU並走中でサンプルが分散しており、旧PU削除後の再計測が必要。</div>
         </div>
       </div>
 
@@ -91,7 +93,7 @@
           <div class="metric-row"><span>PV</span><span class="metric-val">656</span></div>
           <div class="metric-row"><span>imp</span><span class="metric-val">283</span></div>
           <div class="metric-row"><span>CTR</span><span class="metric-val val-bad">12.4%</span></div>
-          <div class="metric-row"><span>FR（追加率）</span><span class="metric-val val-bad">8.6%</span></div>
+          <div class="metric-row"><span>友だち追加率</span><span class="metric-val val-bad">8.6%</span></div>
           <div class="metric-row"><span>IMPFR</span><span class="metric-val">1.06%</span></div>
           <div class="metric-row"><span>PVFR</span><span class="metric-val val-bad">0.457%</span></div>
           <div class="metric-row"><span>click / 友だち</span><span class="metric-val">35 / 3</span></div>
@@ -102,7 +104,7 @@
           <div class="metric-row"><span>PV</span><span class="metric-val">293</span></div>
           <div class="metric-row"><span>imp</span><span class="metric-val">127</span></div>
           <div class="metric-row"><span>CTR</span><span class="metric-val val-good">16.5% ↑</span></div>
-          <div class="metric-row"><span>FR（追加率）</span><span class="metric-val val-bad">9.5% ↑</span></div>
+          <div class="metric-row"><span>友だち追加率</span><span class="metric-val val-bad">9.5% ↑</span></div>
           <div class="metric-row"><span>IMPFR</span><span class="metric-val val-ok">1.57% ↑</span></div>
           <div class="metric-row"><span>PVFR</span><span class="metric-val val-ok">0.683% ↑</span></div>
           <div class="metric-row"><span>click / 友だち</span><span class="metric-val">21 / 2</span></div>
@@ -112,18 +114,18 @@
       <h3>PU別内訳（施策後6日間）</h3>
       <table>
         <tr>
-          <th>PU名</th><th>imp</th><th>CTR</th><th>友だち</th><th>FR</th><th>IMPFR</th><th>PVFR</th><th>状態</th>
+          <th>PU名</th><th>imp</th><th>CTR</th><th>友だち</th><th>友だち追加率</th><th>IMPFR</th><th>PVFR</th><th>状態</th>
         </tr>
         <tr>
           <td>痩せない理由知りたい！（新）</td><td>127</td><td><strong>16.5%</strong></td><td>2</td>
           <td><span class="badge" style="background:#fffbea;color:#b7860b;">9.5% ⚠️</span></td>
           <td>1.57%</td><td>0.683%</td>
-          <td><span class="badge" style="background:#fffbea;color:#b7860b;">CTR当たり・FR要観察</span></td>
+          <td><span class="badge" style="background:#fffbea;color:#b7860b;">CTR当たり・追加率要観察</span></td>
         </tr>
         <tr>
           <td>自分に合ったダイエット方法（旧・並走中）</td><td>142</td><td>10.6%</td><td>4</td>
-          <td>26.7%</td><td>2.82%</td><td>1.329%</td>
-          <td><span class="badge" style="background:#fffbea;color:#b7860b;">⚠️ 削除要確認</span></td>
+          <td>26.7%*</td><td>2.82%*</td><td>1.329%*</td>
+          <td><span class="badge" style="background:#fffbea;color:#b7860b;">差し替え漏れ？Renに確認</span></td>
         </tr>
         <tr style="background:#f0f4ff;">
           <td><strong>LP全体合算</strong></td><td><strong>269</strong></td><td><strong>13.4%</strong></td><td><strong>6</strong></td>
@@ -131,27 +133,50 @@
           <td><span class="badge" style="background:#f0fff4;color:#27ae60;">✅ PVFR基準超え（旧PU込み）</span></td>
         </tr>
       </table>
+      <p style="font-size:12px;color:#aaa;">* 旧PUのclick=15・友だち=4は少サンプルのためノイズが大きく、数値の信頼性は低い。</p>
 
       <div class="highlight">
-        <strong>旧PUを削除すべき理由：</strong>旧PU（imp 142）が新PU（imp 127）より多く表示されており、LPのimpを半分ずつ分散させている。新PU単体のclick数は21回しかなく、1人の差でFRが大きく変わる少サンプル状態。旧PU削除で全impが新PUに集中すれば、FRの実態が正確に把握できる。<br><br>
-        → <strong>旧PU削除後7日以上で再計測。FRが11%を安定して取れれば当たり確定。</strong>
+        <strong>旧PU削除が必要な理由：</strong>施策として新PUに差し替えたはずが旧PUがimp 142と新PU（127）より多く表示されており、差し替え漏れかA/Bかが不明な状態。新PU単体のclick数は21回しかなく1人の差で追加率が大きく変わるため、旧PU削除で全impを集中させて計測し直す必要がある。<br><br>
+        → <strong>旧PU削除後7日以上で再計測。友だち追加率が11%を安定して取れれば当たり確定。</strong>
       </div>
     </div>
 
     <!-- t57 -->
     <div class="section">
       <p class="section-title">t57 — 渋谷「ダイエットパッチ」</p>
-      <h2>施策後6日間の結果</h2>
-
-      <div class="info" style="margin-bottom:16px;">
-        <strong>施策前との比較について：</strong>施策前の同タグのimp=15（参考値にならない）のため、施策後6日間の絶対値で判断する。
-      </div>
+      <h2>施策前後 比較（前7日 vs 後6日）</h2>
 
       <div class="verdict bad">
         <div class="verdict-icon">🔴</div>
         <div>
           <div class="verdict-title">CTRのみ当たり・友達追加画面が構造的にNG</div>
-          <div class="verdict-desc">6日間でCTR 13.7%（基準クリア）。ただしFR 2.1%・PVFR 0.107%と基準から大幅乖離。click 47に対して友だち1人。サンプル不足ではなく友達追加画面の問題。</div>
+          <div class="verdict-desc">CTRは基準クリア。ただし友だち追加率2.1%・PVFR 0.107%と基準から大幅乖離。click 47に対して友だち1人。サンプル不足ではなく友達追加画面の問題。</div>
+        </div>
+      </div>
+
+      <h3>施策前後 比較</h3>
+      <div class="info" style="margin-bottom: 12px; margin-top: 0;">
+        施策前の同タグはimp=15のみで参考値にならないため、施策前は「—」表示。
+      </div>
+      <div class="compare-block">
+        <div class="compare-before">
+          <div class="compare-title">施策前（4/18〜4/24・7日間）</div>
+          <div class="metric-row"><span>imp</span><span class="metric-val val-gray">15（参考値不可）</span></div>
+          <div class="metric-row"><span>CTR</span><span class="metric-val val-gray">—</span></div>
+          <div class="metric-row"><span>友だち追加率</span><span class="metric-val val-gray">—</span></div>
+          <div class="metric-row"><span>IMPFR</span><span class="metric-val val-gray">—</span></div>
+          <div class="metric-row"><span>PVFR</span><span class="metric-val val-gray">—</span></div>
+          <div class="metric-row"><span>click / 友だち</span><span class="metric-val val-gray">3 / 0</span></div>
+        </div>
+        <div class="compare-after bad">
+          <div class="compare-title">施策後（4/25〜4/30・6日間）新PU</div>
+          <div class="metric-row"><span>PU</span><span class="metric-val">頑張らずに痩せる</span></div>
+          <div class="metric-row"><span>imp</span><span class="metric-val">344</span></div>
+          <div class="metric-row"><span>CTR</span><span class="metric-val val-good">13.7% ✅</span></div>
+          <div class="metric-row"><span>友だち追加率</span><span class="metric-val val-bad">2.1% 🔴</span></div>
+          <div class="metric-row"><span>IMPFR</span><span class="metric-val val-bad">0.29% 🔴</span></div>
+          <div class="metric-row"><span>PVFR</span><span class="metric-val val-bad">0.107% 🔴</span></div>
+          <div class="metric-row"><span>click / 友だち</span><span class="metric-val">47 / 1</span></div>
         </div>
       </div>
 
@@ -162,7 +187,7 @@
           <div class="kpi-note">基準13% ✅</div>
         </div>
         <div class="kpi-card kpi-bad">
-          <div class="kpi-label">FR（追加率）</div>
+          <div class="kpi-label">友だち追加率</div>
           <div class="kpi-value">2.1%</div>
           <div class="kpi-note">基準11% 🔴</div>
         </div>
@@ -183,6 +208,7 @@
         </div>
       </div>
 
+      <h3>問題の構造分析</h3>
       <div class="alert">
         <strong>t55との違い：</strong>t55はclick 21で少サンプルのため「旧PU削除後に再判断」。<br>
         t57はclick 47が積まれても友だち1人。サンプル不足の問題ではなく、<strong>友達追加画面が構造的にNG</strong>であることが確定。<br><br>
@@ -203,7 +229,7 @@
           <td>CTR</td><td>15.5%</td><td>16.5%</td><td style="color:#27ae60;">↑ +1.0pt</td>
         </tr>
         <tr>
-          <td>FR</td><td>11.1%</td><td>9.5%</td><td style="color:#e74c3c;">↓ −1.6pt</td>
+          <td>友だち追加率</td><td>11.1%</td><td>9.5%</td><td style="color:#e74c3c;">↓ −1.6pt</td>
         </tr>
         <tr>
           <td>IMPFR</td><td>1.72%</td><td>1.57%</td><td style="color:#e74c3c;">↓ −0.15pt</td>
@@ -216,7 +242,7 @@
           <td>CTR</td><td>13.9%</td><td>13.7%</td><td style="color:#e74c3c;">↓ −0.2pt</td>
         </tr>
         <tr>
-          <td>FR</td><td>2.3%</td><td>2.1%</td><td style="color:#e74c3c;">↓ −0.2pt</td>
+          <td>友だち追加率</td><td>2.3%</td><td>2.1%</td><td style="color:#e74c3c;">↓ −0.2pt</td>
         </tr>
         <tr>
           <td>IMPFR</td><td>0.32%</td><td>0.29%</td><td style="color:#e74c3c;">↓ −0.03pt</td>
@@ -225,7 +251,7 @@
           <td>PVFR</td><td>0.115%</td><td>0.107%</td><td style="color:#e74c3c;">↓ −0.008pt</td>
         </tr>
       </table>
-      <p style="font-size:13px; color:#666;">t55はCTR改善・FR微低下。t57は全指標で微悪化。どちらも大きな変動はなく、5日間時点の傾向が継続している。</p>
+      <p style="font-size:13px; color:#666;">t55はCTR改善・追加率微低下。t57は全指標で微悪化。どちらも大きな変動はなく、5日間時点の傾向が継続している。</p>
     </div>
 
     <!-- 総括・次のアクション -->
@@ -235,7 +261,7 @@
 
       <table>
         <tr>
-          <th>タスク</th><th>CTR 前→後</th><th>FR 前→後</th><th>PVFR 前→後</th><th>判定</th><th>次のアクション</th>
+          <th>タスク</th><th>CTR 前→後</th><th>友だち追加率 前→後</th><th>PVFR 前→後</th><th>判定</th><th>次のアクション</th>
         </tr>
         <tr>
           <td><strong>t55</strong><br>こいずみ_日本人1番痩せる</td>
@@ -247,7 +273,7 @@
         </tr>
         <tr>
           <td><strong>t57</strong><br>渋谷_ダイエットパッチ</td>
-          <td><span class="badge" style="background:#f0fff4;color:#27ae60;">（前サンプル不足）→13.7% ✅</span></td>
+          <td><span class="badge" style="background:#f7f7f7;color:#888;">前サンプル不足</span> → <span class="badge" style="background:#f0fff4;color:#27ae60;">13.7% ✅</span></td>
           <td><span class="badge" style="background:#fff0f0;color:#c0392b;">→2.1% 🔴</span></td>
           <td><span class="badge" style="background:#fff0f0;color:#c0392b;">→0.107% 🔴</span></td>
           <td><span class="badge" style="background:#fff0f0;color:#c0392b;">友達追加画面改善急務</span></td>
@@ -258,15 +284,15 @@
       <h3>Renへの確認事項</h3>
       <div class="next-action">
         <div class="next-action-num">1</div>
-        <div><strong>t55 旧PU削除の依頼：</strong>「こいずみ_日本人1番痩せる、旧PU『自分に合ったダイエット方法』がまだ並走してる。新PUのサンプルを正確に計測するために削除してほしい。削除後7日以上で再判断する。」</div>
+        <div><strong>t55 旧PU削除の依頼：</strong>「こいずみ_日本人1番痩せる、旧PU『自分に合ったダイエット方法』がまだ並走してる。差し替えのつもりだったけどA/Bになってる？意図的じゃなければ削除してほしい。削除後7日以上で再判断する。」</div>
       </div>
       <div class="next-action">
         <div class="next-action-num">2</div>
-        <div><strong>t57 友達追加画面改善のGO確認：</strong>「ダイエットパッチ、6日間でFR 2.1%・PVFR 0.107%で改善なし。t60（EDバイアグラ）と同じ構造（友達追加画面の問題）と判断。t60の設計と同じ方向で改善案を作っていい？」</div>
+        <div><strong>t57 友達追加画面改善のGO確認：</strong>「ダイエットパッチ、6日間で友だち追加率2.1%・PVFR 0.107%で改善なし。t60（EDバイアグラ）と同じ構造（友達追加画面の問題）と判断。t60の設計と同じ方向で改善案を作っていい？」</div>
       </div>
       <div class="next-action">
         <div class="next-action-num">3</div>
-        <div><strong>t55 旧PU削除後の再計測：</strong>旧PU削除から7日後に再集計。FRが11%を安定して取れれば当たり確定。引き続き低い場合は友達追加画面の調査が必要。</div>
+        <div><strong>t55 旧PU削除後の再計測：</strong>旧PU削除から7日後に再集計。友だち追加率が11%を安定して取れれば当たり確定。引き続き低い場合は友達追加画面の調査が必要。</div>
       </div>
     </div>
 
