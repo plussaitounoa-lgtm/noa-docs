@@ -66,7 +66,7 @@
     <h1>PU施策結果：ダイエット（t55・t57）</h1>
     <p>計測期間: 2026-04-25〜04-29（5日分）｜集計日: 2026-04-30</p>
   </header>
-  <div class="update-banner">✅ 5日分データで最終判定実施済み</div>
+  <div class="update-banner">✅ 5日分データで最終判定実施済み｜2026-05-01 IMPFR・PVFR追記</div>
 
   <main>
 
@@ -92,28 +92,42 @@
           <div class="metric-row"><span>CTR</span><span class="metric-val val-bad">12.4%</span></div>
           <div class="metric-row"><span>友だち</span><span class="metric-val">3人</span></div>
           <div class="metric-row"><span>追加率</span><span class="metric-val val-bad">8.6%</span></div>
+          <div class="metric-row"><span>IMPFR</span><span class="metric-val val-bad">0.50%</span></div>
+          <div class="metric-row"><span>PVFR</span><span class="metric-val val-bad">0.22%</span></div>
         </div>
         <div class="compare-after">
-          <div class="compare-title">施策後（4/25〜4/29・5日）</div>
+          <div class="compare-title">施策後（4/25〜4/29・5日）新PU単体</div>
           <div class="metric-row"><span>PU</span><span class="metric-val">痩せない理由知りたい！</span></div>
           <div class="metric-row"><span>imp</span><span class="metric-val">116</span></div>
           <div class="metric-row"><span>CTR</span><span class="metric-val val-good">15.5%</span></div>
           <div class="metric-row"><span>友だち</span><span class="metric-val">2人</span></div>
           <div class="metric-row"><span>追加率</span><span class="metric-val val-good">11.1%</span></div>
+          <div class="metric-row"><span>IMPFR</span><span class="metric-val val-good">1.72%</span></div>
+          <div class="metric-row"><span>PVFR</span><span class="metric-val val-ok">0.73%</span></div>
         </div>
+      </div>
+
+      <div class="info">
+        <strong>PVFR基準（0.80%）に対して新PU単体は0.73%：</strong><br>
+        わずかに届いていないが、旧PU「自分に合ったダイエット方法」が並走中のためLP全体ではIMP 247、友だち6人でPVFR <strong>1.085%</strong>（基準超え）。
+        旧PU削除後に新PU単体のPVFRがどう動くか継続観察が必要。
       </div>
 
       <table>
         <tr>
-          <th>PU名</th><th>imp</th><th>CTR</th><th>友だち</th><th>追加率</th><th>判定</th>
+          <th>PU名</th><th>imp</th><th>CTR</th><th>友だち</th><th>追加率</th><th>IMPFR</th><th>PVFR</th><th>判定</th>
         </tr>
         <tr>
-          <td>痩せない理由知りたい！（新）</td><td>116</td><td><strong>15.5%</strong></td><td>2</td><td>11.1%</td>
-          <td><span class="badge green">✅ 基準クリア</span></td>
+          <td>痩せない理由知りたい！（新）</td><td>116</td><td><strong>15.5%</strong></td><td>2</td><td>11.1%</td><td>1.72%</td><td>0.73%</td>
+          <td><span class="badge green">✅ CTR・FR基準クリア</span></td>
         </tr>
         <tr>
-          <td>自分に合ったダイエット方法（旧・並走中）</td><td>131</td><td>11.5%</td><td>4</td><td>26.7%</td>
-          <td><span class="badge yellow">⚠️ 要確認</span></td>
+          <td>自分に合ったダイエット方法（旧・並走中）</td><td>131</td><td>11.5%</td><td>4</td><td>26.7%</td><td>3.05%</td><td>1.43%</td>
+          <td><span class="badge yellow">⚠️ 並走中・削除要確認</span></td>
+        </tr>
+        <tr style="background:#f0f4ff;">
+          <td><strong>LP全体合算</strong></td><td><strong>247</strong></td><td><strong>13.4%</strong></td><td><strong>6</strong></td><td><strong>18.2%</strong></td><td><strong>2.43%</strong></td><td><strong>1.085%</strong></td>
+          <td><span class="badge green">✅ PVFR基準超え</span></td>
         </tr>
       </table>
 
@@ -167,9 +181,19 @@
           <div class="kpi-note">基準13% ✅</div>
         </div>
         <div class="kpi-card kpi-bad">
-          <div class="kpi-label">追加率</div>
+          <div class="kpi-label">追加率（FR）</div>
           <div class="kpi-value">2.3%</div>
           <div class="kpi-note">基準11% 🔴</div>
+        </div>
+        <div class="kpi-card kpi-bad">
+          <div class="kpi-label">IMPFR</div>
+          <div class="kpi-value">0.32%</div>
+          <div class="kpi-note">友だち÷PU表示</div>
+        </div>
+        <div class="kpi-card kpi-bad">
+          <div class="kpi-label">PVFR</div>
+          <div class="kpi-value">0.115%</div>
+          <div class="kpi-note">基準0.80% 🔴</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-label">click / 友だち</div>
@@ -195,21 +219,25 @@
 
       <table>
         <tr>
-          <th>タスク</th><th>施策</th><th>CTR</th><th>追加率</th><th>判定</th><th>次のアクション</th>
+          <th>タスク</th><th>施策</th><th>CTR</th><th>追加率</th><th>IMPFR</th><th>PVFR</th><th>判定</th><th>次のアクション</th>
         </tr>
         <tr>
           <td><strong>t55</strong><br>こいずみ_日本人1番痩せる</td>
           <td>「痩せない理由知りたい！」に差し替え</td>
           <td><span class="badge green">15.5% ✅</span></td>
           <td><span class="badge green">11.1% ✅</span></td>
+          <td><span class="badge green">1.72%</span></td>
+          <td><span class="badge yellow">0.73%（旧PU込み1.09%）</span></td>
           <td><span class="badge green">当たり確定</span></td>
-          <td>旧PU並走をRenに確認。当たりなら他サイト横展開検討</td>
+          <td>旧PU削除後にPVFR 0.80%超えを確認。横展開検討</td>
         </tr>
         <tr>
           <td><strong>t57</strong><br>渋谷_ダイエットパッチ</td>
           <td>「頑張らずに痩せる」に差し替え</td>
           <td><span class="badge green">13.9% ✅</span></td>
           <td><span class="badge red">2.3% 🔴</span></td>
+          <td><span class="badge red">0.32% 🔴</span></td>
+          <td><span class="badge red">0.115% 🔴</span></td>
           <td><span class="badge yellow">CTRのみ当たり</span></td>
           <td>友達追加画面の改善設計が必要（t60と同じアプローチ）</td>
         </tr>
