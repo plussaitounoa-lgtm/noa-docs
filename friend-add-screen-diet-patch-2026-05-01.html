@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>友達追加画面改善：ダイエットパッチ（渋谷）2026-05-01</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header p { color: #aaa; font-size: 14px; }
+    .update-banner { background: #2e1a1a; color: #ffd47e; font-size: 13px; padding: 10px 32px; }
+    main { max-width: 860px; margin: 40px auto; padding: 0 24px 60px; }
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; color: #333; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 8px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+    .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .alert { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .info { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .copy-block { background: #f7f7f7; border-radius: 8px; padding: 16px 20px; margin: 12px 0; font-size: 15px; line-height: 1.8; }
+    .copy-main { font-size: 18px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+    .copy-label { font-size: 11px; color: #888; margin-bottom: 6px; }
+    .recommend { background: #f0fff4; border: 2px solid #27ae60; border-radius: 10px; padding: 20px; margin: 16px 0; }
+    .recommend-tag { font-size: 11px; font-weight: 700; color: #27ae60; margin-bottom: 8px; }
+    .option-block { border: 1px solid #e8e8e8; border-radius: 8px; padding: 16px 20px; margin: 12px 0; }
+    .option-tag { font-size: 11px; font-weight: 700; color: #888; margin-bottom: 8px; }
+    .visual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+    .visual-ok { background: #f0fff4; border: 1px solid #27ae60; border-radius: 8px; padding: 16px; }
+    .visual-ng { background: #fff0f0; border: 1px solid #e74c3c; border-radius: 8px; padding: 16px; }
+    .visual-title { font-size: 12px; font-weight: 700; margin-bottom: 10px; }
+    .visual-ok .visual-title { color: #27ae60; }
+    .visual-ng .visual-title { color: #e74c3c; }
+    .visual-item { font-size: 13px; padding: 3px 0; line-height: 1.6; }
+    .next-action { border: 1px solid #e8e8e8; border-radius: 8px; padding: 14px 18px; margin: 8px 0; font-size: 14px; display: flex; gap: 10px; align-items: flex-start; }
+    .next-action-num { background: #1a1a2e; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f7f7f7; border-radius: 8px; padding: 16px; text-align: center; }
+    .kpi-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+    .kpi-value { font-size: 22px; font-weight: 700; }
+    .kpi-note { font-size: 11px; color: #aaa; margin-top: 2px; }
+    .kpi-bad .kpi-value { color: #e74c3c; }
+    .kpi-good .kpi-value { color: #27ae60; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>友達追加画面改善：ダイエットパッチ（渋谷）</h1>
+    <p>対象タスク: t57｜現状FR 2.1% → 目標11%以上｜設計日: 2026-05-01</p>
+  </header>
+  <div class="update-banner">⏳ ステータス：設計完了 → Renレビュー待ち（t57）</div>
+
+  <main>
+
+    <!-- 現状と課題 -->
+    <div class="section">
+      <p class="section-title">現状と課題</p>
+      <h2>なぜ友達追加されないか</h2>
+
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-good">
+          <div class="kpi-label">CTR（PUクリック率）</div>
+          <div class="kpi-value">13.7%</div>
+          <div class="kpi-note">基準13% ✅ PUは機能している</div>
+        </div>
+        <div class="kpi-card kpi-bad">
+          <div class="kpi-label">友だち追加率</div>
+          <div class="kpi-value">2.1%</div>
+          <div class="kpi-note">基準11% 🔴 47click→友1人</div>
+        </div>
+      </div>
+
+      <div class="alert">
+        <strong>構造：CTR高 × 友だち追加率低 = 友達追加画面の問題</strong><br>
+        PU「頑張らずに痩せる」に反応してクリックした人が、友達追加画面を見て追加をやめている。PU文言ではなく、追加画面の印象が離脱の原因。
+      </div>
+
+      <h3>現状アカウント名</h3>
+      <div class="copy-block">
+        <div class="copy-label">現在</div>
+        <div class="copy-main">【公式】ダイエットガイド</div>
+      </div>
+
+      <div class="highlight">
+        <strong>「【公式】」の問題：</strong>「公式」という表記が企業・クリニック感を強調し、「追加したら勧誘されそう」という警戒心を生んでいる可能性がある。ダイエットパッチを手軽に調べたい人にとって、「公式機関への登録」はハードルが高い。<br><br>
+        <strong>「ダイエットガイド」の問題：</strong>何をガイドしてくれるのかが曖昧。「友達追加したら何が得られるか」が伝わらない。
+      </div>
+    </div>
+
+    <!-- ブリッジテスト -->
+    <div class="section">
+      <p class="section-title">CMO | ブリッジテスト</p>
+      <h2>検索者の気持ちと診断体験の橋渡し</h2>
+
+      <table>
+        <tr>
+          <th>①診断が実際に提供する体験</th>
+          <td>体質タイプを診断 → 自分に合ったダイエットアプローチを提案（太りやすさ診断）</td>
+        </tr>
+        <tr>
+          <th>②「ダイエットパッチ」検索者の今の気持ち</th>
+          <td>「パッチを貼るだけで痩せるって本当？」「自分の体質に合う？」「頑張らずに痩せたいけど、怪しくないか不安」。過去のダイエット挫折があって楽な方法を探している。LINEへの警戒は「また勧誘・売り込まれる」。</td>
+        </tr>
+        <tr>
+          <th>③①を②の言葉で翻訳</th>
+          <td><strong>「そのダイエット、あなたの体質に合ってる？」</strong><br>
+          ①と③は同じ体験（体質から合う方法を提案）✅</td>
+        </tr>
+      </table>
+
+      <div class="info">
+        <strong>t60（EDバイアグラ）との共通点・違い：</strong><br>
+        共通：「CTR高 × 追加率低」の構造。アカウント名・説明文の「勧誘感」が離脱を生んでいる。<br>
+        違い：EDはプライバシー最敏感。ダイエットパッチは「怪しさへの疑念 × 手軽さ追求」。情報提供感を出しつつ、「診断」という明確な価値を前面に出すことが有効。
+      </div>
+    </div>
+
+    <!-- アカウント名 -->
+    <div class="section">
+      <p class="section-title">CMO | 設計案</p>
+      <h2>アカウント名</h2>
+
+      <div class="recommend">
+        <div class="recommend-tag">★ 推奨案</div>
+        <div class="copy-main">ダイエット体質診断</div>
+        <p style="margin-top:8px; font-size:13px; color:#555;">【公式】を外して企業感を薄める。「診断」を入れることで「友達追加したら何ができるか」が一目でわかる。パッチを探している人に「体質から確認できる」という価値を即座に伝える。</p>
+      </div>
+
+      <div class="option-block">
+        <div class="option-tag">案B</div>
+        <div style="font-size:16px; font-weight:700; margin-bottom:6px;">痩せ方体質チェック</div>
+        <p style="font-size:13px; color:#555;">「チェック」でより軽い入口感を演出。ただし「診断」より何をするかが伝わりにくい。</p>
+      </div>
+
+      <div class="option-block">
+        <div class="option-tag">案C</div>
+        <div style="font-size:16px; font-weight:700; margin-bottom:6px;">ダイエットガイド</div>
+        <p style="font-size:13px; color:#555;">現状から【公式】を外すだけの最小変更。「何ができるか」は伝わらないが、勧誘感は下がる。</p>
+      </div>
+    </div>
+
+    <!-- 説明文 -->
+    <div class="section">
+      <h2>説明文（友達追加前に表示される文章）</h2>
+
+      <div class="recommend">
+        <div class="recommend-tag">★ 推奨案A — 体質診断訴求</div>
+        <div class="copy-block" style="margin-top:8px;">
+          ダイエット方法は体質によって向き不向きがあります。<br>
+          パッチ・飲み薬・食事管理など、自分に合う方法を<br>
+          3分の体質診断で調べられます。<br>
+          情報提供のみで勧誘はしません。
+        </div>
+        <p style="font-size:13px; color:#555; margin-top:8px;">
+          <strong>推奨理由：</strong>検索者が調べているパッチを選択肢の一つとして自然に登場させ、「体質から選ぶ」という診断体験につなぐ。「情報提供のみで勧誘はしません」でLINE追加への最大障壁を正面から解消する。
+        </p>
+      </div>
+
+      <div class="option-block">
+        <div class="option-tag">案B — パッチ直結訴求</div>
+        <div class="copy-block">
+          ダイエットパッチが効く人・効かない人の差は<br>
+          体質にあります。<br>
+          3分の体質チェックで、自分に向いている<br>
+          ダイエット法がわかります。
+        </div>
+        <p style="font-size:13px; color:#555; margin-top:8px;">パッチ検索者に直接刺さる。ただし「パッチの話」に絞りすぎると診断体験（体質から合う方法全般を提案）とズレが生じるリスクあり。</p>
+      </div>
+
+      <div class="option-block">
+        <div class="option-tag">案C — 悩み共感訴求</div>
+        <div class="copy-block">
+          頑張っても痩せない原因、<br>
+          体質から調べてみませんか？<br>
+          3分診断で自分に合うダイエット法がわかります。<br>
+          勧誘なし・無料。
+        </div>
+        <p style="font-size:13px; color:#555; margin-top:8px;">PU文言「頑張らずに痩せる」との接続が自然。ただし「頑張っても痩せない」はパッチ検索者より挫折経験のある人向けの言葉で、検索意図と少しズレる可能性あり。</p>
+      </div>
+    </div>
+
+    <!-- ビジュアル方向性 -->
+    <div class="section">
+      <h2>トプ画・背景の方向性</h2>
+
+      <div class="visual-grid">
+        <div class="visual-ok">
+          <div class="visual-title">✅ OK方向</div>
+          <div class="visual-item">・シンプルなダイエット系アイコン（スマホ・診断票・グラフ）</div>
+          <div class="visual-item">・自然光・ライフスタイル系（ナチュラルイメージ）</div>
+          <div class="visual-item">・白背景 + カラーテキスト</div>
+          <div class="visual-item">・「診断」を連想するビジュアル</div>
+        </div>
+        <div class="visual-ng">
+          <div class="visual-title">🔴 NG方向</div>
+          <div class="visual-item">・白衣のドクター・クリニック写真</div>
+          <div class="visual-item">・ビフォーアフターの痩身写真</div>
+          <div class="visual-item">・医療機器・手術室系</div>
+          <div class="visual-item">・「キャンペーン」「今だけ」系の煽り</div>
+        </div>
+      </div>
+
+      <div class="highlight">
+        手軽さを求めてダイエットパッチを調べている人に、「医療・クリニック」の重さは逆効果。「気軽に試せる診断」の空気感を出すビジュアルが望ましい。
+      </div>
+    </div>
+
+    <!-- 目標と次のアクション -->
+    <div class="section">
+      <p class="section-title">目標・次のアクション</p>
+      <h2>Renへの確認事項</h2>
+
+      <table style="margin-bottom:20px;">
+        <tr>
+          <th>指標</th><th>現状</th><th>目標</th>
+        </tr>
+        <tr>
+          <td>友だち追加率</td>
+          <td><span class="badge" style="background:#fff0f0;color:#c0392b;">2.1% 🔴</span></td>
+          <td><span class="badge" style="background:#f0fff4;color:#27ae60;">11%以上 ✅</span></td>
+        </tr>
+        <tr>
+          <td>PVFR</td>
+          <td><span class="badge" style="background:#fff0f0;color:#c0392b;">0.107% 🔴</span></td>
+          <td><span class="badge" style="background:#f0fff4;color:#27ae60;">0.80%以上 ✅</span></td>
+        </tr>
+      </table>
+
+      <div class="next-action">
+        <div class="next-action-num">1</div>
+        <div><strong>設計書のGO確認：</strong>「ダイエットパッチの友達追加画面改善、設計書できました。アカウント名を『ダイエット体質診断』、説明文を案Aにするのを推奨します。確認してGOもらえますか？」</div>
+      </div>
+      <div class="next-action">
+        <div class="next-action-num">2</div>
+        <div><strong>実装依頼：</strong>GO後、WINUTでアカウント名・説明文・トプ画・背景を変更。変更日から7日間でFR計測。</div>
+      </div>
+      <div class="next-action">
+        <div class="next-action-num">3</div>
+        <div><strong>7日後の計測：</strong>友だち追加率が11%を超えていれば当たり確定。超えない場合はビジュアル（トプ画・背景）の追加変更を検討。</div>
+      </div>
+    </div>
+
+  </main>
+</body>
+</html>
