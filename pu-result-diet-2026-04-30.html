@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PU施策結果：ダイエット（t55・t57）2026-04-30</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header p { color: #aaa; font-size: 14px; }
+    .update-banner { background: #1a2e1a; color: #7effd4; font-size: 13px; padding: 10px 32px; }
+    main { max-width: 860px; margin: 40px auto; padding: 0 24px 60px; }
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; color: #333; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 8px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+    .red { background: #fff0f0; color: #c0392b; }
+    .yellow { background: #fffbea; color: #b7860b; }
+    .green { background: #f0fff4; color: #27ae60; }
+    .blue { background: #f0f4ff; color: #2c52b0; }
+    .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .alert { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .info { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f7f7f7; border-radius: 8px; padding: 16px; text-align: center; }
+    .kpi-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+    .kpi-value { font-size: 22px; font-weight: 700; }
+    .kpi-note { font-size: 11px; color: #aaa; margin-top: 2px; }
+    .kpi-bad .kpi-value { color: #e74c3c; }
+    .kpi-ok .kpi-value { color: #f39c12; }
+    .kpi-good .kpi-value { color: #27ae60; }
+    .verdict { display: flex; align-items: center; gap: 12px; background: #f0fff4; border: 2px solid #27ae60; border-radius: 10px; padding: 16px 20px; margin: 16px 0; }
+    .verdict.ng { background: #fff8f0; border-color: #f39c12; }
+    .verdict-icon { font-size: 28px; }
+    .verdict-title { font-size: 16px; font-weight: 700; color: #1a6e3e; }
+    .verdict.ng .verdict-title { color: #b7860b; }
+    .verdict-desc { font-size: 13px; color: #555; margin-top: 2px; line-height: 1.5; }
+    .compare-block { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+    .compare-before { background: #f7f7f7; border-radius: 8px; padding: 16px; }
+    .compare-after { background: #f0fff4; border: 2px solid #27ae60; border-radius: 8px; padding: 16px; }
+    .compare-after.warn { background: #fff8f0; border-color: #f39c12; }
+    .compare-title { font-size: 12px; font-weight: 700; color: #888; margin-bottom: 10px; }
+    .compare-after .compare-title { color: #1a6e3e; }
+    .compare-after.warn .compare-title { color: #b7860b; }
+    .metric-row { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .metric-row:last-child { border-bottom: none; }
+    .metric-val { font-weight: 700; }
+    .val-good { color: #27ae60; }
+    .val-bad { color: #e74c3c; }
+    .val-ok { color: #f39c12; }
+    .next-action { border: 1px solid #e8e8e8; border-radius: 8px; padding: 14px 18px; margin: 8px 0; font-size: 14px; display: flex; gap: 10px; align-items: flex-start; }
+    .next-action-num { background: #1a1a2e; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PU施策結果：ダイエット（t55・t57）</h1>
+    <p>計測期間: 2026-04-25〜04-29（5日分）｜集計日: 2026-04-30</p>
+  </header>
+  <div class="update-banner">✅ 5日分データで最終判定実施済み</div>
+
+  <main>
+
+    <!-- t55 -->
+    <div class="section">
+      <p class="section-title">t55 — こいずみ「日本人1番痩せる」</p>
+      <h2>PU差し替え結果（4/25実施）</h2>
+
+      <div class="verdict">
+        <div class="verdict-icon">✅</div>
+        <div>
+          <div class="verdict-title">当たり確定</div>
+          <div class="verdict-desc">新PU「痩せない理由知りたい！」CTR 15.5%（基準13%超え）・追加率11.1%（基準11%クリア）。両指標で基準達成。</div>
+        </div>
+      </div>
+
+      <h3>施策前後 比較（各7日 vs 5日）</h3>
+      <div class="compare-block">
+        <div class="compare-before">
+          <div class="compare-title">施策前（4/18〜4/24・7日）</div>
+          <div class="metric-row"><span>PU</span><span class="metric-val">自分に合ったダイエット方法</span></div>
+          <div class="metric-row"><span>imp</span><span class="metric-val">283</span></div>
+          <div class="metric-row"><span>CTR</span><span class="metric-val val-bad">12.4%</span></div>
+          <div class="metric-row"><span>友だち</span><span class="metric-val">3人</span></div>
+          <div class="metric-row"><span>追加率</span><span class="metric-val val-bad">8.6%</span></div>
+        </div>
+        <div class="compare-after">
+          <div class="compare-title">施策後（4/25〜4/29・5日）</div>
+          <div class="metric-row"><span>PU</span><span class="metric-val">痩せない理由知りたい！</span></div>
+          <div class="metric-row"><span>imp</span><span class="metric-val">116</span></div>
+          <div class="metric-row"><span>CTR</span><span class="metric-val val-good">15.5%</span></div>
+          <div class="metric-row"><span>友だち</span><span class="metric-val">2人</span></div>
+          <div class="metric-row"><span>追加率</span><span class="metric-val val-good">11.1%</span></div>
+        </div>
+      </div>
+
+      <table>
+        <tr>
+          <th>PU名</th><th>imp</th><th>CTR</th><th>友だち</th><th>追加率</th><th>判定</th>
+        </tr>
+        <tr>
+          <td>痩せない理由知りたい！（新）</td><td>116</td><td><strong>15.5%</strong></td><td>2</td><td>11.1%</td>
+          <td><span class="badge green">✅ 基準クリア</span></td>
+        </tr>
+        <tr>
+          <td>自分に合ったダイエット方法（旧・並走中）</td><td>131</td><td>11.5%</td><td>4</td><td>26.7%</td>
+          <td><span class="badge yellow">⚠️ 要確認</span></td>
+        </tr>
+      </table>
+
+      <div class="highlight">
+        <strong>⚠️ 旧PUが並走中：</strong>差し替えのつもりがA/Bになっている可能性。<br>
+        旧PU「自分に合ったダイエット方法」がimp131と新PU（116）より多く表示されている。<br>
+        → <strong>Renに確認：「こいずみ_日本人1番痩せる、差し替えになってる？A/Bになってる？」</strong>
+      </div>
+
+      <h3>なぜ当たったか</h3>
+      <p>施策前の仮説「検索者の本当の問いは方法選択ではなく原因究明（なぜ痩せられないか）」が正しかった。「痩せない理由、自分の体質から知りたい！」というフレームへの転換がCTR+3.1pt改善を生んだ。</p>
+    </div>
+
+    <!-- t57 -->
+    <div class="section">
+      <p class="section-title">t57 — 渋谷「ダイエットパッチ」</p>
+      <h2>PU差し替え結果（4/25実施）</h2>
+
+      <div class="verdict ng">
+        <div class="verdict-icon">⚠️</div>
+        <div>
+          <div class="verdict-title">CTRは当たり・追加率に問題あり</div>
+          <div class="verdict-desc">新PU「頑張らずに痩せる」CTR 13.9%（基準クリア）。ただし追加率2.3%（基準11%）と大幅乖離。PU文言の問題ではなく友達追加画面の問題と判断。</div>
+        </div>
+      </div>
+
+      <h3>施策前後 比較</h3>
+      <div class="compare-block">
+        <div class="compare-before">
+          <div class="compare-title">施策前（4/18〜4/24・imp少）</div>
+          <div class="metric-row"><span>PU</span><span class="metric-val">頑張らずに痩せる</span></div>
+          <div class="metric-row"><span>imp</span><span class="metric-val">15（参考値）</span></div>
+          <div class="metric-row"><span>CTR</span><span class="metric-val">20.0%</span></div>
+          <div class="metric-row"><span>友だち</span><span class="metric-val">0人</span></div>
+          <div class="metric-row"><span>追加率</span><span class="metric-val">—</span></div>
+        </div>
+        <div class="compare-after warn">
+          <div class="compare-title">施策後（4/25〜4/29・5日）</div>
+          <div class="metric-row"><span>PU</span><span class="metric-val">頑張らずに痩せる</span></div>
+          <div class="metric-row"><span>imp</span><span class="metric-val">309</span></div>
+          <div class="metric-row"><span>CTR</span><span class="metric-val val-good">13.9%</span></div>
+          <div class="metric-row"><span>友だち</span><span class="metric-val">1人</span></div>
+          <div class="metric-row"><span>追加率</span><span class="metric-val val-bad">2.3%</span></div>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-good">
+          <div class="kpi-label">CTR</div>
+          <div class="kpi-value">13.9%</div>
+          <div class="kpi-note">基準13% ✅</div>
+        </div>
+        <div class="kpi-card kpi-bad">
+          <div class="kpi-label">追加率</div>
+          <div class="kpi-value">2.3%</div>
+          <div class="kpi-note">基準11% 🔴</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">click / 友だち</div>
+          <div class="kpi-value">43 / 1</div>
+          <div class="kpi-note">5日間の実数</div>
+        </div>
+      </div>
+
+      <h3>問題の構造分析</h3>
+      <div class="alert">
+        <strong>CTR高 × 追加率低 = 友達追加画面の問題（t60と同じ構造）</strong><br><br>
+        PUをクリックした人（43人）のうち、友達追加まで至ったのは1人（2.3%）。<br>
+        CTRが基準を超えているためPU文言は機能している。<br>
+        ボトルネックはPUクリック後の「友達追加画面」（トプ画・背景・説明文）にある。<br><br>
+        ※ 同じ構造: t60（EDバイアグラ飲み方）CTR 17.6% × 追加率 1〜4.4%。設計書 → <a href="friend-add-screen-ed-viagra-2026-04-30.html">docs参照</a>
+      </div>
+    </div>
+
+    <!-- 総括・次のアクション -->
+    <div class="section">
+      <p class="section-title">総括・次のアクション</p>
+      <h2>2施策まとめ</h2>
+
+      <table>
+        <tr>
+          <th>タスク</th><th>施策</th><th>CTR</th><th>追加率</th><th>判定</th><th>次のアクション</th>
+        </tr>
+        <tr>
+          <td><strong>t55</strong><br>こいずみ_日本人1番痩せる</td>
+          <td>「痩せない理由知りたい！」に差し替え</td>
+          <td><span class="badge green">15.5% ✅</span></td>
+          <td><span class="badge green">11.1% ✅</span></td>
+          <td><span class="badge green">当たり確定</span></td>
+          <td>旧PU並走をRenに確認。当たりなら他サイト横展開検討</td>
+        </tr>
+        <tr>
+          <td><strong>t57</strong><br>渋谷_ダイエットパッチ</td>
+          <td>「頑張らずに痩せる」に差し替え</td>
+          <td><span class="badge green">13.9% ✅</span></td>
+          <td><span class="badge red">2.3% 🔴</span></td>
+          <td><span class="badge yellow">CTRのみ当たり</span></td>
+          <td>友達追加画面の改善設計が必要（t60と同じアプローチ）</td>
+        </tr>
+      </table>
+
+      <h3>Renへの確認事項</h3>
+      <div class="next-action">
+        <div class="next-action-num">1</div>
+        <div><strong>t55 旧PUの状態確認：</strong>「こいずみ_日本人1番痩せる、差し替えのはずが旧PUもimp出てる。A/Bになってる？それとも差し替え漏れ？」</div>
+      </div>
+      <div class="next-action">
+        <div class="next-action-num">2</div>
+        <div><strong>t57 友達追加画面改善のGO確認：</strong>「ダイエットパッチのCTRは13.9%に改善。ただし追加率2.3%が残ってる。EDバイアグラと同じ構造（友達追加画面の問題）と判断。t60の設計と同じ方向で改善案を作っていい？」</div>
+      </div>
+      <div class="next-action">
+        <div class="next-action-num">3</div>
+        <div><strong>t55当たりの横展開：</strong>「こいずみで当たった"痩せない理由/原因究明フレーム"、他サイトの同系記事にも横展開する価値ある？」</div>
+      </div>
+    </div>
+
+  </main>
+</body>
+</html>
