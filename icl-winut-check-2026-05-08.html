@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ICL診断 Winut数値確認 2026-05-08</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header p { color: #aaa; font-size: 14px; }
+    .update-banner { background: #1a2e2e; color: #7effd4; font-size: 13px; padding: 10px 32px; }
+    main { max-width: 860px; margin: 40px auto; padding: 0 24px 60px; }
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; color: #333; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 8px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+    .kpi-card { background: #f7f7f7; border-radius: 8px; padding: 16px; text-align: center; }
+    .kpi-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+    .kpi-value { font-size: 22px; font-weight: 700; }
+    .kpi-note { font-size: 11px; color: #aaa; margin-top: 2px; }
+    .kpi-bad .kpi-value { color: #e74c3c; }
+    .kpi-ok .kpi-value { color: #f39c12; }
+    .kpi-good .kpi-value { color: #27ae60; }
+    .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .info { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .verdict { display: flex; align-items: center; gap: 12px; background: #f0fff4; border: 2px solid #27ae60; border-radius: 10px; padding: 16px 20px; margin: 16px 0; }
+    .verdict.warn { background: #fff8f0; border-color: #f39c12; }
+    .verdict-icon { font-size: 28px; }
+    .verdict-title { font-size: 16px; font-weight: 700; color: #1a6e3e; }
+    .verdict.warn .verdict-title { color: #b7860b; }
+    .verdict-desc { font-size: 13px; color: #555; margin-top: 2px; line-height: 1.5; }
+    .tag-inactive { color: #bbb; font-size: 12px; }
+    .val-bad { color: #e74c3c; font-weight: 700; }
+    .val-ok { color: #f39c12; font-weight: 700; }
+    .val-good { color: #27ae60; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ICL診断 Winut数値確認</h1>
+    <p>t5｜計測期間: 2026-05-01〜05-08（8日間）｜データソース: Winut 離脱防止計測CSV</p>
+  </header>
+  <div class="update-banner">⚠️ ダッシュボードパイプライン未連携のため、Winutから直接CSV取得して確認</div>
+
+  <main>
+
+    <div class="section">
+      <div class="section-title">全体サマリー（アクティブタグ合計）</div>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">pu-imp 合計</div>
+          <div class="kpi-value">399</div>
+          <div class="kpi-note">8日間</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">クリック 合計</div>
+          <div class="kpi-value">53</div>
+          <div class="kpi-note">CTR 13.3%</div>
+        </div>
+        <div class="kpi-card kpi-bad">
+          <div class="kpi-label">友達追加</div>
+          <div class="kpi-value">3</div>
+          <div class="kpi-note">追加率 5.7%</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">日均友達追加</div>
+          <div class="kpi-value">0.4</div>
+          <div class="kpi-note">月換算 約12人</div>
+        </div>
+      </div>
+      <div class="verdict warn">
+        <div class="verdict-icon">⏳</div>
+        <div>
+          <div class="verdict-title">判断保留 — PV母数が小さすぎる</div>
+          <div class="verdict-desc">友達追加3件はコンバージョン問題ではなくPV不足が原因。乱視記事を追加済みで母数拡大中。データが積まれてから再判断。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">タグ別集計（5/1〜5/8）</div>
+      <table>
+        <thead>
+          <tr>
+            <th>タグID</th>
+            <th>推定記事</th>
+            <th>種別</th>
+            <th>pu-imp</th>
+            <th>クリック</th>
+            <th>PUR(%)</th>
+            <th>友達追加</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1766</td>
+            <td>視力回復トレーニング</td>
+            <td>ベスト</td>
+            <td>64</td>
+            <td>15</td>
+            <td>—</td>
+            <td><span class="val-ok">1</span></td>
+          </tr>
+          <tr>
+            <td>1765</td>
+            <td>視力回復トレーニング</td>
+            <td>NL</td>
+            <td>57</td>
+            <td>8</td>
+            <td>—</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>1764</td>
+            <td>視力回復トレーニング</td>
+            <td>通常</td>
+            <td>51</td>
+            <td>7</td>
+            <td>—</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>1768</td>
+            <td>乱視_左右差</td>
+            <td>通常</td>
+            <td>81</td>
+            <td>7</td>
+            <td>—</td>
+            <td><span class="val-ok">1</span></td>
+          </tr>
+          <tr>
+            <td>1770</td>
+            <td>乱視_左右差</td>
+            <td>ベスト</td>
+            <td>64</td>
+            <td>5</td>
+            <td>—</td>
+            <td><span class="val-ok">1</span></td>
+          </tr>
+          <tr>
+            <td>1771</td>
+            <td>乱視_自力系</td>
+            <td>通常</td>
+            <td>33</td>
+            <td>5</td>
+            <td>—</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>1773</td>
+            <td>乱視_自力系</td>
+            <td>ベスト</td>
+            <td>36</td>
+            <td>3</td>
+            <td>—</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>1774</td>
+            <td>乱視_原因系</td>
+            <td>通常</td>
+            <td>8</td>
+            <td>3</td>
+            <td>—</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>1776</td>
+            <td>乱視_原因系</td>
+            <td>ベスト</td>
+            <td>5</td>
+            <td>0</td>
+            <td>—</td>
+            <td>0</td>
+          </tr>
+          <tr style="background:#f7f7f7;">
+            <td colspan="3"><strong>合計</strong></td>
+            <td><strong>399</strong></td>
+            <td><strong>53</strong></td>
+            <td>—</td>
+            <td><strong>3</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="tag-inactive">※ タグ1767/1769/1772/1775は全期間ゼロ（未稼働）</p>
+      <p class="tag-inactive">※ タグ1774/1776は5/7〜稼働開始（直近追加）</p>
+      <p class="tag-inactive">※ タグ名は文字化けのため推定。確認要。</p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">所見</div>
+      <h2>現状の解釈</h2>
+      <div class="info">
+        <strong>PUは稼働中。</strong>pu-impとクリックは8日間で積まれており、PUは正常に表示・機能している。
+      </div>
+      <div class="highlight">
+        <strong>友達追加3件の原因 = PV母数が小さい。</strong>変換率の問題ではない。視力回復トレーニング・乱視_左右差が主力記事だが、1記事あたりのpu-impが1日10〜30程度と少ない。
+      </div>
+      <h3>対応済み</h3>
+      <p>PV低い傾向を確認 → 乱視記事を追加（5/7〜タグ1774/1776が稼働開始）。母数拡大中。</p>
+
+      <h3>次の確認タイミング</h3>
+      <p>乱視記事追加後、1〜2週間データが積まれた時点で再確認。その時点でFB追加数と追加率（目標11%以上）を評価する。</p>
+    </div>
+
+  </main>
+</body>
+</html>
