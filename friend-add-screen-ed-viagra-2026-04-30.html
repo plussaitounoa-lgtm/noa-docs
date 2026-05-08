@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>友達追加画面改善設計：バイアグラ飲み方（ED）2026-04-30</title>
+  <title>ED改善設計：バイアグラ飲み方（PU＋友達追加画面）2026-05-01</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
     header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
     header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
     header p { color: #aaa; font-size: 14px; }
-    .update-banner { background: #1a2e2e; color: #7effd4; font-size: 13px; padding: 10px 32px; }
+    .update-banner { background: #1a2e1a; color: #7effd4; font-size: 13px; padding: 10px 32px; }
     main { max-width: 860px; margin: 40px auto; padding: 0 24px 60px; }
 
     .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
@@ -29,7 +29,6 @@
     .yellow { background: #fffbea; color: #b7860b; }
     .green { background: #f0fff4; color: #27ae60; }
     .blue { background: #f0f4ff; color: #2c52b0; }
-    .purple { background: #f8f0ff; color: #6c3483; }
 
     .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
     .alert { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
@@ -45,13 +44,13 @@
     .kpi-ok .kpi-value { color: #f39c12; }
     .kpi-good .kpi-value { color: #27ae60; }
 
-    .compare-block { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
-    .compare-good { background: #f0fff4; border: 2px solid #27ae60; border-radius: 8px; padding: 16px; }
-    .compare-bad { background: #fff0f0; border: 2px solid #e74c3c; border-radius: 8px; padding: 16px; }
-    .compare-title { font-size: 12px; font-weight: 700; margin-bottom: 8px; }
-    .compare-good .compare-title { color: #1a6e3e; }
-    .compare-bad .compare-title { color: #c0392b; }
-    .compare-item { font-size: 13px; line-height: 1.7; }
+    .pu-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+    .pu-table th { background: #f7f7f7; padding: 8px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; text-align: left; }
+    .pu-table td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+    .pu-table tr.delete-row { background: #fff8f8; }
+    .pu-table tr.keep-row { background: #f8fff8; }
+    .num-good { color: #27ae60; font-weight: 700; }
+    .num-bad { color: #e74c3c; font-weight: 700; }
 
     .design-card { border: 2px solid #e8e8e8; border-radius: 10px; padding: 20px; margin: 12px 0; }
     .design-card.recommended { border-color: #27ae60; background: #f8fffa; }
@@ -69,31 +68,33 @@
     .ng-box h4 { color: #c0392b; font-size: 13px; margin-bottom: 8px; }
     .ok-box h4 { color: #27ae60; font-size: 13px; margin-bottom: 8px; }
     ul { padding-left: 18px; font-size: 13px; line-height: 2; }
+
+    .step-label { display: inline-block; background: #1a1a2e; color: #7effd4; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-bottom: 10px; }
   </style>
 </head>
 <body>
   <header>
-    <h1>友達追加画面改善設計：バイアグラ飲み方（ED）</h1>
-    <p>t60｜設計日: 2026-04-30｜担当: CMO → CEO確認済み</p>
+    <h1>ED改善設計：バイアグラ飲み方（PU＋友達追加画面）</h1>
+    <p>t60｜初稿: 2026-04-30｜v2更新: 2026-05-01｜1ヶ月データで再分析</p>
   </header>
-  <div class="update-banner">⚠️ ブラッシュアップ待ち — Renレビュー前の初稿</div>
+  <div class="update-banner">v3 更新済み（2026-05-01）— 友達追加画面改善に絞り込み</div>
 
   <main>
 
     <!-- 現状数値 -->
     <div class="section">
-      <p class="section-title">現状数値</p>
-      <h2>ボトルネックは友達追加画面のみ</h2>
+      <p class="section-title">現状数値（1ヶ月）</p>
+      <h2>CTRはOK。友達追加画面だけが問題</h2>
 
       <div class="kpi-grid">
         <div class="kpi-card kpi-good">
-          <div class="kpi-label">CTR</div>
-          <div class="kpi-value">17.6%</div>
+          <div class="kpi-label">CTR（全体）</div>
+          <div class="kpi-value">16.8%</div>
           <div class="kpi-note">基準13% ✅</div>
         </div>
         <div class="kpi-card kpi-bad">
-          <div class="kpi-label">追加率</div>
-          <div class="kpi-value">1〜4.4%</div>
+          <div class="kpi-label">追加率（全体）</div>
+          <div class="kpi-value">1.0%</div>
           <div class="kpi-note">基準11% 🔴</div>
         </div>
         <div class="kpi-card">
@@ -103,20 +104,40 @@
         </div>
       </div>
 
-      <div class="compare-block">
-        <div class="compare-bad">
-          <div class="compare-title">❌ バイアグラ飲み方記事</div>
-          <div class="compare-item">同じPU → 追加率 <strong>1〜4.4%</strong></div>
-        </div>
-        <div class="compare-good">
-          <div class="compare-title">✅ DMMED（同じPU）</div>
-          <div class="compare-item">同じPU → 追加率 <strong>8〜13%</strong></div>
-        </div>
-      </div>
+      <h3>PU別内訳</h3>
+      <table class="pu-table">
+        <tr>
+          <th>PU</th>
+          <th>imp</th>
+          <th>click</th>
+          <th>友だち</th>
+          <th>CTR</th>
+          <th>追加率</th>
+          <th>判定</th>
+        </tr>
+        <tr class="delete-row">
+          <td>夜の自信</td>
+          <td>606</td>
+          <td>53</td>
+          <td>0</td>
+          <td class="num-good">17.1%</td>
+          <td class="num-bad">0.0%</td>
+          <td><span class="badge red">削除</span></td>
+        </tr>
+        <tr class="keep-row">
+          <td>自分に合うED薬</td>
+          <td>578</td>
+          <td>48</td>
+          <td>1</td>
+          <td class="num-good">16.5%</td>
+          <td class="num-bad">2.1%</td>
+          <td><span class="badge yellow">文言改善</span></td>
+        </tr>
+      </table>
 
       <div class="highlight">
-        <strong>原因特定済み：</strong>PU・URLは問題なし。<br>
-        同じPUでDMMEDが8〜13%出ている = LINE友達追加画面（トプ画・背景・説明文）の差が原因。
+        <strong>結論：</strong>CTRは両PUとも基準超え。PUは機能している。<br>
+        クリックした後、友達追加画面で全員が離脱している。直すのは友達追加画面のみ。
       </div>
     </div>
 
@@ -133,21 +154,22 @@
         ED = プライバシー最高レベルの警戒。「追加したらしつこく来そう」「クリニックに誘導されそう」という不安がある。<br>
         でも「自分の状況に合った答えが得られる」なら追加する動機はある。</div>
         <br>
-        <div><span class="label">③ ①を②の言葉で翻訳（= 友達追加画面の核心メッセージ）：</span><br>
+        <div><span class="label">③ ①を②の言葉で翻訳（= PU〜友達追加画面を貫く核心メッセージ）：</span><br>
         「バイアグラ、本当に自分に合ってる？飲み方・タイミングを30秒で確認できる」<br>
         → ①と③が一致 ✅</div>
       </div>
 
-      <div class="alert">
-        <strong>問題の核心：</strong>DMMEDとの差 = 心理障壁の差。<br>
-        「バイアグラ飲み方」検索者はED = プライバシー最敏感層。友達追加画面が少しでも「クリニック感・営業感」を出すと即離脱する。
+      <div class="highlight">
+        <strong>友達追加画面が変わるべき理由：</strong><br>
+        同じPUでDMMEDが追加率8〜13%出ている。PU・URLは問題なし。<br>
+        バイアグラ飲み方記事の友達追加画面だけが「クリニック感・営業感」を出していて、ED検索者のプライバシー警戒を突破できていない。
       </div>
     </div>
 
     <!-- 改善設計 -->
     <div class="section">
       <p class="section-title">改善設計</p>
-      <h2>友達追加画面 3点セット</h2>
+      <h2>友達追加画面 3点を直す</h2>
 
       <h3>① アカウント名</h3>
       <div class="good">
@@ -164,7 +186,7 @@
 ED対処法が分かります。
 薬の種類・タイミング・飲み合わせまで確認できます。</div>
         <div class="design-card-reason">
-          <strong>理由：</strong>「バイアグラ飲み方」検索者は「情報確認フェーズ」。「本当に合ってる？」という問いかけが、今まさに抱えている不安（ちゃんと飲めているか）に直撃する。具体的なベネフィット（30秒・種類・タイミング・飲み合わせ）を列挙して価値を可視化。
+          <strong>理由：</strong>PU「バイアグラの飲み方、本当に合ってる？」と文言を統一し、文脈を一貫させる。具体的なベネフィット（30秒・種類・タイミング・飲み合わせ）を列挙して価値を可視化。
         </div>
       </div>
 
@@ -220,15 +242,15 @@ ED対処法が分かります。
       <table>
         <tr>
           <th>工数</th>
-          <td>1営業日（文言変更＋画像差し替えのみ）</td>
+          <td>1営業日（PU文言変更 + 友達追加画面 文言・画像差し替え）</td>
         </tr>
         <tr>
           <th>担当</th>
-          <td>Ren（実装）</td>
+          <td>Noa（PU文言確定）→ Ren（実装）</td>
         </tr>
         <tr>
           <th>判定タイミング</th>
-          <td>実装後5日で追加率確認（目標: 11%以上）</td>
+          <td>実装後5〜7日で追加率確認（目標: 11%以上）</td>
         </tr>
         <tr>
           <th>ステータス</th>
@@ -238,8 +260,8 @@ ED対処法が分かります。
 
       <div class="info">
         <strong>Renへの確認事項：</strong><br>
-        ① 案A〜Cのうちどれでいくか（推奨は案A）<br>
-        ② 現状の友達追加画面の説明文・トプ画を共有してもらえると、改善幅の比較ができる
+        ① 友達追加画面：案A〜Cのうちどれか（推奨は案A）<br>
+        ② 現状の友達追加画面の説明文・トプ画を共有してもらえると改善幅の比較ができる
       </div>
     </div>
 
