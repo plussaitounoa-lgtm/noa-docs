@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>未設置検知スプシ ガイド — Noa Docs</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+
+    header { background: #1a1a2e; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
+    header a { color: #aaa; font-size: 13px; text-decoration: none; }
+    header a:hover { color: white; }
+    header .sep { color: #555; }
+    header h1 { font-size: 18px; font-weight: 700; color: white; }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+
+    .page-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .page-meta { font-size: 12px; color: #999; margin-bottom: 32px; }
+
+    h2 { font-size: 16px; font-weight: 700; margin: 36px 0 12px; padding-left: 10px; border-left: 3px solid #1a4d9e; color: #1a1a1a; }
+    h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #333; }
+
+    p { font-size: 14px; line-height: 1.7; color: #444; margin-bottom: 12px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 20px; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e8e8e8; }
+    thead tr { background: #2d2d2d; color: white; }
+    th { padding: 10px 14px; text-align: left; font-weight: 600; font-size: 12px; }
+    td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafafa; }
+
+    .badge {
+      display: inline-block; padding: 2px 10px; border-radius: 12px;
+      font-size: 11px; font-weight: 700; white-space: nowrap;
+    }
+    .badge-saisyusen { background: #fde8e8; color: #c0392b; }
+    .badge-high      { background: #fef3e2; color: #d35400; }
+    .badge-mid       { background: #eaf4e5; color: #27ae60; }
+    .badge-done      { background: #e8f5e9; color: #2e7d32; }
+    .badge-tbc       { background: #f0f0f0; color: #777; }
+
+    .site-badge {
+      display: inline-block; padding: 2px 8px; border-radius: 4px;
+      font-size: 11px; font-weight: 600; white-space: nowrap;
+    }
+    .site-shibuya  { background: #e3f0ff; color: #1a4d9e; }
+    .site-koizumi  { background: #e8f5e9; color: #2e7d32; }
+    .site-oda      { background: #f3e8ff; color: #6a1b9a; }
+    .site-aita     { background: #fff3e0; color: #e65100; }
+    .site-mega     { background: #fce4ec; color: #880e4f; }
+
+    .code-block {
+      background: #1e1e1e; color: #d4d4d4; padding: 16px 20px;
+      border-radius: 8px; font-family: 'Courier New', monospace; font-size: 13px;
+      line-height: 1.6; margin-bottom: 20px; overflow-x: auto;
+    }
+    .code-block .comment { color: #6a9955; }
+    .code-block .cmd { color: #4ec9b0; }
+
+    .info-box {
+      background: #e8f4fd; border: 1px solid #b3d7f5; border-radius: 8px;
+      padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: #1a5276;
+    }
+    .info-box .icon { font-size: 16px; margin-right: 6px; }
+    .warn-box {
+      background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px;
+      padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: #7d6608;
+    }
+
+    .summary-box {
+      background: white; border: 1px solid #e8e8e8; border-radius: 10px;
+      padding: 20px 24px; margin-bottom: 24px;
+    }
+    .summary-box .kpi-row { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 12px; }
+    .kpi { text-align: center; }
+    .kpi .num { font-size: 28px; font-weight: 700; color: #1a4d9e; }
+    .kpi .label { font-size: 11px; color: #999; margin-top: 2px; }
+
+    .color-legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 12px 0 20px; }
+    .color-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+    .color-dot { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+
+    footer { text-align: center; padding: 20px; color: #bbb; font-size: 12px; border-top: 1px solid #eee; background: white; margin-top: 40px; }
+
+    .tab-list { display: flex; gap: 4px; margin-bottom: 0; flex-wrap: wrap; }
+    .tab-chip {
+      padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+      background: #f0f0f0; color: #555; cursor: default;
+    }
+    .tab-chip.active { background: #1a4d9e; color: white; }
+
+    .divider { height: 1px; background: #eee; margin: 24px 0; }
+
+    .num-right { text-align: right; font-variant-numeric: tabular-nums; }
+    .total-row td { font-weight: 700; background: #f8f8f8; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html">← Noa Docs</a>
+  <span class="sep">/</span>
+  <h1>未設置検知スプシ ガイド</h1>
+</header>
+
+<div class="container">
+
+  <div class="page-title">未設置検知スプシ ガイド</div>
+  <div class="page-meta">最終更新: 2026-05-08 ｜ 対象: Ren, Noa</div>
+
+  <!-- KPIサマリー -->
+  <div class="summary-box">
+    <p style="font-weight:700; font-size:14px; margin-bottom:0;">スプシ概要</p>
+    <div class="kpi-row">
+      <div class="kpi"><div class="num">5</div><div class="label">管理タブ数</div></div>
+      <div class="kpi"><div class="num">60+</div><div class="label">管理記事数</div></div>
+      <div class="kpi"><div class="num">4</div><div class="label">管理サイト</div></div>
+      <div class="kpi" style="border-left:1px solid #eee; padding-left:24px;">
+        <div class="num" style="color:#c0392b;">~25人</div>
+        <div class="label">未設置の月間機会損失/月</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <span class="icon">🔗</span>
+    スプシURL：<a href="https://docs.google.com/spreadsheets/d/1D9p_3X7c74rAyasSGx4-uFbqpM21n9l6wFPxtX0KtRY" target="_blank" style="color:#1a4d9e; font-weight:600;">
+      https://docs.google.com/spreadsheets/d/1D9p_3X7c74rAyasSGx4-uFbqpM21n9l6wFPxtX0KtRY
+    </a>
+  </div>
+
+  <!-- ===== セクション1: 概要 ===== -->
+  <h2>このスプシの目的</h2>
+  <p>
+    SEO記事への LINE PU（ポップアップ）・バナー の設置漏れを一覧で検知するツール。<br>
+    記事にPUが入っていない = 訪問者がLINEに誘導されていない = 友だち追加機会がゼロになっている。<br>
+    月間クリック数に PVFR（友達追加率）0.5% をかけた見込み人数を算出し、優先度をつけて管理する。
+  </p>
+  <p>
+    <strong>データソース：</strong>friend_data_cache.csv（LINEのタグ別友だち追加ログ）＋ Google Search Console（月間クリック数）<br>
+    <strong>更新タイミング：</strong>月1回 or PU設置後に手動実行
+  </p>
+
+  <!-- ===== セクション2: タブ構成 ===== -->
+  <h2>タブ構成（5タブ）</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>タブ名</th>
+        <th>サイト</th>
+        <th>ジャンル</th>
+        <th>記事数</th>
+        <th>更新スクリプト</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="site-badge site-aita">あいた（いびき）</span></td>
+        <td>aita.clinic</td>
+        <td>睡眠・いびき</td>
+        <td>20記事</td>
+        <td><code>add_aita_sheet.py</code></td>
+      </tr>
+      <tr>
+        <td><span class="site-badge site-oda">小田</span></td>
+        <td>ishinkai-mc.net</td>
+        <td>脱毛 + ダイエット</td>
+        <td>20記事（脱毛10・ダイエット10）</td>
+        <td><code>add_oda_sheet.py</code></td>
+      </tr>
+      <tr>
+        <td><span class="site-badge site-shibuya">渋谷（ダイエット）</span></td>
+        <td>shibuya-bunkamuradori-ladies.jp</td>
+        <td>ダイエット</td>
+        <td>18記事</td>
+        <td><code>add_shibuya_sheet.py</code></td>
+      </tr>
+      <tr>
+        <td><span class="site-badge site-koizumi">こいずみ（ダイエット）</span></td>
+        <td>koizumi-seikei.jp</td>
+        <td>ダイエット</td>
+        <td>7記事（CV記事1含む）</td>
+        <td><code>add_koizumi_sheet.py</code></td>
+      </tr>
+      <tr>
+        <td><span class="site-badge site-mega">メガ</span></td>
+        <td>megaclinic.jp</td>
+        <td>全ジャンル横断</td>
+        <td>複数</td>
+        <td><code>add_mega_sheet.py</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ===== セクション3: 列の見方 ===== -->
+  <h2>列の見方（全タブ共通・10列）</h2>
+  <table>
+    <thead>
+      <tr><th>列</th><th>項目名</th><th>内容</th><th>入力方法</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>A</td><td>スラグ</td><td>URL末尾のパス（識別子）</td><td>自動</td></tr>
+      <tr><td>B</td><td>記事名</td><td>記事タイトル</td><td>自動</td></tr>
+      <tr><td>C</td><td>記事URL</td><td>記事への直リンク</td><td>自動</td></tr>
+      <tr><td>D</td><td>記事種別</td><td>ノウハウ / CV の区別</td><td>手入力</td></tr>
+      <tr><td>E</td><td>PU設置</td><td>設置済み / 未設置</td><td>自動</td></tr>
+      <tr><td>F</td><td>バナー設置</td><td>設置済み / 未設置</td><td>自動</td></tr>
+      <tr><td>G</td><td>バナー種別</td><td>どのバナーを設置したか（例: ダイエット薬診断）</td><td>手入力</td></tr>
+      <tr><td>H</td><td>月間クリック</td><td>GSCの月間クリック数</td><td>自動</td></tr>
+      <tr><td>I</td><td>友だち（今月）</td><td>今月のPU+バナー経由友だち追加数</td><td>自動</td></tr>
+      <tr><td>J</td><td>友だち（全期間）</td><td>累計の友だち追加数</td><td>自動</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    <strong>⚠ 記事種別（D列）とバナー種別（G列）は手入力。</strong> スクリプト更新後に消えないよう、スクリプトは空白で書き込み＆列を保持する設計にしてある。
+  </div>
+
+  <h3>色の意味</h3>
+  <div class="color-legend">
+    <div class="color-item">
+      <div class="color-dot" style="background:#d4edda; border:1px solid #ccc;"></div>
+      <span>薄い緑 = PU＋バナー 両方設置済み</span>
+    </div>
+    <div class="color-item">
+      <div class="color-dot" style="background:#d0e8ff; border:1px solid #ccc;"></div>
+      <span>薄い青 = PUのみ設置済み</span>
+    </div>
+    <div class="color-item">
+      <div class="color-dot" style="background:#ffe0cc; border:1px solid #ccc;"></div>
+      <span>オレンジ = 未設置（標準）</span>
+    </div>
+    <div class="color-item">
+      <div class="color-dot" style="background:#ffd6d6; border:1px solid #ccc;"></div>
+      <span>赤みがかった = 未設置・最優先（あいたタブ）</span>
+    </div>
+    <div class="color-item">
+      <div class="color-dot" style="background:#e8e8e8; border:1px solid #ccc;"></div>
+      <span>グレー = CV記事（LINE対象外、こいずみタブ）</span>
+    </div>
+  </div>
+
+  <!-- ===== セクション4: 更新コマンド ===== -->
+  <h2>スプシ更新コマンド</h2>
+  <p>dashboard/ 以下のスクリプトを個別に実行する。所要時間は各タブ約10秒。</p>
+  <div class="code-block">
+<span class="comment"># カレントディレクトリを移動</span>
+<span class="cmd">cd ~/OneDrive/デスクトップ/project-noa/dashboard</span>
+
+<span class="comment"># タブを個別更新（対象タブだけ実行してOK）</span>
+<span class="cmd">python3 add_aita_sheet.py</span>      <span class="comment"># あいた（いびき）</span>
+<span class="cmd">python3 add_oda_sheet.py</span>       <span class="comment"># 小田（脱毛＋ダイエット）</span>
+<span class="cmd">python3 add_shibuya_sheet.py</span>   <span class="comment"># 渋谷（ダイエット）</span>
+<span class="cmd">python3 add_koizumi_sheet.py</span>   <span class="comment"># こいずみ（ダイエット）</span>
+<span class="cmd">python3 add_mega_sheet.py</span>      <span class="comment"># メガ</span>
+  </div>
+
+  <div class="info-box">
+    <span class="icon">ℹ️</span>
+    スクリプトは <code>friend_data_cache.csv</code> を読んでPU/バナー設置状況を判定する。キャッシュデータが古い場合は更新が必要。スクリプトの場所: <code>project-noa/dashboard/</code>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ===== セクション5: ダイエット薬診断バナー設置計画 ===== -->
+  <h2>ダイエット薬診断バナー 設置計画（2026-05-08 時点）</h2>
+
+  <h3>バナー概要</h3>
+  <table>
+    <tbody>
+      <tr><td style="width:140px; color:#999;">コピー（案）</td><td><strong>「種類が多すぎてどれかわからない…！/ あなたにぴったりのダイエット薬診断」</strong></td></tr>
+      <tr><td style="color:#999;">サイズ</td><td>800 × 500 px</td></tr>
+      <tr><td style="color:#999;">バナー現状</td><td>Renが既存バナー作成済み（未設置）。トンマナ合わせのためデザイナー依頼予定</td></tr>
+      <tr><td style="color:#999;">リンク先</td><td>ダイエット薬診断（LINE）</td></tr>
+      <tr><td style="color:#999;">対象記事</td><td>ダイエット薬系ノウハウ記事（CV記事・漢方系は除外）</td></tr>
+    </tbody>
+  </table>
+
+  <h3>設置候補一覧（月間クリック順）</h3>
+  <p style="font-size:12px; color:#999; margin-bottom:8px;">PVFR 0.5% 試算 ｜ 防風通聖散（漢方）は別枠扱い</p>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>サイト</th>
+        <th>記事名</th>
+        <th class="num-right">月間クリック</th>
+        <th class="num-right">見込み人数/月</th>
+        <th>優先度</th>
+        <th>備考</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><span class="site-badge site-shibuya">渋谷</span></td>
+        <td>食欲を抑える薬</td>
+        <td class="num-right">2,019</td>
+        <td class="num-right"><strong>10.1人</strong></td>
+        <td><span class="badge badge-saisyusen">最優先</span></td>
+        <td>t69 設置待ち</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><span class="site-badge site-koizumi">こいずみ</span></td>
+        <td>間食やめられない</td>
+        <td class="num-right">1,101</td>
+        <td class="num-right"><strong>5.5人</strong></td>
+        <td><span class="badge badge-saisyusen">最優先</span></td>
+        <td>t65 対象</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><span class="site-badge site-shibuya">渋谷</span></td>
+        <td>医療ダイエット保険適用</td>
+        <td class="num-right">561</td>
+        <td class="num-right">2.8人</td>
+        <td><span class="badge badge-high">高</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><span class="site-badge site-koizumi">こいずみ</span></td>
+        <td>リベルサスとマンジャロどっち</td>
+        <td class="num-right">320</td>
+        <td class="num-right">1.6人</td>
+        <td><span class="badge badge-high">高</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><span class="site-badge site-oda">小田</span></td>
+        <td>リベルサス通販 安い</td>
+        <td class="num-right">349</td>
+        <td class="num-right">1.7人</td>
+        <td><span class="badge badge-high">高</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td><span class="site-badge site-oda">小田</span></td>
+        <td>DMMリベルサス クーポン</td>
+        <td class="num-right">336</td>
+        <td class="num-right">1.7人</td>
+        <td><span class="badge badge-high">高</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td><span class="site-badge site-oda">小田</span></td>
+        <td>マンジャロ 安いオンライン診療（東京）</td>
+        <td class="num-right">301</td>
+        <td class="num-right">1.5人</td>
+        <td><span class="badge badge-mid">中</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td><span class="site-badge site-oda">小田</span></td>
+        <td>マンジャロ</td>
+        <td class="num-right">229</td>
+        <td class="num-right">1.1人</td>
+        <td><span class="badge badge-mid">中</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td><span class="site-badge site-koizumi">こいずみ</span></td>
+        <td>スルリム（DMMマンジャロ）</td>
+        <td class="num-right">159</td>
+        <td class="num-right">0.8人</td>
+        <td><span class="badge badge-mid">中</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td><span class="site-badge site-oda">小田</span></td>
+        <td>DMMマンジャロ 料金・クーポン</td>
+        <td class="num-right">150</td>
+        <td class="num-right">0.8人</td>
+        <td><span class="badge badge-mid">中</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td><span class="site-badge site-koizumi">こいずみ</span></td>
+        <td>マンジャロ オンライン診療</td>
+        <td class="num-right">100</td>
+        <td class="num-right">0.5人</td>
+        <td><span class="badge badge-mid">中</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td><span class="site-badge site-oda">小田</span></td>
+        <td>オゼンピック 安いオンライン診療</td>
+        <td class="num-right">105</td>
+        <td class="num-right">0.5人</td>
+        <td><span class="badge badge-mid">中</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td><span class="site-badge site-koizumi">こいずみ</span></td>
+        <td>リベルサス 通販</td>
+        <td class="num-right">84</td>
+        <td class="num-right">0.4人</td>
+        <td><span class="badge badge-mid">中</span></td>
+        <td></td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="3">合計</td>
+        <td class="num-right">5,814</td>
+        <td class="num-right">約29人/月</td>
+        <td colspan="2"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    <strong>除外記事：</strong>防風通聖散 ダイエット（小田、2,560クリック）→ 漢方薬のため「ダイエット薬診断」バナーとミスマッチ。別バナー検討の余地あり。<br>
+    <strong>除外記事：</strong>痩せる薬（こいずみ、501クリック）→ CV記事のため LINE 誘導対象外。
+  </div>
+
+  <h3>優先順位と進め方</h3>
+  <table>
+    <thead>
+      <tr><th>Phase</th><th>対象</th><th>内容</th><th>ステータス</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Phase 1</td>
+        <td>渋谷「食欲を抑える薬」<br>こいずみ「間食やめられない」</td>
+        <td>バナー完成後に即設置。合計15.6人/月見込み</td>
+        <td><span class="badge badge-tbc">バナー制作待ち</span></td>
+      </tr>
+      <tr>
+        <td>Phase 2</td>
+        <td>渋谷・小田・こいずみ 高優先記事</td>
+        <td>Phase 1 の結果を確認してから一括設置</td>
+        <td><span class="badge badge-tbc">計画中</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <span class="icon">📝</span>
+    <strong>デザイナー依頼：</strong>案件名「医療ダイエット：SEO記事用バナー作成」でNotionに作成予定。トンマナをサイト（渋谷/こいずみ/小田）別に合わせる必要あり。Renが作った既存バナー（800×500）が参考素材として使用可能。
+  </div>
+
+</div>
+
+<footer>Noa Docs — plussaitounoa-lgtm.github.io/noa-docs</footer>
+
+</body>
+</html>
