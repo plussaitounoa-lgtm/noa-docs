@@ -6,205 +6,347 @@
   <title>Noa Docs</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
-    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
-    header h1 { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
-    header p { color: #aaa; font-size: 14px; }
-    main { max-width: 860px; margin: 40px auto; padding: 0 24px 60px; }
-    .section-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 20px; margin-top: 40px; padding-bottom: 8px; border-bottom: 2px solid #e8e8e8; }
-    .section-title:first-child { margin-top: 0; }
-    .genre-label { display: flex; align-items: center; gap: 8px; margin: 20px 0 12px; }
-    .genre-badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; }
-    .genre-diet  { background: #e8f5e9; color: #2e7d32; }
-    .genre-icl   { background: #e3f0ff; color: #1a4d9e; }
-    .genre-phimo { background: #f3e8ff; color: #6a1b9a; }
-    .genre-ed    { background: #fff3e0; color: #e65100; }
-    .genre-general { background: #f0f0f0; color: #555; }
-    .genre-faga    { background: #fce4ec; color: #880e4f; }
-    .genre-pill    { background: #e0f7fa; color: #006064; }
-    .genre-datsumo { background: #fff8e1; color: #f57f17; }
-    .genre-kango   { background: #e8eaf6; color: #283593; }
-    .genre-rw      { background: #f1f8e9; color: #33691e; }
-    .empty-state { color: #bbb; font-size: 13px; padding: 12px 4px; margin-bottom: 20px; }
-    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 8px; }
-    .card { background: white; border-radius: 10px; padding: 20px; text-decoration: none; color: inherit; border: 1px solid #e8e8e8; transition: box-shadow 0.15s, transform 0.15s; display: block; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ヘッダー */
+    header { background: #1a1a2e; color: white; padding: 24px 32px; flex-shrink: 0; display: flex; align-items: center; gap: 16px; }
+    header h1 { font-size: 22px; font-weight: 700; }
+    header p { color: #aaa; font-size: 13px; }
+
+    /* レイアウト */
+    .layout { display: flex; flex: 1; }
+
+    /* サイドバー */
+    aside {
+      width: 220px; min-width: 220px; background: white; border-right: 1px solid #e8e8e8;
+      padding: 24px 0; overflow-y: auto; position: sticky; top: 0; height: calc(100vh - 72px);
+    }
+    .nav-section { margin-bottom: 8px; }
+    .nav-section-title {
+      font-size: 10px; font-weight: 700; color: #bbb; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 8px 20px 4px; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-section-title:hover { color: #888; }
+    .nav-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px 20px; font-size: 13px; color: #555; cursor: pointer;
+      border-left: 3px solid transparent; transition: all 0.12s;
+    }
+    .nav-item:hover { background: #f7f7f7; color: #1a1a1a; }
+    .nav-item.active { background: #f0f4ff; color: #1a4d9e; border-left-color: #1a4d9e; font-weight: 600; }
+    .nav-item .count { font-size: 11px; background: #f0f0f0; color: #999; padding: 1px 7px; border-radius: 10px; }
+    .nav-item.active .count { background: #dce7ff; color: #1a4d9e; }
+    .nav-divider { height: 1px; background: #f0f0f0; margin: 8px 0; }
+
+    /* コンテンツ */
+    main { flex: 1; padding: 32px; overflow-y: auto; }
+    .content-section { display: none; }
+    .content-section.active { display: block; }
+
+    .content-header { margin-bottom: 24px; }
+    .content-header h2 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .content-header p { font-size: 13px; color: #888; }
+
+    .genre-block { margin-bottom: 32px; }
+    .genre-label { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+    .genre-badge {
+      display: inline-block; padding: 3px 12px; border-radius: 20px;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
+    }
+    .genre-diet   { background: #e8f5e9; color: #2e7d32; }
+    .genre-icl    { background: #e3f0ff; color: #1a4d9e; }
+    .genre-phimo  { background: #f3e8ff; color: #6a1b9a; }
+    .genre-ed     { background: #fff3e0; color: #e65100; }
+    .genre-faga   { background: #fce4ec; color: #880e4f; }
+    .genre-pill   { background: #e0f7fa; color: #006064; }
+    .genre-datsumo{ background: #fff8e1; color: #f57f17; }
+    .genre-kango  { background: #e8eaf6; color: #283593; }
+    .genre-rw     { background: #f1f8e9; color: #33691e; }
+    .genre-general{ background: #f0f0f0; color: #555; }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+    .card {
+      background: white; border-radius: 10px; padding: 20px; text-decoration: none;
+      color: inherit; border: 1px solid #e8e8e8; transition: box-shadow 0.15s, transform 0.15s; display: block;
+    }
     .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-2px); }
-    .card-icon { font-size: 28px; margin-bottom: 12px; }
-    .card-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
-    .card-desc { font-size: 13px; color: #666; line-height: 1.5; }
-    footer { text-align: center; padding: 40px; color: #bbb; font-size: 12px; }
+    .card-icon { font-size: 26px; margin-bottom: 10px; }
+    .card-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; line-height: 1.4; }
+    .card-desc { font-size: 12px; color: #666; line-height: 1.5; }
+    .empty-state { color: #ccc; font-size: 13px; padding: 8px 0; }
+
+    footer { text-align: center; padding: 24px; color: #bbb; font-size: 12px; border-top: 1px solid #eee; background: white; }
   </style>
 </head>
 <body>
   <header>
-    <h1>Noa Docs</h1>
-    <p>LINEマーケチーム｜ドキュメント置き場</p>
+    <div>
+      <h1>Noa Docs</h1>
+      <p>LINEマーケチーム｜ドキュメント置き場</p>
+    </div>
   </header>
-  <main>
 
-    <!-- ========== 分析レポート ========== -->
-    <p class="section-title">分析レポート</p>
+  <div class="layout">
+    <!-- ===== サイドバー ===== -->
+    <aside>
+      <div class="nav-section">
+        <div class="nav-section-title">分析レポート</div>
+        <div class="nav-item active" onclick="show('analysis-diet')">ダイエット <span class="count">8</span></div>
+        <div class="nav-item" onclick="show('analysis-icl')">ICL <span class="count">1</span></div>
+        <div class="nav-item" onclick="show('analysis-phimo')">包茎 <span class="count">1</span></div>
+        <div class="nav-item" onclick="show('analysis-ed')">ED <span class="count">1</span></div>
+        <div class="nav-item" onclick="show('analysis-faga')">FAGA <span class="count">0</span></div>
+        <div class="nav-item" onclick="show('analysis-pill')">オンラインピル <span class="count">0</span></div>
+        <div class="nav-item" onclick="show('analysis-datsumo')">メンズ脱毛 <span class="count">0</span></div>
+        <div class="nav-item" onclick="show('analysis-rw')">リカバリーウェア <span class="count">0</span></div>
+        <div class="nav-item" onclick="show('analysis-kango')">看護転職 <span class="count">0</span></div>
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-section">
+        <div class="nav-section-title">設計書</div>
+        <div class="nav-item" onclick="show('design-icl')">ICL <span class="count">2</span></div>
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-section">
+        <div class="nav-section-title">依頼書</div>
+        <div class="nav-item" onclick="show('brief-icl')">ICL <span class="count">1</span></div>
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-section">
+        <div class="nav-section-title">ガイド</div>
+        <div class="nav-item" onclick="show('guide')">一般 <span class="count">1</span></div>
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-section">
+        <div class="nav-section-title">アーカイブ</div>
+        <div class="nav-item" onclick="show('archive-icl')">ICL <span class="count">5</span></div>
+      </div>
+    </aside>
 
-    <div class="genre-label"><span class="genre-badge genre-diet">ダイエット</span></div>
-    <div class="card-grid">
-      <a class="card" href="pu-result-diet-2026-05-01.html">
-        <div class="card-icon">📈</div>
-        <div class="card-title">PU施策結果：ダイエット（t55・t57）6日間再分析 ★最新</div>
-        <div class="card-desc">t55要継続観察（旧PU並走・サンプル分散）・t57全指標悪化→友達追加画面改善急務（2026-05-01）</div>
-      </a>
-      <a class="card" href="friend-add-screen-diet-patch-2026-05-01.html">
-        <div class="card-icon">💬</div>
-        <div class="card-title">友達追加画面改善：ダイエットパッチ（渋谷）</div>
-        <div class="card-desc">友だち追加率2.1%→11%目標｜アカウント名「ダイエット体質診断」・説明文3案 → Renレビュー待ち（t57）</div>
-      </a>
-      <a class="card" href="pu-result-diet-2026-04-30.html">
-        <div class="card-icon">📊</div>
-        <div class="card-title">PU施策結果：ダイエット（t55・t57）5日間</div>
-        <div class="card-desc">t55当たり確定（CTR15.5%・PVFR0.73%）・t57追加率2.3%→友達追加画面問題（2026-04-30）</div>
-      </a>
-      <a class="card" href="pu-analysis-koizumi-diet-japanese-2026-04-22.html">
-        <div class="card-icon">🔍</div>
-        <div class="card-title">PU改善分析：日本人1番痩せる（こいずみ）</div>
-        <div class="card-desc">原因究明フレームへの訴求転換｜推奨案A確定 → Ren承認待ち（t55）</div>
-      </a>
-      <a class="card" href="pu-analysis-shibuya-diet-patch-2026-04-23.html">
-        <div class="card-icon">🔍</div>
-        <div class="card-title">PU改善分析：ダイエットパッチ（渋谷）</div>
-        <div class="card-desc">CTRのみボトルネック｜決断コスト解消型に転換 → Ren承認待ち（t57）</div>
-      </a>
-      <a class="card" href="lp-analysis-shibuya-diet-suppress-2026-04-23.html">
-        <div class="card-icon">🔍</div>
-        <div class="card-title">LP調査：食欲を抑える薬（渋谷）</div>
-        <div class="card-desc">追加率7.5%の原因はLP構造差｜専用LINE追加LP未設置 → Ren対応待ち（t58）</div>
-      </a>
-      <a class="card" href="pu-analysis-oda-bmi-2026-04-27.html">
-        <div class="card-icon">🔍</div>
-        <div class="card-title">PU改善分析：bmi記事（小田）</div>
-        <div class="card-desc">体型系5本削除・体の状態系拡大・新規1本追加｜+51人ポテンシャル → Ren承認待ち（t59）</div>
-      </a>
-      <a class="card" href="research-2026-04-21.html">
-        <div class="card-icon">📊</div>
-        <div class="card-title">数値分析レポート 2026-04-21</div>
-        <div class="card-desc">BMI記事（3サイト）・ワークマン口コミの課題特定｜回収対象と優先順位</div>
-      </a>
-    </div>
+    <!-- ===== コンテンツ ===== -->
+    <main>
 
-    <div class="genre-label"><span class="genre-badge genre-icl">ICL</span></div>
-    <div class="card-grid">
-      <a class="card" href="icl-winut-check-2026-05-08.html">
-        <div class="card-icon">👁️</div>
-        <div class="card-title">ICL診断 Winut数値確認 2026-05-08 ★最新</div>
-        <div class="card-desc">8日間（5/1〜5/8）｜PU稼働確認・FB追加3件はPV母数不足が原因｜乱視記事追加済み（t5）</div>
-      </a>
-    </div>
+      <!-- 分析 / ダイエット -->
+      <div id="analysis-diet" class="content-section active">
+        <div class="content-header">
+          <h2>分析レポート</h2>
+        </div>
+        <div class="genre-block">
+          <div class="genre-label"><span class="genre-badge genre-diet">ダイエット</span></div>
+          <div class="card-grid">
+            <a class="card" href="pu-result-diet-2026-05-01.html">
+              <div class="card-icon">📈</div>
+              <div class="card-title">PU施策結果：ダイエット（t55・t57）6日間再分析 ★最新</div>
+              <div class="card-desc">t55要継続観察・t57全指標悪化→友達追加画面改善急務（2026-05-01）</div>
+            </a>
+            <a class="card" href="friend-add-screen-diet-patch-2026-05-01.html">
+              <div class="card-icon">💬</div>
+              <div class="card-title">友達追加画面改善：ダイエットパッチ（渋谷）</div>
+              <div class="card-desc">追加率2.1%→11%目標｜アカウント名「ダイエット体質診断」・説明文3案（t57）</div>
+            </a>
+            <a class="card" href="pu-result-diet-2026-04-30.html">
+              <div class="card-icon">📊</div>
+              <div class="card-title">PU施策結果：ダイエット（t55・t57）5日間</div>
+              <div class="card-desc">t55当たり確定（CTR15.5%）・t57追加率2.3%→友達追加画面問題（2026-04-30）</div>
+            </a>
+            <a class="card" href="pu-analysis-koizumi-diet-japanese-2026-04-22.html">
+              <div class="card-icon">🔍</div>
+              <div class="card-title">PU改善分析：日本人1番痩せる（こいずみ）</div>
+              <div class="card-desc">原因究明フレームへの訴求転換｜推奨案A確定（t55）</div>
+            </a>
+            <a class="card" href="pu-analysis-shibuya-diet-patch-2026-04-23.html">
+              <div class="card-icon">🔍</div>
+              <div class="card-title">PU改善分析：ダイエットパッチ（渋谷）</div>
+              <div class="card-desc">CTRのみボトルネック｜決断コスト解消型に転換（t57）</div>
+            </a>
+            <a class="card" href="lp-analysis-shibuya-diet-suppress-2026-04-23.html">
+              <div class="card-icon">🔍</div>
+              <div class="card-title">LP調査：食欲を抑える薬（渋谷）</div>
+              <div class="card-desc">追加率7.5%の原因はLP構造差｜専用LP未設置（t58）</div>
+            </a>
+            <a class="card" href="pu-analysis-oda-bmi-2026-04-27.html">
+              <div class="card-icon">🔍</div>
+              <div class="card-title">PU改善分析：bmi記事（小田）</div>
+              <div class="card-desc">体型系5本削除・体の状態系拡大｜+51人ポテンシャル（t59）</div>
+            </a>
+            <a class="card" href="research-2026-04-21.html">
+              <div class="card-icon">📊</div>
+              <div class="card-title">数値分析レポート 2026-04-21</div>
+              <div class="card-desc">BMI記事（3サイト）・ワークマン口コミの課題特定｜回収対象と優先順位</div>
+            </a>
+          </div>
+        </div>
+      </div>
 
-    <div class="genre-label"><span class="genre-badge genre-phimo">包茎</span></div>
-    <div class="card-grid">
-      <a class="card" href="pu-analysis-phimosis-2026-04-30.html">
-        <div class="card-icon">🔍</div>
-        <div class="card-title">PU改善設計：包茎（kanton/hiyo/sapporo/shinsei）</div>
-        <div class="card-desc">「自分にぴったり」型に全面転換｜kanton問題PU即削除・サイト別差し替え案 → Renレビュー待ち（t61）</div>
-      </a>
-    </div>
+      <!-- 分析 / ICL -->
+      <div id="analysis-icl" class="content-section">
+        <div class="content-header"><h2>分析レポート</h2></div>
+        <div class="genre-block">
+          <div class="genre-label"><span class="genre-badge genre-icl">ICL</span></div>
+          <div class="card-grid">
+            <a class="card" href="icl-winut-check-2026-05-08.html">
+              <div class="card-icon">👁️</div>
+              <div class="card-title">ICL診断 Winut数値確認 2026-05-08 ★最新</div>
+              <div class="card-desc">8日間（5/1〜5/8）｜PU稼働確認・FB追加3件はPV母数不足が原因（t5）</div>
+            </a>
+          </div>
+        </div>
+      </div>
 
-    <div class="genre-label"><span class="genre-badge genre-ed">ED</span></div>
-    <div class="card-grid">
-      <a class="card" href="friend-add-screen-ed-viagra-2026-04-30.html">
-        <div class="card-icon">💬</div>
-        <div class="card-title">友達追加画面改善：バイアグラ飲み方（ED）</div>
-        <div class="card-desc">追加率1〜4.4%→11%目標｜アカウント名・説明文3案・ビジュアル方向性 → Renレビュー待ち（t60）</div>
-      </a>
-    </div>
+      <!-- 分析 / 包茎 -->
+      <div id="analysis-phimo" class="content-section">
+        <div class="content-header"><h2>分析レポート</h2></div>
+        <div class="genre-block">
+          <div class="genre-label"><span class="genre-badge genre-phimo">包茎</span></div>
+          <div class="card-grid">
+            <a class="card" href="pu-analysis-phimosis-2026-04-30.html">
+              <div class="card-icon">🔍</div>
+              <div class="card-title">PU改善設計：包茎（kanton/hiyo/sapporo/shinsei）</div>
+              <div class="card-desc">「自分にぴったり」型に全面転換｜kanton問題PU即削除（t61）</div>
+            </a>
+          </div>
+        </div>
+      </div>
 
-    <div class="genre-label"><span class="genre-badge genre-faga">FAGA</span></div>
-    <p class="empty-state">ドキュメントなし</p>
+      <!-- 分析 / ED -->
+      <div id="analysis-ed" class="content-section">
+        <div class="content-header"><h2>分析レポート</h2></div>
+        <div class="genre-block">
+          <div class="genre-label"><span class="genre-badge genre-ed">ED</span></div>
+          <div class="card-grid">
+            <a class="card" href="friend-add-screen-ed-viagra-2026-04-30.html">
+              <div class="card-icon">💬</div>
+              <div class="card-title">友達追加画面改善：バイアグラ飲み方（ED）</div>
+              <div class="card-desc">追加率1〜4.4%→11%目標｜アカウント名・説明文3案（t60）</div>
+            </a>
+          </div>
+        </div>
+      </div>
 
-    <div class="genre-label"><span class="genre-badge genre-pill">オンラインピル</span></div>
-    <p class="empty-state">ドキュメントなし</p>
+      <!-- 分析 / 空ジャンル -->
+      <div id="analysis-faga" class="content-section">
+        <div class="content-header"><h2>分析レポート</h2></div>
+        <div class="genre-label"><span class="genre-badge genre-faga">FAGA</span></div>
+        <p class="empty-state">ドキュメントなし</p>
+      </div>
+      <div id="analysis-pill" class="content-section">
+        <div class="content-header"><h2>分析レポート</h2></div>
+        <div class="genre-label"><span class="genre-badge genre-pill">オンラインピル</span></div>
+        <p class="empty-state">ドキュメントなし</p>
+      </div>
+      <div id="analysis-datsumo" class="content-section">
+        <div class="content-header"><h2>分析レポート</h2></div>
+        <div class="genre-label"><span class="genre-badge genre-datsumo">メンズ脱毛</span></div>
+        <p class="empty-state">ドキュメントなし</p>
+      </div>
+      <div id="analysis-rw" class="content-section">
+        <div class="content-header"><h2>分析レポート</h2></div>
+        <div class="genre-label"><span class="genre-badge genre-rw">リカバリーウェア</span></div>
+        <p class="empty-state">ドキュメントなし</p>
+      </div>
+      <div id="analysis-kango" class="content-section">
+        <div class="content-header"><h2>分析レポート</h2></div>
+        <div class="genre-label"><span class="genre-badge genre-kango">看護転職</span></div>
+        <p class="empty-state">ドキュメントなし</p>
+      </div>
 
-    <div class="genre-label"><span class="genre-badge genre-datsumo">メンズ脱毛</span></div>
-    <p class="empty-state">ドキュメントなし</p>
+      <!-- 設計書 / ICL -->
+      <div id="design-icl" class="content-section">
+        <div class="content-header"><h2>設計書</h2></div>
+        <div class="genre-block">
+          <div class="genre-label"><span class="genre-badge genre-icl">ICL</span></div>
+          <div class="card-grid">
+            <a class="card" href="icl-shindan-v3.html">
+              <div class="card-icon">👁️</div>
+              <div class="card-title">視力改善診断（ICL）v3 ★最新</div>
+              <div class="card-desc">設計完了 → 制作待ち｜友だち追加 +83人/月（基準値）</div>
+            </a>
+            <a class="card" href="icl-flow-v3.html">
+              <div class="card-icon">🔷</div>
+              <div class="card-title">LINEワークフロー図（ICL）v3 ★最新</div>
+              <div class="card-desc">PU → 友だち追加 → 診断 → 結果 → CTA の全体フロー</div>
+            </a>
+          </div>
+        </div>
+      </div>
 
-    <div class="genre-label"><span class="genre-badge genre-rw">リカバリーウェア</span></div>
-    <p class="empty-state">ドキュメントなし</p>
+      <!-- 依頼書 / ICL -->
+      <div id="brief-icl" class="content-section">
+        <div class="content-header"><h2>依頼書</h2></div>
+        <div class="genre-block">
+          <div class="genre-label"><span class="genre-badge genre-icl">ICL</span></div>
+          <div class="card-grid">
+            <a class="card" href="icl-irai-v2.html">
+              <div class="card-icon">📋</div>
+              <div class="card-title">デザイン依頼書（ICL）v2 ★最新</div>
+              <div class="card-desc">制作依頼待ち｜30枚構成｜先進会眼科</div>
+            </a>
+          </div>
+        </div>
+      </div>
 
-    <div class="genre-label"><span class="genre-badge genre-kango">看護転職</span></div>
-    <p class="empty-state">ドキュメントなし</p>
+      <!-- ガイド -->
+      <div id="guide" class="content-section">
+        <div class="content-header"><h2>ガイド</h2></div>
+        <div class="card-grid">
+          <a class="card" href="task-setup.html">
+            <div class="card-icon">📋</div>
+            <div class="card-title">タスク管理セットアップ</div>
+            <div class="card-desc">tasks.json の操作方法・manage.py コマンド一覧</div>
+          </a>
+        </div>
+      </div>
 
-    <!-- ========== 設計書 ========== -->
-    <p class="section-title">設計書</p>
+      <!-- アーカイブ / ICL -->
+      <div id="archive-icl" class="content-section">
+        <div class="content-header"><h2>アーカイブ</h2></div>
+        <div class="genre-block">
+          <div class="genre-label"><span class="genre-badge genre-icl">ICL</span></div>
+          <div class="card-grid">
+            <a class="card" href="icl-irai-v1.html">
+              <div class="card-icon">🗂️</div>
+              <div class="card-title">デザイン依頼書（ICL）v1</div>
+              <div class="card-desc">旧バージョン｜2026-04-16</div>
+            </a>
+            <a class="card" href="icl-shindan-v2.html">
+              <div class="card-icon">🗂️</div>
+              <div class="card-title">視力改善診断（ICL）v2</div>
+              <div class="card-desc">旧バージョン</div>
+            </a>
+            <a class="card" href="icl-shindan.html">
+              <div class="card-icon">🗂️</div>
+              <div class="card-title">視力改善診断（ICL）v1</div>
+              <div class="card-desc">旧バージョン</div>
+            </a>
+            <a class="card" href="icl-flow-v2.html">
+              <div class="card-icon">🗂️</div>
+              <div class="card-title">LINEワークフロー図（ICL）v2</div>
+              <div class="card-desc">旧バージョン</div>
+            </a>
+            <a class="card" href="icl-flow.html">
+              <div class="card-icon">🗂️</div>
+              <div class="card-title">LINEワークフロー図（ICL）v1</div>
+              <div class="card-desc">旧バージョン</div>
+            </a>
+          </div>
+        </div>
+      </div>
 
-    <div class="genre-label"><span class="genre-badge genre-icl">ICL</span></div>
-    <div class="card-grid">
-      <a class="card" href="icl-shindan-v3.html">
-        <div class="card-icon">👁️</div>
-        <div class="card-title">視力改善診断（ICL）v3 ★最新</div>
-        <div class="card-desc">設計完了 → 制作待ち｜友だち追加 +83人/月（基準値）</div>
-      </a>
-      <a class="card" href="icl-flow-v3.html">
-        <div class="card-icon">🔷</div>
-        <div class="card-title">LINEワークフロー図（ICL）v3 ★最新</div>
-        <div class="card-desc">PU → 友だち追加 → 診断 → 結果 → CTA の全体フロー</div>
-      </a>
-    </div>
+    </main>
+  </div>
 
-    <!-- ========== 依頼書 ========== -->
-    <p class="section-title">依頼書</p>
-
-    <div class="genre-label"><span class="genre-badge genre-icl">ICL</span></div>
-    <div class="card-grid">
-      <a class="card" href="icl-irai-v2.html">
-        <div class="card-icon">📋</div>
-        <div class="card-title">デザイン依頼書（ICL）v2 ★最新</div>
-        <div class="card-desc">制作依頼待ち｜30枚構成｜先進会眼科</div>
-      </a>
-    </div>
-
-    <!-- ========== ガイド ========== -->
-    <p class="section-title">ガイド</p>
-
-    <div class="genre-label"><span class="genre-badge genre-general">一般</span></div>
-    <div class="card-grid">
-      <a class="card" href="task-setup.html">
-        <div class="card-icon">📋</div>
-        <div class="card-title">タスク管理セットアップ</div>
-        <div class="card-desc">tasks.json の操作方法・manage.py コマンド一覧</div>
-      </a>
-    </div>
-
-    <!-- ========== アーカイブ ========== -->
-    <p class="section-title">アーカイブ</p>
-
-    <div class="genre-label"><span class="genre-badge genre-icl">ICL</span></div>
-    <div class="card-grid">
-      <a class="card" href="icl-irai-v1.html">
-        <div class="card-icon">🗂️</div>
-        <div class="card-title">デザイン依頼書（ICL）v1</div>
-        <div class="card-desc">旧バージョン｜2026-04-16</div>
-      </a>
-      <a class="card" href="icl-shindan-v2.html">
-        <div class="card-icon">🗂️</div>
-        <div class="card-title">視力改善診断（ICL）v2</div>
-        <div class="card-desc">旧バージョン</div>
-      </a>
-      <a class="card" href="icl-shindan.html">
-        <div class="card-icon">🗂️</div>
-        <div class="card-title">視力改善診断（ICL）v1</div>
-        <div class="card-desc">旧バージョン</div>
-      </a>
-      <a class="card" href="icl-flow-v2.html">
-        <div class="card-icon">🗂️</div>
-        <div class="card-title">LINEワークフロー図（ICL）v2</div>
-        <div class="card-desc">旧バージョン</div>
-      </a>
-      <a class="card" href="icl-flow.html">
-        <div class="card-icon">🗂️</div>
-        <div class="card-title">LINEワークフロー図（ICL）v1</div>
-        <div class="card-desc">旧バージョン</div>
-      </a>
-    </div>
-
-  </main>
   <footer>Noa Docs — plussaitounoa-lgtm.github.io/noa-docs</footer>
+
+  <script>
+    function show(id) {
+      // コンテンツ切り替え
+      document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      // サイドバーのアクティブ状態
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+    }
+  </script>
 </body>
 </html>
