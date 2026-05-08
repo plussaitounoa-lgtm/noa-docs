@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>全ジャンル日次分析 2026-05-08（5/7データ）</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header p { color: #aaa; font-size: 14px; }
+    main { max-width: 900px; margin: 40px auto; padding: 0 24px 60px; }
+
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; color: #333; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 8px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; }
+    tr:last-child td { border-bottom: none; }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+    .red    { background: #fff0f0; color: #c0392b; }
+    .yellow { background: #fffbea; color: #b7860b; }
+    .green  { background: #f0fff4; color: #27ae60; }
+    .blue   { background: #f0f4ff; color: #2c52b0; }
+    .gray   { background: #f0f0f0; color: #888; }
+
+    .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .alert { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good  { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .info  { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f7f7f7; border-radius: 8px; padding: 16px; text-align: center; }
+    .kpi-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+    .kpi-value { font-size: 22px; font-weight: 700; }
+    .kpi-note  { font-size: 11px; color: #aaa; margin-top: 2px; }
+    .kpi-bad  .kpi-value { color: #e74c3c; }
+    .kpi-ok   .kpi-value { color: #f39c12; }
+    .kpi-good .kpi-value { color: #27ae60; }
+
+    .priority-row { display: flex; gap: 12px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid #f0f0f0; }
+    .priority-row:last-child { border-bottom: none; }
+    .priority-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #1a1a2e; color: white; font-size: 13px; font-weight: 700; text-align: center; line-height: 28px; }
+    .priority-body { flex: 1; }
+    .priority-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .priority-detail { font-size: 13px; color: #555; line-height: 1.6; }
+    .priority-impact { font-size: 12px; font-weight: 700; color: #c0392b; margin-top: 4px; }
+
+    .trend-up   { color: #27ae60; font-weight: 600; }
+    .trend-down { color: #e74c3c; font-weight: 600; }
+    .trend-flat { color: #888; }
+
+    footer { text-align: center; padding: 40px; color: #bbb; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>📊 全ジャンル日次分析</h1>
+  <p>LINEマーケ｜分析日: 2026-05-08（対象データ: 2026-05-07）｜担当: Noa</p>
+</header>
+
+<main>
+
+  <!-- 概要 -->
+  <div class="section">
+    <div class="section-title">概要</div>
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>分析対象日</td><td>2026-05-07（木）</td></tr>
+      <tr><td>比較軸</td><td>前日（5/6）・前週同曜日（4/30）・5月日次推移（5/1〜5/7）</td></tr>
+      <tr><td>対象チャネル</td><td>SEO PU経由（管轄7ジャンル）。バナー・ad系除外</td></tr>
+      <tr><td>管轄ジャンル</td><td>GLP-1 / 包茎 / ED / FAGA / オンラインピル / メンズ脱毛 / 看護転職 / リカバリーウェア</td></tr>
+      <tr><td>月次目標（全チャネル）</td><td>800人 / 現状161人（7日経過）/ 日均23.0人 / 着地予測713人（▲87人不足）</td></tr>
+    </table>
+  </div>
+
+  <!-- 5/7 KPI サマリー -->
+  <div class="section">
+    <div class="section-title">5/7 当日KPI（SEO PU管轄合計）</div>
+    <div class="kpi-grid">
+      <div class="kpi-card kpi-ok">
+        <div class="kpi-label">友だち（SEO PU）</div>
+        <div class="kpi-value">11人</div>
+        <div class="kpi-note">前日15人 ▼4</div>
+      </div>
+      <div class="kpi-card kpi-bad">
+        <div class="kpi-label">PVFR</div>
+        <div class="kpi-value">0.41%</div>
+        <div class="kpi-note">基準0.80% 5月最低</div>
+      </div>
+      <div class="kpi-card kpi-ok">
+        <div class="kpi-label">LP PV</div>
+        <div class="kpi-value">2,670</div>
+        <div class="kpi-note">前日2,992 ▼322</div>
+      </div>
+      <div class="kpi-card kpi-ok">
+        <div class="kpi-label">月間ペース（全体）</div>
+        <div class="kpi-value">23.0人/日</div>
+        <div class="kpi-note">目標25.8人/日</div>
+      </div>
+    </div>
+    <div class="alert">
+      <strong>⚠️ 5月最低PVFR</strong><br>
+      LP PVは2,670と平均水準だが友だち11人はPVに対して少なすぎる。PVの落ち（-10.8%）より友だちの落ち（-26.7%）の方が大きい。ファネル指標の悪化が主因。
+    </div>
+  </div>
+
+  <!-- 5月日次推移 -->
+  <div class="section">
+    <div class="section-title">5月 日次推移（SEO PU管轄）</div>
+    <table>
+      <tr>
+        <th>日付</th><th>曜日</th><th class="num">LP PV</th><th class="num">友だち</th><th class="num">PVFR</th><th>傾向</th>
+      </tr>
+      <tr>
+        <td>5/1（木）</td><td>祝</td><td class="num">2,283</td><td class="num">6</td><td class="num">0.26%</td>
+        <td><span class="badge red">低</span></td>
+      </tr>
+      <tr>
+        <td>5/2（金）</td><td></td><td class="num">2,335</td><td class="num">16</td><td class="num">0.69%</td>
+        <td><span class="badge yellow">並</span></td>
+      </tr>
+      <tr>
+        <td>5/3（土）</td><td>祝</td><td class="num">2,412</td><td class="num">14</td><td class="num">0.58%</td>
+        <td><span class="badge yellow">並</span></td>
+      </tr>
+      <tr>
+        <td>5/4（日）</td><td>祝</td><td class="num">2,545</td><td class="num">14</td><td class="num">0.55%</td>
+        <td><span class="badge yellow">並</span></td>
+      </tr>
+      <tr>
+        <td>5/5（月）</td><td>祝</td><td class="num">2,668</td><td class="num">20</td><td class="num">0.75%</td>
+        <td><span class="badge green">好調</span></td>
+      </tr>
+      <tr>
+        <td>5/6（火）</td><td></td><td class="num">2,992</td><td class="num">15</td><td class="num">0.50%</td>
+        <td><span class="badge yellow">並</span></td>
+      </tr>
+      <tr style="background:#fff8f8;">
+        <td><strong>5/7（水）</strong></td><td></td><td class="num">2,670</td><td class="num"><strong>11</strong></td><td class="num"><strong>0.41%</strong></td>
+        <td><span class="badge red">最低</span></td>
+      </tr>
+    </table>
+    <p style="color:#888;font-size:13px;">※5/5ピーク（20人）は GLP-1 seo のCTR 16.7%が突出した日。構造的な好転ではなく日次ブレの可能性あり。</p>
+  </div>
+
+  <!-- ジャンル別詳細 -->
+  <div class="section">
+    <div class="section-title">5/7 ジャンル別ファネル数値</div>
+    <table>
+      <tr>
+        <th>ジャンル</th><th class="num">LP PV</th><th class="num">友だち</th><th class="num">PVFR</th><th class="num">CTR</th><th class="num">FR（追加率）</th><th>判定</th>
+      </tr>
+      <tr>
+        <td>GLP-1 seo</td><td class="num">933</td><td class="num">6</td><td class="num">0.64%</td>
+        <td class="num"><span class="badge yellow">12.6%</span></td>
+        <td class="num"><span class="badge green">11.5%</span></td>
+        <td><span class="badge yellow">並</span></td>
+      </tr>
+      <tr>
+        <td>GLP-1 ava</td><td class="num">633</td><td class="num">3</td><td class="num">0.47%</td>
+        <td class="num"><span class="badge green">15.9%</span></td>
+        <td class="num"><span class="badge red">6.5%</span></td>
+        <td><span class="badge yellow">要注視</span></td>
+      </tr>
+      <tr>
+        <td>包茎</td><td class="num">335</td><td class="num">0</td><td class="num">0.00%</td>
+        <td class="num"><span class="badge red">9.7%</span></td>
+        <td class="num">—</td>
+        <td><span class="badge red">不調</span></td>
+      </tr>
+      <tr>
+        <td>ED</td><td class="num">161</td><td class="num">2</td><td class="num">1.24%</td>
+        <td class="num"><span class="badge yellow">11.8%</span></td>
+        <td class="num"><span class="badge green">22.2%</span></td>
+        <td><span class="badge green">好調</span></td>
+      </tr>
+      <tr>
+        <td>オンラインピル</td><td class="num">163</td><td class="num">0</td><td class="num">0.00%</td>
+        <td class="num"><span class="badge red">8.0%</span></td>
+        <td class="num">—</td>
+        <td><span class="badge red">慢性低迷</span></td>
+      </tr>
+      <tr>
+        <td>リカバリーウェア</td><td class="num">365</td><td class="num">0</td><td class="num">0.00%</td>
+        <td class="num"><span class="badge green">14.2%</span></td>
+        <td class="num"><span class="badge red">0.0%</span></td>
+        <td><span class="badge red">FR壊滅</span></td>
+      </tr>
+      <tr>
+        <td>看護転職</td><td class="num">67</td><td class="num">0</td><td class="num">0.00%</td>
+        <td class="num"><span class="badge green">14.3%</span></td>
+        <td class="num"><span class="badge red">0.0%</span></td>
+        <td><span class="badge gray">PV少</span></td>
+      </tr>
+      <tr>
+        <td>FAGA / メンズ脱毛</td><td class="num">13</td><td class="num">0</td><td class="num">—</td>
+        <td class="num">—</td><td class="num">—</td>
+        <td><span class="badge gray">データ不足</span></td>
+      </tr>
+    </table>
+    <p style="color:#888;font-size:12px;">基準値: CTR 13%以上 / FR 11%以上 / PVFR 0.80〜1.00%</p>
+  </div>
+
+  <!-- 好調 -->
+  <div class="section">
+    <div class="section-title">好調ジャンル ✅</div>
+    <h3>ED（seo_ed）— PVFR 1.24%、FR 22.2%</h3>
+    <div class="good">
+      5月最も安定したジャンル。PVFR 1.24%（基準超え）・FR 22.2%（基準11%の2倍）。<br>
+      友だちは日均1.4人と少ないが、ファネル効率は全ジャンル最良。触らない。
+    </div>
+    <h3>GLP-1 seo — 5/7は6人、CTR 12.6%（5月平均水準）</h3>
+    <div class="good">
+      「摂取カロリー」3人・「日本人1番痩せる」1人・「痩せる薬」1人と複数記事が分散貢献。<br>
+      全体の約半分の友だちをGLP-1 seoが担っている。5月日均5.6人ペース。
+    </div>
+  </div>
+
+  <!-- 不調・要注視 -->
+  <div class="section">
+    <div class="section-title">不調・要注視ジャンル 🔴🟡</div>
+
+    <!-- 優先度1 -->
+    <div class="priority-row">
+      <div class="priority-num">1</div>
+      <div class="priority-body">
+        <div class="priority-title">GLP-1 BMI記事（seo + ava）— CTR壊滅</div>
+        <div class="priority-detail">
+          seo bmi: CTR <strong>6.8%</strong>（LP PV 161） / ava bmi: CTR <strong>9.2%</strong>（LP PV 156）<br>
+          合計LP PV 317あるのに友だち0。両サイトで同じ問題が再現している。<br>
+          4/22のBMI記事分析（research-2026-04-21.html）と同一構造。t54の方針（訴求切り替え）は未実装。
+        </div>
+        <div class="priority-impact">
+          インパクト: CTR 13%達成で +2〜3人/日 = +60〜90人/月<br>
+          GOALギャップ87人の大部分をここで詰められる
+        </div>
+      </div>
+    </div>
+
+    <!-- 優先度2 -->
+    <div class="priority-row">
+      <div class="priority-num">2</div>
+      <div class="priority-body">
+        <div class="priority-title">GLP-1 ava — CTR高×FR低（追加画面問題）</div>
+        <div class="priority-detail">
+          CTR 15.9%（基準超え・問題なし）→ FR 6.5%（基準11%割れ）<br>
+          クリックした人が友達追加画面で離脱している。CTR高×FR低はLP/追加画面のクリニック感・営業感が原因パターン（anti-patterns.md）。<br>
+          seo_ava は seo と別アカウント。追加画面のビジュアル・文言を要確認。
+        </div>
+        <div class="priority-impact">インパクト: FR 11%達成で +2〜3人/月</div>
+      </div>
+    </div>
+
+    <!-- 優先度3 -->
+    <div class="priority-row">
+      <div class="priority-num">3</div>
+      <div class="priority-body">
+        <div class="priority-title">包茎 — CTR不安定（9〜18%のブレ）</div>
+        <div class="priority-detail">
+          5月CTR推移: 9.5 → 9.7 → <span class="trend-up">13.6 → 13.5</span> → <span class="trend-down">7.7</span> → <span class="trend-up">18.6</span> → <span class="trend-down">9.7</span><br>
+          日によって基準超え/割れを繰り返す。友だちも0〜3人と波がある（5月日均1.4人）。<br>
+          仮説: 記事別でCTR差があり、順位変動で高CTR記事のPVが落ちる日がある。記事別日次でどの記事が動いているかを確認。
+        </div>
+        <div class="priority-impact">インパクト: CTR 安定13%達成で +5〜10人/月</div>
+      </div>
+    </div>
+
+    <!-- 優先度4 -->
+    <div class="priority-row">
+      <div class="priority-num">4</div>
+      <div class="priority-body">
+        <div class="priority-title">オンラインピル — 慢性CTR低迷</div>
+        <div class="priority-detail">
+          5/7 CTR 8.0%。5月を通じて8〜21%とばらつきが激しく基準を安定超えしない。<br>
+          5/3だけ異常値（CTR 25.8%、4人、LP PV 77）。PU自体の問題と判断。<br>
+          PV 163あるが友だちはほぼ0。PU訴求の構造的問題の可能性。
+        </div>
+        <div class="priority-impact">現状: 月間1〜2人ペース。改善余地要調査</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 包茎 5月推移詳細 -->
+  <div class="section">
+    <div class="section-title">包茎 / ピル — 5月日次詳細</div>
+    <h3>包茎（seo_phimo）</h3>
+    <table>
+      <tr><th>日付</th><th class="num">LP PV</th><th class="num">友だち</th><th class="num">CTR</th><th class="num">PVFR</th></tr>
+      <tr><td>5/1</td><td class="num">260</td><td class="num">1</td><td class="num"><span class="badge red">9.5%</span></td><td class="num">0.38%</td></tr>
+      <tr><td>5/2</td><td class="num">285</td><td class="num">1</td><td class="num"><span class="badge red">9.7%</span></td><td class="num">0.35%</td></tr>
+      <tr><td>5/3</td><td class="num">321</td><td class="num">1</td><td class="num"><span class="badge green">13.6%</span></td><td class="num">0.31%</td></tr>
+      <tr><td>5/4</td><td class="num">284</td><td class="num">2</td><td class="num"><span class="badge green">13.5%</span></td><td class="num">0.70%</td></tr>
+      <tr><td>5/5</td><td class="num">370</td><td class="num">2</td><td class="num"><span class="badge red">7.7%</span></td><td class="num">0.54%</td></tr>
+      <tr><td>5/6</td><td class="num">430</td><td class="num">3</td><td class="num"><span class="badge green">18.6%</span></td><td class="num">0.70%</td></tr>
+      <tr style="background:#fff8f8;"><td><strong>5/7</strong></td><td class="num">335</td><td class="num"><strong>0</strong></td><td class="num"><span class="badge red"><strong>9.7%</strong></span></td><td class="num">0.00%</td></tr>
+    </table>
+    <div class="highlight">
+      CTRのブレが示すのは「記事ミックスの変動」が原因の可能性。高CTR記事（shinsei/kanton）のPVが多い日は13%超え、低CTR記事（hiyo/toha等）が多い日は9%台に落ちる。記事別で要確認。
+    </div>
+
+    <h3>オンラインピル（pill_seo）</h3>
+    <table>
+      <tr><th>日付</th><th class="num">LP PV</th><th class="num">友だち</th><th class="num">CTR</th><th class="num">PVFR</th></tr>
+      <tr><td>5/1</td><td class="num">127</td><td class="num">0</td><td class="num"><span class="badge yellow">10.5%</span></td><td class="num">0.00%</td></tr>
+      <tr><td>5/2</td><td class="num">121</td><td class="num">0</td><td class="num"><span class="badge yellow">9.3%</span></td><td class="num">0.00%</td></tr>
+      <tr><td>5/3</td><td class="num">77</td><td class="num">4</td><td class="num"><span class="badge green">25.8%</span></td><td class="num">5.19%</td></tr>
+      <tr><td>5/4</td><td class="num">84</td><td class="num">0</td><td class="num"><span class="badge green">21.2%</span></td><td class="num">0.00%</td></tr>
+      <tr><td>5/5</td><td class="num">83</td><td class="num">0</td><td class="num"><span class="badge yellow">11.1%</span></td><td class="num">0.00%</td></tr>
+      <tr><td>5/6</td><td class="num">111</td><td class="num">1</td><td class="num"><span class="badge green">16.7%</span></td><td class="num">0.90%</td></tr>
+      <tr style="background:#fff8f8;"><td><strong>5/7</strong></td><td class="num">163</td><td class="num"><strong>0</strong></td><td class="num"><span class="badge red"><strong>8.0%</strong></span></td><td class="num">0.00%</td></tr>
+    </table>
+    <div class="alert">
+      5/3の4人は外れ値（LP PV 77と少ない日に偶然高FR）。それ以外は慢性的に友だちゼロ。CTRも8〜25%と不安定で、PU自体の設計問題が疑われる。
+    </div>
+  </div>
+
+  <!-- GOAL分析 -->
+  <div class="section">
+    <div class="section-title">GOALとのGAP分析</div>
+    <table>
+      <tr><th>項目</th><th>数値</th><th>備考</th></tr>
+      <tr><td>月次目標</td><td>800人</td><td>全チャネル合算</td></tr>
+      <tr><td>5/7時点実績</td><td>161人（7日）</td><td>日均 23.0人</td></tr>
+      <tr><td>残り日数</td><td>24日</td><td>5/8〜5/31</td></tr>
+      <tr><td>残り必要数</td><td>639人</td><td>800 - 161</td></tr>
+      <tr><td>必要ペース</td><td><strong>26.6人/日</strong></td><td>現状23.0人 → <span class="badge red">▲3.6人/日不足</span></td></tr>
+      <tr><td>現状着地予測</td><td>713人</td><td>月末-87人不足</td></tr>
+    </table>
+
+    <h3>ギャップを埋めるレバー</h3>
+    <table>
+      <tr><th>施策</th><th>対象</th><th>期待インパクト</th><th>GOALギャップへの貢献</th></tr>
+      <tr>
+        <td><span class="badge red">★★★</span> BMI記事PU訴求改善</td>
+        <td>GLP-1 seo / ava BMI記事（LP PV 317/日）</td>
+        <td>+2〜3人/日</td>
+        <td>-87人中 最大60〜90人分</td>
+      </tr>
+      <tr>
+        <td><span class="badge yellow">★★</span> GLP-1 ava 追加画面改善</td>
+        <td>GLP-1 ava（CTR 15.9%→FR改善）</td>
+        <td>+1〜2人/日</td>
+        <td>24〜48人分</td>
+      </tr>
+      <tr>
+        <td><span class="badge yellow">★</span> 包茎CTR安定化</td>
+        <td>seo_phimo（記事別CTR確認）</td>
+        <td>+0.3〜0.5人/日</td>
+        <td>7〜12人分</td>
+      </tr>
+    </table>
+
+    <div class="info">
+      <strong>結論:</strong> BMI記事のPU訴求改善（t54）が最優先。理論上、これだけでGOALギャップの大部分を埋められる。4/22の分析と方針は一致しており、実装フェーズへ移行すべき。
+    </div>
+  </div>
+
+  <!-- CMO引き渡し論点 -->
+  <div class="section">
+    <div class="section-title">CMOへの引き渡し論点</div>
+    <table>
+      <tr><th>優先</th><th>問題</th><th>どこが</th><th>どれだけ</th><th>仮説</th></tr>
+      <tr>
+        <td><span class="badge red">★★★</span></td>
+        <td>GLP-1 BMI記事 CTR低迷</td>
+        <td>seo bmi 6.8% / ava bmi 9.2%（基準13%割れ）</td>
+        <td>放置で-60〜90人/月</td>
+        <td>訴求ミスマッチ（外見判定系）。4/22分析と同一構造。t54の内側系訴求に転換が未実装</td>
+      </tr>
+      <tr>
+        <td><span class="badge yellow">★★</span></td>
+        <td>GLP-1 ava FR低迷（6.5%）</td>
+        <td>CTR高×FR低 = 追加画面問題</td>
+        <td>-2〜3人/月</td>
+        <td>追加画面のクリニック感・営業感で離脱。アカウント名・説明文の改善で対処可能</td>
+      </tr>
+      <tr>
+        <td><span class="badge gray">★</span></td>
+        <td>包茎CTR不安定</td>
+        <td>日次CTR 9〜18%のブレ</td>
+        <td>-5〜10人/月</td>
+        <td>記事別CTR差 × 順位変動。高CTR記事（shinsei/kanton）のPV確認</td>
+      </tr>
+    </table>
+  </div>
+
+</main>
+
+<footer>Noa Docs｜daily-analysis-2026-05-08</footer>
+
+</body>
+</html>

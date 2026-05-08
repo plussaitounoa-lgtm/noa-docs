@@ -98,7 +98,8 @@
 
     <!-- 分析レポート（ジャンル直列） -->
     <div class="nav-section-title">分析レポート</div>
-    <div class="nav-item active" onclick="show('analysis-diet')">ダイエット <span class="count">8</span></div>
+    <div class="nav-item active" onclick="show('analysis-overall')">全体 <span class="count">1</span></div>
+    <div class="nav-item" onclick="show('analysis-diet')">ダイエット <span class="count">8</span></div>
     <div class="nav-item" onclick="show('analysis-icl')">ICL <span class="count">1</span></div>
     <div class="nav-item" onclick="show('analysis-phimo')">包茎 <span class="count">1</span></div>
     <div class="nav-item" onclick="show('analysis-ed')">ED <span class="count">1</span></div>
@@ -178,8 +179,23 @@
   <!-- ===== コンテンツ ===== -->
   <main>
 
+    <!-- 分析 / 全体 -->
+    <div id="analysis-overall" class="content-section active">
+      <div class="content-header">
+        <div class="breadcrumb">分析レポート</div>
+        <h2><span class="genre-badge genre-general">全体</span></h2>
+      </div>
+      <div class="card-grid">
+        <a class="card" href="daily-analysis-2026-05-08.html">
+          <div class="card-icon">📊</div>
+          <div class="card-title">全ジャンル日次分析 2026-05-08 ★最新</div>
+          <div class="card-desc">5/7データ｜ED好調・GLP-1 BMI記事CTR壊滅・GOALギャップ-87人→打ち手3本</div>
+        </a>
+      </div>
+    </div>
+
     <!-- 分析 / ダイエット -->
-    <div id="analysis-diet" class="content-section active">
+    <div id="analysis-diet" class="content-section">
       <div class="content-header">
         <div class="breadcrumb">分析レポート</div>
         <h2><span class="genre-badge genre-diet">ダイエット</span></h2>
