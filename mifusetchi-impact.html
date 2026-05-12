@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>未設置インパクト分析 — 全ジャンル — Noa Docs</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+
+    header { background: #1a1a2e; color: white; padding: 20px 32px; display: flex; align-items: center; gap: 16px; }
+    header a { color: #aaa; font-size: 13px; text-decoration: none; }
+    header a:hover { color: white; }
+    header .sep { color: #555; }
+    header h1 { font-size: 18px; font-weight: 700; color: white; }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 32px 24px; }
+
+    .page-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .page-meta { font-size: 12px; color: #999; margin-bottom: 32px; }
+
+    h2 { font-size: 16px; font-weight: 700; margin: 36px 0 12px; padding-left: 10px; border-left: 3px solid #1a4d9e; }
+    p { font-size: 14px; line-height: 1.7; color: #444; margin-bottom: 12px; }
+
+    /* KPIカード */
+    .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+    .kpi { background: white; border-radius: 10px; padding: 20px 24px; border: 1px solid #e8e8e8; }
+    .kpi .num { font-size: 32px; font-weight: 800; color: #c0392b; }
+    .kpi .label { font-size: 12px; color: #888; margin-top: 4px; }
+    .kpi .sub { font-size: 11px; color: #bbb; margin-top: 2px; }
+
+    /* テーブル */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 28px; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e8e8e8; }
+    thead tr { background: #2d2d2d; color: white; }
+    th { padding: 10px 14px; text-align: left; font-weight: 600; font-size: 12px; }
+    td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    .num-right { text-align: right; font-variant-numeric: tabular-nums; }
+    .total-row td { font-weight: 700; background: #f8f8f8; }
+
+    /* バッジ */
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+    .badge-s1 { background: #fee2e2; color: #c0392b; }
+    .badge-s2 { background: #fef3c7; color: #92400e; }
+    .badge-s3 { background: #dcfce7; color: #15803d; }
+    .badge-est { background: #e0e7ff; color: #3730a3; }
+    .badge-req { background: #f3f4f6; color: #6b7280; }
+
+    /* インパクト強調 */
+    .impact-high { color: #c0392b; font-weight: 700; }
+    .impact-mid { color: #d97706; font-weight: 700; }
+
+    /* 注釈 */
+    .note { font-size: 11px; color: #999; margin-top: 8px; }
+
+    /* セクション区切り */
+    .section-card { background: white; border-radius: 10px; padding: 24px; border: 1px solid #e8e8e8; margin-bottom: 24px; }
+    .section-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: #1a1a1a; }
+
+    /* 優先度バー */
+    .bar-wrap { background: #f0f0f0; border-radius: 4px; height: 8px; margin-top: 4px; }
+    .bar { height: 8px; border-radius: 4px; background: #c0392b; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html">← Noa Docs</a>
+  <span class="sep">/</span>
+  <h1>未設置インパクト分析 — 全ジャンル</h1>
+</header>
+
+<div class="container">
+  <div class="page-title">未設置インパクト分析 — 全ジャンル</div>
+  <div class="page-meta">最終更新: 2026-05-12 ｜ 対象: Ren, Noa ｜ PVFR試算はジャンル実績値ベース</div>
+
+  <!-- KPIサマリー -->
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="num">+234人</div>
+      <div class="label">推計 月間最大機会損失/月</div>
+      <div class="sub">確認済み+推定合計（6ジャンル集計）</div>
+    </div>
+    <div class="kpi">
+      <div class="num">+160人</div>
+      <div class="label">確認済みインパクト/月</div>
+      <div class="sub">スクリプト試算ジャンル（あいた・メガ・こいずみ・ほんべ）</div>
+    </div>
+    <div class="kpi">
+      <div class="num">5ジャンル</div>
+      <div class="label">データ未取得（要サチコCSV）</div>
+      <div class="sub">包茎残4記事・ピル・ED追加・AGA・RW追加</div>
+    </div>
+  </div>
+
+  <p>
+    PU・バナーが未設置の記事にLP訪問者がいる＝友だち追加機会がゼロになっている状態。
+    月間クリック数 × 実績PVFR（ジャンル別）で見込み人数を試算。設置するだけで即積める友だちがある。
+  </p>
+
+  <!-- ジャンル別サマリー -->
+  <h2>ジャンル別 未設置インパクト一覧</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ジャンル</th>
+        <th>サイト</th>
+        <th class="num-right">設置済み記事</th>
+        <th class="num-right">未設置記事</th>
+        <th class="num-right">現在 友達/月</th>
+        <th class="num-right">純増見込み</th>
+        <th>信頼度</th>
+        <th>備考</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ほくろ・シミ等</td>
+        <td>メガ</td>
+        <td class="num-right">2</td>
+        <td class="num-right">49</td>
+        <td class="num-right">0人</td>
+        <td class="num-right"><span class="impact-high">+74人</span></td>
+        <td><span class="badge badge-s1">スクリプト試算</span></td>
+        <td>URL問題（追加率0%）解決が前提</td>
+      </tr>
+      <tr>
+        <td>いびき</td>
+        <td>あいた</td>
+        <td class="num-right">3</td>
+        <td class="num-right">17</td>
+        <td class="num-right">5人</td>
+        <td class="num-right"><span class="impact-high">+50人</span></td>
+        <td><span class="badge badge-s1">スクリプト試算</span></td>
+        <td>PVFR 0.11%（改善余地あり）</td>
+      </tr>
+      <tr>
+        <td>医療ダイエット</td>
+        <td>渋谷 未設置分</td>
+        <td class="num-right">10（AVA全体）</td>
+        <td class="num-right">〜6</td>
+        <td class="num-right">—</td>
+        <td class="num-right"><span class="impact-mid">+48人</span></td>
+        <td><span class="badge badge-est">PVFR推定</span></td>
+        <td>glp1_seo_ava 実績PVFR 2.38%で試算</td>
+      </tr>
+      <tr>
+        <td>医療ダイエット</td>
+        <td>こいずみ 未設置ノウハウ</td>
+        <td class="num-right">11</td>
+        <td class="num-right">〜7</td>
+        <td class="num-right">337人</td>
+        <td class="num-right"><span class="impact-mid">+26人</span></td>
+        <td><span class="badge badge-s2">PVFR実績</span></td>
+        <td>実績PVFR 1.17% × 未設置2,193click</td>
+      </tr>
+      <tr>
+        <td>ED</td>
+        <td>ginza</td>
+        <td class="num-right">1</td>
+        <td class="num-right">5（推定）</td>
+        <td class="num-right">24人</td>
+        <td class="num-right"><span class="impact-mid">+26人</span></td>
+        <td><span class="badge badge-est">推定</span></td>
+        <td>未設置5記事のトラフィック不明。要サチコCSV</td>
+      </tr>
+      <tr>
+        <td>ICL・レーシック</td>
+        <td>ほんべ</td>
+        <td class="num-right">設置中（WINUT）</td>
+        <td class="num-right">〜30</td>
+        <td class="num-right">22人</td>
+        <td class="num-right"><span class="impact-mid">+10人</span></td>
+        <td><span class="badge badge-s1">スクリプト試算</span></td>
+        <td>全36記事設置時 32.4人/月見込み。現在WINUT経由22人稼働中</td>
+      </tr>
+      <tr>
+        <td>包茎</td>
+        <td>茅ヶ崎</td>
+        <td class="num-right">6（PU+バナー）</td>
+        <td class="num-right">4（推定）</td>
+        <td class="num-right">130人</td>
+        <td class="num-right">要算出</td>
+        <td><span class="badge badge-req">要サチコCSV</span></td>
+        <td>実績PVFR 1.32%（高水準）。未設置4記事のトラフィック不明</td>
+      </tr>
+      <tr>
+        <td>ピル</td>
+        <td>ピル系クリニック</td>
+        <td class="num-right">8</td>
+        <td class="num-right">不明</td>
+        <td class="num-right">27人</td>
+        <td class="num-right">要算出</td>
+        <td><span class="badge badge-req">追加画面改善</span></td>
+        <td>低用量ピル種類1本で21人、他7本で6人。追加画面の問題疑い</td>
+      </tr>
+      <tr>
+        <td>リカバリーウェア</td>
+        <td>mypics</td>
+        <td class="num-right">2</td>
+        <td class="num-right">2（推定）</td>
+        <td class="num-right">30人</td>
+        <td class="num-right">要算出</td>
+        <td><span class="badge badge-req">要サチコCSV</span></td>
+        <td>PVFR 0.25%（低め）。優先度低</td>
+      </tr>
+      <tr>
+        <td>AGA</td>
+        <td>—</td>
+        <td class="num-right">1</td>
+        <td class="num-right">不明</td>
+        <td class="num-right">9人</td>
+        <td class="num-right">要算出</td>
+        <td><span class="badge badge-req">要サチコCSV</span></td>
+        <td>PVFR 0.16%（低め）。ニューモ1記事のみ</td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="5">確認済み合計（メガ・あいた・こいずみ・ほんべ）</td>
+        <td class="num-right">+160人/月</td>
+        <td colspan="2">スクリプト/実績PVFR試算</td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="5">推定含む合計（渋谷・ED追加）</td>
+        <td class="num-right">+234人/月</td>
+        <td colspan="2">一部PVFR推定含む</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ジャンル別詳細 -->
+  <h2>ジャンル別 詳細</h2>
+
+  <div class="section-card">
+    <h3>🔴 メガ（ほくろ・シミ・エラボトックス等） — +74人/月</h3>
+    <p>51記事のうち設置済み2記事のみ。設置済み2記事（シミ増加・除去テープ）も友達追加0人という状態。URLミスまたはLINEアカウント未接続の技術的問題が疑われる。修正して51記事すべてに展開できれば73.9人/月の大幅改善。まず技術問題の解決が先決。</p>
+    <table>
+      <thead><tr><th>指標</th><th class="num-right">値</th></tr></thead>
+      <tbody>
+        <tr><td>全記事数（MEGA_ARTICLES）</td><td class="num-right">51記事</td></tr>
+        <tr><td>設置済み（pipeline）</td><td class="num-right">2記事</td></tr>
+        <tr><td>現状 友達追加/月</td><td class="num-right">0人（URL問題）</td></tr>
+        <tr><td>全設置時見込み</td><td class="num-right">73.9人/月</td></tr>
+        <tr><td>PVFR試算ベース</td><td class="num-right">0.50%（script）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-card">
+    <h3>🔴 あいた（いびき） — +50人/月</h3>
+    <p>20記事のうち3記事のみ設置中（seo_ibiki pipeline: 5人/月）。スクリプト試算の全20記事設置時55.4人/月から現状5人を引くと+50人の純増余地。最優先記事「いびき録音アプリ」だけで月18.3人の見込みがある。</p>
+    <table>
+      <thead><tr><th>記事</th><th class="num-right">月間click</th><th class="num-right">見込み人数</th><th>優先度</th></tr></thead>
+      <tbody>
+        <tr><td>いびき録音アプリ</td><td class="num-right">3,651</td><td class="num-right">18.3人</td><td><span class="badge badge-s1">最優先</span></td></tr>
+        <tr><td>口が乾く 寝てるとき</td><td class="num-right">1,820</td><td class="num-right">9.1人</td><td><span class="badge badge-s1">最優先</span></td></tr>
+        <tr><td>口を開けて寝る</td><td class="num-right">844</td><td class="num-right">4.2人</td><td><span class="badge badge-s1">最優先</span></td></tr>
+        <tr><td>セロトニン 日光</td><td class="num-right">823</td><td class="num-right">4.1人</td><td><span class="badge badge-s1">最優先</span></td></tr>
+        <tr><td>その他16記事</td><td class="num-right">—</td><td class="num-right">19.7人</td><td><span class="badge badge-s2">高〜低</span></td></tr>
+        <tr class="total-row"><td>合計（20記事）</td><td class="num-right">—</td><td class="num-right">55.4人</td><td></td></tr>
+      </tbody>
+    </table>
+    <p class="note">※ seo_ibiki pipeline PVFR 0.11%。スクリプト試算はサイト平均0.50%ベース。実測値と乖離する可能性あり。</p>
+  </div>
+
+  <div class="section-card">
+    <h3>🟡 医療ダイエット（こいずみ + 渋谷） — +74人/月</h3>
+    <p>こいずみ未設置ノウハウ記事（間食・DMMマンジャロ等7記事）：2,193click × PVFR 1.17% = +26人/月。渋谷未設置6記事：推定2,000click × PVFR 2.38% = +48人/月。AVAサイトのPVFRが高く、渋谷記事への展開インパクトが大きい。</p>
+    <table>
+      <thead><tr><th>対象</th><th class="num-right">月間click</th><th>使用PVFR</th><th class="num-right">見込み</th></tr></thead>
+      <tbody>
+        <tr><td>こいずみ 間食（未設置）</td><td class="num-right">1,840</td><td>1.17%（実績）</td><td class="num-right">21.5人</td></tr>
+        <tr><td>こいずみ その他未設置6記事</td><td class="num-right">353</td><td>1.17%（実績）</td><td class="num-right">4.1人</td></tr>
+        <tr><td>渋谷 未設置推定6記事</td><td class="num-right">〜2,000</td><td>2.38%（AVA実績）</td><td class="num-right">47.6人</td></tr>
+        <tr class="total-row"><td>小計</td><td></td><td></td><td class="num-right">+73.2人</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-card">
+    <h3>🟡 ED（ginza） — +26人/月（推定）</h3>
+    <p>article_mappingでginza 6記事を確認。pipeline設置済みは1記事のみ（PVFR 0.52%、24人/月）。未設置5記事のトラフィック不明のため要サチコCSVエクスポート。設置済み記事と同等のトラフィックがあれば+26人/月の見込み。</p>
+    <table>
+      <thead><tr><th>指標</th><th class="num-right">値</th></tr></thead>
+      <tbody>
+        <tr><td>設置済み 1記事 lp_imp/月</td><td class="num-right">4,618</td></tr>
+        <tr><td>設置済み 1記事 友達/月</td><td class="num-right">24人</td></tr>
+        <tr><td>PVFR（実績）</td><td class="num-right">0.52%</td></tr>
+        <tr><td>未設置5記事 見込み（推定）</td><td class="num-right">+26人（要確認）</td></tr>
+      </tbody>
+    </table>
+    <p class="note">※ ginzaのサチコCSVを取得すれば正確な試算が可能。</p>
+  </div>
+
+  <div class="section-card">
+    <h3>🟢 ほんべ（ICL・レーシック） — +10人/月</h3>
+    <p>全36記事設置時の見込みは32.4人/月（スクリプト試算）。現在WINUT経由で22人/月稼働中。残り14記事への展開で+10人/月程度の純増余地。設置が進んでいる段階なのでモニタリング継続。</p>
+  </div>
+
+  <div class="section-card">
+    <h3>⚪ 要データジャンル（包茎・ピル・RW・AGA）</h3>
+    <p>以下は実績PVFR試算に必要なサチコCSVが未取得のため暫定。包茎のPVFR（1.32%）は高水準なので、未設置4記事のトラフィックが確認できれば優先度が上がる可能性あり。ピルは設置済み8記事のうち追加率が機能しているのが1記事のみ（低用量ピル種類）で追加画面の構造問題が疑われる。</p>
+    <table>
+      <thead><tr><th>ジャンル</th><th class="num-right">実績PVFR</th><th class="num-right">現状友達/月</th><th>課題</th></tr></thead>
+      <tbody>
+        <tr><td>包茎（未設置4記事）</td><td class="num-right">1.32%</td><td class="num-right">130人</td><td>未設置4記事のサチコCSV必要</td></tr>
+        <tr><td>ピル（追加画面改善）</td><td class="num-right">0.74%</td><td class="num-right">27人</td><td>8記事設置済みだが機能は1記事のみ</td></tr>
+        <tr><td>リカバリーウェア（未設置2記事）</td><td class="num-right">0.25%</td><td class="num-right">30人</td><td>PVFR低め。優先度低</td></tr>
+        <tr><td>AGA</td><td class="num-right">0.16%</td><td class="num-right">9人</td><td>記事数・トラフィック不明</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 優先度ランキング -->
+  <h2>実施優先度ランキング</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>順位</th>
+        <th>やること</th>
+        <th class="num-right">インパクト</th>
+        <th>前提条件</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>① 最高</td>
+        <td>メガ URL/LINEアカウント問題の解決 → 51記事展開</td>
+        <td class="num-right"><span class="impact-high">+74人/月</span></td>
+        <td>技術的問題の解決が先決</td>
+      </tr>
+      <tr>
+        <td>② 最高</td>
+        <td>あいた（いびき）未設置17記事への PU設置</td>
+        <td class="num-right"><span class="impact-high">+50人/月</span></td>
+        <td>依頼書作成 → 設置依頼</td>
+      </tr>
+      <tr>
+        <td>③ 高</td>
+        <td>渋谷 未設置6記事へのバナー/PU設置</td>
+        <td class="num-right"><span class="impact-mid">+48人/月</span></td>
+        <td>バナー素材 or PU設計</td>
+      </tr>
+      <tr>
+        <td>④ 高</td>
+        <td>こいずみ 未設置ノウハウ7記事（間食 最優先）</td>
+        <td class="num-right"><span class="impact-mid">+26人/月</span></td>
+        <td>間食記事PU/バナー設置</td>
+      </tr>
+      <tr>
+        <td>⑤ 高</td>
+        <td>ED ginza 未設置5記事（要サチコCSV確認）</td>
+        <td class="num-right"><span class="impact-mid">+26人/月（推定）</span></td>
+        <td>ginzaサチコCSVエクスポート</td>
+      </tr>
+      <tr>
+        <td>⑥ 中</td>
+        <td>ほんべ 残30記事 展開</td>
+        <td class="num-right">+10人/月</td>
+        <td>設置中。継続稼働</td>
+      </tr>
+      <tr>
+        <td>⑦ 要調査</td>
+        <td>包茎・ピル・RW・AGA の詳細サチコCSV取得</td>
+        <td class="num-right">TBD</td>
+        <td>各サイトCSVエクスポート</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="note">
+    ※ PVFR試算: メガ・あいた・ほんべはスクリプト（PVFR 0.50%ベース）。こいずみ・渋谷・ED・包茎・ピルはパイプライン実績PVFRを使用。<br>
+    ※ 「月間click」はサチコエクスポートまたはスクリプト保有データ。最終更新: 2026-05-12。<br>
+    ※ 渋谷は glp1_seo_ava に設置済みのものが含まれるため重複カウントあり（概算）。
+  </p>
+
+</div>
+</body>
+</html>
