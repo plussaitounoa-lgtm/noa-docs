@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>診断設計書：隠れ肥満タイプ診断（BMI記事）2026-05-21</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header p { color: #aaa; font-size: 14px; }
+    .status-banner { background: #1a2e1a; color: #7ecc7e; font-size: 13px; padding: 10px 32px; }
+    main { max-width: 900px; margin: 40px auto; padding: 0 24px 80px; }
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-title { font-size: 12px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 700; margin: 20px 0 10px; color: #333; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 9px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; }
+    td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; line-height: 1.6; }
+    tr:last-child td { border-bottom: none; }
+    .badge { display: inline-block; padding: 2px 9px; border-radius: 4px; font-size: 12px; font-weight: 700; }
+    .badge-green { background: #e6f9ee; color: #1a8a3a; }
+    .badge-blue { background: #e6f0ff; color: #1a4ab0; }
+    .badge-orange { background: #fff4e6; color: #b05a1a; }
+    .badge-gray { background: #f0f0f0; color: #666; }
+    .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .info { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+
+    /* KPI */
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f7f7f7; border-radius: 8px; padding: 14px; text-align: center; }
+    .kpi-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+    .kpi-value { font-size: 22px; font-weight: 700; }
+    .kpi-note { font-size: 11px; color: #aaa; margin-top: 2px; }
+    .kpi-bad .kpi-value { color: #e74c3c; }
+    .kpi-good .kpi-value { color: #27ae60; }
+    .kpi-neutral .kpi-value { color: #2c52b0; }
+
+    /* フロー */
+    .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    .flow-step { background: #1a1a2e; color: white; border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+    .flow-step.light { background: #f0f4ff; color: #2c52b0; }
+    .flow-arrow { color: #bbb; font-size: 18px; }
+
+    /* 質問フロー */
+    .q-block { border: 1px solid #e8e8e8; border-radius: 10px; padding: 18px 20px; margin-bottom: 14px; }
+    .q-label { font-size: 11px; font-weight: 700; color: #888; margin-bottom: 8px; }
+    .q-text { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
+    .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .choice { background: #f7f7f7; border-radius: 6px; padding: 8px 12px; font-size: 13px; line-height: 1.5; }
+    .choice.result-a { background: #fff0f4; border-left: 3px solid #e05577; }
+    .choice.result-b { background: #f0f4ff; border-left: 3px solid #2c52b0; }
+    .choice.result-c { background: #f0fff4; border-left: 3px solid #27ae60; }
+    .choice-key { font-weight: 700; margin-right: 4px; }
+
+    /* カルーセルカード */
+    .carousel-section { margin-bottom: 32px; }
+    .type-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .type-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+    .type-a .type-badge { background: #ffe0ea; color: #c0204a; }
+    .type-b .type-badge { background: #e0eaff; color: #2040c0; }
+    .type-c .type-badge { background: #e0ffe8; color: #1a7a35; }
+    .type-name { font-size: 17px; font-weight: 700; }
+    .cards-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .card { border-radius: 10px; overflow: hidden; border: 1px solid #e8e8e8; }
+    .card-num { font-size: 10px; font-weight: 700; color: #888; padding: 8px 12px 0; }
+    .card-role { font-size: 10px; font-weight: 700; padding: 2px 8px 6px 12px; }
+    .card-body { padding: 10px 12px 14px; }
+    .card-hl { font-size: 12px; font-weight: 700; color: #1a1a2e; margin-bottom: 6px; line-height: 1.4; }
+    .card-copy { font-size: 11px; color: #555; line-height: 1.5; margin-bottom: 6px; }
+    .card-sub { font-size: 10px; color: #888; margin-bottom: 4px; }
+    .card-illust { background: #f0f0f0; border-radius: 6px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #999; margin-bottom: 8px; }
+    .card-cta { display: inline-block; background: #1a1a2e; color: white; border-radius: 6px; padding: 6px 10px; font-size: 11px; font-weight: 700; text-align: center; width: 100%; margin-top: 4px; }
+    .card-footer { font-size: 10px; color: #888; padding-top: 4px; }
+
+    /* タイプ別カラー */
+    .type-a .card-role { background: #fff0f4; color: #c0204a; }
+    .type-a .card-num { color: #c0204a; }
+    .type-b .card-role { background: #f0f4ff; color: #2040c0; }
+    .type-b .card-num { color: #2040c0; }
+    .type-c .card-role { background: #f0fff4; color: #1a7a35; }
+    .type-c .card-num { color: #1a7a35; }
+
+    /* PRカルーセル */
+    .pr-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .pr-card { border: 1px solid #e8e8e8; border-radius: 10px; overflow: hidden; }
+    .pr-card-header { background: #1a1a2e; color: white; padding: 8px 12px; font-size: 10px; font-weight: 700; }
+    .pr-card-body { padding: 12px; }
+    .pr-card-hl { font-size: 12px; font-weight: 700; color: #1a1a2e; margin-bottom: 6px; line-height: 1.4; }
+    .pr-card-copy { font-size: 11px; color: #555; line-height: 1.5; }
+    .pr-card-cta { display: block; background: #27ae60; color: white; border-radius: 6px; padding: 8px; font-size: 11px; font-weight: 700; text-align: center; margin-top: 8px; }
+
+    /* PU */
+    .pu-block { border: 2px solid #1a1a2e; border-radius: 10px; padding: 20px; margin: 12px 0; }
+    .pu-recommend-tag { font-size: 11px; font-weight: 700; color: #27ae60; margin-bottom: 8px; }
+    .pu-main { font-size: 16px; font-weight: 700; color: #1a1a2e; margin-bottom: 10px; }
+    .pu-detail { font-size: 13px; color: #555; }
+    .pu-btn { display: inline-block; background: #1a1a2e; color: white; border-radius: 6px; padding: 6px 14px; font-size: 13px; font-weight: 700; margin-right: 8px; margin-top: 8px; }
+    .pu-btn.no { background: #f0f0f0; color: #888; }
+
+    /* 効果 */
+    .effect-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+    .effect-card { border-radius: 10px; padding: 16px; text-align: center; }
+    .effect-label { font-size: 12px; color: #888; margin-bottom: 4px; }
+    .effect-pvfr { font-size: 22px; font-weight: 700; }
+    .effect-add { font-size: 14px; font-weight: 700; margin-top: 4px; }
+    .effect-note { font-size: 11px; color: #888; margin-top: 4px; }
+    .effect-base { background: #f0f4ff; }
+    .effect-base .effect-pvfr { color: #2c52b0; }
+    .effect-base .effect-add { color: #2c52b0; }
+    .effect-cons { background: #f7f7f7; }
+    .effect-best { background: #f0fff4; }
+    .effect-best .effect-pvfr { color: #27ae60; }
+    .effect-best .effect-add { color: #27ae60; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>診断設計書：隠れ肥満タイプ診断（BMI記事）</h1>
+  <p>条件: AVA（小田サイト）｜ KW: BMI系記事｜ 設計日: 2026-05-21</p>
+</header>
+<div class="status-banner">📋 ステータス：設計書確認中（PRカルーセル刷新検討中）</div>
+
+<main>
+
+  <!-- 概要 -->
+  <div class="section">
+    <p class="section-title">なぜこの診断か</p>
+    <h2>ビフォーアフター</h2>
+    <table>
+      <tr><th></th><th>Before（既存）</th><th>After（本診断）</th></tr>
+      <tr>
+        <td><strong>PU</strong></td>
+        <td>ダイエット方法診断（4パターンABテスト済み・全滅）</td>
+        <td>隠れ肥満タイプ診断</td>
+      </tr>
+      <tr>
+        <td><strong>訴求ズレ</strong></td>
+        <td>BMIを調べた人にダイエット方法を提案 → ミスマッチ</td>
+        <td>「BMIだけじゃわからない」という感情に応える</td>
+      </tr>
+      <tr>
+        <td><strong>追加率</strong></td>
+        <td>2.5%（8人/325クリック）</td>
+        <td>目標 <strong>10%+</strong></td>
+      </tr>
+      <tr>
+        <td><strong>友だち/月</strong></td>
+        <td>8人</td>
+        <td>+129人（PVFR 0.70%推定）</td>
+      </tr>
+    </table>
+
+    <div class="highlight">
+      <strong>なぜ響くか：</strong>Yahoo!インサイト 体重系53万vol vs 太りやすさ系5.5万vol（10倍差）。BMI計算後の最大の次の関心は「体脂肪・自分の体の状態」。ダイエット方法より前の段階にいる。
+    </div>
+  </div>
+
+  <!-- アーキテクチャ -->
+  <div class="section">
+    <p class="section-title">設計</p>
+    <h2>診断フロー全体像</h2>
+    <div class="flow">
+      <div class="flow-step light">BMI記事<br><span style="font-size:11px;font-weight:400">計算ツール</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">PU表示<br><span style="font-size:11px;font-weight:400">隠れ肥満度チェック</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">LINE(Winut)<br><span style="font-size:11px;font-weight:400">4問 → 3タイプ分岐</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">結果カルーセル<br><span style="font-size:11px;font-weight:400">4枚 × 3タイプ</span></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">PRカルーセル<br><span style="font-size:11px;font-weight:400">4枚 → CTA</span></div>
+    </div>
+  </div>
+
+  <!-- PU -->
+  <div class="section">
+    <p class="section-title">入口設計</p>
+    <h2>PU文言</h2>
+
+    <div class="pu-block">
+      <div class="pu-recommend-tag">✅ 推奨（好奇心起動型）</div>
+      <div class="pu-main">BMIだけじゃわからない"隠れ肥満度"をチェックしてみない？</div>
+      <div class="pu-detail">マイクロコピー: LINEで30秒</div>
+      <div>
+        <span class="pu-btn">チェックする</span>
+        <span class="pu-btn no">しない</span>
+      </div>
+    </div>
+
+    <div style="border: 1px solid #e8e8e8; border-radius: 10px; padding: 16px 20px; margin: 12px 0;">
+      <div style="font-size:11px;font-weight:700;color:#888;margin-bottom:8px;">ABテスト用（課題明示型）</div>
+      <div class="pu-main" style="font-size:14px;">BMI標準でも体脂肪率は高い？30秒で隠れ肥満度をチェック</div>
+      <div class="pu-detail">マイクロコピー: LINEで無料</div>
+    </div>
+  </div>
+
+  <!-- 質問フロー -->
+  <div class="section">
+    <p class="section-title">診断設計</p>
+    <h2>質問フロー（4問）</h2>
+
+    <div class="q-block">
+      <div class="q-label">Q1 ウォームアップ</div>
+      <div class="q-text">年代は？</div>
+      <div class="choices">
+        <div class="choice"><span class="choice-key">A</span> 20代</div>
+        <div class="choice"><span class="choice-key">B</span> 30代</div>
+        <div class="choice"><span class="choice-key">C</span> 40代</div>
+        <div class="choice"><span class="choice-key">D</span> 50代以上</div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-top:8px;margin-bottom:0;">意図: カロリー診断の踏み台・入力メンタルモデルの入口</p>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q2 自己認識</div>
+      <div class="q-text">自分の体型を正直どう感じてる？</div>
+      <div class="choices">
+        <div class="choice"><span class="choice-key">A</span> BMIは標準だけど見た目が気になる</div>
+        <div class="choice"><span class="choice-key">B</span> 体重も見た目も気になる</div>
+        <div class="choice"><span class="choice-key">C</span> 正直あまり気にしてなかった</div>
+        <div class="choice"><span class="choice-key">D</span> 最近なんか変わってきた気がする</div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-top:8px;margin-bottom:0;">意図: 最大セグメント（A: 標準なのに太って見える）にコミットさせる行為自体がBMIと実態のズレの自己認識</p>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q3 部位特定</div>
+      <div class="q-text">自分の体で気になるのは？</div>
+      <div class="choices">
+        <div class="choice"><span class="choice-key">A</span> お腹周りだけぽっこりしてる</div>
+        <div class="choice"><span class="choice-key">B</span> 全体的にぼんやりした感じ</div>
+        <div class="choice"><span class="choice-key">C</span> 上半身は細いけど下半身が気になる</div>
+        <div class="choice"><span class="choice-key">D</span> 体重は普通だけど体脂肪が多い気がする</div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-top:8px;margin-bottom:0;">意図: BMIでは出ない実感言語を引き出す</p>
+    </div>
+
+    <div class="q-block" style="border-color: #1a1a2e;">
+      <div class="q-label">Q4 <strong>結果分岐</strong>（最終設問）</div>
+      <div class="q-text">普段の生活に一番近いのは？</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="choice result-a"><span class="choice-key">A</span> デスクワーク中心で運動はほとんどしない → <strong>内臓脂肪タイプ</strong></div>
+        <div class="choice result-b"><span class="choice-key">B</span> 食事制限はするけど運動は苦手 → <strong>筋肉低下タイプ</strong></div>
+        <div class="choice result-c"><span class="choice-key">C</span> 食事量は多くないのになぜか体重が増える → <strong>代謝スキータイプ</strong></div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-top:8px;margin-bottom:0;">NG-2準拠: 最終設問のみ結果分岐。3択の理由: BMI検索者の3大パターンにそれぞれ対応</p>
+    </div>
+  </div>
+
+  <!-- 結果カルーセル -->
+  <div class="section">
+    <p class="section-title">診断結果</p>
+    <h2>結果カルーセル（4枚 × 3タイプ）</h2>
+
+    <div class="info" style="margin-bottom:20px;">
+      <strong>共通構造:</strong> Card1 タイプ提示 → Card2 メカニズム説明 → Card3 なのに変化（食事制限だけじゃダメな理由）→ Card4 理想の未来 + CTA
+    </div>
+
+    <!-- タイプA -->
+    <div class="carousel-section type-a">
+      <div class="type-header">
+        <span class="type-badge">タイプ A</span>
+        <span class="type-name">内臓脂肪タイプ</span>
+        <span style="font-size:13px;color:#888;">— デスクワーク中心・運動少ない</span>
+      </div>
+      <div class="cards-row">
+        <div class="card">
+          <div class="card-num">CARD 1</div>
+          <div class="card-role">タイプ提示</div>
+          <div class="card-body">
+            <div class="card-sub">あなたの隠れ肥満度チェック結果</div>
+            <div class="card-hl">内臓脂肪タイプ</div>
+            <div class="card-copy">BMIは標準でも、お腹の奥に脂肪が溜まりやすい体質</div>
+            <div class="card-footer">なぜBMIに出ないの？↓</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-num">CARD 2</div>
+          <div class="card-role">メカニズム</div>
+          <div class="card-body">
+            <div class="card-hl">体重が同じでも脂肪のつき方は全然違う</div>
+            <div class="card-illust">図: 同じ体重・脂肪分布の違い</div>
+            <div class="card-copy">BMIは体重÷身長²の計算式。体の「中身」は見ていません。デスクワークが多いと腸の周りに脂肪がつきやすい</div>
+            <div class="card-footer">じゃあ体を見ればいいの？↓</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-num">CARD 3</div>
+          <div class="card-role">なのに変化</div>
+          <div class="card-body">
+            <div class="card-hl">お腹の脂肪は食事制限だけだと実は落ちにくい</div>
+            <div class="card-copy">内臓脂肪は目に見える脂肪よりも代謝の影響が大きく、食べる量を減らしても仕組みが変わらないと戻る</div>
+            <div class="card-footer">じゃあどうすれば？↓</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-num">CARD 4</div>
+          <div class="card-role">理想の未来 + CTA</div>
+          <div class="card-body">
+            <div class="card-hl">体の中身が変わると、いろんなことが変わる</div>
+            <div class="card-copy">内臓脂肪タイプなら、ただ食事制限するよりも脂肪がつく仕組みにアプローチする方が早い</div>
+            <div class="card-cta">● あなたに合った方法を見る ●</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- タイプB -->
+    <div class="carousel-section type-b" style="margin-top:24px;">
+      <div class="type-header">
+        <span class="type-badge">タイプ B</span>
+        <span class="type-name">筋肉低下タイプ</span>
+        <span style="font-size:13px;color:#888;">— 食事制限はするけど運動苦手</span>
+      </div>
+      <div class="cards-row">
+        <div class="card">
+          <div class="card-num">CARD 1</div>
+          <div class="card-role">タイプ提示</div>
+          <div class="card-body">
+            <div class="card-sub">あなたの隠れ肥満度チェック結果</div>
+            <div class="card-hl">筋肉低下タイプ</div>
+            <div class="card-copy">体重は普通でも、筋肉が減って体脂肪率が高くなりがち</div>
+            <div class="card-footer">なぜBMIに出ないの？↓</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-num">CARD 2</div>
+          <div class="card-role">メカニズム</div>
+          <div class="card-body">
+            <div class="card-hl">食事制限だけだと「筋肉から落ちてしまう」</div>
+            <div class="card-illust">図: 食事制限前後の筋肉/脂肪比率の変化</div>
+            <div class="card-copy">体重が落ちても筋肉まで減ると、BMIでは「改善」に見えても実態は体脂肪率が上がっている</div>
+            <div class="card-footer">じゃあなんで太りやすい？↓</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-num">CARD 3</div>
+          <div class="card-role">なのに変化</div>
+          <div class="card-body">
+            <div class="card-hl">食事制限するほど、実は太りやすい体になっていく</div>
+            <div class="card-copy">筋肉が減ると基礎代謝が落ちて同じご飯を食べても体重が増え、食事制限の繰り返しが「太りやすい体質」を作ってしまう</div>
+            <div class="card-footer">この悪循環を止めたい？↓</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-num">CARD 4</div>
+          <div class="card-role">理想の未来 + CTA</div>
+          <div class="card-body">
+            <div class="card-hl">脂肪だけに働きかける方が、結果が出やすい</div>
+            <div class="card-copy">食事制限より脂肪にアプローチする方が効率的。筋肉を減らさずに体組成を変えることが鍵</div>
+            <div class="card-cta">● あなたに合った方法を見る ●</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- タイプC -->
+    <div class="carousel-section type-c" style="margin-top:24px;">
+      <div class="type-header">
+        <span class="type-badge">タイプ C</span>
+        <span class="type-name">代謝スキータイプ</span>
+        <span style="font-size:13px;color:#888;">— 食べてないのに太る・代謝が低い</span>
+      </div>
+      <div class="cards-row">
+        <div class="card">
+          <div class="card-num">CARD 1</div>
+          <div class="card-role">タイプ提示</div>
+          <div class="card-body">
+            <div class="card-sub">あなたの隠れ肥満度チェック結果</div>
+            <div class="card-hl">代謝スキータイプ</div>
+            <div class="card-copy">基礎代謝が低く、同じ食事でも太りやすい体質</div>
+            <div class="card-footer">なぜBMIに出ないの？↓</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-num">CARD 2</div>
+          <div class="card-role">メカニズム</div>
+          <div class="card-body">
+            <div class="card-hl">同じ食事なのに、消費するカロリーが全然違う</div>
+            <div class="card-illust">図: 代謝の差が大きい人/小さい人の比較</div>
+            <div class="card-copy">同じ量を食べても、代謝が低いと余ったエネルギーが脂肪として蓄積されやすい</div>
+            <div class="card-footer">じゃあ努力しても意味ない？↓</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-num">CARD 3</div>
+          <div class="card-role">なのに変化</div>
+          <div class="card-body">
+            <div class="card-hl">頑張っても足りない、それは体の仕組みの問題</div>
+            <div class="card-copy">代謝の低さは意志力だけでは変えられない。「食べてないのに太る」は気のせいじゃない。体の仕組みが変わらない限り続く</div>
+            <div class="card-footer">体質って変えられるの？↓</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-num">CARD 4</div>
+          <div class="card-role">理想の未来 + CTA</div>
+          <div class="card-body">
+            <div class="card-hl">代謝そのものを変えると、努力が報われる体になる</div>
+            <div class="card-copy">体の仕組みにアプローチする方が早い。食べてないのに太る悩みにちゃんと向き合える</div>
+            <div class="card-cta">● あなたに合った方法を見る ●</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRカルーセル（現状） -->
+  <div class="section">
+    <p class="section-title">CTA設計</p>
+    <h2>PRカルーセル（現状：GLP-1医療ダイエット）</h2>
+    <div class="highlight" style="margin-bottom:20px;">
+      <strong>現状の遷移先：</strong> 結果Card4「あなたに合った方法を見る」→ 以下のPRカルーセルへ接続。<span style="color:#e74c3c;font-weight:600;">★ ここを刷新検討中</span>
+    </div>
+    <div class="pr-cards">
+      <div class="pr-card">
+        <div class="pr-card-header">PR CARD 1 — 商品紹介</div>
+        <div class="pr-card-body">
+          <div class="pr-card-hl">体の仕組みにアプローチする方法は実はこれ</div>
+          <div class="pr-card-copy">GLP-1（医療ダイエット）の紹介。食欲・代謝・脂肪燃焼に直接働きかける</div>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-card-header">PR CARD 2 — 効果</div>
+        <div class="pr-card-body">
+          <div class="pr-card-hl">実際の効果データ・体験談</div>
+          <div class="pr-card-copy">◯◯kgダウンなどの実績数値・体験者の声</div>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-card-header">PR CARD 3 — 安心感</div>
+        <div class="pr-card-body">
+          <div class="pr-card-hl">医師の監修・安全性の説明</div>
+          <div class="pr-card-copy">クリニック監修・副作用リスクへの説明</div>
+        </div>
+      </div>
+      <div class="pr-card">
+        <div class="pr-card-header">PR CARD 4 — CTA</div>
+        <div class="pr-card-body">
+          <div class="pr-card-hl">まずは無料オンライン診察から</div>
+          <div class="pr-card-copy">ハードルを下げる入口設計</div>
+          <a class="pr-card-cta">無料オンライン診察を予約する</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 期待効果 -->
+  <div class="section">
+    <p class="section-title">投資対効果</p>
+    <h2>期待効果</h2>
+    <div class="effect-grid">
+      <div class="effect-card effect-cons">
+        <div class="effect-label">保守シナリオ</div>
+        <div class="effect-pvfr">0.50%</div>
+        <div class="effect-add">+92人/月</div>
+        <div class="effect-note">カロリーの57%</div>
+      </div>
+      <div class="effect-card effect-base">
+        <div class="effect-label">ベースライン（推奨）</div>
+        <div class="effect-pvfr">0.70%</div>
+        <div class="effect-add">+129人/月</div>
+        <div class="effect-note">カロリーの80% / GOAL貢献15.2%</div>
+      </div>
+      <div class="effect-card effect-best">
+        <div class="effect-label">カロリー並み</div>
+        <div class="effect-pvfr">0.87%</div>
+        <div class="effect-add">+160人/月</div>
+        <div class="effect-note">カロリー実績そのまま</div>
+      </div>
+    </div>
+    <table>
+      <tr><th>項目</th><th>数値</th></tr>
+      <tr><td>対象PV</td><td>614/日 = 18,420/月</td></tr>
+      <tr><td>GOAL貢献（ベースライン）</td><td>+129人 = GOAL 850人の <strong>15.2%</strong></td></tr>
+      <tr><td>工数目安</td><td>設計済み + デザイン制作 3-4日 + Winut実装 1日 = <strong>約1週間</strong></td></tr>
+    </table>
+  </div>
+
+</main>
+</body>
+</html>
