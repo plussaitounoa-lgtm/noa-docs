@@ -213,6 +213,8 @@
       <span class="flow-arrow">→</span>
       <div class="flow-step">結果カルーセル（4枚×3タイプ）</div>
       <span class="flow-arrow">→</span>
+      <div class="flow-step confirmed">教育カルーセル（4枚）</div>
+      <span class="flow-arrow">→</span>
       <div class="flow-step confirmed">PRカルーセル SLILIN F（4枚）</div>
       <span class="flow-arrow">→</span>
       <div class="flow-step confirmed">定期申し込み CTA</div>
@@ -221,14 +223,14 @@
       <strong>Q設計の意図:</strong> Q1〜Q4で毎問違う角度から自分の情報を入力させる。属性→行動→実感→症状。「計算機に入力してる」モードのまま最後まで行く（カロリー診断の成功構造と同じ）。結果分岐はQ4のみ（NG-2ルール準拠）。
     </div>
     <div class="good">
-      <strong>結果→PR接続ロジック:</strong> 結果Card 3「食事制限じゃなく体の仕組みの問題」でものさしが変わる → Card 4「体の仕組みからアプローチする方法を見る」でPRへ誘導 → SLILIN F PR Card 1〜4で具体的な方法を提示
+      <strong>結果→教育→PRの接続ロジック:</strong> 結果Card 3「体の仕組みの問題」でものさしが変わる → Card 4「あなたに合った方法を見る」→ 教育Card 1-2「原因は代謝低下・体温低下、運動と食事が大切」→ Card 3「でも続かない」→ Card 4「体の内側からサポートという選択肢」→ PR SLILIN Fで具体的な方法を提示
     </div>
   </div>
 
   <!-- =============== 必要な画像一覧 =============== -->
   <div class="section">
     <div class="section-label">Assets</div>
-    <h2>必要な画像一覧（計28枚）</h2>
+    <h2>必要な画像一覧（計32枚）</h2>
     <div class="img-list">
       <div class="img-item">
         <span class="img-count">6枚</span>
@@ -248,11 +250,15 @@
       </div>
       <div class="img-item confirmed">
         <span class="img-count" style="color:#1a7a45;">4枚</span>
+        <div class="img-label">教育カルーセル<br>（3タイプ共通）<br>✅ 依頼書確定済み</div>
+      </div>
+      <div class="img-item confirmed">
+        <span class="img-count" style="color:#1a7a45;">4枚</span>
         <div class="img-label">PRカルーセル<br>SLILIN F（3タイプ共通）<br>✅ 依頼書確定済み</div>
       </div>
     </div>
-    <p style="font-size:13px;color:#888;margin-top:8px;">テイスト: 既存ダイエット方法診断と同じトンマナ（暖色系グラデ、かわいめイラスト）。PRカルーセルはタイプカラーを引き継がず中立的な暖色系でリセット。</p>
-    <p style="font-size:13px;color:#888;">※診断24枚とPRカルーセル4枚は同じタイミングで実装（PRカルーセル先行不可）</p>
+    <p style="font-size:13px;color:#888;margin-top:8px;">テイスト: 既存ダイエット方法診断と同じトンマナ（暖色系グラデ、かわいめイラスト）。教育・PRカルーセルはタイプカラーを引き継がず中立的な暖色系でリセット。</p>
+    <p style="font-size:13px;color:#888;">※全32枚が揃ってから同時実装（部分先行はNG）</p>
   </div>
 
   <!-- =============== PUバナー =============== -->
@@ -544,9 +550,59 @@
     </div>
   </div>
 
-  <!-- =============== PRカルーセル SLILIN F =============== -->
+  <!-- =============== 教育カルーセル =============== -->
   <div class="section">
     <div class="section-label">Section 5</div>
+    <h2>教育カルーセル（4枚・3タイプ共通）</h2>
+
+    <div class="good">
+      <strong>✅ 確定。</strong> デザイン依頼書：<a href="brief-edu-carousel-kakurehiman-2026-05-22.html" style="color:#1a7a45;">brief-edu-carousel-kakurehiman-2026-05-22.html</a><br>
+      接続元: 各タイプ結果Card 4「≫ あなたに合った方法を見る ≫」 ／ 接続先: PRカルーセル（SLILIN F）Card 1
+    </div>
+
+    <div class="info">
+      <strong>役割:</strong> 結果カルーセルで「体の仕組みの問題」と認識させた後、その原因と解決策の方向性を教育し、SLILIN Fへの橋渡しをする。Card 4でSLILIN Fの名前は出さず「選択肢がある」で終わらせることでPRへの圧力をゼロにする。
+    </div>
+
+    <h3>Card構成（4枚）</h3>
+    <table>
+      <thead><tr><th>Card</th><th>役割</th><th>HL</th><th>SLILIN Fとの接続</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Card 1</strong></td>
+          <td>原因提示</td>
+          <td>体型が変わりやすい人の体で起きていること<br><small>✓ 加齢によるエネルギー代謝力の低下<br>✓ 冷えによる血流の低下・体温低下</small></td>
+          <td>成分①（代謝）・成分②（冷え×体温）の原因を先出し</td>
+        </tr>
+        <tr>
+          <td><strong>Card 2</strong></td>
+          <td>解決策の方向性</td>
+          <td>つまり お腹の脂肪を減らし体温を回復するには<br>適度な運動 + 栄養バランスの良い食事 が大切です</td>
+          <td>一般論として正しい方向を提示（押しつけなし）</td>
+        </tr>
+        <tr>
+          <td><strong>Card 3</strong></td>
+          <td>共感・現実の壁</td>
+          <td>わかってるけど、なかなか続かないですよね<br><small>続かないのは意志の問題ではなく、仕組みの問題</small></td>
+          <td>「運動・食事だけでは難しい」という橋渡しポイント</td>
+        </tr>
+        <tr>
+          <td><strong>Card 4</strong></td>
+          <td>PRへの橋渡し</td>
+          <td>運動・食事に加えて、体の内側からもサポートするという考え方があります</td>
+          <td>「選択肢がある」で終わり→PRで SLILIN F初登場</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight">
+      <strong>設計上の重要ポイント:</strong> Card 1の「代謝低下・体温低下」= PRカルーセルCard 2のSLILIN F成分①②と完全一致。教育で原因を教えてPRで「その解決策がある」という論理接続になるため、こじつけではなく必然の流れになる。
+    </div>
+  </div>
+
+  <!-- =============== PRカルーセル SLILIN F =============== -->
+  <div class="section">
+    <div class="section-label">Section 6</div>
     <h2>PRカルーセル — SLILIN F（スリリンファイア）</h2>
 
     <div class="good">
@@ -728,8 +784,8 @@
         <tr><td>選択肢数</td><td>Q1: 4択 ／ Q2: 4択 ／ Q3: 4択 ／ Q4: <strong>3択（要レイアウト調整）</strong></td></tr>
         <tr><td>結果パターン数</td><td>3タイプ（かくれ内臓脂肪 ／ かくれ体脂肪 ／ 代謝スロー）</td></tr>
         <tr><td>結果分岐</td><td>Q4のみ（NG-2準拠）</td></tr>
-        <tr><td>カルーセル枚数</td><td>結果4枚（×3タイプ = 12枚）+ PRカルーセル4枚（タイプ共通）= 合計16枚</td></tr>
-        <tr><td>PRカルーセル設定</td><td>結果カルーセルに続けて設定（タイプ3種すべてに同一PRを接続）</td></tr>
+        <tr><td>カルーセル枚数</td><td>結果4枚（×3タイプ = 12枚）+ 教育4枚 + PRカルーセル4枚（タイプ共通）= 合計20枚</td></tr>
+        <tr><td>カルーセル設定順</td><td>結果カルーセル → 教育カルーセル → PRカルーセルの順でWinut登録（タイプ3種すべてに同一の教育・PRを接続）</td></tr>
         <tr><td>入力方式</td><td>全問ボタン選択</td></tr>
         <tr><td>所要時間</td><td>約30秒</td></tr>
       </tbody>
@@ -756,7 +812,13 @@
           <td>🔵 制作中</td>
         </tr>
         <tr>
-          <td><strong>2</strong></td>
+          <td><strong>2a</strong></td>
+          <td>教育カルーセル デザイン発注（4枚）— 依頼書確定済み</td>
+          <td>3-4日</td>
+          <td>📌 発注準備中</td>
+        </tr>
+        <tr>
+          <td><strong>2b</strong></td>
           <td>PRカルーセル デザイン発注（SLILIN F 4枚）— 依頼書確定済み</td>
           <td>3-4日</td>
           <td>📌 発注準備中</td>
@@ -776,7 +838,7 @@
       </tbody>
     </table>
     <div class="info">
-      Step 1（診断24枚）とStep 2（PR4枚）は並行で進めてOK。Winut登録（Step 3）は両方そろってから。
+      Step 1（診断24枚）・Step 2a（教育4枚）・Step 2b（PR4枚）は並行で進めてOK。Winut登録（Step 3）は全32枚そろってから。
     </div>
   </div>
 
