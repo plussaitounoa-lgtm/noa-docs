@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>デザイン依頼書：教育カルーセル（隠れ肥満タイプ診断）2026-05-22</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+    header p { color: #aaa; font-size: 14px; }
+    .status-banner { background: #1a2e1e; color: #7effa0; font-size: 13px; padding: 10px 32px; display: flex; gap: 24px; flex-wrap: wrap; }
+    main { max-width: 960px; margin: 40px auto; padding: 0 24px 80px; }
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-label { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; }
+    h2 { font-size: 19px; font-weight: 700; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 700; margin: 22px 0 10px; color: #333; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 9px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; }
+    td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; line-height: 1.6; }
+    tr:last-child td { border-bottom: none; }
+    .info { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .alert { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+
+    /* フロー */
+    .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    .flow-step { background: #1a1a2e; color: white; border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: 600; }
+    .flow-step.light { background: #f0f4ff; color: #2c52b0; }
+    .flow-step.current { background: #c85a00; color: white; }
+    .flow-step.next { background: #1a7a45; color: white; }
+    .flow-arrow { color: #bbb; font-size: 18px; }
+
+    /* カード */
+    .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 20px 0; }
+    .card { border-radius: 12px; overflow: hidden; border: 2px solid #e8e8e8; }
+    .card-header { padding: 12px 16px; font-size: 11px; font-weight: 700; }
+    .card-1 .card-header { background: #fff8f0; color: #c85a00; border-bottom: 1px solid #fde0b8; }
+    .card-2 .card-header { background: #f0f4ff; color: #2c52b0; border-bottom: 1px solid #c5d5f5; }
+    .card-3 .card-header { background: #fafafa; color: #555; border-bottom: 1px solid #e8e8e8; }
+    .card-4 .card-header { background: #1a1a2e; color: white; }
+    .card-body { padding: 16px; background: white; }
+    .card-hl { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 10px; line-height: 1.4; }
+    .card-copy { font-size: 12px; color: #555; line-height: 1.6; margin-bottom: 8px; }
+    .card-illust { font-size: 11px; color: #999; font-style: italic; padding: 8px; background: #f7f7f7; border-radius: 6px; margin: 8px 0; line-height: 1.5; }
+    .card-hook { font-size: 12px; font-weight: 700; color: #27ae60; margin-top: 8px; }
+    .card-hook.bridge { color: #1a7a45; }
+
+    /* チェックリスト風 */
+    .check-list { margin: 10px 0; }
+    .check-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+    .check-box { font-size: 16px; color: #c85a00; flex-shrink: 0; margin-top: 1px; }
+    .check-text { font-size: 12px; line-height: 1.5; }
+    .check-text .cause { font-size: 10px; color: #888; display: block; margin-bottom: 2px; }
+    .check-text .effect { font-size: 13px; font-weight: 700; color: #c85a00; }
+
+    /* 2カラム解決策 */
+    .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+    .solution-item { background: #f7f7f7; border-radius: 8px; padding: 10px; text-align: center; font-size: 11px; font-weight: 600; color: #333; }
+
+    @media (max-width: 640px) {
+      .card-grid { grid-template-columns: 1fr 1fr; }
+      .solution-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>デザイン依頼書：教育カルーセル（隠れ肥満タイプ診断）</h1>
+  <p>3タイプ共通 ｜ 4枚 ｜ 結果カルーセルとPRカルーセルの橋渡し ｜ 2026-05-22</p>
+</header>
+
+<div class="status-banner">
+  <span>✅ 構成確定</span>
+  <span>✅ 3タイプ共通（タイプ別作成なし）</span>
+  <span>📌 デザイン発注準備中</span>
+</div>
+
+<main>
+
+  <!-- =============== 概要 =============== -->
+  <div class="section">
+    <div class="section-label">Overview</div>
+    <h2>概要</h2>
+    <table>
+      <tbody>
+        <tr><td style="width:140px;color:#888;font-weight:600;">位置づけ</td><td>結果カルーセル（各タイプCard 4）の後 ／ PRカルーセル（SLILIN F）の前</td></tr>
+        <tr><td style="color:#888;font-weight:600;">枚数</td><td>4枚（3タイプ共通）</td></tr>
+        <tr><td style="color:#888;font-weight:600;">役割</td><td>「体の仕組みの問題」という認識から「原因の具体化→解決策の方向性→サプリサポートという選択肢」へ自然に橋渡しする</td></tr>
+        <tr><td style="color:#888;font-weight:600;">テイスト</td><td>既存ダイエット診断と同じトンマナ（暖色系グラデ、かわいめイラスト）</td></tr>
+        <tr><td style="color:#888;font-weight:600;">参考素材</td><td>/LINE診断例/医療ダイエット/ダイエット方法診断/</td></tr>
+      </tbody>
+    </table>
+
+    <div class="flow">
+      <div class="flow-step light">結果Card 4（各タイプ）</div>
+      <span class="flow-arrow">↓</span>
+      <div class="flow-step current">教育 Card 1〜4（←これ）</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step next">PRカルーセル SLILIN F</div>
+    </div>
+  </div>
+
+  <!-- =============== ロジック =============== -->
+  <div class="section">
+    <div class="section-label">Logic</div>
+    <h2>橋渡しロジック</h2>
+
+    <div class="good">
+      <strong>結果カルーセルとの接続:</strong><br>
+      各タイプCard 4は「食事制限・意志の力ではなく、体の仕組みから変える方法がある」で締める。
+      教育カルーセルはその「仕組みの原因」を具体的に提示することで、自然につながる。
+    </div>
+
+    <table style="margin-top:16px;">
+      <thead><tr><th>Card</th><th>伝えること</th><th>ユーザーの状態変化</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Card 1</strong></td>
+          <td>体型変化の2大原因：代謝低下 + 体温低下</td>
+          <td>「自分の体に起きてることはこれか」と腑に落ちる</td>
+        </tr>
+        <tr>
+          <td><strong>Card 2</strong></td>
+          <td>だから「運動 + 食事バランス」が大切</td>
+          <td>「そうか、やっぱりそこか」と納得する</td>
+        </tr>
+        <tr>
+          <td><strong>Card 3</strong></td>
+          <td>でも毎日続けるのは難しい（現実の壁）</td>
+          <td>「わかってるけど続かない…」と共感する</td>
+        </tr>
+        <tr>
+          <td><strong>Card 4</strong></td>
+          <td>運動・食事に加えて、体の内側からもサポートする選択肢がある</td>
+          <td>「そういう考え方があるなら見てみたい」とPRへ進む</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight">
+      <strong>SLILIN Fとの成分一致（自然な接続の根拠）:</strong><br>
+      Card 1で「代謝低下」「体温低下」という2大原因を提示 → PRカルーセルCard 2でSLILIN Fの2成分（代謝×脂肪 ／ 冷え×体温）が「その解決策」として自然に受け取られる。こじつけでなく論理的な接続になる。
+    </div>
+  </div>
+
+  <!-- =============== カード設計 =============== -->
+  <div class="section">
+    <div class="section-label">Card Design</div>
+    <h2>Card設計（4枚）</h2>
+
+    <div class="card-grid">
+
+      <!-- Card 1 -->
+      <div class="card card-1">
+        <div class="card-header">Card 1 — 原因提示</div>
+        <div class="card-body">
+          <div class="card-hl">体型が変わりやすい人の体で起きていること</div>
+          <div class="check-list">
+            <div class="check-item">
+              <div class="check-box">☑</div>
+              <div class="check-text">
+                <span class="cause">加齢による</span>
+                <span class="effect">エネルギー代謝力の低下</span>
+              </div>
+            </div>
+            <div class="check-item">
+              <div class="check-box">☑</div>
+              <div class="check-text">
+                <span class="cause">冷えによる</span>
+                <span class="effect">血流の低下・体温低下</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-illust">
+            参考：共有スクショ①に近いビジュアル。ダーク背景＋チェックマーク＋赤橙の強調テキスト。既存LPのグラフィックスタイルを踏襲してOK。
+          </div>
+          <div class="card-hook">だから何が大切なの？→</div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card card-2">
+        <div class="card-header">Card 2 — 解決策の方向性</div>
+        <div class="card-body">
+          <div class="card-hl">つまり お腹の脂肪を減らし<br>体温を回復するには</div>
+          <div class="solution-grid">
+            <div class="solution-item">適度な運動</div>
+            <div class="solution-item">栄養バランスの<br>良い食事</div>
+          </div>
+          <div class="card-copy" style="text-align:center;font-size:14px;font-weight:700;color:#1a1a1a;margin-top:8px;">が大切です。</div>
+          <div class="card-illust">
+            参考：共有スクショ②に近いビジュアル。運動写真＋食事写真の2カラム。「つまり」の手書き風テキスト。暖色系グラデ背景。
+          </div>
+          <div class="card-hook">でも、なかなか続かない？→</div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card card-3">
+        <div class="card-header">Card 3 — 共感・現実の壁</div>
+        <div class="card-body">
+          <div class="card-hl">わかってるけど、<br>なかなか続かないですよね</div>
+          <div class="card-copy">
+            仕事・家事・育児の合間に、毎日運動して食事も管理して——
+            それが簡単にできれば最初から苦労していません。
+          </div>
+          <div class="card-copy" style="font-weight:700;color:#1a1a1a;">
+            続かないのは、意志が弱いのではなく、続けにくい仕組みの問題です。
+          </div>
+          <div class="card-illust">
+            忙しそうな女性のイラストなど。「できてない自分を責めなくていい」という共感感。暖色系・やさしいトーン。
+          </div>
+          <div class="card-hook">じゃあどうすればいい？→</div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card card-4">
+        <div class="card-header">Card 4 — PRへの橋渡し</div>
+        <div class="card-body">
+          <div class="card-hl">運動・食事に加えて、<br>体の内側からもサポートする<br>という考え方があります</div>
+          <div class="card-copy">
+            体のエネルギー代謝や血流・体温に働きかける機能性成分を、毎日の習慣に取り入れること。
+          </div>
+          <div class="card-copy">
+            特別なことをしなくても、続けられる形で体をサポートする——そんな選択肢があります。
+          </div>
+          <div class="card-illust">
+            前向きな女性イラスト。「新しい選択肢を知った」感。暖色系。シンプルに。
+          </div>
+          <div class="card-hook bridge">その選択肢を見てみる →</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="info">
+      <strong>Card 4 フック文の意図:</strong> 「SLILIN F」や「サプリ」という言葉をCard 4では出さない。「選択肢がある」で終わることで、押しつけ感なくPRカルーセルへ進む流れを作る。
+    </div>
+  </div>
+
+  <!-- =============== デザインのポイント =============== -->
+  <div class="section">
+    <div class="section-label">Design Notes</div>
+    <h2>デザインのポイント</h2>
+    <table>
+      <tbody>
+        <tr>
+          <td style="width:32px;text-align:center;font-size:18px;">1</td>
+          <td><strong>Card 1・2は既存LPビジュアルを参考に。</strong> 共有スクショ（①②）のテイストを踏襲する。ゼロから作るよりも既存グラフィックのトーンを流用して統一感を出す。</td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-size:18px;">2</td>
+          <td><strong>Card 3はやさしいトーン。</strong> 「続かない」という自己否定にならないよう、共感・励ましの雰囲気で。責め感のないビジュアルを選ぶ。</td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-size:18px;">3</td>
+          <td><strong>Card 4でSLILIN Fの商品名・サプリ・成分名は出さない。</strong>「選択肢がある」で終わり、PRカルーセルで商品を初登場させる。押しつけ感ゼロの橋渡し。</td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-size:18px;">4</td>
+          <td><strong>トンマナは3タイプ共通の暖色系。</strong> 結果カルーセルのタイプカラー（オレンジ/ブルー/グリーン）は引き継がない。PRカルーセルとも同じトーンでリセット。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- =============== 実装情報 =============== -->
+  <div class="section">
+    <div class="section-label">Implementation</div>
+    <h2>実装情報</h2>
+    <table>
+      <tbody>
+        <tr><td style="width:160px;color:#888;font-weight:600;">接続元</td><td>隠れ肥満タイプ診断 各タイプ結果Card 4（3タイプ全て）</td></tr>
+        <tr><td style="color:#888;font-weight:600;">接続先</td><td>PRカルーセル（SLILIN F）Card 1</td></tr>
+        <tr><td style="color:#888;font-weight:600;">枚数</td><td>4枚（タイプ共通）</td></tr>
+        <tr><td style="color:#888;font-weight:600;">Winut登録</td><td>結果カルーセル → 教育カルーセル → PRカルーセルの順で設定</td></tr>
+        <tr><td style="color:#888;font-weight:600;">実装タイミング</td><td>診断デザイン（24枚）・教育カルーセル（4枚）・PRカルーセル（4枚）が全て揃ってから同時実装</td></tr>
+      </tbody>
+    </table>
+    <div class="good">
+      <strong>フル実装後の枚数:</strong> 診断24枚 + 教育4枚 + PR4枚 = 計32枚。Winut登録は全素材揃い次第まとめて行う。
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
