@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>診断設計書（刷新版）：隠れ肥満タイプ診断 2026-05-22</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+    header .subtitle { color: #7effa0; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    header p { color: #aaa; font-size: 14px; }
+    .status-banner { background: #1a2e1e; color: #7effa0; font-size: 13px; padding: 10px 32px; display: flex; gap: 24px; flex-wrap: wrap; }
+    .status-banner span { display: inline-flex; align-items: center; gap: 6px; }
+    main { max-width: 960px; margin: 40px auto; padding: 0 24px 80px; }
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-label { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; }
+    h2 { font-size: 19px; font-weight: 700; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 700; margin: 22px 0 10px; color: #333; }
+    h4 { font-size: 13px; font-weight: 700; margin: 16px 0 8px; color: #555; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 9px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; }
+    td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; line-height: 1.6; }
+    tr:last-child td { border-bottom: none; }
+    .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .info { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .alert { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .pending { background: #fff8f0; border-left: 3px solid #e67e22; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+
+    /* ファネルフロー */
+    .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    .flow-step { background: #1a1a2e; color: white; border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: 600; }
+    .flow-step.light { background: #f0f4ff; color: #2c52b0; }
+    .flow-step.confirmed { background: #1a7a45; color: white; }
+    .flow-arrow { color: #bbb; font-size: 18px; }
+
+    /* PUバナー */
+    .pu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin: 16px 0; }
+    .pu-card { border: 2px solid #1a1a2e; border-radius: 10px; padding: 18px; }
+    .pu-card.review { border: 2px dashed #e67e22; background: #fff8f0; }
+    .pu-no { font-size: 11px; font-weight: 700; color: #888; margin-bottom: 6px; }
+    .pu-main { font-size: 16px; font-weight: 700; color: #1a1a2e; margin-bottom: 10px; line-height: 1.4; }
+    .pu-main.review { color: #c85a00; }
+    .pu-badge { display: inline-block; background: #f0f0f0; color: #555; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; margin-right: 6px; }
+    .pu-badge.check { background: #fff3e0; color: #e67e22; }
+    .pu-btn { display: inline-block; background: #1a1a2e; color: white; border-radius: 6px; padding: 6px 14px; font-size: 13px; font-weight: 700; margin-right: 6px; margin-top: 6px; }
+    .pu-btn.no { background: #eee; color: #555; }
+
+    /* 設問 */
+    .q-block { border: 1px solid #e8e8e8; border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .q-label { font-size: 11px; font-weight: 700; color: #999; margin-bottom: 6px; }
+    .q-text { font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #1a1a2e; }
+    .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .choices.three { grid-template-columns: repeat(3, 1fr); }
+    .choice { background: #f7f7f7; border-radius: 8px; padding: 10px 14px; font-size: 13px; font-weight: 600; text-align: center; line-height: 1.4; }
+    .choice.result-link { background: #1a1a2e; color: white; }
+    .choice-label { font-size: 10px; color: #999; display: block; margin-bottom: 2px; }
+    .choice-arrow { font-size: 11px; color: #27ae60; display: block; margin-top: 4px; }
+    .q-note { font-size: 12px; color: #888; margin-top: 10px; font-style: italic; }
+
+    /* 結果カルーセル */
+    .type-section { border-radius: 10px; padding: 22px; margin-bottom: 20px; }
+    .type-a { background: #fff8f0; border: 1px solid #fde0b8; }
+    .type-b { background: #f0f4ff; border: 1px solid #c5d5f5; }
+    .type-c { background: #f0fff8; border: 1px solid #b8f0d4; }
+    .type-header { font-size: 17px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,0.08); }
+    .type-a .type-header { color: #c85a00; }
+    .type-b .type-header { color: #2c52b0; }
+    .type-c .type-header { color: #1a7a45; }
+    .card-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .card-item { border-radius: 8px; padding: 14px; font-size: 12px; line-height: 1.5; }
+    .type-a .card-item { background: white; border: 1px solid #fde0b8; }
+    .type-b .card-item { background: white; border: 1px solid #c5d5f5; }
+    .type-c .card-item { background: white; border: 1px solid #b8f0d4; }
+    .card-num { font-size: 10px; font-weight: 700; color: #999; margin-bottom: 4px; }
+    .card-role { font-size: 11px; font-weight: 700; margin-bottom: 6px; }
+    .type-a .card-role { color: #c85a00; }
+    .type-b .card-role { color: #2c52b0; }
+    .type-c .card-role { color: #1a7a45; }
+    .card-hl { font-size: 12px; font-weight: 700; margin-bottom: 6px; color: #1a1a1a; line-height: 1.4; }
+    .card-copy { font-size: 11px; color: #555; line-height: 1.5; }
+    .card-illust { font-size: 10px; color: #999; font-style: italic; margin-top: 6px; }
+    .card-hook { font-size: 11px; font-weight: 700; color: #27ae60; margin-top: 6px; }
+    .card-hook.cta { color: #1a7a45; font-size: 12px; }
+
+    /* PR カルーセル カード */
+    .pr-card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 20px 0; }
+    .pr-card { border-radius: 12px; overflow: hidden; border: 2px solid #e8e8e8; }
+    .pr-card-header { padding: 12px 16px; font-size: 11px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+    .pr-card-1 .pr-card-header { background: #fff8f0; color: #c85a00; border-bottom: 1px solid #fde0b8; }
+    .pr-card-2 .pr-card-header { background: #f0f4ff; color: #2c52b0; border-bottom: 1px solid #c5d5f5; }
+    .pr-card-3 .pr-card-header { background: #f0fff8; color: #1a7a45; border-bottom: 1px solid #b8f0d4; }
+    .pr-card-4 .pr-card-header { background: #1a1a2e; color: white; }
+    .pr-card-body { padding: 16px; background: white; }
+    .pr-card-hl { font-size: 14px; font-weight: 700; color: #1a1a2e; margin-bottom: 10px; line-height: 1.4; }
+    .pr-card-copy { font-size: 12px; color: #555; line-height: 1.6; margin-bottom: 8px; }
+    .pr-card-illust { font-size: 11px; color: #999; font-style: italic; padding: 8px; background: #f7f7f7; border-radius: 6px; margin: 8px 0; line-height: 1.5; }
+    .pr-card-hook { font-size: 12px; font-weight: 700; color: #27ae60; margin-top: 8px; }
+    .pr-card-badge { font-size: 10px; background: #fff3cd; color: #856404; padding: 2px 8px; border-radius: 4px; font-weight: 700; }
+
+    /* 成分ボックス */
+    .ingredient-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+    .ingredient-box { border-radius: 8px; padding: 14px; }
+    .ing-a { background: #fff8f0; border: 1px solid #fde0b8; }
+    .ing-b { background: #f0f8ff; border: 1px solid #b8d8f5; }
+    .ing-label { font-size: 10px; font-weight: 700; margin-bottom: 6px; }
+    .ing-a .ing-label { color: #c85a00; }
+    .ing-b .ing-label { color: #1a5a9e; }
+    .ing-name { font-size: 11px; color: #888; margin-bottom: 4px; }
+    .ing-func { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; line-height: 1.4; }
+    .ing-target { font-size: 11px; color: #888; }
+
+    /* KPI */
+    .kpi-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin: 16px 0; }
+    .kpi-card { background: #f7f7f7; border-radius: 8px; padding: 14px; text-align: center; }
+    .kpi-val { font-size: 22px; font-weight: 700; color: #1a1a2e; display: block; }
+    .kpi-label { font-size: 11px; color: #888; margin-top: 4px; }
+
+    /* 画像一覧 */
+    .img-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 12px 0; }
+    .img-item { background: #f7f7f7; border-radius: 8px; padding: 12px; font-size: 12px; text-align: center; }
+    .img-item.confirmed { background: #f0fff4; border: 1px solid #b8f0d4; }
+    .img-count { font-size: 22px; font-weight: 700; color: #1a1a2e; display: block; margin-bottom: 4px; }
+    .img-label { color: #555; }
+
+    .ng { color: #c0392b; }
+    .ok { color: #27ae60; }
+
+    @media (max-width: 640px) {
+      .card-grid-4 { grid-template-columns: 1fr 1fr; }
+      .pr-card-grid { grid-template-columns: 1fr 1fr; }
+      .choices { grid-template-columns: 1fr; }
+      .choices.three { grid-template-columns: 1fr; }
+      .ingredient-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="subtitle">設計書 刷新版（v2）</div>
+  <h1>隠れ肥満タイプ診断 — 完全設計書</h1>
+  <p>BMI記事（AVA小田）｜3タイプ分岐｜診断 + PRカルーセル（SLILIN F）統合版｜2026-05-22</p>
+</header>
+
+<div class="status-banner">
+  <span>✅ 設計確定（診断）</span>
+  <span>✅ PRカルーセル確定：SLILIN F・定期初回¥980</span>
+  <span>🔵 デザイン制作中（3-4営業日）</span>
+  <span>⚠️ SLILIN F 直提携案件 — レギュレーション準拠必須</span>
+</div>
+
+<main>
+
+  <!-- =============== 概要 =============== -->
+  <div class="section">
+    <div class="section-label">Overview</div>
+    <h2>施策概要</h2>
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <span class="kpi-val">18,420</span>
+        <div class="kpi-label">BMI記事 PV/月</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-val">2.5%</span>
+        <div class="kpi-label">現状 友追率（8人/月）</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-val">+129</span>
+        <div class="kpi-label">改善後 友達増/月（目標）</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-val">0.70%</span>
+        <div class="kpi-label">目標 PVFR</div>
+      </div>
+    </div>
+    <div class="highlight">
+      <strong>なぜやるか:</strong> BMI記事から「ダイエット方法診断」への導線はKWミスマッチ。BMIを調べた人に必要なのは「BMIじゃわからないこと」——隠れ肥満チェックがはまる。現状の6%しか取れていないポテンシャルを引き出す。
+    </div>
+    <div class="good">
+      <strong>✅ CTA確定：SLILIN F（スリリンファイア）</strong><br>
+      機能性表示食品サプリ。直提携案件。定期 初回¥980・30日返金保証・回数縛りなし。BMI記事からの「体の仕組みを変える」ストーリーラインとの親和性が高い。医療ダイエットより決断コストが低く、PU→CTA転換率向上が見込める。
+    </div>
+    <div class="info">
+      <strong>BMI分布と訴求軸の設計:</strong> BMI記事読者の多数（女性20代平均20.5、30代21.5）はBMI 23未満 → SLILIN F成分①（脂肪低減）の対象外。<br>
+      → <strong>成分②（冷え×体温回復）を主軸としたCTA設計</strong>が多数ユーザーへのアプローチとして有効。成分①はBMI 23以上の読者向けに訴求。
+    </div>
+  </div>
+
+  <!-- =============== ファネルフロー =============== -->
+  <div class="section">
+    <div class="section-label">Funnel</div>
+    <h2>全体フロー</h2>
+    <div class="flow">
+      <div class="flow-step">BMI記事 PV</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">PU（6パターン）</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">友だち追加</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">表紙</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step light">Q1 年代</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step light">Q2 体型への取り組み</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step light">Q3 気になる部位</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step light">Q4 症状 ★分岐</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">結果カルーセル（4枚×3タイプ）</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step confirmed">PRカルーセル SLILIN F（4枚）</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step confirmed">定期申し込み CTA</div>
+    </div>
+    <div class="info">
+      <strong>Q設計の意図:</strong> Q1〜Q4で毎問違う角度から自分の情報を入力させる。属性→行動→実感→症状。「計算機に入力してる」モードのまま最後まで行く（カロリー診断の成功構造と同じ）。結果分岐はQ4のみ（NG-2ルール準拠）。
+    </div>
+    <div class="good">
+      <strong>結果→PR接続ロジック:</strong> 結果Card 3「食事制限じゃなく体の仕組みの問題」でものさしが変わる → Card 4「体の仕組みからアプローチする方法を見る」でPRへ誘導 → SLILIN F PR Card 1〜4で具体的な方法を提示
+    </div>
+  </div>
+
+  <!-- =============== 必要な画像一覧 =============== -->
+  <div class="section">
+    <div class="section-label">Assets</div>
+    <h2>必要な画像一覧（計28枚）</h2>
+    <div class="img-list">
+      <div class="img-item">
+        <span class="img-count">6枚</span>
+        <div class="img-label">PUバナー<br>コピー3種 × 診断名2種</div>
+      </div>
+      <div class="img-item">
+        <span class="img-count">2枚</span>
+        <div class="img-label">表紙（タイトル画面）<br>診断名2種</div>
+      </div>
+      <div class="img-item">
+        <span class="img-count">4枚</span>
+        <div class="img-label">設問パネル<br>Q1〜Q4</div>
+      </div>
+      <div class="img-item">
+        <span class="img-count">12枚</span>
+        <div class="img-label">結果カルーセル<br>4枚 × 3タイプ</div>
+      </div>
+      <div class="img-item confirmed">
+        <span class="img-count" style="color:#1a7a45;">4枚</span>
+        <div class="img-label">PRカルーセル<br>SLILIN F（3タイプ共通）<br>✅ 依頼書確定済み</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:#888;margin-top:8px;">テイスト: 既存ダイエット方法診断と同じトンマナ（暖色系グラデ、かわいめイラスト）。PRカルーセルはタイプカラーを引き継がず中立的な暖色系でリセット。</p>
+    <p style="font-size:13px;color:#888;">※診断24枚とPRカルーセル4枚は同じタイミングで実装（PRカルーセル先行不可）</p>
+  </div>
+
+  <!-- =============== PUバナー =============== -->
+  <div class="section">
+    <div class="section-label">Section 1</div>
+    <h2>PUバナー（6枚）</h2>
+    <div class="info">コピー3種 × 診断名2種 = 6種ABCテスト。ボタン「はい / いいえ」、マイクロコピー「30秒」。</div>
+
+    <h3>確定コピー3種</h3>
+    <table>
+      <thead><tr><th>コピー</th><th>テキスト</th><th>設計意図</th></tr></thead>
+      <tbody>
+        <tr><td><strong>A</strong></td><td>数字には出ない"体の本当の状態"、気になりません？</td><td>「数字＝BMI」への懐疑心を刺激。「まだ知らないことがある」フック</td></tr>
+        <tr><td><strong>B</strong></td><td>BMIに出てこない体質のタイプ、知りたくない？</td><td>「体質タイプ」という診断への期待感を先出し</td></tr>
+        <tr><td><strong>C</strong></td><td>BMIじゃ見えない脂肪のつき方、気になりません？</td><td>「脂肪のつき方」という具体的好奇心に訴える</td></tr>
+      </tbody>
+    </table>
+
+    <h3>6パターン組み合わせ（確定）</h3>
+    <div class="pu-grid">
+      <div class="pu-card">
+        <div class="pu-no">PU-1</div>
+        <span class="pu-badge">コピーA</span><span class="pu-badge">診断名①</span>
+        <div class="pu-main">数字には出ない"体の本当の状態"、気になりません？</div>
+        <div style="font-size:12px;color:#888;margin-bottom:8px;">隠れ肥満タイプ診断 ・ 30秒</div>
+        <span class="pu-btn">はい</span><span class="pu-btn no">いいえ</span>
+      </div>
+      <div class="pu-card">
+        <div class="pu-no">PU-2</div>
+        <span class="pu-badge">コピーB</span><span class="pu-badge">診断名①</span>
+        <div class="pu-main">BMIに出てこない体質のタイプ、知りたくない？</div>
+        <div style="font-size:12px;color:#888;margin-bottom:8px;">隠れ肥満タイプ診断 ・ 30秒</div>
+        <span class="pu-btn">はい</span><span class="pu-btn no">いいえ</span>
+      </div>
+      <div class="pu-card">
+        <div class="pu-no">PU-3</div>
+        <span class="pu-badge">コピーC</span><span class="pu-badge">診断名①</span>
+        <div class="pu-main">BMIじゃ見えない脂肪のつき方、気になりません？</div>
+        <div style="font-size:12px;color:#888;margin-bottom:8px;">隠れ肥満タイプ診断 ・ 30秒</div>
+        <span class="pu-btn">はい</span><span class="pu-btn no">いいえ</span>
+      </div>
+      <div class="pu-card">
+        <div class="pu-no">PU-4</div>
+        <span class="pu-badge">コピーA</span><span class="pu-badge">診断名②</span>
+        <div class="pu-main">数字には出ない"体の本当の状態"、気になりません？</div>
+        <div style="font-size:12px;color:#888;margin-bottom:8px;">体質タイプチェック ・ 30秒</div>
+        <span class="pu-btn">はい</span><span class="pu-btn no">いいえ</span>
+      </div>
+      <div class="pu-card">
+        <div class="pu-no">PU-5</div>
+        <span class="pu-badge">コピーB</span><span class="pu-badge">診断名②</span>
+        <div class="pu-main">BMIに出てこない体質のタイプ、知りたくない？</div>
+        <div style="font-size:12px;color:#888;margin-bottom:8px;">体質タイプチェック ・ 30秒</div>
+        <span class="pu-btn">はい</span><span class="pu-btn no">いいえ</span>
+      </div>
+      <div class="pu-card">
+        <div class="pu-no">PU-6</div>
+        <span class="pu-badge">コピーC</span><span class="pu-badge">診断名②</span>
+        <div class="pu-main">BMIじゃ見えない脂肪のつき方、気になりません？</div>
+        <div style="font-size:12px;color:#888;margin-bottom:8px;">体質タイプチェック ・ 30秒</div>
+        <span class="pu-btn">はい</span><span class="pu-btn no">いいえ</span>
+      </div>
+    </div>
+
+    <h3>追加案（検討中 — Renの判断待ち）</h3>
+    <div class="pu-grid">
+      <div class="pu-card review">
+        <div class="pu-no">案D <span class="pu-badge check">検討中</span></div>
+        <div class="pu-main review">同じ生活をしてるのに、なぜか体型が変わってきた気がする人へ。</div>
+        <div style="font-size:12px;color:#888;">年齢を問わず「気づいたら変わってた」感覚に訴求。年齢不問設計。</div>
+      </div>
+      <div class="pu-card review">
+        <div class="pu-no">案E <span class="pu-badge check">検討中</span></div>
+        <div class="pu-main review">頑張ってるのに変わらないのは、ダイエット法と体質が合ってないせいかも。</div>
+        <div style="font-size:12px;color:#888;">「やり方ミスマッチ」訴求。自己否定を外して診断への期待感を作る。</div>
+      </div>
+    </div>
+    <div class="pending" style="margin-top:8px;">D・E案は現行6パターンへの追加として検討。採用する場合はABテスト設定を追加（PU-7/8）。採用・不採用の判断はRenへ確認。</div>
+  </div>
+
+  <!-- =============== 表紙 =============== -->
+  <div class="section">
+    <div class="section-label">Section 2</div>
+    <h2>表紙画面（2枚）</h2>
+    <table>
+      <thead><tr><th>パターン</th><th>フック</th><th>診断名</th><th>バッジ</th><th>CTA</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>①</strong></td>
+          <td>BMIだけじゃ見えない、あなたの体の"本当の状態"</td>
+          <td>隠れ肥満タイプ診断</td>
+          <td>30秒でわかる！</td>
+          <td>▼ タップして診断スタート ▼</td>
+        </tr>
+        <tr>
+          <td><strong>②</strong></td>
+          <td>BMIだけじゃ見えない、あなたの体の"本当の状態"</td>
+          <td>体質タイプチェック</td>
+          <td>30秒でわかる！</td>
+          <td>▼ タップして診断スタート ▼</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="q-note">PUの診断名に合わせて出し分け。既存診断のタイトル画面と同じフォーマット。</p>
+  </div>
+
+  <!-- =============== 設問 =============== -->
+  <div class="section">
+    <div class="section-label">Section 3</div>
+    <h2>設問パネル（4枚）</h2>
+
+    <div class="q-block">
+      <div class="q-label">Q1 ／ 属性</div>
+      <div class="q-text">年代を教えてください</div>
+      <div class="choices">
+        <div class="choice">20代</div>
+        <div class="choice">30代</div>
+        <div class="choice">40代</div>
+        <div class="choice">50代以上</div>
+      </div>
+      <p class="q-note">フリクションゼロの入口。「計算機の入力項目っぽい」設計。カロリー診断の踏襲。</p>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q2 ／ 行動</div>
+      <div class="q-text">体型のために何かしたことある？</div>
+      <div class="choices">
+        <div class="choice">食事制限したことある</div>
+        <div class="choice">運動を試したことある</div>
+        <div class="choice">色々やったけど続かない</div>
+        <div class="choice">特に何もしてない</div>
+      </div>
+      <p class="q-note">「行動」を聞く。結果Card 3への伏線（「食事制限したことある」→「食事制限じゃ落ちない」で刺さる）。</p>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q3 ／ 実感</div>
+      <div class="q-text">自分の体で気になるのは？</div>
+      <div class="choices">
+        <div class="choice">お腹周りだけぽっこり</div>
+        <div class="choice">全体的にたるんでる感じ</div>
+        <div class="choice">上半身は細いけど下半身</div>
+        <div class="choice">体脂肪が多い気がする</div>
+      </div>
+      <p class="q-note">BMIでは拾えない「実感」を部位で言語化させる。</p>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q4 ／ 症状 ★結果分岐（3択）</div>
+      <div class="q-text">あなたの体で、一番当てはまるのは？</div>
+      <div class="choices three">
+        <div class="choice result-link">
+          <span class="choice-label">A</span>
+          お腹の脂肪だけ落ちない
+          <span class="choice-arrow">→ かくれ内臓脂肪タイプ</span>
+        </div>
+        <div class="choice result-link">
+          <span class="choice-label">B</span>
+          痩せてもすぐ戻る
+          <span class="choice-arrow">→ かくれ体脂肪タイプ</span>
+        </div>
+        <div class="choice result-link">
+          <span class="choice-label">C</span>
+          食べてないのに太る
+          <span class="choice-arrow">→ 代謝スロータイプ</span>
+        </div>
+      </div>
+      <p class="q-note">Q4のみ3択（他は4択）。体の「症状」を選ばせることでパーソナライズ感が出る。デザインで3択レイアウトの調整が必要。</p>
+    </div>
+  </div>
+
+  <!-- =============== 結果カルーセル =============== -->
+  <div class="section">
+    <div class="section-label">Section 4</div>
+    <h2>結果カルーセル（12枚 = 4枚 × 3タイプ）</h2>
+    <div class="info">
+      <strong>カード構成（全タイプ共通）:</strong>
+      Card 1 タイプ提示 → Card 2 メカニズム → Card 3 ものさし変化 → Card 4 CTA（→PRカルーセルへ）<br>
+      テキスト最小限、イラスト主役。Card 4のCTAボタン「≫ あなたに合った方法を見る ≫」タップ後、PRカルーセルへ自動接続。
+    </div>
+
+    <!-- タイプA -->
+    <div class="type-section type-a" style="margin-top:20px;">
+      <div class="type-header">タイプA ／ かくれ内臓脂肪タイプ <span style="font-size:13px;font-weight:400;">（Q4-A: お腹の脂肪だけ落ちない）</span></div>
+      <div class="card-grid-4">
+        <div class="card-item">
+          <div class="card-num">Card 1</div>
+          <div class="card-role">タイプ提示</div>
+          <div class="card-hl">あなたの隠れ肥満度チェック結果<br>かくれ内臓脂肪タイプ</div>
+          <div class="card-copy">BMIは標準なのに、お腹周りだけ気になる。それには理由があります</div>
+          <div class="card-illust">イラスト: お腹周りにフォーカスしたシルエット</div>
+          <div class="card-hook">なぜBMIに出ないの？→</div>
+        </div>
+        <div class="card-item">
+          <div class="card-num">Card 2</div>
+          <div class="card-role">メカニズム</div>
+          <div class="card-hl">BMIが見ているのは「体重と身長」だけ。お腹の奥につく内臓脂肪は、この数字には出てきません</div>
+          <div class="card-illust">イラスト: 同じ体重の2人の比較図（脂肪が均等な人 vs 内臓周りに集中した人）</div>
+          <div class="card-hook">じゃあ何を見ればいいの？→</div>
+        </div>
+        <div class="card-item">
+          <div class="card-num">Card 3</div>
+          <div class="card-role">ものさし変化</div>
+          <div class="card-hl">食事を減らしてもお腹だけ変わらない——心当たりはありませんか？</div>
+          <div class="card-copy">内臓脂肪は食事制限では落ちにくい。体の仕組みの問題です</div>
+          <div class="card-illust">イラスト: 食事制限→体重は落ちる→でも内臓脂肪はそのまま→食事を戻すと体重も戻る（フロー図）</div>
+          <div class="card-hook">じゃあどうすれば？→</div>
+        </div>
+        <div class="card-item">
+          <div class="card-num">Card 4</div>
+          <div class="card-role">CTA → PRへ</div>
+          <div class="card-hl">食事制限ではなく、脂肪がつく仕組みごと変える方法があります</div>
+          <div class="card-illust">イラスト: 笑顔の女性。「仕組みから変わった」感</div>
+          <div class="card-hook cta">≫ あなたに合った方法を見る ≫</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- タイプB -->
+    <div class="type-section type-b">
+      <div class="type-header">タイプB ／ かくれ体脂肪タイプ <span style="font-size:13px;font-weight:400;">（Q4-B: 痩せてもすぐ戻る）</span></div>
+      <div class="card-grid-4">
+        <div class="card-item">
+          <div class="card-num">Card 1</div>
+          <div class="card-role">タイプ提示</div>
+          <div class="card-hl">あなたの隠れ肥満度チェック結果<br>かくれ体脂肪タイプ</div>
+          <div class="card-copy">ダイエットしても体型が変わらない。それ、やり方の問題ではありません</div>
+          <div class="card-illust">イラスト: タイプ名を大きく中央に</div>
+          <div class="card-hook">なぜ体型が変わらないの？→</div>
+        </div>
+        <div class="card-item">
+          <div class="card-num">Card 2</div>
+          <div class="card-role">メカニズム</div>
+          <div class="card-hl">食事を減らすと、脂肪より先に筋肉が落ちます。体重は減っても見た目が変わらないのは、これが原因です</div>
+          <div class="card-illust">イラスト: 食事制限前後の筋肉/脂肪比率の変化図（筋肉だけ減って脂肪は残る）</div>
+          <div class="card-hook">じゃあどうすれば？→</div>
+        </div>
+        <div class="card-item">
+          <div class="card-num">Card 3</div>
+          <div class="card-role">ものさし変化</div>
+          <div class="card-hl">食事制限をするたびに代謝が落ち、前より太りやすくなる——この繰り返しに気づいていますか？</div>
+          <div class="card-illust">イラスト: 悪循環ループ図（食事制限→代謝落ちる→太りやすくなる→また食事制限）</div>
+          <div class="card-hook">この悪循環、止められる？→</div>
+        </div>
+        <div class="card-item">
+          <div class="card-num">Card 4</div>
+          <div class="card-role">CTA → PRへ</div>
+          <div class="card-hl">体脂肪の蓄積サイクルを断ち切る。その方法があります</div>
+          <div class="card-illust">イラスト: 笑顔の女性。悪循環から抜けた「スッキリ感」</div>
+          <div class="card-hook cta">≫ あなたに合った方法を見る ≫</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- タイプC -->
+    <div class="type-section type-c">
+      <div class="type-header">タイプC ／ 代謝スロータイプ <span style="font-size:13px;font-weight:400;">（Q4-C: 食べてないのに太る）</span></div>
+      <div class="card-grid-4">
+        <div class="card-item">
+          <div class="card-num">Card 1</div>
+          <div class="card-role">タイプ提示</div>
+          <div class="card-hl">あなたの隠れ肥満度チェック結果<br>代謝スロータイプ</div>
+          <div class="card-copy">少ししか食べていないのに体重が増える。それは気のせいではありません</div>
+          <div class="card-illust">イラスト: タイプ名を大きく中央に</div>
+          <div class="card-hook">なぜ食べてないのに太るの？→</div>
+        </div>
+        <div class="card-item">
+          <div class="card-num">Card 2</div>
+          <div class="card-role">メカニズム</div>
+          <div class="card-hl">同じ食事でも、燃やせる量は人によって違います。代謝が低いと、少ない食事でも体が燃やしきれず溜め込んでしまいます</div>
+          <div class="card-illust">イラスト: 代謝比較図（代謝高い→ちゃんと燃える vs 代謝低い→余って蓄積）</div>
+          <div class="card-hook">じゃあどうすれば？→</div>
+        </div>
+        <div class="card-item">
+          <div class="card-num">Card 3</div>
+          <div class="card-role">ものさし変化</div>
+          <div class="card-hl">努力が足りないのではなく、体の仕組みの問題です。代謝の低さは、意志の力では変えられません</div>
+          <div class="card-illust">イラスト: ❌「頑張りが足りない」vs ⭕「体の仕組みの問題」（自己否定を外すビジュアル）</div>
+          <div class="card-hook">体質って変えられるの？→</div>
+        </div>
+        <div class="card-item">
+          <div class="card-num">Card 4</div>
+          <div class="card-role">CTA → PRへ</div>
+          <div class="card-hl">我慢を続けるのではなく、代謝の仕組みごと変える方法があります</div>
+          <div class="card-illust">イラスト: 笑顔の女性。「我慢してない」自然体感</div>
+          <div class="card-hook cta">≫ あなたに合った方法を見る ≫</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============== PRカルーセル SLILIN F =============== -->
+  <div class="section">
+    <div class="section-label">Section 5</div>
+    <h2>PRカルーセル — SLILIN F（スリリンファイア）</h2>
+
+    <div class="good">
+      <strong>✅ 確定。</strong> 3タイプ共通4枚。デザイン依頼書：<a href="brief-pr-carousel-slilinf-2026-05-22.html" style="color:#1a7a45;">brief-pr-carousel-slilinf-2026-05-22.html</a><br>
+      接続元: 各タイプ結果Card 4「≫ あなたに合った方法を見る ≫」 ／ CTA先: SLILIN F定期申し込み
+    </div>
+
+    <h3>レギュレーション制約（デザイン・コピー両方に適用）</h3>
+    <div class="alert">
+      <strong>⚠️ 直提携案件。</strong> 以下のNGは絶対厳守。発注前にコピー・デザインを必ず照合すること。
+    </div>
+    <table>
+      <thead><tr><th>区分</th><th class="ng">NG（使用禁止）</th><th class="ok">OK（使用可）</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>効果表現</strong></td>
+          <td class="ng">「飲むだけで痩せる」「○週間で効果」即効性全般</td>
+          <td class="ok">「続けることで」「毎日の習慣として」「2〜3ヶ月を目安に」</td>
+        </tr>
+        <tr>
+          <td><strong>病名・症状</strong></td>
+          <td class="ng">「冷え症」「メタボ」「肥満」</td>
+          <td class="ok">「冷えが気になる方」「ぽっこりお腹」「BMIが高めの方」</td>
+        </tr>
+        <tr>
+          <td><strong>BA表記</strong></td>
+          <td class="ng">極端なビフォーアフター</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>機能範囲</strong></td>
+          <td class="ng">「筋肉量アップ」「脚痩せ」「体重○kg減」断定</td>
+          <td class="ok">おなかの脂肪（内臓・皮下）、血流・体温（届出内のみ）</td>
+        </tr>
+        <tr>
+          <td><strong>服用表現</strong></td>
+          <td class="ng">「服用」「服薬」</td>
+          <td class="ok">「飲む」「摂る」「1日1粒」</td>
+        </tr>
+        <tr>
+          <td><strong>価格表記</strong></td>
+          <td class="ng">「定期」なしで価格表示<br>例：スリリンファイア 980円</td>
+          <td class="ok">「定期 初回○○円」（"定期"必須）</td>
+        </tr>
+        <tr>
+          <td><strong>返金保証</strong></td>
+          <td class="ng">「全額返金保証で無料で試せる」等の強訴求</td>
+          <td class="ok">「30日返金保証あり」とだけ記載<br>※初回解約はパッケージ返送が条件</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>機能性届出表示（コピーで使っていい根拠）</h3>
+    <div class="ingredient-grid">
+      <div class="ingredient-box ing-a">
+        <div class="ing-label">成分①</div>
+        <div class="ing-name">ブラックジンジャー由来ポリメトキシフラボン</div>
+        <div class="ing-func">おなかの脂肪（内臓脂肪・皮下脂肪）を減らす機能</div>
+        <div class="ing-target">対象: BMIが高め（23以上30未満）の方</div>
+        <div class="ing-name" style="margin-top:6px;">日常活動時のエネルギー代謝において脂肪を消費しやすくする</div>
+      </div>
+      <div class="ingredient-box ing-b">
+        <div class="ing-label">成分②</div>
+        <div class="ing-name">アムラ由来エラグ酸</div>
+        <div class="ing-func">冷えが気になる女性の血流を上げ、体温を回復する機能</div>
+        <div class="ing-target">対象: 冷えが気になる女性</div>
+      </div>
+    </div>
+    <div class="info">
+      <strong>訴求軸の使い分け:</strong> BMI記事読者の多数はBMI 23未満（成分①対象外） → <strong>成分②（冷え×体温回復）をメイン訴求軸に。</strong>成分①はBMI 23以上の読者向けサブ訴求として位置づける。Card 2の2カラム設計でこの優先度を反映させる。
+    </div>
+
+    <h3>Card設計（4枚）</h3>
+    <div class="pr-card-grid">
+
+      <!-- PR Card 1 -->
+      <div class="pr-card pr-card-1">
+        <div class="pr-card-header">
+          <span>Card 1 — 商品紹介</span>
+        </div>
+        <div class="pr-card-body">
+          <div class="pr-card-hl">体の仕組みから<br>アプローチする選択肢があります</div>
+          <div class="pr-card-copy">
+            <strong>商品名（大）:</strong> SLILIN F<br>
+            <strong>読み:</strong> スリリンファイア<br>
+            <span class="pr-card-badge">機能性表示食品</span>
+          </div>
+          <div class="pr-card-copy">おなかの脂肪が気になる方に<br>選ばれている理由があります</div>
+          <div class="pr-card-illust">商品パッケージを中央に大きく。清潔感のある暖色系グラデ背景。既存PRカルーセルCard 1と同じレイアウト踏襲。</div>
+          <div class="pr-card-hook">その理由は？→</div>
+        </div>
+      </div>
+
+      <!-- PR Card 2 -->
+      <div class="pr-card pr-card-2">
+        <div class="pr-card-header">
+          <span>Card 2 — 機能説明</span>
+        </div>
+        <div class="pr-card-body">
+          <div class="pr-card-hl">2つの機能性成分が<br>ダブルでアプローチ</div>
+          <div class="pr-card-illust">
+            【機能①】お腹周りのシルエットアイコン<br>
+            おなかの脂肪（内臓脂肪・皮下脂肪）を減らす<br>
+            対象: BMI高め（23以上30未満）の方<br><br>
+            【機能②】体温・血流アイコン（炎 or 体温計）<br>
+            冷えが気になる女性の血流を上げ、体温を回復する<br><br>
+            ※シンプルな2カラム図解。成分名は小さめ、機能をメインに大きく。Card 2が肝 — 届出表示を視覚化。
+          </div>
+          <div class="pr-card-hook">どう飲めばいいの？→</div>
+        </div>
+      </div>
+
+      <!-- PR Card 3 -->
+      <div class="pr-card pr-card-3">
+        <div class="pr-card-header">
+          <span>Card 3 — 継続・習慣化</span>
+        </div>
+        <div class="pr-card-body">
+          <div class="pr-card-hl">体の仕組みに働きかけるから、<br>続けることが大切です</div>
+          <div class="pr-card-copy">1日1粒、毎日続けるだけ。<br>2〜3ヶ月を目安に<br>飲み続けてみてください</div>
+          <div class="pr-card-copy" style="font-size:11px;color:#999;">※効果には個人差があります</div>
+          <div class="pr-card-illust">日めくりカレンダー or 1粒を手に持つ女性。「毎日少しずつ」の継続感。</div>
+          <div class="pr-card-hook">試してみたい→</div>
+        </div>
+      </div>
+
+      <!-- PR Card 4 -->
+      <div class="pr-card pr-card-4">
+        <div class="pr-card-header">
+          <span>Card 4 — CTA</span>
+          <span style="font-size:10px;background:#27ae60;padding:2px 6px;border-radius:4px;">✅ 価格確定</span>
+        </div>
+        <div class="pr-card-body">
+          <div class="pr-card-hl">まずはお試しから</div>
+          <div style="font-size:13px;background:#f0fff4;border:1px solid #b8f0d4;border-radius:6px;padding:8px 12px;color:#1a7a45;font-weight:700;margin:8px 0;">定期 初回 ¥980（税込）</div>
+          <div class="pr-card-copy" style="font-size:11px;color:#888;">
+            ・回数縛りなし<br>
+            ・30日返金保証あり<br>
+            　※初回解約時はパッケージ返送が条件
+          </div>
+          <div style="background:#1a1a2e;color:white;text-align:center;padding:8px;border-radius:6px;font-size:13px;font-weight:700;margin-top:10px;">▼ お試しはこちら ▼</div>
+          <div class="pr-card-illust" style="margin-top:8px;">商品パッケージ + CTAボタン。Card 1より小さめのパッケージ配置で余白確保。</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="alert">
+      <strong>⚠️ Card 4 発注前に必ず確認:</strong> 価格「定期 初回¥980（税込）」を最新数値に差し替えてから発注。「定期」の文言漏れ・旧価格はコンプライアンス違反。
+    </div>
+
+    <h3>デザインのポイント</h3>
+    <table>
+      <tbody>
+        <tr>
+          <td style="width:32px;text-align:center;font-size:18px;">1</td>
+          <td><strong>3タイプ共通。</strong> 結果カルーセルのタイプカラー（オレンジ/ブルー/グリーン）は引き継がない。中立的な暖色系でリセット。</td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-size:18px;">2</td>
+          <td><strong>Card 2が肝。</strong> 届出表示の内容を視覚化する。テキストだけだと伝わらない。成分名より「機能」のビジュアルを大きく。</td>
+        </tr>
+        <tr>
+          <td style="text-align:center;font-size:18px;">3</td>
+          <td><strong>Card 4の価格は必ず校正。</strong>「定期」文言の漏れ・旧価格はコンプライアンス違反。発注前に最終確認。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- =============== Winut実装情報 =============== -->
+  <div class="section">
+    <div class="section-label">Implementation</div>
+    <h2>Winut実装情報</h2>
+    <table>
+      <thead><tr><th>項目</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td>質問数</td><td>4問（Q1〜Q4）</td></tr>
+        <tr><td>選択肢数</td><td>Q1: 4択 ／ Q2: 4択 ／ Q3: 4択 ／ Q4: <strong>3択（要レイアウト調整）</strong></td></tr>
+        <tr><td>結果パターン数</td><td>3タイプ（かくれ内臓脂肪 ／ かくれ体脂肪 ／ 代謝スロー）</td></tr>
+        <tr><td>結果分岐</td><td>Q4のみ（NG-2準拠）</td></tr>
+        <tr><td>カルーセル枚数</td><td>結果4枚（×3タイプ = 12枚）+ PRカルーセル4枚（タイプ共通）= 合計16枚</td></tr>
+        <tr><td>PRカルーセル設定</td><td>結果カルーセルに続けて設定（タイプ3種すべてに同一PRを接続）</td></tr>
+        <tr><td>入力方式</td><td>全問ボタン選択</td></tr>
+        <tr><td>所要時間</td><td>約30秒</td></tr>
+      </tbody>
+    </table>
+    <div class="alert">
+      <strong>デザイン上の注意:</strong> Q4のみ3択。通常4択レイアウトと異なるため、3ボタンで違和感のない配置を設計すること。
+    </div>
+    <div class="good">
+      <strong>実装は診断デザインと同時。</strong> PRカルーセルだけ先行はNG（診断との接続整合性が崩れる）。デザイン完成待ちの間に価格確認 + Winut登録準備を完了させておく。
+    </div>
+  </div>
+
+  <!-- =============== 実装プラン =============== -->
+  <div class="section">
+    <div class="section-label">Timeline</div>
+    <h2>実装プラン</h2>
+    <table>
+      <thead><tr><th>Step</th><th>内容</th><th>工数</th><th>状態</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>1</strong></td>
+          <td>デザイン制作（PU 6枚 + 表紙 2枚 + 設問 4枚 + 結果 12枚 = 24枚）</td>
+          <td>3-4日</td>
+          <td>🔵 制作中</td>
+        </tr>
+        <tr>
+          <td><strong>2</strong></td>
+          <td>PRカルーセル デザイン発注（SLILIN F 4枚）— 依頼書確定済み</td>
+          <td>3-4日</td>
+          <td>📌 発注準備中</td>
+        </tr>
+        <tr>
+          <td><strong>3</strong></td>
+          <td>Winut登録・分岐設定（診断 + PRカルーセル接続）</td>
+          <td>0.5日</td>
+          <td>📌 TODO（Step 1完了後）</td>
+        </tr>
+        <tr>
+          <td><strong>4</strong></td>
+          <td>記事にPU設置・ABテスト設定</td>
+          <td>即日</td>
+          <td>📌 TODO</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="info">
+      Step 1（診断24枚）とStep 2（PR4枚）は並行で進めてOK。Winut登録（Step 3）は両方そろってから。
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
