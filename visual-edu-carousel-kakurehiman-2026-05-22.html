@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>教育カルーセル 隠れ肥満タイプ診断 全4枚</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #2a2a2a; padding: 40px 20px; font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif; }
+    .page-title { text-align: center; color: rgba(255,255,255,0.4); font-size: 12px; font-weight: 700; letter-spacing: .1em; margin-bottom: 8px; }
+    .page-sub { text-align: center; color: rgba(255,255,255,0.25); font-size: 11px; margin-bottom: 32px; }
+    .cards-wrap { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .card-unit { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .card-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.35); letter-spacing: .08em; }
+
+    .frame { width: 341px; min-height: 512px; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+
+    /* ========== Card 1 ========== */
+    .c1 { background: #1a1a1a; border: 0.5px solid #333; }
+    .c1-hero { background: linear-gradient(160deg, #1a1a1a 0%, #2a1500 100%); padding: 20px 22px 16px; flex-shrink: 0; }
+    .c1-hero-label { font-size: 10px; color: rgba(255,180,80,0.7); font-weight: 700; letter-spacing: .1em; margin-bottom: 8px; }
+    .c1-hero-title { font-size: 15px; font-weight: 800; color: #fff; line-height: 1.5; }
+    .c1-body { flex: 1; padding: 20px 22px; display: flex; flex-direction: column; gap: 18px; }
+    .c1-check { display: flex; flex-direction: column; gap: 16px; }
+    .c1-item { display: flex; align-items: flex-start; gap: 12px; }
+    .c1-icon { width: 22px; height: 22px; background: #e05a00; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; flex-shrink: 0; margin-top: 2px; }
+    .c1-text { display: flex; flex-direction: column; gap: 2px; }
+    .c1-cause { font-size: 10px; color: rgba(255,255,255,0.45); font-weight: 600; }
+    .c1-effect { font-size: 16px; font-weight: 800; color: #ff7c30; line-height: 1.3; }
+    .c1-hook { margin-top: auto; text-align: right; font-size: 12px; font-weight: 700; color: rgba(255,130,50,0.8); padding-top: 12px; border-top: 1px solid #333; }
+
+    /* ========== Card 2 ========== */
+    .c2 { background: #fdf5ec; border: 0.5px solid #f0d9b8; }
+    .c2-hero { background: linear-gradient(160deg, #f7b733 0%, #fc4a1a 100%); padding: 18px 20px 16px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .c2-hero-deco { position: absolute; top: -16px; right: -16px; width: 70px; height: 70px; background: rgba(255,255,255,0.15); border-radius: 50%; }
+    .c2-label { font-size: 10px; color: rgba(255,255,255,0.8); font-weight: 700; letter-spacing: .08em; margin-bottom: 4px; }
+    .c2-tsumari { font-size: 14px; font-weight: 800; color: white; font-style: italic; margin-bottom: 4px; }
+    .c2-title { font-size: 16px; font-weight: 800; color: white; line-height: 1.4; }
+    .c2-body { flex: 1; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+    .c2-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .c2-col { background: white; border-radius: 10px; border: 1px solid #f0d9b8; padding: 14px 10px; text-align: center; display: flex; flex-direction: column; gap: 8px; }
+    .c2-col-icon { font-size: 28px; }
+    .c2-col-label { font-size: 12px; font-weight: 800; color: #c85a00; line-height: 1.3; }
+    .c2-conclusion { background: #fff5e6; border-radius: 10px; border: 1px solid #f0d9b8; padding: 12px 16px; text-align: center; }
+    .c2-conclusion-text { font-size: 18px; font-weight: 800; color: #c85a00; }
+    .c2-conclusion-sub { font-size: 11px; color: #999; margin-top: 2px; }
+    .c2-hook { text-align: right; font-size: 12px; font-weight: 700; color: #c85a00; padding-top: 10px; border-top: 1px solid #f0d9b8; margin-top: auto; }
+
+    /* ========== Card 3 ========== */
+    .c3 { background: #fdf8f3; border: 0.5px solid #f0d9b8; }
+    .c3-hero { background: linear-gradient(160deg, #d4622a 0%, #e8903a 100%); padding: 18px 20px 16px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .c3-hero-deco { position: absolute; top: -16px; right: -16px; width: 70px; height: 70px; background: rgba(255,255,255,0.12); border-radius: 50%; }
+    .c3-label { font-size: 10px; color: rgba(255,255,255,0.75); font-weight: 700; letter-spacing: .08em; margin-bottom: 6px; }
+    .c3-title { font-size: 18px; font-weight: 800; color: white; line-height: 1.4; }
+    .c3-body { flex: 1; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+    .c3-stat { background: white; border-radius: 10px; border: 1px solid #f0d9b8; padding: 14px 16px; display: flex; align-items: center; gap: 14px; }
+    .c3-stat-num { font-size: 30px; font-weight: 800; color: #d4622a; line-height: 1; flex-shrink: 0; }
+    .c3-stat-text { font-size: 12px; color: #555; font-weight: 600; line-height: 1.5; }
+    .c3-quote { background: #fff5e6; border-left: 3px solid #e8903a; border-radius: 0 8px 8px 0; padding: 12px 14px; }
+    .c3-quote-text { font-size: 13px; font-weight: 700; color: #333; line-height: 1.6; }
+    .c3-quote-text span { color: #d4622a; }
+    .c3-release { font-size: 13px; color: #555; line-height: 1.7; }
+    .c3-release strong { color: #1a1a1a; font-weight: 800; }
+    .c3-hook { text-align: right; font-size: 12px; font-weight: 700; color: #d4622a; padding-top: 10px; border-top: 1px solid #f0d9b8; margin-top: auto; }
+
+    /* ========== Card 4 ========== */
+    .c4 { background: #1a1a2e; border: 0.5px solid #2a2a4e; }
+    .c4-hero { background: linear-gradient(160deg, #1a1a2e 0%, #2e1a00 100%); padding: 20px 22px 16px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .c4-hero-deco { position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; background: rgba(255,130,50,0.08); border-radius: 50%; }
+    .c4-label { font-size: 10px; color: rgba(255,180,80,0.6); font-weight: 700; letter-spacing: .1em; margin-bottom: 6px; }
+    .c4-title { font-size: 20px; font-weight: 800; color: white; line-height: 1.4; }
+    .c4-title span { color: #ff9944; }
+    .c4-body { flex: 1; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+    .c4-approach { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,130,50,0.3); border-radius: 10px; padding: 14px 16px; }
+    .c4-approach-label { font-size: 10px; color: #ff9944; font-weight: 700; margin-bottom: 8px; letter-spacing: .08em; }
+    .c4-approach-text { font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.7; font-weight: 500; }
+    .c4-badge { display: flex; align-items: center; gap: 8px; background: rgba(255,130,50,0.12); border-radius: 8px; padding: 10px 14px; }
+    .c4-badge-icon { font-size: 18px; }
+    .c4-badge-text { font-size: 12px; color: rgba(255,255,255,0.7); font-weight: 600; line-height: 1.4; }
+    .c4-cta { margin-top: auto; background: linear-gradient(90deg, #e05a00, #ff7c30); border-radius: 10px; padding: 14px; text-align: center; }
+    .c4-cta-text { font-size: 14px; font-weight: 800; color: white; letter-spacing: .04em; }
+    .c4-cta-sub { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 3px; }
+  </style>
+</head>
+<body>
+
+<div class="page-title">教育カルーセル — 隠れ肥満タイプ診断 全4枚</div>
+<div class="page-sub">3タイプ共通 ｜ 結果カルーセル → 教育 → PRカルーセル（SLILIN F）</div>
+
+<div class="cards-wrap">
+
+  <!-- Card 1 -->
+  <div class="card-unit">
+    <div class="card-label">CARD 01</div>
+    <div class="frame c1">
+      <div class="c1-hero">
+        <div class="c1-hero-label">診断結果から見えてきたこと</div>
+        <div class="c1-hero-title">体型が変わりやすい人の体で<br>起きていること</div>
+      </div>
+      <div class="c1-body">
+        <div class="c1-check">
+          <div class="c1-item">
+            <div class="c1-icon">☑</div>
+            <div class="c1-text">
+              <span class="c1-cause">加齢による</span>
+              <span class="c1-effect">エネルギー代謝力の低下</span>
+            </div>
+          </div>
+          <div class="c1-item">
+            <div class="c1-icon">☑</div>
+            <div class="c1-text">
+              <span class="c1-cause">冷えによる</span>
+              <span class="c1-effect">血流の低下・体温低下</span>
+            </div>
+          </div>
+        </div>
+        <div class="c1-hook">だから何が大切なの？→</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="card-unit">
+    <div class="card-label">CARD 02</div>
+    <div class="frame c2">
+      <div class="c2-hero">
+        <div class="c2-hero-deco"></div>
+        <div class="c2-label">お腹の脂肪と体温の回復のために</div>
+        <div class="c2-tsumari">つまり</div>
+        <div class="c2-title">お腹の脂肪を減らし<br>体温を回復するには</div>
+      </div>
+      <div class="c2-body">
+        <div class="c2-cols">
+          <div class="c2-col">
+            <div class="c2-col-icon">🏃‍♀️</div>
+            <div class="c2-col-label">適度な運動</div>
+          </div>
+          <div class="c2-col">
+            <div class="c2-col-icon">🥗</div>
+            <div class="c2-col-label">栄養バランスの良い食事</div>
+          </div>
+        </div>
+        <div class="c2-conclusion">
+          <div class="c2-conclusion-text">が大切です。</div>
+          <div class="c2-conclusion-sub">でも、なかなか続けられないのが現実…</div>
+        </div>
+        <div class="c2-hook">でも、なかなか続かない？→</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="card-unit">
+    <div class="card-label">CARD 03</div>
+    <div class="frame c3">
+      <div class="c3-hero">
+        <div class="c3-hero-deco"></div>
+        <div class="c3-label">共感・現実の壁</div>
+        <div class="c3-title">年齢を重ねるほど、<br>同じ努力が通じなくなる。</div>
+      </div>
+      <div class="c3-body">
+        <div class="c3-stat">
+          <div class="c3-stat-num">-20%</div>
+          <div class="c3-stat-text">基礎代謝は30代で<br>10代より約20%低下<br><span style="font-size:10px;color:#aaa;">（厚生労働省データより）</span></div>
+        </div>
+        <div class="c3-quote">
+          <div class="c3-quote-text">「<span>前はこれで痩せてたのに</span>」<br>——その感覚は正しい。</div>
+        </div>
+        <div class="c3-release">
+          体が変わってきているのだから、当然のことです。<br>
+          <strong>あなたのせいじゃありません。</strong>
+        </div>
+        <div class="c3-hook">じゃあどうすれば？→</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="card-unit">
+    <div class="card-label">CARD 04</div>
+    <div class="frame c4">
+      <div class="c4-hero">
+        <div class="c4-hero-deco"></div>
+        <div class="c4-label">もう一つのアプローチ</div>
+        <div class="c4-title">運動・食事に、<br><span>もう一つの選択肢を。</span></div>
+      </div>
+      <div class="c4-body">
+        <div class="c4-approach">
+          <div class="c4-approach-label">APPROACH</div>
+          <div class="c4-approach-text">
+            体のエネルギー代謝や血流・体温に<br>
+            直接働きかける成分を、<br>
+            毎日の習慣に取り入れるという方法があります。
+          </div>
+        </div>
+        <div class="c4-badge">
+          <div class="c4-badge-icon">✅</div>
+          <div class="c4-badge-text">機能性表示食品として<br>科学的根拠のある成分</div>
+        </div>
+        <div class="c4-cta">
+          <div class="c4-cta-text">その方法とは？→</div>
+          <div class="c4-cta-sub">次のカードで詳しく見る</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
