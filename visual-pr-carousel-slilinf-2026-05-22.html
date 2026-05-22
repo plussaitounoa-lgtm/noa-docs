@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRカルーセル SLILIN F 全4枚</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #2a2a2a; padding: 40px 20px; font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif; }
+    .page-title { text-align: center; color: rgba(255,255,255,0.4); font-size: 12px; font-weight: 700; letter-spacing: .1em; margin-bottom: 8px; }
+    .page-sub { text-align: center; color: rgba(255,255,255,0.25); font-size: 11px; margin-bottom: 32px; }
+    .cards-wrap { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .card-unit { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .card-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.35); letter-spacing: .08em; }
+
+    .frame { width: 341px; min-height: 512px; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+
+    /* ========== Card 1：商品紹介 ========== */
+    .c1 { background: #0f0800; border: 0.5px solid #3a2000; }
+    .c1-hero {
+      background: linear-gradient(160deg, #1a0800 0%, #2e1200 60%, #1a0800 100%);
+      padding: 24px 22px 20px; flex-shrink: 0; position: relative; overflow: hidden;
+    }
+    .c1-hero-deco1 {
+      position: absolute; top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, rgba(255,100,20,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .c1-hero-deco2 {
+      position: absolute; bottom: -20px; left: -20px;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle, rgba(255,60,0,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .c1-label { font-size: 10px; color: rgba(255,200,100,0.6); font-weight: 700; letter-spacing: .12em; margin-bottom: 12px; }
+    .c1-product-name {
+      font-size: 32px; font-weight: 900; color: white; letter-spacing: .06em;
+      line-height: 1;
+    }
+    .c1-product-name span { color: #ff6b1a; }
+    .c1-product-read { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: .14em; margin-top: 4px; margin-bottom: 14px; }
+    .c1-badge {
+      display: inline-block; background: rgba(255,107,26,0.15); border: 1px solid rgba(255,107,26,0.4);
+      color: #ff9944; font-size: 10px; font-weight: 700; padding: 4px 12px; border-radius: 20px;
+      letter-spacing: .06em;
+    }
+    .c1-body { flex: 1; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+    .c1-tagline {
+      font-size: 16px; font-weight: 800; color: white; line-height: 1.6;
+      letter-spacing: .02em;
+    }
+    .c1-tagline span { color: #ff6b1a; }
+    .c1-sub { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+    .c1-img-mock {
+      flex: 1; background: rgba(255,107,26,0.06); border: 1px dashed rgba(255,107,26,0.2);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      min-height: 80px;
+    }
+    .c1-img-mock-text { font-size: 10px; color: rgba(255,255,255,0.2); text-align: center; line-height: 1.6; }
+    .c1-hook {
+      text-align: right; font-size: 12px; font-weight: 700; color: rgba(255,107,26,0.8);
+      padding-top: 12px; border-top: 1px solid rgba(255,107,26,0.15); margin-top: auto;
+    }
+
+    /* ========== Card 2：機能性成分 ========== */
+    .c2 { background: #fff8f2; border: 0.5px solid #f0d0b0; }
+    .c2-hero {
+      background: linear-gradient(135deg, #e05a00 0%, #ff7c30 50%, #ffaa44 100%);
+      padding: 18px 20px 16px; flex-shrink: 0; position: relative; overflow: hidden;
+    }
+    .c2-hero-deco { position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; background: rgba(255,255,255,0.12); border-radius: 50%; }
+    .c2-label { font-size: 10px; color: rgba(255,255,255,0.8); font-weight: 700; letter-spacing: .1em; margin-bottom: 4px; }
+    .c2-title { font-size: 16px; font-weight: 800; color: white; line-height: 1.4; }
+    .c2-body { flex: 1; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+    .c2-func { background: white; border-radius: 10px; border: 1px solid #f0d0b0; padding: 14px 14px; }
+    .c2-func-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .c2-func-num {
+      width: 22px; height: 22px; background: #e05a00; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; color: white; flex-shrink: 0;
+    }
+    .c2-func-ing { font-size: 10px; color: #999; font-weight: 600; }
+    .c2-func-main { font-size: 14px; font-weight: 800; color: #c85a00; line-height: 1.3; }
+    .c2-func-data { display: flex; align-items: center; gap: 10px; background: #fff5e6; border-radius: 8px; padding: 10px 12px; }
+    .c2-func-data-num { font-size: 24px; font-weight: 900; color: #e05a00; line-height: 1; }
+    .c2-func-data-num sup { font-size: 13px; vertical-align: super; }
+    .c2-func-data-text { font-size: 10px; color: #888; line-height: 1.5; }
+    .c2-func-thermo { display: flex; align-items: center; gap: 8px; background: #fff5e6; border-radius: 8px; padding: 10px 12px; }
+    .c2-func-thermo-before { background: #3a2080; border-radius: 6px; padding: 6px 10px; text-align: center; flex: 1; }
+    .c2-func-thermo-after { background: #c82000; border-radius: 6px; padding: 6px 10px; text-align: center; flex: 1; }
+    .c2-func-thermo-label { font-size: 9px; color: rgba(255,255,255,0.7); }
+    .c2-func-thermo-val { font-size: 11px; font-weight: 800; color: white; }
+    .c2-func-thermo-arrow { font-size: 16px; color: #e05a00; font-weight: 700; }
+    .c2-func-thermo-time { font-size: 9px; color: #aaa; text-align: center; margin-top: 4px; }
+    .c2-hook { text-align: right; font-size: 12px; font-weight: 700; color: #c85a00; padding-top: 10px; border-top: 1px solid #f0d0b0; margin-top: auto; }
+
+    /* ========== Card 3：6つの赤と黒 ========== */
+    .c3 { background: #1a0808; border: 0.5px solid #3a0808; }
+    .c3-hero {
+      flex-shrink: 0; display: flex; overflow: hidden;
+    }
+    .c3-hero-red {
+      flex: 1; background: linear-gradient(160deg, #c82000 0%, #e03000 100%);
+      padding: 18px 14px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .c3-hero-black {
+      flex: 1; background: linear-gradient(160deg, #1a1a1a 0%, #0a0a0a 100%);
+      padding: 18px 14px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .c3-hero-kanji { font-size: 36px; font-weight: 900; color: white; line-height: 1; }
+    .c3-hero-sub { font-size: 9px; color: rgba(255,255,255,0.5); letter-spacing: .08em; margin-top: 4px; }
+    .c3-label-bar {
+      background: rgba(255,255,255,0.05); padding: 8px 18px; text-align: center;
+      font-size: 10px; color: rgba(255,255,255,0.4); font-weight: 700; letter-spacing: .1em;
+      flex-shrink: 0;
+    }
+    .c3-body { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+    .c3-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .c3-item { background: rgba(255,255,255,0.04); border-radius: 8px; padding: 10px 10px; }
+    .c3-item-color { font-size: 9px; font-weight: 700; letter-spacing: .08em; margin-bottom: 4px; }
+    .c3-item-color.red { color: #ff4422; }
+    .c3-item-color.black { color: rgba(255,255,255,0.35); }
+    .c3-item-name { font-size: 12px; font-weight: 800; color: white; line-height: 1.3; }
+    .c3-item-comp { font-size: 9px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+    .c3-tagline { text-align: center; font-size: 11px; color: rgba(255,255,255,0.45); line-height: 1.6; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .c3-hook { text-align: right; font-size: 12px; font-weight: 700; color: rgba(255,100,50,0.7); padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: auto; }
+
+    /* ========== Card 4：CTA ========== */
+    .c4 { background: #0f0a00; border: 0.5px solid #3a2800; }
+    .c4-hero {
+      background: linear-gradient(160deg, #1a0f00 0%, #2e1800 100%);
+      padding: 20px 22px 18px; flex-shrink: 0; position: relative; overflow: hidden;
+    }
+    .c4-hero-glow {
+      position: absolute; top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, rgba(255,140,40,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .c4-label { font-size: 10px; color: rgba(255,180,80,0.5); font-weight: 700; letter-spacing: .12em; margin-bottom: 8px; }
+    .c4-title { font-size: 20px; font-weight: 800; color: white; line-height: 1.5; }
+    .c4-title span { color: #ff9944; }
+    .c4-body { flex: 1; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+    .c4-price-box {
+      background: linear-gradient(135deg, rgba(255,107,26,0.15) 0%, rgba(255,153,68,0.08) 100%);
+      border: 1px solid rgba(255,107,26,0.4); border-radius: 12px; padding: 18px 20px; text-align: center;
+    }
+    .c4-price-label { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 600; margin-bottom: 6px; }
+    .c4-price { font-size: 36px; font-weight: 900; color: #ff9944; line-height: 1; }
+    .c4-price sup { font-size: 18px; vertical-align: super; }
+    .c4-price-tax { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+    .c4-benefits { display: flex; flex-direction: column; gap: 8px; }
+    .c4-benefit { display: flex; align-items: center; gap: 8px; font-size: 12px; color: rgba(255,255,255,0.65); }
+    .c4-benefit-icon { font-size: 14px; flex-shrink: 0; }
+    .c4-note { font-size: 10px; color: rgba(255,255,255,0.25); line-height: 1.5; }
+    .c4-cta {
+      background: linear-gradient(90deg, #c85a00, #e05a00, #ff7c30);
+      border-radius: 12px; padding: 16px; text-align: center; margin-top: auto;
+    }
+    .c4-cta-text { font-size: 15px; font-weight: 800; color: white; letter-spacing: .04em; }
+    .c4-cta-sub { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 3px; }
+  </style>
+</head>
+<body>
+
+<div class="page-title">PRカルーセル — SLILIN F 全4枚</div>
+<div class="page-sub">3タイプ共通 ｜ 教育カルーセル → PRカルーセル → CTA（SLILIN F申し込み）</div>
+
+<div class="cards-wrap">
+
+  <!-- Card 1 -->
+  <div class="card-unit">
+    <div class="card-label">CARD 01</div>
+    <div class="frame c1">
+      <div class="c1-hero">
+        <div class="c1-hero-deco1"></div>
+        <div class="c1-hero-deco2"></div>
+        <div class="c1-label">体の仕組みから、アプローチする</div>
+        <div class="c1-product-name">SLILIN<span>F</span></div>
+        <div class="c1-product-read">スリリン ファイア</div>
+        <div class="c1-badge">機能性表示食品</div>
+      </div>
+      <div class="c1-body">
+        <div class="c1-tagline">飲むたびに上がる、<br><span>ワタシのカラダ。</span></div>
+        <div class="c1-sub">おなかの脂肪が気になる方に<br>選ばれている理由があります。</div>
+        <div class="c1-img-mock">
+          <div class="c1-img-mock-text">商品パッケージ<br>（大・中央配置）<br>暖色系グラデ背景</div>
+        </div>
+        <div class="c1-hook">その理由は？→</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="card-unit">
+    <div class="card-label">CARD 02</div>
+    <div class="frame c2">
+      <div class="c2-hero">
+        <div class="c2-hero-deco"></div>
+        <div class="c2-label">2つの機能性関与成分</div>
+        <div class="c2-title">2つの成分が<br>ダブルでアプローチ</div>
+      </div>
+      <div class="c2-body">
+
+        <!-- 成分① -->
+        <div class="c2-func">
+          <div class="c2-func-header">
+            <div class="c2-func-num">①</div>
+            <div class="c2-func-ing">ブラックジンジャー由来ポリメトキシフラボン</div>
+          </div>
+          <div class="c2-func-main">おなかの脂肪（内臓・皮下）<br>を減らす</div>
+          <div style="height:8px;"></div>
+          <div class="c2-func-data">
+            <div class="c2-func-data-num">-16.17<sup>cm²</sup></div>
+            <div class="c2-func-data-text">腹部全脂肪面積変化量<br>（摂取12週目）<br><span style="font-size:9px;color:#bbb;">※プラセボ比</span></div>
+          </div>
+        </div>
+
+        <!-- 成分② -->
+        <div class="c2-func">
+          <div class="c2-func-header">
+            <div class="c2-func-num">②</div>
+            <div class="c2-func-ing">アムラ由来エラグ酸</div>
+          </div>
+          <div class="c2-func-main">冷えが気になる女性の<br>血流を上げ、体温を回復する</div>
+          <div style="height:8px;"></div>
+          <div class="c2-func-thermo">
+            <div class="c2-func-thermo-before">
+              <div class="c2-func-thermo-label">摂取前</div>
+              <div class="c2-func-thermo-val">低体温</div>
+            </div>
+            <div class="c2-func-thermo-arrow">→</div>
+            <div class="c2-func-thermo-after">
+              <div class="c2-func-thermo-label">10分後</div>
+              <div class="c2-func-thermo-val">体温UP</div>
+            </div>
+          </div>
+          <div class="c2-func-thermo-time">サーモグラフィー（エラグ酸あり/なし比較）</div>
+        </div>
+
+        <div class="c2-hook">どう飲めばいいの？→</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="card-unit">
+    <div class="card-label">CARD 03</div>
+    <div class="frame c3">
+      <div class="c3-hero">
+        <div class="c3-hero-red">
+          <div class="c3-hero-kanji">赤</div>
+          <div class="c3-hero-sub">HEAT SOURCE</div>
+        </div>
+        <div class="c3-hero-black">
+          <div class="c3-hero-kanji">黒</div>
+          <div class="c3-hero-sub">BURN SOURCE</div>
+        </div>
+      </div>
+      <div class="c3-label-bar">ヒートサポート成分｜厳選植物性100%</div>
+      <div class="c3-body">
+        <div class="c3-grid">
+          <div class="c3-item">
+            <div class="c3-item-color red">赤</div>
+            <div class="c3-item-name">レッドジンジャー</div>
+            <div class="c3-item-comp">アントシアニン</div>
+          </div>
+          <div class="c3-item">
+            <div class="c3-item-color black">黒</div>
+            <div class="c3-item-name">ブラックジンジャー</div>
+            <div class="c3-item-comp">ポリメトキシフラボン</div>
+          </div>
+          <div class="c3-item">
+            <div class="c3-item-color red">赤</div>
+            <div class="c3-item-name">紅参</div>
+            <div class="c3-item-comp">人参サポニン</div>
+          </div>
+          <div class="c3-item">
+            <div class="c3-item-color black">黒</div>
+            <div class="c3-item-name">黒高麗人参</div>
+            <div class="c3-item-comp">凝縮人参サポニン</div>
+          </div>
+          <div class="c3-item">
+            <div class="c3-item-color red">赤</div>
+            <div class="c3-item-name">唐辛子</div>
+            <div class="c3-item-comp">カプサイシン</div>
+          </div>
+          <div class="c3-item">
+            <div class="c3-item-color black">黒</div>
+            <div class="c3-item-name">オーガニック黒酢</div>
+            <div class="c3-item-comp">D-アミノ酸</div>
+          </div>
+        </div>
+        <div class="c3-tagline">1日1粒、毎日続けるだけ。<br>2〜3ヶ月を目安にお飲みください。</div>
+        <div class="c3-hook">試してみたい→</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="card-unit">
+    <div class="card-label">CARD 04</div>
+    <div class="frame c4">
+      <div class="c4-hero">
+        <div class="c4-hero-glow"></div>
+        <div class="c4-label">診断を受けた方へ</div>
+        <div class="c4-title">まずは<br><span>お試しから。</span></div>
+      </div>
+      <div class="c4-body">
+        <div class="c4-price-box">
+          <div class="c4-price-label">定期 初回特別価格</div>
+          <div class="c4-price"><sup>¥</sup>980</div>
+          <div class="c4-price-tax">（税込）</div>
+        </div>
+        <div class="c4-benefits">
+          <div class="c4-benefit"><span class="c4-benefit-icon">✅</span> 回数縛りなし</div>
+          <div class="c4-benefit"><span class="c4-benefit-icon">✅</span> 30日返金保証あり</div>
+          <div class="c4-benefit"><span class="c4-benefit-icon">✅</span> 機能性表示食品</div>
+        </div>
+        <div class="c4-note">※返金保証は初回解約時にパッケージ返送が条件<br>※効果には個人差があります</div>
+        <div class="c4-cta">
+          <div class="c4-cta-text">▼ お試しはこちら ▼</div>
+          <div class="c4-cta-sub">SLILIN F（スリリンファイア）公式サイト</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
