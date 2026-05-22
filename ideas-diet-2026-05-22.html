@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ダイエット施策アイデアバンク 2026-05-22</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+    header p { color: #aaa; font-size: 14px; }
+    .status-banner { background: #1a2e1a; color: #7fffb0; font-size: 13px; padding: 10px 32px; display: flex; gap: 24px; flex-wrap: wrap; }
+    main { max-width: 1000px; margin: 40px auto; padding: 0 24px 80px; }
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-label { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; }
+    h2 { font-size: 19px; font-weight: 700; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 700; margin: 22px 0 10px; color: #333; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 9px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; }
+    td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; line-height: 1.6; }
+    tr:last-child td { border-bottom: none; }
+    .info  { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good  { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .warn  { background: #fff8f0; border-left: 3px solid #e67e22; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .idea  { background: #fdf4ff; border-left: 3px solid #9b59b6; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+
+    /* ステータスバッジ */
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; vertical-align: middle; margin-left: 8px; }
+    .badge-active   { background: #27ae60; color: white; }
+    .badge-plan     { background: #2c52b0; color: white; }
+    .badge-idea     { background: #9b59b6; color: white; }
+    .badge-task     { background: #f0f0f0; color: #555; font-size: 10px; }
+
+    /* アイデアカード */
+    .idea-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    @media (max-width: 700px) { .idea-grid { grid-template-columns: 1fr; } }
+    .idea-card { border-radius: 12px; border: 1.5px solid #e8e8e8; overflow: hidden; }
+    .idea-card-header { padding: 14px 18px; display: flex; justify-content: space-between; align-items: flex-start; }
+    .idea-card-title { font-size: 14px; font-weight: 700; line-height: 1.4; }
+    .idea-card-body { padding: 14px 18px; background: white; font-size: 13px; color: #555; line-height: 1.6; }
+    .idea-card-footer { padding: 10px 18px; background: #fafafa; border-top: 1px solid #f0f0f0; font-size: 12px; color: #888; }
+
+    .card-active   .idea-card-header { background: #f0fff4; }
+    .card-plan     .idea-card-header { background: #f0f4ff; }
+    .card-idea     .idea-card-header { background: #fdf4ff; }
+
+    /* フロー */
+    .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    .flow-step { background: #1a1a2e; color: white; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; }
+    .flow-step.light { background: #f0f4ff; color: #2c52b0; }
+    .flow-step.green { background: #f0fff4; color: #1a7a45; }
+    .flow-arrow { color: #bbb; font-size: 18px; }
+
+    /* インサイトリスト */
+    .insight-list { list-style: none; margin: 12px 0; }
+    .insight-list li { padding: 8px 0 8px 20px; position: relative; font-size: 14px; line-height: 1.6; border-bottom: 1px solid #f5f5f5; }
+    .insight-list li::before { content: '→'; position: absolute; left: 0; color: #27ae60; font-weight: 700; }
+    .insight-list li:last-child { border-bottom: none; }
+
+    /* 参考リソース */
+    .resource-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
+    .resource-item:last-child { border-bottom: none; }
+    .resource-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+    .resource-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .resource-desc { font-size: 12px; color: #888; line-height: 1.5; }
+    .resource-url { font-size: 11px; color: #2c52b0; word-break: break-all; margin-top: 4px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>ダイエット施策 アイデアバンク</h1>
+  <p>2026-05-22 更新 ｜ 医療ダイエット × LINE ファネル 施策アイデア集</p>
+</header>
+<div class="status-banner">
+  <span>進行中: 1本</span>
+  <span>計画中: 2本</span>
+  <span>アイデア: 2本</span>
+  <span>対象記事: BMI計算記事（koizumi-seikei.jp/obesity/diet-bmi/）</span>
+</div>
+
+<main>
+
+  <!-- 現在のメインファネル -->
+  <div class="section">
+    <div class="section-label">現在進行中</div>
+    <h2>メインファネル <span class="badge badge-active">進行中</span></h2>
+
+    <div class="flow">
+      <div class="flow-step light">BMI記事 流入</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step light">PU（友達追加）</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">隠れ肥満タイプ診断</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">結果カルーセル（3タイプ）</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step green">PRカルーセル → SLILIN F</div>
+    </div>
+
+    <table>
+      <tr><th>項目</th><th>内容</th></tr>
+      <tr><td>診断名</td><td>隠れ肥満タイプ診断（3タイプ：かくれ内臓脂肪 / かくれ体脂肪 / 代謝スロー）</td></tr>
+      <tr><td>CTA先</td><td>SLILIN F（スリリンファイア）定期 初回 ¥980（税込）</td></tr>
+      <tr><td>商品種別</td><td>機能性表示食品（直提携案件・レギュレーション有）</td></tr>
+      <tr><td>機能①</td><td>ブラックジンジャー由来ポリメトキシフラボン → おなかの脂肪を減らす（BMI 23以上30未満対象）</td></tr>
+      <tr><td>機能②</td><td>アムラ由来エラグ酸 → 冷えが気になる女性の血流を上げ体温を回復する</td></tr>
+      <tr><td>ターゲット</td><td>女性・20-50代（コア：35-42歳）</td></tr>
+      <tr><td>ステータス</td><td>デザイン依頼書完成・デザイン制作中（3-4日）→ 完成後 Winut 実装</td></tr>
+    </table>
+
+    <div class="warn">
+      <strong>⚠️ 構造上の課題：</strong> SLILIN F機能①（脂肪を減らす）はBMI 23以上が対象。BMI記事読者の多数派は女性20-40代でBMI 20-22台が中心。<br>
+      → 機能②（冷え×体温回復）を主軸にしたストーリーラインで BMI 23未満ユーザーにも訴求する設計が必要。
+    </div>
+  </div>
+
+  <!-- 追加診断アイデア -->
+  <div class="section">
+    <div class="section-label">追加診断アイデア（同ファネル内）</div>
+    <h2>診断の拡張案</h2>
+    <p>現在の隠れ肥満タイプ診断だけでは BMI 23未満ユーザーへの導線が弱い。以下の診断を追加することで SLILIN F への入口を増やす。</p>
+
+    <div class="idea-grid">
+
+      <div class="idea-card card-plan">
+        <div class="idea-card-header">
+          <div class="idea-card-title">冷えと体質タイプ診断</div>
+          <span class="badge badge-plan">計画中</span>
+        </div>
+        <div class="idea-card-body">
+          <strong>テーマ：</strong> 末端冷え / 内臓冷え / 冷え×代謝低下 の3タイプ分類<br><br>
+          <strong>なぜ必要：</strong> BMI 23未満（多数派）に機能②（体温回復）で自然につなぐ入口がない。冷え診断を作ることで BMI制約なしに SLILIN F を提示できる。<br><br>
+          <strong>設問軸：</strong> 手足の冷え・朝の体温・お腹の冷たさ・代謝感<br><br>
+          <strong>CTA：</strong> 機能②「体温を上げてカラダについた脂肪を落とす」へ自然につながる
+        </div>
+        <div class="idea-card-footer">優先度：最高 ｜ 参考：CMOユーザーダイブ分析 2026-05-22</div>
+      </div>
+
+      <div class="idea-card card-idea">
+        <div class="idea-card-header">
+          <div class="idea-card-title">基礎代謝チェック診断</div>
+          <span class="badge badge-idea">アイデア</span>
+        </div>
+        <div class="idea-card-body">
+          <strong>テーマ：</strong> 年齢・生活習慣・体温・運動頻度から「代謝年齢スコア」を算出<br><br>
+          <strong>ターゲット：</strong> 35-50代・年齢別BMI平均クエリ流入（ペルソナC：年齢で体型が変わった層）<br><br>
+          <strong>インサイト：</strong>「35歳すぎてからみるみる脂肪がついてきた」「代謝がガクッと落ちた」という声が多数<br><br>
+          <strong>CTA：</strong> 代謝を上げるアプローチとして SLILIN F を提示（機能②の体温回復文脈）
+        </div>
+        <div class="idea-card-footer">優先度：次点 ｜ 冷え診断のデータが出てから判断</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 別軸ファネルアイデア -->
+  <div class="section">
+    <div class="section-label">別軸 コンテンツ・導線アイデア</div>
+    <h2>新規ファネルアイデア</h2>
+    <p>隠れ肥満診断とは独立した別軸。将来的に設計・実装予定。</p>
+
+    <div class="idea-grid">
+
+      <div class="idea-card card-idea">
+        <div class="idea-card-header">
+          <div class="idea-card-title">食事管理 → サプリ 導線 <span class="badge badge-task">t92</span></div>
+          <span class="badge badge-idea">アイデア</span>
+        </div>
+        <div class="idea-card-body">
+          <strong>フロー：</strong> BMI×食事回数コンテンツ → 食事管理タイプ診断 → サプリ CTA<br><br>
+          <strong>ユーザー層：</strong> 食事管理を意識しているが続かない・方法がわからない人<br><br>
+          <strong>コンテンツ軸：</strong> 「自分に合った食事法」「PFCバランス」「食事回数と代謝」<br><br>
+          <strong>参考：</strong> YT Shorts「BMIと最適な食事回数〜自分に合った食事法が分かる〜」
+        </div>
+        <div class="idea-card-footer">
+          <a href="https://youtube.com/shorts/70MnBfU_WGE?si=GqouVLbEc9hh5LpM" target="_blank" style="color:#2c52b0;">参考動画を見る →</a>
+        </div>
+      </div>
+
+      <div class="idea-card card-idea">
+        <div class="idea-card-header">
+          <div class="idea-card-title">BMI別ダイエットアドバイス → LINE導線 <span class="badge badge-task">t94</span></div>
+          <span class="badge badge-idea">アイデア</span>
+        </div>
+        <div class="idea-card-body">
+          <strong>フロー：</strong> BMI別アドバイスコンテンツ → LINE登録 → 継続コンテンツ → CTA<br><br>
+          <strong>ユーザー層：</strong> BMIを調べてダイエットを意識している全層<br><br>
+          <strong>ポイント：</strong> BMI 25以上 / 22前後 / 20台 の3段階に悩みを細分化。どのBMIでもダイエット意識があれば刺さる汎用性の高い導線。<br><br>
+          <strong>参考：</strong> 実際に同構造でLINE公式アカウントへの誘導を行っているYouTubeクリエイターが存在（実証済み型）
+        </div>
+        <div class="idea-card-footer">
+          <a href="https://youtu.be/pKpV1PHiz6w?si=v1nu6YgW8ifPIius" target="_blank" style="color:#2c52b0;">参考動画を見る →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ユーザーインサイト -->
+  <div class="section">
+    <div class="section-label">ユーザーリサーチ（2026-05-22）</div>
+    <h2>BMI記事流入ユーザーのインサイト</h2>
+    <p>対象：女性・20-50代 ｜ 流入記事：koizumi-seikei.jp/obesity/diet-bmi/</p>
+
+    <h3>ペルソナ3分類</h3>
+    <table>
+      <tr><th>ペルソナ</th><th>年代</th><th>心理の核</th><th>SLILIN F相性</th></tr>
+      <tr>
+        <td><strong>A：確認したかっただけ</strong></td>
+        <td>20-30代前半</td>
+        <td>「自分は普通か」を数値で確かめたい。安心したら離脱する</td>
+        <td>低</td>
+      </tr>
+      <tr>
+        <td><strong>B：BMI標準なのに体型が気になる</strong></td>
+        <td>20-40代</td>
+        <td>数値と見た目のズレへのモヤモヤ。「隠れ〇〇」系の説明を求めている</td>
+        <td>中（隠れ肥満診断に親和性高）</td>
+      </tr>
+      <tr>
+        <td><strong>C：年齢で体型が変わった</strong></td>
+        <td>35-50代</td>
+        <td>代謝低下・冷えを感じている。「昔の自分に戻りたい」という意志</td>
+        <td><strong>高（SLILIN F機能②と直結）</strong></td>
+      </tr>
+    </table>
+
+    <h3>リアルワード（知恵袋・AllAbout等）</h3>
+    <ul class="insight-list">
+      <li>「BMIが19なのに、おなかにお肉があるし足も太い。数値的には痩せのエリアなんですけど信じられないです」</li>
+      <li>「体重は変わってないのに、ウエストが10cmも増えていた」</li>
+      <li>「30代前半まで食べても太らなかったのに、35歳すぎてからみるみる脂肪がついてきた」</li>
+      <li>「代謝がガクッと落ちますからねぇ。それまでダイエットなんて考えもしない体型だったのが、みるみるまに太りました」</li>
+      <li>「代謝が落ちたのかお腹ばかり出てしまって、痩せても凹まなくなりました」（50代女性）</li>
+      <li>「歳をとったらお腹って痩せないんですよね。ホルモンバランスもあるし……」（40代女性）</li>
+      <li>「運動も食事もがんばってるのに、なかなか結果が出ない」</li>
+      <li>「BMIは低いのに体脂肪率を測ると驚くほど高い」</li>
+    </ul>
+
+    <h3>PUコピー候補（CMO案）</h3>
+    <ul class="insight-list">
+      <li>「体重は普通なのに、お腹だけ出てる。それ、体脂肪のせいかも。」</li>
+      <li>「35歳から急に体型が変わった気がする人へ。」</li>
+      <li>「冷えやすいお腹、脂肪が落ちにくい体。つながっているかもしれない。」</li>
+      <li>「体重計の数字より、体脂肪率を見て。あなたの体型の答えはそっちにある。」</li>
+      <li>「運動してる。食事も気をつけてる。でも変わらない。もしかして体質のタイプが違う？」</li>
+    </ul>
+
+    <div class="good">
+      <strong>重要な発見：</strong><br>
+      「冷えと脂肪の関係」はほぼ全ユーザーが知らない。「内臓冷え → 代謝低下 → お腹脂肪」のロジックは大半に新情報。LINE診断のWow体験として機能する可能性が高い。
+    </div>
+  </div>
+
+  <!-- 参考リソース -->
+  <div class="section">
+    <div class="section-label">参考リソース</div>
+    <h2>リサーチ参考動画・チャンネル</h2>
+
+    <div class="resource-item">
+      <div class="resource-icon">▶</div>
+      <div>
+        <div class="resource-title">BMIと実際の見た目（2ch系まとめ動画）</div>
+        <div class="resource-desc">BMI標準〜低めでも体脂肪率が高いユーザーのリアルな声まとめ。「BMI正常なのに体型が気になる」ペルソナBの声が豊富。</div>
+        <div class="resource-url"><a href="https://youtu.be/K85gOeyJkrg?si=zeHKiEjTt1rUzOpf" target="_blank">https://youtu.be/K85gOeyJkrg</a></div>
+      </div>
+    </div>
+
+    <div class="resource-item">
+      <div class="resource-icon">▶</div>
+      <div>
+        <div class="resource-title">痩せるためにやるべきこと BMI別に</div>
+        <div class="resource-desc">BMI 25以上 / 22前後 / 20台 の3段階別アドバイス動画。末尾でLINE公式アカウントに誘導する構造あり。「BMI別コンテンツ→LINE登録」の実証事例。</div>
+        <div class="resource-url"><a href="https://youtu.be/pKpV1PHiz6w?si=v1nu6YgW8ifPIius" target="_blank">https://youtu.be/pKpV1PHiz6w</a></div>
+      </div>
+    </div>
+
+    <div class="resource-item">
+      <div class="resource-icon">▶</div>
+      <div>
+        <div class="resource-title">BMIと最適な食事回数〜自分に合った食事法が分かる〜（Shorts）</div>
+        <div class="resource-desc">食事管理→サプリ導線（t92）の参考。BMI×食事法のコンテンツ軸。</div>
+        <div class="resource-url"><a href="https://youtube.com/shorts/70MnBfU_WGE?si=GqouVLbEc9hh5LpM" target="_blank">https://youtube.com/shorts/70MnBfU_WGE</a></div>
+      </div>
+    </div>
+
+    <div class="resource-item">
+      <div class="resource-icon">📺</div>
+      <div>
+        <div class="resource-title">チャンネル：有益面白ガルガルチャンネル</div>
+        <div class="resource-desc">ダイエット・女性関連コンテンツ多数。動画内にユーザーコメントをまとめる形式。女性ユーザーのリアルな声収集に活用。</div>
+        <div class="resource-url"><a href="https://www.youtube.com/@2ch554" target="_blank">https://www.youtube.com/@2ch554</a></div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+</body>
+</html>
