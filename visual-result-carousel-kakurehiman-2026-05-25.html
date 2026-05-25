@@ -150,6 +150,23 @@
     .k4-cta { background: linear-gradient(90deg, #c85a00, #e05a00, #ff7c30); border-radius: 12px; padding: 16px; text-align: center; margin-top: auto; }
     .k4-cta-text { font-size: 14px; font-weight: 800; color: white; letter-spacing: .04em; }
     .k4-cta-sub { font-size: 10px; color: rgba(255,255,255,0.65); margin-top: 3px; }
+
+    /* ========== 既存カード参照枠 ========== */
+    .existing-frame { width: 341px; min-height: 512px; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; background: #d6eaf5; border: 2px dashed #8ec5e0; }
+    .existing-badge { background: #5fa8cc; color: white; font-size: 10px; font-weight: 700; text-align: center; padding: 6px; letter-spacing: .1em; }
+    .existing-body { flex: 1; padding: 24px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; }
+    .existing-bubble { background: #5fa8cc; color: white; font-size: 11px; font-weight: 700; border-radius: 20px; padding: 6px 16px; }
+    .existing-type { font-size: 28px; font-weight: 900; color: #2a6a8a; line-height: 1.2; }
+    .existing-sub { font-size: 13px; font-weight: 700; color: #2a6a8a; background: white; border-radius: 8px; padding: 8px 14px; line-height: 1.5; }
+    .existing-hook { font-size: 13px; font-weight: 800; color: #1a4a6a; }
+    .existing-note { font-size: 10px; color: #5fa8cc; margin-top: 8px; }
+
+    /* Card 2共通 — シーン枠 */
+    .scene-block { background: rgba(0,0,0,0.04); border-radius: 10px; padding: 12px 14px; margin-bottom: 4px; }
+    .scene-line { font-size: 13px; font-weight: 700; color: #333; line-height: 1.6; }
+    .scene-line::before { content: '「'; opacity: .5; }
+    .scene-line::after { content: '」'; opacity: .5; }
+    .scene-divider { height: 1px; background: rgba(0,0,0,0.08); margin: 8px 0; }
   </style>
 </head>
 <body>
@@ -164,21 +181,14 @@
 
   <div class="card-unit">
     <div class="card-label">CARD A-1</div>
-    <div class="frame a1">
-      <div class="a1-hero">
-        <div class="a1-hero-glow"></div>
-        <div class="a1-type-badge"><span class="a1-type-badge-text">診断結果</span></div>
-        <div class="a1-result-label">あなたのタイプは</div>
-        <div class="a1-type-name">かくれ<span>内臓脂肪</span>タイプ</div>
-      </div>
-      <div class="a1-body">
-        <div class="a1-scene">
-          <div class="a1-scene-quote">お腹の脂肪が気になる</div>
-          <div class="a1-scene-quote">食事に気をつけてるのに、<br>お腹だけ残る</div>
-        </div>
-        <div class="a1-divider"></div>
-        <div class="a1-sub">BMIは標準でも、お腹の奥には<br>気になる脂肪がたまっています。</div>
-        <div class="a1-hook">なぜそうなるの？→</div>
+    <div class="existing-frame">
+      <div class="existing-badge">既存デザイン（変更なし）</div>
+      <div class="existing-body">
+        <div class="existing-bubble">あなたの診断結果は…</div>
+        <div class="existing-type">かくれ<br>内臓脂肪タイプ</div>
+        <div class="existing-sub">ダイエットしても体型が変わらない<br>その理由、知っていますか？</div>
+        <div class="existing-hook">なぜそうなるの？ →</div>
+        <div class="existing-note">※水色背景・かわいいイラスト・既存コピーのまま</div>
       </div>
     </div>
   </div>
@@ -192,6 +202,11 @@
         <div class="a2-hl">BMIに出てこない脂肪が、<br>お腹にたまっている。</div>
       </div>
       <div class="a2-body">
+        <div class="scene-block">
+          <div class="scene-line">お腹の脂肪が気になる</div>
+          <div class="scene-divider"></div>
+          <div class="scene-line">食事に気をつけてるのに、お腹だけ残る</div>
+        </div>
         <div class="a2-text">
           内臓脂肪は体重・身長には反映されません。<br>
           加齢で代謝が落ちると、同じ食事でも<br>
@@ -215,23 +230,14 @@
 
   <div class="card-unit">
     <div class="card-label">CARD B-1</div>
-    <div class="frame b1">
-      <div class="b1-hero">
-        <div class="b1-hero-glow"></div>
-        <div class="b1-type-badge"><span class="b1-type-badge-text">診断結果</span></div>
-        <div class="b1-result-label">あなたのタイプは</div>
-        <div class="b1-type-name">かくれ<span>体脂肪</span>タイプ</div>
-      </div>
-      <div class="b1-body">
-        <div>
-          <div class="b1-scene-quote">鏡を見ても、<br>見て見ぬふりしてしまう</div>
-        </div>
-        <div>
-          <div class="b1-scene-quote">体重は落ちるのに、<br>見た目がすっきりしない</div>
-        </div>
-        <div class="b1-divider"></div>
-        <div class="b1-sub">体重計の数字には出てこない、<br>体組成の問題があります。</div>
-        <div class="b1-hook">なぜそうなるの？→</div>
+    <div class="existing-frame">
+      <div class="existing-badge">既存デザイン（変更なし）</div>
+      <div class="existing-body">
+        <div class="existing-bubble">あなたの診断結果は…</div>
+        <div class="existing-type">かくれ<br>体脂肪タイプ</div>
+        <div class="existing-sub">ダイエットしても体型が変わらない<br>その理由、知っていますか？</div>
+        <div class="existing-hook">なぜ体型が変わらないの？ →</div>
+        <div class="existing-note">※水色背景・かわいいイラスト・既存コピーのまま</div>
       </div>
     </div>
   </div>
@@ -245,6 +251,11 @@
         <div class="b2-hl">体重が減っても、<br>脂肪が減っているとは限らない。</div>
       </div>
       <div class="b2-body">
+        <div class="scene-block">
+          <div class="scene-line">鏡を見ても、見て見ぬふりしてしまう</div>
+          <div class="scene-divider"></div>
+          <div class="scene-line">体重は落ちるのに、見た目がすっきりしない</div>
+        </div>
         <div class="b2-text">
           食事を減らすと、脂肪より先に<br>
           <strong>筋肉が落ちます。</strong><br>
@@ -268,23 +279,14 @@
 
   <div class="card-unit">
     <div class="card-label">CARD C-1</div>
-    <div class="frame c1">
-      <div class="c1-hero">
-        <div class="c1-hero-glow"></div>
-        <div class="c1-type-badge"><span class="c1-type-badge-text">診断結果</span></div>
-        <div class="c1-result-label">あなたのタイプは</div>
-        <div class="c1-type-name"><span>代謝スロー</span>タイプ</div>
-      </div>
-      <div class="c1-body">
-        <div>
-          <div class="c1-scene-quote">手足の冷えが気になる</div>
-        </div>
-        <div>
-          <div class="c1-scene-quote">少ししか食べていないのに、<br>なぜか太る</div>
-        </div>
-        <div class="c1-divider"></div>
-        <div class="c1-sub">食べる量ではなく、<br>体が燃やせる量に差があります。</div>
-        <div class="c1-hook">なぜそうなるの？→</div>
+    <div class="existing-frame">
+      <div class="existing-badge">既存デザイン（変更なし）</div>
+      <div class="existing-body">
+        <div class="existing-bubble">あなたの診断結果は…</div>
+        <div class="existing-type">代謝スロー<br>タイプ</div>
+        <div class="existing-sub">食べていないのに太るのはなぜ？<br>その仕組みを知ろう</div>
+        <div class="existing-hook">なぜそうなるの？ →</div>
+        <div class="existing-note">※水色背景・かわいいイラスト・既存コピーのまま</div>
       </div>
     </div>
   </div>
@@ -298,6 +300,11 @@
         <div class="c2-hl">食べる量の問題じゃなく、<br>燃やす力の問題。</div>
       </div>
       <div class="c2-body">
+        <div class="scene-block">
+          <div class="scene-line">手足の冷えが気になる</div>
+          <div class="scene-divider"></div>
+          <div class="scene-line">少ししか食べていないのに、なぜか太る</div>
+        </div>
         <div class="c2-text">
           代謝が低いと、少ない食事でも<br>
           体が燃やしきれず<strong>溜め込んでしまいます。</strong><br>
