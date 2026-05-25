@@ -95,35 +95,18 @@
     .c2-func-thermo-time { font-size: 9px; color: #aaa; text-align: center; margin-top: 4px; }
     .c2-hook { text-align: right; font-size: 12px; font-weight: 700; color: #c85a00; padding-top: 10px; border-top: 1px solid #f0d0b0; margin-top: auto; }
 
-    /* ========== Card 3：6つの赤と黒 ========== */
+    /* ========== Card 3：変化の声 ========== */
     .c3 { background: #1a0808; border: 0.5px solid #3a0808; }
     .c3-hero {
-      flex-shrink: 0; display: flex; overflow: hidden;
+      background: linear-gradient(135deg, #c82000 0%, #e03000 100%);
+      padding: 20px 22px 18px; flex-shrink: 0;
     }
-    .c3-hero-red {
-      flex: 1; background: linear-gradient(160deg, #c82000 0%, #e03000 100%);
-      padding: 18px 14px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    }
-    .c3-hero-black {
-      flex: 1; background: linear-gradient(160deg, #1a1a1a 0%, #0a0a0a 100%);
-      padding: 18px 14px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    }
-    .c3-hero-kanji { font-size: 36px; font-weight: 900; color: white; line-height: 1; }
-    .c3-hero-sub { font-size: 9px; color: rgba(255,255,255,0.5); letter-spacing: .08em; margin-top: 4px; }
-    .c3-label-bar {
-      background: rgba(255,255,255,0.05); padding: 8px 18px; text-align: center;
-      font-size: 10px; color: rgba(255,255,255,0.4); font-weight: 700; letter-spacing: .1em;
-      flex-shrink: 0;
-    }
-    .c3-body { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
-    .c3-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .c3-item { background: rgba(255,255,255,0.04); border-radius: 8px; padding: 10px 10px; }
-    .c3-item-color { font-size: 9px; font-weight: 700; letter-spacing: .08em; margin-bottom: 4px; }
-    .c3-item-color.red { color: #ff4422; }
-    .c3-item-color.black { color: rgba(255,255,255,0.35); }
-    .c3-item-name { font-size: 12px; font-weight: 800; color: white; line-height: 1.3; }
-    .c3-item-comp { font-size: 9px; color: rgba(255,255,255,0.3); margin-top: 2px; }
-    .c3-tagline { text-align: center; font-size: 11px; color: rgba(255,255,255,0.45); line-height: 1.6; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .c3-hero-label { font-size: 10px; color: rgba(255,255,255,0.7); font-weight: 700; letter-spacing: .1em; margin-bottom: 6px; }
+    .c3-hero-title { font-size: 18px; font-weight: 800; color: white; line-height: 1.5; }
+    .c3-body { flex: 1; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; }
+    .c3-voice { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 14px; border-left: 3px solid rgba(255,80,40,0.5); }
+    .c3-voice-meta { font-size: 11px; color: #ff7755; font-weight: 700; margin-bottom: 6px; }
+    .c3-voice-text { font-size: 12px; color: rgba(255,255,255,0.75); line-height: 1.7; }
     .c3-hook { text-align: right; font-size: 12px; font-weight: 700; color: rgba(255,100,50,0.7); padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: auto; }
 
     /* ========== Card 4：CTA ========== */
@@ -153,6 +136,7 @@
     .c4-benefits { display: flex; flex-direction: column; gap: 8px; }
     .c4-benefit { display: flex; align-items: center; gap: 8px; font-size: 12px; color: rgba(255,255,255,0.65); }
     .c4-benefit-icon { font-size: 14px; flex-shrink: 0; }
+    .c4-reason { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.65); line-height: 1.7; }
     .c4-note { font-size: 10px; color: rgba(255,255,255,0.25); line-height: 1.5; }
     .c4-cta {
       background: linear-gradient(90deg, #c85a00, #e05a00, #ff7c30);
@@ -176,18 +160,18 @@
       <div class="c1-hero">
         <div class="c1-hero-deco1"></div>
         <div class="c1-hero-deco2"></div>
-        <div class="c1-label">体の仕組みから、アプローチする</div>
+        <div class="c1-label">体温から、代謝を変える</div>
         <div class="c1-product-name">SLILIN<span>F</span></div>
         <div class="c1-product-read">スリリン ファイア</div>
         <div class="c1-badge">機能性表示食品</div>
       </div>
       <div class="c1-body">
-        <div class="c1-tagline">飲むたびに上がる、<br><span>ワタシのカラダ。</span></div>
-        <div class="c1-sub">おなかの脂肪が気になる方に<br>選ばれている理由があります。</div>
+        <div class="c1-tagline">体温が上がると、<br><span>脂肪が動き出す。</span></div>
+        <div class="c1-sub">冷えと体脂肪、その両方に<br>機能性表示食品として同時アプローチ。</div>
         <div class="c1-img-mock">
           <div class="c1-img-mock-text">商品パッケージ<br>（大・中央配置）<br>暖色系グラデ背景</div>
         </div>
-        <div class="c1-hook">その理由は？→</div>
+        <div class="c1-hook">その成分とは？→</div>
       </div>
     </div>
   </div>
@@ -249,50 +233,23 @@
     <div class="card-label">CARD 03</div>
     <div class="frame c3">
       <div class="c3-hero">
-        <div class="c3-hero-red">
-          <div class="c3-hero-kanji">赤</div>
-          <div class="c3-hero-sub">HEAT SOURCE</div>
-        </div>
-        <div class="c3-hero-black">
-          <div class="c3-hero-kanji">黒</div>
-          <div class="c3-hero-sub">BURN SOURCE</div>
-        </div>
+        <div class="c3-hero-label">使った人の変化</div>
+        <div class="c3-hero-title">体温が変わると、<br>見た目が変わった。</div>
       </div>
-      <div class="c3-label-bar">ヒートサポート成分｜厳選植物性100%</div>
       <div class="c3-body">
-        <div class="c3-grid">
-          <div class="c3-item">
-            <div class="c3-item-color red">赤</div>
-            <div class="c3-item-name">レッドジンジャー</div>
-            <div class="c3-item-comp">アントシアニン</div>
-          </div>
-          <div class="c3-item">
-            <div class="c3-item-color black">黒</div>
-            <div class="c3-item-name">ブラックジンジャー</div>
-            <div class="c3-item-comp">ポリメトキシフラボン</div>
-          </div>
-          <div class="c3-item">
-            <div class="c3-item-color red">赤</div>
-            <div class="c3-item-name">紅参</div>
-            <div class="c3-item-comp">人参サポニン</div>
-          </div>
-          <div class="c3-item">
-            <div class="c3-item-color black">黒</div>
-            <div class="c3-item-name">黒高麗人参</div>
-            <div class="c3-item-comp">凝縮人参サポニン</div>
-          </div>
-          <div class="c3-item">
-            <div class="c3-item-color red">赤</div>
-            <div class="c3-item-name">唐辛子</div>
-            <div class="c3-item-comp">カプサイシン</div>
-          </div>
-          <div class="c3-item">
-            <div class="c3-item-color black">黒</div>
-            <div class="c3-item-name">オーガニック黒酢</div>
-            <div class="c3-item-comp">D-アミノ酸</div>
-          </div>
+        <!-- [要確認: 実際の口コミに差し替え] -->
+        <div class="c3-voice">
+          <div class="c3-voice-meta">★★★★★　30代・女性</div>
+          <div class="c3-voice-text">「体重は変わってないのに、ウエストがすっきりしてきた。体が温まりやすくなった気がします。」</div>
         </div>
-        <div class="c3-tagline">1日1粒、毎日続けるだけ。<br>2〜3ヶ月を目安にお飲みください。</div>
+        <div class="c3-voice">
+          <div class="c3-voice-meta">★★★★★　40代・女性</div>
+          <div class="c3-voice-text">「冷え性がずっと気になっていたのですが、3ヶ月続けたら体が軽くなってきました。」</div>
+        </div>
+        <div class="c3-voice">
+          <div class="c3-voice-meta">★★★★☆　30代・女性</div>
+          <div class="c3-voice-text">「お腹周りが気になっていましたが、少しすっきりしてきた感じがします。引き続き続けます。」</div>
+        </div>
         <div class="c3-hook">試してみたい→</div>
       </div>
     </div>
@@ -305,9 +262,10 @@
       <div class="c4-hero">
         <div class="c4-hero-glow"></div>
         <div class="c4-label">診断を受けた方へ</div>
-        <div class="c4-title">まずは<br><span>お試しから。</span></div>
+        <div class="c4-title">体温を変える、<br><span>最初の一歩。</span></div>
       </div>
       <div class="c4-body">
+        <div class="c4-reason">食事制限では見えなかった原因が、<br>体温にあるなら。変えられる。</div>
         <div class="c4-price-box">
           <div class="c4-price-label">定期 初回特別価格</div>
           <div class="c4-price"><sup>¥</sup>980</div>
