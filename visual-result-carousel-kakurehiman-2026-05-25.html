@@ -121,7 +121,23 @@
     .c2-point-text { font-size: 12px; color: #444; line-height: 1.5; font-weight: 600; }
     .c2-hook { text-align: right; font-size: 12px; font-weight: 700; color: #1a6a30; padding-top: 10px; border-top: 1px solid #b0dfc0; margin-top: auto; }
 
-    /* ========== 共通 Card 3・4 ========== */
+    /* ========== 共通 Card 3（感情共感） ========== */
+    .kc { background: #131010; border: 0.5px solid #2e2020; }
+    .kc-hero { background: linear-gradient(155deg, #131010 0%, #221818 100%); padding: 20px 22px 18px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .kc-hero-glow { position: absolute; top: -20px; right: -20px; width: 90px; height: 90px; background: radial-gradient(circle, rgba(255,180,100,0.07) 0%, transparent 70%); border-radius: 50%; }
+    .kc-label { font-size: 10px; color: rgba(255,200,150,0.4); font-weight: 700; letter-spacing: .12em; margin-bottom: 8px; }
+    .kc-hl { font-size: 20px; font-weight: 900; color: white; line-height: 1.4; }
+    .kc-hl span { color: rgba(255,200,150,0.8); }
+    .kc-body { flex: 1; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+    .kc-scene { background: rgba(255,255,255,0.04); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; border-left: 2px solid rgba(255,180,100,0.2); }
+    .kc-scene-line { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; font-weight: 500; }
+    .kc-scene-line::before { content: '「'; opacity: .5; }
+    .kc-scene-line::after { content: '」'; opacity: .5; }
+    .kc-text { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.85; }
+    .kc-text strong { color: rgba(255,255,255,0.8); font-weight: 700; }
+    .kc-hook { text-align: right; font-size: 12px; font-weight: 700; color: rgba(255,180,100,0.55); padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: auto; }
+
+    /* ========== 共通 Card 4・5 ========== */
     .k3 { background: #1a1000; border: 0.5px solid #3a2a00; }
     .k3-hero { background: linear-gradient(155deg, #1a1200 0%, #2e2000 100%); padding: 20px 22px 18px; flex-shrink: 0; position: relative; overflow: hidden; }
     .k3-hero-glow { position: absolute; top: -20px; right: -20px; width: 90px; height: 90px; background: radial-gradient(circle, rgba(255,200,60,0.1) 0%, transparent 70%); border-radius: 50%; }
@@ -172,7 +188,7 @@
 <body>
 
 <div class="page-title">結果カルーセル（統合版） — 隠れ肥満タイプ診断 全8枚</div>
-<div class="page-sub">タイプ別 2枚 × 3タイプ ＋ 共通 2枚 ｜ 教育カルーセルを統合</div>
+<div class="page-sub">タイプ別 2枚 × 3タイプ ＋ 共通 3枚 ｜ 教育カルーセルを統合 ｜ 計9枚</div>
 <div class="page-note">v3対応 ｜ 感情・シーン軸 ｜ 2026-05-25</div>
 
 <!-- ===== TYPE A ===== -->
@@ -323,11 +339,36 @@
 </div>
 
 <!-- ===== 共通 ===== -->
-<div class="section-label">共通（全タイプ） — Card 3・4</div>
+<div class="section-label">共通（全タイプ） — Card 3・4・5</div>
 <div class="cards-wrap">
 
+  <!-- 共通Card3：感情共感（追加） -->
   <div class="card-unit">
-    <div class="card-label">CARD 3（共通）</div>
+    <div class="card-label">CARD 3（共通）感情共感</div>
+    <div class="frame kc">
+      <div class="kc-hero">
+        <div class="kc-hero-glow"></div>
+        <div class="kc-label">気のせいじゃない</div>
+        <div class="kc-hl">なんとなく、<br><span>気になっている。</span></div>
+      </div>
+      <div class="kc-body">
+        <div class="kc-scene">
+          <div class="kc-scene-line">体重は普通なのに、なんかすっきりしない</div>
+          <div class="kc-scene-line">昔と同じ生活なのに、体型だけ変わってきた</div>
+          <div class="kc-scene-line">特に何もしてないのに、お腹周りが気になる</div>
+        </div>
+        <div class="kc-text">
+          そのモヤモヤ、<br>
+          <strong>放っておくと変わらないまま</strong>かもしれない。<br>
+          でも、原因がわかれば変えられる。
+        </div>
+        <div class="kc-hook">その原因とは？→</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-unit">
+    <div class="card-label">CARD 4（共通）ハンマー</div>
     <div class="frame k3">
       <div class="k3-hero">
         <div class="k3-hero-glow"></div>
@@ -349,7 +390,7 @@
   </div>
 
   <div class="card-unit">
-    <div class="card-label">CARD 4（共通）</div>
+    <div class="card-label">CARD 5（共通）リソミラ</div>
     <div class="frame k4">
       <div class="k4-hero">
         <div class="k4-hero-glow"></div>
