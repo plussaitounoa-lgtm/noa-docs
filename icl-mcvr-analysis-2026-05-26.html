@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ICL シナリオMCVR分析 2026-05-26</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header p { color: #aaa; font-size: 14px; }
+    main { max-width: 900px; margin: 40px auto; padding: 0 24px 60px; }
+
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; color: #333; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 8px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; }
+    tr:last-child td { border-bottom: none; }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    td.pct { text-align: right; font-weight: 600; }
+
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+    .green  { background: #f0fff4; color: #27ae60; }
+    .yellow { background: #fffbea; color: #b7860b; }
+    .red    { background: #fff0f0; color: #c0392b; }
+    .blue   { background: #e3f0ff; color: #1a4d9e; }
+    .gray   { background: #f0f0f0; color: #888; }
+
+    .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .alert  { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good   { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .info   { background: #e3f0ff; border-left: 3px solid #1a4d9e; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+    .kpi-card { background: #f7f7f7; border-radius: 8px; padding: 16px; text-align: center; }
+    .kpi-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+    .kpi-value { font-size: 22px; font-weight: 700; }
+    .kpi-note  { font-size: 11px; color: #aaa; margin-top: 2px; }
+    .kpi-bad  .kpi-value { color: #e74c3c; }
+    .kpi-ok   .kpi-value { color: #f39c12; }
+    .kpi-good .kpi-value { color: #27ae60; }
+    .kpi-blue .kpi-value { color: #1a4d9e; }
+
+    /* ファネル図 */
+    .funnel { display: flex; flex-direction: column; gap: 0; align-items: center; margin: 20px 0; }
+    .funnel-stage { width: 100%; max-width: 600px; }
+    .funnel-bar {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; border-radius: 8px; margin-bottom: 2px;
+      background: #e3f0ff;
+    }
+    .funnel-label { flex: 1; font-size: 14px; font-weight: 600; color: #1a1a2e; }
+    .funnel-count { font-size: 20px; font-weight: 700; color: #1a4d9e; min-width: 40px; text-align: right; }
+    .funnel-pct { font-size: 13px; color: #555; min-width: 48px; text-align: right; }
+    .funnel-arrow { text-align: center; color: #aaa; font-size: 13px; padding: 2px 0 4px; }
+    .funnel-drop { font-size: 11px; color: #e74c3c; font-weight: 600; }
+
+    .funnel-bar.dim { background: #f7f7f7; }
+    .funnel-bar.dim .funnel-count { color: #888; }
+    .funnel-bar.dim .funnel-label { color: #555; }
+    .funnel-bar.warn { background: #fff3e0; }
+    .funnel-bar.warn .funnel-count { color: #e65100; }
+    .funnel-bar.good-bg { background: #f0fff4; }
+    .funnel-bar.good-bg .funnel-count { color: #27ae60; }
+
+    .genre-badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 14px; background: #e3f0ff; color: #1a4d9e; }
+
+    footer { text-align: center; padding: 40px; color: #bbb; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>ICL シナリオ MCVR 分析</h1>
+  <p>2026-05-26 ／ データ: 友だちリスト（視力改善ラボ）5月分</p>
+</header>
+
+<main>
+
+  <!-- 概要 -->
+  <div class="section">
+    <div class="section-title">Overview</div>
+    <h2><span class="genre-badge">ICL</span> シナリオ各ステージの到達率（MCVR）</h2>
+    <p>ICL診断フローで友達追加したユーザーが、LINEシナリオの各カードステージにどこまで到達しているかを計測。5月分の友だちリスト（テストアカウント除く）17人を対象に分析。</p>
+    <div class="info">母数が17人のため率の振れ幅は大きい。傾向把握・仮説生成の用途で使用し、本判定は30人以上で行う。</div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card kpi-blue">
+        <div class="kpi-label">友達追加（5月計）</div>
+        <div class="kpi-value">17人</div>
+        <div class="kpi-note">テスト除く実ユーザー</div>
+      </div>
+      <div class="kpi-card kpi-ok">
+        <div class="kpi-label">診断完了率</div>
+        <div class="kpi-value">88%</div>
+        <div class="kpi-note">15 / 17人</div>
+      </div>
+      <div class="kpi-card kpi-bad">
+        <div class="kpi-label">ブロック率</div>
+        <div class="kpi-value">29%</div>
+        <div class="kpi-note">5 / 17人</div>
+      </div>
+      <div class="kpi-card kpi-bad">
+        <div class="kpi-label">MCV_PR到達率</div>
+        <div class="kpi-value">12%</div>
+        <div class="kpi-note">2 / 17人</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ファネル -->
+  <div class="section">
+    <div class="section-title">Funnel</div>
+    <h2>シナリオ到達ファネル</h2>
+
+    <div class="funnel">
+      <div class="funnel-stage">
+        <div class="funnel-bar">
+          <div class="funnel-label">① 友達追加</div>
+          <div class="funnel-count">17人</div>
+          <div class="funnel-pct">100%</div>
+        </div>
+        <div class="funnel-arrow">↓ <span class="funnel-drop">−2人（途中離脱1 / ブロック早期1）</span></div>
+
+        <div class="funnel-bar">
+          <div class="funnel-label">② 診断完了（finish）</div>
+          <div class="funnel-count">15人</div>
+          <div class="funnel-pct">88%</div>
+        </div>
+        <div class="funnel-arrow">↓ SM送信（セグメント分岐）: 15人</div>
+
+        <div class="funnel-bar warn">
+          <div class="funnel-label">③ 診断結果カード</div>
+          <div class="funnel-count">11人</div>
+          <div class="funnel-pct">65%</div>
+        </div>
+        <div class="funnel-arrow">↓ <span class="funnel-drop">−4人落ち（ブロック等）</span></div>
+
+        <div class="funnel-bar warn">
+          <div class="funnel-label">④ OCMカード（教育）</div>
+          <div class="funnel-count">5人</div>
+          <div class="funnel-pct">29%</div>
+        </div>
+        <div class="funnel-arrow">↓ <span class="funnel-drop">−6人落ち（最大ドロップ）</span></div>
+
+        <div class="funnel-bar dim">
+          <div class="funnel-label">⑤ MCV_PR（PRカード到達）</div>
+          <div class="funnel-count">2人</div>
+          <div class="funnel-pct">12%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ステージ間CVR -->
+  <div class="section">
+    <div class="section-title">Stage CVR</div>
+    <h2>ステージ間転換率</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ステージ</th>
+          <th>人数</th>
+          <th class="num">前ステージ比</th>
+          <th>判定</th>
+          <th>メモ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>友達追加 → 診断完了</td>
+          <td>17 → 15人</td>
+          <td class="pct">88%</td>
+          <td><span class="badge green">良好</span></td>
+          <td>step00のみで離脱1 / 早期ブロック1</td>
+        </tr>
+        <tr>
+          <td>診断完了 → 診断結果カード</td>
+          <td>15 → 11人</td>
+          <td class="pct">73%</td>
+          <td><span class="badge yellow">要観察</span></td>
+          <td>SM_コンタクト勢で診断カード未到達者あり（ブロック等）</td>
+        </tr>
+        <tr>
+          <td>診断結果カード → OCMカード</td>
+          <td>11 → 5人</td>
+          <td class="pct">45%</td>
+          <td><span class="badge red">最大ドロップ</span></td>
+          <td>ここが最大の落ちポイント。タイミング・コンテンツ要因か要検証</td>
+        </tr>
+        <tr>
+          <td>OCMカード → MCV_PR</td>
+          <td>5 → 2人</td>
+          <td class="pct">40%</td>
+          <td><span class="badge yellow">要観察</span></td>
+          <td>OCM到達者の4割がPRまで進んでいる。母数少のため要蓄積</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alert">
+      <strong>最大ドロップ：診断結果カード → OCMカード（45%）</strong><br>
+      11人のうち6人がここで離脱。配信タイミング・メッセージ内容・ブロックのどれが原因か未特定。母数が増えたら配信日程との照合を行う。
+    </div>
+  </div>
+
+  <!-- セグメント別 -->
+  <div class="section">
+    <div class="section-title">Segment</div>
+    <h2>セグメント分布（SM分岐）</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>セグメント</th>
+          <th>人数</th>
+          <th>MCV_PR到達</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>コンタクトレンズユーザー（SM_コンタクト）</td>
+          <td>5人</td>
+          <td>1人（Yuri）</td>
+          <td>診断カード到達はうち2人（診断結果→OCM落ちあり）</td>
+        </tr>
+        <tr>
+          <td>ICLユーザック（SM_ICLユーザック）</td>
+          <td>1人</td>
+          <td>0人</td>
+          <td>母数少すぎ、判断不可</td>
+        </tr>
+        <tr>
+          <td>待機（SM_待機）</td>
+          <td>9人</td>
+          <td>1人（セータ）</td>
+          <td>診断カード到達は8人。OCMまでは4人</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="info">セグメント間の差はまだ母数不足で判断できない。傾向として待機勢はステージ到達率が高い可能性あり。</p>
+  </div>
+
+  <!-- ブロック分析 -->
+  <div class="section">
+    <div class="section-title">Block Analysis</div>
+    <h2>ブロック状況</h2>
+    <div class="kpi-grid">
+      <div class="kpi-card kpi-bad">
+        <div class="kpi-label">ブロック数</div>
+        <div class="kpi-value">5人</div>
+        <div class="kpi-note">/ 17人</div>
+      </div>
+      <div class="kpi-card kpi-bad">
+        <div class="kpi-label">ブロック率</div>
+        <div class="kpi-value">29%</div>
+        <div class="kpi-note">高水準</div>
+      </div>
+    </div>
+    <div class="alert">
+      ブロック率29%は高い。5人全員が友達追加当日にブロックしており、診断フローの体験またはシナリオメッセージへの拒否反応が原因と推測。PU・診断UI・メッセージ初回の見直し余地あり。
+    </div>
+    <table>
+      <thead>
+        <tr><th>ブロック発生タイミング</th><th>人数</th><th>状況</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>診断途中（step03で離脱）</td><td>1人</td><td>4FLU7L4（5/1）</td></tr>
+        <tr><td>診断完了後・SM受信後</td><td>4人</td><td>4KKXA04・4JHJA07・4JF0U8E・4HH8A39</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 現状まとめ・次アクション -->
+  <div class="section">
+    <div class="section-title">Summary</div>
+    <h2>現状まとめと仮説</h2>
+    <h3>わかっていること</h3>
+    <ul style="font-size:14px;line-height:2;padding-left:20px;">
+      <li>診断完了率は88%と高い。診断フロー自体の離脱は少ない</li>
+      <li>ブロック率29%は高水準。友達追加当日ブロックが全件</li>
+      <li>最大ドロップは「診断結果カード → OCMカード（45%落ち）」</li>
+      <li>MCV_PR到達は2人（12%）。母数不足のため率としての意味は薄い</li>
+    </ul>
+
+    <h3>仮説</h3>
+    <div class="highlight">
+      ブロックの主因はシナリオメッセージの配信タイミング・頻度または内容への違和感。診断完了直後にSMが来ることへの温度感が合っていない可能性。
+    </div>
+    <div class="highlight">
+      診断結果→OCM落ちの主因はタイミング（配信間隔が長すぎてスルー）または診断結果メッセージへの満足で終了しているケース。OCMの到達確認が必要。
+    </div>
+
+    <h3>次アクション（母数が揃ったら）</h3>
+    <ul style="font-size:14px;line-height:2;padding-left:20px;">
+      <li>30人超えた段階でセグメント別CVRを再分析</li>
+      <li>ブロックユーザーの配信タイミング・シナリオ内容のレビュー</li>
+      <li>OCM未到達者の配信ログ確認（そもそも送られているか）</li>
+    </ul>
+  </div>
+
+</main>
+<footer>Noa Docs — ICL MCVR Analysis 2026-05-26</footer>
+</body>
+</html>
