@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRカルーセル 比較 — ダーク版 vs LP寄せ版</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #2a2a2a; padding: 40px 20px; font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif; }
+
+    .page-title { text-align: center; color: rgba(255,255,255,0.7); font-size: 16px; font-weight: 900; letter-spacing: .1em; margin-bottom: 6px; }
+    .page-sub { text-align: center; color: rgba(255,255,255,0.3); font-size: 11px; margin-bottom: 40px; }
+
+    /* 比較セクション */
+    .compare-block { margin-bottom: 60px; }
+    .compare-block-label {
+      text-align: center; color: rgba(255,255,255,0.4); font-size: 12px; font-weight: 700;
+      letter-spacing: .12em; margin-bottom: 14px; padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .compare-row { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+    .compare-col { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .compare-col-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em; padding: 4px 16px;
+      border-radius: 20px;
+    }
+    .label-dark { background: rgba(255,107,26,0.15); color: rgba(255,153,68,0.8); border: 1px solid rgba(255,107,26,0.3); }
+    .label-lp   { background: rgba(216,96,0,0.15); color: rgba(255,160,80,0.9); border: 1px solid rgba(216,96,0,0.3); }
+
+    /* ========== フレーム共通 ========== */
+    .frame { width: 341px; min-height: 512px; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+
+    /* ====================================================
+       ダーク版スタイル（.dk スコープ）
+       ==================================================== */
+    .dk .frame { background: #0d0800; border: 0.5px solid #3a1a00; box-shadow: none; }
+
+    /* Card 1 */
+    .dk .c1 { background: #0f0800; border: 0.5px solid #3a2000; }
+    .dk .c1-hero { background: linear-gradient(160deg, #1a0800 0%, #2e1200 60%, #1a0800 100%); padding: 24px 22px 20px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .dk .c1-hero-deco1 { position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(255,100,20,0.15) 0%, transparent 70%); border-radius: 50%; }
+    .dk .c1-hero-deco2 { position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px; background: radial-gradient(circle, rgba(255,60,0,0.08) 0%, transparent 70%); border-radius: 50%; }
+    .dk .c1-label { font-size: 10px; color: rgba(255,200,100,0.6); font-weight: 700; letter-spacing: .12em; margin-bottom: 12px; }
+    .dk .c1-product-name { font-size: 32px; font-weight: 900; color: white; letter-spacing: .06em; line-height: 1; }
+    .dk .c1-product-name span { color: #ff6b1a; }
+    .dk .c1-product-read { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: .14em; margin-top: 4px; margin-bottom: 14px; }
+    .dk .c1-badge { display: inline-block; background: rgba(255,107,26,0.15); border: 1px solid rgba(255,107,26,0.4); color: #ff9944; font-size: 10px; font-weight: 700; padding: 4px 12px; border-radius: 20px; letter-spacing: .06em; }
+    .dk .c1-body { flex: 1; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+    .dk .c1-img-mock { flex: 1; background: rgba(255,107,26,0.06); border: 1px dashed rgba(255,107,26,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; min-height: 80px; }
+    .dk .c1-img-mock-text { font-size: 10px; color: rgba(255,255,255,0.2); text-align: center; line-height: 1.6; }
+    .dk .c1-hook { text-align: right; font-size: 12px; font-weight: 700; color: rgba(255,107,26,0.8); padding-top: 12px; border-top: 1px solid rgba(255,107,26,0.15); margin-top: auto; }
+
+    /* Card 2 (ダーク・価格) */
+    .dk .c2 { background: #0d0a06; border: 0.5px solid #3a2800; }
+    .dk .c2-hero { background: linear-gradient(160deg, #1a0f03 0%, #2a1a00 60%, #1a0f03 100%); padding: 20px 22px 18px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .dk .c2-hero-deco { position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(255,180,60,0.15) 0%, transparent 70%); border-radius: 50%; }
+    .dk .c2-campaign-badge { position: absolute; top: 14px; left: 14px; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #ff8c00, #e05a00); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 9px; font-weight: 900; color: white; text-align: center; line-height: 1.3; transform: rotate(-12deg); box-shadow: 0 2px 8px rgba(200,80,0,0.4); }
+    .dk .c2-hero-inner { padding-left: 64px; }
+    .dk .c2-hero-label { font-size: 10px; color: rgba(255,200,100,0.6); font-weight: 700; letter-spacing: .1em; margin-bottom: 4px; }
+    .dk .c2-hero-name { font-size: 24px; font-weight: 900; color: white; letter-spacing: .04em; line-height: 1.1; }
+    .dk .c2-hero-name span { color: #ff6b1a; }
+    .dk .c2-hero-sub { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: .1em; margin-top: 4px; }
+    .dk .c2-body { flex: 1; padding: 18px 20px; display: flex; flex-direction: column; gap: 13px; }
+    .dk .c2-price-box { background: linear-gradient(135deg, rgba(255,107,26,0.15) 0%, rgba(255,153,68,0.08) 100%); border: 1.5px solid rgba(255,107,26,0.45); border-radius: 12px; padding: 16px 18px; text-align: center; }
+    .dk .c2-price-label { font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 700; letter-spacing: .08em; margin-bottom: 4px; }
+    .dk .c2-price-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px; }
+    .dk .c2-price-regular { font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: line-through; }
+    .dk .c2-off-badge { background: #c82000; color: white; font-size: 11px; font-weight: 900; padding: 2px 8px; border-radius: 4px; }
+    .dk .c2-price { font-size: 50px; font-weight: 900; color: #ff9944; line-height: 1; }
+    .dk .c2-price sup { font-size: 22px; vertical-align: super; }
+    .dk .c2-price-tax { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+    .dk .c2-guarantee { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,107,26,0.2); border-radius: 10px; overflow: hidden; }
+    .dk .c2-guarantee-header { background: rgba(255,107,26,0.12); padding: 7px 14px; text-align: center; font-size: 11px; color: rgba(255,180,100,0.8); font-weight: 700; letter-spacing: .06em; }
+    .dk .c2-guarantee-body { padding: 10px 14px; }
+    .dk .c2-guarantee-badge { display: block; background: linear-gradient(90deg, #c85a00, #ff7c30); color: white; text-align: center; font-size: 13px; font-weight: 900; padding: 6px; border-radius: 6px; margin-bottom: 6px; }
+    .dk .c2-guarantee-text { font-size: 11px; color: rgba(255,255,255,0.7); line-height: 1.65; text-align: center; }
+    .dk .c2-guarantee-note { font-size: 9px; color: rgba(255,255,255,0.3); margin-top: 4px; text-align: center; line-height: 1.5; }
+    .dk .c2-mini-benefits { display: flex; gap: 8px; }
+    .dk .c2-mini-benefit { flex: 1; background: rgba(255,255,255,0.04); border-radius: 8px; padding: 8px 4px; text-align: center; }
+    .dk .c2-mini-icon { font-size: 15px; margin-bottom: 3px; }
+    .dk .c2-mini-text { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.75); line-height: 1.4; }
+    .dk .c2-hook { text-align: right; font-size: 12px; font-weight: 700; color: rgba(255,107,26,0.8); padding-top: 10px; border-top: 1px solid rgba(255,107,26,0.15); margin-top: auto; }
+
+    /* Cards 3-4 ダーク共通 */
+    .dk .rx { background: #0d0800; border: 0.5px solid #3a1a00; }
+    .dk .rx-hero { padding: 20px 22px 18px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .dk .rx-deco { position: absolute; top: -30px; right: -30px; width: 100px; height: 100px; border-radius: 50%; }
+    .dk .rx-num { font-size: 10px; font-weight: 700; letter-spacing: .12em; margin-bottom: 2px; }
+    .dk .rx-ing { font-size: 11px; font-weight: 600; margin-bottom: 10px; }
+    .dk .rx-headline { font-size: 22px; font-weight: 900; color: white; line-height: 1.3; letter-spacing: .02em; }
+    .dk .rx-body { flex: 1; padding: 18px 20px; display: flex; flex-direction: column; gap: 13px; }
+    .dk .rx-hook { text-align: right; font-size: 12px; font-weight: 700; padding-top: 12px; border-top: 1px solid rgba(255,107,26,0.15); margin-top: auto; }
+    .dk .rx2-hero { background: linear-gradient(160deg, #1a0800 0%, #2e1200 60%, #1a0800 100%); }
+    .dk .rx2-deco { background: radial-gradient(circle, rgba(255,100,20,0.15) 0%, transparent 70%); }
+    .dk .rx2-num { color: rgba(255,153,68,0.65); }
+    .dk .rx2-ing { color: rgba(255,200,130,0.75); }
+    .dk .rx2-thermo { display: flex; align-items: center; gap: 10px; background: rgba(255,107,26,0.08); border: 1px solid rgba(255,107,26,0.2); border-radius: 10px; padding: 14px; }
+    .dk .rx2-thermo-before { background: #1a2255; border-radius: 8px; padding: 10px 12px; text-align: center; flex: 1; }
+    .dk .rx2-thermo-after { background: #c82000; border-radius: 8px; padding: 10px 12px; text-align: center; flex: 1; }
+    .dk .rx2-thermo-label { font-size: 9px; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+    .dk .rx2-thermo-val { font-size: 12px; font-weight: 800; color: white; }
+    .dk .rx2-thermo-arrow { font-size: 18px; color: #ff7c30; font-weight: 700; }
+    .dk .rx2-thermo-note { font-size: 9px; color: rgba(255,255,255,0.35); text-align: center; margin-top: -4px; }
+    .dk .rx2-stat { background: rgba(255,107,26,0.08); border: 1px solid rgba(255,107,26,0.2); border-radius: 10px; padding: 14px 16px; }
+    .dk .rx2-stat-main { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.85); line-height: 1.6; }
+    .dk .rx2-stat-main em { color: #ff9944; font-style: normal; font-size: 18px; }
+    .dk .rx2-hook { color: rgba(255,107,26,0.8); }
+    .dk .rx3-hero { background: linear-gradient(160deg, #0d0d0d 0%, #1a1500 60%, #0d0d0d 100%); }
+    .dk .rx3-deco { background: radial-gradient(circle, rgba(200,160,20,0.12) 0%, transparent 70%); }
+    .dk .rx3-num { color: rgba(200,180,80,0.65); }
+    .dk .rx3-ing { color: rgba(220,200,100,0.7); }
+    .dk .rx3-data-box { background: rgba(200,160,20,0.08); border: 1px solid rgba(200,160,20,0.25); border-radius: 12px; padding: 13px 18px; text-align: center; }
+    .dk .rx3-data-label { font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: .08em; margin-bottom: 5px; }
+    .dk .rx3-data-num { font-size: 38px; font-weight: 900; color: #d4a020; line-height: 1; }
+    .dk .rx3-data-unit { font-size: 13px; font-weight: 700; color: rgba(212,160,32,0.7); margin-left: 2px; }
+    .dk .rx3-data-note { font-size: 9px; color: rgba(255,255,255,0.3); margin-top: 5px; line-height: 1.5; }
+    .dk .rx3-hook { color: rgba(200,160,20,0.8); border-top-color: rgba(200,160,20,0.15) !important; }
+
+    /* Card 5 ダーク */
+    .dk .c5 { background: #1a0808; border: 0.5px solid #3a0808; }
+    .dk .c5-hero { background: linear-gradient(135deg, #c82000 0%, #e03000 100%); padding: 20px 22px 18px; flex-shrink: 0; }
+    .dk .c5-hero-label { font-size: 10px; color: rgba(255,255,255,0.7); font-weight: 700; letter-spacing: .1em; margin-bottom: 6px; }
+    .dk .c5-hero-title { font-size: 18px; font-weight: 800; color: white; line-height: 1.5; }
+    .dk .c5-body { flex: 1; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; }
+    .dk .c5-voice { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 14px; border-left: 3px solid rgba(255,80,40,0.5); }
+    .dk .c5-voice-meta { font-size: 11px; color: #ff7755; font-weight: 700; margin-bottom: 6px; }
+    .dk .c5-voice-text { font-size: 12px; color: rgba(255,255,255,0.75); line-height: 1.7; }
+    .dk .c5-hook { text-align: right; font-size: 12px; font-weight: 700; color: rgba(255,100,50,0.7); padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: auto; }
+
+    /* Card 6 ダーク */
+    .dk .c6 { background: #0f0800; border: 0.5px solid #3a2000; }
+    .dk .c6-hero { background: linear-gradient(160deg, #D85A00 0%, #FF8C30 60%, #D85A00 100%); padding: 14px 18px 12px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .dk .c6-star-l { position: absolute; left: 10px; top: 8px; font-size: 20px; color: rgba(255,255,200,0.45); }
+    .dk .c6-star-r { position: absolute; right: 10px; bottom: 8px; font-size: 20px; color: rgba(255,255,200,0.45); }
+    .dk .c6-ima-badge { display: inline-block; background: white; color: #D86000; font-size: 11px; font-weight: 900; padding: 3px 12px; border-radius: 20px; margin-bottom: 6px; }
+    .dk .c6-camp-title { font-size: 24px; font-weight: 900; color: white; line-height: 1.2; text-align: center; }
+    .dk .c6-camp-title em { font-style: normal; color: #fff100; font-size: 30px; }
+    .dk .c6-camp-sub { font-size: 13px; font-weight: 800; color: rgba(255,255,255,0.9); text-align: center; margin-top: 4px; }
+    .dk .c6-body { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 11px; }
+    .dk .c6-price-box { background: rgba(255,107,26,0.08); border: 1.5px solid rgba(255,107,26,0.3); border-radius: 12px; padding: 12px 16px; text-align: center; }
+    .dk .c6-price-label { font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 600; margin-bottom: 2px; }
+    .dk .c6-price-regular { font-size: 13px; color: rgba(255,255,255,0.35); text-decoration: line-through; }
+    .dk .c6-price { font-size: 44px; font-weight: 900; color: #ff9944; line-height: 1; margin-top: 2px; }
+    .dk .c6-price sup { font-size: 20px; vertical-align: super; }
+    .dk .c6-price-tax { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+    .dk .c6-saving { background: rgba(200,20,0,0.12); border: 1px solid rgba(200,20,0,0.25); border-radius: 10px; padding: 10px 14px; text-align: center; }
+    .dk .c6-saving-text { font-size: 13px; font-weight: 800; color: rgba(255,200,160,0.9); line-height: 1.6; }
+    .dk .c6-saving-text em { color: #ff9944; font-style: normal; font-size: 17px; }
+    .dk .c6-benefits { display: flex; gap: 6px; }
+    .dk .c6-benefit { flex: 1; background: rgba(255,255,255,0.04); border-radius: 8px; padding: 8px 4px; text-align: center; }
+    .dk .c6-benefit-icon { font-size: 14px; margin-bottom: 3px; }
+    .dk .c6-benefit-text { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.65); line-height: 1.4; }
+    .dk .c6-note { font-size: 10px; color: rgba(255,255,255,0.25); line-height: 1.5; }
+
+    /* ダーク共通CTA */
+    .dk .cta-orange { background: linear-gradient(90deg, #c85a00, #e05a00, #ff7c30); border-radius: 10px; padding: 13px 16px; text-align: center; font-size: 13px; font-weight: 800; color: white; letter-spacing: .04em; flex-shrink: 0; }
+    .dk .cta-orange-lg { background: linear-gradient(90deg, #c85a00, #e05a00, #ff7c30); border-radius: 12px; padding: 18px 16px; text-align: center; font-size: 15px; font-weight: 900; color: white; letter-spacing: .04em; flex-shrink: 0; }
+    .dk .cta-orange-lg-sub { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+
+    /* ====================================================
+       LP寄せ版スタイル（.lp スコープ）
+       ==================================================== */
+    .lp .frame { background: #FFFFFF; box-shadow: 0 4px 24px rgba(0,0,0,0.12); }
+    .lp .orange-band { background: linear-gradient(135deg, #D85A00 0%, #FF7C30 100%); padding: 10px 18px; flex-shrink: 0; }
+    .lp .orange-band-label { font-size: 10px; color: rgba(255,255,255,0.72); font-weight: 700; letter-spacing: .1em; margin-bottom: 3px; }
+    .lp .orange-band-title { font-size: 19px; font-weight: 900; color: white; line-height: 1.3; }
+    .lp .orange-band-title em { font-style: normal; color: #fff100; }
+    .lp .cta-green { background: linear-gradient(90deg, #1A8038, #28A848, #38C060); border-radius: 10px; padding: 14px 16px; text-align: center; font-size: 14px; font-weight: 900; color: white; letter-spacing: .04em; flex-shrink: 0; box-shadow: 0 4px 14px rgba(30,130,50,0.3); }
+    .lp .cta-green-sub { font-size: 10px; color: rgba(255,255,255,0.72); margin-top: 3px; font-weight: 400; }
+    .lp .card-hook { text-align: right; font-size: 12px; font-weight: 700; color: #D86000; padding-top: 10px; border-top: 1px solid rgba(216,96,0,0.15); margin-top: auto; }
+
+    /* Card 1 LP */
+    .lp .c1-hero { background: white; padding: 14px 16px 12px; flex-shrink: 0; position: relative; }
+    .lp .c1-img-area { background: linear-gradient(135deg, #FFF5EB 0%, #FFEEDD 100%); border-radius: 10px; height: 130px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; position: relative; overflow: hidden; }
+    .lp .c1-img-mock-text { font-size: 10px; color: #ccc; text-align: center; line-height: 1.6; }
+    .lp .c1-rakuten { position: absolute; left: 8px; top: 8px; width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #BF0000, #E50000); display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 7px; font-weight: 900; color: white; text-align: center; line-height: 1.5; box-shadow: 0 3px 8px rgba(190,0,0,0.3); }
+    .lp .c1-rakuten-num { font-size: 18px; font-weight: 900; line-height: 1; }
+    .lp .c1-doc { position: absolute; right: 8px; top: 8px; background: white; border: 1.5px solid #C89000; border-radius: 6px; padding: 4px 8px; text-align: center; box-shadow: 0 2px 6px rgba(200,144,0,0.2); }
+    .lp .c1-doc-text { font-size: 8px; font-weight: 800; color: #C89000; line-height: 1.5; }
+    .lp .c1-product { font-size: 28px; font-weight: 900; color: #222; letter-spacing: .04em; }
+    .lp .c1-product span { color: #D86000; }
+    .lp .c1-product-read { font-size: 10px; color: #999; letter-spacing: .12em; margin-top: 1px; margin-bottom: 8px; }
+    .lp .c1-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+    .lp .badge-orange { display: inline-flex; align-items: center; background: rgba(216,96,0,0.1); border: 1px solid rgba(216,96,0,0.35); color: #D86000; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px; }
+    .lp .badge-gold { display: inline-flex; align-items: center; background: white; border: 1.5px solid #C89000; color: #C89000; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px; }
+    .lp .c1-body { flex: 1; padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; background: #FFFAF5; }
+    .lp .c1-reasons { display: flex; flex-direction: column; gap: 7px; }
+    .lp .c1-reason { display: flex; align-items: flex-start; gap: 8px; }
+    .lp .c1-reason-check { color: #D86000; font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+    .lp .c1-reason-body { flex: 1; }
+    .lp .c1-reason-main { font-size: 13px; font-weight: 800; color: #222; line-height: 1.3; }
+    .lp .c1-reason-sub { font-size: 10px; color: #888; margin-top: 1px; }
+    .lp .c1-divider { height: 1px; background: rgba(216,96,0,0.1); }
+    .lp .c1-achievement { background: white; border: 1px solid rgba(216,96,0,0.2); border-radius: 8px; padding: 8px 12px; text-align: center; }
+    .lp .c1-achievement-num { font-size: 18px; font-weight: 900; color: #D86000; }
+    .lp .c1-achievement-text { font-size: 10px; color: #666; margin-top: 1px; }
+
+    /* Card 2 LP */
+    .lp .c2-body { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+    .lp .c2-price-section { background: #FFFAF5; border: 1.5px solid rgba(216,96,0,0.25); border-radius: 12px; padding: 14px 16px; text-align: center; }
+    .lp .c2-nihon-first { display: inline-block; background: #D86000; color: white; font-size: 11px; font-weight: 900; padding: 3px 12px; border-radius: 4px; margin-bottom: 8px; }
+    .lp .c2-price-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px; }
+    .lp .c2-regular-price { font-size: 14px; color: #bbb; text-decoration: line-through; }
+    .lp .c2-off-badge { background: #C82000; color: white; font-size: 11px; font-weight: 900; padding: 2px 8px; border-radius: 4px; }
+    .lp .c2-price { font-size: 54px; font-weight: 900; color: #D86000; line-height: 1; }
+    .lp .c2-price sup { font-size: 24px; vertical-align: super; }
+    .lp .c2-price-tax { font-size: 12px; color: #888; margin-top: 3px; }
+    .lp .c2-limit { display: inline-block; background: #C82000; color: white; font-size: 11px; font-weight: 800; padding: 3px 12px; border-radius: 4px; margin-top: 7px; }
+    .lp .c2-guarantee { background: white; border: 1px solid rgba(216,96,0,0.2); border-radius: 10px; overflow: hidden; }
+    .lp .c2-guarantee-header { background: rgba(216,96,0,0.08); padding: 6px 14px; text-align: center; font-size: 11px; color: #D86000; font-weight: 700; }
+    .lp .c2-guarantee-body { padding: 10px 14px; }
+    .lp .c2-guarantee-badge { display: block; background: linear-gradient(90deg, #D85A00, #FF7C30); color: white; text-align: center; font-size: 13px; font-weight: 900; padding: 6px; border-radius: 6px; margin-bottom: 6px; }
+    .lp .c2-guarantee-text { font-size: 11px; color: #555; line-height: 1.65; text-align: center; }
+    .lp .c2-guarantee-note { font-size: 9px; color: #bbb; margin-top: 4px; text-align: center; line-height: 1.5; }
+    .lp .c2-mini-benefits { display: flex; gap: 6px; }
+    .lp .c2-mini-benefit { flex: 1; background: #FFFAF5; border: 1px solid rgba(216,96,0,0.12); border-radius: 8px; padding: 8px 4px; text-align: center; }
+    .lp .c2-mini-icon { font-size: 15px; margin-bottom: 3px; }
+    .lp .c2-mini-text { font-size: 10px; font-weight: 700; color: #444; line-height: 1.4; }
+
+    /* Card 3 LP */
+    .lp .c3-body { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+    .lp .c3-ingredient-tag { display: inline-block; background: rgba(216,96,0,0.1); border: 1px solid rgba(216,96,0,0.3); color: #D86000; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
+    .lp .c3-thermo { display: flex; align-items: center; gap: 10px; background: #FFFAF5; border: 1px solid rgba(216,96,0,0.18); border-radius: 10px; padding: 12px; }
+    .lp .c3-thermo-before { background: #C8DCED; border-radius: 8px; padding: 10px 10px; text-align: center; flex: 1; }
+    .lp .c3-thermo-after { background: linear-gradient(135deg, #D85A00, #FF5500); border-radius: 8px; padding: 10px 10px; text-align: center; flex: 1; }
+    .lp .c3-thermo-label-b { font-size: 9px; color: #6688AA; margin-bottom: 3px; font-weight: 600; }
+    .lp .c3-thermo-val-b { font-size: 13px; font-weight: 900; color: #336688; }
+    .lp .c3-thermo-label-a { font-size: 9px; color: rgba(255,255,255,0.7); margin-bottom: 3px; font-weight: 600; }
+    .lp .c3-thermo-val-a { font-size: 13px; font-weight: 900; color: white; }
+    .lp .c3-thermo-arrow { font-size: 20px; color: #D86000; font-weight: 700; }
+    .lp .c3-thermo-note { font-size: 9px; color: #aaa; text-align: center; margin-top: -4px; }
+    .lp .c3-metabolism { background: linear-gradient(135deg, rgba(216,96,0,0.07), rgba(255,124,48,0.04)); border: 1px solid rgba(216,96,0,0.2); border-radius: 10px; padding: 14px 16px; }
+    .lp .c3-meta-main { font-size: 13px; font-weight: 700; color: #333; line-height: 1.7; }
+    .lp .c3-meta-main em { color: #D86000; font-style: normal; font-size: 20px; font-weight: 900; }
+    .lp .c3-meta-sub { font-size: 11px; color: #888; margin-top: 6px; line-height: 1.5; }
+
+    /* Card 4 LP */
+    .lp .c4-body { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+    .lp .c4-graph-box { background: #FFFAF5; border: 1px solid rgba(216,96,0,0.18); border-radius: 10px; padding: 12px 14px; }
+    .lp .c4-graph-label { font-size: 10px; color: #888; text-align: center; letter-spacing: .05em; margin-bottom: 10px; }
+    .lp .c4-graph-area { display: flex; align-items: flex-end; justify-content: center; gap: 20px; height: 72px; margin-bottom: 6px; }
+    .lp .c4-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .lp .c4-bar-placebo { width: 38px; height: 18px; background: #DDDDDD; border-radius: 4px 4px 0 0; }
+    .lp .c4-bar-active { width: 38px; height: 64px; background: linear-gradient(180deg, #FF8C40 0%, #D86000 100%); border-radius: 4px 4px 0 0; }
+    .lp .c4-bar-label { font-size: 9px; color: #999; }
+    .lp .c4-graph-result { text-align: center; }
+    .lp .c4-graph-num { font-size: 32px; font-weight: 900; color: #D86000; line-height: 1; }
+    .lp .c4-graph-unit { font-size: 13px; color: #C86000; }
+    .lp .c4-graph-note { font-size: 9px; color: #aaa; margin-top: 4px; line-height: 1.5; }
+    .lp .c4-both { background: rgba(216,96,0,0.07); border: 1px solid rgba(216,96,0,0.18); border-radius: 10px; padding: 10px 14px; text-align: center; }
+    .lp .c4-both-title { font-size: 13px; font-weight: 800; color: #333; line-height: 1.6; }
+    .lp .c4-both-title em { color: #D86000; font-style: normal; }
+    .lp .c4-both-sub { font-size: 11px; color: #888; margin-top: 4px; }
+    .lp .c4-ing-wrap { background: #FFFAF5; border-radius: 10px; padding: 10px 12px; }
+    .lp .c4-ing-title { font-size: 10px; color: #888; text-align: center; margin-bottom: 8px; letter-spacing: .06em; }
+    .lp .c4-ing-row { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+    .lp .c4-bubble-orange { background: linear-gradient(135deg, #D86000, #FF8040); color: white; font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 20px; }
+    .lp .c4-bubble-dark { background: #333; color: rgba(255,255,255,0.85); font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 20px; }
+
+    /* Card 5 LP */
+    .lp .c5 { background: #FFFAF5; }
+    .lp .c5-body { flex: 1; padding: 12px 14px; display: flex; flex-direction: column; gap: 9px; }
+    .lp .c5-voice { background: white; border-radius: 10px; padding: 12px; border-left: 3px solid #D86000; display: flex; gap: 10px; align-items: flex-start; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+    .lp .c5-voice-photo { width: 46px; height: 46px; border-radius: 50%; background: #F0D8C4; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; border: 2px solid rgba(216,96,0,0.2); }
+    .lp .c5-voice-content { flex: 1; }
+    .lp .c5-voice-meta { font-size: 11px; color: #D86000; font-weight: 800; margin-bottom: 4px; }
+    .lp .c5-voice-stars { color: #F5A623; font-size: 11px; margin-bottom: 3px; }
+    .lp .c5-voice-text { font-size: 11px; color: #444; line-height: 1.65; }
+    .lp .c5-hook { text-align: right; font-size: 12px; font-weight: 700; color: #D86000; padding-top: 8px; border-top: 1px solid rgba(216,96,0,0.12); margin-top: auto; }
+
+    /* Card 6 LP */
+    .lp .c6 { background: white; }
+    .lp .c6-hero { background: linear-gradient(160deg, #D85A00 0%, #FF8C30 60%, #D85A00 100%); padding: 14px 18px 12px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .lp .c6-star-l { position: absolute; left: 10px; top: 8px; font-size: 20px; color: rgba(255,255,200,0.45); }
+    .lp .c6-star-r { position: absolute; right: 10px; bottom: 8px; font-size: 20px; color: rgba(255,255,200,0.45); }
+    .lp .c6-ima-badge { display: inline-block; background: white; color: #D86000; font-size: 11px; font-weight: 900; padding: 3px 12px; border-radius: 20px; margin-bottom: 6px; }
+    .lp .c6-camp-title { font-size: 24px; font-weight: 900; color: white; line-height: 1.2; text-align: center; }
+    .lp .c6-camp-title em { font-style: normal; color: #fff100; font-size: 30px; }
+    .lp .c6-camp-sub { font-size: 13px; font-weight: 800; color: rgba(255,255,255,0.9); text-align: center; margin-top: 4px; }
+    .lp .c6-body { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 11px; }
+    .lp .c6-price-box { background: #FFFAF5; border: 1.5px solid rgba(216,96,0,0.28); border-radius: 12px; padding: 12px 16px; text-align: center; }
+    .lp .c6-price-label { font-size: 10px; color: #888; font-weight: 600; margin-bottom: 2px; }
+    .lp .c6-price-regular { font-size: 13px; color: #bbb; text-decoration: line-through; }
+    .lp .c6-price { font-size: 44px; font-weight: 900; color: #D86000; line-height: 1; margin-top: 2px; }
+    .lp .c6-price sup { font-size: 20px; vertical-align: super; }
+    .lp .c6-price-tax { font-size: 11px; color: #888; margin-top: 2px; }
+    .lp .c6-saving { background: rgba(200,20,0,0.06); border: 1px solid rgba(200,20,0,0.18); border-radius: 10px; padding: 10px 14px; text-align: center; }
+    .lp .c6-saving-text { font-size: 13px; font-weight: 800; color: #333; line-height: 1.6; }
+    .lp .c6-saving-text em { color: #D86000; font-style: normal; font-size: 17px; }
+    .lp .c6-benefits { display: flex; gap: 6px; }
+    .lp .c6-benefit { flex: 1; background: #FFFAF5; border: 1px solid rgba(216,96,0,0.12); border-radius: 8px; padding: 8px 4px; text-align: center; }
+    .lp .c6-benefit-icon { font-size: 14px; margin-bottom: 3px; }
+    .lp .c6-benefit-text { font-size: 10px; font-weight: 700; color: #444; line-height: 1.4; }
+    .lp .c6-note { font-size: 10px; color: #bbb; line-height: 1.5; }
+    .lp .cta-green-lg { background: linear-gradient(90deg, #1A8038, #28A848, #38C060); border-radius: 12px; padding: 18px 16px; text-align: center; font-size: 15px; font-weight: 900; color: white; letter-spacing: .04em; flex-shrink: 0; box-shadow: 0 4px 14px rgba(30,130,50,0.3); }
+    .lp .cta-green-lg-sub { font-size: 10px; color: rgba(255,255,255,0.72); margin-top: 4px; }
+  </style>
+</head>
+<body>
+
+<div class="page-title">PRカルーセル デザイン比較</div>
+<div class="page-sub">左：ダーク版（現行） ／ 右：LP寄せ版（shop.kirarithm.com トンマナ参考）</div>
+
+<!-- ========== CARD 01 ========== -->
+<div class="compare-block">
+  <div class="compare-block-label">CARD 01 — 商品紹介</div>
+  <div class="compare-row">
+
+    <!-- ダーク版 -->
+    <div class="compare-col">
+      <div class="compare-col-label label-dark">ダーク版（現行）</div>
+      <div class="dk">
+        <div class="frame c1">
+          <div class="c1-hero">
+            <div class="c1-hero-deco1"></div>
+            <div class="c1-hero-deco2"></div>
+            <div class="c1-label">体温から、代謝を変える</div>
+            <div class="c1-product-name">SLILIN<span>F</span></div>
+            <div class="c1-product-read">スリリン ファイア</div>
+            <div class="c1-badge">機能性表示食品</div>
+          </div>
+          <div class="c1-body">
+            <div class="c1-img-mock"><div class="c1-img-mock-text">写真<br>（キャッチビジュアル）</div></div>
+            <div style="background:rgba(255,107,26,0.08); border:1px solid rgba(255,107,26,0.25); border-radius:8px; padding:10px 14px;">
+              <div style="font-size:10px; font-weight:700; color:rgba(255,153,68,0.8); text-align:center; letter-spacing:.1em; margin-bottom:10px;">── SLILINが選ばれる理由 ──</div>
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <div style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:white;"><span style="color:#ff7c30;">✅</span> 血流UP × 体温UP</div>
+                <div style="height:1px; background:rgba(255,107,26,0.15);"></div>
+                <div style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:white;"><span style="color:#ff7c30;">✅</span> お腹の脂肪を減らす</div>
+                <div style="height:1px; background:rgba(255,107,26,0.15);"></div>
+                <div style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:white;"><span style="color:#ff7c30;">✅</span> 赤×黒 ヒートサポート成分</div>
+              </div>
+            </div>
+            <div class="c1-hook">詳しく見る→</div>
+            <div class="cta-orange">初回¥980で試してみる →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LP寄せ版 -->
+    <div class="compare-col">
+      <div class="compare-col-label label-lp">LP寄せ版（新）</div>
+      <div class="lp">
+        <div class="frame">
+          <div class="c1-hero">
+            <div class="c1-img-area">
+              <div class="c1-rakuten"><div>楽天</div><div class="c1-rakuten-num">3冠</div></div>
+              <div class="c1-doc"><div class="c1-doc-text">医師<br>監修</div></div>
+              <div class="c1-img-mock-text">写真<br>（商品ビジュアル）</div>
+            </div>
+            <div class="c1-product">SLILIN<span>F</span></div>
+            <div class="c1-product-read">スリリン ファイア</div>
+            <div class="c1-badges">
+              <div class="badge-orange">機能性表示食品</div>
+              <div class="badge-gold">医師監修</div>
+            </div>
+          </div>
+          <div class="orange-band">
+            <div class="orange-band-label">──── SLILINが選ばれる理由 ────</div>
+            <div class="orange-band-title"><em>脂肪を落とす</em>、体温で。</div>
+          </div>
+          <div class="c1-body">
+            <div class="c1-reasons">
+              <div class="c1-reason"><div class="c1-reason-check">✅</div><div class="c1-reason-body"><div class="c1-reason-main">血流UP × 体温UP</div><div class="c1-reason-sub">アムラ由来エラグ酸（機能性関与成分）</div></div></div>
+              <div class="c1-divider"></div>
+              <div class="c1-reason"><div class="c1-reason-check">✅</div><div class="c1-reason-body"><div class="c1-reason-main">お腹の脂肪を減らす</div><div class="c1-reason-sub">臨床試験で効果が確認されています</div></div></div>
+              <div class="c1-divider"></div>
+              <div class="c1-reason"><div class="c1-reason-check">✅</div><div class="c1-reason-body"><div class="c1-reason-main">内臓脂肪・皮下脂肪の両方に</div><div class="c1-reason-sub">赤×黒 ヒートサポート成分配合</div></div></div>
+            </div>
+            <div class="c1-achievement"><div class="c1-achievement-num">累計 2,570,000個以上</div><div class="c1-achievement-text">販売突破（※ブランド内定期実績）</div></div>
+            <div class="cta-green">最安値でお得に始める →<div class="cta-green-sub">初回¥980 ／ 送料無料</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== CARD 02 ========== -->
+<div class="compare-block">
+  <div class="compare-block-label">CARD 02 — 価格・特典</div>
+  <div class="compare-row">
+
+    <div class="compare-col">
+      <div class="compare-col-label label-dark">ダーク版（現行）</div>
+      <div class="dk">
+        <div class="frame c2">
+          <div class="c2-hero">
+            <div class="c2-hero-deco"></div>
+            <div class="c2-campaign-badge">キャンペーン<br>割引で</div>
+            <div class="c2-hero-inner">
+              <div class="c2-hero-label">SLILIN F — スリリンファイア</div>
+              <div class="c2-hero-name">続けやすい<br>料金体系</div>
+              <div class="c2-hero-sub">機能性表示食品</div>
+            </div>
+          </div>
+          <div class="c2-body">
+            <div class="c2-price-box">
+              <div class="c2-price-label">定期便 初回特別価格</div>
+              <div class="c2-price-row"><div class="c2-price-regular">通常 ¥6,480（税込）</div><div class="c2-off-badge">85%OFF</div></div>
+              <div class="c2-price"><sup>¥</sup>980</div>
+              <div class="c2-price-tax">税込・送料無料</div>
+            </div>
+            <div class="c2-guarantee">
+              <div class="c2-guarantee-header">万が一、合わなかった場合</div>
+              <div class="c2-guarantee-body">
+                <div class="c2-guarantee-badge">30日間全額返金保証</div>
+                <div class="c2-guarantee-text">支払った代金を<br>全額返金してもらえるので安心！</div>
+                <div class="c2-guarantee-note">※初回解約時にパッケージ返送が条件<br>※効果には個人差があります</div>
+              </div>
+            </div>
+            <div class="c2-mini-benefits">
+              <div class="c2-mini-benefit"><div class="c2-mini-icon">🚚</div><div class="c2-mini-text">送料<br>無料</div></div>
+              <div class="c2-mini-benefit"><div class="c2-mini-icon">🔓</div><div class="c2-mini-text">回数縛り<br>なし</div></div>
+              <div class="c2-mini-benefit"><div class="c2-mini-icon">🏅</div><div class="c2-mini-text">機能性<br>表示食品</div></div>
+            </div>
+            <div class="c2-hook">成分の実力を見る→</div>
+            <div class="cta-orange">初回¥980で試してみる →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-col">
+      <div class="compare-col-label label-lp">LP寄せ版（新）</div>
+      <div class="lp">
+        <div class="frame">
+          <div class="orange-band"><div class="orange-band-label">期間限定</div><div class="orange-band-title">初回限定 特別価格</div></div>
+          <div class="c2-body">
+            <div class="c2-price-section">
+              <div class="c2-nihon-first">日本初 ヒートサポート機能性食品</div>
+              <div class="c2-price-row"><div class="c2-regular-price">通常価格 ¥6,480（税込）</div><div class="c2-off-badge">85%OFF</div></div>
+              <div class="c2-price"><sup>¥</sup>980</div>
+              <div class="c2-price-tax">税込・送料無料</div>
+              <div class="c2-limit">毎月1,000名様限定！</div>
+            </div>
+            <div class="c2-guarantee">
+              <div class="c2-guarantee-header">万が一、合わなかった場合</div>
+              <div class="c2-guarantee-body">
+                <div class="c2-guarantee-badge">30日間の返金保証</div>
+                <div class="c2-guarantee-text">支払った代金を<br>全額返金してもらえるので安心！</div>
+                <div class="c2-guarantee-note">※初回解約時にパッケージ返送が条件<br>※効果には個人差があります</div>
+              </div>
+            </div>
+            <div class="c2-mini-benefits">
+              <div class="c2-mini-benefit"><div class="c2-mini-icon">🚚</div><div class="c2-mini-text">送料<br>無料</div></div>
+              <div class="c2-mini-benefit"><div class="c2-mini-icon">🔓</div><div class="c2-mini-text">回数縛り<br>なし</div></div>
+              <div class="c2-mini-benefit"><div class="c2-mini-icon">🏅</div><div class="c2-mini-text">機能性<br>表示食品</div></div>
+            </div>
+            <div class="card-hook">成分の実力を見る→</div>
+            <div class="cta-green">最安値でお得に始める →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== CARD 03 ========== -->
+<div class="compare-block">
+  <div class="compare-block-label">CARD 03 — 血流UP × 体温UP</div>
+  <div class="compare-row">
+
+    <div class="compare-col">
+      <div class="compare-col-label label-dark">ダーク版（現行）</div>
+      <div class="dk">
+        <div class="frame rx">
+          <div class="rx-hero rx2-hero"><div class="rx-deco rx2-deco"></div><div class="rx-num rx2-num">実力その1</div><div class="rx-ing rx2-ing">アムラ由来エラグ酸</div><div class="rx-headline">血流UP × 体温UP</div></div>
+          <div class="rx-body">
+            <div class="rx2-thermo"><div class="rx2-thermo-before"><div class="rx2-thermo-label">摂取前</div><div class="rx2-thermo-val">低体温</div></div><div class="rx2-thermo-arrow">→</div><div class="rx2-thermo-after"><div class="rx2-thermo-label">10分後</div><div class="rx2-thermo-val">体温UP</div></div></div>
+            <div class="rx2-thermo-note">サーモグラフィー（エラグ酸あり / なし比較）</div>
+            <div class="rx2-stat"><div class="rx2-stat-main">体温が<em>1℃</em>上がると、<br>基礎代謝は<em>13〜15%</em>UP。<br><span style="font-size:12px; color:rgba(255,255,255,0.5);">＝ 何もしなくても +180kcal<br>（ウォーキング約1時間分）</span></div></div>
+            <div class="rx-hook rx2-hook">次の実力を見る→</div>
+            <div class="cta-orange">初回¥980で試してみる →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-col">
+      <div class="compare-col-label label-lp">LP寄せ版（新）</div>
+      <div class="lp">
+        <div class="frame">
+          <div class="orange-band"><div class="orange-band-label">臨床試験で確認された</div><div class="orange-band-title">血流UP × <em>体温UP</em></div></div>
+          <div class="c3-body">
+            <div class="c3-ingredient-tag">アムラ由来エラグ酸（機能性関与成分）</div>
+            <div class="c3-thermo"><div class="c3-thermo-before"><div class="c3-thermo-label-b">摂取前</div><div class="c3-thermo-val-b">低体温</div></div><div class="c3-thermo-arrow">→</div><div class="c3-thermo-after"><div class="c3-thermo-label-a">10分後</div><div class="c3-thermo-val-a">体温UP</div></div></div>
+            <div class="c3-thermo-note">サーモグラフィー（エラグ酸あり / なし比較）</div>
+            <div class="c3-metabolism"><div class="c3-meta-main">体温が<em>1℃</em>上がると、<br>基礎代謝は<em>13〜15%</em>UP。</div><div class="c3-meta-sub">＝ 何もしなくても +180kcal<br>（ウォーキング約1時間分に相当）</div></div>
+            <div style="background:#FFFAF5; border-radius:10px; padding:10px 12px; border-left:3px solid #C89000;"><div style="font-size:9px; color:#C89000; font-weight:700; margin-bottom:4px;">👨‍⚕️ 医師コメント</div><div style="font-size:11px; color:#444; line-height:1.65;">「体温と代謝の関係は医学的に確認されており、体温管理はダイエットの重要な鍵です。」</div></div>
+            <div class="card-hook">次の実力を見る→</div>
+            <div class="cta-green">最安値でお得に始める →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== CARD 04 ========== -->
+<div class="compare-block">
+  <div class="compare-block-label">CARD 04 — 脂肪アプローチ</div>
+  <div class="compare-row">
+
+    <div class="compare-col">
+      <div class="compare-col-label label-dark">ダーク版（現行）</div>
+      <div class="dk">
+        <div class="frame rx" style="background:#0d0d0a; border-color:#2e2800;">
+          <div class="rx-hero rx3-hero"><div class="rx-deco rx3-deco"></div><div class="rx-num rx3-num">実力その2</div><div class="rx-ing rx3-ing">ブラックジンジャー由来</div><div class="rx-headline">お腹の脂肪を減らす</div></div>
+          <div class="rx-body">
+            <div class="rx3-data-box"><div class="rx3-data-label">腹部全脂肪面積 変化量（摂取12週目）</div><div><span class="rx3-data-num">-16.17</span><span class="rx3-data-unit">cm²</span></div><div class="rx3-data-note">※プラセボ対比（ブラックジンジャー由来ポリメトキシフラボン）</div></div>
+            <div style="background:rgba(200,160,20,0.07); border:1px solid rgba(200,160,20,0.2); border-radius:10px; padding:11px 14px;"><div style="font-size:12px; font-weight:800; color:rgba(255,255,255,0.85); text-align:center; line-height:1.6;">内臓脂肪・皮下脂肪、<br>両方にアプローチ。</div><div style="font-size:11px; color:rgba(255,255,255,0.4); text-align:center; margin-top:6px;">BMIが標準でもお腹が気になる人に。</div></div>
+            <div style="background:rgba(255,255,255,0.04); border-radius:10px; padding:11px 12px;"><div style="font-size:10px; font-weight:700; color:rgba(255,255,255,0.38); text-align:center; letter-spacing:.08em; margin-bottom:9px;">さらに6つの植物性成分がサポート</div><div style="display:flex; gap:8px;"><div style="flex:1; background:rgba(200,20,0,0.1); border:1px solid rgba(200,20,0,0.25); border-radius:8px; padding:8px 10px;"><div style="font-size:10px; font-weight:800; color:#ff5533; text-align:center; margin-bottom:6px;">🔴 赤</div><div style="display:flex; flex-direction:column; gap:4px; font-size:11px; color:rgba(255,255,255,0.78); font-weight:700;"><div>レッドジンジャー</div><div>紅参</div><div>唐辛子</div></div></div><div style="flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:8px 10px;"><div style="font-size:10px; font-weight:800; color:rgba(200,200,200,0.65); text-align:center; margin-bottom:6px;">⚫ 黒</div><div style="display:flex; flex-direction:column; gap:4px; font-size:11px; color:rgba(255,255,255,0.78); font-weight:700;"><div>ブラックジンジャー</div><div>黒高麗人参</div><div>黒酢</div></div></div></div></div>
+            <div style="font-size:9px; color:rgba(255,255,255,0.2); text-align:center;">※赤・黒の成分は機能性関与成分ではございません</div>
+            <div class="rx-hook rx3-hook">口コミを見る→</div>
+            <div class="cta-orange">初回¥980で試してみる →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-col">
+      <div class="compare-col-label label-lp">LP寄せ版（新）</div>
+      <div class="lp">
+        <div class="frame">
+          <div class="orange-band"><div class="orange-band-label">臨床試験で確認された</div><div class="orange-band-title"><em>脂肪を落とす</em>効果</div></div>
+          <div class="c4-body">
+            <div class="c4-graph-box">
+              <div class="c4-graph-label">腹部全脂肪面積 変化量（摂取12週目）</div>
+              <div class="c4-graph-area"><div class="c4-bar-wrap"><div class="c4-bar-placebo"></div><div class="c4-bar-label">プラセボ</div></div><div class="c4-bar-wrap"><div class="c4-bar-active"></div><div class="c4-bar-label">摂取群</div></div></div>
+              <div class="c4-graph-result"><span class="c4-graph-num">-16.17</span><span class="c4-graph-unit">cm²</span></div>
+              <div class="c4-graph-note">※ブラックジンジャー由来ポリメトキシフラボン　※プラセボ対比</div>
+            </div>
+            <div class="c4-both"><div class="c4-both-title"><em>内臓脂肪</em>と<em>皮下脂肪</em>、<br>両方にアプローチ。</div><div class="c4-both-sub">BMIが標準でもお腹が気になる人に。</div></div>
+            <div class="c4-ing-wrap">
+              <div class="c4-ing-title">ヒートサポート成分 全6種</div>
+              <div class="c4-ing-row"><div class="c4-bubble-orange">紅参</div><div class="c4-bubble-orange">唐辛子</div><div class="c4-bubble-orange">レッドジンジャー</div></div>
+              <div style="height:6px;"></div>
+              <div class="c4-ing-row"><div class="c4-bubble-dark">ブラックジンジャー</div><div class="c4-bubble-dark">黒高麗人参</div><div class="c4-bubble-dark">黒酢</div></div>
+            </div>
+            <div style="font-size:9px; color:#bbb; text-align:center;">※上記は機能性関与成分ではございません</div>
+            <div class="card-hook">口コミを見る→</div>
+            <div class="cta-green">最安値でお得に始める →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== CARD 05 ========== -->
+<div class="compare-block">
+  <div class="compare-block-label">CARD 05 — 口コミ</div>
+  <div class="compare-row">
+
+    <div class="compare-col">
+      <div class="compare-col-label label-dark">ダーク版（現行）</div>
+      <div class="dk">
+        <div class="frame c5">
+          <div class="c5-hero"><div class="c5-hero-label">使った人の変化</div><div class="c5-hero-title">体温が変わると、<br>見た目が変わった。</div></div>
+          <div class="c5-body">
+            <div class="c5-voice"><div class="c5-voice-meta">★★★★★　42歳・女性</div><div class="c5-voice-text">「気付いたらベルトの穴が以前と比べて5個以上も余裕が出てきました。」</div></div>
+            <div class="c5-voice"><div class="c5-voice-meta">★★★★★　38歳・女性</div><div class="c5-voice-text">「1ヶ月に1キロずつ減っていき7キロ減。服も太る前のが入った。」</div></div>
+            <div class="c5-voice"><div class="c5-voice-meta">★★★★　36歳・女性</div><div class="c5-voice-text">「実際に体重が減ってきたことから、効果があるのではないかと感じています。」</div></div>
+            <div class="c5-hook">試してみたい→</div>
+            <div class="cta-orange">初回¥980で試してみる →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-col">
+      <div class="compare-col-label label-lp">LP寄せ版（新）</div>
+      <div class="lp">
+        <div class="frame c5">
+          <div class="orange-band"><div class="orange-band-label">スリリンFを取り入れた方から</div><div class="orange-band-title"><em>嬉しい喜び</em>の声が続出！</div></div>
+          <div class="c5-body">
+            <div class="c5-voice"><div class="c5-voice-photo">👩</div><div class="c5-voice-content"><div class="c5-voice-stars">★★★★★</div><div class="c5-voice-meta">42歳・女性</div><div class="c5-voice-text">「気付いたらベルトの穴が以前と比べて5個以上も余裕が出てきました。」</div></div></div>
+            <div class="c5-voice"><div class="c5-voice-photo">👩</div><div class="c5-voice-content"><div class="c5-voice-stars">★★★★★</div><div class="c5-voice-meta">38歳・女性</div><div class="c5-voice-text">「1ヶ月に1キロずつ減っていき7キロ減。服も太る前のが入った。」</div></div></div>
+            <div class="c5-voice"><div class="c5-voice-photo">👩</div><div class="c5-voice-content"><div class="c5-voice-stars">★★★★☆</div><div class="c5-voice-meta">36歳・女性</div><div class="c5-voice-text">「実際に体重が減ってきたことから、効果があるのではないかと感じています。」</div></div></div>
+            <div class="c5-hook">試してみたい→</div>
+            <div class="cta-green">最安値でお得に始める →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== CARD 06 ========== -->
+<div class="compare-block">
+  <div class="compare-block-label">CARD 06 — CTA</div>
+  <div class="compare-row">
+
+    <div class="compare-col">
+      <div class="compare-col-label label-dark">ダーク版（現行）</div>
+      <div class="dk">
+        <div class="frame c6">
+          <div class="c6-hero"><div class="c6-star-l">✦</div><div class="c6-star-r">✦</div><div style="text-align:center;"><div class="c6-ima-badge">今だけ</div><div class="c6-camp-title">初回<em>85%OFF</em></div><div class="c6-camp-sub">✦ キャンペーン実施中！！ ✦</div></div></div>
+          <div class="c6-body">
+            <div class="c6-price-box"><div class="c6-price-label">定期便 初回特別価格</div><div class="c6-price-regular">通常価格 ¥6,480（税込）</div><div class="c6-price"><sup>¥</sup>980</div><div class="c6-price-tax">（税込・送料無料）</div></div>
+            <div class="c6-saving"><div class="c6-saving-text">通常価格より<em>¥5,500以上</em>お得に<br>始められます！</div></div>
+            <div class="c6-benefits"><div class="c6-benefit"><div class="c6-benefit-icon">🔓</div><div class="c6-benefit-text">回数縛り<br>なし</div></div><div class="c6-benefit"><div class="c6-benefit-icon">💰</div><div class="c6-benefit-text">30日<br>返金保証</div></div><div class="c6-benefit"><div class="c6-benefit-icon">🚚</div><div class="c6-benefit-text">送料<br>無料</div></div></div>
+            <div class="c6-note">※返金保証は初回解約時にパッケージ返送が条件<br>※効果には個人差があります</div>
+            <div class="cta-orange-lg">▼ 今すぐ¥980で始める ▼<div class="cta-orange-lg-sub">SLILIN F（スリリンファイア）公式サイト</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-col">
+      <div class="compare-col-label label-lp">LP寄せ版（新）</div>
+      <div class="lp">
+        <div class="frame c6">
+          <div class="c6-hero"><div class="c6-star-l">✦</div><div class="c6-star-r">✦</div><div style="text-align:center;"><div class="c6-ima-badge">今だけ</div><div class="c6-camp-title">初回<em>85%OFF</em></div><div class="c6-camp-sub">✦ キャンペーン実施中！！ ✦</div></div></div>
+          <div class="c6-body">
+            <div class="c6-price-box"><div class="c6-price-label">定期便 初回特別価格</div><div class="c6-price-regular">通常価格 ¥6,480（税込）</div><div class="c6-price"><sup>¥</sup>980</div><div class="c6-price-tax">（税込・送料無料）</div></div>
+            <div class="c6-saving"><div class="c6-saving-text">通常価格より<em>¥5,500以上</em>お得に<br>始められます！</div></div>
+            <div class="c6-benefits"><div class="c6-benefit"><div class="c6-benefit-icon">🔓</div><div class="c6-benefit-text">回数縛り<br>なし</div></div><div class="c6-benefit"><div class="c6-benefit-icon">💰</div><div class="c6-benefit-text">30日<br>返金保証</div></div><div class="c6-benefit"><div class="c6-benefit-icon">🚚</div><div class="c6-benefit-text">送料<br>無料</div></div></div>
+            <div class="c6-note">※返金保証は初回解約時にパッケージ返送が条件<br>※効果には個人差があります</div>
+            <div class="cta-green-lg">▼ 最安値でお得に始める ▼<div class="cta-green-lg-sub">SLILIN F（スリリンファイア）公式サイト</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
