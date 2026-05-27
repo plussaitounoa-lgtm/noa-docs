@@ -43,21 +43,22 @@
     /* ========== 共通：CTAボタン（緑・LP参考） ========== */
     .cta-green {
       background: linear-gradient(90deg, #1A8038, #28A848, #38C060);
-      border-radius: 10px; padding: 14px 16px;
-      text-align: center; font-size: 14px; font-weight: 900; color: white;
-      letter-spacing: .04em; cursor: pointer; flex-shrink: 0;
+      border-radius: 10px; overflow: hidden;
+      display: flex; flex-direction: column;
+      cursor: pointer; flex-shrink: 0;
       box-shadow: 0 4px 14px rgba(30,130,50,0.3);
     }
-    .cta-green-sub { font-size: 10px; color: rgba(255,255,255,0.72); margin-top: 3px; font-weight: 400; }
-
-    /* CTA上バッジ */
-    .cta-pre-badges { display: flex; gap: 6px; justify-content: center; }
+    .cta-pre-badges { display: flex; border-bottom: 1px solid rgba(255,255,255,0.25); }
     .cta-pre-badge {
-      flex: 1; background: linear-gradient(90deg, #1A8038, #28A848);
-      color: white; font-size: 10px; font-weight: 800;
-      padding: 5px 8px; border-radius: 20px; text-align: center;
-      letter-spacing: .02em;
+      flex: 1; text-align: center; font-size: 10px; font-weight: 700;
+      color: white; padding: 6px 4px; letter-spacing: .02em;
     }
+    .cta-pre-badge:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.25); }
+    .cta-main-text {
+      padding: 13px 16px; text-align: center; font-size: 14px;
+      font-weight: 900; color: white; letter-spacing: .04em;
+    }
+    .cta-green-sub { font-size: 10px; color: rgba(255,255,255,0.72); margin-top: 3px; font-weight: 400; }
 
     /* ========== 共通：フック ========== */
     .card-hook {
@@ -428,13 +429,15 @@
           <div class="c1-achievement-text">販売突破（※ブランド内定期実績）</div>
         </div>
 
-        <div class="cta-pre-badges">
-          <div class="cta-pre-badge">初回のみでの解約OK</div>
-          <div class="cta-pre-badge">全額返金保証付き</div>
-        </div>
         <div class="cta-green">
-          最安値でお得に始める →
-          <div class="cta-green-sub">初回¥980 ／ 送料無料</div>
+          <div class="cta-pre-badges">
+            <div class="cta-pre-badge">初回のみでの解約OK</div>
+            <div class="cta-pre-badge">全額返金保証付き</div>
+          </div>
+          <div class="cta-main-text">
+            最安値でお得に始める →
+            <div class="cta-green-sub">初回¥980 ／ 送料無料</div>
+          </div>
         </div>
       </div>
     </div>
@@ -483,11 +486,13 @@
         </div>
 
 
-        <div class="cta-pre-badges">
-          <div class="cta-pre-badge">初回のみでの解約OK</div>
-          <div class="cta-pre-badge">全額返金保証付き</div>
+        <div class="cta-green">
+          <div class="cta-pre-badges">
+            <div class="cta-pre-badge">初回のみでの解約OK</div>
+            <div class="cta-pre-badge">全額返金保証付き</div>
+          </div>
+          <div class="cta-main-text">最安値でお得に始める →</div>
         </div>
-        <div class="cta-green">最安値でお得に始める →</div>
       </div>
     </div>
   </div>
@@ -544,11 +549,13 @@
           </div>
         </div>
 
-        <div class="cta-pre-badges">
-          <div class="cta-pre-badge">初回のみでの解約OK</div>
-          <div class="cta-pre-badge">全額返金保証付き</div>
+        <div class="cta-green">
+          <div class="cta-pre-badges">
+            <div class="cta-pre-badge">初回のみでの解約OK</div>
+            <div class="cta-pre-badge">全額返金保証付き</div>
+          </div>
+          <div class="cta-main-text">最安値でお得に始める →</div>
         </div>
-        <div class="cta-green">最安値でお得に始める →</div>
       </div>
     </div>
   </div>
@@ -612,11 +619,13 @@
 
         <div style="font-size:9px; color:#bbb; text-align:center; margin-top:-4px;">※上記は機能性関与成分ではございません</div>
 
-        <div class="cta-pre-badges">
-          <div class="cta-pre-badge">初回のみでの解約OK</div>
-          <div class="cta-pre-badge">全額返金保証付き</div>
+        <div class="cta-green">
+          <div class="cta-pre-badges">
+            <div class="cta-pre-badge">初回のみでの解約OK</div>
+            <div class="cta-pre-badge">全額返金保証付き</div>
+          </div>
+          <div class="cta-main-text">最安値でお得に始める →</div>
         </div>
-        <div class="cta-green">最安値でお得に始める →</div>
       </div>
     </div>
   </div>
@@ -675,11 +684,13 @@
         </div>
 
         <div style="text-align:right; font-size:8px; color:#bbb;">※効果効能を保証するものではありません。</div>
-        <div class="cta-pre-badges">
-          <div class="cta-pre-badge">初回のみでの解約OK</div>
-          <div class="cta-pre-badge">全額返金保証付き</div>
+        <div class="cta-green">
+          <div class="cta-pre-badges">
+            <div class="cta-pre-badge">初回のみでの解約OK</div>
+            <div class="cta-pre-badge">全額返金保証付き</div>
+          </div>
+          <div class="cta-main-text">最安値でお得に始める →</div>
         </div>
-        <div class="cta-green">最安値でお得に始める →</div>
       </div>
     </div>
   </div>
@@ -736,13 +747,15 @@
 
         <div class="c6-note">※返金保証は初回解約時にパッケージ返送が条件<br>※効果には個人差があります</div>
 
-        <div class="cta-pre-badges">
-          <div class="cta-pre-badge">初回のみでの解約OK</div>
-          <div class="cta-pre-badge">全額返金保証付き</div>
-        </div>
-        <div class="cta-green" style="padding:18px 16px; font-size:15px; border-radius:12px;">
-          最安値でお得に始める →
-          <div class="cta-green-sub">SLILIN F（スリリンファイア）公式サイト</div>
+        <div class="cta-green" style="border-radius:12px;">
+          <div class="cta-pre-badges">
+            <div class="cta-pre-badge">初回のみでの解約OK</div>
+            <div class="cta-pre-badge">全額返金保証付き</div>
+          </div>
+          <div class="cta-main-text" style="padding:17px 16px; font-size:15px;">
+            最安値でお得に始める →
+            <div class="cta-green-sub">SLILIN F（スリリンファイア）公式サイト</div>
+          </div>
         </div>
       </div>
     </div>
