@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRカルーセル SLILIN F — LP寄せ版 全6枚</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #EDE0D4;
+      padding: 40px 20px;
+      font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+    }
+    .page-title {
+      text-align: center; color: #888; font-size: 12px; font-weight: 700;
+      letter-spacing: .1em; margin-bottom: 6px;
+    }
+    .page-sub { text-align: center; color: #aaa; font-size: 11px; margin-bottom: 32px; }
+    .cards-wrap { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .card-unit { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .card-label { font-size: 11px; font-weight: 700; color: #999; letter-spacing: .08em; }
+
+    .frame {
+      width: 341px; min-height: 512px; border-radius: 16px; overflow: hidden;
+      display: flex; flex-direction: column; background: #FFFFFF;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    }
+
+    /* ========== 共通：オレンジ帯（LPのセクション見出し風） ========== */
+    .orange-band {
+      background: linear-gradient(135deg, #D85A00 0%, #FF7C30 100%);
+      padding: 10px 18px; flex-shrink: 0;
+    }
+    .orange-band-label {
+      font-size: 10px; color: rgba(255,255,255,0.72); font-weight: 700;
+      letter-spacing: .1em; margin-bottom: 3px;
+    }
+    .orange-band-title {
+      font-size: 19px; font-weight: 900; color: white; line-height: 1.3;
+    }
+    .orange-band-title em { font-style: normal; color: #fff100; }
+
+    /* ========== 共通：CTAボタン（緑・LP参考） ========== */
+    .cta-green {
+      background: linear-gradient(90deg, #1A8038, #28A848, #38C060);
+      border-radius: 10px; padding: 14px 16px;
+      text-align: center; font-size: 14px; font-weight: 900; color: white;
+      letter-spacing: .04em; cursor: pointer; flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(30,130,50,0.3);
+    }
+    .cta-green-sub { font-size: 10px; color: rgba(255,255,255,0.72); margin-top: 3px; font-weight: 400; }
+
+    /* ========== 共通：フック ========== */
+    .card-hook {
+      text-align: right; font-size: 12px; font-weight: 700; color: #D86000;
+      padding-top: 10px; border-top: 1px solid rgba(216,96,0,0.15); margin-top: auto;
+    }
+
+    /* =====================================
+       Card 1：商品紹介
+       ===================================== */
+    .c1-hero {
+      background: white; padding: 14px 16px 12px;
+      flex-shrink: 0; position: relative;
+    }
+    /* 商品ビジュアルエリア */
+    .c1-img-area {
+      background: linear-gradient(135deg, #FFF5EB 0%, #FFEEDD 100%);
+      border-radius: 10px; height: 130px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 10px; position: relative; overflow: hidden;
+    }
+    .c1-img-mock-text { font-size: 10px; color: #ccc; text-align: center; line-height: 1.6; }
+    /* 楽天3冠バッジ */
+    .c1-rakuten {
+      position: absolute; left: 8px; top: 8px;
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, #BF0000, #E50000);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-size: 7px; font-weight: 900; color: white; text-align: center; line-height: 1.5;
+      box-shadow: 0 3px 8px rgba(190,0,0,0.3);
+    }
+    .c1-rakuten-num { font-size: 18px; font-weight: 900; line-height: 1; }
+    /* 医師監修バッジ */
+    .c1-doc {
+      position: absolute; right: 8px; top: 8px;
+      background: white; border: 1.5px solid #C89000;
+      border-radius: 6px; padding: 4px 8px; text-align: center;
+      box-shadow: 0 2px 6px rgba(200,144,0,0.2);
+    }
+    .c1-doc-text { font-size: 8px; font-weight: 800; color: #C89000; line-height: 1.5; }
+    /* 商品名 */
+    .c1-product { font-size: 28px; font-weight: 900; color: #222; letter-spacing: .04em; }
+    .c1-product span { color: #D86000; }
+    .c1-product-read { font-size: 10px; color: #999; letter-spacing: .12em; margin-top: 1px; margin-bottom: 8px; }
+    .c1-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+    .badge-orange {
+      display: inline-flex; align-items: center;
+      background: rgba(216,96,0,0.1); border: 1px solid rgba(216,96,0,0.35);
+      color: #D86000; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px;
+    }
+    .badge-gold {
+      display: inline-flex; align-items: center;
+      background: white; border: 1.5px solid #C89000;
+      color: #C89000; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px;
+    }
+
+    .c1-body { flex: 1; padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; background: #FFFAF5; }
+    .c1-reasons { display: flex; flex-direction: column; gap: 7px; }
+    .c1-reason { display: flex; align-items: flex-start; gap: 8px; }
+    .c1-reason-check { color: #D86000; font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+    .c1-reason-body { flex: 1; }
+    .c1-reason-main { font-size: 13px; font-weight: 800; color: #222; line-height: 1.3; }
+    .c1-reason-sub { font-size: 10px; color: #888; margin-top: 1px; }
+    .c1-divider { height: 1px; background: rgba(216,96,0,0.1); }
+
+    /* 実績バー */
+    .c1-achievement {
+      background: white; border: 1px solid rgba(216,96,0,0.2);
+      border-radius: 8px; padding: 8px 12px; text-align: center;
+    }
+    .c1-achievement-num { font-size: 18px; font-weight: 900; color: #D86000; }
+    .c1-achievement-text { font-size: 10px; color: #666; margin-top: 1px; }
+
+    /* =====================================
+       Card 2：価格・特典
+       ===================================== */
+    .c2-body { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+
+    /* 価格メインブロック */
+    .c2-price-section {
+      background: #FFFAF5; border: 1.5px solid rgba(216,96,0,0.25);
+      border-radius: 12px; padding: 14px 16px; text-align: center;
+    }
+    .c2-nihon-first {
+      display: inline-block; background: #D86000; color: white;
+      font-size: 11px; font-weight: 900; padding: 3px 12px; border-radius: 4px; margin-bottom: 8px;
+    }
+    .c2-price-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px; }
+    .c2-regular-price { font-size: 14px; color: #bbb; text-decoration: line-through; }
+    .c2-off-badge {
+      background: #C82000; color: white; font-size: 11px; font-weight: 900;
+      padding: 2px 8px; border-radius: 4px;
+    }
+    .c2-price { font-size: 54px; font-weight: 900; color: #D86000; line-height: 1; }
+    .c2-price sup { font-size: 24px; vertical-align: super; }
+    .c2-price-tax { font-size: 12px; color: #888; margin-top: 3px; }
+    .c2-limit {
+      display: inline-block; background: #C82000; color: white;
+      font-size: 11px; font-weight: 800; padding: 3px 12px; border-radius: 4px; margin-top: 7px;
+    }
+
+    /* 返金保証ブロック（LP「30日間の返金保証」風） */
+    .c2-guarantee {
+      background: white; border: 1px solid rgba(216,96,0,0.2); border-radius: 10px; overflow: hidden;
+    }
+    .c2-guarantee-header {
+      background: rgba(216,96,0,0.08); padding: 6px 14px; text-align: center;
+      font-size: 11px; color: #D86000; font-weight: 700; letter-spacing: .04em;
+    }
+    .c2-guarantee-body { padding: 10px 14px; }
+    .c2-guarantee-badge {
+      display: block; background: linear-gradient(90deg, #D85A00, #FF7C30);
+      color: white; text-align: center; font-size: 13px; font-weight: 900;
+      padding: 6px; border-radius: 6px; margin-bottom: 6px;
+    }
+    .c2-guarantee-text { font-size: 11px; color: #555; line-height: 1.65; text-align: center; }
+    .c2-guarantee-note { font-size: 9px; color: #bbb; margin-top: 4px; text-align: center; line-height: 1.5; }
+
+    /* 小特典 */
+    .c2-mini-benefits { display: flex; gap: 6px; }
+    .c2-mini-benefit {
+      flex: 1; background: #FFFAF5; border: 1px solid rgba(216,96,0,0.12);
+      border-radius: 8px; padding: 8px 4px; text-align: center;
+    }
+    .c2-mini-icon { font-size: 15px; margin-bottom: 3px; }
+    .c2-mini-text { font-size: 10px; font-weight: 700; color: #444; line-height: 1.4; }
+
+    /* =====================================
+       Card 3：血流×体温
+       ===================================== */
+    .c3-body { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+
+    .c3-ingredient-tag {
+      display: inline-block; background: rgba(216,96,0,0.1); border: 1px solid rgba(216,96,0,0.3);
+      color: #D86000; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px;
+    }
+
+    /* サーモグラフィー */
+    .c3-thermo {
+      display: flex; align-items: center; gap: 10px;
+      background: #FFFAF5; border: 1px solid rgba(216,96,0,0.18);
+      border-radius: 10px; padding: 12px;
+    }
+    .c3-thermo-before {
+      background: #C8DCED; border-radius: 8px; padding: 10px 10px; text-align: center; flex: 1;
+    }
+    .c3-thermo-after {
+      background: linear-gradient(135deg, #D85A00, #FF5500);
+      border-radius: 8px; padding: 10px 10px; text-align: center; flex: 1;
+    }
+    .c3-thermo-label-b { font-size: 9px; color: #6688AA; margin-bottom: 3px; font-weight: 600; }
+    .c3-thermo-val-b { font-size: 13px; font-weight: 900; color: #336688; }
+    .c3-thermo-label-a { font-size: 9px; color: rgba(255,255,255,0.7); margin-bottom: 3px; font-weight: 600; }
+    .c3-thermo-val-a { font-size: 13px; font-weight: 900; color: white; }
+    .c3-thermo-arrow { font-size: 20px; color: #D86000; font-weight: 700; }
+    .c3-thermo-note { font-size: 9px; color: #aaa; text-align: center; margin-top: -4px; }
+
+    /* 代謝データ */
+    .c3-metabolism {
+      background: linear-gradient(135deg, rgba(216,96,0,0.07), rgba(255,124,48,0.04));
+      border: 1px solid rgba(216,96,0,0.2); border-radius: 10px; padding: 14px 16px;
+    }
+    .c3-meta-main { font-size: 13px; font-weight: 700; color: #333; line-height: 1.7; }
+    .c3-meta-main em { color: #D86000; font-style: normal; font-size: 20px; font-weight: 900; }
+    .c3-meta-sub { font-size: 11px; color: #888; margin-top: 6px; line-height: 1.5; }
+
+    /* =====================================
+       Card 4：脂肪アプローチ
+       ===================================== */
+    .c4-body { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+
+    /* グラフ（LP参考） */
+    .c4-graph-box {
+      background: #FFFAF5; border: 1px solid rgba(216,96,0,0.18);
+      border-radius: 10px; padding: 12px 14px;
+    }
+    .c4-graph-label { font-size: 10px; color: #888; text-align: center; letter-spacing: .05em; margin-bottom: 10px; }
+    .c4-graph-area { display: flex; align-items: flex-end; justify-content: center; gap: 20px; height: 72px; margin-bottom: 6px; }
+    .c4-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .c4-bar-placebo { width: 38px; height: 18px; background: #DDDDDD; border-radius: 4px 4px 0 0; }
+    .c4-bar-active { width: 38px; height: 64px; background: linear-gradient(180deg, #FF8C40 0%, #D86000 100%); border-radius: 4px 4px 0 0; }
+    .c4-bar-label { font-size: 9px; color: #999; }
+    .c4-graph-result { text-align: center; }
+    .c4-graph-num { font-size: 32px; font-weight: 900; color: #D86000; line-height: 1; }
+    .c4-graph-unit { font-size: 13px; color: #C86000; }
+    .c4-graph-note { font-size: 9px; color: #aaa; margin-top: 4px; line-height: 1.5; }
+
+    /* 内臓皮下両方 */
+    .c4-both {
+      background: rgba(216,96,0,0.07); border: 1px solid rgba(216,96,0,0.18);
+      border-radius: 10px; padding: 10px 14px; text-align: center;
+    }
+    .c4-both-title { font-size: 13px; font-weight: 800; color: #333; line-height: 1.6; }
+    .c4-both-title em { color: #D86000; font-style: normal; }
+    .c4-both-sub { font-size: 11px; color: #888; margin-top: 4px; }
+
+    /* 成分バブル（LP参考） */
+    .c4-ing-wrap {
+      background: #FFFAF5; border-radius: 10px; padding: 10px 12px;
+    }
+    .c4-ing-title { font-size: 10px; color: #888; text-align: center; margin-bottom: 8px; letter-spacing: .06em; }
+    .c4-ing-row { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+    .c4-bubble-orange {
+      background: linear-gradient(135deg, #D86000, #FF8040); color: white;
+      font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 20px;
+    }
+    .c4-bubble-dark {
+      background: #333; color: rgba(255,255,255,0.85);
+      font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 20px;
+    }
+
+    /* =====================================
+       Card 5：口コミ
+       ===================================== */
+    .c5 { background: #FFFAF5; }
+    .c5-body { flex: 1; padding: 12px 14px; display: flex; flex-direction: column; gap: 9px; }
+
+    .c5-voice {
+      background: white; border-radius: 10px; padding: 12px;
+      border-left: 3px solid #D86000;
+      display: flex; gap: 10px; align-items: flex-start;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    }
+    .c5-voice-photo {
+      width: 46px; height: 46px; border-radius: 50%; background: #F0D8C4;
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      font-size: 20px; border: 2px solid rgba(216,96,0,0.2);
+    }
+    .c5-voice-content { flex: 1; }
+    .c5-voice-meta { font-size: 11px; color: #D86000; font-weight: 800; margin-bottom: 4px; }
+    .c5-voice-stars { color: #F5A623; font-size: 11px; margin-bottom: 3px; }
+    .c5-voice-text { font-size: 11px; color: #444; line-height: 1.65; }
+
+    .c5-hook {
+      text-align: right; font-size: 12px; font-weight: 700; color: #D86000;
+      padding-top: 8px; border-top: 1px solid rgba(216,96,0,0.12); margin-top: auto;
+    }
+
+    /* =====================================
+       Card 6：CTA（キャンペーン感）
+       ===================================== */
+    .c6 { background: white; }
+    .c6-hero {
+      background: linear-gradient(160deg, #D85A00 0%, #FF8C30 60%, #D85A00 100%);
+      padding: 14px 18px 12px; flex-shrink: 0; position: relative; overflow: hidden;
+    }
+    .c6-star-l { position: absolute; left: 10px; top: 8px; font-size: 20px; color: rgba(255,255,200,0.45); }
+    .c6-star-r { position: absolute; right: 10px; bottom: 8px; font-size: 20px; color: rgba(255,255,200,0.45); }
+    .c6-ima-badge {
+      display: inline-block; background: white; color: #D86000;
+      font-size: 11px; font-weight: 900; padding: 3px 12px; border-radius: 20px; margin-bottom: 6px;
+    }
+    .c6-camp-title {
+      font-size: 24px; font-weight: 900; color: white; line-height: 1.2;
+      text-align: center; letter-spacing: .02em;
+    }
+    .c6-camp-title em { font-style: normal; color: #fff100; font-size: 30px; }
+    .c6-camp-sub { font-size: 13px; font-weight: 800; color: rgba(255,255,255,0.9); text-align: center; margin-top: 4px; }
+
+    .c6-body { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 11px; }
+
+    /* 価格ボックス */
+    .c6-price-box {
+      background: #FFFAF5; border: 1.5px solid rgba(216,96,0,0.28);
+      border-radius: 12px; padding: 12px 16px; text-align: center;
+    }
+    .c6-price-label { font-size: 10px; color: #888; font-weight: 600; margin-bottom: 2px; }
+    .c6-price-regular { font-size: 13px; color: #bbb; text-decoration: line-through; }
+    .c6-price { font-size: 44px; font-weight: 900; color: #D86000; line-height: 1; margin-top: 2px; }
+    .c6-price sup { font-size: 20px; vertical-align: super; }
+    .c6-price-tax { font-size: 11px; color: #888; margin-top: 2px; }
+
+    /* お得感 */
+    .c6-saving {
+      background: rgba(200,20,0,0.06); border: 1px solid rgba(200,20,0,0.18);
+      border-radius: 10px; padding: 10px 14px; text-align: center;
+    }
+    .c6-saving-text { font-size: 13px; font-weight: 800; color: #333; line-height: 1.6; }
+    .c6-saving-text em { color: #D86000; font-style: normal; font-size: 17px; }
+
+    /* 特典横並び */
+    .c6-benefits { display: flex; gap: 6px; }
+    .c6-benefit {
+      flex: 1; background: #FFFAF5; border: 1px solid rgba(216,96,0,0.12);
+      border-radius: 8px; padding: 8px 4px; text-align: center;
+    }
+    .c6-benefit-icon { font-size: 14px; margin-bottom: 3px; }
+    .c6-benefit-text { font-size: 10px; font-weight: 700; color: #444; line-height: 1.4; }
+    .c6-note { font-size: 10px; color: #bbb; line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+<div class="page-title">PRカルーセル SLILIN F — LP寄せ版 全6枚</div>
+<div class="page-sub">shop.kirarithm.com LPのトンマナ参考 ｜ ライト系・医師監修・臨床試験強調</div>
+
+<div class="cards-wrap">
+
+  <!-- Card 1：商品紹介 -->
+  <div class="card-unit">
+    <div class="card-label">CARD 01</div>
+    <div class="frame">
+      <div class="c1-hero">
+        <!-- 商品写真エリア -->
+        <div class="c1-img-area">
+          <!-- 楽天3冠バッジ -->
+          <div class="c1-rakuten">
+            <div>楽天</div>
+            <div class="c1-rakuten-num">3冠</div>
+          </div>
+          <!-- 医師監修バッジ -->
+          <div class="c1-doc">
+            <div class="c1-doc-text">医師<br>監修</div>
+          </div>
+          <div class="c1-img-mock-text">写真<br>（商品ビジュアル）</div>
+        </div>
+        <!-- 商品名 -->
+        <div class="c1-product">SLILIN<span>F</span></div>
+        <div class="c1-product-read">スリリン ファイア</div>
+        <div class="c1-badges">
+          <div class="badge-orange">機能性表示食品</div>
+          <div class="badge-gold">医師監修</div>
+        </div>
+      </div>
+
+      <!-- オレンジ帯 -->
+      <div class="orange-band">
+        <div class="orange-band-label">──── SLILINが選ばれる理由 ────</div>
+        <div class="orange-band-title"><em>脂肪を落とす</em>、体温で。</div>
+      </div>
+
+      <div class="c1-body">
+        <div class="c1-reasons">
+          <div class="c1-reason">
+            <div class="c1-reason-check">✅</div>
+            <div class="c1-reason-body">
+              <div class="c1-reason-main">血流UP × 体温UP</div>
+              <div class="c1-reason-sub">アムラ由来エラグ酸（機能性関与成分）</div>
+            </div>
+          </div>
+          <div class="c1-divider"></div>
+          <div class="c1-reason">
+            <div class="c1-reason-check">✅</div>
+            <div class="c1-reason-body">
+              <div class="c1-reason-main">お腹の脂肪を減らす</div>
+              <div class="c1-reason-sub">臨床試験で効果が確認されています</div>
+            </div>
+          </div>
+          <div class="c1-divider"></div>
+          <div class="c1-reason">
+            <div class="c1-reason-check">✅</div>
+            <div class="c1-reason-body">
+              <div class="c1-reason-main">内臓脂肪・皮下脂肪の両方に</div>
+              <div class="c1-reason-sub">赤×黒 ヒートサポート成分配合</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 実績 -->
+        <div class="c1-achievement">
+          <div class="c1-achievement-num">累計 2,570,000個以上</div>
+          <div class="c1-achievement-text">販売突破（※ブランド内定期実績）</div>
+        </div>
+
+        <div class="cta-green">
+          最安値でお得に始める →
+          <div class="cta-green-sub">初回¥980 ／ 送料無料</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2：価格・特典 -->
+  <div class="card-unit">
+    <div class="card-label">CARD 02</div>
+    <div class="frame">
+      <!-- オレンジ帯 -->
+      <div class="orange-band">
+        <div class="orange-band-label">期間限定</div>
+        <div class="orange-band-title">初回限定 特別価格</div>
+      </div>
+
+      <div class="c2-body">
+        <!-- 価格メイン -->
+        <div class="c2-price-section">
+          <div class="c2-nihon-first">日本初 ヒートサポート機能性食品</div>
+          <div class="c2-price-row">
+            <div class="c2-regular-price">通常価格 ¥6,480（税込）</div>
+            <div class="c2-off-badge">85%OFF</div>
+          </div>
+          <div class="c2-price"><sup>¥</sup>980</div>
+          <div class="c2-price-tax">税込・送料無料</div>
+          <div class="c2-limit">毎月1,000名様限定！</div>
+        </div>
+
+        <!-- 返金保証 -->
+        <div class="c2-guarantee">
+          <div class="c2-guarantee-header">万が一、合わなかった場合</div>
+          <div class="c2-guarantee-body">
+            <div class="c2-guarantee-badge">30日間の返金保証</div>
+            <div class="c2-guarantee-text">
+              支払った代金を<br>全額返金してもらえるので安心！
+            </div>
+            <div class="c2-guarantee-note">※初回解約時にパッケージ返送が条件<br>※効果には個人差があります</div>
+          </div>
+        </div>
+
+        <!-- 小特典 -->
+        <div class="c2-mini-benefits">
+          <div class="c2-mini-benefit">
+            <div class="c2-mini-icon">🚚</div>
+            <div class="c2-mini-text">送料<br>無料</div>
+          </div>
+          <div class="c2-mini-benefit">
+            <div class="c2-mini-icon">🔓</div>
+            <div class="c2-mini-text">回数縛り<br>なし</div>
+          </div>
+          <div class="c2-mini-benefit">
+            <div class="c2-mini-icon">🏅</div>
+            <div class="c2-mini-text">機能性<br>表示食品</div>
+          </div>
+        </div>
+
+        <div class="card-hook">成分の実力を見る→</div>
+        <div class="cta-green">最安値でお得に始める →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3：血流UP × 体温UP -->
+  <div class="card-unit">
+    <div class="card-label">CARD 03</div>
+    <div class="frame">
+      <!-- オレンジ帯 -->
+      <div class="orange-band">
+        <div class="orange-band-label">臨床試験で確認された</div>
+        <div class="orange-band-title">血流UP × <em>体温UP</em></div>
+      </div>
+
+      <div class="c3-body">
+        <div class="c3-ingredient-tag">アムラ由来エラグ酸（機能性関与成分）</div>
+
+        <!-- サーモグラフィー -->
+        <div class="c3-thermo">
+          <div class="c3-thermo-before">
+            <div class="c3-thermo-label-b">摂取前</div>
+            <div class="c3-thermo-val-b">低体温</div>
+          </div>
+          <div class="c3-thermo-arrow">→</div>
+          <div class="c3-thermo-after">
+            <div class="c3-thermo-label-a">10分後</div>
+            <div class="c3-thermo-val-a">体温UP</div>
+          </div>
+        </div>
+        <div class="c3-thermo-note">サーモグラフィー（エラグ酸あり / なし比較）</div>
+
+        <!-- 代謝データ -->
+        <div class="c3-metabolism">
+          <div class="c3-meta-main">
+            体温が<em>1℃</em>上がると、<br>
+            基礎代謝は<em>13〜15%</em>UP。<br>
+          </div>
+          <div class="c3-meta-sub">
+            ＝ 何もしなくても +180kcal<br>
+            （ウォーキング約1時間分に相当）
+          </div>
+        </div>
+
+        <!-- 医師コメント風 -->
+        <div style="background:#FFFAF5; border-radius:10px; padding:10px 12px; border-left:3px solid #C89000;">
+          <div style="font-size:9px; color:#C89000; font-weight:700; margin-bottom:4px;">👨‍⚕️ 医師コメント</div>
+          <div style="font-size:11px; color:#444; line-height:1.65;">
+            「体温と代謝の関係は医学的に確認されており、<br>体温管理はダイエットの重要な鍵です。」
+          </div>
+        </div>
+
+        <div class="card-hook">次の実力を見る→</div>
+        <div class="cta-green">最安値でお得に始める →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 4：脂肪アプローチ -->
+  <div class="card-unit">
+    <div class="card-label">CARD 04</div>
+    <div class="frame">
+      <!-- オレンジ帯 -->
+      <div class="orange-band">
+        <div class="orange-band-label">臨床試験で確認された</div>
+        <div class="orange-band-title"><em>脂肪を落とす</em>効果</div>
+      </div>
+
+      <div class="c4-body">
+        <!-- グラフ（LP参考・バーグラフ） -->
+        <div class="c4-graph-box">
+          <div class="c4-graph-label">腹部全脂肪面積 変化量（摂取12週目）</div>
+          <div class="c4-graph-area">
+            <div class="c4-bar-wrap">
+              <div class="c4-bar-placebo"></div>
+              <div class="c4-bar-label">プラセボ</div>
+            </div>
+            <div class="c4-bar-wrap">
+              <div class="c4-bar-active"></div>
+              <div class="c4-bar-label">摂取群</div>
+            </div>
+          </div>
+          <div class="c4-graph-result">
+            <span class="c4-graph-num">-16.17</span><span class="c4-graph-unit">cm²</span>
+          </div>
+          <div class="c4-graph-note">※ブラックジンジャー由来ポリメトキシフラボン<br>※プラセボ対比</div>
+        </div>
+
+        <!-- 内臓・皮下両方 -->
+        <div class="c4-both">
+          <div class="c4-both-title">
+            <em>内臓脂肪</em>と<em>皮下脂肪</em>、<br>両方にアプローチ。
+          </div>
+          <div class="c4-both-sub">BMIが標準でもお腹が気になる人に。</div>
+        </div>
+
+        <!-- 成分バブル（LP参考） -->
+        <div class="c4-ing-wrap">
+          <div class="c4-ing-title">ヒートサポート成分 全6種</div>
+          <div class="c4-ing-row">
+            <div class="c4-bubble-orange">紅参</div>
+            <div class="c4-bubble-orange">唐辛子</div>
+            <div class="c4-bubble-orange">レッドジンジャー</div>
+          </div>
+          <div style="height:6px;"></div>
+          <div class="c4-ing-row">
+            <div class="c4-bubble-dark">ブラックジンジャー</div>
+            <div class="c4-bubble-dark">黒高麗人参</div>
+            <div class="c4-bubble-dark">黒酢</div>
+          </div>
+        </div>
+
+        <div style="font-size:9px; color:#bbb; text-align:center; margin-top:-4px;">※上記は機能性関与成分ではございません</div>
+
+        <div class="card-hook">口コミを見る→</div>
+        <div class="cta-green">最安値でお得に始める →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 5：口コミ -->
+  <div class="card-unit">
+    <div class="card-label">CARD 05</div>
+    <div class="frame c5">
+      <!-- オレンジ帯 -->
+      <div class="orange-band">
+        <div class="orange-band-label">スリリンFを取り入れた方から</div>
+        <div class="orange-band-title"><em>嬉しい喜び</em>の声が続出！</div>
+      </div>
+
+      <div class="c5-body">
+        <div class="c5-voice">
+          <div class="c5-voice-photo">👩</div>
+          <div class="c5-voice-content">
+            <div class="c5-voice-stars">★★★★★</div>
+            <div class="c5-voice-meta">42歳・女性</div>
+            <div class="c5-voice-text">「気付いたらベルトの穴が以前と比べて5個以上も余裕が出てきました。」</div>
+          </div>
+        </div>
+        <div class="c5-voice">
+          <div class="c5-voice-photo">👩</div>
+          <div class="c5-voice-content">
+            <div class="c5-voice-stars">★★★★★</div>
+            <div class="c5-voice-meta">38歳・女性</div>
+            <div class="c5-voice-text">「1ヶ月に1キロずつ減っていき7キロ減。服も太る前のが入った。」</div>
+          </div>
+        </div>
+        <div class="c5-voice">
+          <div class="c5-voice-photo">👩</div>
+          <div class="c5-voice-content">
+            <div class="c5-voice-stars">★★★★☆</div>
+            <div class="c5-voice-meta">36歳・女性</div>
+            <div class="c5-voice-text">「実際に体重が減ってきたことから、効果があるのではないかと感じています。」</div>
+          </div>
+        </div>
+
+        <div class="c5-hook">試してみたい→</div>
+        <div class="cta-green">最安値でお得に始める →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 6：CTA（キャンペーン感） -->
+  <div class="card-unit">
+    <div class="card-label">CARD 06</div>
+    <div class="frame c6">
+      <!-- ヒーロー：オレンジで「今だけ」全開 -->
+      <div class="c6-hero">
+        <div class="c6-star-l">✦</div>
+        <div class="c6-star-r">✦</div>
+        <div style="text-align:center;">
+          <div class="c6-ima-badge">今だけ</div>
+          <div class="c6-camp-title">初回<em>85%OFF</em></div>
+          <div class="c6-camp-sub">✦ キャンペーン実施中！！ ✦</div>
+        </div>
+      </div>
+
+      <div class="c6-body">
+        <!-- 価格ボックス -->
+        <div class="c6-price-box">
+          <div class="c6-price-label">定期便 初回特別価格</div>
+          <div class="c6-price-regular">通常価格 ¥6,480（税込）</div>
+          <div class="c6-price"><sup>¥</sup>980</div>
+          <div class="c6-price-tax">（税込・送料無料）</div>
+        </div>
+
+        <!-- お得感 -->
+        <div class="c6-saving">
+          <div class="c6-saving-text">
+            通常価格より<em>¥5,500以上</em>お得に<br>始められます！
+          </div>
+        </div>
+
+        <!-- 特典 -->
+        <div class="c6-benefits">
+          <div class="c6-benefit">
+            <div class="c6-benefit-icon">🔓</div>
+            <div class="c6-benefit-text">回数縛り<br>なし</div>
+          </div>
+          <div class="c6-benefit">
+            <div class="c6-benefit-icon">💰</div>
+            <div class="c6-benefit-text">30日<br>返金保証</div>
+          </div>
+          <div class="c6-benefit">
+            <div class="c6-benefit-icon">🚚</div>
+            <div class="c6-benefit-text">送料<br>無料</div>
+          </div>
+        </div>
+
+        <div class="c6-note">※返金保証は初回解約時にパッケージ返送が条件<br>※効果には個人差があります</div>
+
+        <div class="cta-green" style="padding:18px 16px; font-size:15px; border-radius:12px;">
+          ▼ 最安値でお得に始める ▼
+          <div class="cta-green-sub">SLILIN F（スリリンファイア）公式サイト</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
