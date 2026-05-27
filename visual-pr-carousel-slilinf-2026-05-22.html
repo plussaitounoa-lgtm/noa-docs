@@ -15,23 +15,19 @@
 
     .frame { width: 341px; min-height: 512px; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
 
-    /* ========== Card 1：商品紹介 + 選ばれる理由概要 ========== */
+    /* ========== Card 1：商品紹介 ========== */
     .c1 { background: #0f0800; border: 0.5px solid #3a2000; }
     .c1-hero {
       background: linear-gradient(160deg, #1a0800 0%, #2e1200 60%, #1a0800 100%);
       padding: 24px 22px 20px; flex-shrink: 0; position: relative; overflow: hidden;
     }
     .c1-hero-deco1 {
-      position: absolute; top: -30px; right: -30px;
-      width: 120px; height: 120px;
-      background: radial-gradient(circle, rgba(255,100,20,0.15) 0%, transparent 70%);
-      border-radius: 50%;
+      position: absolute; top: -30px; right: -30px; width: 120px; height: 120px;
+      background: radial-gradient(circle, rgba(255,100,20,0.15) 0%, transparent 70%); border-radius: 50%;
     }
     .c1-hero-deco2 {
-      position: absolute; bottom: -20px; left: -20px;
-      width: 80px; height: 80px;
-      background: radial-gradient(circle, rgba(255,60,0,0.08) 0%, transparent 70%);
-      border-radius: 50%;
+      position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px;
+      background: radial-gradient(circle, rgba(255,60,0,0.08) 0%, transparent 70%); border-radius: 50%;
     }
     .c1-label { font-size: 10px; color: rgba(255,200,100,0.6); font-weight: 700; letter-spacing: .12em; margin-bottom: 12px; }
     .c1-product-name { font-size: 32px; font-weight: 900; color: white; letter-spacing: .06em; line-height: 1; }
@@ -52,110 +48,98 @@
       padding-top: 12px; border-top: 1px solid rgba(255,107,26,0.15); margin-top: auto;
     }
 
-    /* ========== Cards 2-4：実力カード 共通 ========== */
-    .rx { background: #0d0800; border: 0.5px solid #3a1a00; }
-    .rx-hero {
+    /* ========== Card 2（新）：価格・特典 ========== */
+    .c2 { background: #0d0a06; border: 0.5px solid #3a2800; }
+    .c2-hero {
+      background: linear-gradient(160deg, #1a0f03 0%, #2a1a00 60%, #1a0f03 100%);
       padding: 20px 22px 18px; flex-shrink: 0; position: relative; overflow: hidden;
     }
-    .rx-deco {
-      position: absolute; top: -30px; right: -30px;
-      width: 100px; height: 100px; border-radius: 50%;
+    .c2-hero-deco {
+      position: absolute; top: -30px; right: -30px; width: 120px; height: 120px;
+      background: radial-gradient(circle, rgba(255,180,60,0.15) 0%, transparent 70%); border-radius: 50%;
     }
+    .c2-label { font-size: 10px; color: rgba(255,200,100,0.6); font-weight: 700; letter-spacing: .12em; margin-bottom: 6px; }
+    .c2-title { font-size: 21px; font-weight: 900; color: white; line-height: 1.35; }
+    .c2-title span { color: #ff9944; }
+    .c2-sub { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 6px; letter-spacing: .04em; }
+    .c2-body { flex: 1; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+    .c2-price-box {
+      background: linear-gradient(135deg, rgba(255,107,26,0.15) 0%, rgba(255,153,68,0.08) 100%);
+      border: 1px solid rgba(255,107,26,0.45); border-radius: 12px; padding: 16px 18px; text-align: center;
+    }
+    .c2-price-label { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 600; margin-bottom: 4px; }
+    .c2-price-regular {
+      font-size: 12px; color: rgba(255,255,255,0.35); text-decoration: line-through; margin-bottom: 4px;
+    }
+    .c2-price { font-size: 46px; font-weight: 900; color: #ff9944; line-height: 1; }
+    .c2-price sup { font-size: 20px; vertical-align: super; }
+    .c2-price-tax { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+    .c2-off-badge {
+      display: inline-block; background: #c82000; color: white;
+      font-size: 11px; font-weight: 800; padding: 3px 12px; border-radius: 20px; margin-top: 8px;
+    }
+    .c2-benefits { display: flex; flex-direction: column; gap: 8px; }
+    .c2-benefit {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.04); border-radius: 8px; padding: 10px 12px;
+    }
+    .c2-benefit-icon { font-size: 16px; flex-shrink: 0; }
+    .c2-benefit-main { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.88); }
+    .c2-benefit-sub { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+    .c2-hook {
+      text-align: right; font-size: 12px; font-weight: 700; color: rgba(255,107,26,0.8);
+      padding-top: 10px; border-top: 1px solid rgba(255,107,26,0.15); margin-top: auto;
+    }
+
+    /* ========== Cards 3-4 共通 ========== */
+    .rx { background: #0d0800; border: 0.5px solid #3a1a00; }
+    .rx-hero { padding: 20px 22px 18px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .rx-deco { position: absolute; top: -30px; right: -30px; width: 100px; height: 100px; border-radius: 50%; }
     .rx-num { font-size: 10px; font-weight: 700; letter-spacing: .12em; margin-bottom: 2px; }
     .rx-ing { font-size: 11px; font-weight: 600; margin-bottom: 10px; }
     .rx-headline { font-size: 22px; font-weight: 900; color: white; line-height: 1.3; letter-spacing: .02em; }
-    .rx-body { flex: 1; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+    .rx-body { flex: 1; padding: 18px 20px; display: flex; flex-direction: column; gap: 13px; }
     .rx-hook {
       text-align: right; font-size: 12px; font-weight: 700;
       padding-top: 12px; border-top: 1px solid rgba(255,107,26,0.15); margin-top: auto;
     }
 
-    /* Card 2: アムラ（血流UP×体温UP） */
+    /* Card 3：血流UP × 体温UP */
     .rx2-hero { background: linear-gradient(160deg, #1a0800 0%, #2e1200 60%, #1a0800 100%); }
     .rx2-deco { background: radial-gradient(circle, rgba(255,100,20,0.15) 0%, transparent 70%); }
     .rx2-num { color: rgba(255,153,68,0.65); }
     .rx2-ing { color: rgba(255,200,130,0.75); }
     .rx2-thermo {
       display: flex; align-items: center; gap: 10px;
-      background: rgba(255,107,26,0.08); border: 1px solid rgba(255,107,26,0.2);
-      border-radius: 10px; padding: 14px;
+      background: rgba(255,107,26,0.08); border: 1px solid rgba(255,107,26,0.2); border-radius: 10px; padding: 14px;
     }
     .rx2-thermo-before { background: #1a2255; border-radius: 8px; padding: 10px 12px; text-align: center; flex: 1; }
     .rx2-thermo-after { background: #c82000; border-radius: 8px; padding: 10px 12px; text-align: center; flex: 1; }
     .rx2-thermo-label { font-size: 9px; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
     .rx2-thermo-val { font-size: 12px; font-weight: 800; color: white; }
     .rx2-thermo-arrow { font-size: 18px; color: #ff7c30; font-weight: 700; }
-    .rx2-thermo-note { font-size: 9px; color: rgba(255,255,255,0.35); text-align: center; margin-top: 4px; }
+    .rx2-thermo-note { font-size: 9px; color: rgba(255,255,255,0.35); text-align: center; margin-top: -4px; }
     .rx2-stat {
-      background: rgba(255,107,26,0.08); border: 1px solid rgba(255,107,26,0.2);
-      border-radius: 10px; padding: 14px 16px;
+      background: rgba(255,107,26,0.08); border: 1px solid rgba(255,107,26,0.2); border-radius: 10px; padding: 14px 16px;
     }
     .rx2-stat-main { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.85); line-height: 1.6; }
     .rx2-stat-main em { color: #ff9944; font-style: normal; font-size: 18px; }
     .rx2-hook { color: rgba(255,107,26,0.8); }
 
-    /* Card 3: ブラックジンジャー（お腹の脂肪を減らす） */
+    /* Card 4：脂肪アプローチ（旧Card 3+4 集約） */
     .rx3-hero { background: linear-gradient(160deg, #0d0d0d 0%, #1a1500 60%, #0d0d0d 100%); }
     .rx3-deco { background: radial-gradient(circle, rgba(200,160,20,0.12) 0%, transparent 70%); }
     .rx3-num { color: rgba(200,180,80,0.65); }
     .rx3-ing { color: rgba(220,200,100,0.7); }
     .rx3-data-box {
       background: rgba(200,160,20,0.08); border: 1px solid rgba(200,160,20,0.25);
-      border-radius: 12px; padding: 16px 18px; text-align: center;
+      border-radius: 12px; padding: 13px 18px; text-align: center;
     }
-    .rx3-data-label { font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: .08em; margin-bottom: 6px; }
-    .rx3-data-num { font-size: 42px; font-weight: 900; color: #d4a020; line-height: 1; }
-    .rx3-data-unit { font-size: 14px; font-weight: 700; color: rgba(212,160,32,0.7); margin-left: 2px; }
-    .rx3-data-note { font-size: 9px; color: rgba(255,255,255,0.3); margin-top: 8px; line-height: 1.6; }
-    .rx3-detail {
-      background: rgba(255,255,255,0.04); border-radius: 10px; padding: 12px 14px;
-    }
-    .rx3-detail-text { font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.7; }
+    .rx3-data-label { font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: .08em; margin-bottom: 5px; }
+    .rx3-data-num { font-size: 38px; font-weight: 900; color: #d4a020; line-height: 1; }
+    .rx3-data-unit { font-size: 13px; font-weight: 700; color: rgba(212,160,32,0.7); margin-left: 2px; }
+    .rx3-data-note { font-size: 9px; color: rgba(255,255,255,0.3); margin-top: 5px; line-height: 1.5; }
     .rx3-hook { color: rgba(200,160,20,0.8); border-top-color: rgba(200,160,20,0.15) !important; }
-
-    /* Card 4: 赤×黒 ヒートサポート / 厳選植物性100% */
-    .rx4 { background: #0d0505; border: 0.5px solid #3a0808; }
-    .rx4-hero { background: linear-gradient(160deg, #1a0000 0%, #2e0808 60%, #1a0000 100%); }
-    .rx4-deco { background: radial-gradient(circle, rgba(200,20,0,0.15) 0%, transparent 70%); }
-    .rx4-num { color: rgba(255,100,80,0.65); }
-    .rx4-ing { color: rgba(255,140,100,0.75); }
-    .rx4-combo { display: flex; flex-direction: column; gap: 10px; }
-    .rx4-red-block {
-      background: rgba(200,20,0,0.12); border: 1px solid rgba(200,20,0,0.3);
-      border-radius: 10px; padding: 12px 14px; display: flex; align-items: flex-start; gap: 10px;
-    }
-    .rx4-black-block {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px; padding: 12px 14px; display: flex; align-items: flex-start; gap: 10px;
-    }
-    .rx4-color-dot-red {
-      width: 28px; height: 28px; border-radius: 50%; background: #c82000;
-      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-      font-size: 12px; margin-top: 2px;
-    }
-    .rx4-color-dot-black {
-      width: 28px; height: 28px; border-radius: 50%; background: #222;
-      border: 1px solid rgba(255,255,255,0.2);
-      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-      font-size: 12px; margin-top: 2px;
-    }
-    .rx4-block-ing { font-size: 10px; color: rgba(255,255,255,0.45); margin-bottom: 3px; }
-    .rx4-block-effect { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.85); }
-    .rx4-natural {
-      background: rgba(255,255,255,0.04); border-radius: 10px; padding: 12px 14px; text-align: center;
-    }
-    .rx4-natural-badge { font-size: 11px; font-weight: 700; color: rgba(255,120,80,0.9); margin-bottom: 4px; }
-    .rx4-natural-text { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.6; }
-    .rx4-hook { color: rgba(200,60,40,0.8); border-top-color: rgba(200,60,40,0.15) !important; }
-
-    /* ========== 全カード共通CTA ========== */
-    .card-cta {
-      background: linear-gradient(90deg, #c85a00, #e05a00, #ff7c30);
-      border-radius: 10px; padding: 12px 16px;
-      text-align: center; font-size: 13px; font-weight: 800; color: white;
-      letter-spacing: .04em; cursor: pointer; flex-shrink: 0;
-    }
-    .card-cta-sub { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 2px; font-weight: 400; }
 
     /* ========== Card 5：口コミ ========== */
     .c5 { background: #1a0808; border: 0.5px solid #3a0808; }
@@ -167,8 +151,7 @@
     .c5-hero-title { font-size: 18px; font-weight: 800; color: white; line-height: 1.5; }
     .c5-body { flex: 1; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; }
     .c5-voice {
-      background: rgba(255,255,255,0.05); border-radius: 10px;
-      padding: 14px; border-left: 3px solid rgba(255,80,40,0.5);
+      background: rgba(255,255,255,0.05); border-radius: 10px; padding: 14px; border-left: 3px solid rgba(255,80,40,0.5);
     }
     .c5-voice-meta { font-size: 11px; color: #ff7755; font-weight: 700; margin-bottom: 6px; }
     .c5-voice-text { font-size: 12px; color: rgba(255,255,255,0.75); line-height: 1.7; }
@@ -177,31 +160,40 @@
       padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: auto;
     }
 
-    /* ========== Card 6：CTA ========== */
+    /* ========== Card 6：CTA（キャンペーン感強化） ========== */
     .c6 { background: #0f0a00; border: 0.5px solid #3a2800; }
     .c6-hero {
       background: linear-gradient(160deg, #1a0f00 0%, #2e1800 100%);
       padding: 20px 22px 18px; flex-shrink: 0; position: relative; overflow: hidden;
     }
     .c6-hero-glow {
-      position: absolute; top: -30px; right: -30px;
-      width: 120px; height: 120px;
-      background: radial-gradient(circle, rgba(255,140,40,0.12) 0%, transparent 70%);
-      border-radius: 50%;
+      position: absolute; top: -30px; right: -30px; width: 120px; height: 120px;
+      background: radial-gradient(circle, rgba(255,140,40,0.12) 0%, transparent 70%); border-radius: 50%;
     }
-    .c6-label { font-size: 10px; color: rgba(255,180,80,0.5); font-weight: 700; letter-spacing: .12em; margin-bottom: 8px; }
-    .c6-title { font-size: 20px; font-weight: 800; color: white; line-height: 1.5; }
+    .c6-campaign-badge {
+      display: inline-block; background: #c82000; color: white;
+      font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px;
+      letter-spacing: .04em; margin-bottom: 8px;
+    }
+    .c6-title { font-size: 20px; font-weight: 800; color: white; line-height: 1.45; }
     .c6-title span { color: #ff9944; }
-    .c6-body { flex: 1; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+    .c6-sub { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 6px; }
+    .c6-body { flex: 1; padding: 16px 18px; display: flex; flex-direction: column; gap: 11px; }
     .c6-price-box {
       background: linear-gradient(135deg, rgba(255,107,26,0.15) 0%, rgba(255,153,68,0.08) 100%);
-      border: 1px solid rgba(255,107,26,0.4); border-radius: 12px; padding: 18px 20px; text-align: center;
+      border: 1px solid rgba(255,107,26,0.45); border-radius: 12px; padding: 13px 18px; text-align: center;
     }
-    .c6-price-label { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 600; margin-bottom: 6px; }
-    .c6-price { font-size: 36px; font-weight: 900; color: #ff9944; line-height: 1; }
+    .c6-price-label { font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 600; margin-bottom: 2px; }
+    .c6-price-regular { font-size: 11px; color: rgba(255,255,255,0.3); text-decoration: line-through; margin-bottom: 2px; }
+    .c6-price { font-size: 40px; font-weight: 900; color: #ff9944; line-height: 1; }
     .c6-price sup { font-size: 18px; vertical-align: super; }
-    .c6-price-tax { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px; }
-    .c6-benefits { display: flex; flex-direction: column; gap: 8px; }
+    .c6-price-tax { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+    .c6-urgency {
+      background: rgba(200,32,0,0.1); border: 1px solid rgba(200,32,0,0.25);
+      border-radius: 10px; padding: 10px 14px; text-align: center;
+    }
+    .c6-urgency-text { font-size: 12px; font-weight: 700; color: rgba(255,200,160,0.9); line-height: 1.65; }
+    .c6-benefits { display: flex; flex-direction: column; gap: 6px; }
     .c6-benefit { display: flex; align-items: center; gap: 8px; font-size: 12px; color: rgba(255,255,255,0.65); }
     .c6-benefit-icon { font-size: 14px; flex-shrink: 0; }
     .c6-note { font-size: 10px; color: rgba(255,255,255,0.25); line-height: 1.5; }
@@ -211,6 +203,14 @@
     }
     .c6-cta-text { font-size: 15px; font-weight: 800; color: white; letter-spacing: .04em; }
     .c6-cta-sub { font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 3px; }
+
+    /* ========== 全カード共通CTA ========== */
+    .card-cta {
+      background: linear-gradient(90deg, #c85a00, #e05a00, #ff7c30);
+      border-radius: 10px; padding: 12px 16px;
+      text-align: center; font-size: 13px; font-weight: 800; color: white;
+      letter-spacing: .04em; cursor: pointer; flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
@@ -220,7 +220,7 @@
 
 <div class="cards-wrap">
 
-  <!-- Card 1：商品紹介 + 選ばれる理由概要 -->
+  <!-- Card 1：商品紹介（変更なし） -->
   <div class="card-unit">
     <div class="card-label">CARD 01</div>
     <div class="frame c1">
@@ -258,9 +258,61 @@
     </div>
   </div>
 
-  <!-- Card 2：実力その1 — アムラ由来エラグ酸 / 血流UP × 体温UP -->
+  <!-- Card 2（新）：価格・特典 -->
   <div class="card-unit">
     <div class="card-label">CARD 02</div>
+    <div class="frame c2">
+      <div class="c2-hero">
+        <div class="c2-hero-deco"></div>
+        <div class="c2-label">お得に始めるなら今</div>
+        <div class="c2-title">初回<span>¥980</span>で、<br>まず試せます。</div>
+        <div class="c2-sub">定期便 初回特別価格 ／ 送料無料</div>
+      </div>
+      <div class="c2-body">
+
+        <!-- 価格ボックス -->
+        <div class="c2-price-box">
+          <div class="c2-price-label">定期便 初回特別価格</div>
+          <div class="c2-price-regular">通常価格 ¥6,480（税込）</div>
+          <div class="c2-price"><sup>¥</sup>980</div>
+          <div class="c2-price-tax">（税込・送料無料）</div>
+          <div class="c2-off-badge">85%OFF</div>
+        </div>
+
+        <!-- 特典 -->
+        <div class="c2-benefits">
+          <div class="c2-benefit">
+            <span class="c2-benefit-icon">🚚</span>
+            <div>
+              <div class="c2-benefit-main">送料無料</div>
+              <div class="c2-benefit-sub">毎回・何回でも</div>
+            </div>
+          </div>
+          <div class="c2-benefit">
+            <span class="c2-benefit-icon">🔓</span>
+            <div>
+              <div class="c2-benefit-main">回数縛りなし</div>
+              <div class="c2-benefit-sub">2回目以降もいつでも解約OK</div>
+            </div>
+          </div>
+          <div class="c2-benefit">
+            <span class="c2-benefit-icon">💰</span>
+            <div>
+              <div class="c2-benefit-main">30日間全額返金保証</div>
+              <div class="c2-benefit-sub">試して合わなければ返金対応</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="c2-hook">成分の実力を見る→</div>
+        <div class="card-cta">初回¥980で試してみる →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3：血流UP × 体温UP（旧Card 2） -->
+  <div class="card-unit">
+    <div class="card-label">CARD 03</div>
     <div class="frame rx">
       <div class="rx-hero rx2-hero">
         <div class="rx-deco rx2-deco"></div>
@@ -299,10 +351,10 @@
     </div>
   </div>
 
-  <!-- Card 3：実力その2 — ブラックジンジャー由来 / お腹の脂肪を減らす -->
+  <!-- Card 4：脂肪アプローチ（旧Card 3+4 集約） -->
   <div class="card-unit">
-    <div class="card-label">CARD 03</div>
-    <div class="frame rx">
+    <div class="card-label">CARD 04</div>
+    <div class="frame rx" style="background:#0d0d0a; border-color:#2e2800;">
       <div class="rx-hero rx3-hero">
         <div class="rx-deco rx3-deco"></div>
         <div class="rx-num rx3-num">実力その2</div>
@@ -317,96 +369,51 @@
           <div>
             <span class="rx3-data-num">-16.17</span><span class="rx3-data-unit">cm²</span>
           </div>
-          <div class="rx3-data-note">※プラセボ対比<br>（ブラックジンジャー由来ポリメトキシフラボン）</div>
+          <div class="rx3-data-note">※プラセボ対比（ブラックジンジャー由来ポリメトキシフラボン）</div>
         </div>
 
-        <!-- 詳細 -->
-        <div class="rx3-detail">
-          <div class="rx3-detail-text">
-            内臓脂肪と皮下脂肪、<br>
-            両方にアプローチする成分。<br>
-            <br>
-            <span style="font-size:11px; color:rgba(255,255,255,0.4);">BMIが標準でも、<br>お腹周りが気になる人に。</span>
+        <!-- 内臓・皮下脂肪アプローチ -->
+        <div style="background:rgba(200,160,20,0.07); border:1px solid rgba(200,160,20,0.2); border-radius:10px; padding:11px 14px;">
+          <div style="font-size:12px; font-weight:800; color:rgba(255,255,255,0.85); text-align:center; line-height:1.6;">
+            内臓脂肪・皮下脂肪、<br>両方にアプローチする成分。
+          </div>
+          <div style="font-size:11px; color:rgba(255,255,255,0.4); text-align:center; margin-top:6px; line-height:1.5;">
+            BMIが標準でも、<br>お腹周りが気になる人に。
           </div>
         </div>
 
-        <div class="rx-hook rx3-hook">次の実力を見る→</div>
-        <div class="card-cta">初回¥980で試してみる →</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Card 4：実力その3 — 赤×黒 ヒートサポート成分 / 厳選植物性100% -->
-  <div class="card-unit">
-    <div class="card-label">CARD 04</div>
-    <div class="frame rx rx4">
-      <div class="rx-hero rx4-hero">
-        <div class="rx-deco rx4-deco"></div>
-        <div class="rx-num rx4-num">実力その3</div>
-        <div class="rx-ing rx4-ing">赤×黒 ヒートサポート成分</div>
-        <div class="rx-headline">厳選植物性100%</div>
-      </div>
-      <div class="rx-body">
-
-        <!-- 赤×黒 6成分 -->
-        <div style="display:flex; gap:8px;">
-          <!-- 赤 -->
-          <div style="flex:1; background:rgba(200,20,0,0.1); border:1px solid rgba(200,20,0,0.3); border-radius:10px; padding:10px 10px;">
-            <div style="font-size:10px; font-weight:800; color:#ff5533; text-align:center; margin-bottom:8px; letter-spacing:.06em;">🔴 赤の成分</div>
-            <div style="display:flex; flex-direction:column; gap:7px;">
-              <div>
-                <div style="font-size:9px; color:rgba(255,150,100,0.6);">アントシアニン</div>
-                <div style="font-size:12px; font-weight:700; color:rgba(255,255,255,0.85);">レッドジンジャー</div>
-              </div>
-              <div style="height:1px; background:rgba(200,20,0,0.2);"></div>
-              <div>
-                <div style="font-size:9px; color:rgba(255,150,100,0.6);">人参サポニン</div>
-                <div style="font-size:12px; font-weight:700; color:rgba(255,255,255,0.85);">紅参</div>
-              </div>
-              <div style="height:1px; background:rgba(200,20,0,0.2);"></div>
-              <div>
-                <div style="font-size:9px; color:rgba(255,150,100,0.6);">カプサイシン</div>
-                <div style="font-size:12px; font-weight:700; color:rgba(255,255,255,0.85);">唐辛子</div>
+        <!-- 赤×黒 植物性成分 コンパクト版 -->
+        <div style="background:rgba(255,255,255,0.04); border-radius:10px; padding:11px 12px;">
+          <div style="font-size:10px; font-weight:700; color:rgba(255,255,255,0.38); text-align:center; letter-spacing:.08em; margin-bottom:9px;">さらに6つの植物性成分がサポート</div>
+          <div style="display:flex; gap:8px;">
+            <div style="flex:1; background:rgba(200,20,0,0.1); border:1px solid rgba(200,20,0,0.25); border-radius:8px; padding:8px 10px;">
+              <div style="font-size:10px; font-weight:800; color:#ff5533; text-align:center; margin-bottom:6px;">🔴 赤</div>
+              <div style="display:flex; flex-direction:column; gap:4px; font-size:11px; color:rgba(255,255,255,0.78); font-weight:700; line-height:1.3;">
+                <div>レッドジンジャー</div>
+                <div>紅参</div>
+                <div>唐辛子</div>
               </div>
             </div>
-          </div>
-          <!-- 黒 -->
-          <div style="flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:10px 10px;">
-            <div style="font-size:10px; font-weight:800; color:rgba(200,200,200,0.7); text-align:center; margin-bottom:8px; letter-spacing:.06em;">⚫ 黒の成分</div>
-            <div style="display:flex; flex-direction:column; gap:7px;">
-              <div>
-                <div style="font-size:9px; color:rgba(180,180,180,0.5);">ポリメトキシフラボン</div>
-                <div style="font-size:12px; font-weight:700; color:rgba(255,255,255,0.85);">ブラックジンジャー</div>
-              </div>
-              <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
-              <div>
-                <div style="font-size:9px; color:rgba(180,180,180,0.5);">凝縮人参サポニン</div>
-                <div style="font-size:12px; font-weight:700; color:rgba(255,255,255,0.85);">黒高麗人参</div>
-              </div>
-              <div style="height:1px; background:rgba(255,255,255,0.08);"></div>
-              <div>
-                <div style="font-size:9px; color:rgba(180,180,180,0.5);">D-アミノ酸</div>
-                <div style="font-size:12px; font-weight:700; color:rgba(255,255,255,0.85);">オーガニック黒酢</div>
+            <div style="flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:8px 10px;">
+              <div style="font-size:10px; font-weight:800; color:rgba(200,200,200,0.65); text-align:center; margin-bottom:6px;">⚫ 黒</div>
+              <div style="display:flex; flex-direction:column; gap:4px; font-size:11px; color:rgba(255,255,255,0.78); font-weight:700; line-height:1.3;">
+                <div>ブラックジンジャー</div>
+                <div>黒高麗人参</div>
+                <div>オーガニック黒酢</div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 締め -->
-        <div style="background:rgba(200,60,40,0.08); border:1px solid rgba(200,60,40,0.2); border-radius:10px; padding:12px 14px; text-align:center;">
-          <div style="font-size:11px; color:rgba(255,255,255,0.4); margin-bottom:4px;">つまり</div>
-          <div style="font-size:14px; font-weight:800; color:rgba(255,255,255,0.9); line-height:1.6;">日常生活のなかで<br>効率的に脂肪を落とせる</div>
-        </div>
+        <div style="font-size:9px; color:rgba(255,255,255,0.2); text-align:center; margin-top:-4px;">※赤・黒の成分は機能性関与成分ではございません</div>
 
-        <div style="font-size:9px; color:rgba(255,255,255,0.2); text-align:center; margin-top:-6px;">※赤・黒の成分は機能性関与成分ではございません</div>
-
-        <div class="rx-hook rx4-hook">口コミを見る→</div>
+        <div class="rx-hook rx3-hook">口コミを見る→</div>
         <div class="card-cta">初回¥980で試してみる →</div>
       </div>
     </div>
   </div>
 
-  <!-- Card 5：口コミ -->
+  <!-- Card 5：口コミ（変更なし） -->
   <div class="card-unit">
     <div class="card-label">CARD 05</div>
     <div class="frame c5">
@@ -433,29 +440,45 @@
     </div>
   </div>
 
-  <!-- Card 6：CTA -->
+  <!-- Card 6：CTA（キャンペーン感強化） -->
   <div class="card-unit">
     <div class="card-label">CARD 06</div>
     <div class="frame c6">
       <div class="c6-hero">
         <div class="c6-hero-glow"></div>
-        <div class="c6-label">診断を受けた方へ</div>
-        <div class="c6-title">体温を変える、<br><span>最初の一歩。</span></div>
+        <div class="c6-campaign-badge">📢 期間限定キャンペーン中</div>
+        <div class="c6-title">診断を受けた今が、<br><span>一番お得な日。</span></div>
+        <div class="c6-sub">この機会を逃すと、また後回しになります。</div>
       </div>
       <div class="c6-body">
+
+        <!-- 価格 -->
         <div class="c6-price-box">
-          <div class="c6-price-label">定期 初回特別価格</div>
+          <div class="c6-price-label">定期便 初回特別価格</div>
+          <div class="c6-price-regular">通常 ¥6,480（税込）</div>
           <div class="c6-price"><sup>¥</sup>980</div>
-          <div class="c6-price-tax">（税込）</div>
+          <div class="c6-price-tax">（税込・送料無料）</div>
         </div>
+
+        <!-- 緊急性メッセージ -->
+        <div class="c6-urgency">
+          <div class="c6-urgency-text">
+            今の体に合ったサポートを、<br>
+            今日から始めてみませんか？
+          </div>
+        </div>
+
+        <!-- 特典 -->
         <div class="c6-benefits">
-          <div class="c6-benefit"><span class="c6-benefit-icon">✅</span> 回数縛りなし</div>
-          <div class="c6-benefit"><span class="c6-benefit-icon">✅</span> 30日返金保証あり</div>
+          <div class="c6-benefit"><span class="c6-benefit-icon">✅</span> 回数縛りなし（いつでも解約OK）</div>
+          <div class="c6-benefit"><span class="c6-benefit-icon">✅</span> 30日間全額返金保証</div>
           <div class="c6-benefit"><span class="c6-benefit-icon">✅</span> 機能性表示食品</div>
         </div>
+
         <div class="c6-note">※返金保証は初回解約時にパッケージ返送が条件<br>※効果には個人差があります</div>
+
         <div class="c6-cta">
-          <div class="c6-cta-text">▼ お試しはこちら ▼</div>
+          <div class="c6-cta-text">▼ 今すぐ¥980で始める ▼</div>
           <div class="c6-cta-sub">SLILIN F（スリリンファイア）公式サイト</div>
         </div>
       </div>
