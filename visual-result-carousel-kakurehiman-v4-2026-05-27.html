@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>結果カルーセル（統合版）隠れ肥満タイプ診断 全8枚 v4</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #2a2a2a; padding: 40px 20px; font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif; }
+    .page-title { text-align: center; color: rgba(255,255,255,0.4); font-size: 12px; font-weight: 700; letter-spacing: .1em; margin-bottom: 6px; }
+    .page-sub { text-align: center; color: rgba(255,255,255,0.25); font-size: 11px; margin-bottom: 8px; }
+    .page-note { text-align: center; color: rgba(255,180,80,0.4); font-size: 10px; margin-bottom: 36px; }
+
+    .section-label {
+      text-align: center; color: rgba(255,255,255,0.2); font-size: 10px; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase; margin: 32px 0 16px;
+      display: flex; align-items: center; gap: 12px; justify-content: center;
+    }
+    .section-label::before, .section-label::after {
+      content: ''; flex: 1; max-width: 120px; height: 1px; background: rgba(255,255,255,0.1);
+    }
+
+    .cards-wrap { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .card-unit { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .card-label { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.35); letter-spacing: .08em; }
+
+    .frame { width: 341px; min-height: 512px; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+
+    /* ========== TYPE A: かくれ内臓脂肪 (オレンジ) ========== */
+    .a1 { background: #140800; border: 0.5px solid #3a1800; }
+    .a1-hero { background: linear-gradient(155deg, #1e0c00 0%, #3a1800 100%); padding: 22px 22px 18px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .a1-hero-glow { position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(255,100,20,0.18) 0%, transparent 70%); border-radius: 50%; }
+    .a1-type-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,107,26,0.15); border: 1px solid rgba(255,107,26,0.35); border-radius: 20px; padding: 4px 12px; margin-bottom: 12px; }
+    .a1-type-badge-text { font-size: 10px; color: #ff9944; font-weight: 700; letter-spacing: .08em; }
+    .a1-result-label { font-size: 10px; color: rgba(255,255,255,0.35); font-weight: 600; margin-bottom: 6px; }
+    .a1-type-name { font-size: 22px; font-weight: 900; color: white; line-height: 1.3; }
+    .a1-type-name span { color: #ff7c30; }
+    .a1-body { flex: 1; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+    .a1-scene { display: flex; flex-direction: column; gap: 8px; }
+    .a1-scene-item { display: flex; align-items: flex-start; gap: 10px; }
+    .a1-scene-quote { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.85); line-height: 1.5; }
+    .a1-scene-quote::before { content: '「'; color: #ff7c30; }
+    .a1-scene-quote::after { content: '」'; color: #ff7c30; }
+    .a1-divider { height: 1px; background: rgba(255,107,26,0.15); }
+    .a1-sub { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.7; }
+    .a1-hook { text-align: right; font-size: 12px; font-weight: 700; color: rgba(255,107,26,0.7); padding-top: 12px; border-top: 1px solid rgba(255,107,26,0.12); margin-top: auto; }
+
+    /* TYPE A Card 2 */
+    .a2 { background: #fdf6ef; border: 0.5px solid #f0d0a0; }
+    .a2-hero { background: linear-gradient(155deg, #e05a00 0%, #ff8c3a 100%); padding: 18px 20px 16px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .a2-hero-deco { position: absolute; top: -16px; right: -16px; width: 70px; height: 70px; background: rgba(255,255,255,0.14); border-radius: 50%; }
+    .a2-label { font-size: 10px; color: rgba(255,255,255,0.75); font-weight: 700; letter-spacing: .1em; margin-bottom: 6px; }
+    .a2-hl { font-size: 17px; font-weight: 800; color: white; line-height: 1.4; }
+    .a2-body { flex: 1; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+    .a2-text { font-size: 13px; color: #444; line-height: 1.8; font-weight: 500; }
+    .a2-text strong { color: #c85a00; font-weight: 800; }
+    .a2-point { background: white; border-radius: 10px; border: 1px solid #f0d0a0; padding: 12px 14px; display: flex; align-items: center; gap: 12px; }
+    .a2-point-icon { font-size: 22px; flex-shrink: 0; }
+    .a2-point-text { font-size: 12px; color: #555; line-height: 1.5; font-weight: 600; }
+    .a2-hook { text-align: right; font-size: 12px; font-weight: 700; color: #c85a00; padding-top: 10px; border-top: 1px solid #f0d0a0; margin-top: auto; }
+
+    /* ========== TYPE B: かくれ体脂肪 (ブルー) ========== */
+    .b1 { background: #080e1a; border: 0.5px solid #1a2e50; }
+    .b1-hero { background: linear-gradient(155deg, #0a1428 0%, #1a3060; 100%); padding: 22px 22px 18px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .b1-hero-glow { position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(60,120,255,0.15) 0%, transparent 70%); border-radius: 50%; }
+    .b1-type-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(60,120,255,0.15); border: 1px solid rgba(60,120,255,0.3); border-radius: 20px; padding: 4px 12px; margin-bottom: 12px; }
+    .b1-type-badge-text { font-size: 10px; color: #7aabff; font-weight: 700; letter-spacing: .08em; }
+    .b1-result-label { font-size: 10px; color: rgba(255,255,255,0.35); font-weight: 600; margin-bottom: 6px; }
+    .b1-type-name { font-size: 22px; font-weight: 900; color: white; line-height: 1.3; }
+    .b1-type-name span { color: #7aabff; }
+    .b1-body { flex: 1; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+    .b1-scene-quote { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.85); line-height: 1.5; }
+    .b1-scene-quote::before { content: '「'; color: #7aabff; }
+    .b1-scene-quote::after { content: '」'; color: #7aabff; }
+    .b1-divider { height: 1px; background: rgba(60,120,255,0.15); }
+    .b1-sub { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.7; }
+    .b1-hook { text-align: right; font-size: 12px; font-weight: 700; color: rgba(100,160,255,0.7); padding-top: 12px; border-top: 1px solid rgba(60,120,255,0.12); margin-top: auto; }
+
+    /* TYPE B Card 2 */
+    .b2 { background: #f0f4ff; border: 0.5px solid #c0d0f0; }
+    .b2-hero { background: linear-gradient(155deg, #1a3a9e 0%, #3a6ad8 100%); padding: 18px 20px 16px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .b2-hero-deco { position: absolute; top: -16px; right: -16px; width: 70px; height: 70px; background: rgba(255,255,255,0.14); border-radius: 50%; }
+    .b2-label { font-size: 10px; color: rgba(255,255,255,0.75); font-weight: 700; letter-spacing: .1em; margin-bottom: 6px; }
+    .b2-hl { font-size: 17px; font-weight: 800; color: white; line-height: 1.4; }
+    .b2-body { flex: 1; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+    .b2-text { font-size: 13px; color: #333; line-height: 1.8; font-weight: 500; }
+    .b2-text strong { color: #1a3a9e; font-weight: 800; }
+    .b2-point { background: white; border-radius: 10px; border: 1px solid #c0d0f0; padding: 12px 14px; display: flex; align-items: center; gap: 12px; }
+    .b2-point-icon { font-size: 22px; flex-shrink: 0; }
+    .b2-point-text { font-size: 12px; color: #444; line-height: 1.5; font-weight: 600; }
+    .b2-hook { text-align: right; font-size: 12px; font-weight: 700; color: #1a3a9e; padding-top: 10px; border-top: 1px solid #c0d0f0; margin-top: auto; }
+
+    /* ========== TYPE C: 代謝スロー (グリーン) ========== */
+    .c1 { background: #080f0a; border: 0.5px solid #1a3a20; }
+    .c1-hero { background: linear-gradient(155deg, #081408 0%, #1a3a1a 100%); padding: 22px 22px 18px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .c1-hero-glow { position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(40,180,80,0.15) 0%, transparent 70%); border-radius: 50%; }
+    .c1-type-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(40,180,80,0.12); border: 1px solid rgba(40,180,80,0.28); border-radius: 20px; padding: 4px 12px; margin-bottom: 12px; }
+    .c1-type-badge-text { font-size: 10px; color: #7adda0; font-weight: 700; letter-spacing: .08em; }
+    .c1-result-label { font-size: 10px; color: rgba(255,255,255,0.35); font-weight: 600; margin-bottom: 6px; }
+    .c1-type-name { font-size: 22px; font-weight: 900; color: white; line-height: 1.3; }
+    .c1-type-name span { color: #7adda0; }
+    .c1-body { flex: 1; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+    .c1-scene-quote { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.85); line-height: 1.5; }
+    .c1-scene-quote::before { content: '「'; color: #7adda0; }
+    .c1-scene-quote::after { content: '」'; color: #7adda0; }
+    .c1-divider { height: 1px; background: rgba(40,180,80,0.15); }
+    .c1-sub { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.7; }
+    .c1-hook { text-align: right; font-size: 12px; font-weight: 700; color: rgba(100,200,130,0.7); padding-top: 12px; border-top: 1px solid rgba(40,180,80,0.12); margin-top: auto; }
+
+    /* TYPE C Card 2 */
+    .c2 { background: #f0faf2; border: 0.5px solid #b0dfc0; }
+    .c2-hero { background: linear-gradient(155deg, #1a6a30 0%, #2ea050 100%); padding: 18px 20px 16px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .c2-hero-deco { position: absolute; top: -16px; right: -16px; width: 70px; height: 70px; background: rgba(255,255,255,0.14); border-radius: 50%; }
+    .c2-label { font-size: 10px; color: rgba(255,255,255,0.75); font-weight: 700; letter-spacing: .1em; margin-bottom: 6px; }
+    .c2-hl { font-size: 17px; font-weight: 800; color: white; line-height: 1.4; }
+    .c2-body { flex: 1; padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+    .c2-text { font-size: 13px; color: #333; line-height: 1.8; font-weight: 500; }
+    .c2-text strong { color: #1a6a30; font-weight: 800; }
+    .c2-point { background: white; border-radius: 10px; border: 1px solid #b0dfc0; padding: 12px 14px; display: flex; align-items: center; gap: 12px; }
+    .c2-point-icon { font-size: 22px; flex-shrink: 0; }
+    .c2-point-text { font-size: 12px; color: #444; line-height: 1.5; font-weight: 600; }
+    .c2-hook { text-align: right; font-size: 12px; font-weight: 700; color: #1a6a30; padding-top: 10px; border-top: 1px solid #b0dfc0; margin-top: auto; }
+
+    /* ========== 共通 Card 3（感情共感） ========== */
+    .kc { background: #131010; border: 0.5px solid #2e2020; }
+    .kc-hero { background: linear-gradient(155deg, #131010 0%, #221818 100%); padding: 20px 22px 18px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .kc-hero-glow { position: absolute; top: -20px; right: -20px; width: 90px; height: 90px; background: radial-gradient(circle, rgba(255,180,100,0.07) 0%, transparent 70%); border-radius: 50%; }
+    .kc-label { font-size: 10px; color: rgba(255,200,150,0.4); font-weight: 700; letter-spacing: .12em; margin-bottom: 8px; }
+    .kc-hl { font-size: 20px; font-weight: 900; color: white; line-height: 1.4; }
+    .kc-hl span { color: rgba(255,200,150,0.8); }
+    .kc-body { flex: 1; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+    .kc-scene { background: rgba(255,255,255,0.04); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; border-left: 2px solid rgba(255,180,100,0.2); }
+    .kc-scene-line { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; font-weight: 500; }
+    .kc-scene-line::before { content: '「'; opacity: .5; }
+    .kc-scene-line::after { content: '」'; opacity: .5; }
+    .kc-text { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.85; }
+    .kc-text strong { color: rgba(255,255,255,0.8); font-weight: 700; }
+    .kc-hook { text-align: right; font-size: 12px; font-weight: 700; color: rgba(255,180,100,0.55); padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: auto; }
+
+    /* ========== 共通 Card 4・5 ========== */
+    .k3 { background: #1a1000; border: 0.5px solid #3a2a00; }
+    .k3-hero { background: linear-gradient(155deg, #1a1200 0%, #2e2000 100%); padding: 20px 22px 18px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .k3-hero-glow { position: absolute; top: -20px; right: -20px; width: 90px; height: 90px; background: radial-gradient(circle, rgba(255,200,60,0.1) 0%, transparent 70%); border-radius: 50%; }
+    .k3-label { font-size: 10px; color: rgba(255,200,80,0.45); font-weight: 700; letter-spacing: .12em; margin-bottom: 8px; }
+    .k3-hl { font-size: 18px; font-weight: 900; color: white; line-height: 1.5; }
+    .k3-hl em { color: #ffcc44; font-style: normal; }
+    .k3-body { flex: 1; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+    .k3-main { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.85; font-weight: 500; }
+    .k3-main strong { color: white; font-weight: 800; }
+    .k3-relief { background: rgba(255,200,60,0.07); border: 1px solid rgba(255,200,60,0.2); border-radius: 10px; padding: 14px 16px; text-align: center; }
+    .k3-relief-text { font-size: 16px; font-weight: 800; color: #ffcc44; line-height: 1.5; }
+    .k3-hook { text-align: right; font-size: 12px; font-weight: 700; color: rgba(255,200,60,0.6); padding-top: 12px; border-top: 1px solid rgba(255,200,60,0.1); margin-top: auto; }
+
+    .k4 { background: #0f0a00; border: 0.5px solid #3a2800; }
+    .k4-hero { background: linear-gradient(155deg, #1a0f00 0%, #2e1c00 100%); padding: 20px 22px 18px; flex-shrink: 0; position: relative; overflow: hidden; }
+    .k4-hero-glow { position: absolute; top: -24px; right: -24px; width: 110px; height: 110px; background: radial-gradient(circle, rgba(255,140,40,0.12) 0%, transparent 70%); border-radius: 50%; }
+    .k4-label { font-size: 10px; color: rgba(255,180,80,0.45); font-weight: 700; letter-spacing: .12em; margin-bottom: 8px; }
+    .k4-hl { font-size: 20px; font-weight: 900; color: white; line-height: 1.4; }
+    .k4-hl span { color: #ff9944; }
+    .k4-body { flex: 1; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+    .k4-text { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.85; font-weight: 500; }
+    .k4-text strong { color: rgba(255,255,255,0.9); font-weight: 700; }
+    .k4-badge { display: flex; align-items: center; gap: 10px; background: rgba(255,153,68,0.1); border: 1px solid rgba(255,153,68,0.25); border-radius: 10px; padding: 12px 14px; }
+    .k4-badge-icon { font-size: 18px; flex-shrink: 0; }
+    .k4-badge-text { font-size: 12px; color: rgba(255,255,255,0.65); font-weight: 600; line-height: 1.4; }
+    .k4-cta { background: linear-gradient(90deg, #c85a00, #e05a00, #ff7c30); border-radius: 12px; padding: 16px; text-align: center; margin-top: auto; }
+    .k4-cta-text { font-size: 14px; font-weight: 800; color: white; letter-spacing: .04em; }
+    .k4-cta-sub { font-size: 10px; color: rgba(255,255,255,0.65); margin-top: 3px; }
+
+    /* ========== 既存カード参照枠 ========== */
+    .existing-frame { width: 341px; min-height: 512px; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; background: #d6eaf5; border: 2px dashed #8ec5e0; }
+    .existing-badge { background: #5fa8cc; color: white; font-size: 10px; font-weight: 700; text-align: center; padding: 6px; letter-spacing: .1em; }
+    .existing-body { flex: 1; padding: 24px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; }
+    .existing-bubble { background: #5fa8cc; color: white; font-size: 11px; font-weight: 700; border-radius: 20px; padding: 6px 16px; }
+    .existing-type { font-size: 28px; font-weight: 900; color: #2a6a8a; line-height: 1.2; }
+    .existing-sub { font-size: 13px; font-weight: 700; color: #2a6a8a; background: white; border-radius: 8px; padding: 8px 14px; line-height: 1.5; }
+    .existing-hook { font-size: 13px; font-weight: 800; color: #1a4a6a; }
+    .existing-note { font-size: 10px; color: #5fa8cc; margin-top: 8px; }
+
+    /* Card 2共通 — シーン枠 */
+    .scene-block { background: rgba(0,0,0,0.04); border-radius: 10px; padding: 12px 14px; margin-bottom: 4px; }
+    .scene-line { font-size: 13px; font-weight: 700; color: #333; line-height: 1.6; }
+    .scene-line::before { content: '「'; opacity: .5; }
+    .scene-line::after { content: '」'; opacity: .5; }
+    .scene-divider { height: 1px; background: rgba(0,0,0,0.08); margin: 8px 0; }
+  </style>
+</head>
+<body>
+
+<div class="page-title">結果カルーセル（統合版） — 隠れ肥満タイプ診断 全8枚</div>
+<div class="page-sub">タイプ別 3枚 × 3タイプ ＋ 共通 2枚 ｜ 教育カルーセルを統合 ｜ 5枚/ユーザー 計11枚</div>
+<div class="page-note">v4対応 ｜ 感情・シーン軸 ｜ 2026-05-27</div>
+
+<!-- ===== TYPE A ===== -->
+<div class="section-label">TYPE A — かくれ内臓脂肪タイプ</div>
+<div class="cards-wrap">
+
+  <div class="card-unit">
+    <div class="card-label">CARD A-1</div>
+    <div class="existing-frame">
+      <div class="existing-badge">既存デザイン（変更なし）</div>
+      <div class="existing-body">
+        <div class="existing-bubble">あなたの診断結果は…</div>
+        <div class="existing-type">かくれ<br>内臓脂肪タイプ</div>
+        <div class="existing-sub">BMIは標準なのに<br>お腹周りだけ気になる</div>
+        <div class="existing-hook">なぜそうなるの？ →</div>
+        <div class="existing-note">※水色背景・かわいいイラスト・既存コピーのまま</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-unit">
+    <div class="card-label">CARD A-2（シーン）</div>
+    <div class="frame a2">
+      <div class="a2-hero">
+        <div class="a2-hero-deco"></div>
+        <div class="a2-label">あなたのタイプの特徴</div>
+        <div class="a2-hl">BMIが見ているのは、<br>体重と身長だけ。</div>
+      </div>
+      <div class="a2-body">
+        <!-- イラスト：BMI同じでも体型が違う2人の比較 -->
+        <div style="display:flex; justify-content:center; gap:24px; padding:8px 0 4px;">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+            <svg width="60" height="110" viewBox="0 0 60 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- 頭 -->
+              <circle cx="30" cy="14" r="10" fill="#f4c09a" stroke="#e07a40" stroke-width="1.5"/>
+              <!-- 首 -->
+              <rect x="26" y="23" width="8" height="7" rx="3" fill="#f4c09a"/>
+              <!-- 胴体（スリム） -->
+              <path d="M18 30 Q20 28 30 28 Q40 28 42 30 L40 62 Q38 65 30 65 Q22 65 20 62 Z" fill="#fde8d5" stroke="#e07a40" stroke-width="1.2"/>
+              <!-- 腕（左） -->
+              <path d="M18 32 Q10 40 11 55" stroke="#f4c09a" stroke-width="5" stroke-linecap="round"/>
+              <!-- 腕（右） -->
+              <path d="M42 32 Q50 40 49 55" stroke="#f4c09a" stroke-width="5" stroke-linecap="round"/>
+              <!-- 脚（左） -->
+              <path d="M24 64 Q22 80 22 96" stroke="#f4c09a" stroke-width="5.5" stroke-linecap="round"/>
+              <!-- 脚（右） -->
+              <path d="M36 64 Q38 80 38 96" stroke="#f4c09a" stroke-width="5.5" stroke-linecap="round"/>
+            </svg>
+            <div style="font-size:9px; color:#c85a00; font-weight:700; text-align:center; line-height:1.3;">体脂肪<br>均等</div>
+          </div>
+          <!-- 真ん中ラベル -->
+          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
+            <div style="background:#e07a40; color:white; font-size:8px; font-weight:800; border-radius:20px; padding:3px 8px; letter-spacing:.04em;">BMI<br>同じ</div>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+            <svg width="60" height="110" viewBox="0 0 60 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- 頭 -->
+              <circle cx="30" cy="14" r="10" fill="#f4c09a" stroke="#e07a40" stroke-width="1.5"/>
+              <!-- 首 -->
+              <rect x="26" y="23" width="8" height="7" rx="3" fill="#f4c09a"/>
+              <!-- 胴体（お腹ぽっこり） -->
+              <path d="M18 30 Q19 28 30 28 Q41 28 42 30 L46 52 Q44 65 30 66 Q16 65 14 52 Z" fill="#fde8d5" stroke="#e07a40" stroke-width="1.2"/>
+              <!-- 腕（左） -->
+              <path d="M18 32 Q9 40 10 55" stroke="#f4c09a" stroke-width="5" stroke-linecap="round"/>
+              <!-- 腕（右） -->
+              <path d="M42 32 Q51 40 50 55" stroke="#f4c09a" stroke-width="5" stroke-linecap="round"/>
+              <!-- 脚（左） -->
+              <path d="M24 65 Q22 80 22 96" stroke="#f4c09a" stroke-width="5.5" stroke-linecap="round"/>
+              <!-- 脚（右） -->
+              <path d="M36 65 Q38 80 38 96" stroke="#f4c09a" stroke-width="5.5" stroke-linecap="round"/>
+            </svg>
+            <div style="font-size:9px; color:#c85a00; font-weight:700; text-align:center; line-height:1.3;">お腹に<br>集中</div>
+          </div>
+        </div>
+        <div class="scene-block">
+          <div class="scene-line">体重は変わってないのに、なんかお腹だけ出てきた気がする</div>
+          <div class="scene-divider"></div>
+          <div class="scene-line">食事に気をつけてるのに、効果を感じない</div>
+        </div>
+        <div class="a2-hook">なぜそうなるの？→</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-unit">
+    <div class="card-label">CARD A-3（メカニズム+ハンマー）</div>
+    <div class="frame a2">
+      <div class="a2-hero">
+        <div class="a2-hero-deco"></div>
+        <div class="a2-label">なぜそうなるの？</div>
+        <div class="a2-hl">それ、<br>"代謝低下"のサインかも。</div>
+      </div>
+      <div class="a2-body">
+        <svg width="100%" viewBox="0 0 280 118" xmlns="http://www.w3.org/2000/svg">
+          <text x="4" y="9" font-size="7.5" fill="#999" font-family="sans-serif">年齢区分基礎代謝量（目安）</text>
+          <rect x="8"   y="12" width="24" height="88" rx="2" fill="#ff7030"/>
+          <rect x="40"  y="20" width="24" height="80" rx="2" fill="#ff8040"/>
+          <rect x="72"  y="32" width="24" height="68" rx="2" fill="#ff9450"/>
+          <rect x="104" y="44" width="24" height="56" rx="2" fill="#ffa862"/>
+          <rect x="136" y="57" width="24" height="43" rx="2" fill="#ffbc74"/>
+          <rect x="168" y="69" width="24" height="31" rx="2" fill="#ffd086"/>
+          <path d="M 20,14 Q 100,18 192,73" stroke="#cc2200" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <polygon points="184,68 196,78 183,80" fill="#cc2200"/>
+          <text x="20"  y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">12〜14</text>
+          <text x="52"  y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">15〜17</text>
+          <text x="84"  y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">18〜29</text>
+          <text x="116" y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">30〜49</text>
+          <text x="148" y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">50〜69</text>
+          <text x="180" y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">70以上</text>
+          <text x="238" y="32" font-size="10" font-weight="bold" fill="#cc2200" text-anchor="middle" font-family="sans-serif">年齢と</text>
+          <text x="238" y="46" font-size="10" font-weight="bold" fill="#cc2200" text-anchor="middle" font-family="sans-serif">共に</text>
+          <text x="238" y="64" font-size="17" font-weight="bold" fill="#cc2200" text-anchor="middle" font-family="sans-serif">低下!</text>
+        </svg>
+        <div style="display:flex; align-items:center; gap:12px; background:#fff3e0; border:1px solid #ffcc80; border-radius:10px; padding:10px 14px;">
+          <div style="flex:1;">
+            <div style="font-size:10px; color:#999; font-weight:700; margin-bottom:2px;">基礎代謝量</div>
+            <div style="font-size:12px; color:#c85a00; font-weight:800;">10代をピークに</div>
+          </div>
+          <div style="background:linear-gradient(135deg,#ff8c00,#ff5500); width:54px; height:54px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 8px rgba(255,100,0,0.3);">
+            <div style="font-size:16px; font-weight:900; color:white; line-height:1.1;">1/6</div>
+            <div style="font-size:8px; color:rgba(255,255,255,0.9); font-weight:700;">以下へ</div>
+          </div>
+        </div>
+        <!-- v4変更: 強調ブロック（タイプA・橙色） -->
+        <div style="border:2px solid #c85a00; border-radius:12px; padding:14px 16px; text-align:center; background:#fff8f0;">
+          <div style="font-size:11px; color:#aaa; font-weight:700; margin-bottom:6px;">代謝が落ちると…</div>
+          <div style="font-size:16px; font-weight:900; color:#c85a00; line-height:1.5;">同じ食事でも<br><span style="font-size:22px; display:block; margin:4px 0;">溜め込みやすい体</span>になってしまう。</div>
+        </div>
+        <div style="background:#fff8e0; border:1px solid #e8c040; border-radius:10px; padding:12px 16px; text-align:center;">
+          <div style="font-size:13px; font-weight:800; color:#c85a00; line-height:1.5;">ダイエットのカギは、<br>代謝にある！</div>
+        </div>
+        <div class="a2-hook">どうやって代謝を上げるの？→</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== TYPE B ===== -->
+<div class="section-label">TYPE B — かくれ体脂肪タイプ</div>
+<div class="cards-wrap">
+
+  <div class="card-unit">
+    <div class="card-label">CARD B-1</div>
+    <div class="existing-frame">
+      <div class="existing-badge">既存デザイン（変更なし）</div>
+      <div class="existing-body">
+        <div class="existing-bubble">あなたの診断結果は…</div>
+        <div class="existing-type">かくれ<br>体脂肪タイプ</div>
+        <div class="existing-sub">ダイエットしても体型が変わらない</div>
+        <div class="existing-hook">なぜ体型が変わらないの？その理由は？</div>
+        <div class="existing-note">※水色背景・かわいいイラスト・既存コピーのまま</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-unit">
+    <div class="card-label">CARD B-2（シーン）</div>
+    <div class="frame b2">
+      <div class="b2-hero">
+        <div class="b2-hero-deco"></div>
+        <div class="b2-label">あなたのタイプの特徴</div>
+        <div class="b2-hl">BMIが見ているのは、<br>体重と身長だけ。</div>
+      </div>
+      <div class="b2-body">
+        <div class="scene-block">
+          <div class="scene-line">体重は変わらないのに、つまめる肉が多くなってきた</div>
+          <div class="scene-divider"></div>
+          <div class="scene-line">ダイエットしてるのに、締まった感じがしない</div>
+        </div>
+        <div class="b2-hook">なぜ体型が変わらないの？→</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-unit">
+    <div class="card-label">CARD B-3（メカニズム+ハンマー）</div>
+    <div class="frame b2">
+      <div class="b2-hero">
+        <div class="b2-hero-deco"></div>
+        <div class="b2-label">なぜそうなるの？</div>
+        <div class="b2-hl">それ、<br>"代謝低下"のサインかも。</div>
+      </div>
+      <div class="b2-body">
+        <svg width="100%" viewBox="0 0 280 118" xmlns="http://www.w3.org/2000/svg">
+          <text x="4" y="9" font-size="7.5" fill="#999" font-family="sans-serif">年齢区分基礎代謝量（目安）</text>
+          <rect x="8"   y="12" width="24" height="88" rx="2" fill="#ff7030"/>
+          <rect x="40"  y="20" width="24" height="80" rx="2" fill="#ff8040"/>
+          <rect x="72"  y="32" width="24" height="68" rx="2" fill="#ff9450"/>
+          <rect x="104" y="44" width="24" height="56" rx="2" fill="#ffa862"/>
+          <rect x="136" y="57" width="24" height="43" rx="2" fill="#ffbc74"/>
+          <rect x="168" y="69" width="24" height="31" rx="2" fill="#ffd086"/>
+          <path d="M 20,14 Q 100,18 192,73" stroke="#cc2200" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <polygon points="184,68 196,78 183,80" fill="#cc2200"/>
+          <text x="20"  y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">12〜14</text>
+          <text x="52"  y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">15〜17</text>
+          <text x="84"  y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">18〜29</text>
+          <text x="116" y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">30〜49</text>
+          <text x="148" y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">50〜69</text>
+          <text x="180" y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">70以上</text>
+          <text x="238" y="32" font-size="10" font-weight="bold" fill="#cc2200" text-anchor="middle" font-family="sans-serif">年齢と</text>
+          <text x="238" y="46" font-size="10" font-weight="bold" fill="#cc2200" text-anchor="middle" font-family="sans-serif">共に</text>
+          <text x="238" y="64" font-size="17" font-weight="bold" fill="#cc2200" text-anchor="middle" font-family="sans-serif">低下!</text>
+        </svg>
+        <div style="display:flex; align-items:center; gap:12px; background:#eef2ff; border:1px solid #c0d0f0; border-radius:10px; padding:10px 14px;">
+          <div style="flex:1;">
+            <div style="font-size:10px; color:#999; font-weight:700; margin-bottom:2px;">基礎代謝量</div>
+            <div style="font-size:12px; color:#1a3a9e; font-weight:800;">10代をピークに</div>
+          </div>
+          <div style="background:linear-gradient(135deg,#ff8c00,#ff5500); width:54px; height:54px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 8px rgba(255,100,0,0.3);">
+            <div style="font-size:16px; font-weight:900; color:white; line-height:1.1;">1/6</div>
+            <div style="font-size:8px; color:rgba(255,255,255,0.9); font-weight:700;">以下へ</div>
+          </div>
+        </div>
+        <!-- v4変更: 強調ブロック（タイプB・青色） -->
+        <div style="border:2px solid #1a3a9e; border-radius:12px; padding:14px 16px; text-align:center; background:#f0f4ff;">
+          <div style="font-size:11px; color:#aaa; font-weight:700; margin-bottom:6px;">代謝が落ちると…</div>
+          <div style="font-size:16px; font-weight:900; color:#1a3a9e; line-height:1.5;">同じ食事でも<br><span style="font-size:22px; display:block; margin:4px 0;">溜め込みやすい体</span>になってしまう。</div>
+        </div>
+        <div style="background:#eef4ff; border:1px solid #a0b8e8; border-radius:10px; padding:12px 16px; text-align:center;">
+          <div style="font-size:13px; font-weight:800; color:#1a3a9e; line-height:1.5;">ダイエットのカギは、<br>代謝にある！</div>
+        </div>
+        <div class="b2-hook">どうやって代謝を上げるの？→</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== TYPE C ===== -->
+<div class="section-label">TYPE C — 代謝スロータイプ</div>
+<div class="cards-wrap">
+
+  <div class="card-unit">
+    <div class="card-label">CARD C-1</div>
+    <div class="existing-frame">
+      <div class="existing-badge">既存デザイン（変更なし）</div>
+      <div class="existing-body">
+        <div class="existing-bubble">あなたの診断結果は…</div>
+        <div class="existing-type">代謝スロー<br>タイプ</div>
+        <div class="existing-sub">少し食べただけで体重が増えてしまう</div>
+        <div class="existing-hook">なぜ食べてないのに太る？その理由は？</div>
+        <div class="existing-note">※水色背景・かわいいイラスト・既存コピーのまま</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-unit">
+    <div class="card-label">CARD C-2（シーン）</div>
+    <div class="frame c2">
+      <div class="c2-hero">
+        <div class="c2-hero-deco"></div>
+        <div class="c2-label">あなたのタイプの特徴</div>
+        <div class="c2-hl">食べてないのに、<br>なぜか太る。</div>
+      </div>
+      <div class="c2-body">
+        <div class="scene-block">
+          <div class="scene-line">運動しても、なかなか体型が変わらない</div>
+          <div class="scene-divider"></div>
+          <div class="scene-line">昔より食べる量減ったのに、むしろ太った気がする</div>
+        </div>
+        <div class="c2-hook">その理由は？→</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-unit">
+    <div class="card-label">CARD C-3（メカニズム+ハンマー）</div>
+    <div class="frame c2">
+      <div class="c2-hero">
+        <div class="c2-hero-deco"></div>
+        <div class="c2-label">なぜそうなるの？</div>
+        <div class="c2-hl">それ、<br>"代謝低下"のサインかも。</div>
+      </div>
+      <div class="c2-body">
+        <svg width="100%" viewBox="0 0 280 118" xmlns="http://www.w3.org/2000/svg">
+          <text x="4" y="9" font-size="7.5" fill="#999" font-family="sans-serif">年齢区分基礎代謝量（目安）</text>
+          <rect x="8"   y="12" width="24" height="88" rx="2" fill="#ff7030"/>
+          <rect x="40"  y="20" width="24" height="80" rx="2" fill="#ff8040"/>
+          <rect x="72"  y="32" width="24" height="68" rx="2" fill="#ff9450"/>
+          <rect x="104" y="44" width="24" height="56" rx="2" fill="#ffa862"/>
+          <rect x="136" y="57" width="24" height="43" rx="2" fill="#ffbc74"/>
+          <rect x="168" y="69" width="24" height="31" rx="2" fill="#ffd086"/>
+          <path d="M 20,14 Q 100,18 192,73" stroke="#cc2200" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <polygon points="184,68 196,78 183,80" fill="#cc2200"/>
+          <text x="20"  y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">12〜14</text>
+          <text x="52"  y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">15〜17</text>
+          <text x="84"  y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">18〜29</text>
+          <text x="116" y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">30〜49</text>
+          <text x="148" y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">50〜69</text>
+          <text x="180" y="112" font-size="6.5" fill="#888" text-anchor="middle" font-family="sans-serif">70以上</text>
+          <text x="238" y="32" font-size="10" font-weight="bold" fill="#cc2200" text-anchor="middle" font-family="sans-serif">年齢と</text>
+          <text x="238" y="46" font-size="10" font-weight="bold" fill="#cc2200" text-anchor="middle" font-family="sans-serif">共に</text>
+          <text x="238" y="64" font-size="17" font-weight="bold" fill="#cc2200" text-anchor="middle" font-family="sans-serif">低下!</text>
+        </svg>
+        <div style="display:flex; align-items:center; gap:12px; background:#eef9f2; border:1px solid #b0dfc0; border-radius:10px; padding:10px 14px;">
+          <div style="flex:1;">
+            <div style="font-size:10px; color:#999; font-weight:700; margin-bottom:2px;">基礎代謝量</div>
+            <div style="font-size:12px; color:#1a6a30; font-weight:800;">10代をピークに</div>
+          </div>
+          <div style="background:linear-gradient(135deg,#ff8c00,#ff5500); width:54px; height:54px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 8px rgba(255,100,0,0.3);">
+            <div style="font-size:16px; font-weight:900; color:white; line-height:1.1;">1/6</div>
+            <div style="font-size:8px; color:rgba(255,255,255,0.9); font-weight:700;">以下へ</div>
+          </div>
+        </div>
+        <!-- v4変更: 強調ブロック（タイプC・緑色） -->
+        <div style="border:2px solid #1a6a30; border-radius:12px; padding:14px 16px; text-align:center; background:#f0faf2;">
+          <div style="font-size:11px; color:#aaa; font-weight:700; margin-bottom:6px;">代謝が落ちると…</div>
+          <div style="font-size:16px; font-weight:900; color:#1a6a30; line-height:1.5;">同じ食事でも<br><span style="font-size:22px; display:block; margin:4px 0;">溜め込みやすい体</span>になってしまう。</div>
+        </div>
+        <div style="background:#eef9f2; border:1px solid #90d0a8; border-radius:10px; padding:12px 16px; text-align:center;">
+          <div style="font-size:13px; font-weight:800; color:#1a6a30; line-height:1.5;">ダイエットのカギは、<br>代謝にある！</div>
+        </div>
+        <div class="c2-hook">どうやって代謝を上げるの？→</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== 共通 ===== -->
+<div class="section-label">共通（全タイプ） — Card 4・5・6</div>
+<div class="cards-wrap">
+
+  <div class="card-unit">
+    <div class="card-label">CARD 4（共通）体温×代謝</div>
+    <div class="frame k4">
+      <div class="k4-hero">
+        <div class="k4-hero-glow"></div>
+        <div class="k4-hl">代謝を上げるカギは、<br><span>体温</span>にある！</div>
+      </div>
+      <div class="k4-body">
+        <!-- v4追加: なぜ体温が大事なのか？のブリッジ -->
+        <div style="background:rgba(255,153,68,0.08); border:1px solid rgba(255,153,68,0.25); border-radius:10px; padding:14px 16px;">
+          <div style="font-size:10px; color:rgba(255,200,100,0.7); font-weight:700; letter-spacing:.08em; margin-bottom:6px;">なぜ体温が大事なの？</div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.7); line-height:1.75;">体温が下がると、身体の<strong style="color:rgba(255,255,255,0.9);">エネルギーを燃やす力も一緒に低下</strong>します。<br>逆に体温が整うと…</div>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:4px 0;">
+          <div style="width:100%; background:rgba(255,153,68,0.12); border:1px solid rgba(255,153,68,0.3); border-radius:10px; padding:12px 16px; text-align:center;">
+            <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-bottom:4px;">体温が</div>
+            <div style="font-size:26px; font-weight:900; color:#ff9944;">1℃ UP</div>
+          </div>
+          <div style="font-size:20px; color:rgba(255,153,68,0.5); line-height:1;">↓</div>
+          <div style="width:100%; background:rgba(255,200,60,0.1); border:1px solid rgba(255,200,60,0.25); border-radius:10px; padding:12px 16px; text-align:center;">
+            <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-bottom:4px;">基礎代謝が</div>
+            <div style="font-size:26px; font-weight:900; color:#ffcc44;">13〜15% UP</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.35); margin-top:6px;">＝ 脂肪が燃えやすい体</div>
+            <div style="font-size:20px; font-weight:900; color:#ff9944; margin-top:2px;">+180kcal</div>
+            <div style="font-size:10px; color:rgba(255,255,255,0.3); margin-top:3px;">ウォーキング約1時間分</div>
+          </div>
+        </div>
+        <div class="k4-cta">
+          <div class="k4-cta-text">体温を上げる方法は？→</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-unit">
+    <div class="card-label">CARD 5（共通）食事・運動×体温</div>
+    <div class="frame k4">
+      <div class="k4-hero">
+        <div class="k4-hero-glow"></div>
+        <div class="k4-hl"><span>食事</span>と<span>運動</span>で<br>体温→代謝アップ</div>
+      </div>
+      <div class="k4-body">
+        <div style="display:flex; gap:10px;">
+          <div style="flex:1; background:rgba(255,153,68,0.1); border:1px solid rgba(255,153,68,0.25); border-radius:12px; padding:12px; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center;">
+            <div style="width:100%; aspect-ratio:1; background:rgba(255,255,255,0.08); border-radius:8px; display:flex; align-items:center; justify-content:center;">
+              <div style="font-size:9px; color:rgba(255,255,255,0.3); line-height:1.4;">運動<br>イラスト</div>
+            </div>
+            <div style="font-size:12px; font-weight:800; color:rgba(255,255,255,0.85);">①適度な運動</div>
+            <div style="font-size:13px; font-weight:800; color:rgba(255,153,68,0.85); line-height:1.5;">🔥 体温UP<br>→ 代謝UP</div>
+          </div>
+          <div style="flex:1; background:rgba(255,153,68,0.1); border:1px solid rgba(255,153,68,0.25); border-radius:12px; padding:12px; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center;">
+            <div style="width:100%; aspect-ratio:1; background:rgba(255,255,255,0.08); border-radius:8px; display:flex; align-items:center; justify-content:center;">
+              <div style="font-size:9px; color:rgba(255,255,255,0.3); line-height:1.4;">食事<br>イラスト</div>
+            </div>
+            <div style="font-size:12px; font-weight:800; color:rgba(255,255,255,0.85);">②栄養バランス<br>の良い食事</div>
+            <div style="font-size:13px; font-weight:800; color:rgba(255,153,68,0.85); line-height:1.5;">🔥 体温UP<br>→ 代謝UP</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; margin:2px 0;">
+          <div style="flex:1; height:1px; background:rgba(255,153,68,0.2);"></div>
+          <div style="background:linear-gradient(135deg,#ff8c00,#ff5500); width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:900; color:white; flex-shrink:0; box-shadow:0 2px 8px rgba(255,100,0,0.35);">でも</div>
+          <div style="flex:1; height:1px; background:rgba(255,153,68,0.2);"></div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px; margin-top:4px;">
+          <div style="font-size:12px; color:rgba(255,255,255,0.6); line-height:1.6; border-left:2px solid rgba(255,153,68,0.3); padding-left:10px;">「食事制限してるのに、体型が変わらない」</div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.6); line-height:1.6; border-left:2px solid rgba(255,153,68,0.3); padding-left:10px;">「運動しても、なかなか続かない…」</div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.6); line-height:1.6; border-left:2px solid rgba(255,153,68,0.3); padding-left:10px;">「痩せてもすぐリバウンドしちゃう」</div>
+        </div>
+        <div style="text-align:right; font-size:12px; font-weight:700; color:rgba(255,153,68,0.65); padding-top:12px; border-top:1px solid rgba(255,153,68,0.1); margin-top:auto;">何か良い方法はないの？→</div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card-unit">
+    <div class="card-label">CARD 6（共通）サプリCTA</div>
+    <div class="frame k4">
+      <div class="k4-hero">
+        <div class="k4-hero-glow"></div>
+        <div class="k4-hl"><span>体温×代謝アップ</span>の<br>サポートアイテム</div>
+      </div>
+      <div class="k4-body">
+        <div style="display:flex; gap:8px;">
+          <div style="flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px; text-align:center;">
+            <div style="font-size:20px; margin-bottom:4px;">🏃</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.3); font-weight:700;">運動</div>
+          </div>
+          <div style="flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px; text-align:center;">
+            <div style="font-size:20px; margin-bottom:4px;">🥗</div>
+            <div style="font-size:11px; color:rgba(255,255,255,0.3); font-weight:700;">食事管理</div>
+          </div>
+        </div>
+        <div style="text-align:center; font-size:12px; color:rgba(255,255,255,0.3); font-weight:600;">続けるのが難しい…</div>
+        <div style="text-align:center; font-size:22px; color:rgba(255,153,68,0.4); line-height:1;">↓</div>
+        <div style="background:rgba(255,153,68,0.15); border:1px solid rgba(255,153,68,0.4); border-radius:12px; padding:16px; text-align:center; display:flex; flex-direction:column; gap:6px;">
+          <div style="font-size:10px; color:rgba(255,153,68,0.8); font-weight:700; letter-spacing:.08em;">サプリを取り入れるのがおすすめ</div>
+          <div style="display:flex; gap:6px; justify-content:center; flex-wrap:wrap; margin:4px 0;">
+            <div style="background:rgba(255,153,68,0.2); border:1px solid rgba(255,153,68,0.4); border-radius:20px; padding:5px 10px; font-size:11px; font-weight:700; color:rgba(255,255,255,0.8);">🔥 代謝UP</div>
+            <div style="background:rgba(255,153,68,0.2); border:1px solid rgba(255,153,68,0.4); border-radius:20px; padding:5px 10px; font-size:11px; font-weight:700; color:rgba(255,255,255,0.8);">💧 脂肪燃焼</div>
+            <div style="background:rgba(255,153,68,0.2); border:1px solid rgba(255,153,68,0.4); border-radius:20px; padding:5px 10px; font-size:11px; font-weight:700; color:rgba(255,255,255,0.8);">❤️ 血行促進</div>
+          </div>
+          <div style="font-size:13px; font-weight:800; color:white; line-height:1.6;">体温×代謝アップをサポート<br>日常生活で無理なく続けられる</div>
+        </div>
+        <div class="k4-cta">
+          <div class="k4-cta-text">おすすめのサプリを見る→</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
