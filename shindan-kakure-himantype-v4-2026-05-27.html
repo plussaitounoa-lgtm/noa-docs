@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>診断設計書 v4：隠れ肥満タイプ診断 2026-05-27</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+    header .subtitle { color: #7effa0; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    header p { color: #aaa; font-size: 14px; }
+    .status-banner { background: #1a2e1e; color: #7effa0; font-size: 13px; padding: 10px 32px; display: flex; gap: 24px; flex-wrap: wrap; }
+    .change-banner { background: #2e1a00; color: #ffcc66; font-size: 13px; padding: 10px 32px; }
+    main { max-width: 960px; margin: 40px auto; padding: 0 24px 80px; }
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-label { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; }
+    h2 { font-size: 19px; font-weight: 700; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 700; margin: 22px 0 10px; color: #333; }
+    h4 { font-size: 13px; font-weight: 700; margin: 16px 0 8px; color: #555; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 9px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; }
+    td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; line-height: 1.6; }
+    tr:last-child td { border-bottom: none; }
+    .info { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .alert { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .pending { background: #fff8f0; border-left: 3px solid #e67e22; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .change { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .archived { background: #f7f7f7; border-left: 3px solid #ccc; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; color: #888; }
+
+    .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    .flow-step { background: #1a1a2e; color: white; border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: 600; }
+    .flow-step.light { background: #f0f4ff; color: #2c52b0; }
+    .flow-step.merged { background: #2e7d32; color: white; }
+    .flow-step.removed { background: #eee; color: #aaa; text-decoration: line-through; }
+    .flow-arrow { color: #bbb; font-size: 18px; }
+
+    .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0; }
+    .card-item { border: 1px solid #e8e8e8; border-radius: 10px; padding: 16px; background: white; }
+    .card-item.updated { border-color: #f39c12; background: #fffdf5; }
+    .card-num { font-size: 11px; font-weight: 700; color: #999; margin-bottom: 4px; }
+    .card-role { font-size: 11px; font-weight: 700; margin-bottom: 8px; }
+    .card-hl { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; line-height: 1.4; }
+    .card-scene { font-size: 12px; color: #555; background: #f7f7f7; border-radius: 6px; padding: 8px 10px; margin-bottom: 8px; line-height: 1.6; font-style: italic; }
+    .card-copy { font-size: 12px; color: #555; line-height: 1.6; margin-bottom: 8px; }
+    .card-hook { font-size: 12px; font-weight: 700; color: #27ae60; }
+    .card-hook.cta { background: #1a1a2e; color: white; text-align: center; padding: 8px; border-radius: 6px; }
+    .card-badge { font-size: 10px; display: inline-block; padding: 2px 8px; border-radius: 4px; font-weight: 700; margin-bottom: 6px; }
+    .badge-common { background: #e8f5e9; color: #2e7d32; }
+    .badge-type-a { background: #fff3e0; color: #e65100; }
+    .badge-type-b { background: #e3f0ff; color: #1a4d9e; }
+    .badge-type-c { background: #e8f5e9; color: #2e7d32; }
+    .badge-new { background: #fff3cd; color: #856404; font-size: 10px; display: inline-block; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; }
+    .badge-changed { background: #f8d7da; color: #842029; font-size: 10px; display: inline-block; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; }
+
+    .type-header { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #e8e8e8; }
+
+    .fb-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+    .fb-item:last-child { border-bottom: none; }
+    .fb-num { font-size: 18px; font-weight: 900; color: #e67e22; flex-shrink: 0; min-width: 24px; }
+    .fb-content { flex: 1; }
+    .fb-title { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
+    .fb-desc { font-size: 12px; color: #666; line-height: 1.6; }
+    .fb-action { font-size: 12px; color: #27ae60; font-weight: 600; margin-top: 4px; }
+
+    .diff-row { display: flex; gap: 12px; margin: 8px 0; }
+    .diff-before { flex: 1; background: #fff5f5; border: 1px solid #f5c6c6; border-radius: 8px; padding: 10px 12px; font-size: 12px; color: #888; }
+    .diff-after { flex: 1; background: #f0fff4; border: 1px solid #b2dfdb; border-radius: 8px; padding: 10px 12px; font-size: 12px; color: #1a5c30; }
+    .diff-label { font-size: 10px; font-weight: 700; margin-bottom: 4px; color: #aaa; }
+    .diff-after .diff-label { color: #27ae60; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>診断設計書（v4）：隠れ肥満タイプ診断</h1>
+  <div class="subtitle">★ 最新版 — B-2ストーリーライン再設計・Card-2全タイプ導線強化</div>
+  <p>SLILIN F接続 ｜ 3タイプ ｜ 2026-05-27 ｜ 前版: <a href="shindan-kakure-himantype-v3-2026-05-25.html" style="color:#7effa0;">v3（2026-05-25）</a></p>
+</header>
+
+<div class="status-banner">
+  <span>✅ B-2 heroコピー確定（体脂肪率が変わっていないから）</span>
+  <span>✅ B-2イラスト再設計（BMI・体重では見えない体脂肪率）</span>
+  <span>✅ A/B/C Card-2に「心当たりありませんか？」見出し追加</span>
+  <span>✅ Card 4に「体温が整うと…」ブリッジバッジ追加</span>
+</div>
+<div class="change-banner">
+  ⚠️ v3からの主要変更: ①B-2 heroをB-1のhookへの直接アンサーに変更  ②B-2イラストを体組成before/afterから「BMI・体重では見えない」概念図に変更  ③全タイプCard-2に「心当たりありませんか？」見出し追加  ④Card 4に「体温が整うと…」ピルバッジ追加
+</div>
+
+<main>
+
+  <!-- =============== v4変更概要 =============== -->
+  <div class="section">
+    <div class="section-label">What Changed</div>
+    <h2>v4変更概要（Noa壁打ち→Ren FB反映）</h2>
+
+    <div class="fb-item">
+      <div class="fb-num">1</div>
+      <div class="fb-content">
+        <div class="fb-title">B-2 heroがB-1のhookに答えていなかった</div>
+        <div class="fb-desc">v3のB-2 hero「BMIが見ているのは、体重と身長だけ。」はB-1 hook「ダイエットしても体型が変わらない」への直接アンサーになっていなかった。Bタイプの診断トリガーは「痩せてもすぐに戻る」であり、体型変化のなさが起点。</div>
+        <div class="fb-action">→ B-2 heroを「体型が変わらないのは、体脂肪率が変わっていないから。」に変更。B-1→B-2の因果が明確な導線に。</div>
+      </div>
+    </div>
+
+    <div class="fb-item">
+      <div class="fb-num">2</div>
+      <div class="fb-content">
+        <div class="fb-title">B-2イラストが「カロリー制限」限定の話になっていた</div>
+        <div class="fb-desc">体組成before/after比較図（脂肪少し減・筋肉大幅減→体脂肪率変わらず）は、食事制限ダイエット前提のメカニズム説明になっており、heroの「体脂肪率が変わっていない」とも、B-3の代謝低下とも噛み合わなかった。「筋肉が減る」を見せるとB-3の代謝低下が薄まる問題もあった。</div>
+        <div class="fb-action">→ 「BMI・体重では見えない体脂肪率」の概念図に変更。左パネル（BMI/体重計→正常範囲）・右パネル（体の中は脂肪多め）の対比で、B-2の役割を「事実提示」に絞る。メカニズム説明はB-3に委ねる。</div>
+      </div>
+    </div>
+
+    <div class="fb-item">
+      <div class="fb-num">3</div>
+      <div class="fb-content">
+        <div class="fb-title">Card-2のシーンへの入り口が唐突だった</div>
+        <div class="fb-desc">ヒーロー後にシーン2つが直接並ぶ構造で、「この話はあなたのこと？」という橋渡しが欠けていた。</div>
+        <div class="fb-action">→ 全タイプ（A/B/C）のCard-2に「心当たりありませんか？」見出しを追加。タイプカラーのグラジエントライン付き。</div>
+      </div>
+    </div>
+
+    <div class="fb-item">
+      <div class="fb-num">4</div>
+      <div class="fb-content">
+        <div class="fb-title">Card 4の体温への接続が弱かった</div>
+        <div class="fb-desc">「なぜ体温が代謝に関係するのか？」の説明ブロックとCard 5の体温数値の間に、感情的な引きが不足していた。</div>
+        <div class="fb-action">→ 「体温が整うと…」ピルバッジ（🌡️アイコン付き・オレンジグラジエント）をCard 5の「でも」バッジと同スタイルで追加。Card 4→5への期待感を高める。</div>
+      </div>
+    </div>
+
+    <div class="fb-item">
+      <div class="fb-num">5</div>
+      <div class="fb-content">
+        <div class="fb-title">C-2のイラストが体験と乖離していた</div>
+        <div class="fb-desc">C-2のイラストが「少食なのに体重が増える」というC-typeの体験に直結していなかった。</div>
+        <div class="fb-action">→ 「少食のつもり → なのに → 体重が増える…」の2コマイラストに変更。食事シーン（箸・小皿）と体重計（増加中）の対比で、C-typeの当事者感を高める。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============== ナラティブ設計メモ =============== -->
+  <div class="section">
+    <div class="section-label">Narrative Design</div>
+    <h2>カード間ナラティブ設計（v4確定）</h2>
+
+    <div class="info">
+      <strong>設計原則：</strong> Card-1のhookにCard-2のheroが直接アンサーする構造。Card-2の役割は「状態の提示」のみ。メカニズム説明（なぜ？）はCard-3に委ねる。
+    </div>
+
+    <h3>タイプA — かくれ内臓脂肪タイプ</h3>
+    <table>
+      <thead><tr><th>カード</th><th>役割</th><th>キーメッセージ</th></tr></thead>
+      <tbody>
+        <tr><td>A-1 hook</td><td>診断結果・問いかけ</td><td>「BMIは標準なのにお腹周りだけ気になる」→ なぜそうなるの？</td></tr>
+        <tr><td>A-2 hero</td><td>A-1への直接アンサー</td><td>「BMIが見ているのは、体重と身長だけ。」</td></tr>
+        <tr><td>A-2 scenes</td><td>体験確認（自分ごと化）</td><td>お腹だけ出てきた気がする / 食事に気をつけても効果を感じない</td></tr>
+        <tr><td>A-3</td><td>メカニズム＋ハンマー</td><td>代謝低下 → 溜め込みやすい体 → 「ダイエットのカギは代謝にある」</td></tr>
+      </tbody>
+    </table>
+
+    <h3>タイプB — かくれ体脂肪タイプ</h3>
+    <table>
+      <thead><tr><th>カード</th><th>役割</th><th>キーメッセージ</th></tr></thead>
+      <tbody>
+        <tr><td>B-1 hook</td><td>診断結果・問いかけ</td><td>「ダイエットしても体型が変わらない」→ なぜ体型が変わらないの？</td></tr>
+        <tr><td>B-2 hero</td><td>B-1への直接アンサー</td><td>「体型が変わらないのは、体脂肪率が変わっていないから。」<span class="badge-changed">v4変更</span></td></tr>
+        <tr><td>B-2 イラスト</td><td>事実の視覚化（状態提示）</td><td>BMI・体重では正常→でも体の中は体脂肪率高め。因果説明なし。<span class="badge-changed">v4変更</span></td></tr>
+        <tr><td>B-2 scenes</td><td>体験確認（自分ごと化）</td><td>つまめる肉が多くなってきた / 締まった感じがしない</td></tr>
+        <tr><td>B-3</td><td>メカニズム＋ハンマー</td><td>代謝低下 → 溜め込みやすい体 → 「ダイエットのカギは代謝にある」</td></tr>
+      </tbody>
+    </table>
+
+    <h3>タイプC — 代謝スロータイプ</h3>
+    <table>
+      <thead><tr><th>カード</th><th>役割</th><th>キーメッセージ</th></tr></thead>
+      <tbody>
+        <tr><td>C-1 hook</td><td>診断結果・問いかけ</td><td>「少し食べただけで体重が増えてしまう」→ なぜ食べてないのに太る？</td></tr>
+        <tr><td>C-2 hero</td><td>C-1への直接アンサー</td><td>「食べてないのに、なぜか太る。」</td></tr>
+        <tr><td>C-2 イラスト</td><td>体験の視覚化</td><td>少食のつもり → なのに → 体重が増える…（2コマ）<span class="badge-changed">v4変更</span></td></tr>
+        <tr><td>C-2 scenes</td><td>体験確認（自分ごと化）</td><td>運動しても体型が変わらない / 昔より食べる量減ったのに太った</td></tr>
+        <tr><td>C-3</td><td>メカニズム＋ハンマー</td><td>代謝低下 → 溜め込みやすい体 → 「ダイエットのカギは代謝にある」</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- =============== ファネル構造（変更なし） =============== -->
+  <div class="section">
+    <div class="section-label">Funnel</div>
+    <h2>ファネル構造（v3から変更なし）</h2>
+    <div class="flow">
+      <div class="flow-step light">PU</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step light">友達追加</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step light">診断 Q1〜Q4</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step merged">結果カル（統合）<br><small>タイプ別3枚 + 共通3枚 = 12枚</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step removed">教育カル（廃止）</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">PRカル SLILIN F</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step light">CTA</div>
+    </div>
+  </div>
+
+  <!-- =============== 結果カルーセル =============== -->
+  <div class="section">
+    <div class="section-label">Section 4 — Updated</div>
+    <h2>結果カルーセル統合版（12枚）</h2>
+
+    <div class="change">
+      <strong>v4確定構成:</strong> 構成枚数・カード分割はv3から変更なし（タイプ別3枚×3＋共通3枚＝12枚）。
+      v4の変更はコピー・イラスト・見出しの追加のみ。<br>
+      ビジュアル確認: <a href="visual-result-carousel-kakurehiman-v4-2026-05-27.html">visual-result-carousel-kakurehiman-v4-2026-05-27.html</a>
+    </div>
+
+    <!-- タイプA -->
+    <h3>タイプA — かくれ内臓脂肪タイプ</h3>
+    <div class="card-grid">
+      <div class="card-item">
+        <div class="card-num">Card A-1</div>
+        <div class="card-badge badge-type-a">タイプ別</div>
+        <div class="card-role" style="color:#5fa8cc;">既存デザイン（変更なし）</div>
+        <div class="card-hl">かくれ内臓脂肪タイプ</div>
+        <div class="card-copy" style="color:#5fa8cc;">水色背景・かわいいイラスト。実物コピー：「BMIは標準なのにお腹周りだけ気になる」</div>
+        <div class="card-hook">なぜそうなるの？→</div>
+      </div>
+      <div class="card-item updated">
+        <div class="card-num">Card A-2 <span class="badge-new">v4更新</span></div>
+        <div class="card-badge badge-type-a">タイプ別</div>
+        <div class="card-role" style="color:#e65100;">シーン（感情共感）</div>
+        <div class="card-hl">BMIが見ているのは、体重と身長だけ。</div>
+        <div class="card-copy">
+          【イラスト】BMI同じでも体型が違う2人比較（スリム vs お腹ぽっこり）<br>
+          【見出し】心当たりありませんか？（オレンジグラジエントライン付き）<span class="badge-new">新規追加</span>
+        </div>
+        <div class="card-scene">「体重は変わってないのに、なんかお腹だけ出てきた気がする」<br>「食事に気をつけてるのに、効果を感じない」</div>
+        <div class="card-hook">なぜそうなるの？→</div>
+      </div>
+      <div class="card-item">
+        <div class="card-num">Card A-3</div>
+        <div class="card-badge badge-type-a">タイプ別</div>
+        <div class="card-role" style="color:#e65100;">メカニズム＋ハンマー統合</div>
+        <div class="card-hl">それ、"代謝低下"のサインかも。</div>
+        <div class="card-copy">
+          【グラフ】年齢区分別基礎代謝量（棒グラフ・右肩下がり・赤矢印「年齢と共に低下!」）<br>
+          【バッジ】基礎代謝量 10代をピークに1/6以下へ<br>
+          代謝が落ちると、同じ食事でも溜め込みやすい体になってしまう。<br>
+          【💡】食事を減らしてもお腹だけ変わらないのは、ここが原因。<br>
+          【ハンマー】ダイエットのカギは、代謝にある。
+        </div>
+        <div class="card-hook">代謝が上がると、体型は変わる？→</div>
+      </div>
+    </div>
+
+    <!-- タイプB -->
+    <h3>タイプB — かくれ体脂肪タイプ</h3>
+    <div class="change" style="margin-bottom:12px;">
+      <strong>v4の主要変更はBタイプ。</strong> 診断トリガー「痩せてもすぐに戻る」からのストーリーラインを再設計。hero・イラストを刷新。
+    </div>
+    <div class="card-grid">
+      <div class="card-item">
+        <div class="card-num">Card B-1</div>
+        <div class="card-badge badge-type-b">タイプ別</div>
+        <div class="card-role" style="color:#5fa8cc;">既存デザイン（変更なし）</div>
+        <div class="card-hl">かくれ体脂肪タイプ</div>
+        <div class="card-copy" style="color:#5fa8cc;">水色背景・かわいいイラスト。実物コピー：「ダイエットしても体型が変わらない」</div>
+        <div class="card-hook">なぜ体型が変わらないの？その理由は？</div>
+      </div>
+      <div class="card-item updated">
+        <div class="card-num">Card B-2 <span class="badge-changed">v4大幅変更</span></div>
+        <div class="card-badge badge-type-b">タイプ別</div>
+        <div class="card-role" style="color:#1a4d9e;">シーン（感情共感）</div>
+        <div class="card-hl" style="color:#1a3a9e;">体型が変わらないのは、体脂肪率が変わっていないから。</div>
+        <div class="card-copy">
+          【イラスト】「BMI・体重では見えない体脂肪率」概念図<span class="badge-changed">全面変更</span><br>
+          　左：BMI/体重計→✓正常範囲（問題ないに見えてしまう）<br>
+          　右：体の中は→脂肪（大）/ 筋肉（小）<br>
+          ※before/after比較なし。状態の提示のみ（メカニズム説明しない）<br>
+          【見出し】心当たりありませんか？（ブルーグラジエントライン付き）<span class="badge-new">新規追加</span>
+        </div>
+        <div class="card-scene">「体重は変わらないのに、つまめる肉が多くなってきた」<br>「ダイエットしてるのに、締まった感じがしない」</div>
+        <div class="card-hook">なぜ体型が変わらないの？→</div>
+      </div>
+      <div class="card-item">
+        <div class="card-num">Card B-3</div>
+        <div class="card-badge badge-type-b">タイプ別</div>
+        <div class="card-role" style="color:#1a4d9e;">メカニズム＋ハンマー統合</div>
+        <div class="card-hl">それ、"代謝低下"のサインかも。</div>
+        <div class="card-copy">
+          【グラフ】年齢区分別基礎代謝量（棒グラフ・右肩下がり・赤矢印「年齢と共に低下!」）<br>
+          【バッジ】基礎代謝量 10代をピークに1/6以下へ<br>
+          代謝が落ちると、同じ食事でも溜め込みやすい体になってしまう。<br>
+          【💡】ダイエットしてもすっきりしないのは、ここが原因。<br>
+          【ハンマー】ダイエットのカギは、代謝にある。
+        </div>
+        <div class="card-hook">代謝が上がると、体型は変わる？→</div>
+      </div>
+    </div>
+
+    <div class="info" style="margin-top:4px;">
+      <strong>B-2設計の考え方：</strong><br>
+      B-2の役割は「体脂肪率が高い」という事実の提示のみ。「なぜ高いままなのか」「筋肉が減るから」などのメカニズム説明はB-3に委ねる。B-2でメカニズムを見せるとB-3の代謝低下が薄まり、「え、筋肉の話じゃなかったの？」の混乱が生まれる。
+    </div>
+
+    <!-- タイプC -->
+    <h3>タイプC — 代謝スロータイプ</h3>
+    <div class="card-grid">
+      <div class="card-item">
+        <div class="card-num">Card C-1</div>
+        <div class="card-badge badge-type-c">タイプ別</div>
+        <div class="card-role" style="color:#5fa8cc;">既存デザイン（変更なし）</div>
+        <div class="card-hl">代謝スロータイプ</div>
+        <div class="card-copy" style="color:#5fa8cc;">水色背景・かわいいイラスト。実物コピー：「少し食べただけで体重が増えてしまう」</div>
+        <div class="card-hook">なぜ食べてないのに太る？その理由は？</div>
+      </div>
+      <div class="card-item updated">
+        <div class="card-num">Card C-2 <span class="badge-new">v4更新</span></div>
+        <div class="card-badge badge-type-c">タイプ別</div>
+        <div class="card-role" style="color:#1a7a45;">シーン（感情共感）</div>
+        <div class="card-hl">食べてないのに、なぜか太る。</div>
+        <div class="card-copy">
+          【イラスト】少食のつもり → なのに → 体重が増える… 2コマ<span class="badge-changed">変更</span><br>
+          　左：食事シーン（箸・小皿）「少食のつもり」<br>
+          　右：体重計（増加中・上向き矢印）「体重が増える…」<br>
+          【見出し】心当たりありませんか？（グリーングラジエントライン付き）<span class="badge-new">新規追加</span>
+        </div>
+        <div class="card-scene">「運動しても、なかなか体型が変わらない」<br>「昔より食べる量減ったのに、むしろ太った気がする」</div>
+        <div class="card-hook">その理由は？→</div>
+      </div>
+      <div class="card-item">
+        <div class="card-num">Card C-3</div>
+        <div class="card-badge badge-type-c">タイプ別</div>
+        <div class="card-role" style="color:#1a7a45;">メカニズム＋ハンマー統合</div>
+        <div class="card-hl">それ、"代謝低下"のサインかも。</div>
+        <div class="card-copy">
+          【グラフ】年齢区分別基礎代謝量（棒グラフ・右肩下がり・赤矢印「年齢と共に低下!」）<br>
+          【バッジ】基礎代謝量 10代をピークに1/6以下へ<br>
+          代謝が落ちると、同じ食事でも溜め込みやすい体になってしまう。<br>
+          【💡】食べてないのに太るのは、意志じゃなく体の仕組みの問題。<br>
+          【ハンマー】ダイエットのカギは、代謝にある。
+        </div>
+        <div class="card-hook">代謝が上がると、体型は変わる？→</div>
+      </div>
+    </div>
+
+    <!-- 共通 -->
+    <h3>共通（全タイプ） — Card 4・5・6</h3>
+    <div class="card-grid">
+      <div class="card-item updated">
+        <div class="card-num">Card 4（共通） <span class="badge-new">v4更新</span></div>
+        <div class="card-badge badge-common">全タイプ共通</div>
+        <div class="card-role" style="color:#ff9944;">体温×代謝</div>
+        <div class="card-hl" style="color:#cc6600;">代謝を上げるカギは、体温にある！</div>
+        <div class="card-copy">
+          【説明ブロック】なぜ体温が大事なの？ → 体温が下がるとエネルギーを燃やす力も低下<br>
+          【🌡️ピルバッジ】体温が整うと… <span class="badge-new">新規追加</span>（Card5の「でも」と同スタイル）<br>
+          体温1℃ UP → 基礎代謝13〜15%UP → +180kcal（ウォーキング約1時間分）
+        </div>
+        <div class="card-hook">体温を上げる方法は？→</div>
+      </div>
+      <div class="card-item" style="background:#0f0a00;border-color:#3a2800;">
+        <div class="card-num" style="color:#aaa;">Card 5（共通）</div>
+        <div class="card-badge badge-common">全タイプ共通</div>
+        <div class="card-role" style="color:#ff9944;">食事・運動×体温（変更なし）</div>
+        <div class="card-hl" style="color:white;">食事と運動で体温→代謝アップ</div>
+        <div class="card-copy" style="color:#ccc;">
+          ①適度な運動 🔥体温UP→代謝UP<br>
+          ②栄養バランスの良い食事 🔥体温UP→代謝UP<br>
+          【でもバッジ】「食事制限しても体型が変わらない」「運動しても続かない」「痩せてもすぐリバウンド」
+        </div>
+      </div>
+      <div class="card-item" style="background:#0f0a00;border-color:#3a2800;">
+        <div class="card-num" style="color:#aaa;">Card 6（共通）</div>
+        <div class="card-badge badge-common">全タイプ共通</div>
+        <div class="card-role" style="color:#ff9944;">サプリCTA（変更なし）</div>
+        <div class="card-hl" style="color:white;">体温×代謝アップのサポートアイテム</div>
+        <div class="card-copy" style="color:#ccc;">運動・食事管理 →続けるのが難しい… → サプリという選択肢</div>
+        <div class="card-hook cta">SLILIN Fを見てみる →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============== v3→v4 差分サマリー =============== -->
+  <div class="section">
+    <div class="section-label">Diff Summary</div>
+    <h2>v3 → v4 差分サマリー</h2>
+
+    <h3>B-2 hero（最重要変更）</h3>
+    <div class="diff-row">
+      <div class="diff-before">
+        <div class="diff-label">v3（変更前）</div>
+        BMIが見ているのは、体重と身長だけ。
+      </div>
+      <div class="diff-after">
+        <div class="diff-label">v4（変更後）</div>
+        体型が変わらないのは、体脂肪率が変わっていないから。<br>
+        ※B-1「ダイエットしても体型が変わらない」への直接アンサー
+      </div>
+    </div>
+
+    <h3>B-2 イラスト</h3>
+    <div class="diff-row">
+      <div class="diff-before">
+        <div class="diff-label">v3（変更前）</div>
+        体組成before/after比較（ダイエット前→カロリー制限→ダイエット後）<br>
+        脂肪↓少し / 筋肉↓大幅 → 体脂肪率はほぼ変わらず<br>
+        ※食事制限前提、メカニズム説明になってしまっていた
+      </div>
+      <div class="diff-after">
+        <div class="diff-label">v4（変更後）</div>
+        「BMI・体重では見えない体脂肪率」概念図<br>
+        左パネル：BMI/体重計→✓正常範囲「問題ないに見えてしまう」<br>
+        右パネル：体の中は→脂肪(大)/筋肉(小)<br>
+        ※状態の提示のみ。メカニズム説明なし
+      </div>
+    </div>
+
+    <h3>Card-2 共通追加（A/B/C全タイプ）</h3>
+    <div class="diff-row">
+      <div class="diff-before">
+        <div class="diff-label">v3（変更前）</div>
+        ヒーロー → シーン2つ（直接並列）
+      </div>
+      <div class="diff-after">
+        <div class="diff-label">v4（変更後）</div>
+        ヒーロー → 「心当たりありませんか？」見出し → シーン2つ<br>
+        ※タイプカラーのグラジエントライン（左右フェード）付き
+      </div>
+    </div>
+
+    <h3>C-2 イラスト</h3>
+    <div class="diff-row">
+      <div class="diff-before">
+        <div class="diff-label">v3（変更前）</div>
+        体型比較図（人物シルエット）
+      </div>
+      <div class="diff-after">
+        <div class="diff-label">v4（変更後）</div>
+        「少食のつもり → なのに → 体重が増える…」2コマイラスト<br>
+        左：食事シーン（箸・小皿） / 右：体重計（増加中・上向き矢印）
+      </div>
+    </div>
+
+    <h3>Card 4 追加</h3>
+    <div class="diff-row">
+      <div class="diff-before">
+        <div class="diff-label">v3（変更前）</div>
+        なぜ体温が大事なの？説明ブロック → 体温1℃UP数値
+      </div>
+      <div class="diff-after">
+        <div class="diff-label">v4（変更後）</div>
+        説明ブロック →「🌡️ 体温が整うと…」ピルバッジ → 体温1℃UP数値<br>
+        ※Card5の「でも」バッジと同スタイル（オレンジグラジエント）
+      </div>
+    </div>
+  </div>
+
+  <!-- =============== PRカル（参照のみ） =============== -->
+  <div class="section">
+    <div class="section-label">Section 6 — Reference</div>
+    <h2>PRカルーセル SLILIN F（v3から変更なし）</h2>
+    <div class="archived">
+      PRカルはv3時点のままです。v4での変更対象外。<br>
+      詳細はv3設計書を参照: <a href="shindan-kakure-himantype-v3-2026-05-25.html" style="color:#aaa;">shindan-kakure-himantype-v3-2026-05-25.html</a>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
