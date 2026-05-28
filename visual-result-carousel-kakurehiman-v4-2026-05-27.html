@@ -355,34 +355,38 @@
         <div class="b2-hl">ダイエットで落ちているのは、<br>脂肪だけじゃない。</div>
       </div>
       <div class="b2-body">
-        <div style="display:flex; justify-content:center; gap:24px; padding:8px 0 4px;">
-          <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
-            <svg width="60" height="110" viewBox="0 0 60 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="30" cy="14" r="10" fill="#f4c09a" stroke="#e07a40" stroke-width="1.5"/>
-              <rect x="26" y="23" width="8" height="7" rx="3" fill="#f4c09a"/>
-              <path d="M18 30 Q20 28 30 28 Q40 28 42 30 L40 62 Q38 65 30 65 Q22 65 20 62 Z" fill="#fde8d5" stroke="#e07a40" stroke-width="1.2"/>
-              <path d="M18 32 Q10 40 11 55" stroke="#f4c09a" stroke-width="5" stroke-linecap="round"/>
-              <path d="M42 32 Q50 40 49 55" stroke="#f4c09a" stroke-width="5" stroke-linecap="round"/>
-              <path d="M24 64 Q22 80 22 96" stroke="#f4c09a" stroke-width="5.5" stroke-linecap="round"/>
-              <path d="M36 64 Q38 80 38 96" stroke="#f4c09a" stroke-width="5.5" stroke-linecap="round"/>
-            </svg>
-            <div style="font-size:9px; color:#1a3a9e; font-weight:700; text-align:center; line-height:1.3;">体脂肪<br>均等</div>
-          </div>
-          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
-            <div style="background:#3a6ad8; color:white; font-size:8px; font-weight:800; border-radius:20px; padding:3px 8px; letter-spacing:.04em;">BMI<br>同じ</div>
-          </div>
-          <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
-            <svg width="60" height="110" viewBox="0 0 60 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="30" cy="14" r="10" fill="#f4c09a" stroke="#e07a40" stroke-width="1.5"/>
-              <rect x="26" y="23" width="8" height="7" rx="3" fill="#f4c09a"/>
-              <path d="M18 30 Q19 28 30 28 Q41 28 42 30 L46 52 Q44 65 30 66 Q16 65 14 52 Z" fill="#fde8d5" stroke="#e07a40" stroke-width="1.2"/>
-              <path d="M18 32 Q9 40 10 55" stroke="#f4c09a" stroke-width="5" stroke-linecap="round"/>
-              <path d="M42 32 Q51 40 50 55" stroke="#f4c09a" stroke-width="5" stroke-linecap="round"/>
-              <path d="M24 65 Q22 80 22 96" stroke="#f4c09a" stroke-width="5.5" stroke-linecap="round"/>
-              <path d="M36 65 Q38 80 38 96" stroke="#f4c09a" stroke-width="5.5" stroke-linecap="round"/>
-            </svg>
-            <div style="font-size:9px; color:#1a3a9e; font-weight:700; text-align:center; line-height:1.3;">お腹に<br>集中</div>
-          </div>
+        <!-- v4修正: B-2専用「体組成変化」比較イラスト（ダイエット前後） -->
+        <div style="padding:6px 0 4px;">
+          <svg width="100%" viewBox="0 0 280 150" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">
+            <!-- ===== 左：ダイエット前 ===== -->
+            <text x="60" y="13" font-size="9" fill="#888" text-anchor="middle">ダイエット前</text>
+            <!-- 脂肪バー -->
+            <rect x="15" y="18" width="90" height="58" rx="6" fill="#ffaa55"/>
+            <text x="60" y="44" font-size="12" font-weight="bold" fill="white" text-anchor="middle">脂肪</text>
+            <text x="60" y="60" font-size="9" fill="rgba(255,255,255,0.85)" text-anchor="middle">（多い）</text>
+            <!-- 筋肉バー -->
+            <rect x="15" y="80" width="90" height="52" rx="6" fill="#5588cc"/>
+            <text x="60" y="110" font-size="12" font-weight="bold" fill="white" text-anchor="middle">筋肉</text>
+
+            <!-- ===== 中央：矢印 ===== -->
+            <text x="140" y="74" font-size="8" fill="#aaa" text-anchor="middle">カロリー</text>
+            <text x="140" y="85" font-size="8" fill="#aaa" text-anchor="middle">制限すると…</text>
+            <polygon points="132,93 148,93 140,103" fill="#bbb"/>
+
+            <!-- ===== 右：ダイエット後 ===== -->
+            <text x="220" y="13" font-size="9" fill="#888" text-anchor="middle">ダイエット後</text>
+            <!-- 脂肪バー（少し減） -->
+            <rect x="175" y="28" width="90" height="48" rx="6" fill="#ffaa55"/>
+            <text x="220" y="50" font-size="11" font-weight="bold" fill="white" text-anchor="middle">脂肪</text>
+            <text x="220" y="66" font-size="8.5" fill="rgba(255,255,255,0.9)" text-anchor="middle">少しだけ↓</text>
+            <!-- 筋肉バー（大幅減） -->
+            <rect x="175" y="80" width="90" height="22" rx="6" fill="#5588cc"/>
+            <text x="220" y="95" font-size="10" font-weight="bold" fill="white" text-anchor="middle">筋肉 大幅↓↓</text>
+            <!-- 体脂肪率バッジ -->
+            <rect x="175" y="107" width="90" height="28" rx="6" fill="rgba(200,60,0,0.1)" stroke="rgba(200,60,0,0.35)" stroke-width="1.2"/>
+            <text x="220" y="120" font-size="9" fill="#cc4400" text-anchor="middle" font-weight="bold">体脂肪率は</text>
+            <text x="220" y="131" font-size="9" fill="#cc4400" text-anchor="middle" font-weight="bold">ほぼ変わらず</text>
+          </svg>
         </div>
         <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
           <div style="flex:1; height:2px; background:linear-gradient(to right, transparent, rgba(26,58,158,0.3));"></div>
