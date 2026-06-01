@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>クライアントチェック用 | 隠れ肥満タイプ診断 × SLILIN F ファネル全体</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f0ebe4;
+      padding: 40px 0 80px;
+      min-height: 100vh;
+    }
+    .page-wrap { max-width: 1020px; margin: 0 auto; padding: 0 20px; }
+
+    /* ─── ヘッダー ─── */
+    .page-header {
+      background: #1a1a1a; border-radius: 16px;
+      padding: 28px 32px; margin-bottom: 32px;
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+    }
+    .page-header-left h1 { font-size: 20px; font-weight: 800; color: white; margin-bottom: 6px; }
+    .page-header-left p  { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+    .page-header-badges  { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    .header-badge { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
+    .hb-orange { background: rgba(216,90,0,0.3); color: #FF8C30; border: 1px solid rgba(216,90,0,0.4); }
+    .hb-green  { background: rgba(6,199,85,0.2);  color: #06c755; border: 1px solid rgba(6,199,85,0.35); }
+    .hb-gray   { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.2); }
+    .page-header-right { text-align: right; flex-shrink: 0; }
+    .check-date { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+    .check-version { font-size: 22px; font-weight: 900; color: #FF8C30; }
+
+    /* ─── セクションラベル ─── */
+    .section-header {
+      display: flex; align-items: center; gap: 14px;
+      margin: 36px 0 16px;
+    }
+    .section-step {
+      background: #D85A00; color: white;
+      font-size: 11px; font-weight: 800; padding: 4px 12px;
+      border-radius: 20px; letter-spacing: .06em; flex-shrink: 0;
+    }
+    .section-step.green { background: #06c755; }
+    .section-step.dark  { background: #1a1a1a; }
+    .section-title { font-size: 17px; font-weight: 800; color: #1a1a1a; }
+    .section-sub   { font-size: 12px; color: #888; margin-top: 2px; }
+    .section-line  { flex: 1; height: 1px; background: rgba(0,0,0,0.1); }
+
+    /* ─── フロー部分 ─── */
+    .flow-wrap {
+      background: #3a2410; border-radius: 16px;
+      padding: 28px 24px; margin-bottom: 8px;
+    }
+    .flow-inner { max-width: 440px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 0; }
+
+    .step-label {
+      background: rgba(216,90,0,0.35); border: 1px solid rgba(255,140,30,0.4);
+      color: #ffc06a; font-size: 12px; font-weight: 600;
+      padding: 5px 18px; border-radius: 20px; margin-bottom: 12px;
+      white-space: nowrap; text-align: center;
+    }
+    .arrow { width: 2px; height: 32px; background: rgba(255,255,255,0.25); position: relative; flex-shrink: 0; margin: 0 auto; }
+    .arrow::after { content:''; position:absolute; bottom:-7px; left:50%; transform:translateX(-50%); border-left:7px solid transparent; border-right:7px solid transparent; border-top:8px solid rgba(255,255,255,0.25); }
+    .step-note { font-size: 11px; color: rgba(255,255,255,0.5); text-align: center; margin: 6px 0 0; }
+
+    /* ─── PUカード ─── */
+    .pu-wrap { width: 100%; background: white; border-radius: 14px; padding: 16px; box-shadow: 0 2px 14px rgba(0,0,0,0.25); }
+    .pu-label { font-size: 10px; font-weight: 700; color: #bbb; letter-spacing: .06em; margin-bottom: 8px; }
+    .pu-inner { background: #fff5eb; border: 1.5px solid #f0b070; border-radius: 10px; padding: 14px; text-align: center; }
+    .pu-headline { font-size: 14px; font-weight: 800; color: #D85A00; margin-bottom: 5px; }
+    .pu-copy { font-size: 11px; color: #555; line-height: 1.6; }
+    .pu-buttons { display: flex; gap: 8px; margin-top: 10px; }
+    .btn-yes { flex:1; background:#06c755; color:white; border:none; border-radius:6px; padding:8px; font-size:12px; font-weight:700; }
+    .btn-no  { flex:1; background:#f0f0f0; color:#666; border:none; border-radius:6px; padding:8px; font-size:12px; font-weight:700; }
+
+    /* ─── 友達追加カード ─── */
+    .friend-card { background: #06c755; border-radius: 12px; width: 100%; padding: 20px; text-align: center; }
+    .friend-title { font-size: 18px; font-weight: 800; color: white; }
+    .friend-sub { font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 3px; }
+    .friend-goal { display:inline-block; background:rgba(255,255,255,0.25); color:white; font-size:11px; font-weight:700; padding:2px 10px; border-radius:20px; margin-top:7px; }
+
+    /* ─── LINEモック ─── */
+    .line-mock { width: 100%; background: #c8e0f4; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.2); }
+    .line-mock-header { background: #06c755; padding: 9px 12px; display: flex; align-items: center; gap: 8px; }
+    .line-mock-icon { width: 26px; height: 26px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+    .line-mock-name { font-size: 12px; font-weight: 700; color: white; }
+    .line-mock-body { padding: 12px 10px; display: flex; flex-direction: column; gap: 9px; }
+    .line-bubble { background: white; border-radius: 0 10px 10px 10px; padding: 10px 12px; font-size: 12px; color: #222; line-height: 1.6; max-width: 90%; box-shadow: 0 1px 3px rgba(0,0,0,0.07); }
+    .line-bubble strong { font-size: 13px; font-weight: 800; display: block; margin-bottom: 3px; }
+    .timing-tag { display:inline-block; background:#e0f2e9; color:#16a34a; font-size:10px; font-weight:700; padding:1px 6px; border-radius:4px; margin-bottom:3px; }
+
+    /* ─── 診断スタートカード ─── */
+    .line-shindan-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+    .shindan-card-header { background: #f5f5f5; padding: 9px 12px; font-size: 12px; font-weight: 700; color: #333; border-bottom: 1px solid #eee; }
+    .shindan-card-body { padding: 11px 12px; }
+    .shindan-inner { background: #fff8f2; border: 1px solid #f0c090; border-radius: 8px; padding: 9px 11px; font-size: 11px; color: #555; line-height: 1.6; margin-bottom: 9px; }
+    .shindan-inner .shindan-title { font-size: 12px; font-weight: 700; color: #D85A00; margin-bottom: 3px; }
+    .shindan-badge { display:inline-block; background:#fff0e0; color:#D85A00; font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; border:1px solid #f0c090; margin-top:3px; }
+    .shindan-start-btn { width: 100%; background: #D85A00; color: white; border: none; border-radius: 7px; padding: 10px; font-size: 13px; font-weight: 800; }
+
+    /* ─── 設問カード ─── */
+    .line-q-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+    .q-card-question { padding: 11px 12px 9px; font-size: 12px; font-weight: 700; color: #111; border-bottom: 1px solid #f0f0f0; line-height: 1.5; }
+    .q-card-answers { padding: 7px 9px; display: flex; flex-direction: column; gap: 5px; }
+    .q-purpose-tag { display:inline-block; background:#fff5eb; color:#D85A00; font-size:9px; font-weight:700; padding:1px 6px; border-radius:4px; margin-left:5px; vertical-align:middle; }
+    .q-answer-btn { border: 1.5px solid #D85A00; border-radius: 7px; padding: 7px 10px; font-size: 11px; color: #D85A00; font-weight: 600; display: flex; align-items: center; gap: 7px; background: white; }
+    .q-answer-btn.branch-btn { border-color: #f59e0b; color: #92400e; }
+    .q-answer-key { background: #D85A00; color: white; width: 18px; height: 18px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; flex-shrink: 0; }
+    .q-answer-key.branch { background: #f59e0b; color: #1a1a1a; }
+    .q-answer-branch { margin-left: auto; font-size: 9px; font-weight: 700; color: #f59e0b; white-space: nowrap; }
+    .q-branch-note { text-align: center; font-size: 11px; color: #f59e0b; font-weight: 700; padding: 5px 0 7px; }
+    .branch-label { background:rgba(255,255,255,0.12); border:1px dashed rgba(255,255,255,0.35); color:white; font-size:12px; font-weight:700; padding:7px 20px; border-radius:20px; text-align:center; }
+
+    /* ─── カルーセルセクション ─── */
+    .carousel-section {
+      background: white; border-radius: 16px;
+      border: 2px solid #f0e8df;
+      overflow: hidden; margin-bottom: 8px;
+    }
+    .carousel-section-header {
+      padding: 16px 22px; border-bottom: 1px solid #f0e8df;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .carousel-section-icon { font-size: 20px; }
+    .carousel-section-title { font-size: 15px; font-weight: 800; color: #1a1a1a; }
+    .carousel-section-sub { font-size: 11px; color: #999; margin-top: 1px; }
+    .carousel-section-badge {
+      margin-left: auto; font-size: 10px; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
+    }
+    .csb-orange { background: #fff0e6; color: #D85A00; border: 1px solid rgba(216,90,0,0.2); }
+    .csb-new { background: #fff0e6; color: #D85A00; border: 1px solid rgba(216,90,0,0.4); }
+    .carousel-iframe-wrap { width: 100%; overflow: hidden; }
+    .carousel-iframe-wrap iframe {
+      width: 100%; border: none; display: block;
+    }
+
+    /* ─── 結合バー ─── */
+    .merge-bar { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 12px 0; }
+    .merge-line { width: 2px; height: 24px; background: rgba(0,0,0,0.15); }
+    .merge-note { background: rgba(0,0,0,0.07); color: #666; font-size: 11px; font-weight: 700; padding: 5px 16px; border-radius: 20px; border: 1px dashed rgba(0,0,0,0.15); }
+
+    /* ─── CTA ─── */
+    .cta-wrap { background: #1a1a1a; border-radius: 16px; padding: 28px 24px; text-align: center; margin-top: 8px; }
+    .cta-label { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: .08em; margin-bottom: 8px; }
+    .cta-title { font-size: 18px; font-weight: 800; color: white; margin-bottom: 8px; line-height: 1.4; }
+    .cta-badge { display:inline-block; background:rgba(216,90,0,0.3); border:1px solid rgba(255,140,30,0.4); color:#FF8C30; font-size:12px; font-weight:700; padding:4px 14px; border-radius:20px; margin-bottom:14px; }
+    .cta-sub { font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 18px; }
+    .cta-btn { display:inline-block; background:linear-gradient(90deg,#1A8038,#28A848,#38C060); color:white; font-size:15px; font-weight:800; padding:14px 36px; border-radius:10px; box-shadow:0 4px 16px rgba(30,130,50,0.4); }
+
+    /* ─── フッター ─── */
+    .page-footer { text-align: center; margin-top: 40px; font-size: 11px; color: #bbb; }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- ── ヘッダー ── -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1>🔥 クライアントチェック用｜隠れ肥満タイプ診断 × SLILIN F</h1>
+      <p>PU → 友達追加 → 診断（Q1〜Q4）→ 結果カル（12枚）→ PRカル v2（6枚）→ FAQカル（5枚）→ CTA</p>
+      <div class="page-header-badges">
+        <span class="header-badge hb-orange">結果カル v4</span>
+        <span class="header-badge hb-orange">PRカル v2</span>
+        <span class="header-badge hb-orange">FAQカル v1</span>
+        <span class="header-badge hb-green">⏳ PRカル Card5 口コミはクライアントチェック待ち</span>
+      </div>
+    </div>
+    <div class="page-header-right">
+      <div class="check-date">2026-06-01</div>
+      <div class="check-version">CC v1</div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 1: 診断フロー ══ -->
+  <div class="section-header">
+    <span class="section-step green">STEP 00〜06</span>
+    <div>
+      <div class="section-title">診断フロー</div>
+      <div class="section-sub">PU（記事）→ 友達追加 → ウェルカム → Q1〜Q4</div>
+    </div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="flow-wrap">
+    <div class="flow-inner">
+
+      <!-- STEP 00 PU -->
+      <div class="step-label">STEP 00 · PU / 記事内バナー</div>
+      <div class="pu-wrap">
+        <div class="pu-label">PU IMAGE（SEO記事などから流入）</div>
+        <div class="pu-inner">
+          <div class="pu-headline">BMIは標準なのに、お腹だけ気になる…</div>
+          <div class="pu-copy">それ、「隠れ肥満」かもしれません。<br>30秒で自分のタイプがわかる無料診断</div>
+          <div class="pu-buttons">
+            <button class="btn-yes">診断してみる →</button>
+            <button class="btn-no">今はいい</button>
+          </div>
+        </div>
+      </div>
+      <div class="step-note">流入元：BMI・体重・ダイエット系SEO記事</div>
+
+      <div class="arrow" style="margin:10px auto;"></div>
+
+      <!-- STEP 01 友達追加 -->
+      <div class="step-label">STEP 01 · 友達追加</div>
+      <div class="friend-card">
+        <div class="friend-title">＋ 友達追加</div>
+        <div class="friend-sub">LINE公式アカウント登録</div>
+        <div class="friend-goal">← ファーストゴール達成</div>
+      </div>
+
+      <div class="arrow" style="margin:10px auto;"></div>
+
+      <!-- STEP 02 ウェルカム -->
+      <div class="step-label">STEP 02 · ウェルカム ＋ 診断スタート（即時送信）</div>
+      <div class="line-mock">
+        <div class="line-mock-header">
+          <div class="line-mock-icon">🔥</div>
+          <div class="line-mock-name">隠れ肥満タイプ診断</div>
+        </div>
+        <div class="line-mock-body">
+          <div class="line-bubble">
+            <span class="timing-tag">即時送信</span>
+            <strong>友達追加ありがとうございます！</strong>
+            あなたの体のタイプを診断します。Q1〜Q4に答えるだけ、30秒で完了です。
+          </div>
+          <div class="line-shindan-card">
+            <div class="shindan-card-header">📋 隠れ肥満タイプ診断</div>
+            <div class="shindan-card-body">
+              <div class="shindan-inner">
+                <div class="shindan-title">あなたの「隠れ肥満タイプ」がわかる</div>
+                体重・BMIでは見えない体脂肪率の状態を診断。タイプ別のアドバイスをお届けします。
+                <br><span class="shindan-badge">匿名・無料</span>
+              </div>
+              <button class="shindan-start-btn">診断スタート ▶</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arrow" style="margin:10px auto;"></div>
+      <div class="branch-label" style="margin-bottom:12px;">——— 診断フロー（Q1〜Q4）———</div>
+      <div class="arrow" style="margin:0 auto 10px;"></div>
+
+      <!-- Q1 -->
+      <div class="step-label">STEP 03 · Q1（年代確認）</div>
+      <div class="line-mock">
+        <div class="line-mock-header">
+          <div class="line-mock-icon">🔥</div>
+          <div class="line-mock-name">隠れ肥満タイプ診断</div>
+        </div>
+        <div class="line-mock-body">
+          <div class="line-q-card">
+            <div class="q-card-question">
+              Q1. あなたの<strong style="color:#D85A00;">年代</strong>は？
+              <span class="q-purpose-tag">属性収集</span>
+            </div>
+            <div class="q-card-answers">
+              <div class="q-answer-btn"><div class="q-answer-key">A</div>20代</div>
+              <div class="q-answer-btn"><div class="q-answer-key">B</div>30代</div>
+              <div class="q-answer-btn"><div class="q-answer-key">C</div>40代</div>
+              <div class="q-answer-btn"><div class="q-answer-key">D</div>50代以上</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arrow" style="margin:10px auto;"></div>
+
+      <!-- Q2 -->
+      <div class="step-label">STEP 04 · Q2（体型のための行動歴）</div>
+      <div class="line-mock">
+        <div class="line-mock-header">
+          <div class="line-mock-icon">🔥</div>
+          <div class="line-mock-name">隠れ肥満タイプ診断</div>
+        </div>
+        <div class="line-mock-body">
+          <div class="line-q-card">
+            <div class="q-card-question"><strong style="color:#D85A00;">体型</strong>のためにしたことがあることは？</div>
+            <div class="q-card-answers">
+              <div class="q-answer-btn"><div class="q-answer-key">A</div>食事制限したことある</div>
+              <div class="q-answer-btn"><div class="q-answer-key">B</div>運動を試したことある</div>
+              <div class="q-answer-btn"><div class="q-answer-key">C</div>色々やったけど続かない</div>
+              <div class="q-answer-btn"><div class="q-answer-key">D</div>特に何もしてない</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arrow" style="margin:10px auto;"></div>
+
+      <!-- Q3 -->
+      <div class="step-label">STEP 05 · Q3（体の悩みの部位・種類）</div>
+      <div class="line-mock">
+        <div class="line-mock-header">
+          <div class="line-mock-icon">🔥</div>
+          <div class="line-mock-name">隠れ肥満タイプ診断</div>
+        </div>
+        <div class="line-mock-body">
+          <div class="line-q-card">
+            <div class="q-card-question">自分の<strong style="color:#D85A00;">体</strong>で特に気になるのは？</div>
+            <div class="q-card-answers">
+              <div class="q-answer-btn"><div class="q-answer-key">A</div>お腹周りだけぽっこり</div>
+              <div class="q-answer-btn"><div class="q-answer-key">B</div>全体的にたるんでる感じ</div>
+              <div class="q-answer-btn"><div class="q-answer-key">C</div>上半身は細いけど下半身</div>
+              <div class="q-answer-btn"><div class="q-answer-key">D</div>体脂肪が多い気がする</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arrow" style="margin:10px auto;"></div>
+
+      <!-- Q4 -->
+      <div class="step-label">STEP 06 · Q4（タイプ確定・分岐設問）</div>
+      <div class="line-mock">
+        <div class="line-mock-header">
+          <div class="line-mock-icon">🔥</div>
+          <div class="line-mock-name">隠れ肥満タイプ診断</div>
+        </div>
+        <div class="line-mock-body">
+          <div class="line-q-card">
+            <div class="q-card-question">
+              あなたの<strong style="color:#D85A00;">体質</strong>に一番当てはまるのは？
+              <span class="q-purpose-tag">タイプ分岐</span>
+            </div>
+            <div class="q-card-answers">
+              <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">A</div>お腹の脂肪だけ落ちない<div class="q-answer-branch">→ タイプA</div></div>
+              <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">B</div>痩せてもすぐ戻る<div class="q-answer-branch">→ タイプB</div></div>
+              <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">C</div>食べてないのに太る<div class="q-answer-branch">→ タイプC</div></div>
+            </div>
+            <div class="q-branch-note">⚡ この回答でタイプが確定→結果カルへ</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /flow-inner -->
+  </div><!-- /flow-wrap -->
+
+  <!-- ══ SECTION 2: 結果カルーセル ══ -->
+  <div class="merge-bar">
+    <div class="merge-line"></div>
+    <div class="merge-note">Q4の回答でA/B/Cに分岐 → 結果カルーセルへ</div>
+    <div class="merge-line"></div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-step">STEP 07</span>
+    <div>
+      <div class="section-title">結果カルーセル（12枚）</div>
+      <div class="section-sub">タイプ別3枚（A/B/C）＋ 共通3枚 = 合計12枚</div>
+    </div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="carousel-section">
+    <div class="carousel-section-header">
+      <div class="carousel-section-icon">🧬</div>
+      <div>
+        <div class="carousel-section-title">結果カルーセル v4</div>
+        <div class="carousel-section-sub">隠れ肥満タイプ診断 — 3タイプ × 3枚 ＋ 共通3枚</div>
+      </div>
+      <span class="carousel-section-badge csb-orange">v4 確定</span>
+    </div>
+    <div class="carousel-iframe-wrap">
+      <iframe
+        src="visual-result-carousel-kakurehiman-v4-2026-05-27.html"
+        id="iframe-result"
+        scrolling="no"
+        onload="this.style.height=(this.contentDocument.documentElement.scrollHeight)+'px'"
+      ></iframe>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 3: PRカルーセル ══ -->
+  <div class="merge-bar">
+    <div class="merge-line"></div>
+    <div class="merge-note">全タイプ共通 → PRカルーセルへ</div>
+    <div class="merge-line"></div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-step">STEP 08</span>
+    <div>
+      <div class="section-title">PRカルーセル v2（6枚）</div>
+      <div class="section-sub">SLILIN F — LP寄せ版。Card5口コミはクライアントチェック待ち。</div>
+    </div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="carousel-section">
+    <div class="carousel-section-header">
+      <div class="carousel-section-icon">🔥</div>
+      <div>
+        <div class="carousel-section-title">PRカルーセル SLILIN F v2</div>
+        <div class="carousel-section-sub">Card4：脂肪細胞GIFイラスト確定 ／ Card5：口コミ仮（チェック待ち）</div>
+      </div>
+      <span class="carousel-section-badge csb-orange">v2 確定</span>
+    </div>
+    <div class="carousel-iframe-wrap">
+      <iframe
+        src="visual-pr-carousel-slilinf-v2-2026-05-27.html"
+        id="iframe-pr"
+        scrolling="no"
+        onload="this.style.height=(this.contentDocument.documentElement.scrollHeight)+'px'"
+      ></iframe>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 4: FAQカルーセル ══ -->
+  <div class="merge-bar">
+    <div class="merge-line"></div>
+    <div class="merge-note">PRカル後 → FAQカルーセルへ</div>
+    <div class="merge-line"></div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-step">STEP 09</span>
+    <div>
+      <div class="section-title">FAQカルーセル（5枚）</div>
+      <div class="section-sub">よくある質問 — 飲み方・実感・添加物・解約返金</div>
+    </div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="carousel-section">
+    <div class="carousel-section-header">
+      <div class="carousel-section-icon">❓</div>
+      <div>
+        <div class="carousel-section-title">FAQカルーセル SLILIN F</div>
+        <div class="carousel-section-sub">飲むタイミング・1日3粒・実感3〜4ヶ月・添加物不使用・解約OK</div>
+      </div>
+      <span class="carousel-section-badge csb-new">NEW v1</span>
+    </div>
+    <div class="carousel-iframe-wrap">
+      <iframe
+        src="visual-faq-carousel-slilinf-2026-06-01.html"
+        id="iframe-faq"
+        scrolling="no"
+        onload="this.style.height=(this.contentDocument.documentElement.scrollHeight)+'px'"
+      ></iframe>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 5: CTA ══ -->
+  <div class="merge-bar">
+    <div class="merge-line"></div>
+    <div class="merge-note">FAQカル後 → 最終CTAへ</div>
+    <div class="merge-line"></div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-step dark">STEP 10</span>
+    <div>
+      <div class="section-title">最終CTA</div>
+      <div class="section-sub">初回¥980 購入ボタン</div>
+    </div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="cta-wrap">
+    <div class="cta-label">FINAL CTA</div>
+    <div class="cta-title">まず試してみませんか？<br>初回限定 ¥980</div>
+    <div class="cta-badge">通常¥4,980 → 初回¥980（約80%OFF）</div>
+    <div class="cta-sub">初回のみ解約OK ｜ 全額返金保証付き</div>
+    <div class="cta-btn">→ 初回¥980で試してみる</div>
+  </div>
+
+  <div class="page-footer">
+    クライアントチェック用資料 — Noa作成 ｜ 2026-06-01 ｜ 社外秘
+  </div>
+
+</div><!-- /page-wrap -->
+
+<script>
+  // iframeの高さをコンテンツに合わせて自動調整（同一オリジン前提）
+  function resizeIframe(iframe) {
+    try {
+      var h = iframe.contentDocument.documentElement.scrollHeight;
+      iframe.style.height = h + 'px';
+    } catch(e) {}
+  }
+  document.querySelectorAll('iframe').forEach(function(iframe) {
+    iframe.addEventListener('load', function() { resizeIframe(this); });
+    // 画像読み込み完了後に再調整
+    setTimeout(function() { resizeIframe(iframe); }, 1500);
+    setTimeout(function() { resizeIframe(iframe); }, 3000);
+  });
+</script>
+</body>
+</html>
