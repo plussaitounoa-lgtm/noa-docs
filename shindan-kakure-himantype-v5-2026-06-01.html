@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>診断設計書 v5：隠れ肥満タイプ診断 2026-06-01</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+    header .subtitle { color: #7effa0; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    header p { color: #aaa; font-size: 14px; }
+    .status-banner { background: #1a2e1e; color: #7effa0; font-size: 13px; padding: 10px 32px; display: flex; gap: 24px; flex-wrap: wrap; }
+    .change-banner { background: #2e1a00; color: #ffcc66; font-size: 13px; padding: 10px 32px; }
+    main { max-width: 960px; margin: 40px auto; padding: 0 24px 80px; }
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-label { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; }
+    h2 { font-size: 19px; font-weight: 700; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 700; margin: 22px 0 10px; color: #333; }
+    h4 { font-size: 13px; font-weight: 700; margin: 16px 0 8px; color: #555; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 9px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; }
+    td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; line-height: 1.6; }
+    tr:last-child td { border-bottom: none; }
+    .info { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .alert { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .pending { background: #fff8f0; border-left: 3px solid #e67e22; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .change { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .archived { background: #f7f7f7; border-left: 3px solid #ccc; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; color: #888; }
+
+    .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    .flow-step { background: #1a1a2e; color: white; border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: 600; }
+    .flow-step.light { background: #f0f4ff; color: #2c52b0; }
+    .flow-step.merged { background: #2e7d32; color: white; }
+    .flow-step.removed { background: #eee; color: #aaa; text-decoration: line-through; }
+    .flow-step.new { background: #D85A00; color: white; }
+    .flow-arrow { color: #bbb; font-size: 18px; }
+
+    .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0; }
+    .card-grid-5 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0; }
+    .card-item { border: 1px solid #e8e8e8; border-radius: 10px; padding: 16px; background: white; }
+    .card-item.updated { border-color: #f39c12; background: #fffdf5; }
+    .card-item.new-card { border-color: #D85A00; background: #fff8f2; }
+    .card-item.unchanged { border-color: #e8e8e8; background: #fafafa; opacity: 0.8; }
+    .card-num { font-size: 11px; font-weight: 700; color: #999; margin-bottom: 4px; }
+    .card-role { font-size: 11px; font-weight: 700; margin-bottom: 8px; }
+    .card-hl { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; line-height: 1.4; }
+    .card-scene { font-size: 12px; color: #555; background: #f7f7f7; border-radius: 6px; padding: 8px 10px; margin-bottom: 8px; line-height: 1.6; font-style: italic; }
+    .card-copy { font-size: 12px; color: #555; line-height: 1.6; margin-bottom: 8px; }
+    .card-hook { font-size: 12px; font-weight: 700; color: #27ae60; }
+    .card-hook.cta { background: #1a1a2e; color: white; text-align: center; padding: 8px; border-radius: 6px; }
+    .card-hook.orange { color: #D86000; }
+    .card-badge { font-size: 10px; display: inline-block; padding: 2px 8px; border-radius: 4px; font-weight: 700; margin-bottom: 6px; }
+    .badge-common { background: #e8f5e9; color: #2e7d32; }
+    .badge-type-a { background: #fff3e0; color: #e65100; }
+    .badge-type-b { background: #e3f0ff; color: #1a4d9e; }
+    .badge-type-c { background: #e8f5e9; color: #2e7d32; }
+    .badge-pr { background: #fff0e6; color: #D85A00; }
+    .badge-faq { background: #fff0e6; color: #D85A00; }
+    .badge-new { background: #fff3cd; color: #856404; font-size: 10px; display: inline-block; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; }
+    .badge-changed { background: #f8d7da; color: #842029; font-size: 10px; display: inline-block; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; }
+    .badge-nc { background: #e8e8e8; color: #888; font-size: 10px; display: inline-block; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; }
+
+    .type-header { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #e8e8e8; }
+
+    .fb-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+    .fb-item:last-child { border-bottom: none; }
+    .fb-num { font-size: 18px; font-weight: 900; color: #e67e22; flex-shrink: 0; min-width: 24px; }
+    .fb-content { flex: 1; }
+    .fb-title { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
+    .fb-desc { font-size: 12px; color: #666; line-height: 1.6; }
+    .fb-action { font-size: 12px; color: #27ae60; font-weight: 600; margin-top: 4px; }
+
+    .diff-row { display: flex; gap: 12px; margin: 8px 0; }
+    .diff-before { flex: 1; background: #fff5f5; border: 1px solid #f5c6c6; border-radius: 8px; padding: 10px 12px; font-size: 12px; color: #888; }
+    .diff-after { flex: 1; background: #f0fff4; border: 1px solid #b2dfdb; border-radius: 8px; padding: 10px 12px; font-size: 12px; color: #1a5c30; }
+    .diff-label { font-size: 10px; font-weight: 700; margin-bottom: 4px; color: #aaa; }
+    .diff-after .diff-label { color: #27ae60; }
+
+    .faq-answer { font-size: 12px; color: #D85A00; font-weight: 700; margin-top: 4px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>診断設計書（v5）：隠れ肥満タイプ診断</h1>
+  <div class="subtitle">★ 最新版 — PRカルv2 Card4確定・FAQカル新規追加</div>
+  <p>SLILIN F接続 ｜ 3タイプ ｜ 2026-06-01 ｜ 前版: <a href="shindan-kakure-himantype-v4-2026-05-27.html" style="color:#7effa0;">v4（2026-05-27）</a></p>
+</header>
+
+<div class="status-banner">
+  <span>✅ PRカルv2 Card4 脂肪細胞イラスト（LP GIF）埋め込み確定</span>
+  <span>✅ FAQカル 全5枚 新規作成（飲み方・実感・添加物・解約）</span>
+  <span>⏳ PRカルv2 Card5 口コミ（クライアントチェック待ち）</span>
+  <span>⏳ デザイン発注（PRカル確定後）</span>
+</div>
+<div class="change-banner">
+  ⚠️ v4からの主要変更: ①PRカルv2 Card4に脂肪細胞分解GIFイラスト（LP画像）埋め込み完了  ②FAQカル5枚新規作成（ファネル末尾に追加）  ③結果カルは変更なし
+</div>
+
+<main>
+
+  <!-- =============== v5変更概要 =============== -->
+  <div class="section">
+    <div class="section-label">What Changed</div>
+    <h2>v5変更概要（Ren FB反映・FAQカル新規）</h2>
+
+    <div class="fb-item">
+      <div class="fb-num">1</div>
+      <div class="fb-content">
+        <div class="fb-title">PRカルv2 Card4：イラストがなく脂肪データが伝わりづらかった</div>
+        <div class="fb-desc">-16.17cm²の数値だけでは内臓脂肪が落ちるイメージが湧かない。Renフィードバック「イラストかグラフ入れないと伝わりづらいから、抜いてシンプルにするか、イメージ入れるかしたい」。</div>
+        <div class="fb-action">→ -16.17cm²の数値ブロックを削除し、脂肪細胞が分解されるGIFイラスト（LP画像）を「なぜ？」ブロックの下に挿入。視覚的に脂肪が燃えるイメージを伝える構成に。</div>
+      </div>
+    </div>
+
+    <div class="fb-item">
+      <div class="fb-num">2</div>
+      <div class="fb-content">
+        <div class="fb-title">PRカル後にFAQが存在しなかった</div>
+        <div class="fb-desc">LINEで帰ってくる「いつ飲めばいい？」「何粒？」「いつ効く？」「添加物は？」「解約できる？」という質問に答えるコンテンツが不足していた。</div>
+        <div class="fb-action">→ FAQカル5枚を新規作成。LP（shop.kirarithm.com）の実際の情報を元に、飲み方・実感期間・添加物・解約返金の4テーマをカード化。ファネル末尾に追加。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============== ファネル構造 =============== -->
+  <div class="section">
+    <div class="section-label">Funnel</div>
+    <h2>ファネル構造（v5更新）</h2>
+    <div class="flow">
+      <div class="flow-step light">PU</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step light">友達追加</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step light">診断 Q1〜Q4</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step merged">結果カル（統合）<br><small>タイプ別3枚 + 共通3枚 = 12枚</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step removed">教育カル（廃止）</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">PRカル v2<br><small>SLILIN F 6枚</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step new">FAQカル<br><small>5枚 ★新規</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step light">CTA</div>
+    </div>
+  </div>
+
+  <!-- =============== 結果カルーセル（変更なし） =============== -->
+  <div class="section">
+    <div class="section-label">Section 3 — Unchanged</div>
+    <h2>結果カルーセル統合版（12枚）— v4から変更なし</h2>
+
+    <div class="archived">
+      結果カルはv4時点から変更なし。ビジュアル確認: <a href="visual-result-carousel-kakurehiman-v4-2026-05-27.html" style="color:#aaa;">visual-result-carousel-kakurehiman-v4-2026-05-27.html</a><br>
+      詳細のナラティブ設計・カード仕様はv4設計書を参照: <a href="shindan-kakure-himantype-v4-2026-05-27.html" style="color:#aaa;">shindan-kakure-himantype-v4-2026-05-27.html</a>
+    </div>
+
+    <h3>構成サマリー（確定済み）</h3>
+    <table>
+      <thead><tr><th>カード</th><th>タイプ</th><th>役割</th><th>キーメッセージ</th></tr></thead>
+      <tbody>
+        <tr><td>Card A/B/C-1</td><td>タイプ別</td><td>診断結果・hook</td><td>既存デザイン（変更なし）</td></tr>
+        <tr><td>Card A-2</td><td>A: かくれ内臓脂肪</td><td>hero + シーン</td><td>BMIが見ているのは、体重と身長だけ。</td></tr>
+        <tr><td>Card B-2</td><td>B: かくれ体脂肪</td><td>hero + イラスト + シーン</td><td>体型が変わらないのは、体脂肪率が変わっていないから。（v4変更）</td></tr>
+        <tr><td>Card C-2</td><td>C: 代謝スロー</td><td>hero + イラスト + シーン</td><td>食べてないのに、なぜか太る。（v4変更）</td></tr>
+        <tr><td>Card A/B/C-3</td><td>タイプ別</td><td>メカニズム+ハンマー</td><td>それ、"代謝低下"のサインかも。→ ダイエットのカギは、代謝にある。</td></tr>
+        <tr><td>Card 4（共通）</td><td>全タイプ共通</td><td>体温×代謝</td><td>代謝を上げるカギは、体温にある！ / 体温が整うと…ピルバッジ（v4追加）</td></tr>
+        <tr><td>Card 5（共通）</td><td>全タイプ共通</td><td>食事・運動×体温</td><td>「でも」バッジ → サプリ誘導</td></tr>
+        <tr><td>Card 6（共通）</td><td>全タイプ共通</td><td>サプリCTA</td><td>SLILIN Fを見てみる →</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- =============== PRカルーセル v2 =============== -->
+  <div class="section">
+    <div class="section-label">Section 4 — Updated</div>
+    <h2>PRカルーセル SLILIN F v2（6枚）</h2>
+
+    <div class="change">
+      <strong>v5確定：</strong> Card4のみ変更。それ以外はv4（旧PRカル）から継続。<br>
+      ビジュアル確認: <a href="visual-pr-carousel-slilinf-v2-2026-05-27.html">visual-pr-carousel-slilinf-v2-2026-05-27.html</a>
+    </div>
+
+    <div class="card-grid">
+
+      <div class="card-item unchanged">
+        <div class="card-num">Card 1 <span class="badge-nc">変更なし</span></div>
+        <div class="card-badge badge-pr">PRカル</div>
+        <div class="card-role" style="color:#D85A00;">商品紹介</div>
+        <div class="card-hl">SLILIN F スリリンF</div>
+        <div class="card-copy">
+          楽天3冠バッジ・医師監修バッジ<br>
+          選ばれる理由：血流UP×体温UP / 機能性表示食品 / 返金保証<br>
+          【実績】累計〇〇万袋突破
+        </div>
+        <div class="card-hook orange">次のカードへ →</div>
+      </div>
+
+      <div class="card-item unchanged">
+        <div class="card-num">Card 2 <span class="badge-nc">変更なし</span></div>
+        <div class="card-badge badge-pr">PRカル</div>
+        <div class="card-role" style="color:#D85A00;">価格・特典</div>
+        <div class="card-hl">おすすめポイント①<br>試しやすい初回価格</div>
+        <div class="card-copy">
+          通常価格 ¥4,980 → 初回 ¥980（約80%OFF）<br>
+          初回のみ解約OK / 全額返金保証付き<br>
+          ※初回解約時にパッケージ返送が条件
+        </div>
+        <div class="card-hook orange">初回¥980で試してみる →</div>
+      </div>
+
+      <div class="card-item unchanged">
+        <div class="card-num">Card 3 <span class="badge-nc">変更なし</span></div>
+        <div class="card-badge badge-pr">PRカル</div>
+        <div class="card-role" style="color:#D85A00;">血流UP × 体温UP</div>
+        <div class="card-hl">おすすめポイント②<br>血流UP × 体温UP</div>
+        <div class="card-copy">
+          体温が上がると、代謝が変わる。<br>
+          アムラ由来"エラグ酸"（機能性関与成分）<br>
+          【サーモグラフィー比較】エラグ酸なし→低体温 / エラグ酸あり→体温UP<br>
+          わずか5分で体温が回復！<br>
+          【代謝データ】体温1℃UP / 代謝13〜15%UP / +180kcal
+        </div>
+        <div class="card-hook orange">初回¥980で試してみる →</div>
+      </div>
+
+      <div class="card-item updated">
+        <div class="card-num">Card 4 <span class="badge-changed">v5変更</span></div>
+        <div class="card-badge badge-pr">PRカル</div>
+        <div class="card-role" style="color:#D85A00;">脂肪アプローチ</div>
+        <div class="card-hl">おすすめポイント③<br>脂肪を落とす効果</div>
+        <div class="card-copy">
+          【「なぜ？」ブロック（保持）】脂肪が落ちるのは、なぜ？<br>
+          ブラックジンジャー由来成分が、脂肪のエネルギー消費を促進。<br>
+          【脂肪細胞イラスト★変更】脂肪細胞が分解されるGIFアニメ（LP画像）<br>
+          ※-16.17cm²数値ブロックは削除（イラストで代替）<br>
+          内臓脂肪と皮下脂肪、両方にアプローチできる！
+        </div>
+        <div class="card-hook orange">初回¥980で試してみる →</div>
+      </div>
+
+      <div class="card-item unchanged">
+        <div class="card-num">Card 5 <span class="badge-nc">チェック待ち</span></div>
+        <div class="card-badge badge-pr">PRカル</div>
+        <div class="card-role" style="color:#D85A00;">口コミ</div>
+        <div class="card-hl">お客様の声</div>
+        <div class="card-copy">
+          体型系口コミ 2〜3件（仮）<br>
+          ⏳ クライアントチェック後に差し替え予定
+        </div>
+        <div class="card-hook orange">初回¥980で試してみる →</div>
+      </div>
+
+      <div class="card-item unchanged">
+        <div class="card-num">Card 6 <span class="badge-nc">変更なし</span></div>
+        <div class="card-badge badge-pr">PRカル</div>
+        <div class="card-role" style="color:#D85A00;">CTA</div>
+        <div class="card-hl">キャンペーン</div>
+        <div class="card-copy">
+          初回 ¥980（定価の約80%OFF）<br>
+          初回のみ解約OK / 全額返金保証
+        </div>
+        <div class="card-hook cta">初回¥980で試してみる →</div>
+      </div>
+
+    </div>
+
+    <div class="info" style="margin-top:8px;">
+      <strong>Card4の設計意図：</strong><br>
+      「脂肪が落ちるのは、なぜ？」ブロックで仕組みを示した後に、脂肪細胞が分解されるGIFイラストを見せる。数値（-16.17cm²）は削除し、視覚的なイメージで「効きそう」を伝える設計。潜在層向けに専門用語（プラセボ群・ポリメトキシフラボン等）は使わない。
+    </div>
+  </div>
+
+  <!-- =============== FAQカルーセル（新規） =============== -->
+  <div class="section">
+    <div class="section-label">Section 5 — New</div>
+    <h2>FAQカルーセル SLILIN F（5枚）★新規</h2>
+
+    <div class="good">
+      <strong>位置づけ：</strong> PRカルを見た後にLINEで返ってくる質問に答えるコンテンツ。飲み方・実感・安全性・解約の4テーマ。<br>
+      ビジュアル確認: <a href="visual-faq-carousel-slilinf-2026-06-01.html">visual-faq-carousel-slilinf-2026-06-01.html</a>
+    </div>
+
+    <div class="card-grid-5">
+
+      <div class="card-item new-card">
+        <div class="card-num">FAQ Card 1</div>
+        <div class="card-badge badge-faq">FAQ</div>
+        <div class="card-role" style="color:#D85A00;">飲むタイミング</div>
+        <div class="card-hl">Q: おすすめの飲むタイミングは？</div>
+        <div class="faq-answer">A: 活動が始まる前。通勤・通学前がおすすめ。</div>
+        <div class="card-copy" style="margin-top:8px;">
+          【比較ビジュアル】朝・活動前 ✓ / 運動前 ✓ / 就寝前 △<br>
+          【補足】体温UP→代謝サポートの設計上、活動量が多い時間帯が効果的
+        </div>
+      </div>
+
+      <div class="card-item new-card">
+        <div class="card-num">FAQ Card 2</div>
+        <div class="card-badge badge-faq">FAQ</div>
+        <div class="card-role" style="color:#D85A00;">摂取量</div>
+        <div class="card-hl">Q: 1日に何粒飲めばいい？</div>
+        <div class="faq-answer">A: 1日3粒を目安に。</div>
+        <div class="card-copy" style="margin-top:8px;">
+          【ビジュアル】「3」大きく表示 + 💊💊💊アイコン<br>
+          朝まとめて3粒 / 朝2粒+昼1粒でもOK<br>
+          水またはぬるま湯と一緒に。食事の有無は問わない
+        </div>
+      </div>
+
+      <div class="card-item new-card">
+        <div class="card-num">FAQ Card 3</div>
+        <div class="card-badge badge-faq">FAQ</div>
+        <div class="card-role" style="color:#D85A00;">実感期間</div>
+        <div class="card-hl">Q: いつ頃から実感できますか？</div>
+        <div class="faq-answer">A: まずは3〜4ヶ月継続推奨。</div>
+        <div class="card-copy" style="margin-top:8px;">
+          【タイムライン】1ヶ月：体がポカポカしやすくなる人も / 3〜4ヶ月：実感しやすいタイミング<br>
+          ※効果には個人差があります
+        </div>
+      </div>
+
+      <div class="card-item new-card">
+        <div class="card-num">FAQ Card 4</div>
+        <div class="card-badge badge-faq">FAQ</div>
+        <div class="card-role" style="color:#D85A00;">安全性・成分</div>
+        <div class="card-hl">Q: 添加物は入ってる？体に大丈夫？</div>
+        <div class="faq-answer">A: 着色料・香料・甘味料・酸化防止剤すべて不使用。</div>
+        <div class="card-copy" style="margin-top:8px;">
+          【4項目グリッド】着色料✕ / 香料✕ / 甘味料✕ / 酸化防止剤✕<br>
+          🌿 自然由来の植物成分にこだわって製造（6成分）<br>
+          ※妊娠中・授乳中・服薬中は医師に相談
+        </div>
+      </div>
+
+      <div class="card-item new-card">
+        <div class="card-num">FAQ Card 5</div>
+        <div class="card-badge badge-faq">FAQ</div>
+        <div class="card-role" style="color:#D85A00;">解約・返金</div>
+        <div class="card-hl">Q: 解約できる？返金保証はある？</div>
+        <div class="faq-answer">A: 初回のみ解約OK。全額返金保証あり。</div>
+        <div class="card-copy" style="margin-top:8px;">
+          【3ステップ】①受け取り→解約連絡 / ②パッケージ返送（送料自己負担）/ ③全額返金<br>
+          ※返金保証は初回購入に限る
+        </div>
+        <div class="card-hook cta">まず試してみる → 初回¥980</div>
+      </div>
+
+    </div>
+
+    <div class="info" style="margin-top:8px;">
+      <strong>FAQ設計の考え方：</strong><br>
+      PRカルを見てから帰ってくる質問をそのままカード化。「答えを先に、補足はあとに」のフォーマット統一。Card5（解約）にのみCTAを配置し、不安解消→背中を押す流れを作る。注釈テキスト（薬機法対応）はFAQカード内の自然な文脈に溶け込む形で配置。
+    </div>
+  </div>
+
+  <!-- =============== v4→v5 差分サマリー =============== -->
+  <div class="section">
+    <div class="section-label">Diff Summary</div>
+    <h2>v4 → v5 差分サマリー</h2>
+
+    <h3>PRカル Card4：脂肪データの見せ方</h3>
+    <div class="diff-row">
+      <div class="diff-before">
+        <div class="diff-label">v4（変更前）</div>
+        -16.17cm²の数値ブロック（腹部全脂肪面積 12週間の変化）<br>
+        ※数字だけでイメージが湧かない、との指摘（Ren FB）
+      </div>
+      <div class="diff-after">
+        <div class="diff-label">v5（変更後）</div>
+        脂肪細胞が分解されるGIFイラスト（LP画像）<br>
+        「なぜ？」ブロック→GIFイラスト→内臓・皮下両方アプローチの流れ<br>
+        ※数値ブロックは削除。イラストで「効きそう」を伝える
+      </div>
+    </div>
+
+    <h3>ファネル：FAQカル追加</h3>
+    <div class="diff-row">
+      <div class="diff-before">
+        <div class="diff-label">v4（変更前）</div>
+        PRカル（6枚）→ CTA<br>
+        ※LINEで返ってくるFAQへの対応コンテンツがなかった
+      </div>
+      <div class="diff-after">
+        <div class="diff-label">v5（変更後）</div>
+        PRカル（6枚）→ FAQカル（5枚）→ CTA<br>
+        ※飲み方・実感・安全性・解約の4テーマをカード化
+      </div>
+    </div>
+  </div>
+
+  <!-- =============== 未完了・次のアクション =============== -->
+  <div class="section">
+    <div class="section-label">Next Actions</div>
+    <h2>未完了・次のアクション</h2>
+
+    <table>
+      <thead><tr><th>項目</th><th>状態</th><th>次のアクション</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>PRカル Card5 口コミ</strong></td>
+          <td>⏳ 仮コンテンツ（クライアントチェック待ち）</td>
+          <td>チェック完了後に差し替え</td>
+        </tr>
+        <tr>
+          <td><strong>PRカル・FAQカル デザイン発注</strong></td>
+          <td>⏳ Card5確定後に発注</td>
+          <td>Notionに依頼書作成（Rinon経由→デザイナー）</td>
+        </tr>
+        <tr>
+          <td><strong>注釈・薬機法表記の配置</strong></td>
+          <td>💬 検討中（PRカル内か別カードか）</td>
+          <td>Renと方針確認後に対応</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+</body>
+</html>
