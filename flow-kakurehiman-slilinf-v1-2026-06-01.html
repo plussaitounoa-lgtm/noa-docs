@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LINEワークフロー設計図 v1.0 | 隠れ肥満タイプ診断 × SLILIN F</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #3a2410;
+      padding: 40px 0 80px;
+      min-height: 100vh;
+    }
+    .page-wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+
+    /* ─── ページヘッダー ─── */
+    .back-link { display:inline-block; color:rgba(255,255,255,0.45); font-size:13px; text-decoration:none; margin-bottom:20px; }
+    .back-link:hover { color:white; }
+    .page-header { text-align:center; margin-bottom:12px; }
+    .page-header h1 { font-size:20px; font-weight:700; color:white; }
+    .page-header p  { font-size:13px; color:rgba(255,255,255,0.6); margin-top:6px; }
+    .version-badge { display:inline-block; background:rgba(255,140,30,0.35); color:#ffc06a; font-size:11px; font-weight:700; padding:2px 10px; border-radius:10px; margin-top:6px; border:1px solid rgba(255,140,30,0.4); }
+
+    /* ─── サマリーボックス ─── */
+    .summary-box {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+      color: white;
+    }
+    .summary-box h2 { font-size:12px; font-weight:700; color:rgba(255,255,255,0.5); letter-spacing:.1em; margin-bottom:12px; }
+    .summary-flow-row { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+    .sf-step { background:rgba(255,140,30,0.25); border:1px solid rgba(255,140,30,0.4); border-radius:6px; padding:4px 10px; font-size:12px; font-weight:600; color:#ffc06a; white-space:nowrap; }
+    .sf-arrow { color:rgba(255,255,255,0.35); font-size:14px; }
+    .summary-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:4px; }
+    .summary-table th { text-align:left; color:rgba(255,255,255,0.45); font-weight:600; padding:4px 8px; border-bottom:1px solid rgba(255,255,255,0.1); }
+    .summary-table td { padding:5px 8px; color:rgba(255,255,255,0.8); border-bottom:1px solid rgba(255,255,255,0.06); vertical-align:top; }
+    .summary-table td:first-child { white-space:nowrap; color:rgba(255,255,255,0.4); }
+
+    /* ─── 凡例 ─── */
+    .legend {
+      display:flex; gap:12px; flex-wrap:wrap;
+      background:rgba(0,0,0,0.2); border-radius:10px;
+      padding:10px 16px; margin-bottom:28px;
+    }
+    .legend-item { display:flex; align-items:center; gap:6px; font-size:11px; color:rgba(255,255,255,0.75); }
+    .legend-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+    .ld-step   { background:#06c755; }
+    .ld-branch { background:#f59e0b; }
+    .ld-note   { background:#60a5fa; }
+    .ld-pr     { background:#D85A00; }
+
+    /* ─── フロー共通 ─── */
+    .flow { max-width:440px; margin:0 auto; display:flex; flex-direction:column; align-items:center; }
+    .flow.wide { max-width:980px; }
+    .step-label { background:rgba(216,90,0,0.35); border:1px solid rgba(255,140,30,0.4); color:#ffc06a; font-size:12px; font-weight:600; padding:5px 18px; border-radius:20px; margin-bottom:12px; white-space:nowrap; text-align:center; }
+    .arrow { width:2px; height:36px; background:rgba(255,255,255,0.3); position:relative; flex-shrink:0; }
+    .arrow::after { content:''; position:absolute; bottom:-7px; left:50%; transform:translateX(-50%); border-left:7px solid transparent; border-right:7px solid transparent; border-top:8px solid rgba(255,255,255,0.3); }
+    .step-note { font-size:12px; color:rgba(255,255,255,0.55); text-align:center; margin-top:8px; }
+
+    /* ─── 実装メモ（青） ─── */
+    .impl-note {
+      background:rgba(96,165,250,0.12);
+      border:1px dashed rgba(96,165,250,0.4);
+      border-radius:8px; padding:8px 14px;
+      font-size:11px; color:rgba(147,197,253,0.9);
+      margin-top:8px; width:100%; max-width:440px; text-align:left;
+    }
+    .impl-note strong { display:block; margin-bottom:3px; font-size:11px; }
+    .impl-note ul { padding-left:14px; }
+    .impl-note li { margin-bottom:2px; }
+
+    /* ─── 備考メモ（橙） ─── */
+    .warn-note {
+      background:rgba(245,158,11,0.12);
+      border:1px dashed rgba(245,158,11,0.4);
+      border-radius:8px; padding:8px 14px;
+      font-size:11px; color:rgba(253,211,77,0.9);
+      margin-top:8px; width:100%; max-width:440px; text-align:left;
+    }
+    .warn-note strong { display:block; margin-bottom:3px; }
+
+    /* ─── PUカード ─── */
+    .pu-wrap { width:100%; background:white; border-radius:16px; padding:18px; box-shadow:0 2px 16px rgba(0,0,0,0.3); }
+    .pu-label { font-size:11px; font-weight:700; color:#aaa; letter-spacing:.06em; margin-bottom:10px; }
+    .pu-inner { background:#fff5eb; border:1.5px solid #f0b070; border-radius:10px; padding:16px; text-align:center; }
+    .pu-headline { font-size:15px; font-weight:800; color:#D85A00; margin-bottom:6px; }
+    .pu-copy     { font-size:12px; color:#555; line-height:1.6; }
+    .pu-badge    { font-size:11px; color:#999; margin:8px 0 12px; }
+    .pu-buttons  { display:flex; gap:8px; }
+    .btn-yes { flex:1; background:#06c755; color:white; border:none; border-radius:6px; padding:9px; font-size:13px; font-weight:700; }
+    .btn-no  { flex:1; background:#f0f0f0; color:#666;  border:none; border-radius:6px; padding:9px; font-size:13px; font-weight:700; }
+
+    /* ─── 友だち追加 ─── */
+    .friend-card { background:#06c755; border-radius:14px; width:100%; padding:26px 20px; text-align:center; box-shadow:0 2px 12px rgba(0,0,0,0.2); }
+    .friend-icon  { font-size:30px; margin-bottom:6px; }
+    .friend-title { font-size:20px; font-weight:800; color:white; margin-bottom:4px; }
+    .friend-sub   { font-size:13px; color:rgba(255,255,255,0.8); }
+    .friend-goal  { display:inline-block; background:rgba(255,255,255,0.25); color:white; font-size:12px; font-weight:700; padding:3px 12px; border-radius:20px; margin-top:8px; }
+
+    /* ─── LINEモック ─── */
+    .line-mock { width:100%; background:#c8e0f4; border-radius:16px; overflow:hidden; box-shadow:0 2px 14px rgba(0,0,0,0.25); }
+    .line-mock-header { background:#06c755; padding:10px 14px; display:flex; align-items:center; gap:8px; }
+    .line-mock-icon { width:28px; height:28px; background:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+    .line-mock-name { font-size:13px; font-weight:700; color:white; }
+    .line-mock-body { padding:14px 12px; display:flex; flex-direction:column; gap:10px; }
+    .line-bubble { background:white; border-radius:0 10px 10px 10px; padding:12px 14px; font-size:13px; color:#222; line-height:1.6; max-width:90%; box-shadow:0 1px 3px rgba(0,0,0,0.08); }
+    .line-bubble strong { font-size:14px; font-weight:800; display:block; margin-bottom:4px; }
+    .timing-tag { display:inline-block; background:#e0f2e9; color:#16a34a; font-size:10px; font-weight:700; padding:1px 6px; border-radius:4px; margin-bottom:4px; }
+
+    /* ─── 診断スタートカード ─── */
+    .line-shindan-card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.1); }
+    .shindan-card-header { background:#f5f5f5; padding:10px 14px; display:flex; align-items:center; gap:6px; font-size:13px; font-weight:700; color:#333; border-bottom:1px solid #eee; }
+    .shindan-card-body { padding:12px 14px; }
+    .shindan-inner { background:#fff8f2; border:1px solid #f0c090; border-radius:8px; padding:10px 12px; font-size:12px; color:#555; line-height:1.6; margin-bottom:10px; }
+    .shindan-inner .shindan-title { font-size:13px; font-weight:700; color:#D85A00; margin-bottom:4px; }
+    .shindan-badge { display:inline-block; background:#fff0e0; color:#D85A00; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px; border:1px solid #f0c090; margin-top:4px; }
+    .shindan-start-btn { width:100%; background:#D85A00; color:white; border:none; border-radius:8px; padding:11px; font-size:14px; font-weight:800; letter-spacing:.03em; }
+
+    /* ─── 設問カード ─── */
+    .line-q-card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.1); }
+    .q-card-question { padding:12px 14px 10px; font-size:13px; font-weight:700; color:#111; border-bottom:1px solid #f0f0f0; line-height:1.5; }
+    .q-card-answers { padding:8px 10px; display:flex; flex-direction:column; gap:6px; }
+    .q-purpose-tag { display:inline-block; background:#fff5eb; color:#D85A00; font-size:10px; font-weight:700; padding:2px 7px; border-radius:4px; margin-left:6px; vertical-align:middle; }
+    .q-answer-btn { border:1.5px solid #D85A00; border-radius:8px; padding:8px 12px; font-size:12px; color:#D85A00; font-weight:600; display:flex; align-items:center; gap:8px; background:white; }
+    .q-answer-btn.branch-btn { border-color:#f59e0b; color:#92400e; }
+    .q-answer-key { background:#D85A00; color:white; width:20px; height:20px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex-shrink:0; }
+    .q-answer-key.branch { background:#f59e0b; color:#1a1a1a; }
+    .q-answer-branch { margin-left:auto; font-size:10px; font-weight:700; color:#f59e0b; white-space:nowrap; }
+    .q-branch-note { text-align:center; font-size:11px; color:#f59e0b; font-weight:700; padding:6px 0 8px; }
+
+    /* ─── 分岐ラベル ─── */
+    .branch-label { background:rgba(255,255,255,0.12); border:1px dashed rgba(255,255,255,0.35); color:white; font-size:13px; font-weight:700; padding:8px 24px; border-radius:20px; margin:4px 0; text-align:center; }
+
+    /* ─── 3列タイプ分岐エリア ─── */
+    .branch-area { width:100%; max-width:980px; margin:0 auto; }
+    .branch-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; align-items:start; }
+    .type-col { display:flex; flex-direction:column; align-items:center; }
+    .type-badge { font-size:11px; font-weight:700; padding:4px 14px; border-radius:20px; margin-bottom:10px; white-space:nowrap; }
+    .badge-a { background:#f59e0b; color:#1a1a1a; }
+    .badge-b { background:#1e3a8a; color:white; }
+    .badge-c { background:#2e7d32; color:white; }
+    .type-line-mock { width:100%; border-radius:14px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.25); }
+    .type-header-bar { padding:9px 12px; display:flex; align-items:center; gap:7px; }
+    .th-a { background:#92400e; }
+    .th-b { background:#1e3a8a; }
+    .th-c { background:#1a5c30; }
+    .type-icon { width:24px;height:24px; background:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+    .type-name-text { font-size:12px; font-weight:700; color:white; }
+    .type-body { background:#c8e0f4; padding:10px; display:flex; flex-direction:column; gap:8px; }
+
+    /* ─── 結果カルーセル（タイプ別） ─── */
+    .result-scroll { display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; scrollbar-width:thin; }
+    .result-scroll::-webkit-scrollbar { height:3px; }
+    .result-scroll::-webkit-scrollbar-thumb { background:rgba(0,0,0,0.2); border-radius:2px; }
+    .result-card { background:white; border-radius:8px; min-width:150px; max-width:150px; flex-shrink:0; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.1); display:flex; flex-direction:column; }
+    .result-card-top { height:5px; }
+    .rc-a { background:#f59e0b; }
+    .rc-b { background:#1e3a8a; }
+    .rc-c { background:#2e7d32; }
+    .rc-common { background:#D85A00; }
+    .result-card-body { padding:8px 10px; flex:1; }
+    .rc-label { font-size:9px; font-weight:700; padding:1px 6px; border-radius:10px; display:inline-block; margin-bottom:5px; }
+    .rc-label.type-a { background:#fef3c7; color:#92400e; }
+    .rc-label.type-b { background:#dbeafe; color:#1e3a8a; }
+    .rc-label.type-c { background:#dcfce7; color:#1a5c30; }
+    .rc-label.common { background:#fff0e0; color:#D85A00; }
+    .rc-title { font-size:11px; font-weight:800; color:#1a1a1a; line-height:1.4; margin-bottom:4px; }
+    .rc-copy  { font-size:10px; color:#555; line-height:1.5; }
+    .rc-cta { font-size:10px; font-weight:700; background:#06c755; color:white; text-align:center; padding:5px; margin:5px 6px 6px; border-radius:4px; }
+
+    /* ─── 結合バー ─── */
+    .merge-bar { width:100%; height:28px; position:relative; margin-top:6px; }
+    .merge-bar::before { content:''; position:absolute; top:0; left:8%; right:8%; height:2px; background:rgba(255,255,255,0.3); }
+    .merge-bar::after { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:2px; height:28px; background:rgba(255,255,255,0.3); }
+    .merge-note { background:rgba(255,255,255,0.12); border:1px dashed rgba(255,255,255,0.3); color:rgba(255,255,255,0.85); font-size:12px; padding:8px 20px; border-radius:20px; text-align:center; margin:4px 0; }
+
+    /* ─── PRカルーセルモック ─── */
+    .pr-carousel-wrap { width:100%; background:#c8e0f4; border-radius:16px; overflow:hidden; box-shadow:0 2px 14px rgba(0,0,0,0.25); }
+    .pr-carousel-header { background:#1A1A1A; padding:10px 14px; display:flex; align-items:center; gap:8px; }
+    .pr-carousel-icon { width:28px; height:28px; background:linear-gradient(135deg,#FF8C30,#D85A00); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:white; flex-shrink:0; }
+    .pr-carousel-name { font-size:13px; font-weight:700; color:white; }
+    .pr-carousel-sub { font-size:10px; color:rgba(255,255,255,0.5); margin-left:auto; }
+    .pr-carousel-body { padding:12px; }
+    .pr-scroll-hint { font-size:11px; color:rgba(0,0,0,0.4); text-align:right; margin-bottom:8px; }
+    .pr-cards-scroll { display:flex; gap:8px; overflow-x:auto; padding-bottom:8px; scrollbar-width:thin; }
+    .pr-cards-scroll::-webkit-scrollbar { height:4px; }
+    .pr-cards-scroll::-webkit-scrollbar-thumb { background:rgba(0,0,0,0.2); border-radius:2px; }
+    .pr-line-card { background:white; border-radius:10px; overflow:hidden; min-width:180px; max-width:180px; flex-shrink:0; box-shadow:0 1px 4px rgba(0,0,0,0.1); display:flex; flex-direction:column; }
+    .pr-card-top { height:4px; background:linear-gradient(90deg,#D85A00,#FF7C30); }
+    .pr-card-header-bar { background:#1A1A1A; padding:6px 10px; font-size:10px; font-weight:700; color:rgba(255,255,255,0.6); }
+    .pr-card-illust { height:52px; display:flex; align-items:center; justify-content:center; font-size:22px; }
+    .pr-card-illust.c1 { background:linear-gradient(135deg,#fff5eb,#ffeedd); }
+    .pr-card-illust.c2 { background:linear-gradient(135deg,#fff8f2,#fff0e0); }
+    .pr-card-illust.c3 { background:linear-gradient(135deg,#fff5eb,#ffe8d0); }
+    .pr-card-illust.c4 { background:linear-gradient(135deg,#fff0e6,#ffe4cc); }
+    .pr-card-illust.c5 { background:linear-gradient(135deg,#f9f9f9,#f0f0f0); }
+    .pr-card-illust.c6 { background:linear-gradient(135deg,#e8f5e9,#c8e6c9); }
+    .pr-card-body { padding:8px 10px 0; flex:1; }
+    .pr-card-num  { font-size:9px; font-weight:700; color:#aaa; margin-bottom:3px; }
+    .pr-card-title { font-size:11px; font-weight:800; color:#D85A00; line-height:1.4; margin-bottom:4px; }
+    .pr-card-desc  { font-size:10px; color:#555; line-height:1.5; }
+    .pr-card-cta { margin:8px 8px 8px; background:#06c755; color:white; border:none; border-radius:5px; padding:6px; font-size:10px; font-weight:700; text-align:center; display:block; }
+
+    /* ─── FAQカルーセルモック ─── */
+    .faq-carousel-wrap { width:100%; background:#c8e0f4; border-radius:16px; overflow:hidden; box-shadow:0 2px 14px rgba(0,0,0,0.25); }
+    .faq-carousel-header { background:#1A1A1A; padding:10px 14px; display:flex; align-items:center; gap:8px; }
+    .faq-carousel-label { font-size:10px; font-weight:700; color:rgba(255,140,30,0.8); margin-left:auto; background:rgba(216,90,0,0.3); padding:2px 8px; border-radius:10px; }
+    .faq-cards-scroll { display:flex; gap:8px; overflow-x:auto; padding:12px 12px 16px; scrollbar-width:thin; }
+    .faq-cards-scroll::-webkit-scrollbar { height:4px; }
+    .faq-cards-scroll::-webkit-scrollbar-thumb { background:rgba(0,0,0,0.2); border-radius:2px; }
+    .faq-line-card { background:white; border-radius:10px; overflow:hidden; min-width:170px; max-width:170px; flex-shrink:0; box-shadow:0 1px 4px rgba(0,0,0,0.1); display:flex; flex-direction:column; }
+    .faq-card-top { height:4px; background:linear-gradient(90deg,#D85A00,#FF7C30); }
+    .faq-q-band { background:linear-gradient(135deg,#D85A00,#FF7C30); padding:8px 10px; display:flex; align-items:center; gap:7px; }
+    .faq-q-badge { width:20px; height:20px; border-radius:50%; background:rgba(255,255,255,0.25); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:white; flex-shrink:0; }
+    .faq-q-text { font-size:11px; font-weight:700; color:white; line-height:1.3; }
+    .faq-card-body { padding:8px 10px 10px; flex:1; }
+    .faq-a-label { font-size:9px; font-weight:700; color:#D85A00; margin-bottom:3px; }
+    .faq-a-text { font-size:11px; font-weight:700; color:#1a1a1a; line-height:1.4; }
+    .faq-card-cta { margin:8px 8px 8px; background:#06c755; color:white; border:none; border-radius:5px; padding:6px; font-size:10px; font-weight:700; text-align:center; display:block; }
+
+    /* ─── CTAカード ─── */
+    .cta-card { background:#1A1A1A; border-radius:14px; width:100%; padding:24px 22px; text-align:center; box-shadow:0 2px 12px rgba(0,0,0,0.3); }
+    .cta-label { font-size:11px; color:rgba(255,255,255,0.45); margin-bottom:6px; letter-spacing:.06em; }
+    .cta-title { font-size:16px; font-weight:800; color:white; margin-bottom:8px; line-height:1.4; }
+    .cta-sub   { font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:16px; }
+    .cta-price-badge { display:inline-block; background:rgba(216,90,0,0.3); border:1px solid rgba(255,140,30,0.4); color:#ffc06a; font-size:11px; font-weight:700; padding:3px 12px; border-radius:20px; margin-bottom:14px; }
+    .cta-btn   { display:inline-block; background:linear-gradient(90deg,#1A8038,#28A848,#38C060); color:white; font-size:14px; font-weight:700; padding:12px 32px; border-radius:8px; box-shadow:0 4px 14px rgba(30,130,50,0.35); }
+
+    /* ─── セクション区切り ─── */
+    .section-divider {
+      width:100%; text-align:center; margin:32px 0 20px;
+      position:relative;
+    }
+    .section-divider::before {
+      content:''; position:absolute; top:50%; left:0; right:0;
+      height:1px; background:rgba(255,255,255,0.15);
+    }
+    .section-divider span {
+      position:relative; background:#3a2410;
+      padding:0 14px; color:rgba(255,255,255,0.55);
+      font-size:12px; font-weight:700; letter-spacing:.06em;
+    }
+
+    @media (max-width:700px) { .branch-cols { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+<a class="back-link" href="shindan-kakure-himantype-v5-2026-06-01.html">← 設計書 v5 に戻る</a>
+
+<div class="page-header">
+  <h1>🔥 LINEワークフロー設計図 | 隠れ肥満タイプ診断 × SLILIN F</h1>
+  <p>PU → 友達追加 → 診断（Q1〜Q4）→ タイプ別結果カル → 共通カル → PRカル v2 → FAQカル → CTA</p>
+  <span class="version-badge">Ver 1.0 — 2026-06-01</span>
+</div>
+
+<!-- ══ フロー概要サマリー ══ -->
+<div class="summary-box">
+  <h2>FLOW OVERVIEW</h2>
+  <div class="summary-flow-row">
+    <span class="sf-step">STEP 00 PU/記事</span><span class="sf-arrow">→</span>
+    <span class="sf-step">STEP 01 友達追加</span><span class="sf-arrow">→</span>
+    <span class="sf-step">STEP 02 診断スタート</span><span class="sf-arrow">→</span>
+    <span class="sf-step">Q1〜Q4 診断</span><span class="sf-arrow">→</span>
+    <span class="sf-step">3タイプ分岐</span><span class="sf-arrow">→</span>
+    <span class="sf-step">結果カル（12枚）</span><span class="sf-arrow">→</span>
+    <span class="sf-step">PRカル v2（6枚）</span><span class="sf-arrow">→</span>
+    <span class="sf-step">FAQカル（5枚）</span><span class="sf-arrow">→</span>
+    <span class="sf-step">CTA</span>
+  </div>
+  <table class="summary-table">
+    <tr><th>STEP</th><th>内容</th><th>分岐</th><th>タイミング</th></tr>
+    <tr><td>00</td><td>記事内バナー/PU — BMIや体重に関するSEO記事から流入。「友達追加はこちら」誘導</td><td>—</td><td>記事流入</td></tr>
+    <tr><td>01</td><td>友達追加（ファーストゴール）</td><td>—</td><td>ユーザー操作</td></tr>
+    <tr><td>02</td><td>ウェルカムメッセージ＋診断スタートカード</td><td>—</td><td>友達追加直後・即時</td></tr>
+    <tr><td>03〜06</td><td>診断Q1〜Q4（Q4の回答でタイプA/B/Cに分岐）</td><td>Q4のみ</td><td>前の回答後・即時</td></tr>
+    <tr><td>07</td><td>結果カル（タイプ別3枚＋共通3枚＝12枚）教育カル統合済み</td><td>—</td><td>結果直後・即時</td></tr>
+    <tr><td>08</td><td>PRカル v2（SLILIN F 6枚）価格・血流体温・脂肪アプローチ・口コミ・CTA</td><td>—</td><td>STEP07直後・即時</td></tr>
+    <tr><td>09</td><td>FAQカル（5枚）飲み方・実感・添加物・解約返金</td><td>—</td><td>STEP08直後・即時</td></tr>
+    <tr><td>10</td><td>最終CTA — 初回¥980購入ボタン</td><td>—</td><td>STEP09直後・即時</td></tr>
+  </table>
+</div>
+
+<!-- ══ 凡例 ══ -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot ld-step"></div>STEPラベル（フロー本線）</div>
+  <div class="legend-item"><div class="legend-dot ld-branch"></div>分岐・タイプルーティング</div>
+  <div class="legend-item"><div class="legend-dot ld-note"></div>設計・実装メモ</div>
+  <div class="legend-item"><div class="legend-dot ld-pr"></div>SLILIN F専用セクション</div>
+</div>
+
+<!-- ══ メインフロー ══ -->
+<div class="flow">
+
+  <!-- STEP 00 -->
+  <div class="step-label">STEP 00 · PU / 記事内バナー</div>
+  <div class="pu-wrap">
+    <div class="pu-label">PU IMAGE（例：SEO記事）</div>
+    <div class="pu-inner">
+      <div class="pu-headline">BMIは標準なのに、お腹だけ気になる…</div>
+      <div class="pu-copy">それ、「隠れ肥満」かもしれません。<br>30秒で自分のタイプがわかる無料診断</div>
+      <div class="pu-badge">匿名・無料・LINEで完結</div>
+      <div class="pu-buttons">
+        <button class="btn-yes">診断してみる →</button>
+        <button class="btn-no">今はいい</button>
+      </div>
+    </div>
+  </div>
+  <div class="step-note">流入元：BMI・体重・ダイエット系SEO記事</div>
+  <div class="warn-note"><strong>💡 設計メモ</strong>「BMIは標準なのにお腹が気になる」層が主ターゲット。潜在層なので「痩せたい！」よりインパルス型のコピーが合う。</div>
+
+  <div class="arrow"></div>
+
+  <!-- STEP 01 -->
+  <div class="step-label">STEP 01 · 友達追加（ファーストゴール）</div>
+  <div class="friend-card">
+    <div class="friend-icon">＋</div>
+    <div class="friend-title">友達追加</div>
+    <div class="friend-sub">LINE公式アカウント登録</div>
+    <div class="friend-goal">← ファーストゴール達成</div>
+  </div>
+  <div class="step-note">KPI①：友達追加数</div>
+
+  <div class="arrow"></div>
+
+  <!-- STEP 02 -->
+  <div class="step-label">STEP 02 · ウェルカム ＋ 診断スタート（即時送信）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">🔥</div>
+      <div class="line-mock-name">隠れ肥満タイプ診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-bubble">
+        <span class="timing-tag">即時送信</span>
+        <strong>友達追加ありがとうございます！</strong>
+        あなたの体のタイプを診断します。<br>Q1〜Q4に答えるだけ、30秒で完了です。
+      </div>
+      <div class="line-shindan-card">
+        <div class="shindan-card-header">📋 隠れ肥満タイプ診断</div>
+        <div class="shindan-card-body">
+          <div class="shindan-inner">
+            <div class="shindan-title">あなたの「隠れ肥満タイプ」がわかる</div>
+            体重・BMIでは見えない体脂肪率の状態を診断。タイプ別のアドバイスをお届けします。
+            <br><span class="shindan-badge">匿名・無料</span>
+          </div>
+          <button class="shindan-start-btn">診断スタート ▶</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="step-note">テキストバブル ＋ 診断スタートカードの2点送信</div>
+
+  <div class="arrow"></div>
+  <div class="branch-label">——— 診断フロー（Q1〜Q4）———</div>
+  <div class="arrow"></div>
+
+  <!-- STEP 03: Q1 -->
+  <div class="step-label">STEP 03 · Q1（体型の悩みタイプ把握）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">🔥</div>
+      <div class="line-mock-name">隠れ肥満タイプ診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-q-card">
+        <div class="q-card-question">
+          Q1. 体型について、気になることはありますか？
+          <span class="q-purpose-tag">タイプ把握</span>
+        </div>
+        <div class="q-card-answers">
+          <div class="q-answer-btn"><div class="q-answer-key">A</div>BMIは標準なのにお腹周りが気になる</div>
+          <div class="q-answer-btn"><div class="q-answer-key">B</div>ダイエットしても体型が変わらない</div>
+          <div class="q-answer-btn"><div class="q-answer-key">C</div>少し食べただけで体重が増えてしまう</div>
+          <div class="q-answer-btn"><div class="q-answer-key">D</div>特に気になることはない</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="step-note">回答でタイプのヒントを収集。D→スクリーニング離脱候補</div>
+
+  <div class="arrow"></div>
+
+  <!-- STEP 04: Q2 -->
+  <div class="step-label">STEP 04 · Q2（体重・BMIとの関係）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">🔥</div>
+      <div class="line-mock-name">隠れ肥満タイプ診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-q-card">
+        <div class="q-card-question">Q2. 体重・BMIはどのくらいですか？</div>
+        <div class="q-card-answers">
+          <div class="q-answer-btn"><div class="q-answer-key">A</div>BMIは標準（18.5〜24.9）だけど体型が気になる</div>
+          <div class="q-answer-btn"><div class="q-answer-key">B</div>体重は変わっていないのに体型が変わった</div>
+          <div class="q-answer-btn"><div class="q-answer-key">C</div>BMIが標準より高め</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow"></div>
+
+  <!-- STEP 05: Q3 -->
+  <div class="step-label">STEP 05 · Q3（体の変化・代謝チェック）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">🔥</div>
+      <div class="line-mock-name">隠れ肥満タイプ診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-q-card">
+        <div class="q-card-question">Q3. 最近こんなこと、ありませんか？</div>
+        <div class="q-card-answers">
+          <div class="q-answer-btn"><div class="q-answer-key">A</div>昔と同じ食事なのに体型が変わってきた</div>
+          <div class="q-answer-btn"><div class="q-answer-key">B</div>体が冷えやすくなった・むくみやすい</div>
+          <div class="q-answer-btn"><div class="q-answer-key">C</div>運動しても効果を感じにくくなった</div>
+          <div class="q-answer-btn"><div class="q-answer-key">D</div>特にない</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow"></div>
+
+  <!-- STEP 06: Q4（タイプ分岐） -->
+  <div class="step-label">STEP 06 · Q4（タイプ確定・分岐設問）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">🔥</div>
+      <div class="line-mock-name">隠れ肥満タイプ診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-q-card">
+        <div class="q-card-question">
+          Q4. ダイエットへのアプローチはどれが近いですか？
+          <span class="q-purpose-tag">タイプ分岐</span>
+        </div>
+        <div class="q-card-answers">
+          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">A</div>お腹周りをすっきりさせたい<div class="q-answer-branch">→ タイプA</div></div>
+          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">B</div>体型を引き締めたい（数値より見た目）<div class="q-answer-branch">→ タイプB</div></div>
+          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">C</div>食べてないのに太るのをなんとかしたい<div class="q-answer-branch">→ タイプC</div></div>
+        </div>
+        <div class="q-branch-note">⚡ この回答でタイプが確定→結果カルへ</div>
+      </div>
+    </div>
+  </div>
+  <div class="step-note">Q4の回答でA/B/C 3タイプに分岐</div>
+
+</div><!-- /flow -->
+
+<!-- ══ 3タイプ分岐 ══ -->
+<div class="section-divider"><span>3タイプ分岐</span></div>
+
+<div class="branch-area flow wide">
+
+  <div class="branch-label" style="margin-bottom:16px;">Q4の回答 → タイプ別結果カルーセル（各3枚）</div>
+
+  <div class="branch-cols">
+
+    <!-- タイプA -->
+    <div class="type-col">
+      <div class="type-badge badge-a">タイプA｜かくれ内臓脂肪</div>
+      <div class="type-line-mock">
+        <div class="type-header-bar th-a">
+          <div class="type-icon">🟠</div>
+          <div class="type-name-text">かくれ内臓脂肪タイプ</div>
+        </div>
+        <div class="type-body">
+          <div class="result-scroll">
+            <div class="result-card">
+              <div class="result-card-top rc-a"></div>
+              <div class="result-card-body">
+                <div class="rc-label type-a">A-1</div>
+                <div class="rc-title">かくれ内臓脂肪タイプ</div>
+                <div class="rc-copy">既存診断デザイン。BMIは標準なのにお腹周りが気になる。</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-a"></div>
+              <div class="result-card-body">
+                <div class="rc-label type-a">A-2</div>
+                <div class="rc-title">BMIが見ているのは体重と身長だけ。</div>
+                <div class="rc-copy">「心当たりありませんか？」見出し＋シーン2つ</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-a"></div>
+              <div class="result-card-body">
+                <div class="rc-label type-a">A-3</div>
+                <div class="rc-title">それ、"代謝低下"のサインかも。</div>
+                <div class="rc-copy">代謝グラフ＋ハンマー「ダイエットのカギは代謝にある。」</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- タイプB -->
+    <div class="type-col">
+      <div class="type-badge badge-b">タイプB｜かくれ体脂肪</div>
+      <div class="type-line-mock">
+        <div class="type-header-bar th-b">
+          <div class="type-icon">🔵</div>
+          <div class="type-name-text">かくれ体脂肪タイプ</div>
+        </div>
+        <div class="type-body">
+          <div class="result-scroll">
+            <div class="result-card">
+              <div class="result-card-top rc-b"></div>
+              <div class="result-card-body">
+                <div class="rc-label type-b">B-1</div>
+                <div class="rc-title">かくれ体脂肪タイプ</div>
+                <div class="rc-copy">既存診断デザイン。ダイエットしても体型が変わらない。</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-b"></div>
+              <div class="result-card-body">
+                <div class="rc-label type-b">B-2</div>
+                <div class="rc-title">体型が変わらないのは体脂肪率が変わっていないから。</div>
+                <div class="rc-copy">BMI・体重では見えない体脂肪率 概念図（v4変更）</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-b"></div>
+              <div class="result-card-body">
+                <div class="rc-label type-b">B-3</div>
+                <div class="rc-title">それ、"代謝低下"のサインかも。</div>
+                <div class="rc-copy">代謝グラフ＋ハンマー「ダイエットのカギは代謝にある。」</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- タイプC -->
+    <div class="type-col">
+      <div class="type-badge badge-c">タイプC｜代謝スロー</div>
+      <div class="type-line-mock">
+        <div class="type-header-bar th-c">
+          <div class="type-icon">🟢</div>
+          <div class="type-name-text">代謝スロータイプ</div>
+        </div>
+        <div class="type-body">
+          <div class="result-scroll">
+            <div class="result-card">
+              <div class="result-card-top rc-c"></div>
+              <div class="result-card-body">
+                <div class="rc-label type-c">C-1</div>
+                <div class="rc-title">代謝スロータイプ</div>
+                <div class="rc-copy">既存診断デザイン。少し食べただけで体重が増えてしまう。</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-c"></div>
+              <div class="result-card-body">
+                <div class="rc-label type-c">C-2</div>
+                <div class="rc-title">食べてないのに、なぜか太る。</div>
+                <div class="rc-copy">少食のつもり→体重が増える 2コマイラスト（v4変更）</div>
+              </div>
+            </div>
+            <div class="result-card">
+              <div class="result-card-top rc-c"></div>
+              <div class="result-card-body">
+                <div class="rc-label type-c">C-3</div>
+                <div class="rc-title">それ、"代謝低下"のサインかも。</div>
+                <div class="rc-copy">代謝グラフ＋ハンマー「ダイエットのカギは代謝にある。」</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /branch-cols -->
+
+  <!-- 結合バー＋共通カル -->
+  <div class="merge-bar"></div>
+  <div class="merge-note">全タイプ → 共通結果カル（Card 4・5・6）へ合流</div>
+  <div class="arrow"></div>
+
+  <!-- 共通カル -->
+  <div class="type-line-mock" style="max-width:500px; width:100%;">
+    <div class="type-header-bar" style="background:#D85A00;">
+      <div class="type-icon">🔥</div>
+      <div class="type-name-text">共通結果カル — Card 4・5・6（全タイプ共通）</div>
+    </div>
+    <div class="type-body">
+      <div class="result-scroll">
+        <div class="result-card">
+          <div class="result-card-top rc-common"></div>
+          <div class="result-card-body">
+            <div class="rc-label common">Card 4</div>
+            <div class="rc-title">代謝を上げるカギは体温にある！</div>
+            <div class="rc-copy">体温が整うと…ピルバッジ＋体温1℃UP→+180kcal</div>
+          </div>
+        </div>
+        <div class="result-card">
+          <div class="result-card-top rc-common"></div>
+          <div class="result-card-body">
+            <div class="rc-label common">Card 5</div>
+            <div class="rc-title">食事と運動で体温→代謝アップ</div>
+            <div class="rc-copy">「でも」バッジ→食事制限・運動の限界→サプリ誘導</div>
+          </div>
+        </div>
+        <div class="result-card">
+          <div class="result-card-top rc-common"></div>
+          <div class="result-card-body">
+            <div class="rc-label common">Card 6</div>
+            <div class="rc-title">体温×代謝アップのサポートアイテム</div>
+            <div class="rc-copy">サプリという選択肢の提示</div>
+            <div class="rc-cta">SLILIN Fを見てみる →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /branch-area -->
+
+<!-- ══ PRカル ══ -->
+<div class="section-divider"><span>SLILIN F PRカル v2</span></div>
+
+<div class="flow">
+  <div class="step-label">STEP 08 · PRカルーセル v2（6枚）</div>
+  <div class="pr-carousel-wrap">
+    <div class="pr-carousel-header">
+      <div class="pr-carousel-icon">F</div>
+      <div class="pr-carousel-name">スリリン<span style="color:#FF8C30;">F</span> — SLILIN F</div>
+      <div class="pr-carousel-sub">6枚カルーセル</div>
+    </div>
+    <div class="pr-carousel-body">
+      <div class="pr-scroll-hint">← スクロール →</div>
+      <div class="pr-cards-scroll">
+
+        <div class="pr-line-card">
+          <div class="pr-card-top"></div>
+          <div class="pr-card-header-bar">SLILIN F</div>
+          <div class="pr-card-illust c1">🏆</div>
+          <div class="pr-card-body">
+            <div class="pr-card-num">CARD 01</div>
+            <div class="pr-card-title">商品紹介</div>
+            <div class="pr-card-desc">楽天3冠・医師監修。血流UP×体温UPで選ばれる理由</div>
+          </div>
+          <div class="pr-card-cta">次のカードへ →</div>
+        </div>
+
+        <div class="pr-line-card">
+          <div class="pr-card-top"></div>
+          <div class="pr-card-header-bar">SLILIN F</div>
+          <div class="pr-card-illust c2">💰</div>
+          <div class="pr-card-body">
+            <div class="pr-card-num">CARD 02</div>
+            <div class="pr-card-title">① 試しやすい初回価格</div>
+            <div class="pr-card-desc">通常¥4,980 → 初回¥980（約80%OFF）初回のみ解約OK</div>
+          </div>
+          <div class="pr-card-cta">初回¥980で試してみる →</div>
+        </div>
+
+        <div class="pr-line-card">
+          <div class="pr-card-top"></div>
+          <div class="pr-card-header-bar">SLILIN F</div>
+          <div class="pr-card-illust c3">🌡️</div>
+          <div class="pr-card-body">
+            <div class="pr-card-num">CARD 03</div>
+            <div class="pr-card-title">② 血流UP × 体温UP</div>
+            <div class="pr-card-desc">アムラ由来エラグ酸。5分で体温回復。代謝13〜15%UP</div>
+          </div>
+          <div class="pr-card-cta">初回¥980で試してみる →</div>
+        </div>
+
+        <div class="pr-line-card">
+          <div class="pr-card-top"></div>
+          <div class="pr-card-header-bar">SLILIN F</div>
+          <div class="pr-card-illust c4">🔥</div>
+          <div class="pr-card-body">
+            <div class="pr-card-num">CARD 04 ★v5変更</div>
+            <div class="pr-card-title">③ 脂肪を落とす効果</div>
+            <div class="pr-card-desc">なぜ？→ GIFイラスト（脂肪分解）→ 内臓・皮下両方</div>
+          </div>
+          <div class="pr-card-cta">初回¥980で試してみる →</div>
+        </div>
+
+        <div class="pr-line-card">
+          <div class="pr-card-top"></div>
+          <div class="pr-card-header-bar">SLILIN F</div>
+          <div class="pr-card-illust c5">⭐</div>
+          <div class="pr-card-body">
+            <div class="pr-card-num">CARD 05 ⏳</div>
+            <div class="pr-card-title">口コミ</div>
+            <div class="pr-card-desc">体型系口コミ2〜3件（クライアントチェック待ち）</div>
+          </div>
+          <div class="pr-card-cta">初回¥980で試してみる →</div>
+        </div>
+
+        <div class="pr-line-card">
+          <div class="pr-card-top"></div>
+          <div class="pr-card-header-bar">SLILIN F</div>
+          <div class="pr-card-illust c6">✅</div>
+          <div class="pr-card-body">
+            <div class="pr-card-num">CARD 06</div>
+            <div class="pr-card-title">CTA キャンペーン</div>
+            <div class="pr-card-desc">初回¥980 / 初回解約OK / 全額返金保証</div>
+          </div>
+          <div class="pr-card-cta">初回¥980で試してみる →</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="step-note">KPI②：PRカルCTAクリック率</div>
+  <div class="warn-note"><strong>💡 設計メモ</strong>潜在層向け。専門用語（プラセボ・成分名の詳細）は使わない。「なんか効きそう」感情で引っ張る設計。</div>
+
+  <div class="arrow"></div>
+
+  <!-- FAQカル -->
+  <div class="step-label">STEP 09 · FAQカルーセル（5枚）★新規</div>
+  <div class="faq-carousel-wrap">
+    <div class="faq-carousel-header">
+      <div class="pr-carousel-icon">F</div>
+      <div class="pr-carousel-name" style="font-size:13px; font-weight:700; color:white;">よくある質問 — FAQ</div>
+      <div class="faq-carousel-label">NEW v5</div>
+    </div>
+    <div class="faq-cards-scroll">
+
+      <div class="faq-line-card">
+        <div class="faq-card-top"></div>
+        <div class="faq-q-band">
+          <div class="faq-q-badge">Q</div>
+          <div class="faq-q-text">おすすめの飲むタイミングは？</div>
+        </div>
+        <div class="faq-card-body">
+          <div class="faq-a-label">ANSWER</div>
+          <div class="faq-a-text">活動が始まる前。通勤・通学前がおすすめ。</div>
+        </div>
+      </div>
+
+      <div class="faq-line-card">
+        <div class="faq-card-top"></div>
+        <div class="faq-q-band">
+          <div class="faq-q-badge">Q</div>
+          <div class="faq-q-text">1日に何粒飲めばいい？</div>
+        </div>
+        <div class="faq-card-body">
+          <div class="faq-a-label">ANSWER</div>
+          <div class="faq-a-text">1日3粒を目安に。朝まとめてでもOK。</div>
+        </div>
+      </div>
+
+      <div class="faq-line-card">
+        <div class="faq-card-top"></div>
+        <div class="faq-q-band">
+          <div class="faq-q-badge">Q</div>
+          <div class="faq-q-text">いつ頃から実感できますか？</div>
+        </div>
+        <div class="faq-card-body">
+          <div class="faq-a-label">ANSWER</div>
+          <div class="faq-a-text">まずは3〜4ヶ月の継続推奨。個人差あり。</div>
+        </div>
+      </div>
+
+      <div class="faq-line-card">
+        <div class="faq-card-top"></div>
+        <div class="faq-q-band">
+          <div class="faq-q-badge">Q</div>
+          <div class="faq-q-text">添加物は？体に大丈夫？</div>
+        </div>
+        <div class="faq-card-body">
+          <div class="faq-a-label">ANSWER</div>
+          <div class="faq-a-text">着色料・香料・甘味料・酸化防止剤 すべて不使用。植物由来。</div>
+        </div>
+      </div>
+
+      <div class="faq-line-card">
+        <div class="faq-card-top"></div>
+        <div class="faq-q-band">
+          <div class="faq-q-badge">Q</div>
+          <div class="faq-q-text">解約できる？返金保証は？</div>
+        </div>
+        <div class="faq-card-body">
+          <div class="faq-a-label">ANSWER</div>
+          <div class="faq-a-text">初回のみ解約OK。全額返金保証あり（パッケージ返送条件）</div>
+        </div>
+        <div class="faq-card-cta">まず試してみる → 初回¥980</div>
+      </div>
+
+    </div>
+  </div>
+  <div class="step-note">LINEで返ってくる質問に先回りして答えるコンテンツ</div>
+
+  <div class="arrow"></div>
+
+  <!-- STEP 10: CTA -->
+  <div class="step-label">STEP 10 · 最終CTA</div>
+  <div class="cta-card">
+    <div class="cta-label">FINAL CTA</div>
+    <div class="cta-title">まず試してみませんか？<br>初回限定 ¥980</div>
+    <div class="cta-price-badge">通常¥4,980 → 初回¥980（約80%OFF）</div>
+    <div class="cta-sub">初回のみ解約OK ｜ 全額返金保証付き</div>
+    <div class="cta-btn">→ 初回¥980で試してみる</div>
+  </div>
+  <div class="step-note">KPI③：CTA最終クリック率（購入）</div>
+
+</div><!-- /flow -->
+
+</div><!-- /page-wrap -->
+</body>
+</html>
