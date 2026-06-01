@@ -131,9 +131,9 @@
     }
     .csb-orange { background: #fff0e6; color: #D85A00; border: 1px solid rgba(216,90,0,0.2); }
     .csb-new { background: #fff0e6; color: #D85A00; border: 1px solid rgba(216,90,0,0.4); }
-    .carousel-iframe-wrap { width: 100%; overflow: hidden; }
+    .carousel-iframe-wrap { width: 100%; overflow: hidden; background: #EDE0D4; }
     .carousel-iframe-wrap iframe {
-      width: 100%; border: none; display: block;
+      width: 100%; border: none; display: block; height: 620px;
     }
 
     /* ─── 結合バー ─── */
@@ -369,8 +369,6 @@
       <iframe
         src="visual-result-carousel-kakurehiman-v4-2026-05-27.html"
         id="iframe-result"
-        scrolling="no"
-        onload="this.style.height=(this.contentDocument.documentElement.scrollHeight)+'px'"
       ></iframe>
     </div>
   </div>
@@ -404,8 +402,6 @@
       <iframe
         src="visual-pr-carousel-slilinf-v2-2026-05-27.html"
         id="iframe-pr"
-        scrolling="no"
-        onload="this.style.height=(this.contentDocument.documentElement.scrollHeight)+'px'"
       ></iframe>
     </div>
   </div>
@@ -439,8 +435,6 @@
       <iframe
         src="visual-faq-carousel-slilinf-2026-06-01.html"
         id="iframe-faq"
-        scrolling="no"
-        onload="this.style.height=(this.contentDocument.documentElement.scrollHeight)+'px'"
       ></iframe>
     </div>
   </div>
@@ -476,18 +470,31 @@
 </div><!-- /page-wrap -->
 
 <script>
-  // iframeの高さをコンテンツに合わせて自動調整（同一オリジン前提）
-  function resizeIframe(iframe) {
+  // iframeにCSSを注入して横スクロール表示に変換（同一オリジン前提）
+  function injectScrollStyle(iframe) {
     try {
-      var h = iframe.contentDocument.documentElement.scrollHeight;
-      iframe.style.height = h + 'px';
+      var doc = iframe.contentDocument;
+      var style = doc.createElement('style');
+      style.textContent = [
+        // タイトル・サブ非表示
+        '.page-title, .page-sub { display: none !important; }',
+        // bodyのパディングを縮小
+        'body { padding: 16px 0 24px !important; }',
+        // カードを横1列に変更
+        '.cards-wrap { flex-wrap: nowrap !important; overflow-x: auto !important; overflow-y: hidden !important;',
+        '  justify-content: flex-start !important; padding: 0 20px 16px !important;',
+        '  scrollbar-width: thin; -webkit-overflow-scrolling: touch; }',
+        '.cards-wrap::-webkit-scrollbar { height: 4px; }',
+        '.cards-wrap::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 2px; }',
+      ].join('\n');
+      doc.head.appendChild(style);
+      // 高さ = カード高さ + ラベル + パディング + スクロールバー
+      iframe.style.height = '620px';
     } catch(e) {}
   }
+
   document.querySelectorAll('iframe').forEach(function(iframe) {
-    iframe.addEventListener('load', function() { resizeIframe(this); });
-    // 画像読み込み完了後に再調整
-    setTimeout(function() { resizeIframe(iframe); }, 1500);
-    setTimeout(function() { resizeIframe(iframe); }, 3000);
+    iframe.addEventListener('load', function() { injectScrollStyle(this); });
   });
 </script>
 </body>
