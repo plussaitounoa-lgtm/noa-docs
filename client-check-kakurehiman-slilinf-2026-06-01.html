@@ -136,6 +136,16 @@
       width: 100%; border: none; display: block; height: 620px;
     }
 
+    /* ─── 結果カル タイプ別ラベル ─── */
+    .result-type-block { border-top: 1px solid #f0e8df; }
+    .result-type-label {
+      font-size: 12px; font-weight: 800; padding: 10px 22px;
+      letter-spacing: .06em;
+    }
+    .result-label-a { background: rgba(216,90,0,0.08); color: #D85A00; }
+    .result-label-b { background: rgba(30,80,200,0.08); color: #1A50C8; }
+    .result-label-c { background: rgba(30,150,80,0.08); color: #1A7040; }
+
     /* ─── 結合バー ─── */
     .merge-bar { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 12px 0; }
     .merge-line { width: 2px; height: 24px; background: rgba(0,0,0,0.15); }
@@ -361,15 +371,30 @@
       <div class="carousel-section-icon">🧬</div>
       <div>
         <div class="carousel-section-title">結果カルーセル v4</div>
-        <div class="carousel-section-sub">隠れ肥満タイプ診断 — 3タイプ × 3枚 ＋ 共通3枚</div>
+        <div class="carousel-section-sub">タイプ別3枚 ＋ 共通3枚 = 6枚 × 3タイプ</div>
       </div>
       <span class="carousel-section-badge csb-orange">v4 確定</span>
     </div>
-    <div class="carousel-iframe-wrap">
-      <iframe
-        src="visual-result-carousel-kakurehiman-v4-2026-05-27.html"
-        id="iframe-result"
-      ></iframe>
+
+    <div class="result-type-block">
+      <div class="result-type-label result-label-a">TYPE A — かくれ内臓脂肪タイプ</div>
+      <div class="carousel-iframe-wrap">
+        <iframe src="visual-result-carousel-kakurehiman-v4-2026-05-27.html" id="iframe-result-a"></iframe>
+      </div>
+    </div>
+
+    <div class="result-type-block">
+      <div class="result-type-label result-label-b">TYPE B — かくれ体脂肪タイプ</div>
+      <div class="carousel-iframe-wrap">
+        <iframe src="visual-result-carousel-kakurehiman-v4-2026-05-27.html" id="iframe-result-b"></iframe>
+      </div>
+    </div>
+
+    <div class="result-type-block">
+      <div class="result-type-label result-label-c">TYPE C — 代謝スロータイプ</div>
+      <div class="carousel-iframe-wrap">
+        <iframe src="visual-result-carousel-kakurehiman-v4-2026-05-27.html" id="iframe-result-c"></iframe>
+      </div>
     </div>
   </div>
 
@@ -470,31 +495,64 @@
 </div><!-- /page-wrap -->
 
 <script>
-  // iframeにCSSを注入して横スクロール表示に変換（同一オリジン前提）
-  function injectScrollStyle(iframe) {
+  // 横スクロール用CSSをiframe内に注入（同一オリジン前提）
+  function injectScrollCSS(doc, iframe) {
+    var style = doc.createElement('style');
+    style.textContent = [
+      '.page-title, .page-sub, .page-note { display: none !important; }',
+      '.section-label { display: none !important; }',
+      'body { padding: 16px 0 24px !important; }',
+      '.cards-wrap { flex-wrap: nowrap !important; overflow-x: auto !important; overflow-y: hidden !important;',
+      '  justify-content: flex-start !important; padding: 0 20px 16px !important;',
+      '  scrollbar-width: thin; -webkit-overflow-scrolling: touch; }',
+      '.cards-wrap::-webkit-scrollbar { height: 4px; }',
+      '.cards-wrap::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 2px; }',
+    ].join('\n');
+    doc.head.appendChild(style);
+    iframe.style.height = '620px';
+  }
+
+  // 結果カル：typeIndex(0=A,1=B,2=C)のカード行に共通カード(wrap[3])をクローンして追加し他行を非表示
+  function injectResultCarousel(iframe, typeIndex) {
     try {
       var doc = iframe.contentDocument;
-      var style = doc.createElement('style');
-      style.textContent = [
-        // タイトル・サブ非表示
-        '.page-title, .page-sub { display: none !important; }',
-        // bodyのパディングを縮小
-        'body { padding: 16px 0 24px !important; }',
-        // カードを横1列に変更
-        '.cards-wrap { flex-wrap: nowrap !important; overflow-x: auto !important; overflow-y: hidden !important;',
-        '  justify-content: flex-start !important; padding: 0 20px 16px !important;',
-        '  scrollbar-width: thin; -webkit-overflow-scrolling: touch; }',
-        '.cards-wrap::-webkit-scrollbar { height: 4px; }',
-        '.cards-wrap::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 2px; }',
-      ].join('\n');
-      doc.head.appendChild(style);
-      // 高さ = カード高さ + ラベル + パディング + スクロールバー
-      iframe.style.height = '620px';
+      var wraps = doc.querySelectorAll('.cards-wrap');
+      if (wraps.length >= 4) {
+        var commonWrap = wraps[3];
+        var targetWrap = wraps[typeIndex];
+        // 共通Card4・5・6をターゲットタイプ行にクローン追加
+        Array.from(commonWrap.children).forEach(function(child) {
+          targetWrap.appendChild(child.cloneNode(true));
+        });
+        // ターゲット以外のタイプ行 + 共通行をすべて非表示
+        Array.from(wraps).forEach(function(wrap, i) {
+          if (i !== typeIndex) wrap.style.display = 'none';
+        });
+      }
+      injectScrollCSS(doc, iframe);
     } catch(e) {}
   }
 
-  document.querySelectorAll('iframe').forEach(function(iframe) {
-    iframe.addEventListener('load', function() { injectScrollStyle(this); });
+  // PR / FAQカル：標準の横スクロール注入
+  function injectStandardCarousel(iframe) {
+    try {
+      injectScrollCSS(iframe.contentDocument, iframe);
+    } catch(e) {}
+  }
+
+  // 結果カルの3つのiframeを個別初期化（A=0, B=1, C=2）
+  ['a', 'b', 'c'].forEach(function(type, idx) {
+    var iframe = document.getElementById('iframe-result-' + type);
+    if (iframe) {
+      iframe.addEventListener('load', function() { injectResultCarousel(this, idx); });
+    }
+  });
+  // PRカル・FAQカル
+  ['iframe-pr', 'iframe-faq'].forEach(function(id) {
+    var iframe = document.getElementById(id);
+    if (iframe) {
+      iframe.addEventListener('load', function() { injectStandardCarousel(this); });
+    }
   });
 </script>
 </body>
