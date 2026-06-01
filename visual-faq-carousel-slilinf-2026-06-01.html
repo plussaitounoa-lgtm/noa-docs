@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQカルーセル SLILIN F — 全5枚</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #EDE0D4;
+      padding: 40px 20px;
+      font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+    }
+    .page-title {
+      text-align: center; color: #888; font-size: 12px; font-weight: 700;
+      letter-spacing: .1em; margin-bottom: 6px;
+    }
+    .page-sub { text-align: center; color: #aaa; font-size: 11px; margin-bottom: 32px; }
+    .cards-wrap { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .card-unit { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .card-label { font-size: 11px; font-weight: 700; color: #999; letter-spacing: .08em; }
+
+    .frame {
+      width: 341px; min-height: 512px; border-radius: 16px; overflow: hidden;
+      display: flex; flex-direction: column; background: #FFFFFF;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    }
+
+    /* ========== 共通：ロゴヘッダー ========== */
+    .card-logo-header {
+      background: #1A1A1A; padding: 6px 14px;
+      display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+    }
+    .card-logo-read { font-size: 8px; color: rgba(255,255,255,0.55); letter-spacing: .1em; line-height: 1; margin-bottom: 1px; }
+    .card-logo-name {
+      font-size: 16px; font-weight: 900; color: white; letter-spacing: .05em; line-height: 1;
+    }
+    .card-logo-name em {
+      font-style: normal;
+      background: linear-gradient(160deg, #FF8C30, #D85A00);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .card-logo-faq {
+      margin-left: auto; font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.5);
+      letter-spacing: .08em;
+    }
+
+    /* ========== 共通：FAQ帯 ========== */
+    .faq-band {
+      background: linear-gradient(135deg, #D85A00 0%, #FF7C30 100%);
+      padding: 10px 18px; flex-shrink: 0;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .faq-q-badge {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 900; color: white; flex-shrink: 0;
+    }
+    .faq-question {
+      font-size: 15px; font-weight: 900; color: white; line-height: 1.4; flex: 1;
+    }
+
+    /* ========== 共通：ボディ ========== */
+    .faq-body {
+      flex: 1; padding: 16px 16px 14px; display: flex; flex-direction: column; gap: 12px;
+      background: #FFFAF5;
+    }
+
+    /* ========== 共通：回答ブロック ========== */
+    .answer-block {
+      background: white; border: 1.5px solid rgba(216,96,0,0.2);
+      border-radius: 12px; padding: 14px 16px;
+    }
+    .answer-label {
+      font-size: 9px; font-weight: 700; color: #D86000; letter-spacing: .1em;
+      margin-bottom: 6px;
+    }
+    .answer-main {
+      font-size: 14px; font-weight: 800; color: #222; line-height: 1.55;
+    }
+    .answer-main em { font-style: normal; color: #D86000; }
+    .answer-sub {
+      font-size: 10px; color: #888; line-height: 1.6; margin-top: 6px;
+    }
+
+    /* ========== 共通：CTAボタン ========== */
+    .cta-green {
+      background: linear-gradient(90deg, #1A8038, #28A848, #38C060);
+      border-radius: 10px; overflow: hidden;
+      display: flex; flex-direction: column;
+      cursor: pointer; flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(30,130,50,0.3);
+    }
+    .cta-pre-badges { display: flex; border-bottom: 1px solid rgba(255,255,255,0.25); }
+    .cta-pre-badge {
+      flex: 1; text-align: center; font-size: 10px; font-weight: 700;
+      color: white; padding: 6px 4px; letter-spacing: .02em;
+    }
+    .cta-pre-badge:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.25); }
+    .cta-main-text {
+      padding: 13px 16px; text-align: center; font-size: 14px;
+      font-weight: 900; color: white; letter-spacing: .04em;
+    }
+    .cta-green-sub { font-size: 10px; color: rgba(255,255,255,0.72); margin-top: 3px; font-weight: 400; }
+
+    /* ========== Card 1：タイミング ========== */
+    .timing-visual {
+      display: flex; align-items: center; justify-content: center; gap: 0;
+      background: white; border: 1.5px solid rgba(216,96,0,0.2);
+      border-radius: 12px; padding: 16px 12px; overflow: hidden;
+    }
+    .timing-item {
+      flex: 1; text-align: center; display: flex; flex-direction: column;
+      align-items: center; gap: 5px;
+    }
+    .timing-icon { font-size: 28px; line-height: 1; }
+    .timing-name { font-size: 10px; font-weight: 700; color: #555; line-height: 1.4; }
+    .timing-check {
+      font-size: 9px; font-weight: 700; color: white;
+      background: #D86000; border-radius: 10px; padding: 2px 7px; margin-top: 2px;
+    }
+    .timing-ng {
+      font-size: 9px; font-weight: 700; color: #bbb;
+      background: #eee; border-radius: 10px; padding: 2px 7px; margin-top: 2px;
+    }
+    .timing-arrow { font-size: 16px; color: rgba(216,96,0,0.3); flex-shrink: 0; padding: 0 4px; }
+
+    .timing-note {
+      background: rgba(216,96,0,0.07); border-radius: 10px;
+      padding: 10px 14px; font-size: 11px; color: #555; line-height: 1.65;
+      border-left: 3px solid #D86000;
+    }
+    .timing-note strong { color: #D86000; }
+
+    /* ========== Card 2：粒数 ========== */
+    .pills-visual {
+      background: white; border: 1.5px solid rgba(216,96,0,0.2);
+      border-radius: 12px; padding: 20px 16px; text-align: center;
+    }
+    .pills-count {
+      font-size: 72px; font-weight: 900; color: #D86000; line-height: 1;
+      letter-spacing: -.02em;
+    }
+    .pills-unit { font-size: 16px; font-weight: 700; color: #D86000; margin-top: -4px; }
+    .pills-icons { font-size: 22px; letter-spacing: 4px; margin-top: 10px; }
+    .pills-sub { font-size: 10px; color: #999; margin-top: 8px; line-height: 1.5; }
+
+    .pills-timing-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    }
+    .pills-timing-item {
+      background: white; border: 1px solid rgba(216,96,0,0.15);
+      border-radius: 10px; padding: 10px 10px; text-align: center;
+    }
+    .pills-timing-icon { font-size: 20px; margin-bottom: 4px; }
+    .pills-timing-label { font-size: 10px; font-weight: 700; color: #555; line-height: 1.4; }
+    .pills-timing-check { font-size: 9px; color: #D86000; font-weight: 700; margin-top: 3px; }
+
+    /* ========== Card 3：実感期間 ========== */
+    .feel-timeline {
+      background: white; border: 1.5px solid rgba(216,96,0,0.2);
+      border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px;
+    }
+    .feel-row {
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .feel-month {
+      flex-shrink: 0; width: 52px; height: 52px;
+      background: linear-gradient(135deg, #D85A00, #FF7C30);
+      border-radius: 50%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700; color: white; line-height: 1.3; text-align: center;
+    }
+    .feel-month span { font-size: 18px; font-weight: 900; line-height: 1; }
+    .feel-text { flex: 1; padding-top: 6px; }
+    .feel-text-main { font-size: 12px; font-weight: 800; color: #222; line-height: 1.5; }
+    .feel-text-main em { font-style: normal; color: #D86000; }
+    .feel-text-sub { font-size: 10px; color: #999; margin-top: 3px; line-height: 1.5; }
+    .feel-divider { height: 1px; background: rgba(216,96,0,0.1); }
+
+    .feel-note {
+      background: rgba(216,96,0,0.07); border-radius: 10px;
+      padding: 10px 14px; font-size: 10px; color: #777; line-height: 1.6;
+      border-left: 3px solid #D86000;
+    }
+
+    /* ========== Card 4：添加物 ========== */
+    .additive-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    }
+    .additive-item {
+      background: white; border: 1.5px solid rgba(216,96,0,0.15);
+      border-radius: 10px; padding: 10px 10px; text-align: center;
+    }
+    .additive-cross { font-size: 18px; color: #D86000; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+    .additive-name { font-size: 10px; font-weight: 700; color: #444; line-height: 1.4; }
+
+    .additive-positive {
+      background: linear-gradient(135deg, rgba(216,96,0,0.06), rgba(255,160,80,0.06));
+      border: 1.5px solid rgba(216,96,0,0.2); border-radius: 12px;
+      padding: 12px 14px; text-align: center;
+    }
+    .additive-positive-icon { font-size: 24px; margin-bottom: 6px; }
+    .additive-positive-main { font-size: 13px; font-weight: 800; color: #222; line-height: 1.5; }
+    .additive-positive-main em { font-style: normal; color: #D86000; }
+    .additive-positive-sub { font-size: 10px; color: #888; margin-top: 4px; line-height: 1.5; }
+
+    /* ========== Card 5：解約・返金 ========== */
+    .guarantee-box {
+      background: white; border: 2px solid rgba(216,96,0,0.25);
+      border-radius: 12px; padding: 14px 16px; text-align: center;
+    }
+    .guarantee-icon { font-size: 32px; margin-bottom: 6px; }
+    .guarantee-title { font-size: 15px; font-weight: 900; color: #D86000; margin-bottom: 6px; }
+    .guarantee-desc { font-size: 11px; color: #555; line-height: 1.7; }
+    .guarantee-desc em { font-style: normal; color: #D86000; font-weight: 700; }
+
+    .cancel-steps {
+      display: flex; flex-direction: column; gap: 7px;
+    }
+    .cancel-step {
+      display: flex; align-items: center; gap: 10px;
+      background: white; border: 1px solid rgba(216,96,0,0.15);
+      border-radius: 10px; padding: 10px 14px;
+    }
+    .cancel-step-num {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: #D86000; color: white;
+      font-size: 11px; font-weight: 900;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .cancel-step-text { font-size: 11px; font-weight: 700; color: #333; line-height: 1.5; }
+    .cancel-step-text span { font-size: 9px; color: #999; display: block; font-weight: 400; margin-top: 1px; }
+
+    .cancel-note { font-size: 9px; color: #bbb; line-height: 1.6; text-align: center; }
+
+  </style>
+</head>
+<body>
+
+<div class="page-title">FAQカルーセル SLILIN F — 全5枚</div>
+<div class="page-sub">よくある質問・飲み方ガイド</div>
+
+<div class="cards-wrap">
+
+  <!-- Card 1：いつ飲めばいい？ -->
+  <div class="card-unit">
+    <div class="card-label">CARD 01</div>
+    <div class="frame">
+
+      <div class="card-logo-header">
+        <div>
+          <div class="card-logo-read">SLILIN</div>
+          <div class="card-logo-name">スリリン<em>F</em></div>
+        </div>
+        <div class="card-logo-faq">FAQ</div>
+      </div>
+
+      <div class="faq-band">
+        <div class="faq-q-badge">Q</div>
+        <div class="faq-question">おすすめの飲む<br>タイミングは？</div>
+      </div>
+
+      <div class="faq-body">
+
+        <div class="answer-block">
+          <div class="answer-label">ANSWER</div>
+          <div class="answer-main"><em>活動が始まる前</em>がベスト。<br>通勤・通学前がおすすめです。</div>
+        </div>
+
+        <!-- タイミング比較ビジュアル -->
+        <div class="timing-visual">
+          <div class="timing-item">
+            <div class="timing-icon">🌅</div>
+            <div class="timing-name">朝・活動前<br>（通勤前など）</div>
+            <div class="timing-check">✓ おすすめ</div>
+          </div>
+          <div class="timing-arrow">›</div>
+          <div class="timing-item">
+            <div class="timing-icon">🏃‍♀️</div>
+            <div class="timing-name">運動前</div>
+            <div class="timing-check">✓ おすすめ</div>
+          </div>
+          <div class="timing-arrow">›</div>
+          <div class="timing-item">
+            <div class="timing-icon">🌙</div>
+            <div class="timing-name">就寝前</div>
+            <div class="timing-ng">△ 不向き</div>
+          </div>
+        </div>
+
+        <div class="timing-note">
+          SLILIN Fは<strong>体温を上げて代謝をサポート</strong>する設計。<br>
+          活動量が多い時間帯に飲むことで、より働きやすくなります。
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2：1日何粒？ -->
+  <div class="card-unit">
+    <div class="card-label">CARD 02</div>
+    <div class="frame">
+
+      <div class="card-logo-header">
+        <div>
+          <div class="card-logo-read">SLILIN</div>
+          <div class="card-logo-name">スリリン<em>F</em></div>
+        </div>
+        <div class="card-logo-faq">FAQ</div>
+      </div>
+
+      <div class="faq-band">
+        <div class="faq-q-badge">Q</div>
+        <div class="faq-question">1日に何粒<br>飲めばいい？</div>
+      </div>
+
+      <div class="faq-body">
+
+        <!-- 粒数ビジュアル -->
+        <div class="pills-visual">
+          <div class="pills-count">3</div>
+          <div class="pills-unit">粒 / 日</div>
+          <div class="pills-icons">💊💊💊</div>
+          <div class="pills-sub">水またはぬるま湯と一緒にお飲みください</div>
+        </div>
+
+        <!-- おすすめシーン -->
+        <div class="pills-timing-grid">
+          <div class="pills-timing-item">
+            <div class="pills-timing-icon">☀️</div>
+            <div class="pills-timing-label">朝まとめて<br>3粒</div>
+            <div class="pills-timing-check">✓ 推奨</div>
+          </div>
+          <div class="pills-timing-item">
+            <div class="pills-timing-icon">🔄</div>
+            <div class="pills-timing-label">朝2粒＋<br>昼1粒</div>
+            <div class="pills-timing-check">✓ でもOK</div>
+          </div>
+        </div>
+
+        <div class="timing-note" style="font-size:10px;">
+          1日の摂取量（3粒）を超えないようにしてください。<br>
+          食事の有無にかかわらず飲めます。
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3：いつ頃から実感できる？ -->
+  <div class="card-unit">
+    <div class="card-label">CARD 03</div>
+    <div class="frame">
+
+      <div class="card-logo-header">
+        <div>
+          <div class="card-logo-read">SLILIN</div>
+          <div class="card-logo-name">スリリン<em>F</em></div>
+        </div>
+        <div class="card-logo-faq">FAQ</div>
+      </div>
+
+      <div class="faq-band">
+        <div class="faq-q-badge">Q</div>
+        <div class="faq-question">いつ頃から<br>実感できますか？</div>
+      </div>
+
+      <div class="faq-body">
+
+        <div class="answer-block">
+          <div class="answer-label">ANSWER</div>
+          <div class="answer-main">まずは<em>3〜4ヶ月</em>の<br>継続をおすすめしています。</div>
+          <div class="answer-sub">体の代謝は少しずつ変わるもの。飲み始めの変化は個人差があります。</div>
+        </div>
+
+        <!-- タイムライン -->
+        <div class="feel-timeline">
+          <div class="feel-row">
+            <div class="feel-month"><span>1</span>ヶ月</div>
+            <div class="feel-text">
+              <div class="feel-text-main">体がポカポカしやすく<br>なってきた、という方も</div>
+              <div class="feel-text-sub">※個人差があります</div>
+            </div>
+          </div>
+          <div class="feel-divider"></div>
+          <div class="feel-row">
+            <div class="feel-month"><span>3〜4</span>ヶ月</div>
+            <div class="feel-text">
+              <div class="feel-text-main">体の変化を<em>実感しやすい</em><br>タイミング</div>
+              <div class="feel-text-sub">継続が大切です</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feel-note">
+          効果には個人差があります。まずは続けてみることが大切です。
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 4：添加物・安全性は？ -->
+  <div class="card-unit">
+    <div class="card-label">CARD 04</div>
+    <div class="frame">
+
+      <div class="card-logo-header">
+        <div>
+          <div class="card-logo-read">SLILIN</div>
+          <div class="card-logo-name">スリリン<em>F</em></div>
+        </div>
+        <div class="card-logo-faq">FAQ</div>
+      </div>
+
+      <div class="faq-band">
+        <div class="faq-q-badge">Q</div>
+        <div class="faq-question">添加物は入ってる？<br>体に大丈夫？</div>
+      </div>
+
+      <div class="faq-body">
+
+        <!-- 不使用グリッド -->
+        <div class="additive-grid">
+          <div class="additive-item">
+            <div class="additive-cross">✕</div>
+            <div class="additive-name">着色料<br>不使用</div>
+          </div>
+          <div class="additive-item">
+            <div class="additive-cross">✕</div>
+            <div class="additive-name">香料<br>不使用</div>
+          </div>
+          <div class="additive-item">
+            <div class="additive-cross">✕</div>
+            <div class="additive-name">甘味料<br>不使用</div>
+          </div>
+          <div class="additive-item">
+            <div class="additive-cross">✕</div>
+            <div class="additive-name">酸化防止剤<br>不使用</div>
+          </div>
+        </div>
+
+        <!-- ポジティブ強調 -->
+        <div class="additive-positive">
+          <div class="additive-positive-icon">🌿</div>
+          <div class="additive-positive-main"><em>自然由来の植物成分</em>に<br>こだわって製造</div>
+          <div class="additive-positive-sub">アムラ・ブラックジンジャー・レッドジンジャー<br>紅参・黒高麗人参など6成分</div>
+        </div>
+
+        <div class="timing-note" style="font-size:10px;">
+          妊娠中・授乳中の方、薬を服用中の方は<br>医師にご相談のうえお飲みください。
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 5：解約・返金は？ -->
+  <div class="card-unit">
+    <div class="card-label">CARD 05</div>
+    <div class="frame">
+
+      <div class="card-logo-header">
+        <div>
+          <div class="card-logo-read">SLILIN</div>
+          <div class="card-logo-name">スリリン<em>F</em></div>
+        </div>
+        <div class="card-logo-faq">FAQ</div>
+      </div>
+
+      <div class="faq-band">
+        <div class="faq-q-badge">Q</div>
+        <div class="faq-question">解約できる？<br>返金保証はある？</div>
+      </div>
+
+      <div class="faq-body">
+
+        <!-- 返金保証 -->
+        <div class="guarantee-box">
+          <div class="guarantee-icon">🛡️</div>
+          <div class="guarantee-title">全額返金保証あり</div>
+          <div class="guarantee-desc">
+            <em>初回のみの解約OK</em>。<br>
+            定期縛りなし、続けるかどうかは<br>
+            試してから決めてOKです。
+          </div>
+        </div>
+
+        <!-- 解約手順 -->
+        <div class="cancel-steps">
+          <div class="cancel-step">
+            <div class="cancel-step-num">1</div>
+            <div class="cancel-step-text">
+              商品をお受け取りの後、解約連絡
+              <span>受け取りが必要です（受け取り拒否は対象外）</span>
+            </div>
+          </div>
+          <div class="cancel-step">
+            <div class="cancel-step-num">2</div>
+            <div class="cancel-step-text">
+              パッケージを返送
+              <span>返送時の送料はお客様負担となります</span>
+            </div>
+          </div>
+          <div class="cancel-step">
+            <div class="cancel-step-num">3</div>
+            <div class="cancel-step-text">
+              全額返金
+              <span>返送確認後、ご返金対応いたします</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cancel-note">
+          ※返金保証は初回購入に限ります。詳細は公式サイトをご確認ください。
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-green">
+          <div class="cta-pre-badges">
+            <div class="cta-pre-badge">初回のみ解約OK</div>
+            <div class="cta-pre-badge">全額返金保証付き</div>
+          </div>
+          <div class="cta-main-text">
+            まず試してみる →
+            <div class="cta-green-sub">初回 ¥980（定価の約80%OFF）</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- /cards-wrap -->
+</body>
+</html>
