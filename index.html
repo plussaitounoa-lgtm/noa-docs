@@ -118,7 +118,7 @@
       </div>
       <div class="nav-acc-body">
         <div class="nav-item sub" onclick="show('design-icl')">ICL <span class="count">2</span></div>
-        <div class="nav-item sub" onclick="show('design-diet')">ダイエット <span class="count">3</span></div>
+        <div class="nav-item sub" onclick="show('design-diet')">ダイエット <span class="count">7</span></div>
         <div class="nav-item sub" onclick="show('design-phimo')">包茎 <span class="count">0</span></div>
         <div class="nav-item sub" onclick="show('design-ed')">ED <span class="count">0</span></div>
         <div class="nav-item sub" onclick="show('design-faga')">FAGA <span class="count">0</span></div>
@@ -146,6 +146,19 @@
         <div class="nav-item sub" onclick="show('brief-datsumo')">メンズ脱毛 <span class="count">0</span></div>
         <div class="nav-item sub" onclick="show('brief-rw')">リカバリーウェア <span class="count">0</span></div>
         <div class="nav-item sub" onclick="show('brief-kango')">看護転職 <span class="count">0</span></div>
+      </div>
+    </div>
+    <div class="nav-divider"></div>
+
+    <!-- クライアントチェック（サイドバー内アコーディオン） -->
+    <div class="nav-acc" id="nacc-client">
+      <div class="nav-acc-header" onclick="toggleNav('nacc-client')">
+        <span>クライアントチェック</span>
+        <span class="nav-acc-arrow">▶</span>
+      </div>
+      <div class="nav-acc-body">
+        <div class="nav-item sub" onclick="show('client-diet')">ダイエット <span class="count">2</span></div>
+        <div class="nav-item sub" onclick="show('client-icl')">ICL <span class="count">0</span></div>
       </div>
     </div>
     <div class="nav-divider"></div>
@@ -345,16 +358,6 @@
     <div id="design-diet" class="content-section">
       <div class="content-header"><div class="breadcrumb">設計書</div><h2><span class="genre-badge genre-diet">ダイエット</span></h2></div>
       <div class="card-grid">
-        <a class="card" href="client-check-kakurehiman-slilinf-2026-06-01.html">
-          <div class="card-icon">✅</div>
-          <div class="card-title">クライアントチェック用｜隠れ肥満×SLILIN F ファネル全体 ★最新</div>
-          <div class="card-desc">診断フロー＋結果カル＋PRカルv2＋FAQカル＋CTA 1ページ完結｜2026-06-01</div>
-        </a>
-        <a class="card" href="flow-kakurehiman-slilinf-v1-2026-06-01.html">
-          <div class="card-icon">🗺️</div>
-          <div class="card-title">LINEワークフロー設計図 v1（隠れ肥満×SLILIN F）</div>
-          <div class="card-desc">PU→友達追加→診断→結果カル→PRカル→FAQカル→CTA 全フロー図｜2026-06-01</div>
-        </a>
         <a class="card" href="shindan-kakure-himantype-v5-2026-06-01.html">
           <div class="card-icon">🧬</div>
           <div class="card-title">隠れ肥満タイプ診断 設計書 v5</div>
@@ -392,6 +395,28 @@
         </a>
       </div>
     </div>
+    <!-- クライアントチェック > ダイエット -->
+    <div id="client-diet" class="content-section">
+      <div class="content-header"><div class="breadcrumb">クライアントチェック</div><h2><span class="genre-badge genre-diet">ダイエット</span></h2></div>
+      <div class="card-grid">
+        <a class="card" href="client-check-kakurehiman-slilinf-2026-06-01.html">
+          <div class="card-icon">✅</div>
+          <div class="card-title">隠れ肥満×SLILIN F ファネル全体 ★最新</div>
+          <div class="card-desc">診断フロー＋結果カル＋PRカルv2＋FAQカル＋CTA 1ページ完結｜2026-06-01</div>
+        </a>
+        <a class="card" href="flow-kakurehiman-slilinf-v1-2026-06-01.html">
+          <div class="card-icon">🗺️</div>
+          <div class="card-title">LINEワークフロー設計図 v1（隠れ肥満×SLILIN F）</div>
+          <div class="card-desc">PU→友達追加→診断→結果カル→PRカル→FAQカル→CTA 全フロー図｜2026-06-01</div>
+        </a>
+      </div>
+    </div>
+    <!-- クライアントチェック > ICL -->
+    <div id="client-icl" class="content-section">
+      <div class="content-header"><div class="breadcrumb">クライアントチェック</div><h2><span class="genre-badge genre-icl">ICL</span></h2></div>
+      <p class="empty-state">ドキュメントなし</p>
+    </div>
+
     <div id="design-phimo" class="content-section">
       <div class="content-header"><div class="breadcrumb">設計書</div><h2><span class="genre-badge genre-phimo">包茎</span></h2></div>
       <p class="empty-state">ドキュメントなし</p>
