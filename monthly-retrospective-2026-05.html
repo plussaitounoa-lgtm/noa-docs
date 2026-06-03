@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5月2026 月次振り返り</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f0ebe4;
+      padding: 40px 0 80px;
+      min-height: 100vh;
+    }
+    .page-wrap { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+
+    /* ヘッダー */
+    .page-header {
+      background: #1a1a1a; border-radius: 16px;
+      padding: 28px 32px; margin-bottom: 32px;
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+    }
+    .page-header-left h1 { font-size: 20px; font-weight: 800; color: white; margin-bottom: 6px; }
+    .page-header-left p  { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+    .header-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    .badge { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
+    .badge-green  { background: rgba(6,199,85,0.2);  color: #06c755; border: 1px solid rgba(6,199,85,0.35); }
+    .badge-red    { background: rgba(220,38,38,0.2);  color: #f87171; border: 1px solid rgba(220,38,38,0.3); }
+    .badge-gray   { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.15); }
+    .badge-orange { background: rgba(216,90,0,0.3); color: #FF8C30; border: 1px solid rgba(216,90,0,0.4); }
+    .page-header-right { text-align: right; }
+    .header-date { font-size: 11px; color: rgba(255,255,255,0.35); margin-bottom: 4px; }
+    .header-period { font-size: 18px; font-weight: 800; color: #FF8C30; }
+
+    /* セクション */
+    .section-header {
+      display: flex; align-items: center; gap: 14px;
+      margin: 36px 0 16px;
+    }
+    .section-step {
+      color: white; font-size: 11px; font-weight: 800;
+      padding: 4px 12px; border-radius: 20px; letter-spacing: .06em; flex-shrink: 0;
+    }
+    .ss-orange { background: #D85A00; }
+    .ss-green  { background: #059669; }
+    .ss-red    { background: #dc2626; }
+    .ss-blue   { background: #2563eb; }
+    .section-title { font-size: 17px; font-weight: 800; color: #1a1a1a; }
+    .section-line  { flex: 1; height: 1px; background: rgba(0,0,0,0.1); }
+
+    /* KPIカード行 */
+    .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 8px; }
+    @media (max-width: 640px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
+    .kpi-card {
+      background: white; border-radius: 12px; padding: 18px 16px;
+      border-left: 4px solid #e5e7eb;
+    }
+    .kpi-card.ok   { border-left-color: #06c755; }
+    .kpi-card.ng   { border-left-color: #dc2626; }
+    .kpi-card.warn { border-left-color: #f59e0b; }
+    .kpi-label { font-size: 11px; color: #888; font-weight: 600; margin-bottom: 6px; letter-spacing: .04em; text-transform: uppercase; }
+    .kpi-value { font-size: 26px; font-weight: 900; color: #1a1a1a; line-height: 1; margin-bottom: 4px; }
+    .kpi-value .unit { font-size: 14px; font-weight: 600; color: #555; }
+    .kpi-meta { font-size: 11px; color: #888; }
+    .kpi-meta .ok-text  { color: #06c755; font-weight: 700; }
+    .kpi-meta .ng-text  { color: #dc2626; font-weight: 700; }
+    .kpi-meta .warn-text { color: #f59e0b; font-weight: 700; }
+
+    /* 注記バー */
+    .note-bar {
+      background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3);
+      border-radius: 8px; padding: 10px 16px;
+      font-size: 12px; color: #92400e; margin-bottom: 16px;
+    }
+
+    /* 白カード */
+    .card {
+      background: white; border-radius: 12px; padding: 20px 24px; margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 14px; font-weight: 800; color: #1a1a1a; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .dot-green { background: #06c755; }
+    .dot-red   { background: #dc2626; }
+
+    /* ドライバーリスト */
+    .driver-list { display: flex; flex-direction: column; gap: 10px; }
+    .driver-item {
+      background: #f8f8f6; border-radius: 8px; padding: 12px 16px;
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .driver-icon {
+      font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 12px;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .di-diet { background: rgba(216,90,0,0.12); color: #D85A00; }
+    .di-pill { background: rgba(6,199,85,0.12); color: #059669; }
+    .di-phimo { background: rgba(37,99,235,0.12); color: #2563eb; }
+    .driver-body {}
+    .driver-title { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 3px; }
+    .driver-detail { font-size: 12px; color: #666; line-height: 1.6; }
+    .driver-num { font-weight: 700; color: #1a1a1a; }
+
+    /* 課題リスト */
+    .issue-list { display: flex; flex-direction: column; gap: 10px; }
+    .issue-item {
+      background: #fef2f2; border-radius: 8px; padding: 14px 16px;
+      border-left: 3px solid #fca5a5;
+    }
+    .issue-item.warn {
+      background: #fffbeb; border-left-color: #fcd34d;
+    }
+    .issue-label { font-size: 11px; font-weight: 800; color: #dc2626; margin-bottom: 4px; }
+    .issue-item.warn .issue-label { color: #d97706; }
+    .issue-title { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 3px; }
+    .issue-detail { font-size: 12px; color: #666; line-height: 1.6; }
+
+    /* A/B/C案 */
+    .abc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    @media (max-width: 640px) { .abc-grid { grid-template-columns: 1fr; } }
+    .abc-card {
+      background: #f8f8f6; border-radius: 10px; padding: 16px;
+      border-top: 3px solid #e5e7eb; position: relative;
+    }
+    .abc-card.a { border-top-color: #D85A00; }
+    .abc-card.b { border-top-color: #2563eb; }
+    .abc-card.c { border-top-color: #7c3aed; }
+    .abc-label {
+      font-size: 11px; font-weight: 800; letter-spacing: .06em;
+      margin-bottom: 6px;
+    }
+    .abc-card.a .abc-label { color: #D85A00; }
+    .abc-card.b .abc-label { color: #2563eb; }
+    .abc-card.c .abc-label { color: #7c3aed; }
+    .abc-title { font-size: 13px; font-weight: 800; color: #1a1a1a; margin-bottom: 6px; }
+    .abc-body  { font-size: 12px; color: #555; line-height: 1.6; }
+    .abc-impact { font-size: 11px; font-weight: 700; margin-top: 8px; padding: 4px 8px; border-radius: 6px; display: inline-block; }
+    .abc-card.a .abc-impact { background: rgba(216,90,0,0.1); color: #D85A00; }
+    .abc-card.b .abc-impact { background: rgba(37,99,235,0.1); color: #2563eb; }
+    .abc-card.c .abc-impact { background: rgba(124,58,237,0.1); color: #7c3aed; }
+    .tbd-bar {
+      background: #1a1a1a; border-radius: 8px; padding: 10px 16px; margin-top: 12px;
+      font-size: 12px; color: rgba(255,255,255,0.7); text-align: center;
+    }
+
+    /* 区切り線 */
+    hr { border: none; border-top: 1px solid rgba(0,0,0,0.08); margin: 8px 0; }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- ヘッダー -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1>5月 月次振り返り</h1>
+      <p>2026年5月（2026/05/01〜05/31）確定値まとめ</p>
+      <div class="header-badges">
+        <span class="badge badge-green">友達 103%達成</span>
+        <span class="badge badge-red">売上 71%</span>
+        <span class="badge badge-gray">PU仕様変更影響あり</span>
+      </div>
+    </div>
+    <div class="page-header-right">
+      <div class="header-date">作成日</div>
+      <div class="header-period">2026-06-03</div>
+    </div>
+  </div>
+
+  <!-- 注記 -->
+  <div class="note-bar">
+    ⚠️ PU仕様変更（タブ遷移化）の影響が継続しているため、PU CTR・IMPFRは参考値扱い。主指標は PVFR・友だち実数・FCVR で判断する。
+  </div>
+
+  <!-- 1. 月次サマリー -->
+  <div class="section-header">
+    <span class="section-step ss-orange">SUMMARY</span>
+    <span class="section-title">月次KPIサマリー</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card ok">
+      <div class="kpi-label">友達追加</div>
+      <div class="kpi-value">1,030<span class="unit">人</span></div>
+      <div class="kpi-meta">目標 1,000人 → <span class="ok-text">+3.0% 達成</span></div>
+    </div>
+    <div class="kpi-card ok">
+      <div class="kpi-label">達成率</div>
+      <div class="kpi-value">103<span class="unit">%</span></div>
+      <div class="kpi-meta">day平均 <span class="ok-text">33.2人</span></div>
+    </div>
+    <div class="kpi-card ng">
+      <div class="kpi-label">売上</div>
+      <div class="kpi-value">71<span class="unit">万</span></div>
+      <div class="kpi-meta">目標 100万 → <span class="ng-text">▲29万 未達</span></div>
+    </div>
+    <div class="kpi-card ng">
+      <div class="kpi-label">FCVR</div>
+      <div class="kpi-value">2.43<span class="unit">%</span></div>
+      <div class="kpi-meta">基準 3.0% → <span class="ng-text">▲0.57pt</span></div>
+    </div>
+  </div>
+
+  <div class="kpi-row" style="margin-top: 12px;">
+    <div class="kpi-card warn">
+      <div class="kpi-label">PVFR</div>
+      <div class="kpi-value">0.69<span class="unit">%</span></div>
+      <div class="kpi-meta">基準 0.80〜1.00% → <span class="warn-text">下限割れ</span></div>
+    </div>
+    <div class="kpi-card ng">
+      <div class="kpi-label">CV件数</div>
+      <div class="kpi-value">25<span class="unit">件</span></div>
+      <div class="kpi-meta">GOAL到達には <span class="ng-text">35件</span> 必要</div>
+    </div>
+    <div class="kpi-card warn">
+      <div class="kpi-label">客単価</div>
+      <div class="kpi-value">2.8<span class="unit">万</span></div>
+      <div class="kpi-meta">¥710,324 ÷ 25CV</div>
+    </div>
+    <div class="kpi-card ng">
+      <div class="kpi-label">売上残必要額</div>
+      <div class="kpi-value">29<span class="unit">万</span></div>
+      <div class="kpi-meta">¥289,676 が <span class="ng-text">未回収</span></div>
+    </div>
+  </div>
+
+  <!-- 2. 達成できた主因 -->
+  <div class="section-header">
+    <span class="section-step ss-green">DRIVER</span>
+    <span class="section-title">友達達成の主因（なぜ取れたか）</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="driver-list">
+    <div class="driver-item">
+      <span class="driver-icon di-diet">DT ①</span>
+      <div class="driver-body">
+        <div class="driver-title">ダイエット カロリー系3記事 — <span class="driver-num">+31人</span>（PLUS増分の37%）</div>
+        <div class="driver-detail">
+          新診断バナー +15人 ／ 適正カロリー +10人 ／ 1日で食べていい量 +6人<br>
+          「自分のカロリー知りたい」自分事化PUが下旬で軒並み加速。
+        </div>
+      </div>
+    </div>
+    <div class="driver-item">
+      <span class="driver-icon di-diet">DT ②</span>
+      <div class="driver-body">
+        <div class="driver-title">ダイエット 薬診断型PU — <span class="driver-num">+27人</span>（PLUS増分の32%）</div>
+        <div class="driver-detail">
+          痩せる薬_自分に合った +10人 ／ スルリムマンジャロ系 +13人 ／ 日本人1番痩せる_自分に合った +4人<br>
+          「自分に合った薬を選びたい」診断選定型PUが下旬で4倍化。新規貢献が大きい。
+        </div>
+      </div>
+    </div>
+    <div class="driver-item">
+      <span class="driver-icon di-phimo">包茎</span>
+      <div class="driver-body">
+        <div class="driver-title">包茎 kasei バナー流入 — <span class="driver-num">30人</span>（包茎全体の33%）</div>
+        <div class="driver-detail">
+          ボタン1本から30人。ただし他記事はバラつきあり、1記事偏重構造が継続。
+        </div>
+      </div>
+    </div>
+    <div class="driver-item">
+      <span class="driver-icon di-pill">ピル</span>
+      <div class="driver-body">
+        <div class="driver-title">ピル 診断選定型PU — <span class="driver-num">33人/36人</span>（92%）が診断選定型</div>
+        <div class="driver-detail">
+          GYN_低用量ピル種類_自分にぴったり 19人 ＋ 類似「ぴったり型」 14人<br>
+          「自分にぴったり」診断選定PUへの一本化の再現性が高い。他ジャンルへの横展開余地あり。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 課題 -->
+  <div class="section-header">
+    <span class="section-step ss-red">ISSUE</span>
+    <span class="section-title">課題・ボトルネック</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="issue-list">
+    <div class="issue-item">
+      <div class="issue-label">FCVR 未達</div>
+      <div class="issue-title">FCVR 2.43%（基準3%）— ダイエット1.85%が全体を押し下げ</div>
+      <div class="issue-detail">
+        月35CV必要なところ25CVで着地。客単価¥28,413 × 35件 = 目標達成ライン。<br>
+        下旬はダイエットFCVR 3.56%まで回復（薬診断経由CVが要因）。この再現が6月の鍵。
+      </div>
+    </div>
+    <div class="issue-item">
+      <div class="issue-label">GLP-1 集中リスク</div>
+      <div class="issue-title">売上の77.1%がGLP-1単体に集中</div>
+      <div class="issue-detail">
+        包茎（CV0 ／ 7週連続）・FAGA・AGA・転職・ICL・いびきはCV0。<br>
+        GLP-1が止まると売上が即崩れる構造。分散化が中期課題。
+      </div>
+    </div>
+    <div class="issue-item warn">
+      <div class="issue-label">PVFR 基準割れ</div>
+      <div class="issue-title">SEO全体PVFR 0.69%（基準帯0.80〜1.00%の下限割れ）</div>
+      <div class="issue-detail">
+        入口効率に改善余地あり。ダイエット内では、PLUSこいずみ系は伸長中だが、AVA渋谷系は中旬以降の伸びが鈍化。順位観測が必要。
+      </div>
+    </div>
+    <div class="issue-item warn">
+      <div class="issue-label">CV経路の偏り</div>
+      <div class="issue-title">既存CV 25件のうち7〜8割が薬診断経由</div>
+      <div class="issue-detail">
+        痩せる薬・GLP-1薬比較等の診断フロー経由が大半。診断以外の導線（記事CTA・バナー直接CV等）は現状機能していない。
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 6月の打ち手 -->
+  <div class="section-header">
+    <span class="section-step ss-blue">ACTION</span>
+    <span class="section-title">6月の打ち手（方向性案）</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="abc-grid">
+    <div class="abc-card a">
+      <div class="abc-label">A案</div>
+      <div class="abc-title">ダイエットFCVR改善に集中</div>
+      <div class="abc-body">
+        下旬に3.56%まで回復した実績を月初から再現する。薬診断経由CVの導線強化・診断フロー改善が主軸。
+      </div>
+      <span class="abc-impact">売上直結・即効性あり</span>
+    </div>
+    <div class="abc-card b">
+      <div class="abc-label">B案</div>
+      <div class="abc-title">眠ってるジャンルを一本立て</div>
+      <div class="abc-body">
+        包茎（CV0 / 7週連続）・ICLなど停滞ジャンルを掘り起こす。GLP-1集中リスクの分散にもなる。
+      </div>
+      <span class="abc-impact">中期分散・リスク低減</span>
+    </div>
+    <div class="abc-card c">
+      <div class="abc-label">C案</div>
+      <div class="abc-title">入口効率（PVFR）を先に直す</div>
+      <div class="abc-body">
+        PVFR 0.69%→0.80%改善で月間+100人規模の底上げ。ポップ回収・バナー追加・記事導線改善を並行実施。
+      </div>
+      <span class="abc-impact">友達数の底上げ・6月目標直結</span>
+    </div>
+  </div>
+
+  <div class="tbd-bar">
+    優先順位は未確定。A / B / C のどれを軸にするか別途確認して方針確定。
+  </div>
+
+</div>
+</body>
+</html>
