@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PU改修方針：ダイエット（こいずみ・渋谷）2026-06-03</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header p { color: #aaa; font-size: 14px; }
+    .update-banner { background: #1a2e2e; color: #7effd4; font-size: 13px; padding: 10px 32px; }
+    main { max-width: 900px; margin: 40px auto; padding: 0 24px 60px; }
+
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; color: #333; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    ul { padding-left: 20px; margin-bottom: 10px; }
+    li { font-size: 14px; line-height: 1.8; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 8px 12px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; font-size: 12px; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr.priority-1 { background: #fff8f0; }
+    tr.priority-skip { background: #f7f7f7; color: #aaa; }
+
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+    .red   { background: #fff0f0; color: #c0392b; }
+    .yellow{ background: #fffbea; color: #b7860b; }
+    .green { background: #f0fff4; color: #27ae60; }
+    .blue  { background: #f0f4ff; color: #2c52b0; }
+    .gray  { background: #f0f0f0; color: #888; }
+
+    .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .alert     { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good      { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .info      { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+
+    .priority-block { border-radius: 10px; padding: 20px 24px; margin: 16px 0; }
+    .p1 { background: #fff8f0; border: 2px solid #f39c12; }
+    .p2 { background: #f0fff4; border: 2px solid #27ae60; }
+    .p-skip { background: #f9f9f9; border: 1px solid #ddd; }
+    .priority-block h3 { margin-top: 0; font-size: 14px; }
+    .priority-block .p-num { font-size: 11px; font-weight: 700; color: #888; margin-bottom: 6px; }
+    .priority-block .p-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .priority-block .p-meta { font-size: 13px; color: #666; line-height: 1.7; }
+    .priority-block .p-reason { font-size: 13px; color: #b07000; margin-top: 8px; font-style: italic; }
+
+    .kpi-row { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .kpi-box { background: #f7f7f7; border-radius: 8px; padding: 12px 16px; text-align: center; min-width: 100px; }
+    .kpi-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+    .kpi-value { font-size: 20px; font-weight: 700; }
+    .kpi-value.bad  { color: #e74c3c; }
+    .kpi-value.ok   { color: #f39c12; }
+    .kpi-value.good { color: #27ae60; }
+
+    .step-list { list-style: none; padding: 0; counter-reset: steps; }
+    .step-list li { counter-increment: steps; display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+    .step-list li:last-child { border-bottom: none; }
+    .step-list li::before { content: counter(steps); display: flex; align-items: center; justify-content: center; min-width: 26px; height: 26px; border-radius: 50%; background: #1a1a2e; color: white; font-size: 12px; font-weight: 700; }
+    .step-text { font-size: 14px; line-height: 1.7; flex: 1; }
+    .step-text strong { display: block; margin-bottom: 2px; }
+
+    footer { text-align: center; padding: 40px; color: #bbb; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>PU改修方針：ダイエット（こいずみ・渋谷）</h1>
+  <p>2026-06-03 策定｜5月実績データに基づく</p>
+</header>
+<div class="update-banner">対象ジャンル：glp1_seo（こいずみ）／ glp1_seo_ava（渋谷）｜改修タイプ：文言改修（CTR重視）</div>
+
+<main>
+
+  <!-- ===== 1. 方針概要 ===== -->
+  <div class="section">
+    <div class="section-title">方針概要</div>
+    <h2>今回の改修スコープと基本方針</h2>
+
+    <div class="highlight">
+      <strong>改修方針：文言改修ベース。インパクト大順にこいずみ→渋谷で着手。</strong><br>
+      CTRが低いPUを優先。追加率が低いケースは友達追加画面の問題（文言改修では改善しない）。
+    </div>
+
+    <h3>判断基準</h3>
+    <table>
+      <tr><th>症状</th><th>原因</th><th>対処</th></tr>
+      <tr><td>CTR が低い（〜8%未満）</td><td>PU文言がユーザーに刺さっていない</td><td><span class="badge red">文言改修対象</span></td></tr>
+      <tr><td>追加率 が低い（〜5%未満）、CTRはOK</td><td>友達追加画面（アカウント名・説明文）の問題</td><td><span class="badge blue">友達追加画面を確認</span></td></tr>
+      <tr><td>CTR・追加率ともに低い</td><td>両方の問題。まず文言改修してから追加率を再観察</td><td><span class="badge yellow">文言改修＋追加率モニタ</span></td></tr>
+      <tr><td>CTR≧10%、追加率≧8%</td><td>機能している</td><td><span class="badge gray">触らない</span></td></tr>
+    </table>
+
+    <h3>スコープ外（今回）</h3>
+    <ul>
+      <li>SLILIN F：クライアントチェック・デザイン依頼中のためボール持たず</li>
+      <li>PU未設置ページの確認：文言改修後に実施</li>
+    </ul>
+  </div>
+
+  <!-- ===== 2. こいずみ分析 ===== -->
+  <div class="section">
+    <div class="section-title">こいずみ（glp1_seo）</div>
+    <h2>glp1_seo — 5月実績 PU別分析</h2>
+
+    <div class="kpi-row">
+      <div class="kpi-box"><div class="kpi-label">友達合計</div><div class="kpi-value ok">101人</div></div>
+      <div class="kpi-box"><div class="kpi-label">全体CTR</div><div class="kpi-value ok">5.9%</div></div>
+      <div class="kpi-box"><div class="kpi-label">全体追加率</div><div class="kpi-value good">11.2%</div></div>
+      <div class="kpi-box"><div class="kpi-label">総imp</div><div class="kpi-value">15,415</div></div>
+    </div>
+
+    <table>
+      <tr>
+        <th>記事タグ</th>
+        <th>PU文言</th>
+        <th>imp</th>
+        <th>CTR</th>
+        <th>追加率</th>
+        <th>友達</th>
+        <th>判定</th>
+      </tr>
+      <tr class="priority-1">
+        <td>摂取カロリー</td>
+        <td><strong>適正カロリー気になる</strong></td>
+        <td>5,759</td>
+        <td><span class="badge red">6.5%</span></td>
+        <td><span class="badge green">10.5%</span></td>
+        <td>39人</td>
+        <td><span class="badge red">CTR改修①</span></td>
+      </tr>
+      <tr class="priority-1">
+        <td>摂取カロリー</td>
+        <td><strong>1日で食べていい量</strong></td>
+        <td>5,660</td>
+        <td><span class="badge red">6.7%</span></td>
+        <td><span class="badge green">15.1%</span></td>
+        <td>57人</td>
+        <td><span class="badge red">CTR改修②</span></td>
+      </tr>
+      <tr>
+        <td>小田_bmi</td>
+        <td>体質タイプ知りたい</td>
+        <td>1,959</td>
+        <td><span class="badge red">6.1%</span></td>
+        <td><span class="badge red">1.7%</span></td>
+        <td>2人</td>
+        <td><span class="badge blue">画面確認先</span></td>
+      </tr>
+      <tr>
+        <td>小田_bmi</td>
+        <td>脂肪のつき方気になる</td>
+        <td>1,934</td>
+        <td><span class="badge red">5.9%</span></td>
+        <td><span class="badge red">2.6%</span></td>
+        <td>3人</td>
+        <td><span class="badge blue">画面確認先</span></td>
+      </tr>
+      <tr>
+        <td>小田_bmi</td>
+        <td>体の本当の状態気になる</td>
+        <td>1,912</td>
+        <td><span class="badge red">5.8%</span></td>
+        <td><span class="badge red">1.8%</span></td>
+        <td>2人</td>
+        <td><span class="badge blue">画面確認先</span></td>
+      </tr>
+      <tr>
+        <td>自分に合ったダイエット</td>
+        <td>自分に合ったダイエット方法</td>
+        <td>1,574</td>
+        <td><span class="badge yellow">8.0%</span></td>
+        <td><span class="badge green">10.3%</span></td>
+        <td>13人</td>
+        <td><span class="badge gray">機能中</span></td>
+      </tr>
+      <tr>
+        <td>痩せない理由</td>
+        <td>痩せない理由知りたい！</td>
+        <td>1,481</td>
+        <td><span class="badge green">10.5%</span></td>
+        <td><span class="badge green">11.6%</span></td>
+        <td>18人</td>
+        <td><span class="badge gray">機能中</span></td>
+      </tr>
+      <tr>
+        <td>ダイエット薬</td>
+        <td>自分に合ったダイエット薬</td>
+        <td>1,438</td>
+        <td><span class="badge yellow">7.0%</span></td>
+        <td><span class="badge green">10.0%</span></td>
+        <td>10人</td>
+        <td><span class="badge gray">機能中</span></td>
+      </tr>
+      <tr>
+        <td>費用</td>
+        <td>費用を抑えて</td>
+        <td>1,419</td>
+        <td><span class="badge yellow">8.9%</span></td>
+        <td><span class="badge green">13.5%</span></td>
+        <td>17人</td>
+        <td><span class="badge gray">機能中</span></td>
+      </tr>
+    </table>
+
+    <div class="highlight">
+      <strong>こいずみの最優先2本：摂取カロリー系（imp合計 11,419回）</strong><br>
+      追加率はどちらもOK（10.5%・15.1%）→ <strong>CTRだけ直せば大きく伸びる</strong>。<br>
+      imp5,000台×2本でダントツのボリュームがあり、CTRを10%台に改善できれば+50人超の上乗せが見込める。
+    </div>
+
+    <div class="info">
+      <strong>BMI系3本（体質タイプ/脂肪のつき方/体の本当の状態）は文言改修の優先度を下げる</strong><br>
+      追加率が1〜3%台の異常値。CTRを改善しても追加率が低いと友達が増えない。<br>
+      → 先に友達追加画面（アカウント名・説明文）を確認してから文言改修の判断をする。
+    </div>
+  </div>
+
+  <!-- ===== 3. 渋谷分析 ===== -->
+  <div class="section">
+    <div class="section-title">渋谷（glp1_seo_ava）</div>
+    <h2>glp1_seo_ava — 5月実績 PU別分析</h2>
+
+    <div class="kpi-row">
+      <div class="kpi-box"><div class="kpi-label">友達合計</div><div class="kpi-value bad">18人</div></div>
+      <div class="kpi-box"><div class="kpi-label">全体CTR</div><div class="kpi-value bad">5.0%</div></div>
+      <div class="kpi-box"><div class="kpi-label">全体追加率</div><div class="kpi-value bad">5.5%</div></div>
+      <div class="kpi-box"><div class="kpi-label">総imp</div><div class="kpi-value">6,564</div></div>
+    </div>
+
+    <table>
+      <tr>
+        <th>記事タグ</th>
+        <th>PU文言</th>
+        <th>imp</th>
+        <th>CTR</th>
+        <th>追加率</th>
+        <th>友達</th>
+        <th>判定</th>
+      </tr>
+      <tr class="priority-1">
+        <td>ダイエットパッチ</td>
+        <td><strong>頑張らずに痩せる</strong></td>
+        <td>3,145</td>
+        <td><span class="badge red">6.0%</span></td>
+        <td><span class="badge red">6.8%</span></td>
+        <td>13人</td>
+        <td><span class="badge yellow">CTR+追加率改修①</span></td>
+      </tr>
+      <tr>
+        <td>防風通聖散</td>
+        <td>漢方合うか不安</td>
+        <td>1,573</td>
+        <td><span class="badge green">13.2%</span></td>
+        <td><span class="badge yellow">9.6%</span></td>
+        <td>20人</td>
+        <td><span class="badge gray">機能中</span></td>
+      </tr>
+      <tr>
+        <td>ダイエット全般</td>
+        <td>自分に1番合う方法</td>
+        <td>1,536</td>
+        <td><span class="badge green">11.0%</span></td>
+        <td><span class="badge yellow">6.5%</span></td>
+        <td>11人</td>
+        <td><span class="badge gray">概ね機能中</span></td>
+      </tr>
+      <tr>
+        <td>小田_bmi</td>
+        <td>体質タイプ知りたい</td>
+        <td>1,442</td>
+        <td><span class="badge red">6.2%</span></td>
+        <td><span class="badge red">0.0%</span></td>
+        <td>0人</td>
+        <td><span class="badge blue">画面確認先</span></td>
+      </tr>
+      <tr>
+        <td>小田_bmi</td>
+        <td>体の本当の状態気になる</td>
+        <td>1,420</td>
+        <td><span class="badge red">6.8%</span></td>
+        <td><span class="badge red">2.1%</span></td>
+        <td>2人</td>
+        <td><span class="badge blue">画面確認先</span></td>
+      </tr>
+      <tr>
+        <td>小田_bmi</td>
+        <td>脂肪のつき方気になる</td>
+        <td>1,386</td>
+        <td><span class="badge red">5.5%</span></td>
+        <td><span class="badge red">1.3%</span></td>
+        <td>1人</td>
+        <td><span class="badge blue">画面確認先</span></td>
+      </tr>
+      <tr>
+        <td>食欲を抑える薬</td>
+        <td>自分に合った薬</td>
+        <td>1,346</td>
+        <td><span class="badge yellow">7.9%</span></td>
+        <td><span class="badge green">17.0%</span></td>
+        <td>18人</td>
+        <td><span class="badge gray">追加率OK・機能中</span></td>
+      </tr>
+      <tr>
+        <td>食欲を抑える薬</td>
+        <td>費用を抑えて</td>
+        <td>1,340</td>
+        <td><span class="badge yellow">9.6%</span></td>
+        <td><span class="badge yellow">7.8%</span></td>
+        <td>10人</td>
+        <td><span class="badge gray">概ね機能中</span></td>
+      </tr>
+      <tr class="priority-skip">
+        <td>本気で痩せたい</td>
+        <td>続かない自分でも痩せる</td>
+        <td>511</td>
+        <td><span class="badge green">14.3%</span></td>
+        <td><span class="badge red">2.7%</span></td>
+        <td>2人</td>
+        <td><span class="badge blue">追加率問題（画面）</span></td>
+      </tr>
+      <tr class="priority-skip">
+        <td>30_16時間断食</td>
+        <td>体質に合うのか不安</td>
+        <td>491</td>
+        <td><span class="badge green">12.6%</span></td>
+        <td><span class="badge red">1.6%</span></td>
+        <td>1人</td>
+        <td><span class="badge blue">追加率問題（画面）</span></td>
+      </tr>
+    </table>
+
+    <div class="alert">
+      <strong>ダイエットパッチ「頑張らずに痩せる」：imp=3,145でダントツ、CTR・追加率の両方がLOW</strong><br>
+      こいずみ摂取カロリーと違い、<strong>CTRと追加率の2つを同時に改善</strong>する必要がある。<br>
+      改善余地は最大+31人（CTR+14人 / 追加率+7人 / 両方+31人）。
+    </div>
+
+    <div class="info">
+      <strong>「本気で痩せたい」「30_16時間断食」：CTRは高いが追加率が極端に低い</strong><br>
+      CTR14.3%・12.6%でクリックされているのに追加率1〜3%。これは友達追加画面（説明文・アカウント名）の問題。<br>
+      → 文言改修対象ではなく、追加画面の改善が必要。
+    </div>
+  </div>
+
+  <!-- ===== 4. 優先順位まとめ ===== -->
+  <div class="section">
+    <div class="section-title">優先順位まとめ</div>
+    <h2>PU文言改修 — 着手順</h2>
+
+    <div class="priority-block p1">
+      <div class="p-num">PRIORITY 1 — 最優先（こいずみ）</div>
+      <div class="p-title">【摂取カロリー】適正カロリー気になる ／ 1日で食べていい量</div>
+      <div class="p-meta">
+        imp合計 <strong>11,419回</strong>（全体最大）｜追加率OK（10.5%・15.1%）→ CTRだけ直せばいい<br>
+        現状CTR: 6.5% / 6.7% → 目標: 12%台<br>
+        インパクト試算: 両方12%に上げられれば +55〜70人/月
+      </div>
+      <div class="p-reason">追加率は問題ないため、文言改修の効果が直接友達数に反映される最高効率のターゲット</div>
+    </div>
+
+    <div class="priority-block p2">
+      <div class="p-num">PRIORITY 2（渋谷）</div>
+      <div class="p-title">【ダイエットパッチ】頑張らずに痩せる</div>
+      <div class="p-meta">
+        imp <strong>3,145回</strong>｜CTR・追加率の両方がLOW（6.0% / 6.8%）<br>
+        改善余地: 最大 +31人/月<br>
+        注意: 追加率も低いため、文言改修後も追加率の推移をモニタすること
+      </div>
+      <div class="p-reason">こいずみ2本の次に実施。追加率改善は友達追加画面の調整も並走するとより効果的</div>
+    </div>
+
+    <div class="priority-block p-skip">
+      <div class="p-num">HOLD — 文言改修前に友達追加画面確認が必要</div>
+      <div class="p-title">BMI系（こいずみ / 渋谷 共通）</div>
+      <div class="p-meta">
+        追加率0〜3%の異常値。CTRを改修してもクリック後に離脱する可能性が高い。<br>
+        → 先に友達追加画面（アカウント名・説明文）の問題を特定・修正してから着手。
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 5. ネクストアクション ===== -->
+  <div class="section">
+    <div class="section-title">ネクストアクション</div>
+    <h2>実施ステップ</h2>
+
+    <ol class="step-list">
+      <li>
+        <div class="step-text">
+          <strong>こいずみ摂取カロリー2本のPU文言改修</strong>
+          WINUTで「適正カロリー気になる」「1日で食べていい量」のPU文言を書き換える。CTR目標12%台。
+        </div>
+      </li>
+      <li>
+        <div class="step-text">
+          <strong>渋谷ダイエットパッチのPU文言改修</strong>
+          「頑張らずに痩せる」のCTR+追加率を両方改善する文言に変更。追加率は改修後もモニタ継続。
+        </div>
+      </li>
+      <li>
+        <div class="step-text">
+          <strong>BMI系の友達追加画面確認</strong>
+          こいずみ・渋谷両方のBMI系PUで追加率が1〜2%台。友達追加画面のアカウント名・説明文を確認し、改善の余地があれば修正。
+        </div>
+      </li>
+      <li>
+        <div class="step-text">
+          <strong>PU未設置ページの確認</strong>
+          上記改修が一段落した後、設置漏れページをチェック。
+        </div>
+      </li>
+    </ol>
+  </div>
+
+</main>
+
+<footer>Noa Docs — PU改修方針：ダイエット（2026-06-03）</footer>
+</body>
+</html>
