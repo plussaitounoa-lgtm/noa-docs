@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コスメ案件リサーチ — Carena初期調査 2026-06-04</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f5f5f7; color: #1d1d1f; font-size: 14px; line-height: 1.7; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
+  h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #444; }
+  p { margin-bottom: 10px; }
+  .card { background: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #4a4a6a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; }
+  tr:hover td { background: #fafafa; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin: 2px; }
+  .tag-cleansing { background: #e8f0fe; color: #1967d2; }
+  .tag-skincare  { background: #fce8e6; color: #c5221f; }
+  .tag-lotion    { background: #e6f4ea; color: #1e8e3e; }
+  .tag-other     { background: #f0f0f0; color: #666; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-green { background: #e6f4ea; color: #1e8e3e; }
+  .badge-yellow { background: #fff8e1; color: #e37400; }
+  .badge-red { background: #fce8e6; color: #c5221f; }
+  .badge-gray { background: #f0f0f0; color: #666; }
+  .highlight { background: #fffde7; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; }
+  .pending { background: #fce8e6; border-left: 3px solid #ea4335; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; }
+  .kv { display: flex; gap: 8px; margin-bottom: 6px; }
+  .kv-key { font-weight: 600; min-width: 120px; color: #555; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  .stat-box { text-align: center; padding: 16px; }
+  .stat-num { font-size: 28px; font-weight: 700; color: #4a4a6a; }
+  .stat-label { font-size: 11px; color: #888; margin-top: 2px; }
+  .arrow { color: #888; margin: 0 4px; }
+  .funnel { display: flex; align-items: center; gap: 8px; font-size: 13px; flex-wrap: wrap; margin: 12px 0; }
+  .funnel-step { background: #4a4a6a; color: #fff; padding: 6px 14px; border-radius: 4px; font-weight: 600; }
+  .section-note { font-size: 12px; color: #888; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>コスメ案件リサーチ — Carena初期調査</h1>
+  <div class="meta">2026-06-04 ｜ 担当: Noa ｜ ステータス: リサーチ中（Kannaさん情報待ち）</div>
+
+  <!-- ファネル確認 -->
+  <h2>前提：LINEマーケのファネル構造</h2>
+  <div class="card">
+    <div class="funnel">
+      <div class="funnel-step">Carena記事（SEO）</div>
+      <span class="arrow">→</span>
+      <div class="funnel-step">バナー/PU設置</div>
+      <span class="arrow">→</span>
+      <div class="funnel-step">LINE友達追加</div>
+      <span class="arrow">→</span>
+      <div class="funnel-step">LINE内診断</div>
+      <span class="arrow">→</span>
+      <div class="funnel-step">CV（商材購入）</div>
+    </div>
+    <p class="section-note">※「CVはファンデ系が取れている」はリスティング広告の話。SEO（Carena）とは別文脈。</p>
+  </div>
+
+  <!-- サイト概要 -->
+  <h2>Carenaサイト概要</h2>
+  <div class="card">
+    <div class="kv"><span class="kv-key">サイト名</span><span>Carena（カレーナコスメティック）</span></div>
+    <div class="kv"><span class="kv-key">URL</span><span>carenacosmetic.co.jp</span></div>
+    <div class="kv"><span class="kv-key">サイト種別</span><span>コスメ系アフィリエイトSEOサイト</span></div>
+    <div class="kv"><span class="kv-key">CV先商材</span><span>オルビス / ファンケル / ビーグレン / ETVOS / ライスフォース（各トライアルセット 980〜2,090円）</span></div>
+    <div class="kv"><span class="kv-key">記事ジャンル</span><span>クレンジング・スキンケア・化粧水・成分解説が主体。ファンデーション記事はほぼなし</span></div>
+    <div class="kv"><span class="kv-key">診断コンテンツ</span><span><span class="badge badge-red">なし（導入余地あり）</span></span></div>
+    <div class="kv"><span class="kv-key">最終更新</span><span>2026-05-15（継続的に更新中）</span></div>
+  </div>
+
+  <!-- サチコデータ概要 -->
+  <h2>サーチコンソール概要（過去3ヶ月）</h2>
+  <div class="grid3">
+    <div class="card stat-box">
+      <div class="stat-num">57,811</div>
+      <div class="stat-label">総クリック数</div>
+    </div>
+    <div class="card stat-box">
+      <div class="stat-num">228</div>
+      <div class="stat-label">記事数（インデックス済み）</div>
+    </div>
+    <div class="card stat-box">
+      <div class="stat-num">2.15%</div>
+      <div class="stat-label">平均CTR（日本）</div>
+    </div>
+  </div>
+  <div class="card">
+    <p style="margin-bottom:12px; font-size:12px; color:#888;">デバイス：モバイル 54,111クリック（93.6%）/ PC 3,700クリック（6.4%）</p>
+    <table>
+      <thead><tr><th>ジャンル</th><th class="num">クリック</th><th class="num">表示回数</th><th class="num">記事数</th><th class="num">記事1本あたり</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag tag-cleansing">クレンジング</span></td><td class="num">31,166</td><td class="num">1,469,963</td><td class="num">76</td><td class="num">410</td></tr>
+        <tr><td><span class="tag tag-skincare">スキンケア</span></td><td class="num">14,997</td><td class="num">1,177,949</td><td class="num">36</td><td class="num">417</td></tr>
+        <tr><td><span class="tag tag-lotion">化粧水</span></td><td class="num">10,772</td><td class="num">773,979</td><td class="num">48</td><td class="num">224</td></tr>
+        <tr><td><span class="tag tag-other">成分・美容液・その他</span></td><td class="num">1,544</td><td class="num">191,955</td><td class="num">68</td><td class="num">23</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 上位記事 -->
+  <h2>上位記事 TOP20（クリック順）</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>記事スラグ</th><th>ジャンル</th><th class="num">クリック</th><th class="num">表示</th><th class="num">CTR</th><th class="num">順位</th></tr></thead>
+      <tbody>
+        <tr><td>skincare-shisei-oily</td><td><span class="tag tag-skincare">スキンケア</span></td><td class="num">9,064</td><td class="num">254,975</td><td class="num">3.6%</td><td class="num">5.3</td></tr>
+        <tr><td>cleansing-shihan</td><td><span class="tag tag-cleansing">クレンジング</span></td><td class="num">4,855</td><td class="num">171,701</td><td class="num">2.8%</td><td class="num">6.5</td></tr>
+        <tr><td>skincare-innerdry</td><td><span class="tag tag-skincare">スキンケア</span></td><td class="num">3,415</td><td class="num">243,529</td><td class="num">1.4%</td><td class="num">3.8</td></tr>
+        <tr><td>cleansing-acne</td><td><span class="tag tag-cleansing">クレンジング</span></td><td class="num">3,247</td><td class="num">59,575</td><td class="num">5.5%</td><td class="num">4.7</td></tr>
+        <tr><td>cleansing-substitute</td><td><span class="tag tag-cleansing">クレンジング</span></td><td class="num">3,247</td><td class="num">54,122</td><td class="num">6.0%</td><td class="num">3.1</td></tr>
+        <tr><td>cleansing-fifties</td><td><span class="tag tag-cleansing">クレンジング</span></td><td class="num">3,027</td><td class="num">58,205</td><td class="num">5.2%</td><td class="num">6.0</td></tr>
+        <tr><td>cleansing-nuretate</td><td><span class="tag tag-cleansing">クレンジング</span></td><td class="num">2,816</td><td class="num">49,067</td><td class="num">5.7%</td><td class="num">4.1</td></tr>
+        <tr><td>cleansing-matsueku</td><td><span class="tag tag-cleansing">クレンジング</span></td><td class="num">2,243</td><td class="num">80,253</td><td class="num">2.8%</td><td class="num">4.6</td></tr>
+        <tr><td>lotion-cleansing</td><td><span class="tag tag-lotion">化粧水</span></td><td class="num">1,439</td><td class="num">114,089</td><td class="num">1.3%</td><td class="num">10.1</td></tr>
+        <tr><td>cleansing-milk</td><td><span class="tag tag-cleansing">クレンジング</span></td><td class="num">1,384</td><td class="num">48,993</td><td class="num">2.8%</td><td class="num">7.1</td></tr>
+        <tr><td>cleansing-forties</td><td><span class="tag tag-cleansing">クレンジング</span></td><td class="num">1,287</td><td class="num">41,341</td><td class="num">3.1%</td><td class="num">7.8</td></tr>
+        <tr><td>cleansing-nomakeup</td><td><span class="tag tag-cleansing">クレンジング</span></td><td class="num">1,217</td><td class="num">47,416</td><td class="num">2.6%</td><td class="num">4.3</td></tr>
+        <tr><td>cleansing-keana</td><td><span class="tag tag-cleansing">クレンジング</span></td><td class="num">1,216</td><td class="num">70,030</td><td class="num">1.7%</td><td class="num">7.7</td></tr>
+        <tr><td>lotion-sensitive</td><td><span class="tag tag-lotion">化粧水</span></td><td class="num">1,194</td><td class="num">79,932</td><td class="num">1.5%</td><td class="num">7.8</td></tr>
+        <tr><td>cleansing-cream</td><td><span class="tag tag-cleansing">クレンジング</span></td><td class="num">1,160</td><td class="num">32,498</td><td class="num">3.6%</td><td class="num">6.9</td></tr>
+        <tr><td>lotion-convulsive</td><td><span class="tag tag-lotion">化粧水</span></td><td class="num">1,049</td><td class="num">52,475</td><td class="num">2.0%</td><td class="num">5.7</td></tr>
+        <tr><td>lotion-pack</td><td><span class="tag tag-lotion">化粧水</span></td><td class="num">890</td><td class="num">29,813</td><td class="num">3.0%</td><td class="num">5.3</td></tr>
+        <tr><td>lotion-combination-skin</td><td><span class="tag tag-lotion">化粧水</span></td><td class="num">889</td><td class="num">22,972</td><td class="num">3.9%</td><td class="num">8.4</td></tr>
+        <tr><td>skincare-shishunki</td><td><span class="tag tag-skincare">スキンケア</span></td><td class="num">854</td><td class="num">144,431</td><td class="num">0.6%</td><td class="num">4.9</td></tr>
+        <tr><td>cleansing-dry-skin</td><td><span class="tag tag-cleansing">クレンジング</span></td><td class="num">708</td><td class="num">33,621</td><td class="num">2.1%</td><td class="num">6.8</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 上位クエリ -->
+  <h2>上位クエリ TOP30</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>クエリ</th><th class="num">クリック</th><th class="num">表示</th><th class="num">CTR</th><th class="num">順位</th></tr></thead>
+      <tbody>
+        <tr><td>クレンジングおすすめ ドラッグストア</td><td class="num">755</td><td class="num">11,900</td><td class="num">6.3%</td><td class="num">3.7</td></tr>
+        <tr><td>脂性肌 スキンケア おすすめ</td><td class="num">709</td><td class="num">3,299</td><td class="num">21.5%</td><td class="num">2.1</td></tr>
+        <tr><td>拭き取り化粧水 おすすめ</td><td class="num">603</td><td class="num">20,019</td><td class="num">3.0%</td><td class="num">5.9</td></tr>
+        <tr><td>拭き取り化粧水</td><td class="num">411</td><td class="num">46,355</td><td class="num">0.9%</td><td class="num">9.0</td></tr>
+        <tr><td>クレンジングおすすめ 50代 ドラッグストア</td><td class="num">364</td><td class="num">2,972</td><td class="num">12.3%</td><td class="num">2.0</td></tr>
+        <tr><td>インナードライ スキンケア</td><td class="num">354</td><td class="num">16,535</td><td class="num">2.1%</td><td class="num">5.5</td></tr>
+        <tr><td>皮脂抑制 スキンケア</td><td class="num">352</td><td class="num">3,400</td><td class="num">10.4%</td><td class="num">2.5</td></tr>
+        <tr><td>メイク落とし 代用</td><td class="num">336</td><td class="num">2,600</td><td class="num">12.9%</td><td class="num">1.5</td></tr>
+        <tr><td>メイク落とし おすすめ</td><td class="num">323</td><td class="num">13,742</td><td class="num">2.4%</td><td class="num">7.2</td></tr>
+        <tr><td>濡れた手で使えるクレンジング</td><td class="num">290</td><td class="num">934</td><td class="num">31.1%</td><td class="num">1.6</td></tr>
+        <tr><td>収れん化粧水</td><td class="num">278</td><td class="num">11,984</td><td class="num">2.3%</td><td class="num">5.3</td></tr>
+        <tr><td>クレンジング 代用</td><td class="num">278</td><td class="num">1,664</td><td class="num">16.7%</td><td class="num">1.6</td></tr>
+        <tr><td>ノンコメドジェニック クレンジング</td><td class="num">220</td><td class="num">857</td><td class="num">25.7%</td><td class="num">2.4</td></tr>
+        <tr><td>ニキビ クレンジング</td><td class="num">218</td><td class="num">3,654</td><td class="num">6.0%</td><td class="num">4.4</td></tr>
+        <tr><td>クレンジングおすすめ 40代 ドラッグストア</td><td class="num">209</td><td class="num">2,347</td><td class="num">8.9%</td><td class="num">4.7</td></tr>
+        <tr><td>お風呂で使えるクレンジング</td><td class="num">196</td><td class="num">600</td><td class="num">32.7%</td><td class="num">1.4</td></tr>
+        <tr><td>本当に 肌にいいクレンジング 50代</td><td class="num">192</td><td class="num">2,571</td><td class="num">7.5%</td><td class="num">2.5</td></tr>
+        <tr><td>クレンジング 濡れた手ok</td><td class="num">191</td><td class="num">473</td><td class="num">40.4%</td><td class="num">1.3</td></tr>
+        <tr><td>脂性肌 スキンケア プチプラ</td><td class="num">186</td><td class="num">1,395</td><td class="num">13.3%</td><td class="num">3.7</td></tr>
+        <tr><td>混合肌 スキンケア プチプラ</td><td class="num">171</td><td class="num">1,535</td><td class="num">11.1%</td><td class="num">3.6</td></tr>
+        <tr><td>マツエク メイク落とし</td><td class="num">181</td><td class="num">3,565</td><td class="num">5.1%</td><td class="num">5.8</td></tr>
+        <tr><td>ミルククレンジング おすすめ</td><td class="num">172</td><td class="num">3,150</td><td class="num">5.5%</td><td class="num">6.0</td></tr>
+        <tr><td>インナードライとは</td><td class="num">161</td><td class="num">38,622</td><td class="num">0.4%</td><td class="num">1.2</td></tr>
+        <tr><td>脂性肌 毛穴 スキンケア</td><td class="num">142</td><td class="num">464</td><td class="num">30.6%</td><td class="num">1.4</td></tr>
+        <tr><td>ニキビ肌 クレンジング</td><td class="num">142</td><td class="num">1,840</td><td class="num">7.7%</td><td class="num">3.8</td></tr>
+        <tr><td>クレンジング ドラッグストア</td><td class="num">139</td><td class="num">1,898</td><td class="num">7.3%</td><td class="num">3.5</td></tr>
+        <tr><td>クリームクレンジング</td><td class="num">166</td><td class="num">3,292</td><td class="num">5.0%</td><td class="num">5.8</td></tr>
+        <tr><td>クレンジングおすすめ 50代</td><td class="num">154</td><td class="num">3,211</td><td class="num">4.8%</td><td class="num">3.5</td></tr>
+        <tr><td>essence-keana（毛穴美容液系）</td><td class="num">358</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+        <tr><td>ingredient-tranexamic-acid（トラネキサム酸）</td><td class="num">369</td><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 方向性仮説 -->
+  <h2>方向性仮説（Intent-dive結果）</h2>
+  <div class="card">
+    <h3>読者の主な悩み層</h3>
+    <ul style="margin-bottom:14px;">
+      <li><strong>脂性肌・テカリ・毛穴</strong>（最大PV：skincare-shisei-oily 9,064クリック）</li>
+      <li><strong>ニキビ・敏感肌</strong>（cleansing-acne 3,247クリック）</li>
+      <li><strong>インナードライ</strong>（skincare-innerdry 3,415クリック）</li>
+      <li><strong>40〜50代の肌悩み</strong>（cleansing-fifties/forties 合計4,314クリック）</li>
+      <li><strong>クレンジング選びに迷っている層</strong>（種類・シチュエーション系クエリ多数）</li>
+    </ul>
+    <div class="highlight">
+      <strong>診断入口として最も自然なコンセプト（仮）</strong><br>
+      「あなたの肌タイプに合ったクレンジング・スキンケアを診断で見つける」<br>
+      → 脂性肌 / インナードライ / ニキビ肌 / 乾燥肌 / 混合肌 の分岐<br>
+      → 各タイプに合った商材（オルビス・ファンケル等）に誘導
+    </div>
+    <p class="section-note">※ファンデーション記事はCarenaにほぼ存在しない。「CVはファンデ系」はリスの別話。</p>
+  </div>
+
+  <!-- 未確認事項 -->
+  <h2>未確認・次のステップ</h2>
+  <div class="card">
+    <div class="pending">
+      <strong>Kannaさん確認待ち（優先度順）</strong><br>
+      1. コスメLINEアカウントの案件ラインナップは何か<br>
+      2. CVに使いたい商材はどれか（オルビス・ファンケル・ビーグレン等の中から）<br>
+      3. すでにバナー/PUを設置している記事があるか
+    </div>
+    <h3 style="margin-top:16px;">今後確認したいこと</h3>
+    <ul>
+      <li>各記事がノウハウ系かCV誘導型か（記事内の構成・CTA確認）</li>
+      <li>現在のCV発生状況（どの記事・どの商材でCVが出ているか）</li>
+      <li>LINE診断で使う商材の絞り込み → Kannaさん情報待ち</li>
+      <li>バナー/PUの設置候補記事の選定（上位記事PVベースで優先順位付け）</li>
+    </ul>
+  </div>
+
+  <div style="margin-top:40px; font-size:11px; color:#bbb; text-align:center;">
+    generated: 2026-06-04 ｜ noa-docs
+  </div>
+
+</div>
+</body>
+</html>
