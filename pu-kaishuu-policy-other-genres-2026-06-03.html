@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PU改修方針：ダイエット以外ジャンル 2026-06-03</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header p { color: #aaa; font-size: 14px; }
+    .update-banner { background: #1a2e2e; color: #7effd4; font-size: 13px; padding: 10px 32px; }
+    main { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 600; margin: 24px 0 10px; color: #333; }
+    ul { padding-left: 20px; margin-bottom: 10px; }
+    li { font-size: 14px; line-height: 1.8; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 8px 10px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; font-size: 11px; }
+    td { padding: 7px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr.priority-skip { background: #f7f7f7; color: #aaa; }
+
+    .pu-name { vertical-align: middle; border-right: 2px solid #e8e8e8; font-weight: 600; font-size: 13px; }
+    tr.pre-row td:not(.pu-name) { background: #fafafa; }
+    tr.post-row td:not(.pu-name) { background: #eef4ff; }
+    td.pre-label { color: #555; font-size: 11px; white-space: nowrap; font-weight: 600; }
+    td.post-label { color: #2c52b0; font-size: 11px; white-space: nowrap; font-weight: 600; }
+    tr.pu-sep td { height: 6px; background: white; border: none; padding: 0; }
+
+    .pvfr-good { color: #27ae60; font-weight: 700; }
+    .pvfr-ok   { color: #f39c12; font-weight: 700; }
+    .pvfr-bad  { color: #e74c3c; font-weight: 700; }
+
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+    .red   { background: #fff0f0; color: #c0392b; }
+    .yellow{ background: #fffbea; color: #b7860b; }
+    .green { background: #f0fff4; color: #27ae60; }
+    .blue  { background: #f0f4ff; color: #2c52b0; }
+    .gray  { background: #f0f0f0; color: #888; }
+    .purple{ background: #f5f0ff; color: #6c3483; }
+
+    .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .alert     { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good      { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .info      { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+
+    .priority-block { border-radius: 10px; padding: 20px 24px; margin: 16px 0; }
+    .p1 { background: #fff8f0; border: 2px solid #f39c12; }
+    .p2 { background: #f0fff4; border: 2px solid #27ae60; }
+    .p3 { background: #f0f4ff; border: 2px solid #2c52b0; }
+    .p-skip { background: #f9f9f9; border: 1px solid #ddd; }
+    .priority-block .p-num { font-size: 11px; font-weight: 700; color: #888; margin-bottom: 6px; }
+    .priority-block .p-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .priority-block .p-meta { font-size: 13px; color: #666; line-height: 1.7; }
+    .priority-block .p-reason { font-size: 13px; color: #b07000; margin-top: 8px; font-style: italic; }
+
+    .genre-kpi { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+    .kpi-box { background: #f7f7f7; border-radius: 8px; padding: 10px 14px; text-align: center; min-width: 90px; }
+    .kpi-label { font-size: 10px; color: #888; margin-bottom: 3px; }
+    .kpi-value { font-size: 18px; font-weight: 700; }
+    .kpi-value.bad  { color: #e74c3c; }
+    .kpi-value.ok   { color: #f39c12; }
+    .kpi-value.good { color: #27ae60; }
+
+    footer { text-align: center; padding: 40px; color: #bbb; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>PU改修方針：ダイエット以外ジャンル</h1>
+  <p>2026-06-03 策定｜5月実績データ・5/14仕様変更対応・PVFR指標</p>
+</header>
+<div class="update-banner">対象：ピル／ED／包茎／AGA／いびき／リカバリーウェア 他｜集計：5/1–5/13（変更前）と 5/14–5/31（変更後）で分割｜主指標：PVFR（友達追加 ÷ LP imp）</div>
+
+<main>
+
+<!-- ===== 前提 ===== -->
+<div class="section">
+  <div class="section-title">読み方</div>
+  <h2>PVFR判断基準（ダイエット版と共通）</h2>
+  <table>
+    <tr><th>PVFR</th><th>状態</th><th>対処</th></tr>
+    <tr><td>≥ 0.7%</td><td>良好</td><td><span class="badge green">維持 or 文言磨き</span></td></tr>
+    <tr><td>0.3〜0.7%</td><td>普通</td><td><span class="badge yellow">改修候補。impが多い記事は優先</span></td></tr>
+    <tr><td>&lt; 0.3%</td><td>要対応</td><td><span class="badge red">文言改修 or 友達追加画面確認</span></td></tr>
+    <tr><td>CTR高 × 追加率低 × PVFR低</td><td>友達追加画面の問題</td><td><span class="badge blue">画面確認（文言改修では改善しない）</span></td></tr>
+  </table>
+  <div class="info">
+    5/14仕様変更でPU表示率が約40%→約100%超に上昇。CTRは自然に低下するため CTR単体で判断しない。PVFRで前後比較する。
+  </div>
+</div>
+
+<!-- ===== ピル ===== -->
+<div class="section">
+  <div class="section-title">ピル（pill_seo）</div>
+  <h2>ピル — 5月実績 PU別分析</h2>
+
+  <div class="genre-kpi">
+    <div class="kpi-box"><div class="kpi-label">友達合計</div><div class="kpi-value ok">35人</div></div>
+    <div class="kpi-box"><div class="kpi-label">LP imp</div><div class="kpi-value">6,890</div></div>
+    <div class="kpi-box"><div class="kpi-label">PVFR</div><div class="kpi-value ok">0.51%</div></div>
+  </div>
+
+  <h3>GYN_低用量ピル種類記事 &nbsp;<span class="badge green">★ 主力</span></h3>
+  <table>
+    <thead><tr><th>PU文言</th><th>期間</th><th>表示率</th><th>CTR</th><th>追加率</th><th>PVFR</th><th>友達</th></tr></thead>
+    <tbody>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">ぴったりのピルの種類</td>
+        <td class="pre-label">5/1–5/13</td><td>52%</td><td><span class="badge green">18.9%</span></td><td>14.0%</td>
+        <td class="pvfr-good">1.37%</td><td>6人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>111%</td><td><span class="badge yellow">7.4%</span></td><td>12.7%</td>
+        <td class="pvfr-good">1.04%</td><td>8人</td>
+      </tr>
+      <tr class="pu-sep"><td colspan="7"></td></tr>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">自分にぴったりの</td>
+        <td class="pre-label">5/1–5/13</td><td>53%</td><td><span class="badge green">13.2%</span></td><td>28.1%</td>
+        <td class="pvfr-good">1.98%</td><td>9人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>114%</td><td><span class="badge yellow">8.0%</span></td><td>12.0%</td>
+        <td class="pvfr-good">1.09%</td><td>9人</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="good">
+    <strong>PVFR高水準で維持。「低用量ピル種類」記事が圧倒的主力。</strong><br>
+    「自分にぴったりの」が前期PVFR 1.98%→後期1.09%と低下しているが水準は維持。追加率が28.1%→12.0%と半減しているため友達追加画面の変化がないか確認推奨。
+  </div>
+
+  <h3>GYN_ピル値段記事 &nbsp;<span class="badge gray">PVFR低</span></h3>
+  <table>
+    <thead><tr><th>PU文言</th><th>期間</th><th>表示率</th><th>CTR</th><th>追加率</th><th>PVFR</th><th>友達</th></tr></thead>
+    <tbody>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">安いピル</td>
+        <td class="pre-label">5/1–5/13</td><td>43%</td><td><span class="badge yellow">10.7%</span></td><td>12.5%</td>
+        <td class="pvfr-ok">0.57%</td><td>1人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>110%</td><td><span class="badge red">4.3%</span></td><td>0.0%</td>
+        <td class="pvfr-bad">0.00%</td><td>0人</td>
+      </tr>
+      <tr class="pu-sep"><td colspan="7"></td></tr>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">自分にぴったりのピル</td>
+        <td class="pre-label">5/1–5/13</td><td>37%</td><td><span class="badge green">13.7%</span></td><td>0.0%</td>
+        <td class="pvfr-bad">0.00%</td><td>0人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>111%</td><td><span class="badge red">4.3%</span></td><td>0.0%</td>
+        <td class="pvfr-bad">0.00%</td><td>0人</td>
+      </tr>
+      <tr class="pu-sep"><td colspan="7"></td></tr>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">自分に合うピルクリニック</td>
+        <td class="pre-label">5/1–5/13</td><td>40%</td><td><span class="badge red">4.8%</span></td><td>0.0%</td>
+        <td class="pvfr-bad">0.00%</td><td>0人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>112%</td><td><span class="badge red">4.0%</span></td><td>0.0%</td>
+        <td class="pvfr-bad">0.00%</td><td>0人</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>MF系記事（吐き気・生理を送らせる）&nbsp;<span class="badge gray">PVFR低</span></h3>
+  <table>
+    <thead><tr><th>記事</th><th>PU文言</th><th>期間</th><th>CTR</th><th>追加率</th><th>PVFR</th><th>友達</th></tr></thead>
+    <tbody>
+      <tr class="priority-skip"><td>吐き気</td><td>ぴったりの種類を知りたい</td><td>前/後</td><td>5.4% / 4.0%</td><td>0% / 2.6%</td><td class="pvfr-bad">0.00% / 0.12%</td><td>0 / 1人</td></tr>
+      <tr class="priority-skip"><td>生理送らせる</td><td>ぴったりの種類を知りたい</td><td>前/後</td><td>5.8% / 2.8%</td><td>0% / 5.3%</td><td class="pvfr-bad">0.00% / 0.16%</td><td>0 / 1人</td></tr>
+      <tr class="priority-skip"><td>生理送らせる</td><td>自分に合うピルクリニック</td><td>前/後</td><td>8.8% / 3.1%</td><td>0% / 0%</td><td class="pvfr-bad">0.00% / 0.00%</td><td>0 / 0人</td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight">
+    <strong>「低用量ピル種類」vs「ピル値段・MF系」で明確な二極化。</strong><br>
+    ピル種類を調べているユーザー（比較検討フェーズ）はPVFR 1.0%超。値段・吐き気・生理送らせるを調べているユーザーはPVFRほぼ0。<br>
+    → 記事のユーザーフェーズが違う。値段・MF系記事への訴求設計を見直す必要あり（または着手しない判断も）。
+  </div>
+</div>
+
+<!-- ===== ED ===== -->
+<div class="section">
+  <div class="section-title">ED（seo_ed）</div>
+  <h2>ED — 5月実績 PU別分析</h2>
+
+  <div class="genre-kpi">
+    <div class="kpi-box"><div class="kpi-label">友達合計</div><div class="kpi-value ok">24人</div></div>
+    <div class="kpi-box"><div class="kpi-label">LP imp</div><div class="kpi-value">3,836</div></div>
+    <div class="kpi-box"><div class="kpi-label">PVFR</div><div class="kpi-value ok">0.63%</div></div>
+  </div>
+
+  <h3>DMMED記事 &nbsp;<span class="badge green">★ 断トツ主力</span></h3>
+  <table>
+    <thead><tr><th>PU文言</th><th>期間</th><th>表示率</th><th>CTR</th><th>追加率</th><th>PVFR</th><th>友達</th></tr></thead>
+    <tbody>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">自分に合うED薬</td>
+        <td class="pre-label">5/1–5/13</td><td>51%</td><td><span class="badge green">19.3%</span></td><td>32.3%</td>
+        <td class="pvfr-good">3.19%</td><td>10人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>81%</td><td><span class="badge green">13.2%</span></td><td>27.3%</td>
+        <td class="pvfr-good">2.90%</td><td>6人</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="good">
+    <strong>PVFR 3.19%→2.90%：全ジャンル最高水準で維持。触らない。</strong><br>
+    表示率が51%→81%（他記事ほど上がっていない）なのにCTR・PVFR ともに高水準維持。このPU・記事の組み合わせが最高効率。
+  </div>
+
+  <h3>その他記事（バイアグラ飲み方・精力剤・勃起薬）&nbsp;<span class="badge gray">PVFR低</span></h3>
+  <table>
+    <thead><tr><th>記事</th><th>PU文言</th><th>期間</th><th>CTR</th><th>追加率</th><th>PVFR</th><th>友達</th></tr></thead>
+    <tbody>
+      <tr class="priority-skip"><td>バイアグラ飲み方</td><td>夜の自信</td><td>前/後</td><td>13.1% / 8.1%</td><td>0% / 4.8%</td><td class="pvfr-bad">0.00% / 0.37%</td><td>0 / 1人</td></tr>
+      <tr class="priority-skip"><td>バイアグラ飲み方</td><td>自分に合うED薬</td><td>前/後</td><td>11.7% / 10.4%</td><td>6.2% / 0%</td><td class="pvfr-bad">0.40% / 0.00%</td><td>1 / 0人</td></tr>
+      <tr class="priority-skip"><td>精力剤10選</td><td>自分に合うED薬</td><td>前/後</td><td>12.4% / 6.4%</td><td>4.2% / 11.8%</td><td class="pvfr-bad">0.27% / 0.73%</td><td>1 / 2人</td></tr>
+      <tr class="priority-skip"><td>精力剤10選</td><td>今飲んでる精力剤本当に効いていますか</td><td>前/後</td><td>10.3% / 5.7%</td><td>0% / 7.1%</td><td class="pvfr-bad">0.00% / 0.40%</td><td>0 / 1人</td></tr>
+    </tbody>
+  </table>
+  <div class="highlight">
+    <strong>DMMED記事への集中投資が最適解。他記事は改修余地あり。</strong><br>
+    精力剤10選記事の「自分に合うED薬」が後期PVFR 0.73%と浮上傾向。LP impが増えればDMMED記事に次ぐ候補になる可能性あり。
+  </div>
+</div>
+
+<!-- ===== 包茎 ===== -->
+<div class="section">
+  <div class="section-title">包茎（seo_phimo）</div>
+  <h2>包茎 — 5月実績 PU別分析</h2>
+
+  <div class="genre-kpi">
+    <div class="kpi-box"><div class="kpi-label">友達合計</div><div class="kpi-value ok">41人</div></div>
+    <div class="kpi-box"><div class="kpi-label">LP imp</div><div class="kpi-value">13,238</div></div>
+    <div class="kpi-box"><div class="kpi-label">PVFR</div><td class="kpi-value ok">0.31%</td></div>
+  </div>
+
+  <div class="alert">
+    <strong>注意：5月頭以降クライアントのキャンペーン変更でCVRが低下している可能性あり。</strong><br>
+    Renへの確認が取れ次第、着手判断を行う。以下のデータはPVFR（友達追加）単位の分析。
+  </div>
+
+  <h3>hiyo記事</h3>
+  <table>
+    <thead><tr><th>PU文言</th><th>期間</th><th>表示率</th><th>CTR</th><th>追加率</th><th>PVFR</th><th>友達</th></tr></thead>
+    <tbody>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">包茎を治して夜の自信をつけたい!</td>
+        <td class="pre-label">5/1–5/13</td><td>57%</td><td><span class="badge green">14.3%</span></td><td>15.4%</td>
+        <td class="pvfr-good">1.26%</td><td>2人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>101%</td><td><span class="badge yellow">7.1%</span></td><td>13.3%</td>
+        <td class="pvfr-good">0.97%</td><td>2人</td>
+      </tr>
+      <tr class="pu-sep"><td colspan="7"></td></tr>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">包茎を治して自分に自信をつけたい!</td>
+        <td class="pre-label">5/1–5/13</td><td>57%</td><td><span class="badge green">14.4%</span></td><td>7.1%</td>
+        <td class="pvfr-ok">0.59%</td><td>1人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>102%</td><td><span class="badge yellow">7.8%</span></td><td>5.6%</td>
+        <td class="pvfr-ok">0.44%</td><td>1人</td>
+      </tr>
+      <tr class="pu-sep"><td colspan="7"></td></tr>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">自分にぴったりの包茎の直し方を見つける!</td>
+        <td class="pre-label">5/1–5/13</td><td>57%</td><td><span class="badge green">13.3%</span></td><td>7.7%</td>
+        <td class="pvfr-ok">0.58%</td><td>1人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>106%</td><td><span class="badge yellow">6.1%</span></td><td>0.0%</td>
+        <td class="pvfr-bad">0.00%</td><td>0人</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="good">「夜の自信をつけたい」PVFR 1.26%→0.97%で維持。hiyo記事では「夜の自信」が最強。</div>
+
+  <h3>kanton記事</h3>
+  <table>
+    <thead><tr><th>PU文言</th><th>期間</th><th>表示率</th><th>CTR</th><th>追加率</th><th>PVFR</th><th>友達</th></tr></thead>
+    <tbody>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">放っておいて不安</td>
+        <td class="pre-label">5/1–5/13</td><td>68%</td><td><span class="badge green">12.8%</span></td><td>18.2%</td>
+        <td class="pvfr-good">1.57%</td><td>2人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>95%</td><td><span class="badge yellow">6.9%</span></td><td>8.3%</td>
+        <td class="pvfr-ok">0.55%</td><td>1人</td>
+      </tr>
+      <tr class="pu-sep"><td colspan="7"></td></tr>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">治し方が知りたい</td>
+        <td class="pre-label">5/1–5/13</td><td>52%</td><td><span class="badge yellow">11.4%</span></td><td>0.0%</td>
+        <td class="pvfr-bad">0.00%</td><td>0人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>101%</td><td><span class="badge red">5.4%</span></td><td>0.0%</td>
+        <td class="pvfr-bad">0.00%</td><td>0人</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="alert">「放っておいて不安」PVFR 1.57%→0.55%と大幅悪化。CVR問題の影響か、訴求の問題か要確認。</div>
+
+  <h3>kasei記事</h3>
+  <table>
+    <thead><tr><th>PU文言</th><th>期間</th><th>表示率</th><th>CTR</th><th>追加率</th><th>PVFR</th><th>友達</th></tr></thead>
+    <tbody>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">放っておいて不安</td>
+        <td class="pre-label">5/1–5/13</td><td>63%</td><td><span class="badge yellow">9.4%</span></td><td>5.1%</td>
+        <td class="pvfr-ok">0.30%</td><td>3人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>99%</td><td><span class="badge yellow">5.6%</span></td><td>9.2%</td>
+        <td class="pvfr-ok">0.52%</td><td>6人</td>
+      </tr>
+      <tr class="pu-sep"><td colspan="7"></td></tr>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">治し方が知りたい</td>
+        <td class="pre-label">5/1–5/13</td><td>60%</td><td><span class="badge yellow">9.0%</span></td><td>1.9%</td>
+        <td class="pvfr-bad">0.10%</td><td>1人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>98%</td><td><span class="badge red">5.0%</span></td><td>3.7%</td>
+        <td class="pvfr-bad">0.18%</td><td>2人</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="info">kasei記事「放っておいて不安」は0.30%→0.52%と改善傾向。「放っておいて不安」訴求はkasei記事では機能している。</div>
+
+  <h3>shinsei / toha / houhien記事（PVFR低め）</h3>
+  <table>
+    <thead><tr><th>記事</th><th>PU文言</th><th>期間</th><th>CTR</th><th>追加率</th><th>PVFR</th><th>友達</th></tr></thead>
+    <tbody>
+      <tr class="priority-skip"><td>shinsei</td><td>包茎を治して夜の自信を</td><td>前/後</td><td>10.2% / 3.2%</td><td>11.1% / 0%</td><td class="pvfr-bad">0.68% / 0.00%</td><td>1 / 0人</td></tr>
+      <tr class="priority-skip"><td>shinsei</td><td>包茎を治して自分に自信を</td><td>前/後</td><td>12.2% / 4.2%</td><td>0% / 3.2%</td><td class="pvfr-bad">0.00% / 0.16%</td><td>0 / 1人</td></tr>
+      <tr class="priority-skip"><td>toha</td><td>包茎を治して自分に自信</td><td>前/後</td><td>10.4% / 7.1%</td><td>0% / 4.3%</td><td class="pvfr-bad">0.00% / 0.30%</td><td>0 / 2人</td></tr>
+      <tr class="priority-skip"><td>houhien</td><td>自分に自信をつけたい</td><td>前/後</td><td>7.1% / 6.7%</td><td>0% / 2.9%</td><td class="pvfr-bad">0.00% / 0.20%</td><td>0 / 2人</td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight">
+    <strong>包茎の強い訴求：「夜の自信をつけたい」「放っておいて不安」の2軸。</strong><br>
+    「治し方が知りたい」系はどの記事でも弱い。「夜の自信」「放っておいて不安」が機能する記事とそうでない記事がある → CVR問題との切り分けが必要。<br>
+    Renへの確認完了後、hiyo・kasei記事から着手検討。
+  </div>
+</div>
+
+<!-- ===== AGA ===== -->
+<div class="section">
+  <div class="section-title">AGA（seo_aga）</div>
+  <h2>AGA — 5月実績 PU別分析</h2>
+
+  <div class="genre-kpi">
+    <div class="kpi-box"><div class="kpi-label">友達合計</div><div class="kpi-value bad">6人</div></div>
+    <div class="kpi-box"><div class="kpi-label">LP imp</div><div class="kpi-value">4,999</div></div>
+    <div class="kpi-box"><div class="kpi-label">PVFR</div><div class="kpi-value bad">0.12%</div></div>
+  </div>
+
+  <h3>ニューモ系記事（3本）</h3>
+  <table>
+    <thead><tr><th>PU文言</th><th>期間</th><th>表示率</th><th>CTR</th><th>追加率</th><th>PVFR</th><th>友達</th></tr></thead>
+    <tbody>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">もう少し安く</td>
+        <td class="pre-label">5/1–5/13</td><td>40%</td><td><span class="badge yellow">7.5%</span></td><td>8.7%</td>
+        <td class="pvfr-ok">0.26%</td><td>2人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>107%</td><td><span class="badge red">3.3%</span></td><td>0.0%</td>
+        <td class="pvfr-bad">0.00%</td><td>0人</td>
+      </tr>
+      <tr class="pu-sep"><td colspan="7"></td></tr>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">ニューモ効果ある</td>
+        <td class="pre-label">5/1–5/13</td><td>37%</td><td><span class="badge yellow">7.8%</span></td><td>0.0%</td>
+        <td class="pvfr-bad">0.00%</td><td>0人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>108%</td><td><span class="badge red">3.1%</span></td><td>3.2%</td>
+        <td class="pvfr-bad">0.11%</td><td>1人</td>
+      </tr>
+      <tr class="pu-sep"><td colspan="7"></td></tr>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">ニューモ合うか知りたい</td>
+        <td class="pre-label">5/1–5/13</td><td>37%</td><td><span class="badge yellow">9.3%</span></td><td>3.7%</td>
+        <td class="pvfr-bad">0.13%</td><td>1人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>106%</td><td><span class="badge red">4.9%</span></td><td>4.1%</td>
+        <td class="pvfr-bad">0.21%</td><td>2人</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="alert">
+    <strong>全3本がPVFR 0.00〜0.26%と低水準。LP imp 4,999に対して友達6人。</strong><br>
+    「ニューモ」系のユーザーは市販品での解決を求めており、LINE（クリニック）への友達追加との相性が悪い可能性。CTR自体も3〜9%と低め。訴求軸の問題か、記事ユーザーのフェーズ問題か要整理。
+  </div>
+</div>
+
+<!-- ===== いびき ===== -->
+<div class="section">
+  <div class="section-title">いびき（seo_ibiki）</div>
+  <h2>いびき — 5月実績 PU別分析</h2>
+
+  <div class="genre-kpi">
+    <div class="kpi-box"><div class="kpi-label">友達合計</div><div class="kpi-value bad">6人</div></div>
+    <div class="kpi-box"><div class="kpi-label">LP imp</div><div class="kpi-value">8,640</div></div>
+    <div class="kpi-box"><div class="kpi-label">PVFR</div><div class="kpi-value bad">0.07%</div></div>
+  </div>
+
+  <table>
+    <thead><tr><th>記事</th><th>PU文言</th><th>期間</th><th>表示率</th><th>CTR</th><th>追加率</th><th>PVFR</th><th>友達</th></tr></thead>
+    <tbody>
+      <tr class="pre-row">
+        <td rowspan="2">いびきアプリ</td><td>ぴったりクリニック</td>
+        <td class="pre-label">5/1–5/13</td><td>39%</td><td><span class="badge yellow">10.2%</span></td><td>5.3%</td>
+        <td class="pvfr-bad">0.21%</td><td>2人</td>
+      </tr>
+      <tr class="post-row">
+        <td>ぴったりクリニック</td>
+        <td class="post-label">5/14–5/31</td><td>94%</td><td><span class="badge red">5.1%</span></td><td>0.0%</td>
+        <td class="pvfr-bad">0.00%</td><td>0人</td>
+      </tr>
+      <tr class="pre-row">
+        <td rowspan="2">口乾く原因</td><td>ぴったりクリニック</td>
+        <td class="pre-label">5/1–5/13</td><td>60%</td><td><span class="badge yellow">11.7%</span></td><td>3.8%</td>
+        <td class="pvfr-bad">0.27%</td><td>2人</td>
+      </tr>
+      <tr class="post-row">
+        <td>ぴったりクリニック</td>
+        <td class="post-label">5/14–5/31</td><td>94%</td><td><span class="badge yellow">7.4%</span></td><td>0.0%</td>
+        <td class="pvfr-bad">0.00%</td><td>0人</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="alert">
+    <strong>前期はPVFR 0.21〜0.27%あるが、後期は追加率が全記事0%でPVFR消滅。</strong><br>
+    CTRは5〜11%とそこそこあるのに友達追加に至っていない = 友達追加画面の問題の可能性が高い。LINEアカウントのURL・説明文・アイコンを確認すべき。<br>
+    文言改修より先に友達追加画面の確認・修正が必要。
+  </div>
+</div>
+
+<!-- ===== リカバリーウェア ===== -->
+<div class="section">
+  <div class="section-title">リカバリーウェア（seo_mypicsc_rw）</div>
+  <h2>リカバリーウェア — 5月実績 PU別分析</h2>
+
+  <div class="genre-kpi">
+    <div class="kpi-box"><div class="kpi-label">友達合計</div><div class="kpi-value ok">20人</div></div>
+    <div class="kpi-box"><div class="kpi-label">LP imp</div><div class="kpi-value">7,137</div></div>
+    <div class="kpi-box"><div class="kpi-label">PVFR</div><div class="kpi-value bad">0.28%</div></div>
+  </div>
+
+  <h3>ワークマン口コミ記事（3本）</h3>
+  <table>
+    <thead><tr><th>PU文言</th><th>期間</th><th>表示率</th><th>CTR</th><th>追加率</th><th>PVFR</th><th>友達</th></tr></thead>
+    <tbody>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">自分の疲れに合うrw気になる</td>
+        <td class="pre-label">5/1–5/13</td><td>53%</td><td><span class="badge green">15.6%</span></td><td>3.3%</td>
+        <td class="pvfr-ok">0.27%</td><td>4人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>98%</td><td><span class="badge yellow">7.1%</span></td><td>8.9%</td>
+        <td class="pvfr-ok">0.62%</td><td>5人</td>
+      </tr>
+      <tr class="pu-sep"><td colspan="7"></td></tr>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">ワークマン以外気になる</td>
+        <td class="pre-label">5/1–5/13</td><td>54%</td><td><span class="badge green">12.5%</span></td><td>3.7%</td>
+        <td class="pvfr-ok">0.25%</td><td>4人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>99%</td><td><span class="badge yellow">8.0%</span></td><td>4.5%</td>
+        <td class="pvfr-ok">0.35%</td><td>3人</td>
+      </tr>
+      <tr class="pu-sep"><td colspan="7"></td></tr>
+      <tr class="pre-row">
+        <td class="pu-name" rowspan="2">効果のあるRW選びたい</td>
+        <td class="pre-label">5/1–5/13</td><td>51%</td><td><span class="badge yellow">11.9%</span></td><td>3.2%</td>
+        <td class="pvfr-bad">0.19%</td><td>3人</td>
+      </tr>
+      <tr class="post-row">
+        <td class="post-label">5/14–5/31</td><td>97%</td><td><span class="badge yellow">7.2%</span></td><td>1.7%</td>
+        <td class="pvfr-bad">0.12%</td><td>1人</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info">
+    <strong>CTR高（7〜15%）× 追加率低（1〜9%）= 友達追加画面 or ファネル構造の問題。</strong><br>
+    「自分の疲れに合うrw」が後期PVFR 0.62%と最高。「効果のあるRW選びたい」が後期0.12%と最低。<br>
+    リカバリーウェア（アパレル系）とLINEクリニックファネルの相性自体を確認する必要あり。文言改修より構造的な問題を先に整理する。
+  </div>
+</div>
+
+<!-- ===== その他 ===== -->
+<div class="section">
+  <div class="section-title">その他（参考）</div>
+  <h2>FAGA・ほくろ・看護師転職</h2>
+
+  <div class="info">imp少 or 後期データのみのため参考値として記載。</div>
+
+  <h3>FAGA（seo_faga）</h3>
+  <table>
+    <thead><tr><th>記事</th><th>PU文言</th><th>期間</th><th>CTR</th><th>追加率</th><th>PVFR</th><th>友達</th></tr></thead>
+    <tbody>
+      <tr class="priority-skip"><td>asami</td><td>できるだけ費用を抑えて</td><td>後のみ</td><td>3.4%</td><td>20.0%</td><td class="pvfr-ok">0.72%</td><td>1人</td></tr>
+      <tr class="priority-skip"><td>asami</td><td>どのクリニックがいいか</td><td>後のみ</td><td>4.2%</td><td>16.7%</td><td class="pvfr-ok">0.81%</td><td>1人</td></tr>
+    </tbody>
+  </table>
+  <div class="info">LP imp 411と非常に少ないが、追加率・PVFRは良い水準。記事・LP impが増えれば改善余地あり。</div>
+
+  <h3>ほくろ（seo_hokuro）</h3>
+  <table>
+    <thead><tr><th>記事</th><th>PU文言</th><th>期間</th><th>CTR</th><th>追加率</th><th>PVFR</th><th>友達</th></tr></thead>
+    <tbody>
+      <tr class="priority-skip"><td>シミ増加</td><td>自分に合ったほくろ取り方法</td><td>前/後</td><td>3.0% / 8.7%</td><td>0% / 0%</td><td class="pvfr-bad">0.00% / 0.00%</td><td>0人</td></tr>
+      <tr class="priority-skip"><td>除去テープ</td><td>自分に合ったほくろ取り方法</td><td>前/後</td><td>6.5% / 4.0%</td><td>0% / 2.2%</td><td class="pvfr-bad">0.00% / 0.09%</td><td>0 / 1人</td></tr>
+    </tbody>
+  </table>
+  <div class="alert">追加率ほぼ0%が継続。LINEアカウントのURL・設定に問題がある可能性（既報）。文言改修前に設定確認が先決。</div>
+
+  <h3>看護師転職（seo_job_kango）</h3>
+  <div class="info">後期データのみ・PVFR 0〜1.47%（f=1人のみ）。統計的信頼性が低いため判断保留。</div>
+</div>
+
+<!-- ===== 優先順位まとめ ===== -->
+<div class="section">
+  <div class="section-title">優先順位まとめ</div>
+  <h2>ダイエット以外ジャンル — 着手順</h2>
+
+  <div class="priority-block p1">
+    <div class="p-num">PRIORITY 1（ED）</div>
+    <div class="p-title">DMMED記事「自分に合うED薬」— 触らない。他記事への展開を検討</div>
+    <div class="p-meta">
+      PVFR 2.90%〜3.19%で全ジャンル最高水準・維持。ブロッカーなし。<br>
+      現状の主力PUは機能中 → 精力剤10選記事など他記事でも「自分に合うED薬」展開の余地あり。
+    </div>
+    <div class="p-reason">最高PVFRを維持している唯一のジャンル。他記事への展開がレバー</div>
+  </div>
+
+  <div class="priority-block p2">
+    <div class="p-num">PRIORITY 2（ピル）</div>
+    <div class="p-title">低用量ピル種類記事「ぴったりの種類」— 維持。値段・MF系記事の訴求見直し</div>
+    <div class="p-meta">
+      低用量ピル種類記事PVFR 1.04〜1.09%（維持）。LP imp 6,890。<br>
+      値段・MF系記事はPVFRほぼ0 → 記事ユーザーのフェーズ問題か訴求軸問題か整理が必要。
+    </div>
+    <div class="p-reason">主力記事は機能中。フェーズが合っていない記事の訴求再設計が次のレバー</div>
+  </div>
+
+  <div class="priority-block p3">
+    <div class="p-num">PRIORITY 3（包茎）— Ren確認待ち</div>
+    <div class="p-title">hiyo・kasei記事「夜の自信」「放っておいて不安」</div>
+    <div class="p-meta">
+      LP imp 13,238と最大規模。CVR問題のRen確認が取れ次第着手。<br>
+      「夜の自信をつけたい」がhiyo記事でPVFR 0.97%（維持）。「放っておいて不安」はkasei記事で改善傾向。
+    </div>
+    <div class="p-reason">LP imp最大。CVR確認後に即着手できるよう方針を今から準備</div>
+  </div>
+
+  <div class="priority-block p-skip">
+    <div class="p-num">構造問題 — 文言改修の前に確認が必要</div>
+    <div class="p-title">いびき・リカバリーウェア・ほくろ</div>
+    <div class="p-meta">
+      <strong>いびき：</strong>前期CTR あるが後期追加率が全記事0% → 友達追加画面のURL・設定確認が先決<br>
+      <strong>リカバリーウェア：</strong>CTR高×追加率低 → 友達追加画面の問題 or LINEファネルとの相性問題を整理が必要<br>
+      <strong>ほくろ：</strong>追加率継続ゼロ → URL・アカウント設定の不具合疑い（既報）
+    </div>
+  </div>
+
+  <div class="priority-block p-skip">
+    <div class="p-num">低優先 — 規模・効率ともに小さい</div>
+    <div class="p-title">AGA・FAGA・看護師転職</div>
+    <div class="p-meta">
+      AGA：ニューモ系3本すべてPVFR 0.00〜0.21%。記事ユーザーと訴求の不一致が疑われる。LPimpは約5,000と中程度だが友達6人のみ。<br>
+      FAGA/看護師転職：imp少・データ不十分で判断保留。
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>Noa Docs — PU改修方針：ダイエット以外ジャンル（2026-06-03）</footer>
+</body>
+</html>
