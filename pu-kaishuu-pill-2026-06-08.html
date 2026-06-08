@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PU改修：ピルジャンル分析 2026-06-08</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f5f5f7; color: #1d1d1f; font-size: 14px; line-height: 1.7; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
+  h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #333; }
+  .card { background: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #4a4a6a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:hover td { background: #fafafa; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-green  { background: #e6f4ea; color: #1e8e3e; }
+  .badge-yellow { background: #fff8e1; color: #e37400; }
+  .badge-red    { background: #fce8e6; color: #c5221f; }
+  .badge-gray   { background: #f0f0f0; color: #666; }
+  .badge-blue   { background: #e8f0fe; color: #1967d2; }
+  .highlight { background: #fffde7; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .alert    { background: #fce8e6; border-left: 3px solid #ea4335; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .ok       { background: #e6f4ea; border-left: 3px solid #34a853; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .bridge   { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 16px 20px; margin: 12px 0; font-size: 13px; }
+  .bridge .label { font-weight: 700; color: #4a4a6a; margin-bottom: 4px; }
+  .bridge .val  { color: #333; margin-bottom: 10px; padding-left: 12px; border-left: 2px solid #ccc; }
+  .copy-box { background: #4a4a6a; color: #fff; border-radius: 8px; padding: 14px 18px; margin: 8px 0; font-size: 15px; font-weight: 700; letter-spacing: .02em; }
+  .copy-sub { color: #bbb; font-size: 12px; margin-top: 4px; font-weight: 400; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 26px; font-weight: 700; color: #4a4a6a; }
+  .stat-label { font-size: 11px; color: #888; }
+  .section-note { font-size: 12px; color: #888; margin-top: 6px; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin: 2px; background: #f0f0f0; color: #555; }
+  .arrow { color: #aaa; margin: 0 4px; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  .check { color: #34a853; font-weight: 700; }
+  .cross { color: #ea4335; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>PU改修：ピルジャンル分析</h1>
+  <div class="meta">2026-06-08 ｜ 担当: Noa × CMO ｜ ステータス: 分析完了・改修案確定</div>
+
+  <!-- サマリー -->
+  <h2>サマリー</h2>
+  <div class="card">
+    <div class="grid2">
+      <div class="stat">
+        <div class="stat-num">4</div>
+        <div class="stat-label">現在のPU設置記事数（GYN 2本 + MF 2本）</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1</div>
+        <div class="stat-label">機能している記事（GYN 低用量ピル種類のみ）</div>
+      </div>
+    </div>
+    <div class="highlight" style="margin-top:16px;">
+      <strong>Renの方針（月次報告6/2）：</strong>「GYN_低用量ピル種類_自分にぴったりの 19人 ＋ 類似ぴったり型 14人で36人中33人（92%）が"診断選定型"。同型PUの再現性高い。他記事への横展開ナレッジ化が来月NA。」
+    </div>
+    <p class="section-note">設置済み3記事（値段・吐き気・生理遅らせる）はPVFRほぼ0。訴求軸のミスマッチが主因。今回文言を「診断選定型」に統一して改修する。</p>
+  </div>
+
+  <!-- 5月実績 -->
+  <h2>ピルジャンル 5月実績（月次報告6/2）</h2>
+  <div class="card">
+    <table>
+      <tr>
+        <th>指標</th>
+        <th>5月実績</th>
+        <th>前月（4月）</th>
+        <th>評価</th>
+      </tr>
+      <tr>
+        <td>友達追加数</td>
+        <td>36人（日均1.2）</td>
+        <td>23人</td>
+        <td><span class="badge badge-yellow">↑増加</span></td>
+      </tr>
+      <tr>
+        <td>PVFR</td>
+        <td>0.50%</td>
+        <td>0.79%</td>
+        <td><span class="badge badge-red">↓悪化</span></td>
+      </tr>
+      <tr>
+        <td>CTR</td>
+        <td>6.09%</td>
+        <td>12.58%</td>
+        <td><span class="badge badge-gray">仕様変更影響</span></td>
+      </tr>
+      <tr>
+        <td>FCVR</td>
+        <td>5.56%（CV 2件）</td>
+        <td>17.39%（CV 4件）</td>
+        <td><span class="badge badge-red">↓悪化</span></td>
+      </tr>
+      <tr>
+        <td>売上</td>
+        <td>¥33,000</td>
+        <td>¥65,000</td>
+        <td><span class="badge badge-red">↓減少</span></td>
+      </tr>
+    </table>
+    <p class="section-note">CTR低下は5/14 PU仕様変更（表示率2倍化）の影響で参考値扱い。主指標はPVFR・FCVR。</p>
+  </div>
+
+  <!-- 現在のPU設置状況 -->
+  <h2>現在のPU設置状況（全4記事）</h2>
+  <div class="card">
+    <table>
+      <tr>
+        <th>サイト</th>
+        <th>記事スラグ</th>
+        <th>記事内容</th>
+        <th>現行PU文言</th>
+        <th>PVFR（5/14後）</th>
+        <th>状態</th>
+      </tr>
+      <tr>
+        <td>GYN</td>
+        <td>pill-type</td>
+        <td>低用量ピルの種類一覧と選び方</td>
+        <td>「自分にぴったりの」「ぴったりのピルの種類」</td>
+        <td class="num">1.04〜1.09%</td>
+        <td><span class="badge badge-green">✅ 機能中</span></td>
+      </tr>
+      <tr>
+        <td>GYN</td>
+        <td>pill-price</td>
+        <td>ピルの値段・1ヶ月いくらか</td>
+        <td>「安いピル」「自分にぴったりのピル」「自分に合うピルクリニック」</td>
+        <td class="num">0.00%</td>
+        <td><span class="badge badge-red">🔴 改修対象</span></td>
+      </tr>
+      <tr>
+        <td>MF</td>
+        <td>pill-delaymenstruation</td>
+        <td>生理を遅らせる方法（ピル以外含む）</td>
+        <td>「ぴったりの種類を知りたい」「自分に合うピルクリニック」</td>
+        <td class="num">0.16%</td>
+        <td><span class="badge badge-red">🔴 改修対象</span></td>
+      </tr>
+      <tr>
+        <td>MF</td>
+        <td>pill-nausea</td>
+        <td>ピルの吐き気対策・何時間続くか</td>
+        <td>「ぴったりの種類を知りたい」</td>
+        <td class="num">0.12%</td>
+        <td><span class="badge badge-red">🔴 改修対象</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ブリッジテスト＋改修案 -->
+  <h2>ブリッジテスト＋改修案（記事別）</h2>
+
+  <!-- 記事1: GYN pill-price -->
+  <h3>① GYN / pill-price「ピルの値段」</h3>
+  <div class="card">
+    <div class="bridge">
+      <div class="label">① 診断が実際に提供する体験</div>
+      <div class="val">質問に答えると「あなたに合うピルの種類」を提案する<br>（種類によって保険適用可否・費用が変わる）</div>
+      <div class="label">② このKWで検索した人の今の気持ち</div>
+      <div class="val">「ピルって毎月いくらかかる？保険使える？続けられる値段かどうか確認したい」<br>→ 不安の核心 ＝ <strong>継続コスト</strong>。ピルを使うか迷いながら費用を調べている</div>
+      <div class="label">③ ①を②の言葉で翻訳すると</div>
+      <div class="val">「自分に合う種類がわかれば、費用の目安・保険適用可否もわかる」<br>→ ①と③は同じ体験を指しているか？ <span class="check">YES ✅</span></div>
+    </div>
+    <div class="highlight">
+      <strong>現行PUが0%の理由：</strong>「安いピル」は「安いピルを教えてもらえる」という約束になるが診断は安さランキングを出さない → 約束違反。「自分にぴったりのピル」は費用不安を持つユーザーには「種類」という切り口が前のめりすぎで刺さらない。
+    </div>
+    <div class="alert">
+      <strong>⚠️ 追加確認事項：</strong>5/14後に追加率が12.5% → 0%に急落。サンプル数が少ない可能性もあるが、<strong>WINUTで遷移先URLが正しく設定されているか合わせて確認を推奨。</strong>
+    </div>
+
+    <h3 style="margin-top:16px;">推奨PU文言</h3>
+    <div class="copy-box">
+      毎月続けやすいピル、自分はどれ？
+      <div class="copy-sub">推奨A案 ｜「継続コスト不安」に直結。タップ動機＝能動的意欲「知りたい」</div>
+    </div>
+    <div class="copy-box" style="background:#6c757d;">
+      保険が使えるピルって、自分に合う？
+      <div class="copy-sub">代替B案 ｜記事H2「保険適用ピルの種類と条件」を読んだ層向け</div>
+    </div>
+  </div>
+
+  <!-- 記事2: MF pill-delaymenstruation -->
+  <h3>② MF / pill-delaymenstruation「生理を遅らせる方法」</h3>
+  <div class="card">
+    <div class="bridge">
+      <div class="label">① 診断が実際に提供する体験</div>
+      <div class="val">質問に答えると「あなたに合うピルの種類」を提案する</div>
+      <div class="label">② このKWで検索した人の今の気持ち</div>
+      <div class="val">「旅行・イベントに生理が被りそう。ピル以外で何とかならないか？直前でも間に合う？」<br>→ まだピルに決めていない。ただし記事構成がピル（中用量）を選択肢として提示しており、<br>　 記事を読んだ後は「ピルを使うとしたらどれ？自分は使える？」という疑問が生まれる</div>
+      <div class="label">③ ①を②の言葉で翻訳すると</div>
+      <div class="val">「生理を遅らせるために使えるピルの種類を診断で確認できる」<br>→ ①と③は同じ体験を指しているか？ <span class="check">YES ✅</span>（記事が中用量ピルを選択肢提示しているため）</div>
+    </div>
+    <div class="highlight">
+      <strong>現行PUが弱い理由：</strong>「ぴったりの種類を知りたい」は汎用的すぎて、生理移動に悩むユーザーの「自分に使えるか？」という一番の疑問に答えていない。
+    </div>
+
+    <h3 style="margin-top:16px;">推奨PU文言</h3>
+    <div class="copy-box">
+      生理を遅らせるピル、自分は使える？30秒でチェック
+      <div class="copy-sub">推奨A案 ｜ユーザーの最大疑問「自分に使えるの？」をダイレクトに拾う</div>
+    </div>
+    <div class="copy-box" style="background:#6c757d;">
+      中用量ピルで生理移動、自分に合う？
+      <div class="copy-sub">代替B案 ｜記事を読み終えた層向け。より踏み込んだ訴求</div>
+    </div>
+  </div>
+
+  <!-- 記事3: MF pill-nausea -->
+  <h3>③ MF / pill-nausea「ピルの吐き気」</h3>
+  <div class="card">
+    <div class="bridge">
+      <div class="label">① 診断が実際に提供する体験</div>
+      <div class="val">質問に答えると「あなたに合うピルの種類」を提案する<br>（種類によって吐き気の出やすさが異なる）</div>
+      <div class="label">② このKWで検索した人の今の気持ち</div>
+      <div class="val">「ピルを飲み始めた/飲もうとしてるが吐き気が怖い。種類を変えれば改善する？」<br>→ 記事H2に「低用量ピルがおすすめ」とある ＝ 種類変更を意識している段階</div>
+      <div class="label">③ ①を②の言葉で翻訳すると</div>
+      <div class="val">「吐き気が出にくい種類をこの診断で見つけられる」<br>→ ①と③は同じ体験を指しているか？ <span class="check">YES ✅</span></div>
+    </div>
+    <div class="highlight">
+      <strong>現行PUが弱い理由：</strong>「ぴったりの種類を知りたい」は汎用すぎて、吐き気で悩むユーザーへの刺さりがゼロ。「吐き気」という検索語が文言に一切入っていない。
+    </div>
+
+    <h3 style="margin-top:16px;">推奨PU文言</h3>
+    <div class="copy-box">
+      吐き気が出にくいピル、自分に合う種類がある
+      <div class="copy-sub">推奨A案 ｜「吐き気」と直結。「種類を変えれば解決するかも」という希望を提示</div>
+    </div>
+    <div class="copy-box" style="background:#6c757d;">
+      そのピルの吐き気、種類を変えたら改善するかも
+      <div class="copy-sub">代替B案 ｜既にピル服用中の人向け。「そのピル」という語りかけが刺さる</div>
+    </div>
+  </div>
+
+  <!-- 改修サマリー -->
+  <h2>改修サマリー</h2>
+  <div class="card">
+    <table>
+      <tr>
+        <th>記事</th>
+        <th>現行PU（問題）</th>
+        <th>推奨新PU</th>
+        <th>期待効果</th>
+      </tr>
+      <tr>
+        <td>GYN 値段</td>
+        <td>「安いピル」「自分にぴったりのピル」<br><span class="cross">→ 費用不安に答えない約束違反</span></td>
+        <td><strong>「毎月続けやすいピル、自分はどれ？」</strong></td>
+        <td>PVFR 0% → 改善<br><small>※URL設定も要確認</small></td>
+      </tr>
+      <tr>
+        <td>MF 生理遅らせる</td>
+        <td>「ぴったりの種類を知りたい」<br><span class="cross">→ 「使えるか？」への回答なし</span></td>
+        <td><strong>「生理を遅らせるピル、自分は使える？30秒でチェック」</strong></td>
+        <td>PVFR 0.16% → 改善</td>
+      </tr>
+      <tr>
+        <td>MF 吐き気</td>
+        <td>「ぴったりの種類を知りたい」<br><span class="cross">→ 吐き気への刺さりゼロ</span></td>
+        <td><strong>「吐き気が出にくいピル、自分に合う種類がある」</strong></td>
+        <td>PVFR 0.12% → 改善</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 機会損失（未設置記事） -->
+  <h2>参考：未設置記事の機会損失</h2>
+  <div class="card">
+    <div class="grid2">
+      <div>
+        <strong>GYN（gyn-md.jp）</strong>
+        <ul style="margin-top:8px;">
+          <li>設置済み：2記事</li>
+          <li>未設置：74記事</li>
+          <li>推定機会損失：+58人/月（PVFR 0.5%試算）</li>
+        </ul>
+      </div>
+      <div>
+        <strong>MFビューティ（mf-beautyclinic.com）</strong>
+        <ul style="margin-top:8px;">
+          <li>設置済み：2記事</li>
+          <li>未設置：56記事</li>
+          <li>推定機会損失：+24人/月（PVFR 0.5%試算）</li>
+        </ul>
+      </div>
+    </div>
+    <p class="section-note" style="margin-top:12px;">今回は設置済み3記事の文言改修を優先。未設置記事への展開は別セッションで優先度付けを行う。</p>
+  </div>
+
+  <!-- 次のアクション -->
+  <h2>次のアクション</h2>
+  <div class="card">
+    <table>
+      <tr>
+        <th>#</th>
+        <th>アクション</th>
+        <th>担当</th>
+        <th>優先度</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>GYN pill-price WINUTで遷移先URL確認（追加率0%の設定ミス有無チェック）</td>
+        <td>Noa</td>
+        <td><span class="badge badge-red">最優先</span></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>GYN pill-price：現行PU3本削除 → 「毎月続けやすいピル、自分はどれ？」に差し替え</td>
+        <td>Noa（WINUT）</td>
+        <td><span class="badge badge-red">高</span></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>MF pill-nausea：「ぴったりの種類を知りたい」→「吐き気が出にくいピル、自分に合う種類がある」</td>
+        <td>Noa（WINUT）</td>
+        <td><span class="badge badge-yellow">中</span></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>MF pill-delaymenstruation：「ぴったりの種類を知りたい」→「生理を遅らせるピル、自分は使える？30秒でチェック」</td>
+        <td>Noa（WINUT）</td>
+        <td><span class="badge badge-yellow">中</span></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>未設置記事への展開（GYN 74本・MF 56本）：優先記事選定 → 別セッションで設計</td>
+        <td>Noa × CMO</td>
+        <td><span class="badge badge-gray">次フェーズ</span></td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>
