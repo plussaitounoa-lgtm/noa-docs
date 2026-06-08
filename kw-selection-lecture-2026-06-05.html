@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ノウハウKW選定の考え方</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 44px 24px 88px;
+        }
+
+        /* ── Header ── */
+        .page-header {
+            margin-bottom: 32px;
+        }
+        .page-header .eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+        .page-header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+        .page-header .desc {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        /* ── Flow bar ── */
+        .flow {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .flow-badge {
+            background: #fff;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 99px;
+            padding: 5px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+            white-space: nowrap;
+        }
+        .flow-arrow {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        /* ── Section card ── */
+        .section {
+            background: #fff;
+            border-radius: 14px;
+            padding: 28px 32px;
+            margin-bottom: 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,.07);
+        }
+
+        .section-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+        .num {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: 800;
+            color: #fff;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .num-blue   { background: #3b82f6; }
+        .num-green  { background: #10b981; }
+        .num-amber  { background: #f59e0b; }
+        .num-red    { background: #ef4444; }
+        .num-purple { background: #8b5cf6; }
+
+        .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+        .section-sub   { font-size: 13px; color: #64748b; }
+
+        .body { margin-left: 54px; }
+
+        /* ── Typography ── */
+        p   { font-size: 14px; margin-bottom: 10px; }
+        p:last-child { margin-bottom: 0; }
+
+        strong { font-weight: 700; }
+
+        ul, ol { list-style: none; padding: 0; margin-bottom: 10px; }
+        ul li, ol li {
+            font-size: 14px;
+            padding: 7px 0 7px 22px;
+            position: relative;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        ul li:last-child, ol li:last-child { border-bottom: none; }
+
+        ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #94a3b8;
+            font-size: 11px;
+            top: 10px;
+        }
+        ol { counter-reset: cnt; }
+        ol li { counter-increment: cnt; }
+        ol li::before {
+            content: counter(cnt);
+            position: absolute;
+            left: 2px;
+            top: 7px;
+            font-size: 12px;
+            font-weight: 800;
+            color: #3b82f6;
+        }
+
+        /* ── Cards (2-col) ── */
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .card {
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 16px 18px;
+        }
+        .card-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #94a3b8;
+            margin-bottom: 6px;
+        }
+        .card h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 7px;
+        }
+        .card p { font-size: 13px; color: #475569; }
+
+        /* ── Divider ── */
+        hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+        /* ── Axis card (block 3) ── */
+        .axis {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 16px 18px;
+            margin-bottom: 12px;
+        }
+        .axis:last-child { margin-bottom: 0; }
+        .axis-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .axis-tag {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 11px;
+            border-radius: 99px;
+        }
+        .tag-line    { background: #f0fdf4; color: #16a34a; }
+        .tag-rank    { background: #eff6ff; color: #3b82f6; }
+        .tag-traffic { background: #fff7ed; color: #ea580c; }
+        .axis-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        /* ── Note box ── */
+        .note {
+            border-radius: 8px;
+            padding: 11px 15px;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+        .note-yellow { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
+        .note-green  { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+
+        /* ── Pattern blocks (block 4) ── */
+        .pattern {
+            border-radius: 0 8px 8px 0;
+            padding: 14px 17px;
+            margin-bottom: 12px;
+        }
+        .pattern:last-child { margin-bottom: 0; }
+        .pattern-ng { background: #fff1f2; border-left: 3px solid #ef4444; }
+        .pattern-ok { background: #f0fdf4; border-left: 3px solid #10b981; }
+        .pattern-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+        }
+        .pattern-ng .pattern-label { color: #ef4444; }
+        .pattern-ok .pattern-label { color: #10b981; }
+        .pattern p { font-size: 13px; color: #334155; margin-bottom: 6px; }
+        .pattern p:last-child { margin-bottom: 0; }
+
+        /* ── Sub list ── */
+        .sub-list {
+            background: #f8fafc;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-top: 8px;
+        }
+        .sub-list li {
+            font-size: 13px;
+            padding: 4px 0 4px 18px;
+            border-bottom: none;
+            color: #475569;
+        }
+        .sub-list li::before { top: 7px; }
+
+        /* ── Rule row (block 5) ── */
+        .rule {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 11px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .rule:last-child { border-bottom: none; }
+        .rule-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #8b5cf6;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .rule-body { flex: 1; }
+        .rule-title { font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+        .rule-desc  { font-size: 13px; color: #475569; }
+
+        @media (max-width: 600px) {
+            .cards { grid-template-columns: 1fr; }
+            .body  { margin-left: 0; margin-top: 12px; }
+            .section { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- Header -->
+    <div class="page-header">
+        <div class="eyebrow">LINE × SEO チーム向け</div>
+        <h1>ノウハウKW選定の考え方</h1>
+        <p class="desc">KWを選んで記事を入れるまでの全体フローと判断基準</p>
+    </div>
+
+    <!-- Flow bar -->
+    <div class="flow">
+        <div class="flow-step">
+            <span class="flow-badge">① 記事の前提確認</span>
+            <span class="flow-arrow">→</span>
+        </div>
+        <div class="flow-step">
+            <span class="flow-badge">② 候補KWを探す</span>
+            <span class="flow-arrow">→</span>
+        </div>
+        <div class="flow-step">
+            <span class="flow-badge">③ 3軸で評価</span>
+            <span class="flow-arrow">→</span>
+        </div>
+        <div class="flow-step">
+            <span class="flow-badge">④ カニバリ確認</span>
+            <span class="flow-arrow">→</span>
+        </div>
+        <div class="flow-step">
+            <span class="flow-badge">⑤ 内部リンク設計</span>
+        </div>
+    </div>
+
+    <!-- ── Block 1 ── -->
+    <div class="section">
+        <div class="section-head">
+            <div class="num num-blue">1</div>
+            <div>
+                <div class="section-title">記事を作る前の前提確認</div>
+                <div class="section-sub">どんな記事を入れるべきか、方向性を揃える</div>
+            </div>
+        </div>
+        <div class="body">
+            <ul>
+                <li>
+                    <strong>ゴールがサイトの売りたい商品に向かっているか</strong><br>
+                    ノウハウ記事であっても、最終的にサイトが訴求している商品・サービスへの流れを意識した設計であること
+                </li>
+                <li>
+                    <strong>内部リンクが適切に設置されているか</strong><br>
+                    関連するCV記事・ノウハウ記事へのリンクが設計された状態で公開すること
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ── Block 2 ── -->
+    <div class="section">
+        <div class="section-head">
+            <div class="num num-green">2</div>
+            <div>
+                <div class="section-title">KW候補のあたりをつける</div>
+                <div class="section-sub">「入れられそうなKW」を見つけるための分析方法</div>
+            </div>
+        </div>
+        <div class="body">
+
+            <div class="cards">
+                <div class="card">
+                    <div class="card-label">手動分析 ① </div>
+                    <h4>競合アフィリエイトメディアを分析</h4>
+                    <p>上位表示しているノウハウ記事で<strong>同時にランクインしている競合</strong>が、どんなKWでどんな記事を入れているかを確認する。<br><br>
+                    アフィリメディアが上位にいるKWは<strong>自社も上がりやすい傾向</strong>があるため、そこから候補を探す。</p>
+                </div>
+                <div class="card">
+                    <div class="card-label">手動分析 ②</div>
+                    <h4>公式クリニックサイトを分析</h4>
+                    <p>アフィリが少ないKWでも、<strong>公式クリニックが上位</strong>なら参考になる。クリニックのコラム一覧から記事の傾向をキャッチアップし、「自社でも入れられそうか」を判断する起点にする。</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <p style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:#94a3b8; margin-bottom:12px;">Ahrefs を使った効率的な分析</p>
+            <ol>
+                <li>
+                    <strong>上位URLをAhrefsにかける</strong><br>
+                    上位表示している他メディア・公式クリニックのURLを入力し、どんなノウハウクエリを拾っているかを一覧で確認する
+                </li>
+                <li>
+                    <strong>コラム一覧から傾向把握 → 実際に検索して初期判断</strong><br>
+                    クリニックのコラム一覧で記事傾向をキャッチアップし、そのKWで実際に検索して「アフィリでも上がれそうか」を確認する
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- ── Block 3 ── -->
+    <div class="section">
+        <div class="section-head">
+            <div class="num num-amber">3</div>
+            <div>
+                <div class="section-title">3つの軸で候補KWを評価する</div>
+                <div class="section-sub">3軸すべてが揃ったKWを狙いにいく</div>
+            </div>
+        </div>
+        <div class="body">
+
+            <div class="axis">
+                <div class="axis-head">
+                    <span class="axis-tag tag-line">軸① LINE相性</span>
+                    <span class="axis-name">そのKWから入るユーザーとLINEの相性は良いか</span>
+                </div>
+                <p>候補KWから「このユーザーが検索しているときに何を知りたいのか」を想定し、その検索意図とLINEで提供できる価値がマッチしているかを確認する。</p>
+                <div class="note note-yellow">
+                    <strong>例：</strong>「痩せる薬 診断」→ 検索意図は「自分に合った薬の種類を知りたい」。LINEで診断・個別提案が提供できるなら相性が高い。<br>
+                    過去の成功事例と照らし合わせて感覚をつかむ。深い分析はLINEチームに委ねる。
+                </div>
+            </div>
+
+            <div class="axis">
+                <div class="axis-head">
+                    <span class="axis-tag tag-rank">軸② 上位表示できそうか</span>
+                    <span class="axis-name">そのドメインで勝ち目があるか</span>
+                </div>
+                <ul>
+                    <li>
+                        <strong>公式 vs アフィリの割合を確認</strong><br>
+                        SERPに並んでいる記事のうち、アフィリエイトメディアの割合が高いほど自社が入りやすい
+                    </li>
+                    <li>
+                        <strong>公式が多くても食い込める余地があるか</strong><br>
+                        並んでいる公式サイトのドメイン強度・知名度を見て、自社が入れるギャップがないかを確認する
+                    </li>
+                    <li>
+                        <strong>サブKWをずらして突破できないか</strong><br>
+                        メインKWは厳しくても、サブKWを少し変えることでアフィリが多い枠を狙えるケースがある
+                    </li>
+                </ul>
+            </div>
+
+            <div class="axis">
+                <div class="axis-head">
+                    <span class="axis-tag tag-traffic">軸③ トラフィック見込み</span>
+                    <span class="axis-name">上位表示したときに人が来るか</span>
+                </div>
+                <ol>
+                    <li>
+                        <strong>上位URLのトラフィックをAhrefsで確認する</strong><br>
+                        候補KWで上位表示しているURLをAhrefsにかけて、実際の流入規模を把握する
+                    </li>
+                    <li>
+                        <strong>流入KWを精査する</strong><br>
+                        確認してみると<strong>想定と別のKWの方が流入が多い</strong>ケースがある。そちらで記事を作るべきか、判断を切り替えることもある
+                    </li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ── Block 4 ── -->
+    <div class="section">
+        <div class="section-head">
+            <div class="num num-red">4</div>
+            <div>
+                <div class="section-title">カニバリを避けながらKWを入れる</div>
+                <div class="section-sub">既存記事との重複チェック → 2パターンで判断</div>
+            </div>
+        </div>
+        <div class="body">
+
+            <p>候補KWのSERPと、既存記事で狙っているKWのSERPを<strong>並べて見比べる</strong>ことが起点。</p>
+            <br>
+
+            <div class="pattern pattern-ng">
+                <div class="pattern-label">▲ 新規記事を作らない</div>
+                <p><strong>両SERPに並んでいる記事がほぼ同じ</strong>場合、Googleは「1記事で網羅すべき内容」と判断している。</p>
+                <p>このまま新規で記事を作るとカニバリになるため、<strong>既存記事に統合するか見送る</strong>。</p>
+            </div>
+
+            <div class="pattern pattern-ok">
+                <div class="pattern-label">◎ 新規記事を作る</div>
+                <p><strong>SERPが別々</strong>の場合は、新規で記事を作成する。</p>
+                <p>ただし<strong>既存記事が候補KWの内容に触れすぎている</strong>場合は、<br>
+                既存記事のボリュームを削り、内部リンクを新規記事に飛ばして、<strong>新規記事でしっかり網羅する形にセットで書き換える</strong>。</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ── Block 5 ── -->
+    <div class="section">
+        <div class="section-head">
+            <div class="num num-purple">5</div>
+            <div>
+                <div class="section-title">内部リンクの設計</div>
+                <div class="section-sub">CV記事への集結を前提に、ノウハウ記事からのリンクを設計する</div>
+            </div>
+        </div>
+        <div class="body">
+
+            <div class="note note-green" style="margin-bottom:20px;">
+                <strong>大前提：</strong>CV記事に内部リンクを集結させる。CV記事 → ノウハウ記事へのリンクは本数を絞る。
+            </div>
+
+            <div class="rule">
+                <div class="rule-num">1</div>
+                <div class="rule-body">
+                    <div class="rule-title">CV記事への導線を必ず設計する</div>
+                    <div class="rule-desc">KWによっては直接CV記事につなげられない場合もあるが、なるべくCVまでの距離を埋めるようにリンクを入れていく。</div>
+                </div>
+            </div>
+
+            <div class="rule">
+                <div class="rule-num">2</div>
+                <div class="rule-body">
+                    <div class="rule-title">横並びのノウハウ記事同士もリンクでつなぐ</div>
+                    <div class="rule-desc">以下の場合、記事間でリンクを設置する。</div>
+                    <ul class="sub-list" style="margin-top:8px;">
+                        <li>カニバリしそうな記事同士</li>
+                        <li>「このH2は記事に必要だが、詳細は別記事がすでに扱っている」という場合</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="rule">
+                <div class="rule-num">3</div>
+                <div class="rule-body">
+                    <div class="rule-title">新規公開時は双方向リンクを徹底する</div>
+                    <ul class="sub-list" style="margin-top:6px;">
+                        <li>既存記事 → 新規記事へのリンクを入れる</li>
+                        <li>新規記事 → 既存記事へのリンクも入れる</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
