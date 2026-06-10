@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PU改修：ピル吐き気記事 設計書 2026-06-10</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f5f5f7; color: #1d1d1f; font-size: 14px; line-height: 1.7; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
+  h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #333; }
+  .card { background: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #4a4a6a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:hover td { background: #fafafa; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-green  { background: #e6f4ea; color: #1e8e3e; }
+  .badge-red    { background: #fce8e6; color: #c5221f; }
+  .badge-gray   { background: #f0f0f0; color: #666; }
+  .badge-blue   { background: #e8f0fe; color: #1967d2; }
+  .highlight { background: #fffde7; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .alert    { background: #fce8e6; border-left: 3px solid #ea4335; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .ok       { background: #e6f4ea; border-left: 3px solid #34a853; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .copy-box { background: #4a4a6a; color: #fff; border-radius: 8px; padding: 14px 18px; margin: 8px 0; font-size: 15px; font-weight: 700; letter-spacing: .02em; }
+  .copy-sub { color: #bbb; font-size: 12px; margin-top: 4px; font-weight: 400; }
+  .copy-old { background: #f0f0f0; color: #888; border-radius: 8px; padding: 14px 18px; margin: 8px 0; font-size: 14px; text-decoration: line-through; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 26px; font-weight: 700; color: #4a4a6a; }
+  .stat-label { font-size: 11px; color: #888; }
+  .arrow { color: #aaa; margin: 0 8px; font-size: 18px; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  .pu-mockup { border: 2px solid #f0c0cc; border-radius: 12px; padding: 20px; background: #fff8f9; max-width: 320px; margin: 16px auto; text-align: center; }
+  .pu-header { background: #f0c0cc; color: #fff; border-radius: 8px; padding: 6px 12px; font-size: 12px; margin-bottom: 8px; }
+  .pu-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #333; }
+  .pu-body { font-size: 14px; color: #444; line-height: 1.6; margin-bottom: 12px; }
+  .pu-body .highlight-word { background: #ffd6e0; border-radius: 3px; padding: 1px 4px; font-weight: 700; }
+  .pu-btn { background: #4dc33f; color: #fff; border-radius: 8px; padding: 10px 24px; font-size: 16px; font-weight: 700; display: inline-block; margin: 4px; }
+  .pu-btn-no { background: #ddd; color: #888; border-radius: 8px; padding: 10px 24px; font-size: 16px; font-weight: 700; display: inline-block; margin: 4px; }
+  .pu-badge { font-size: 11px; color: #4dc33f; font-weight: 700; margin-bottom: 4px; }
+  .section-note { font-size: 12px; color: #888; margin-top: 6px; }
+  .phase-box { border: 1px solid #dee2e6; border-radius: 8px; padding: 16px; margin: 8px 0; background: #f8f9fa; }
+  .phase-label { font-size: 11px; font-weight: 700; color: #4a4a6a; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>PU改修：ピル吐き気記事 設計書</h1>
+  <div class="meta">2026-06-10 作成 ｜ 担当: Noa ｜ ステータス: 設計確定・実装待ち ｜ タスク: t110</div>
+
+  <!-- サマリー -->
+  <h2>サマリー</h2>
+  <div class="card">
+    <div class="grid2">
+      <div class="stat">
+        <div class="stat-num">939</div>
+        <div class="stat-label">6月 PU imp（改修前）</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color:#c5221f;">0人</div>
+        <div class="stat-label">6月 友達追加（改修前）</div>
+      </div>
+    </div>
+    <div class="alert" style="margin-top:16px;">
+      imp=939あるのに友達ゼロ。「ぴったりの種類を知りたい」という汎用訴求が吐き気悩みユーザーに刺さっていない。
+    </div>
+    <div class="ok">
+      訴求軸を<strong>体質ミスマッチ</strong>に変更。ユーザーの潜在不安「今のピル合ってないのかも」を言語化して自分事化を促す。
+    </div>
+  </div>
+
+  <!-- ユーザーダイブ -->
+  <h2>ユーザーダイブ</h2>
+  <div class="card">
+    <h3>記事に来るユーザーの状態</h3>
+    <p>「ピルの吐き気 対策」「ピルの吐き気 いつまで」などで検索。ピルを既に飲んでいて、今まさに吐き気で悩んでいる層がほぼ全員。</p>
+    <div class="highlight" style="margin-top:12px;">
+      <strong>ユーザーの本音：</strong>「吐き気がつらい。なんで自分だけこんなに出るんだろう。もしかして今のピル、自分に合ってない？」
+    </div>
+
+    <h3>記事を読んで得る気づき</h3>
+    <ul>
+      <li>ピルはホルモンの種類・量が異なる複数種類がある</li>
+      <li>体質によって合う合わないが医学的に存在する</li>
+      <li>吐き気はエストロゲン量との相性が主因 → 種類を変えると改善することがある</li>
+    </ul>
+
+    <h3>記事を読み終えた後の自然な疑問</h3>
+    <div class="phase-box">
+      <div class="phase-label">ユーザーの心理フロー</div>
+      吐き気がつらい → 記事を読む → 「種類によって違うんだ」を理解 →
+      <strong>「じゃあ自分に合う種類ってどれ？ / 今のピル合ってないのかも」</strong>
+    </div>
+
+    <h3>なぜ現行PUが機能しないか</h3>
+    <div class="alert">
+      「自分にぴったりのピルの種類を知りたい！」は種類選びの初期フェーズ向け。吐き気という具体的な悩みへの言及がゼロで自分事化できない。潜在層はまず「これ私のことだ」と感じないとクリックしない。
+    </div>
+  </div>
+
+  <!-- 訴求軸の変更 -->
+  <h2>訴求軸の変更</h2>
+  <div class="card">
+    <table>
+      <tr>
+        <th>軸</th>
+        <th>文言例</th>
+        <th>評価</th>
+      </tr>
+      <tr>
+        <td>汎用選択軸（現行）</td>
+        <td>自分にぴったりのピルの種類を知りたい！</td>
+        <td><span class="badge badge-red">✗ 吐き気との接続なし</span></td>
+      </tr>
+      <tr>
+        <td>症状解決軸</td>
+        <td>その吐き気、ピルの種類を変えると改善するかも</td>
+        <td><span class="badge badge-gray">△ 記事内容と繋がるが自分事化が弱い</span></td>
+      </tr>
+      <tr>
+        <td><strong>体質ミスマッチ軸（採用）</strong></td>
+        <td><strong>そのピル、体質に合ってないのかも</strong></td>
+        <td><span class="badge badge-green">◎ 潜在不安を直接言語化</span></td>
+      </tr>
+    </table>
+    <div class="highlight" style="margin-top:12px;">
+      <strong>「その」が機能する理由：</strong>記事を読んでいるので「そのピル＝今自分が飲んでいるピル」とユーザーが自動的に解釈する。コンテキストが担保されているため短い文言で強い自分事化が実現できる。
+    </div>
+  </div>
+
+  <!-- PU確定設計 -->
+  <h2>PU確定設計</h2>
+  <div class="card">
+    <div class="grid2">
+      <div>
+        <h3>改修前</h3>
+        <div class="pu-mockup">
+          <div class="pu-header">あなたにぴったりの</div>
+          <div class="pu-title">ピルの選び方 診断</div>
+          <div class="pu-body">自分にぴったりの<br><span style="background:#ffd6e0;border-radius:3px;padding:1px 4px;font-weight:700;">ピルの種類</span>を知りたい！</div>
+          <div class="pu-badge">LINEで簡単15秒</div>
+          <div>
+            <span class="pu-btn">はい</span>
+            <span class="pu-btn-no">いいえ</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3>改修後（確定）</h3>
+        <div class="pu-mockup">
+          <div class="pu-header">あなたにぴったりの</div>
+          <div class="pu-title">ピルの選び方 診断</div>
+          <div class="pu-body">
+            そのピル、<span class="highlight-word">体質</span>に合ってないのかも<br>
+            <span style="font-weight:700;"><span class="highlight-word">自分に合うピル</span>が知りたい！</span>
+          </div>
+          <div class="pu-badge">LINEで30秒</div>
+          <div>
+            <span class="pu-btn">はい</span>
+            <span class="pu-btn-no">いいえ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>変更箇所</h3>
+    <table style="margin-top:8px;">
+      <tr><th>要素</th><th>変更前</th><th>変更後</th></tr>
+      <tr>
+        <td>ヘッダー</td>
+        <td>あなたにぴったりの</td>
+        <td><span class="badge badge-gray">維持</span></td>
+      </tr>
+      <tr>
+        <td>タイトル</td>
+        <td>ピルの選び方 診断</td>
+        <td><span class="badge badge-gray">維持</span></td>
+      </tr>
+      <tr>
+        <td>本文①</td>
+        <td>自分にぴったりのピルの種類を知りたい！</td>
+        <td><strong>そのピル、体質に合ってないのかも</strong></td>
+      </tr>
+      <tr>
+        <td>本文②</td>
+        <td>（なし）</td>
+        <td><strong>自分に合うピルが知りたい！</strong></td>
+      </tr>
+      <tr>
+        <td>ボタン</td>
+        <td>LINEで簡単15秒</td>
+        <td><strong>LINEで30秒</strong></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 設計思想 -->
+  <h2>設計思想</h2>
+  <div class="card">
+    <h3>2段構成の狙い</h3>
+    <div class="phase-box">
+      <div class="phase-label">本文① 気づき</div>
+      「そのピル、体質に合ってないのかも」<br>
+      → ユーザーが薄々感じていた不安を言語化。「これ私のことだ」と自分事化させる
+    </div>
+    <div class="phase-box">
+      <div class="phase-label">本文② 解決意欲</div>
+      「自分に合うピルが知りたい！」<br>
+      → 気づきを行動意欲に転換。「そうそう、知りたい」とユーザーの代弁をする
+    </div>
+    <div class="ok" style="margin-top:12px;">
+      <strong>潜在層攻略の原則：</strong>情報収集フェーズのユーザーは「行動したい」ではなく「理解したい」段階。まず自分事化 → 次に解決意欲の順番で設計しないとクリックが起きない。
+    </div>
+  </div>
+
+  <!-- 判定基準 -->
+  <h2>判定基準</h2>
+  <div class="card">
+    <table>
+      <tr><th>指標</th><th>現状</th><th>目標</th><th>判定タイミング</th></tr>
+      <tr>
+        <td>CTR</td>
+        <td><span class="badge badge-red">〜5%</span></td>
+        <td>13%以上</td>
+        <td rowspan="3">設置後7日</td>
+      </tr>
+      <tr>
+        <td>追加率</td>
+        <td><span class="badge badge-red">0%</span></td>
+        <td>11%以上</td>
+      </tr>
+      <tr>
+        <td>PVFR</td>
+        <td><span class="badge badge-red">0%</span></td>
+        <td>0.80%以上</td>
+      </tr>
+    </table>
+    <p class="section-note" style="margin-top:8px;">7日後に改善なければ本文訴求軸を再検討。次候補は「症状解決軸」または診断刷新。</p>
+  </div>
+
+</div>
+</body>
+</html>
