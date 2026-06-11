@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コスメ診断 設計前提 — 案件 × ジャンル整理 2026-06-11</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f5f5f7; color: #1d1d1f; font-size: 14px; line-height: 1.7; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
+  h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #444; }
+  .card { background: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #4a4a6a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:hover td { background: #fafafa; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin: 2px; }
+  .tag-cleansing { background: #e8f0fe; color: #1967d2; }
+  .tag-skincare  { background: #fce8e6; color: #c5221f; }
+  .tag-lotion    { background: #e6f4ea; color: #1e8e3e; }
+  .tag-serum     { background: #f3e8fd; color: #8430ce; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-green  { background: #e6f4ea; color: #1e8e3e; }
+  .badge-yellow { background: #fff8e1; color: #e37400; }
+  .badge-red    { background: #fce8e6; color: #c5221f; }
+  .badge-gray   { background: #f0f0f0; color: #666; }
+  .highlight { background: #fffde7; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; }
+  .section-note { font-size: 12px; color: #888; margin-top: 6px; }
+  .stat-box { text-align: center; padding: 16px; }
+  .stat-num { font-size: 28px; font-weight: 700; color: #4a4a6a; }
+  .stat-label { font-size: 11px; color: #888; margin-top: 2px; }
+  .order-badge { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; font-size: 12px; font-weight: 700; background: #4a4a6a; color: #fff; margin-right: 8px; }
+  .genre-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .genre-cl { font-size: 22px; font-weight: 700; color: #4a4a6a; }
+  .genre-cl-label { font-size: 11px; color: #888; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>コスメ診断 設計前提 — 案件 × ジャンル整理</h1>
+  <div class="meta">2026-06-11 ｜ 担当: Noa ｜ 用途: クレンジング診断・スキンケア診断の設計根拠</div>
+
+  <!-- 全体サマリー -->
+  <h2>ジャンル別インパクト × 診断設計の優先順位</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>優先順</th><th>ジャンル</th><th class="num">月間CL（推計）</th><th class="num">記事数</th><th class="num">割合</th><th>提携済案件数</th><th>診断ステータス</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="order-badge">1</span></td>
+          <td><span class="tag tag-cleansing">クレンジング</span></td>
+          <td class="num"><strong>10,386</strong></td>
+          <td class="num">54件</td>
+          <td class="num">53.4%</td>
+          <td>4案件</td>
+          <td><span class="badge badge-yellow">設計中</span></td>
+        </tr>
+        <tr>
+          <td><span class="order-badge">2</span></td>
+          <td><span class="tag tag-skincare">スキンケア</span></td>
+          <td class="num">4,997</td>
+          <td class="num">23件</td>
+          <td class="num">25.7%</td>
+          <td>4案件</td>
+          <td><span class="badge badge-gray">次の着手</span></td>
+        </tr>
+        <tr>
+          <td><span class="order-badge">3</span></td>
+          <td><span class="tag tag-lotion">化粧水</span></td>
+          <td class="num">3,589</td>
+          <td class="num">26件</td>
+          <td class="num">18.4%</td>
+          <td>6案件</td>
+          <td><span class="badge badge-gray">後続</span></td>
+        </tr>
+        <tr>
+          <td>—</td>
+          <td><span class="tag tag-serum">美容液ほか</span></td>
+          <td class="num">488</td>
+          <td class="num">8件</td>
+          <td class="num">2.5%</td>
+          <td>1案件</td>
+          <td><span class="badge badge-gray">後続</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="highlight" style="margin-top:14px;">
+      <strong>診断設計方針：A案（タイプ → 1商材推薦）で先行ローンチ</strong><br>
+      クレンジング診断を先行。完成次第すぐスキンケア診断へ着手。CVRが低ければランキング型（C案）に改善。
+    </div>
+  </div>
+
+  <!-- クレンジング -->
+  <h2>① クレンジング診断（先行着手）</h2>
+  <div class="card">
+    <div class="genre-header">
+      <div>
+        <div class="genre-cl">10,386 <span style="font-size:14px; font-weight:400;">CL/月</span></div>
+        <div class="genre-cl-label">54記事 ｜ 全体の53%</div>
+      </div>
+    </div>
+
+    <h3>提携済案件（即使用可）</h3>
+    <table>
+      <thead><tr><th>案件名</th><th class="num">単価（税抜）</th><th>商品特性（→ 向く肌タイプ）</th></tr></thead>
+      <tbody>
+        <tr><td><strong>マナラ ホットクレンジングゲル</strong></td><td class="num">¥6,000</td><td>温感・保湿・敏感肌向け → <strong>乾燥肌・敏感肌</strong></td></tr>
+        <tr><td><strong>オルビスオフクリーム</strong></td><td class="num">¥5,000</td><td>さっぱり・毛穴ケア → <strong>脂性肌・混合肌</strong></td></tr>
+        <tr><td><strong>アテニア スキンクリア クレンズ オイル</strong></td><td class="num">¥4,500</td><td>オイルクレンジング・エイジング対応 → <strong>40〜50代・エイジング肌</strong></td></tr>
+        <tr><td><strong>アクセーヌ</strong></td><td class="num">7.5%</td><td>低刺激・ノンコメドジェニック → <strong>ニキビ肌・敏感肌</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:20px;">進行予定案件（単価未確定）</h3>
+    <table>
+      <thead><tr><th>案件名</th><th>ステータス</th><th>備考</th></tr></thead>
+      <tbody>
+        <tr><td>オルビスクレンジング</td><td><span class="badge badge-yellow">進行予定</span></td><td>felmat経由</td></tr>
+        <tr><td>ファンケル マイクレ</td><td><span class="badge badge-gray">未確定</span></td><td>単価・ASP未定</td></tr>
+        <tr><td>DUO</td><td><span class="badge badge-gray">未確定</span></td><td>ASP調整中</td></tr>
+        <tr><td>カバーマーク</td><td><span class="badge badge-gray">未確定</span></td><td>A8</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:20px;">診断タイプ × 商材マッピング（案）</h3>
+    <table>
+      <thead><tr><th>診断タイプ</th><th>根拠KW・CL</th><th>CV先（提携済）</th></tr></thead>
+      <tbody>
+        <tr><td><strong>脂性肌・テカリ</strong></td><td>脂性肌 おすすめスキンケア 3,021CL</td><td>オルビスオフクリーム</td></tr>
+        <tr><td><strong>乾燥肌・敏感肌</strong></td><td>乾燥肌クレンジング 708CL</td><td>マナラ ホットクレンジングゲル</td></tr>
+        <tr><td><strong>ニキビ肌・毛穴</strong></td><td>ニキビ肌 1,082CL / 毛穴 405CL</td><td>アクセーヌ</td></tr>
+        <tr><td><strong>エイジング（40〜50代）</strong></td><td>50代/40代 合計 1,438CL</td><td>アテニア スキンクリア クレンズ オイル</td></tr>
+      </tbody>
+    </table>
+    <p class="section-note">※ 混合肌はタイプ分類上いずれかに寄せる（脂性 or 乾燥の悩み優先軸で判断）</p>
+  </div>
+
+  <!-- スキンケア -->
+  <h2>② スキンケア診断（次の着手）</h2>
+  <div class="card">
+    <div class="genre-header">
+      <div>
+        <div class="genre-cl">4,997 <span style="font-size:14px; font-weight:400;">CL/月</span></div>
+        <div class="genre-cl-label">23記事 ｜ 全体の26%</div>
+      </div>
+    </div>
+
+    <h3>提携済案件（即使用可）</h3>
+    <table>
+      <thead><tr><th>案件名</th><th class="num">単価（税抜）</th><th>商品特性（→ 向く肌タイプ）</th></tr></thead>
+      <tbody>
+        <tr><td><strong>オルビス クリアフル</strong></td><td class="num">¥6,500</td><td>皮脂ケア・毛穴・オイリー → <strong>脂性肌</strong></td></tr>
+        <tr><td><strong>ビーグレン</strong></td><td class="num">¥3,000</td><td>成分処方・浸透重視 → <strong>混合肌・インナードライ</strong></td></tr>
+        <tr><td><strong>ファンケル アクネケア</strong></td><td class="num">¥7,692</td><td>ニキビ・肌荒れ専門ライン → <strong>ニキビ肌・敏感肌</strong></td></tr>
+        <tr><td><strong>VCスターターセット</strong></td><td class="num">¥5,000</td><td>ビタミンC・美白・毛穴 → <strong>シミ・くすみ・毛穴</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:20px;">進行予定案件</h3>
+    <table>
+      <thead><tr><th>案件名</th><th>ステータス</th><th>備考</th></tr></thead>
+      <tbody>
+        <tr><td>Nオーガニック</td><td><span class="badge badge-yellow">進行予定</span></td><td>0円オファー上限あり（2025/8月まで）</td></tr>
+        <tr><td>ドクターシーラボ</td><td><span class="badge badge-yellow">進行予定</span></td><td>記事チェック待ち・単価付与遅延</td></tr>
+        <tr><td>米肌</td><td><span class="badge badge-yellow">進行予定</span></td><td>訴求OK：毛穴・30代・40代・セラミドのみ</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:20px;">診断タイプ × 商材マッピング（案）</h3>
+    <table>
+      <thead><tr><th>診断タイプ</th><th>根拠KW・CL</th><th>CV先（提携済）</th></tr></thead>
+      <tbody>
+        <tr><td><strong>脂性肌・皮脂・毛穴</strong></td><td>脂性肌スキンケア 3,021CL</td><td>オルビス クリアフル</td></tr>
+        <tr><td><strong>インナードライ・混合肌</strong></td><td>インナードライ 1,138CL</td><td>ビーグレン</td></tr>
+        <tr><td><strong>ニキビ肌・肌荒れ</strong></td><td>ニキビ系（クレンジング含む）1,082CL</td><td>ファンケル アクネケア</td></tr>
+        <tr><td><strong>シミ・くすみ・美白</strong></td><td>美白・成分系クエリ</td><td>VCスターターセット</td></tr>
+      </tbody>
+    </table>
+    <p class="section-note">※ エイジング（40〜50代）は化粧水案件（アテニアドレスリフト等）との統合も検討余地あり</p>
+  </div>
+
+  <!-- 化粧水 -->
+  <h2>③ 化粧水（後続・参考）</h2>
+  <div class="card">
+    <div class="genre-header">
+      <div>
+        <div class="genre-cl">3,589 <span style="font-size:14px; font-weight:400;">CL/月</span></div>
+        <div class="genre-cl-label">26記事 ｜ 全体の18%</div>
+      </div>
+    </div>
+
+    <h3>提携済案件</h3>
+    <table>
+      <thead><tr><th>案件名</th><th class="num">単価（税抜）</th><th>商品特性</th><th>備考</th></tr></thead>
+      <tbody>
+        <tr><td>オルビスユー</td><td class="num">¥3,075</td><td>保湿・オールラウンド</td><td>通常報酬</td></tr>
+        <tr><td>ディセンシア</td><td class="num">¥4,010</td><td>敏感肌・低刺激</td><td></td></tr>
+        <tr><td>アテニア ドレスリフト</td><td class="num">¥5,000</td><td>エイジング・ハリ</td><td></td></tr>
+        <tr><td>アテニア ドレスノー</td><td class="num">¥4,500</td><td>美白・透明感</td><td></td></tr>
+        <tr><td>エトヴォス</td><td class="num">¥1,170</td><td>敏感肌・ミネラル</td><td>通常報酬・単価低め</td></tr>
+        <tr><td>ナールスピュア</td><td class="num">¥2,306</td><td>エイジング・成分特化</td><td>通常報酬</td></tr>
+      </tbody>
+    </table>
+    <p class="section-note">※ 化粧水はスキンケア診断に統合する形も検討余地あり（別診断にするかは②の反応後に判断）</p>
+  </div>
+
+  <!-- 設計方針まとめ -->
+  <h2>診断設計 全体方針まとめ</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>項目</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td><strong>診断形式</strong></td><td>A案：タイプ診断 → 1商材推薦（シンプル・CV最優先）</td></tr>
+        <tr><td><strong>改善フラグ</strong></td><td>CVRが低ければC案（ランキングTOP3）に切り替え</td></tr>
+        <tr><td><strong>デザイン</strong></td><td>AIデザイン生成ツール（Ren開発中）を使用 → カード枚数はコスト不問</td></tr>
+        <tr><td><strong>診断順番</strong></td><td>① クレンジング → ② スキンケア → ③ 化粧水（インパクト順）</td></tr>
+        <tr><td><strong>PU設置先</strong></td><td>各ジャンル記事（クレンジング54件・スキンケア23件・化粧水26件）に順次設置</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:40px; font-size:11px; color:#bbb; text-align:center;">
+    generated: 2026-06-11 ｜ noa-docs
+  </div>
+
+</div>
+</body>
+</html>
