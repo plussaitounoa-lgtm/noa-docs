@@ -253,7 +253,7 @@
       <div class="result-type">ゲルタイプ</div>
       <div class="result-product">▶ マナラ ホットクレンジングゲル</div>
       <div class="result-features">
-        単価: ¥6,000<br>
+        CV単価（アフィリ報酬）: ¥6,000<br>
         特徴: 温感・乾燥ケア・エイジング<br>
         向き: 乾燥肌・しっとり好き
       </div>
@@ -262,7 +262,7 @@
       <div class="result-type">クリームタイプ</div>
       <div class="result-product">▶ オルビス オフクリーム</div>
       <div class="result-features">
-        単価: ¥5,000<br>
+        CV単価（アフィリ報酬）: ¥5,000<br>
         特徴: W洗顔不要・さっぱり<br>
         向き: 脂性〜普通肌・さっぱり好き
       </div>
@@ -271,7 +271,7 @@
       <div class="result-type">オイルタイプ</div>
       <div class="result-product">▶ アテニア スキンクリア</div>
       <div class="result-features">
-        単価: ¥4,500<br>
+        CV単価（アフィリ報酬）: ¥4,500<br>
         特徴: 高洗浄力・毛穴ケア・エイジング<br>
         向き: 濃いめメイク・毛穴・くすみ
       </div>
@@ -280,7 +280,7 @@
       <div class="result-type">ミルクタイプ</div>
       <div class="result-product">▶ アクセーヌ</div>
       <div class="result-features">
-        単価: 7.5%報酬<br>
+        CV単価（アフィリ報酬）: 7.5%<br>
         特徴: 低刺激・肌負担少<br>
         向き: 敏感肌・ニキビ肌
       </div>
@@ -350,29 +350,31 @@
   </div>
 
   <!-- 振り分けロジック -->
-  <h2>振り分けロジック <span class="badge badge-yellow">設計中</span></h2>
+  <h2>振り分けロジック <span class="badge badge-red">実装方式 検討中</span></h2>
   <div class="card">
-    <p style="font-size:13px;color:#555;margin-bottom:12px;">5問×全組み合わせのロジック表は次フェーズで作成。現時点の方向性：</p>
-    <div class="logic-row">
-      <div class="logic-cond">Q3 = ニキビ・敏感肌 <strong>または</strong> Q5 = 肌への優しさ</div>
-      <div class="logic-arrow">→</div>
-      <div class="logic-result">ミルクタイプ（アクセーヌ）</div>
+    <div class="highlight">
+      <strong>制約：LINE BOTはスコア加算型ロジックが使えない。</strong><br>
+      実装は「この答え → 次のメッセージ/結果」の分岐ツリー（決定木）のみ。複数問の回答を集計して判定する方式は不可。
     </div>
-    <div class="logic-row">
-      <div class="logic-cond">Q1 = 50代以上 <strong>または</strong> Q3 = 乾燥・ハリのなさ ＋ Q4 = しっとり</div>
-      <div class="logic-arrow">→</div>
-      <div class="logic-result">ゲルタイプ（マナラ）</div>
-    </div>
-    <div class="logic-row">
-      <div class="logic-cond">Q3 = 毛穴・くすみ <strong>または</strong> Q2 = 濃いめ ＋ Q5 = しっかり落とす</div>
-      <div class="logic-arrow">→</div>
-      <div class="logic-result">オイルタイプ（アテニア）</div>
-    </div>
-    <div class="logic-row">
-      <div class="logic-cond">Q3 = ベタつき・テカリ <strong>または</strong> Q4 = さっぱり</div>
-      <div class="logic-arrow">→</div>
-      <div class="logic-result">クリームタイプ（オルビスオフ）</div>
-    </div>
+    <p style="font-size:13px;color:#555;margin:12px 0 8px;">検討中の構成案：</p>
+    <table>
+      <thead><tr><th>案</th><th>構造</th><th>メリット</th><th>デメリット</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>A</strong></td>
+          <td>Q1〜Q4は全員共通 → Q5の4択が4商材に1対1対応</td>
+          <td>実装シンプル</td>
+          <td>Q1〜Q4が結果に反映されない。Q5だけで決まる</td>
+        </tr>
+        <tr>
+          <td><strong>B</strong></td>
+          <td>Q1から分岐する決定木。各パスの最後の問いが結果を決定</td>
+          <td>各答えが結果に意味を持つ</td>
+          <td>実装重い。ユーザーによって問数・質問が変わる</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#888;margin-top:10px;">→ どちらの構造で組むかを確定してからロジック表を作成する。</p>
   </div>
 
   <!-- 次のステップ -->
