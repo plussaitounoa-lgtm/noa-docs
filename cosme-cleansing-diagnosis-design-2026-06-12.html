@@ -219,10 +219,29 @@
     <table>
       <thead><tr><th>項目</th><th>方針</th><th>根拠</th></tr></thead>
       <tbody>
-        <tr><td><strong>問数</strong></td><td>4問（最大5問）</td><td>DHCの4問が最短・離脱少。LINE会話体験として5問が上限</td></tr>
-        <tr><td><strong>形式</strong></td><td>多択（2〜3択）</td><td>LINEのクイックリプライボタン。Yes/Noより自然な会話形式</td></tr>
+        <tr><td><strong>問数</strong></td><td><strong>5問</strong></td><td>年代→メイク→肌悩み→仕上がり好み→重視点の5軸。4商材を精度よく振り分けるために必要</td></tr>
+        <tr><td><strong>形式</strong></td><td>縦ボタン多択（2〜4択）</td><td>LINE実装は縦ボタン形式。4択まで問題なし</td></tr>
         <tr><td><strong>結果タイプ</strong></td><td>4タイプ</td><td>提携商材が4種。タイプ1:1で商材に紐づける</td></tr>
         <tr><td><strong>結果の表示</strong></td><td>タイプ名 → 教育 → 商材推薦</td><td>ルートA。「なぜこの商材か」の説得ロジックを自然に組める</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 設置予定記事 -->
+  <h2>PU設置予定記事（9記事・未設置検知スプシより）</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>記事ID</th><th>KW軸</th><th>CL</th><th>読者インサイト</th></tr></thead>
+      <tbody>
+        <tr><td>cleansing-shihan</td><td>市販・ドラッグストア</td><td class="num">4,855</td><td>プチプラ・手軽さ重視</td></tr>
+        <tr><td>cleansing-acne</td><td>ニキビ肌</td><td class="num">3,247</td><td>問題肌・低刺激重視 → アクセーヌ親和性高</td></tr>
+        <tr><td>cleansing-fifties</td><td>50代</td><td class="num">3,027</td><td>エイジング・乾燥・ハリ → マナラ親和性高</td></tr>
+        <tr><td>cleansing-nuretate</td><td>濡れた手OK</td><td class="num">2,816</td><td>利便性・時短・お風呂派</td></tr>
+        <tr><td>cleansing-matsueku</td><td>マツエク対応</td><td class="num">2,243</td><td>低刺激・優しさ優先 → アクセーヌ親和性高</td></tr>
+        <tr><td>cleansing-milk</td><td>ミルクタイプ</td><td class="num">1,384</td><td>タイプ知識あり・しっとり好み</td></tr>
+        <tr><td>cleansing-forties</td><td>40代</td><td class="num">1,287</td><td>エイジング初期・毛穴・くすみ → アテニア親和性高</td></tr>
+        <tr><td>cleansing-nomakeup</td><td>ノーメイクの日</td><td class="num">1,217</td><td>習慣・知識型（どうすべき？）</td></tr>
+        <tr><td>cleansing-keana</td><td>毛穴</td><td class="num">1,216</td><td>毛穴詰まり・洗浄力重視 → アテニア親和性高</td></tr>
       </tbody>
     </table>
   </div>
@@ -268,89 +287,105 @@
     </div>
   </div>
 
-  <!-- LINE診断フロー案 -->
-  <h2>LINE診断フロー案（現時点）</h2>
-  <div class="note">競合リサーチ完了・フロー骨格確定。詳細の質問文・振り分けロジックは次フェーズで詰める。</div>
+  <!-- LINE診断フロー確定版 -->
+  <h2>LINE診断フロー <span class="badge badge-green">確定 2026-06-12</span></h2>
 
   <div style="margin-top:16px;">
     <div class="q-block">
-      <div class="q-num">Q1 ｜ 洗浄力ニーズ</div>
+      <div class="q-num">Q1 ｜ 基本情報</div>
+      <div class="q-text">年齢を教えてください</div>
+      <div class="choices">
+        <div class="choice">10〜20代</div>
+        <div class="choice">30代</div>
+        <div class="choice">40代</div>
+        <div class="choice">50代以上</div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-top:8px;">年代で商材の方向性を大枠で分岐。50代以上はマナラ、40代はアテニア寄り、10〜20代はアクセーヌ・オルビスオフ寄り。</p>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Q2 ｜ メイク習慣</div>
       <div class="q-text">普段のメイクは？</div>
       <div class="choices">
         <div class="choice">しっかり・濃いめ</div>
         <div class="choice">ナチュラル・薄め</div>
       </div>
-      <p style="font-size:12px;color:#888;margin-top:8px;">DHC・ma-kkoで共通。最初に洗浄力ニーズを把握。</p>
+      <p style="font-size:12px;color:#888;margin-top:8px;">クレンジング＝メイクを落とす文脈として自然な2問目。洗浄力ニーズを把握。濃いめ→アテニア（オイル）の高洗浄力に強く傾く。</p>
     </div>
 
     <div class="q-block">
-      <div class="q-num">Q2 ｜ 肌タイプ判定</div>
-      <div class="q-text">肌状態は？</div>
+      <div class="q-num">Q3 ｜ 肌悩み・状態</div>
+      <div class="q-text">今一番気になる肌悩みは？</div>
       <div class="choices">
-        <div class="choice">ベタつきが気になる</div>
-        <div class="choice">カサつきが気になる</div>
-        <div class="choice key">敏感で赤くなりやすい ← Carena追加軸</div>
+        <div class="choice">ニキビ・敏感肌</div>
+        <div class="choice">乾燥・ハリのなさ</div>
+        <div class="choice">毛穴・くすみ</div>
+        <div class="choice">ベタつき・テカリ</div>
       </div>
-      <p style="font-size:12px;color:#888;margin-top:8px;">DHCの2択をベースに「敏感肌」を追加。これでアクセーヌへの誘導フラグを立てる。</p>
+      <p style="font-size:12px;color:#888;margin-top:8px;">設置予定9記事の読者インサイトに直結。ニキビ→アクセーヌ、乾燥・ハリ→マナラ、毛穴・くすみ→アテニア、ベタつき→オルビスオフに強く傾く。</p>
     </div>
 
     <div class="q-block">
-      <div class="q-num">Q3 ｜ 仕上がり好み</div>
-      <div class="q-text">洗い上がりの好みは？</div>
+      <div class="q-num">Q4 ｜ 仕上がり好み</div>
+      <div class="q-text">クレンジング後の仕上がりの好みは？</div>
       <div class="choices">
         <div class="choice">さっぱり</div>
         <div class="choice">しっとり</div>
+        <div class="choice">うるっとなめらか</div>
       </div>
-      <p style="font-size:12px;color:#888;margin-top:8px;">4競合中3社で共通。ゲル（マナラ）とオイル（アテニア）の分岐に使う。</p>
+      <p style="font-size:12px;color:#888;margin-top:8px;">競合4社中3社で共通の軸。マナラ（しっとり）とオルビスオフ（さっぱり）の最終分岐に使う。</p>
     </div>
 
     <div class="q-block">
-      <div class="q-num">Q4 ｜ 重視軸</div>
-      <div class="q-text">クレンジングで重視するのは？</div>
+      <div class="q-num">Q5 ｜ 重視点</div>
+      <div class="q-text">クレンジング選びで重視することは？</div>
       <div class="choices">
-        <div class="choice">毛穴汚れをしっかり落とす</div>
+        <div class="choice">汚れをしっかり落とす</div>
+        <div class="choice">肌への優しさ・低刺激</div>
         <div class="choice">うるおいを残す</div>
+        <div class="choice">毛穴ケア</div>
       </div>
-      <p style="font-size:12px;color:#888;margin-top:8px;">DHC・ma-kkoで共通。アテニア（毛穴）とマナラ（うるおい）の最終分岐。</p>
+      <p style="font-size:12px;color:#888;margin-top:8px;">Q3と組み合わせてエッジケースを解消する最終確認軸。</p>
     </div>
   </div>
 
   <!-- 振り分けロジック -->
-  <h2>振り分けロジック（仮）</h2>
+  <h2>振り分けロジック <span class="badge badge-yellow">設計中</span></h2>
   <div class="card">
+    <p style="font-size:13px;color:#555;margin-bottom:12px;">5問×全組み合わせのロジック表は次フェーズで作成。現時点の方向性：</p>
     <div class="logic-row">
-      <div class="logic-cond">Q2 = 敏感で赤くなりやすい</div>
+      <div class="logic-cond">Q3 = ニキビ・敏感肌 <strong>または</strong> Q5 = 肌への優しさ</div>
       <div class="logic-arrow">→</div>
-      <div class="logic-result">ミルクタイプ（アクセーヌ）確定</div>
+      <div class="logic-result">ミルクタイプ（アクセーヌ）</div>
     </div>
     <div class="logic-row">
-      <div class="logic-cond">Q1 = 濃いめ ＋ Q4 = 毛穴</div>
-      <div class="logic-arrow">→</div>
-      <div class="logic-result">オイルタイプ（アテニア）</div>
-    </div>
-    <div class="logic-row">
-      <div class="logic-cond">Q2 = カサつき ＋ Q3 = しっとり</div>
+      <div class="logic-cond">Q1 = 50代以上 <strong>または</strong> Q3 = 乾燥・ハリのなさ ＋ Q4 = しっとり</div>
       <div class="logic-arrow">→</div>
       <div class="logic-result">ゲルタイプ（マナラ）</div>
     </div>
     <div class="logic-row">
-      <div class="logic-cond">Q2 = ベタつき ＋ Q3 = さっぱり</div>
+      <div class="logic-cond">Q3 = 毛穴・くすみ <strong>または</strong> Q2 = 濃いめ ＋ Q5 = しっかり落とす</div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-result">オイルタイプ（アテニア）</div>
+    </div>
+    <div class="logic-row">
+      <div class="logic-cond">Q3 = ベタつき・テカリ <strong>または</strong> Q4 = さっぱり</div>
       <div class="logic-arrow">→</div>
       <div class="logic-result">クリームタイプ（オルビスオフ）</div>
     </div>
-    <div class="highlight" style="margin-top:12px;">エッジケース（例: Q2=カサつき＋Q3=さっぱり）の振り分けは次フェーズで詰める。全回答パターンを網羅したロジック表を別途作成予定。</div>
   </div>
 
   <!-- 次のステップ -->
   <h2>次のステップ</h2>
   <div class="card">
     <table>
-      <thead><tr><th>ステップ</th><th>内容</th><th>担当</th></tr></thead>
+      <thead><tr><th>ステップ</th><th>内容</th><th>状態</th></tr></thead>
       <tbody>
-        <tr><td>① フロー確定</td><td>Q1〜Q4の質問文・選択肢の最終決定。エッジケース含む全パターンの振り分けロジック表作成</td><td>Noa + Claude</td></tr>
-        <tr><td>② 結果メッセージ設計</td><td>タイプ教育テキスト × 4パターン。おすすめ商材の紹介文・CV導線テキスト</td><td>Claude → Noa確認</td></tr>
-        <tr><td>③ PU文言設計</td><td>記事設置バナー・PUのキャッチコピー案。インパクト上位6記事を対象に設置</td><td>Claude → Rinon/デザイナー</td></tr>
-        <tr><td>④ LINE実装</td><td>診断フローのLINE BOT実装。クイックリプライ設定</td><td>Ren確認後 → 実装</td></tr>
+        <tr><td>① 5問フロー確定</td><td>Q1〜Q5の質問文・選択肢確定</td><td><span class="badge badge-green">✅ 完了</span></td></tr>
+        <tr><td>② 振り分けロジック表</td><td>全組み合わせパターンの網羅表。エッジケース処理含む</td><td><span class="badge badge-yellow">🔧 次</span></td></tr>
+        <tr><td>③ 結果メッセージ設計</td><td>タイプ教育テキスト × 4パターン。商材紹介文・CV導線</td><td><span class="badge">待機中</span></td></tr>
+        <tr><td>④ PU文言設計</td><td>9記事へのPUキャッチコピー案。デザイナー依頼書作成</td><td><span class="badge">待機中</span></td></tr>
+        <tr><td>⑤ LINE実装</td><td>診断フローのLINE BOT実装</td><td><span class="badge">Ren確認後</span></td></tr>
       </tbody>
     </table>
   </div>
