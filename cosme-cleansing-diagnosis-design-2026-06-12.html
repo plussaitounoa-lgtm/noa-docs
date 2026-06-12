@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>クレンジング選び診断 設計書 2026-06-12</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f5f5f7; color: #1d1d1f; font-size: 14px; line-height: 1.7; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 36px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
+  h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #444; }
+  .card { background: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #4a4a6a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:hover td { background: #fafafa; }
+  .highlight { background: #fffde7; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .note { background: #e8f0fe; border-left: 3px solid #4285f4; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin: 2px; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-green  { background: #e6f4ea; color: #1e8e3e; }
+  .badge-blue   { background: #e8f0fe; color: #1967d2; }
+  .badge-yellow { background: #fff8e1; color: #e37400; }
+  .badge-red    { background: #fce8e6; color: #c5221f; }
+  .check { color: #1e8e3e; font-weight: 700; }
+  .cross { color: #ccc; }
+  .funnel { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+  .funnel-step { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; }
+  .funnel-arrow { color: #aaa; font-size: 18px; }
+  .q-block { background: #fff; border-radius: 10px; padding: 16px 20px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.06); border-left: 4px solid #4a4a6a; }
+  .q-num { font-size: 11px; font-weight: 700; color: #888; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .q-text { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .choices { display: flex; gap: 8px; flex-wrap: wrap; }
+  .choice { background: #f5f5f7; border-radius: 6px; padding: 6px 14px; font-size: 13px; }
+  .choice.key { background: #e8f0fe; color: #1967d2; font-weight: 600; }
+  .result-card { background: #fff; border-radius: 10px; padding: 16px 20px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .result-type { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .result-product { font-size: 13px; color: #555; margin-bottom: 8px; }
+  .result-features { font-size: 12px; color: #888; }
+  .competitor-card { background: #fff; border-radius: 10px; padding: 16px 20px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .comp-name { font-size: 13px; font-weight: 700; margin-bottom: 8px; color: #333; }
+  .logic-row { display: flex; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+  .logic-row:last-child { border-bottom: none; }
+  .logic-cond { color: #555; flex: 1; }
+  .logic-arrow { color: #aaa; }
+  .logic-result { font-weight: 700; color: #1967d2; }
+  ul { padding-left: 18px; }
+  li { margin-bottom: 4px; }
+  p { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>クレンジング選び診断 設計書</h1>
+  <div class="meta">2026-06-12 ｜ Carena（carenacosmetic.co.jp）× LINE診断 ｜ ステータス: 競合リサーチ完了・フロー設計中</div>
+
+  <!-- ファネル位置づけ -->
+  <h2>ファネル上の位置づけ</h2>
+  <div class="card">
+    <div class="funnel">
+      <div class="funnel-step">Carena クレンジング記事<br><small style="color:#888;font-weight:400">ノウハウ系KWで集客</small></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">PU設置<br><small style="color:#888;font-weight:400">「クレンジング選び診断」</small></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">LINE友達追加</div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step" style="border-color:#4285f4;background:#e8f0fe;color:#1967d2;">LINE内 クレンジング選び診断<br><small style="font-weight:400">←ここの設計</small></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">タイプ判定 + 教育</div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">おすすめ商材 → CV</div>
+    </div>
+    <div class="note" style="margin-top:12px;">診断形式はルートA（タイプ → 商材推薦）。まずタイプを教育してから商材を提案することで「なぜこの商品か」の説得ロジックを自然に組む。</div>
+  </div>
+
+  <!-- 競合リサーチ -->
+  <h2>競合リサーチ（クレンジング診断 上位4サイト）</h2>
+
+  <div class="grid2">
+    <div class="competitor-card">
+      <div class="comp-name">DHC — 1分診断 <span class="badge badge-green">4問2択</span></div>
+      <table>
+        <thead><tr><th>#</th><th>質問</th><th>選択肢</th></tr></thead>
+        <tbody>
+          <tr><td>Q1</td><td>普段のメークは？</td><td>しっかり・濃いめ / ナチュラル・薄め</td></tr>
+          <tr><td>Q2</td><td>あなたの肌状態はどっち？</td><td>ベタつきが気になる / カサつきが気になる</td></tr>
+          <tr><td>Q3</td><td>洗い上がりの好みは？</td><td>すっきり / しっとり</td></tr>
+          <tr><td>Q4</td><td>クレンジング選びで重視するのは？</td><td>うるおいを残す / 毛穴汚れを落とす</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:10px;font-size:12px;color:#555;">結果: タイプ名（温感ジェルタイプ等）→ 自社商品直推薦。結果全4〜5種と推定。</p>
+    </div>
+
+    <div class="competitor-card">
+      <div class="comp-name">ma-kko（参加2.3万人） <span class="badge badge-blue">5問2〜3択</span></div>
+      <table>
+        <thead><tr><th>#</th><th>質問</th><th>選択肢</th></tr></thead>
+        <tbody>
+          <tr><td>Q1</td><td>普段のメイクは濃いめ？</td><td>濃いめ / 薄め</td></tr>
+          <tr><td>Q2</td><td>洗顔後につっぱりを感じる？</td><td>はい / いいえ</td></tr>
+          <tr><td>Q3</td><td>肌の悩みは？</td><td>べたつき / 乾燥 / ざらつき</td></tr>
+          <tr><td>Q4</td><td>クレンジングで重視する点は？</td><td>汚れをしっかり落とす / 肌負担を少なく</td></tr>
+          <tr><td>Q5</td><td>仕上がりの好みは？</td><td>さっぱり / しっとり / うるっとなめらか</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:10px;font-size:12px;color:#555;">結果: タイプ名（オイルタイプ等）→ 複数商品推薦（楽天アフィリ）。結果全5種。</p>
+    </div>
+
+    <div class="competitor-card">
+      <div class="comp-name">RIMEDO（自社EC診断） <span class="badge badge-yellow">6問Yes/No</span></div>
+      <table>
+        <thead><tr><th>#</th><th>質問</th><th>測っていること</th></tr></thead>
+        <tbody>
+          <tr><td>Q1</td><td>WPマスカラを使うことが多い</td><td>メイクの落ちにくさ</td></tr>
+          <tr><td>Q2</td><td>日焼け止め/ファンデはロングラスティング</td><td>洗浄力ニーズ</td></tr>
+          <tr><td>Q3</td><td>リップはグロス・ティントが多い</td><td>メイクの落ちにくさ補足</td></tr>
+          <tr><td>Q4</td><td>ダブル洗顔をすることが多い</td><td>W洗顔への抵抗感</td></tr>
+          <tr><td>Q5</td><td>洗顔後すぐ顔がつっぱる</td><td>乾燥肌チェック</td></tr>
+          <tr><td>Q6</td><td>さっぱりした後肌が好き</td><td>仕上がり好み</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:10px;font-size:12px;color:#555;">結果: 自社商品5種のいずれか（セラム・バーム・オイル・リキッド・セット）。</p>
+    </div>
+
+    <div class="competitor-card">
+      <div class="comp-name">biteki（美的.com） <span class="badge badge-red">6問Yes/Noフローチャート</span></div>
+      <table>
+        <thead><tr><th>#</th><th>質問</th></tr></thead>
+        <tbody>
+          <tr><td>Q1</td><td>肌の悩みは？（乾燥 / ザラつき・ゴワつき）</td></tr>
+          <tr><td>Q2</td><td>洗顔後に肌がつっぱるのが気になる</td></tr>
+          <tr><td>Q3</td><td>顔全体・TゾーンのテカリやPが気になる</td></tr>
+          <tr><td>Q4</td><td>乾燥してゴワつきやくすみ感が出やすい</td></tr>
+          <tr><td>Q5</td><td>汗がしみたり湿疹ができたりしがち</td></tr>
+          <tr><td>Q6</td><td>生理前などニキビができやすい</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:10px;font-size:12px;color:#555;">フローチャート型。回答によって次の質問が分岐する。結果数不明。洗顔＆クレンジング両方を診断。</p>
+    </div>
+  </div>
+
+  <!-- 横断比較 -->
+  <h2>質問軸 横断比較</h2>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>質問軸</th>
+          <th>DHC</th>
+          <th>ma-kko</th>
+          <th>RIMEDO</th>
+          <th>biteki</th>
+          <th>重要度</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>メイクの濃さ</strong></td>
+          <td class="check">✅ Q1</td>
+          <td class="check">✅ Q1</td>
+          <td>（Q1-3で代替）</td>
+          <td class="cross">—</td>
+          <td><span class="badge badge-green">必須</span></td>
+        </tr>
+        <tr>
+          <td><strong>肌状態（ベタ/カサ）</strong></td>
+          <td class="check">✅ Q2</td>
+          <td class="check">✅ Q3</td>
+          <td class="check">✅ Q5</td>
+          <td class="check">✅ 複数</td>
+          <td><span class="badge badge-green">必須</span></td>
+        </tr>
+        <tr>
+          <td><strong>洗い上がり好み</strong></td>
+          <td class="check">✅ Q3</td>
+          <td class="check">✅ Q5</td>
+          <td class="check">✅ Q6</td>
+          <td class="cross">—</td>
+          <td><span class="badge badge-green">必須</span></td>
+        </tr>
+        <tr>
+          <td><strong>重視点（うるおい/毛穴）</strong></td>
+          <td class="check">✅ Q4</td>
+          <td class="check">✅ Q4</td>
+          <td class="cross">—</td>
+          <td class="cross">—</td>
+          <td><span class="badge badge-blue">推奨</span></td>
+        </tr>
+        <tr>
+          <td><strong>ニキビ・敏感肌</strong></td>
+          <td class="cross">—</td>
+          <td class="cross">—</td>
+          <td class="cross">—</td>
+          <td class="check">✅ Q5-6</td>
+          <td><span class="badge badge-yellow">Carena必要</span></td>
+        </tr>
+        <tr>
+          <td>ダブル洗顔への抵抗感</td>
+          <td class="cross">—</td>
+          <td class="cross">—</td>
+          <td class="check">✅ Q4</td>
+          <td class="cross">—</td>
+          <td><span class="badge">任意</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="highlight" style="margin-top:12px;">「メイクの濃さ」→「肌状態」→「洗い上がり好み」の3軸がDHC・ma-kko共通の最小構成。Carenaはアクセーヌ（敏感肌・ニキビ）への誘導が必要なため、敏感肌フラグを追加する。</div>
+  </div>
+
+  <!-- 設計方針 -->
+  <h2>LINE診断 設計方針</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>項目</th><th>方針</th><th>根拠</th></tr></thead>
+      <tbody>
+        <tr><td><strong>問数</strong></td><td>4問（最大5問）</td><td>DHCの4問が最短・離脱少。LINE会話体験として5問が上限</td></tr>
+        <tr><td><strong>形式</strong></td><td>多択（2〜3択）</td><td>LINEのクイックリプライボタン。Yes/Noより自然な会話形式</td></tr>
+        <tr><td><strong>結果タイプ</strong></td><td>4タイプ</td><td>提携商材が4種。タイプ1:1で商材に紐づける</td></tr>
+        <tr><td><strong>結果の表示</strong></td><td>タイプ名 → 教育 → 商材推薦</td><td>ルートA。「なぜこの商材か」の説得ロジックを自然に組める</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- タイプ×商材マッピング -->
+  <h2>結果タイプ × 提携商材マッピング</h2>
+  <div class="grid4">
+    <div class="result-card" style="border-top:3px solid #4285f4;">
+      <div class="result-type">ゲルタイプ</div>
+      <div class="result-product">▶ マナラ ホットクレンジングゲル</div>
+      <div class="result-features">
+        単価: ¥6,000<br>
+        特徴: 温感・乾燥ケア・エイジング<br>
+        向き: 乾燥肌・しっとり好き
+      </div>
+    </div>
+    <div class="result-card" style="border-top:3px solid #34a853;">
+      <div class="result-type">クリームタイプ</div>
+      <div class="result-product">▶ オルビス オフクリーム</div>
+      <div class="result-features">
+        単価: ¥5,000<br>
+        特徴: W洗顔不要・さっぱり<br>
+        向き: 脂性〜普通肌・さっぱり好き
+      </div>
+    </div>
+    <div class="result-card" style="border-top:3px solid #fbbc04;">
+      <div class="result-type">オイルタイプ</div>
+      <div class="result-product">▶ アテニア スキンクリア</div>
+      <div class="result-features">
+        単価: ¥4,500<br>
+        特徴: 高洗浄力・毛穴ケア・エイジング<br>
+        向き: 濃いめメイク・毛穴・くすみ
+      </div>
+    </div>
+    <div class="result-card" style="border-top:3px solid #ea4335;">
+      <div class="result-type">ミルクタイプ</div>
+      <div class="result-product">▶ アクセーヌ</div>
+      <div class="result-features">
+        単価: 7.5%報酬<br>
+        特徴: 低刺激・肌負担少<br>
+        向き: 敏感肌・ニキビ肌
+      </div>
+    </div>
+  </div>
+
+  <!-- LINE診断フロー案 -->
+  <h2>LINE診断フロー案（現時点）</h2>
+  <div class="note">競合リサーチ完了・フロー骨格確定。詳細の質問文・振り分けロジックは次フェーズで詰める。</div>
+
+  <div style="margin-top:16px;">
+    <div class="q-block">
+      <div class="q-num">Q1 ｜ 洗浄力ニーズ</div>
+      <div class="q-text">普段のメイクは？</div>
+      <div class="choices">
+        <div class="choice">しっかり・濃いめ</div>
+        <div class="choice">ナチュラル・薄め</div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-top:8px;">DHC・ma-kkoで共通。最初に洗浄力ニーズを把握。</p>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Q2 ｜ 肌タイプ判定</div>
+      <div class="q-text">肌状態は？</div>
+      <div class="choices">
+        <div class="choice">ベタつきが気になる</div>
+        <div class="choice">カサつきが気になる</div>
+        <div class="choice key">敏感で赤くなりやすい ← Carena追加軸</div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-top:8px;">DHCの2択をベースに「敏感肌」を追加。これでアクセーヌへの誘導フラグを立てる。</p>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Q3 ｜ 仕上がり好み</div>
+      <div class="q-text">洗い上がりの好みは？</div>
+      <div class="choices">
+        <div class="choice">さっぱり</div>
+        <div class="choice">しっとり</div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-top:8px;">4競合中3社で共通。ゲル（マナラ）とオイル（アテニア）の分岐に使う。</p>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Q4 ｜ 重視軸</div>
+      <div class="q-text">クレンジングで重視するのは？</div>
+      <div class="choices">
+        <div class="choice">毛穴汚れをしっかり落とす</div>
+        <div class="choice">うるおいを残す</div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-top:8px;">DHC・ma-kkoで共通。アテニア（毛穴）とマナラ（うるおい）の最終分岐。</p>
+    </div>
+  </div>
+
+  <!-- 振り分けロジック -->
+  <h2>振り分けロジック（仮）</h2>
+  <div class="card">
+    <div class="logic-row">
+      <div class="logic-cond">Q2 = 敏感で赤くなりやすい</div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-result">ミルクタイプ（アクセーヌ）確定</div>
+    </div>
+    <div class="logic-row">
+      <div class="logic-cond">Q1 = 濃いめ ＋ Q4 = 毛穴</div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-result">オイルタイプ（アテニア）</div>
+    </div>
+    <div class="logic-row">
+      <div class="logic-cond">Q2 = カサつき ＋ Q3 = しっとり</div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-result">ゲルタイプ（マナラ）</div>
+    </div>
+    <div class="logic-row">
+      <div class="logic-cond">Q2 = ベタつき ＋ Q3 = さっぱり</div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-result">クリームタイプ（オルビスオフ）</div>
+    </div>
+    <div class="highlight" style="margin-top:12px;">エッジケース（例: Q2=カサつき＋Q3=さっぱり）の振り分けは次フェーズで詰める。全回答パターンを網羅したロジック表を別途作成予定。</div>
+  </div>
+
+  <!-- 次のステップ -->
+  <h2>次のステップ</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>ステップ</th><th>内容</th><th>担当</th></tr></thead>
+      <tbody>
+        <tr><td>① フロー確定</td><td>Q1〜Q4の質問文・選択肢の最終決定。エッジケース含む全パターンの振り分けロジック表作成</td><td>Noa + Claude</td></tr>
+        <tr><td>② 結果メッセージ設計</td><td>タイプ教育テキスト × 4パターン。おすすめ商材の紹介文・CV導線テキスト</td><td>Claude → Noa確認</td></tr>
+        <tr><td>③ PU文言設計</td><td>記事設置バナー・PUのキャッチコピー案。インパクト上位6記事を対象に設置</td><td>Claude → Rinon/デザイナー</td></tr>
+        <tr><td>④ LINE実装</td><td>診断フローのLINE BOT実装。クイックリプライ設定</td><td>Ren確認後 → 実装</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:40px; font-size:11px; color:#bbb; text-align:center;">generated: 2026-06-12 ｜ noa-docs</div>
+
+</div>
+</body>
+</html>
