@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>週次分析 W24 — 2026-06-08〜06-14</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 900px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .calorie-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+    .calorie-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px; }
+    .calorie-card.winner { border-color: #86efac; background: #f0fdf4; }
+    .calorie-title { font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 8px; }
+    .calorie-metric { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 3px; }
+    .calorie-metric .label { color: #64748b; }
+    .calorie-metric .val { font-weight: 700; color: #0f172a; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="page-header">
+    <div class="eyebrow">週次分析 — W24</div>
+    <h1>2026-06-08〜06-14 週次分析レポート</h1>
+    <p class="desc">作成: 2026-06-15 ／ 前週: W23（6/1〜6/7）</p>
+  </div>
+
+  <!-- ① 6月GOAL進捗 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">1</div>
+      <div>
+        <div class="section-title">6月 GOAL進捗</div>
+        <div class="section-sub">目標1,200人 に対する当月累計（14日時点）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card alert">
+          <div class="kpi-label">6月累計</div>
+          <div class="kpi-value">408人</div>
+          <div class="kpi-sub">14日経過</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">日均</div>
+          <div class="kpi-value">29.1人</div>
+          <div class="kpi-sub">必要日均 40人</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">月末予測</div>
+          <div class="kpi-value">874人</div>
+          <div class="kpi-sub">目標比 73%</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">GOALギャップ</div>
+          <div class="kpi-value">▲326人</div>
+          <div class="kpi-sub">残16日で要回収</div>
+        </div>
+      </div>
+      <div class="insight insight-red">
+        <strong>月末予測874人 = 目標1,200人の73%。</strong>
+        日均29.1人を40人に引き上げる必要がある。W24で-25.6%減を記録しており、来週以降の巻き返しが急務。
+      </div>
+    </div>
+  </div>
+
+  <!-- ② W24全体ファネル -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">2</div>
+      <div>
+        <div class="section-title">W24 週次パフォーマンス</div>
+        <div class="section-sub">6/8〜6/14 vs 6/1〜6/7（W23）比較</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>指標</th>
+            <th>W24（6/8〜6/14）</th>
+            <th>W23（6/1〜6/7）</th>
+            <th>前週比</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>友達合計</strong></td>
+            <td><strong>174人</strong>（PU102 + バナー72）</td>
+            <td>234人（PU153 + バナー81）</td>
+            <td class="down">▲60人（-25.6%）</td>
+          </tr>
+          <tr>
+            <td>LP imp</td>
+            <td>27,902</td>
+            <td>32,617</td>
+            <td class="down">▲4,715（-14.5%）</td>
+          </tr>
+          <tr>
+            <td>PU imp</td>
+            <td>25,927</td>
+            <td>30,214</td>
+            <td class="down">▲4,287（-14.2%）</td>
+          </tr>
+          <tr>
+            <td>PU click</td>
+            <td>1,404</td>
+            <td>1,894</td>
+            <td class="down">▲490（-25.9%）</td>
+          </tr>
+          <tr>
+            <td>PVFR</td>
+            <td class="warn">0.37%</td>
+            <td class="warn">0.47%</td>
+            <td class="down">-0.10pt</td>
+          </tr>
+          <tr>
+            <td>CTR（5/14仕様後）</td>
+            <td>5.4%</td>
+            <td>6.3%</td>
+            <td class="down">-0.9pt</td>
+          </tr>
+          <tr>
+            <td>友達追加率（PU）</td>
+            <td>7.3%</td>
+            <td>8.1%</td>
+            <td class="down">-0.8pt</td>
+          </tr>
+          <tr>
+            <td>日均</td>
+            <td>24.9人</td>
+            <td>33.4人</td>
+            <td class="down">▲8.5人</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-red">
+        <strong>主犯判定: 全体的なLP imp落ち（-14.5%）が友達減少を牽引。</strong>
+        PVFRも0.47%→0.37%に悪化しており、LP imp落ちだけでなくPU効率も低下している。
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ ジャンル別分析 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">3</div>
+      <div>
+        <div class="section-title">ジャンル別 W24 vs W23</div>
+        <div class="section-sub">友達増減の内訳</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>ジャンル</th>
+            <th>W24友達</th>
+            <th>W23友達</th>
+            <th>差</th>
+            <th>W24 PVFR</th>
+            <th>W23 PVFR</th>
+            <th>判定</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>医療ダイエット(GLP-1)</strong></td>
+            <td><strong>72人</strong></td>
+            <td>122人</td>
+            <td class="down">▲50人</td>
+            <td class="down">0.44%</td>
+            <td class="warn">0.61%</td>
+            <td><span class="badge badge-red">主犯</span></td>
+          </tr>
+          <tr>
+            <td>オンラインピル</td>
+            <td>12人</td>
+            <td>10人</td>
+            <td class="up">+2人</td>
+            <td class="warn">0.63%</td>
+            <td class="warn">0.48%</td>
+            <td><span class="badge badge-green">微改善</span></td>
+          </tr>
+          <tr>
+            <td>AGA</td>
+            <td>6人</td>
+            <td>2人</td>
+            <td class="up">+4人</td>
+            <td>0.28%</td>
+            <td>0.19%</td>
+            <td><span class="badge badge-yellow">imp少</span></td>
+          </tr>
+          <tr>
+            <td>ICL（ほんべ）</td>
+            <td>5人</td>
+            <td>1人</td>
+            <td class="up">+4人</td>
+            <td>0.36%</td>
+            <td>0.06%</td>
+            <td><span class="badge badge-yellow">改善傾向</span></td>
+          </tr>
+          <tr>
+            <td>包茎手術(PLUS)</td>
+            <td>4人</td>
+            <td>6人</td>
+            <td class="down">▲2人</td>
+            <td>0.15%</td>
+            <td>0.18%</td>
+            <td><span class="badge badge-yellow">横ばい</span></td>
+          </tr>
+          <tr>
+            <td>ED</td>
+            <td>2人</td>
+            <td>7人</td>
+            <td class="down">▲5人</td>
+            <td>0.66%</td>
+            <td>1.85%</td>
+            <td><span class="badge badge-yellow">LP imp少（305）</span></td>
+          </tr>
+          <tr>
+            <td>FAGA</td>
+            <td>1人</td>
+            <td>2人</td>
+            <td class="down">▲1人</td>
+            <td class="up">0.91%</td>
+            <td class="up">1.18%</td>
+            <td><span class="badge badge-yellow">imp少・機能中</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-red">
+        ダイエット1ジャンルで全体落ちの83%（-50/60人）を占める。他ジャンルは軒並み微変動範囲内。
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ ダイエット記事ドリルダウン -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">4</div>
+      <div>
+        <div class="section-title">ダイエット記事別ドリルダウン</div>
+        <div class="section-sub">LP imp落ちの主犯記事を特定</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>記事</th>
+            <th>W24友達</th>
+            <th>W23友達</th>
+            <th>差</th>
+            <th>W24 LP</th>
+            <th>W23 LP</th>
+            <th>W24 PVFR</th>
+            <th>W23 PVFR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1日_摂取カロリー</td>
+            <td>18人</td>
+            <td>24人</td>
+            <td class="down">▲6</td>
+            <td>3,065</td>
+            <td>3,935</td>
+            <td>0.59%</td>
+            <td>0.61%</td>
+          </tr>
+          <tr>
+            <td>本気で痩せたい</td>
+            <td>12人</td>
+            <td>18人</td>
+            <td class="down">▲6</td>
+            <td>1,180</td>
+            <td>1,757</td>
+            <td class="up">1.02%</td>
+            <td class="up">1.02%</td>
+          </tr>
+          <tr>
+            <td><strong>痩せる薬</strong></td>
+            <td><strong>6人</strong></td>
+            <td>15人</td>
+            <td class="down"><strong>▲9</strong></td>
+            <td>667</td>
+            <td>940</td>
+            <td>0.90%</td>
+            <td class="up">1.60%</td>
+          </tr>
+          <tr>
+            <td>更年期太り</td>
+            <td>6人</td>
+            <td>5人</td>
+            <td class="up">+1</td>
+            <td>756</td>
+            <td>939</td>
+            <td>0.79%</td>
+            <td>0.53%</td>
+          </tr>
+          <tr>
+            <td><strong>スルリムマンジャロ</strong></td>
+            <td><strong>3人</strong></td>
+            <td>12人</td>
+            <td class="down"><strong>▲9</strong></td>
+            <td>837</td>
+            <td>1,265</td>
+            <td>0.36%</td>
+            <td>0.95%</td>
+          </tr>
+          <tr>
+            <td><strong>ダイエットパッチ</strong></td>
+            <td><strong>5人</strong></td>
+            <td>11人</td>
+            <td class="down"><strong>▲6</strong></td>
+            <td>1,939</td>
+            <td>2,064</td>
+            <td class="down">0.26%</td>
+            <td>0.53%</td>
+          </tr>
+          <tr>
+            <td>日本人1番痩せる</td>
+            <td>4人</td>
+            <td>6人</td>
+            <td class="down">▲2</td>
+            <td>941</td>
+            <td>1,270</td>
+            <td>0.43%</td>
+            <td>0.47%</td>
+          </tr>
+          <tr>
+            <td>間食やめられない</td>
+            <td>2人</td>
+            <td>6人</td>
+            <td class="down">▲4</td>
+            <td>632</td>
+            <td>830</td>
+            <td>0.32%</td>
+            <td>0.72%</td>
+          </tr>
+          <tr>
+            <td>リベルサスマンジャロどっち</td>
+            <td>3人</td>
+            <td>6人</td>
+            <td class="down">▲3</td>
+            <td>494</td>
+            <td>752</td>
+            <td>0.61%</td>
+            <td>0.80%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="insight insight-red">
+        <strong>LP imp落ちが主因（A類）:</strong>
+        痩せる薬（LP -29%）、スルリムマンジャロ（LP -34%）、本気で痩せたい（LP -33%）は記事PV自体が急減。
+        SEO順位変動の可能性が高い。仮説: Googleアルゴリズム変動 or 検索需要の季節変動。
+      </div>
+      <div class="insight insight-yellow">
+        <strong>LP imp維持なのにPVFR半減（B類・要注意）:</strong>
+        ダイエットパッチ: LP imp -6%（ほぼ維持）なのにPVFR 0.53%→0.26%に半減（-6人）。
+        LP impが落ちた分だけでは説明できない → PU文言疲弊 or 流入ユーザー質の変化が仮説。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ 摂取カロリーPU判定（t109） -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">5</div>
+      <div>
+        <div class="section-title">摂取カロリーPU 1本体制判定（t109）</div>
+        <div class="section-sub">「1日で食べていい量」確定PU / ABテスト終了後の単体評価</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="verdict verdict-yellow">
+        判定: △ 安定稼働だが基準未達。文言改修余地あり（PVFR 0.68% → 目標 0.80%）
+      </div>
+
+      <div class="calorie-grid">
+        <div class="calorie-card winner">
+          <div class="calorie-title">✅ 稼働中: 「1日で食べていい量」（W24）</div>
+          <div class="calorie-metric"><span class="label">LP imp</span><span class="val">2,361</span></div>
+          <div class="calorie-metric"><span class="label">PU imp</span><span class="val">2,488</span></div>
+          <div class="calorie-metric"><span class="label">click</span><span class="val">98</span></div>
+          <div class="calorie-metric"><span class="label">友達</span><span class="val">16人</span></div>
+          <div class="calorie-metric"><span class="label">PVFR</span><span class="val">0.68%</span></div>
+          <div class="calorie-metric"><span class="label">CTR</span><span class="val">3.9%</span></div>
+          <div class="calorie-metric"><span class="label">追加率</span><span class="val">16.3%</span></div>
+        </div>
+        <div class="calorie-card">
+          <div class="calorie-title">W23時点（参考: 3PU並走合計）</div>
+          <div class="calorie-metric"><span class="label">「1日で食べていい量」</span><span class="val">PVFR 0.69%</span></div>
+          <div class="calorie-metric"><span class="label">「適正カロリー気になる」</span><span class="val">PVFR 0.57%</span></div>
+          <div class="calorie-metric"><span class="label">「食事量あっているか」</span><span class="val">PVFR 0.47%</span></div>
+          <div class="calorie-metric"><span class="label">合計</span><span class="val">PVFR 0.61%</span></div>
+          <div class="calorie-metric"><span class="label">合計友達</span><span class="val">24人</span></div>
+        </div>
+      </div>
+
+      <div class="insight insight-blue" style="margin-top: 12px;">
+        <strong>考察:</strong> 1本体制での単体PVFR（0.68%）はW23の同PU単体（0.69%）と同等。
+        並走時のimp分散がなくなったことで単体効率は維持。
+        ただし基準0.80%には0.12pt届いておらず、文言改修で+4〜6人/週のポテンシャルあり。
+        → <strong>CMOへ: この記事のPU文言改修案を設計依頼（t109）</strong>
+      </div>
+
+      <div class="insight insight-yellow" style="margin-top: 8px;">
+        <strong>残存PU注意:</strong> 「食事量あっているか知りたい」がW24でもLP=699分稼働（PVFR 0.29%）。
+        完全削除できているか確認が必要。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ ファネル指標サマリー -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">6</div>
+      <div>
+        <div class="section-title">6月累計 ジャンル別KPI</div>
+        <div class="section-sub">当月累計（14日）/ 基準: PVFR≥0.80% / CTR≥13% / 追加率≥11%</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>ジャンル</th>
+            <th>友達</th>
+            <th>PVFR</th>
+            <th>CTR*</th>
+            <th>追加率</th>
+            <th>CV</th>
+            <th>FCVR</th>
+            <th>ボトルネック</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>医療ダイエット(GLP-1)</td>
+            <td>194</td>
+            <td class="down">0.5%</td>
+            <td class="down">6.2%</td>
+            <td class="down">9.4%</td>
+            <td>3</td>
+            <td class="down">1.5%</td>
+            <td>文言＋LP</td>
+          </tr>
+          <tr>
+            <td>オンラインピル</td>
+            <td>22</td>
+            <td class="down">0.6%</td>
+            <td class="down">4.8%</td>
+            <td class="down">10.5%</td>
+            <td>—</td>
+            <td>—</td>
+            <td>文言＋LP</td>
+          </tr>
+          <tr>
+            <td>AGA</td>
+            <td>8</td>
+            <td class="down">0.3%</td>
+            <td class="down">3.5%</td>
+            <td class="down">6.9%</td>
+            <td>—</td>
+            <td>—</td>
+            <td>文言＋LP</td>
+          </tr>
+          <tr>
+            <td>ED</td>
+            <td>9</td>
+            <td class="up">1.3%</td>
+            <td class="down">9.9%</td>
+            <td class="up">15.3%</td>
+            <td>1</td>
+            <td class="up">11.1%</td>
+            <td>機能中</td>
+          </tr>
+          <tr>
+            <td>FAGA</td>
+            <td>3</td>
+            <td class="up">1.1%</td>
+            <td class="down">5.1%</td>
+            <td class="up">21.4%</td>
+            <td>—</td>
+            <td>—</td>
+            <td>機能中</td>
+          </tr>
+          <tr>
+            <td>包茎手術(PLUS)</td>
+            <td>10</td>
+            <td class="down">0.2%</td>
+            <td class="down">5.5%</td>
+            <td class="down">3.0%</td>
+            <td>—</td>
+            <td>—</td>
+            <td>文言＋LP</td>
+          </tr>
+          <tr>
+            <td>ICL（ほんべ）</td>
+            <td>6</td>
+            <td class="down">0.2%</td>
+            <td class="down">12.2%</td>
+            <td class="down">3.9%</td>
+            <td>—</td>
+            <td>—</td>
+            <td>追加率</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px; color: #94a3b8;">* CTRは5/14仕様変更後にPU imp二重計上のため構造的低値。PVFRを主指標とすること。</p>
+    </div>
+  </div>
+
+  <!-- ⑦ 次週アクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">7</div>
+      <div>
+        <div class="section-title">次週アクション（6/16〜6/22）</div>
+        <div class="section-sub">GOAL▲326人ギャップ解消に向けた優先施策</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-high">高</span>
+          <div class="action-body">
+            <strong>摂取カロリーPU文言改修（CMO依頼・t109）</strong>
+            <span>1本体制PVFR 0.68%→0.80%へ。達成で+4〜6人/週（×4週=+16〜24人/月）。LP imp 2,361あり改修ROI高い。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">高</span>
+          <div class="action-body">
+            <strong>コスメ案件リサーチ完了・小柳さんMTG（t106）</strong>
+            <span>6/15週のMTGまでにクレンジング診断の振り分けロジック方式確定（案A:直1:1 or 案B:決定木）→ PU文言9記事分へ展開。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中</span>
+          <div class="action-body">
+            <strong>ダイエットパッチPVFR急落の切り分け</strong>
+            <span>LP imp -6%なのにPVFR半減（0.53%→0.26%）。PU文言疲弊 or 追加率問題かデータで確認。放置なら-6人/週レベル継続。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中</span>
+          <div class="action-body">
+            <strong>AGA/FAGA PU設置実行（t115 → t114連動）</strong>
+            <span>GTMタグ設置完了後に着手。池袋FAGA（ニューモ9,968クリック）・アサミAGA・アサミFAGAが設置確定記事。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中</span>
+          <div class="action-body">
+            <strong>痩せる薬・スルリムマンジャロ記事LP imp急落の確認</strong>
+            <span>LP -29%/-34%の原因確認（サーチコンソールで順位・インプレッション変動をチェック）。SEO対策 or 様子見の判断材料に。</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
