@@ -287,6 +287,96 @@
     </div>
   </div>
 
+  <!-- LINE診断フロー確定版 -->
+  <h2>LINE診断フロー <span class="badge badge-green">確定 2026-06-12</span></h2>
+
+  <div style="margin-top:16px;">
+    <div class="q-block">
+      <div class="q-num">Q1 ｜ 基本情報</div>
+      <div class="q-text">年齢を教えてください</div>
+      <div class="choices">
+        <div class="choice">10〜20代</div>
+        <div class="choice">30代</div>
+        <div class="choice">40代</div>
+        <div class="choice">50代以上</div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-top:8px;">年代で商材の方向性を大枠で分岐。50代以上はマナラ、40代はアテニア寄り、10〜20代はアクセーヌ・オルビスオフ寄り。</p>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Q2 ｜ メイク習慣</div>
+      <div class="q-text">普段のメイクは？</div>
+      <div class="choices">
+        <div class="choice">しっかり・濃いめ</div>
+        <div class="choice">ナチュラル・薄め</div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-top:8px;">クレンジング＝メイクを落とす文脈として自然な2問目。洗浄力ニーズを把握。濃いめ→アテニア（オイル）の高洗浄力に強く傾く。</p>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Q3 ｜ 肌悩み・状態</div>
+      <div class="q-text">今一番気になる肌悩みは？</div>
+      <div class="choices">
+        <div class="choice">ニキビ・敏感肌</div>
+        <div class="choice">乾燥・ハリのなさ</div>
+        <div class="choice">毛穴・くすみ</div>
+        <div class="choice">ベタつき・テカリ</div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-top:8px;">設置予定9記事の読者インサイトに直結。ニキビ→アクセーヌ、乾燥・ハリ→マナラ、毛穴・くすみ→アテニア、ベタつき→オルビスオフに強く傾く。</p>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Q4 ｜ 仕上がり好み</div>
+      <div class="q-text">クレンジング後の仕上がりの好みは？</div>
+      <div class="choices">
+        <div class="choice">さっぱり</div>
+        <div class="choice">しっとり</div>
+        <div class="choice">うるっとなめらか</div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-top:8px;">競合4社中3社で共通の軸。マナラ（しっとり）とオルビスオフ（さっぱり）の最終分岐に使う。</p>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Q5 ｜ 重視点</div>
+      <div class="q-text">クレンジング選びで重視することは？</div>
+      <div class="choices">
+        <div class="choice">汚れをしっかり落とす</div>
+        <div class="choice">肌への優しさ・低刺激</div>
+        <div class="choice">うるおいを残す</div>
+        <div class="choice">毛穴ケア</div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-top:8px;">Q3と組み合わせてエッジケースを解消する最終確認軸。</p>
+    </div>
+  </div>
+
+  <!-- 振り分けロジック -->
+  <h2>振り分けロジック <span class="badge badge-red">実装方式 検討中</span></h2>
+  <div class="card">
+    <div class="highlight">
+      <strong>制約：LINE BOTはスコア加算型ロジックが使えない。</strong><br>
+      実装は「この答え → 次のメッセージ/結果」の分岐ツリー（決定木）のみ。複数問の回答を集計して判定する方式は不可。
+    </div>
+    <p style="font-size:13px;color:#555;margin:12px 0 8px;">検討中の構成案：</p>
+    <table>
+      <thead><tr><th>案</th><th>構造</th><th>メリット</th><th>デメリット</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>A</strong></td>
+          <td>Q1〜Q4は全員共通 → Q5の4択が4商材に1対1対応</td>
+          <td>実装シンプル</td>
+          <td>Q1〜Q4が結果に反映されない。Q5だけで決まる</td>
+        </tr>
+        <tr>
+          <td><strong>B</strong></td>
+          <td>Q1から分岐する決定木。各パスの最後の問いが結果を決定</td>
+          <td>各答えが結果に意味を持つ</td>
+          <td>実装重い。ユーザーによって問数・質問が変わる</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#888;margin-top:10px;">→ どちらの構造で組むかを確定してからロジック表を作成する。</p>
+  </div>
+
   <!-- タイプ別リサーチ結果 -->
   <h2>タイプ別リサーチ結果 <span class="badge badge-green">完了 2026-06-15</span></h2>
   <div class="grid2">
@@ -445,96 +535,6 @@
         <tr><td>Card 5</td><td>橋渡し</td><td style="font-size:12px;">あなたのミルクタイプにぴったりのクレンジングを紹介します<br><span style="color:#1967d2;">[ボタン]「あなたに合うクレンジングを見る →」</span></td></tr>
       </tbody>
     </table>
-  </div>
-
-  <!-- LINE診断フロー確定版 -->
-  <h2>LINE診断フロー <span class="badge badge-green">確定 2026-06-12</span></h2>
-
-  <div style="margin-top:16px;">
-    <div class="q-block">
-      <div class="q-num">Q1 ｜ 基本情報</div>
-      <div class="q-text">年齢を教えてください</div>
-      <div class="choices">
-        <div class="choice">10〜20代</div>
-        <div class="choice">30代</div>
-        <div class="choice">40代</div>
-        <div class="choice">50代以上</div>
-      </div>
-      <p style="font-size:12px;color:#888;margin-top:8px;">年代で商材の方向性を大枠で分岐。50代以上はマナラ、40代はアテニア寄り、10〜20代はアクセーヌ・オルビスオフ寄り。</p>
-    </div>
-
-    <div class="q-block">
-      <div class="q-num">Q2 ｜ メイク習慣</div>
-      <div class="q-text">普段のメイクは？</div>
-      <div class="choices">
-        <div class="choice">しっかり・濃いめ</div>
-        <div class="choice">ナチュラル・薄め</div>
-      </div>
-      <p style="font-size:12px;color:#888;margin-top:8px;">クレンジング＝メイクを落とす文脈として自然な2問目。洗浄力ニーズを把握。濃いめ→アテニア（オイル）の高洗浄力に強く傾く。</p>
-    </div>
-
-    <div class="q-block">
-      <div class="q-num">Q3 ｜ 肌悩み・状態</div>
-      <div class="q-text">今一番気になる肌悩みは？</div>
-      <div class="choices">
-        <div class="choice">ニキビ・敏感肌</div>
-        <div class="choice">乾燥・ハリのなさ</div>
-        <div class="choice">毛穴・くすみ</div>
-        <div class="choice">ベタつき・テカリ</div>
-      </div>
-      <p style="font-size:12px;color:#888;margin-top:8px;">設置予定9記事の読者インサイトに直結。ニキビ→アクセーヌ、乾燥・ハリ→マナラ、毛穴・くすみ→アテニア、ベタつき→オルビスオフに強く傾く。</p>
-    </div>
-
-    <div class="q-block">
-      <div class="q-num">Q4 ｜ 仕上がり好み</div>
-      <div class="q-text">クレンジング後の仕上がりの好みは？</div>
-      <div class="choices">
-        <div class="choice">さっぱり</div>
-        <div class="choice">しっとり</div>
-        <div class="choice">うるっとなめらか</div>
-      </div>
-      <p style="font-size:12px;color:#888;margin-top:8px;">競合4社中3社で共通の軸。マナラ（しっとり）とオルビスオフ（さっぱり）の最終分岐に使う。</p>
-    </div>
-
-    <div class="q-block">
-      <div class="q-num">Q5 ｜ 重視点</div>
-      <div class="q-text">クレンジング選びで重視することは？</div>
-      <div class="choices">
-        <div class="choice">汚れをしっかり落とす</div>
-        <div class="choice">肌への優しさ・低刺激</div>
-        <div class="choice">うるおいを残す</div>
-        <div class="choice">毛穴ケア</div>
-      </div>
-      <p style="font-size:12px;color:#888;margin-top:8px;">Q3と組み合わせてエッジケースを解消する最終確認軸。</p>
-    </div>
-  </div>
-
-  <!-- 振り分けロジック -->
-  <h2>振り分けロジック <span class="badge badge-red">実装方式 検討中</span></h2>
-  <div class="card">
-    <div class="highlight">
-      <strong>制約：LINE BOTはスコア加算型ロジックが使えない。</strong><br>
-      実装は「この答え → 次のメッセージ/結果」の分岐ツリー（決定木）のみ。複数問の回答を集計して判定する方式は不可。
-    </div>
-    <p style="font-size:13px;color:#555;margin:12px 0 8px;">検討中の構成案：</p>
-    <table>
-      <thead><tr><th>案</th><th>構造</th><th>メリット</th><th>デメリット</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><strong>A</strong></td>
-          <td>Q1〜Q4は全員共通 → Q5の4択が4商材に1対1対応</td>
-          <td>実装シンプル</td>
-          <td>Q1〜Q4が結果に反映されない。Q5だけで決まる</td>
-        </tr>
-        <tr>
-          <td><strong>B</strong></td>
-          <td>Q1から分岐する決定木。各パスの最後の問いが結果を決定</td>
-          <td>各答えが結果に意味を持つ</td>
-          <td>実装重い。ユーザーによって問数・質問が変わる</td>
-        </tr>
-      </tbody>
-    </table>
-    <p style="font-size:12px;color:#888;margin-top:10px;">→ どちらの構造で組むかを確定してからロジック表を作成する。</p>
   </div>
 
   <!-- 次のステップ -->
