@@ -463,25 +463,71 @@
       </div>
 
       <div class="insight insight-blue" style="margin-top: 12px;">
-        <strong>考察:</strong> 1本体制での単体PVFR（0.68%）はW23の同PU単体（0.69%）と同等。
-        並走時のimp分散がなくなったことで単体効率は維持。
-        ただし基準0.80%には0.12pt届いておらず、文言改修で+4〜6人/週のポテンシャルあり。
+        <strong>考察:</strong> 1本体制での単体PVFR（0.68%）は前週同PU単体（0.69%）と横ばいで改善なし。
+        基準0.80%まで▲0.12pt。文言改修で+4〜6人/週のポテンシャルあり。
         → <strong>CMOへ: この記事のPU文言改修案を設計依頼（t109）</strong>
-      </div>
-
-      <div class="insight insight-yellow" style="margin-top: 8px;">
-        <strong>残存PU注意:</strong> 「食事量あっているか知りたい」がW24でもLP=699分稼働（PVFR 0.29%）。
-        完全削除できているか確認が必要。
       </div>
     </div>
   </div>
 
-  <!-- ⑥ ファネル指標サマリー -->
+  <!-- ⑥ ピルPU改修（W24実施） -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">6</div>
+      <div>
+        <div class="section-title">ピルPU改修（W24実施・2件）</div>
+        <div class="section-sub">MF生理遅らせる記事・MF吐き気記事 / 初週のため来週以降で判断</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>記事</th>
+            <th>内容</th>
+            <th>imp</th>
+            <th>CTR</th>
+            <th>追加率</th>
+            <th>友達</th>
+            <th>PVFR</th>
+            <th>判定</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>MF / 生理遅らせる</td>
+            <td>文言差し替え<br>「自分に合うピルクリニックを知りたい」<br>→「ピルは興味あるけど不安」</td>
+            <td>219（前304）</td>
+            <td class="up">5.9%（前2.6% <strong>+3.3pt</strong>）</td>
+            <td>7.7%</td>
+            <td>1人</td>
+            <td>0.52%（前0.36% +0.16pt）</td>
+            <td><span class="badge badge-yellow">△ 初週</span></td>
+          </tr>
+          <tr>
+            <td>MF / 吐き気</td>
+            <td>新規設置<br>「そのピル合ってないかも」</td>
+            <td>110</td>
+            <td>5.5%</td>
+            <td class="up">16.7%</td>
+            <td>1人</td>
+            <td>1.14%</td>
+            <td><span class="badge badge-yellow">△ 初週</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-blue">
+        CTRは生理遅らせる記事で大幅改善（+3.3pt）。追加率・友達数は初週でサンプル少。来週以降の数値で本判定する。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ ファネル指標サマリー -->
   <div class="section">
     <div class="section-head">
       <div class="num num-purple">6</div>
       <div>
-        <div class="section-title">6月累計 ジャンル別KPI</div>
+        <div class="section-title" data-num="7">6月累計 ジャンル別KPI</div>
         <div class="section-sub">当月累計（14日）/ 基準: PVFR≥0.80% / CTR≥13% / 追加率≥11%</div>
       </div>
     </div>
@@ -576,10 +622,10 @@
     </div>
   </div>
 
-  <!-- ⑦ 次週アクション -->
+  <!-- ⑧ 次週アクション -->
   <div class="section">
     <div class="section-head">
-      <div class="num num-green">7</div>
+      <div class="num num-green">8</div>
       <div>
         <div class="section-title">次週アクション（6/16〜6/22）</div>
         <div class="section-sub">GOAL▲326人ギャップ解消に向けた優先施策</div>
@@ -597,8 +643,8 @@
         <li>
           <span class="action-pri pri-high">高</span>
           <div class="action-body">
-            <strong>コスメ案件リサーチ完了・小柳さんMTG（t106）</strong>
-            <span>6/15週のMTGまでにクレンジング診断の振り分けロジック方式確定（案A:直1:1 or 案B:決定木）→ PU文言9記事分へ展開。</span>
+            <strong>コスメ案件：クレンジング選び診断 作成中（t106）</strong>
+            <span>MTGで方向性確定済み。クレンジング診断フロー設計・LINEへの接続まで今週中に完成させる。</span>
           </div>
         </li>
         <li>
@@ -611,8 +657,8 @@
         <li>
           <span class="action-pri pri-mid">中</span>
           <div class="action-body">
-            <strong>AGA/FAGA PU設置実行（t115 → t114連動）</strong>
-            <span>GTMタグ設置完了後に着手。アサミAGA・アサミFAGAが設置確定記事。※池袋FAGA「ニューモ育毛剤レビュー」記事はクライアント要請により2026-06-15削除済み（PU設置対象外）。月間9,968クリック分の流入消失→W25以降FAGA数値は構造的に落ちる見込み。</span>
+            <strong>AGA/FAGA PU・バナー設置実行（t115）</strong>
+            <span>GTMタグ設置完了後に着手。設置対象3記事：池袋FAGA・アサミAGA・アサミFAGA。※池袋FAGA「ニューモ育毛剤レビュー」記事はクライアント要請により2026-06-15削除済み（PU設置対象外）。月間9,968クリック分の流入消失→W25以降FAGA数値は構造的に落ちる見込み。</span>
           </div>
         </li>
         <li>
