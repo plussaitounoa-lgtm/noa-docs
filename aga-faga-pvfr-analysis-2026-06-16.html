@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AGA/FAGA PVFR分析 — 2026-06-16</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 900px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+    h3 { font-size: 14px; font-weight: 700; color: #334155; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="page-header">
+    <div class="eyebrow">AGA / FAGA 分析 — 2026-06-16</div>
+    <h1>AGA・FAGA PVFR分析</h1>
+    <p class="desc">月次PVFR推移・友達1人獲得に必要なPV数の整理。PU設置ROI試算の前提データ。</p>
+  </div>
+
+  <!-- サマリー -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">S</div>
+      <div>
+        <div class="section-title">サマリー</div>
+        <div class="section-sub">安定値・直近値・結論</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">AGA 安定PVFR</div>
+          <div class="kpi-value">0.19%</div>
+          <div class="kpi-sub">1〜4月平均</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">AGA PV/友達1人</div>
+          <div class="kpi-value">約500</div>
+          <div class="kpi-sub">安定値ベース</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">FAGA 安定PVFR</div>
+          <div class="kpi-value">0.49%</div>
+          <div class="kpi-sub">3〜5月平均</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">FAGA PV/友達1人</div>
+          <div class="kpi-value">約200</div>
+          <div class="kpi-sub">安定値ベース</div>
+        </div>
+      </div>
+
+      <div class="verdict verdict-red">AGA：PV自体が1月比▲64%と激減。ポップ改善より流入回復が先決。</div>
+      <div class="verdict verdict-yellow">FAGA：ニューモ記事削除で今後さらに下落確定。PU設置は「記事が増えた時の仕込み」として位置づける。</div>
+    </div>
+  </div>
+
+  <!-- AGA月次データ -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">1</div>
+      <div>
+        <div class="section-title">AGA 月次推移</div>
+        <div class="section-sub">SEOチャネルのみ集計</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>月</th>
+            <th>LP imp</th>
+            <th>友達</th>
+            <th>PVFR</th>
+            <th>PV/友達1人</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026-01</td>
+            <td>10,001</td>
+            <td>19</td>
+            <td>0.19%</td>
+            <td>526</td>
+          </tr>
+          <tr>
+            <td>2026-02</td>
+            <td>8,590</td>
+            <td>14</td>
+            <td>0.16%</td>
+            <td>614</td>
+          </tr>
+          <tr>
+            <td>2026-03</td>
+            <td>6,770</td>
+            <td>11</td>
+            <td>0.16%</td>
+            <td>615</td>
+          </tr>
+          <tr>
+            <td>2026-04</td>
+            <td>5,880</td>
+            <td>14</td>
+            <td>0.24%</td>
+            <td>420</td>
+          </tr>
+          <tr>
+            <td>2026-05</td>
+            <td>4,999</td>
+            <td>7</td>
+            <td>0.14%</td>
+            <td>714</td>
+          </tr>
+          <tr style="background:#fff1f2;">
+            <td><strong>2026-06</strong> <span class="badge badge-gray">当月途中</span></td>
+            <td>3,603</td>
+            <td>8</td>
+            <td>0.22%</td>
+            <td>450</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="insight insight-red">
+        <strong>LP imp が1月比▲64%。</strong>チャップアップ・ニューモ等の高流入記事消失が主因と推測。友達が増えない以前にPV分母が消えている状態。
+      </div>
+      <div class="insight insight-blue" style="margin-top:8px;">
+        <strong>PVFR自体は0.14〜0.24%で横ばい。</strong>PUの転換効率に大きな変化はない。流入が戻れば友達数も回復する構造。
+      </div>
+    </div>
+  </div>
+
+  <!-- FAGA月次データ -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">2</div>
+      <div>
+        <div class="section-title">FAGA 月次推移</div>
+        <div class="section-sub">SEOチャネルのみ集計。サンプル小のため参考値</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>月</th>
+            <th>LP imp</th>
+            <th>友達</th>
+            <th>PVFR</th>
+            <th>PV/友達1人</th>
+            <th>備考</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026-01</td>
+            <td>853</td>
+            <td>0</td>
+            <td>0.00%</td>
+            <td>—</td>
+            <td>PU未設置or未稼働</td>
+          </tr>
+          <tr>
+            <td>2026-02</td>
+            <td>690</td>
+            <td>1</td>
+            <td>0.14%</td>
+            <td>690</td>
+            <td>サンプル極小</td>
+          </tr>
+          <tr>
+            <td>2026-03</td>
+            <td>569</td>
+            <td>3</td>
+            <td>0.53%</td>
+            <td>190</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>2026-04</td>
+            <td>438</td>
+            <td>2</td>
+            <td>0.46%</td>
+            <td>219</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>2026-05</td>
+            <td>411</td>
+            <td>2</td>
+            <td>0.49%</td>
+            <td>206</td>
+            <td></td>
+          </tr>
+          <tr style="background:#fffbeb;">
+            <td><strong>2026-06</strong> <span class="badge badge-gray">当月途中</span></td>
+            <td>295</td>
+            <td>5</td>
+            <td class="warn">1.69%</td>
+            <td>59</td>
+            <td class="warn">外れ値</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="insight insight-yellow">
+        <strong>6月1.69%は外れ値。</strong>友達5人のみでブレが大きい。実態は3〜5月の0.46〜0.53%（PV/友達1人 約200）が参考値。
+      </div>
+      <div class="insight insight-red" style="margin-top:8px;">
+        <strong>ニューモ育毛剤記事削除（月9,968クリック）の影響でW25以降は構造的に下落確定。</strong>分析時は要注記。
+      </div>
+    </div>
+  </div>
+
+  <!-- 結論・活用方法 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">3</div>
+      <div>
+        <div class="section-title">PU設置ROI試算への活用</div>
+        <div class="section-sub">新規記事追加時の友達数見込み計算に使う</div>
+      </div>
+    </div>
+    <div class="body">
+      <h3>基準値（安定値ベース）</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ジャンル</th>
+            <th>安定PVFR</th>
+            <th>PV/友達1人</th>
+            <th>直近5月</th>
+            <th>直近6月</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>AGA</strong></td>
+            <td>0.19%（1〜4月平均）</td>
+            <td>約500PV</td>
+            <td>0.14% / 714PV</td>
+            <td>0.22% / 450PV</td>
+          </tr>
+          <tr>
+            <td><strong>FAGA</strong></td>
+            <td>0.49%（3〜5月平均）</td>
+            <td>約200PV</td>
+            <td>0.49% / 206PV</td>
+            <td>1.69% / 59PV <span class="badge badge-yellow">外れ値</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="insight insight-blue" style="margin-top:12px;">
+        <strong>試算例：</strong>AGA系新規記事が月1,000PV獲得した場合 → 友達追加見込み 約2人（PVFR 0.19%）。
+        FAGA系なら約5人（PVFR 0.49%）。
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
