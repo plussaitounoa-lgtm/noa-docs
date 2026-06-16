@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ジャンル別PVFR分析 — 2026-06-16</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 960px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    /* サマリーテーブル */
+    .summary-section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 24px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .summary-section h2 { font-size: 16px; font-weight: 800; color: #0f172a; margin-bottom: 16px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    .up   { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .muted { color: #94a3b8; }
+
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .badge-green  { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-red    { background: #fee2e2; color: #dc2626; }
+    .badge-gray   { background: #f1f5f9; color: #64748b; }
+
+    /* ジャンル別セクション */
+    .genre-section { background: #fff; border-radius: 14px; padding: 24px 28px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .genre-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .genre-tag { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 6px; }
+    .tag-diet  { background: #dbeafe; color: #1d4ed8; }
+    .tag-phimo { background: #f3e8ff; color: #6d28d9; }
+    .tag-ed    { background: #fff3e0; color: #c2410c; }
+    .tag-pill  { background: #e0f7fa; color: #0e7490; }
+    .tag-icl   { background: #f0fdf4; color: #15803d; }
+    .tag-ibiki { background: #fce7f3; color: #9d174d; }
+    .tag-kango { background: #fff7ed; color: #9a3412; }
+    .tag-rw    { background: #f8fafc; color: #475569; }
+    .tag-aga   { background: #fef2f2; color: #b91c1c; }
+
+    .genre-title { font-size: 16px; font-weight: 800; color: #0f172a; }
+    .stable-row { background: #f0fdf4; }
+    .recent-row { background: #fafafa; }
+
+    .insight { border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-top: 10px; }
+    .insight-red    { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-green  { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-blue   { background: #eff6ff; border-left: 3px solid #3b82f6; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="page-header">
+    <div class="eyebrow">全ジャンル比較 — 2026-06-16</div>
+    <h1>ジャンル別PVFR分析</h1>
+    <p class="desc">友達1人獲得に必要なPV数の一覧。PU設置・ROI試算の前提データ。安定値 = 直近3ヶ月（5月以前）加重平均、直近 = 5月・6月実績。</p>
+  </div>
+
+  <!-- サマリー比較表 -->
+  <div class="summary-section">
+    <h2>全ジャンル比較サマリー</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ジャンル</th>
+          <th>安定PVFR</th>
+          <th>安定 PV/1人</th>
+          <th>5月 PVFR</th>
+          <th>6月 PVFR</th>
+          <th>トレンド</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>医療ダイエット</strong></td>
+          <td>0.97%</td>
+          <td>103</td>
+          <td class="up">1.11%</td>
+          <td>0.88%</td>
+          <td>→ 安定稼働</td>
+        </tr>
+        <tr>
+          <td><strong>包茎（PLUS）</strong></td>
+          <td>0.79%</td>
+          <td>126</td>
+          <td>0.69%</td>
+          <td class="down">0.46%</td>
+          <td class="down">↓ 急落中</td>
+        </tr>
+        <tr>
+          <td><strong>ED</strong></td>
+          <td>0.47%</td>
+          <td>213</td>
+          <td>0.65%</td>
+          <td class="warn">1.26%</td>
+          <td class="warn">↑ サンプル小</td>
+        </tr>
+        <tr>
+          <td><strong>オンラインピル</strong></td>
+          <td>0.61%</td>
+          <td>163</td>
+          <td>0.51%</td>
+          <td>0.54%</td>
+          <td>→ 横ばい</td>
+        </tr>
+        <tr>
+          <td><strong>ICL</strong></td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>0.36%</td>
+          <td class="muted">6月稼働開始</td>
+        </tr>
+        <tr>
+          <td><strong>AGA</strong></td>
+          <td>0.19%</td>
+          <td>500</td>
+          <td>0.14%</td>
+          <td>0.22%</td>
+          <td class="down">↓ LP imp激減</td>
+        </tr>
+        <tr>
+          <td><strong>FAGA</strong></td>
+          <td>0.49%</td>
+          <td>200</td>
+          <td>0.49%</td>
+          <td class="warn">1.69%</td>
+          <td class="warn">↑ 外れ値疑い</td>
+        </tr>
+        <tr>
+          <td><strong>いびき</strong></td>
+          <td>0.07%</td>
+          <td>1,363</td>
+          <td>0.07%</td>
+          <td class="down">0.03%</td>
+          <td class="down">↓ 構造問題疑い</td>
+        </tr>
+        <tr>
+          <td><strong>看護転職</strong></td>
+          <td>0.15%</td>
+          <td>686</td>
+          <td>0.20%</td>
+          <td>0.16%</td>
+          <td>→ 低水準で横ばい</td>
+        </tr>
+        <tr>
+          <td><strong>リカバリーウェア</strong></td>
+          <td>0.39%</td>
+          <td>253</td>
+          <td>0.27%</td>
+          <td class="down">0.00%</td>
+          <td class="down">↓ LP imp急減</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note">基準: PVFR ≥ 0.80%。安定値 = 2026年3〜5月の加重平均（当月除く）。6月は途中値（〜15日）。</p>
+  </div>
+
+  <!-- 医療ダイエット -->
+  <div class="genre-section">
+    <div class="genre-header">
+      <span class="genre-tag tag-diet">医療ダイエット（GLP-1）</span>
+      <span class="genre-title"></span>
+    </div>
+    <table>
+      <thead><tr><th>月</th><th>LP imp</th><th>友達</th><th>PVFR</th><th>PV/友達1人</th></tr></thead>
+      <tbody>
+        <tr><td>2026-01</td><td>31,350</td><td>281</td><td>0.90%</td><td>112</td></tr>
+        <tr><td>2026-02</td><td>62,020</td><td>592</td><td>0.95%</td><td>105</td></tr>
+        <tr><td>2026-03</td><td>101,653</td><td>874</td><td>0.86%</td><td>116</td></tr>
+        <tr><td>2026-04</td><td>55,323</td><td>564</td><td>1.02%</td><td>98</td></tr>
+        <tr class="stable-row"><td>2026-05 <span class="badge badge-green">安定値算入</span></td><td>57,352</td><td>634</td><td>1.11%</td><td>90</td></tr>
+        <tr class="recent-row"><td>2026-06 <span class="badge badge-gray">途中</span></td><td>38,956</td><td>344</td><td>0.88%</td><td>113</td></tr>
+        <tr style="background:#f0fdf4; font-weight:700;"><td colspan="3">安定値（3〜5月加重平均）</td><td>0.97%</td><td>103</td></tr>
+      </tbody>
+    </table>
+    <div class="insight insight-green">全ジャンル中唯一PVFR基準（0.80%）を安定的にクリア。メインジャンル。</div>
+  </div>
+
+  <!-- 包茎 -->
+  <div class="genre-section">
+    <div class="genre-header">
+      <span class="genre-tag tag-phimo">包茎（PLUS）</span>
+    </div>
+    <table>
+      <thead><tr><th>月</th><th>LP imp</th><th>友達</th><th>PVFR</th><th>PV/友達1人</th></tr></thead>
+      <tbody>
+        <tr><td>2026-01</td><td>15,195</td><td>129</td><td>0.85%</td><td>118</td></tr>
+        <tr><td>2026-02</td><td>11,910</td><td>108</td><td>0.91%</td><td>110</td></tr>
+        <tr><td>2026-03</td><td>12,162</td><td>108</td><td>0.89%</td><td>113</td></tr>
+        <tr class="stable-row"><td>2026-04 <span class="badge badge-green">安定値算入</span></td><td>9,725</td><td>79</td><td>0.81%</td><td>123</td></tr>
+        <tr class="stable-row"><td>2026-05 <span class="badge badge-green">安定値算入</span></td><td>13,238</td><td>91</td><td>0.69%</td><td>145</td></tr>
+        <tr class="recent-row"><td>2026-06 <span class="badge badge-gray">途中</span></td><td>6,522</td><td>30</td><td class="down">0.46%</td><td>217</td></tr>
+        <tr style="background:#f0fdf4; font-weight:700;"><td colspan="3">安定値（3〜5月加重平均）</td><td>0.79%</td><td>126</td></tr>
+      </tbody>
+    </table>
+    <div class="insight insight-red">6月に入りPVFR・LP impともに急落。5月 0.69%→6月 0.46%で基準を大きく割り込み。要因調査が必要。</div>
+  </div>
+
+  <!-- ED -->
+  <div class="genre-section">
+    <div class="genre-header">
+      <span class="genre-tag tag-ed">ED</span>
+    </div>
+    <table>
+      <thead><tr><th>月</th><th>LP imp</th><th>友達</th><th>PVFR</th><th>PV/友達1人</th></tr></thead>
+      <tbody>
+        <tr><td>2026-01</td><td>2,375</td><td>20</td><td>0.84%</td><td>119</td></tr>
+        <tr><td>2026-02</td><td>2,759</td><td>16</td><td>0.58%</td><td>172</td></tr>
+        <tr><td>2026-03</td><td>9,436</td><td>39</td><td>0.41%</td><td>242</td></tr>
+        <tr><td>2026-04</td><td>4,637</td><td>20</td><td>0.43%</td><td>232</td></tr>
+        <tr class="stable-row"><td>2026-05 <span class="badge badge-green">安定値算入</span></td><td>3,836</td><td>25</td><td>0.65%</td><td>153</td></tr>
+        <tr class="recent-row"><td>2026-06 <span class="badge badge-gray">途中</span></td><td>717</td><td>9</td><td class="warn">1.26%</td><td>80</td></tr>
+        <tr style="background:#f0fdf4; font-weight:700;"><td colspan="3">安定値（3〜5月加重平均）</td><td>0.47%</td><td>213</td></tr>
+      </tbody>
+    </table>
+    <div class="insight insight-yellow">LP impの変動が大きくブレやすい。3月に急増した理由は不明。6月1.26%はLP imp 717と極小サンプルのため参考値。安定値0.47%が実態に近い。</div>
+  </div>
+
+  <!-- オンラインピル -->
+  <div class="genre-section">
+    <div class="genre-header">
+      <span class="genre-tag tag-pill">オンラインピル</span>
+    </div>
+    <table>
+      <thead><tr><th>月</th><th>LP imp</th><th>友達</th><th>PVFR</th><th>PV/友達1人</th></tr></thead>
+      <tbody>
+        <tr><td>2026-01</td><td>1,388</td><td>5</td><td>0.36%</td><td>278</td></tr>
+        <tr><td>2026-02</td><td>1,002</td><td>3</td><td>0.30%</td><td>334</td></tr>
+        <tr><td>2026-03</td><td>2,102</td><td>15</td><td>0.71%</td><td>140</td></tr>
+        <tr><td>2026-04</td><td>2,904</td><td>23</td><td>0.79%</td><td>126</td></tr>
+        <tr class="stable-row"><td>2026-05 <span class="badge badge-green">安定値算入</span></td><td>6,890</td><td>35</td><td>0.51%</td><td>197</td></tr>
+        <tr class="recent-row"><td>2026-06 <span class="badge badge-gray">途中</span></td><td>4,255</td><td>23</td><td>0.54%</td><td>185</td></tr>
+        <tr style="background:#f0fdf4; font-weight:700;"><td colspan="3">安定値（3〜5月加重平均）</td><td>0.61%</td><td>163</td></tr>
+      </tbody>
+    </table>
+    <div class="insight insight-yellow">LP impは成長傾向（1,000→6,900）だがPVFRは0.51〜0.54%で横ばい。PU改修で0.80%に届けば+15〜20人/月のポテンシャル。</div>
+  </div>
+
+  <!-- ICL -->
+  <div class="genre-section">
+    <div class="genre-header">
+      <span class="genre-tag tag-icl">ICL（ほんべ）</span>
+    </div>
+    <table>
+      <thead><tr><th>月</th><th>LP imp</th><th>友達</th><th>PVFR</th><th>PV/友達1人</th></tr></thead>
+      <tbody>
+        <tr class="recent-row"><td>2026-06 <span class="badge badge-gray">稼働開始</span></td><td>3,312</td><td>12</td><td>0.36%</td><td>276</td></tr>
+      </tbody>
+    </table>
+    <div class="insight insight-blue">6月稼働開始のため安定値なし。1ヶ月未満のデータのみ。今後3〜4ヶ月蓄積してから評価。</div>
+  </div>
+
+  <!-- AGA -->
+  <div class="genre-section">
+    <div class="genre-header">
+      <span class="genre-tag tag-aga">AGA</span>
+    </div>
+    <table>
+      <thead><tr><th>月</th><th>LP imp</th><th>友達</th><th>PVFR</th><th>PV/友達1人</th></tr></thead>
+      <tbody>
+        <tr><td>2026-01</td><td>10,001</td><td>19</td><td>0.19%</td><td>526</td></tr>
+        <tr><td>2026-02</td><td>8,590</td><td>14</td><td>0.16%</td><td>614</td></tr>
+        <tr><td>2026-03</td><td>6,770</td><td>11</td><td>0.16%</td><td>615</td></tr>
+        <tr class="stable-row"><td>2026-04 <span class="badge badge-green">安定値算入</span></td><td>5,880</td><td>14</td><td>0.24%</td><td>420</td></tr>
+        <tr class="stable-row"><td>2026-05 <span class="badge badge-green">安定値算入</span></td><td>4,999</td><td>7</td><td>0.14%</td><td>714</td></tr>
+        <tr class="recent-row"><td>2026-06 <span class="badge badge-gray">途中</span></td><td>3,603</td><td>8</td><td>0.22%</td><td>450</td></tr>
+        <tr style="background:#f0fdf4; font-weight:700;"><td colspan="3">安定値（3〜5月加重平均）</td><td>0.19%</td><td>500</td></tr>
+      </tbody>
+    </table>
+    <div class="insight insight-red">LP impが1月比▲64%と激減。チャップアップ・ニューモ等の記事消失が主因と推測。PVFRは0.14〜0.24%で横ばいのため、流入さえ戻れば回復できる構造。PU設置は記事追加後の「仕込み」として位置づける。</div>
+  </div>
+
+  <!-- FAGA -->
+  <div class="genre-section">
+    <div class="genre-header">
+      <span class="genre-tag tag-aga">FAGA</span>
+    </div>
+    <table>
+      <thead><tr><th>月</th><th>LP imp</th><th>友達</th><th>PVFR</th><th>PV/友達1人</th></tr></thead>
+      <tbody>
+        <tr><td>2026-02</td><td>690</td><td>1</td><td>0.14%</td><td>690</td></tr>
+        <tr><td>2026-03</td><td>569</td><td>3</td><td>0.53%</td><td>190</td></tr>
+        <tr class="stable-row"><td>2026-04 <span class="badge badge-green">安定値算入</span></td><td>438</td><td>2</td><td>0.46%</td><td>219</td></tr>
+        <tr class="stable-row"><td>2026-05 <span class="badge badge-green">安定値算入</span></td><td>411</td><td>2</td><td>0.49%</td><td>206</td></tr>
+        <tr class="recent-row"><td>2026-06 <span class="badge badge-gray">途中</span></td><td>295</td><td>5</td><td class="warn">1.69%</td><td>59</td></tr>
+        <tr style="background:#f0fdf4; font-weight:700;"><td colspan="3">安定値（3〜5月加重平均）</td><td>0.49%</td><td>200</td></tr>
+      </tbody>
+    </table>
+    <div class="insight insight-red">ニューモ育毛剤記事削除（月9,968クリック）によりW25以降LP impが構造的に下落確定。6月1.69%は友達5人の外れ値。安定実態は約200PVで1人。</div>
+  </div>
+
+  <!-- いびき -->
+  <div class="genre-section">
+    <div class="genre-header">
+      <span class="genre-tag tag-ibiki">いびき（あいたクリニック）</span>
+    </div>
+    <table>
+      <thead><tr><th>月</th><th>LP imp</th><th>友達</th><th>PVFR</th><th>PV/友達1人</th></tr></thead>
+      <tbody>
+        <tr><td>2026-04</td><td>904</td><td>1</td><td>0.11%</td><td>904</td></tr>
+        <tr class="stable-row"><td>2026-05 <span class="badge badge-green">安定値算入</span></td><td>8,640</td><td>6</td><td>0.07%</td><td>1,440</td></tr>
+        <tr class="recent-row"><td>2026-06 <span class="badge badge-gray">途中</span></td><td>3,014</td><td>1</td><td class="down">0.03%</td><td>3,014</td></tr>
+        <tr style="background:#f0fdf4; font-weight:700;"><td colspan="3">安定値（3〜5月加重平均）</td><td>0.07%</td><td>1,363</td></tr>
+      </tbody>
+    </table>
+    <div class="insight insight-red">PVは増えているのに友達がほぼ増えない。PUクリック後の遷移先URL・友達追加画面に構造的問題がある可能性大。PU改善より先にLP・友達追加画面の確認が必要。</div>
+  </div>
+
+  <!-- 看護転職 -->
+  <div class="genre-section">
+    <div class="genre-header">
+      <span class="genre-tag tag-kango">看護転職（SEO）</span>
+    </div>
+    <table>
+      <thead><tr><th>月</th><th>LP imp</th><th>友達</th><th>PVFR</th><th>PV/友達1人</th></tr></thead>
+      <tbody>
+        <tr><td>2026-01</td><td>379</td><td>2</td><td>0.53%</td><td>190</td></tr>
+        <tr><td>2026-02</td><td>883</td><td>2</td><td>0.23%</td><td>442</td></tr>
+        <tr><td>2026-03</td><td>1,050</td><td>1</td><td>0.10%</td><td>1,050</td></tr>
+        <tr class="stable-row"><td>2026-04 <span class="badge badge-green">安定値算入</span></td><td>1,725</td><td>2</td><td>0.12%</td><td>862</td></tr>
+        <tr class="stable-row"><td>2026-05 <span class="badge badge-green">安定値算入</span></td><td>2,027</td><td>4</td><td>0.20%</td><td>507</td></tr>
+        <tr class="recent-row"><td>2026-06 <span class="badge badge-gray">途中</span></td><td>1,231</td><td>2</td><td>0.16%</td><td>616</td></tr>
+        <tr style="background:#f0fdf4; font-weight:700;"><td colspan="3">安定値（3〜5月加重平均）</td><td>0.15%</td><td>686</td></tr>
+      </tbody>
+    </table>
+    <div class="insight insight-red">PVは増加傾向だがPVFRは0.10〜0.20%で低水準。ROI最低ジャンル。撤退 or 継続の判断が必要。</div>
+  </div>
+
+  <!-- リカバリーウェア -->
+  <div class="genre-section">
+    <div class="genre-header">
+      <span class="genre-tag tag-rw">リカバリーウェア</span>
+    </div>
+    <table>
+      <thead><tr><th>月</th><th>LP imp</th><th>友達</th><th>PVFR</th><th>PV/友達1人</th></tr></thead>
+      <tbody>
+        <tr><td>2026-03</td><td>19,195</td><td>97</td><td>0.51%</td><td>198</td></tr>
+        <tr class="stable-row"><td>2026-04 <span class="badge badge-green">安定値算入</span></td><td>11,587</td><td>34</td><td>0.29%</td><td>341</td></tr>
+        <tr class="stable-row"><td>2026-05 <span class="badge badge-green">安定値算入</span></td><td>7,725</td><td>21</td><td>0.27%</td><td>368</td></tr>
+        <tr class="recent-row"><td>2026-06 <span class="badge badge-gray">途中</span></td><td>1,229</td><td>0</td><td class="down">0.00%</td><td>—</td></tr>
+        <tr style="background:#f0fdf4; font-weight:700;"><td colspan="3">安定値（3〜5月加重平均）</td><td>0.39%</td><td>253</td></tr>
+      </tbody>
+    </table>
+    <div class="insight insight-red">LP impが3月19,195→6月1,229と急減。6月は友達0人。流入元の記事PV減少が主因と推測。</div>
+  </div>
+
+</div>
+</body>
+</html>
