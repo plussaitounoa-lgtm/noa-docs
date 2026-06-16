@@ -58,7 +58,7 @@
 <div class="container">
 
   <h1>クレンジング選び診断 設計書</h1>
-  <div class="meta">2026-06-15 ｜ Carena（carenacosmetic.co.jp）× LINE診断 ｜ ステータス: 教育カル設計完了（4タイプ）</div>
+  <div class="meta">2026-06-16 ｜ Carena（carenacosmetic.co.jp）× LINE診断 ｜ ステータス: 振り分けロジック確定（案A）・教育カル設計完了（4タイプ）</div>
 
   <!-- ファネル位置づけ -->
   <h2>ファネル上の位置づけ</h2>
@@ -340,41 +340,52 @@
       <div class="q-num">Q5 ｜ 重視点</div>
       <div class="q-text">クレンジング選びで重視することは？</div>
       <div class="choices">
-        <div class="choice">汚れをしっかり落とす</div>
-        <div class="choice">肌への優しさ・低刺激</div>
-        <div class="choice">うるおいを残す</div>
-        <div class="choice">毛穴ケア</div>
+        <div class="choice key">汚れをしっかり落としたい</div>
+        <div class="choice key">うるおいを残したい</div>
+        <div class="choice key">さっぱり・すっきり洗い上がりたい</div>
+        <div class="choice key">肌への優しさ・低刺激を大切にしたい</div>
       </div>
-      <p style="font-size:12px;color:#888;margin-top:8px;">Q3と組み合わせてエッジケースを解消する最終確認軸。</p>
+      <p style="font-size:12px;color:#888;margin-top:8px;"><strong>この回答が結果タイプを直接決定する。</strong> Q1〜Q4は情報収集（パーソナライズ用途）。</p>
     </div>
   </div>
 
   <!-- 振り分けロジック -->
-  <h2>振り分けロジック <span class="badge badge-red">実装方式 検討中</span></h2>
+  <h2>振り分けロジック <span class="badge badge-green">確定 2026-06-16</span></h2>
   <div class="card">
-    <div class="highlight">
-      <strong>制約：LINE BOTはスコア加算型ロジックが使えない。</strong><br>
-      実装は「この答え → 次のメッセージ/結果」の分岐ツリー（決定木）のみ。複数問の回答を集計して判定する方式は不可。
+    <div class="note">
+      <strong>採用方式：案A（Q5直結型）</strong><br>
+      Q1〜Q4は全員共通で通過（情報収集・パーソナライズ用途）。Q5の回答が結果タイプを直接決定する。LINE BOTはスコア加算型が使えないためシンプルな分岐で実装。
     </div>
-    <p style="font-size:13px;color:#555;margin:12px 0 8px;">検討中の構成案：</p>
-    <table>
-      <thead><tr><th>案</th><th>構造</th><th>メリット</th><th>デメリット</th></tr></thead>
+    <table style="margin-top:14px;">
+      <thead><tr><th>Q5の回答</th><th>判定タイプ</th><th>推薦商材</th><th>送信カルーセル</th></tr></thead>
       <tbody>
         <tr>
-          <td><strong>A</strong></td>
-          <td>Q1〜Q4は全員共通 → Q5の4択が4商材に1対1対応</td>
-          <td>実装シンプル</td>
-          <td>Q1〜Q4が結果に反映されない。Q5だけで決まる</td>
+          <td>汚れをしっかり落としたい</td>
+          <td><strong>オイルタイプ</strong></td>
+          <td>アテニア スキンクリア</td>
+          <td>オイルタイプ 教育カル（5枚）→ 商材推薦カル</td>
         </tr>
         <tr>
-          <td><strong>B</strong></td>
-          <td>Q1から分岐する決定木。各パスの最後の問いが結果を決定</td>
-          <td>各答えが結果に意味を持つ</td>
-          <td>実装重い。ユーザーによって問数・質問が変わる</td>
+          <td>うるおいを残したい</td>
+          <td><strong>ゲルタイプ</strong></td>
+          <td>マナラ ホットクレンジングゲル</td>
+          <td>ゲルタイプ 教育カル（5枚）→ 商材推薦カル</td>
+        </tr>
+        <tr>
+          <td>さっぱり・すっきり洗い上がりたい</td>
+          <td><strong>クリームタイプ</strong></td>
+          <td>オルビス オフクリーム</td>
+          <td>クリームタイプ 教育カル（5枚）→ 商材推薦カル</td>
+        </tr>
+        <tr>
+          <td>肌への優しさ・低刺激を大切にしたい</td>
+          <td><strong>ミルクタイプ</strong></td>
+          <td>アクセーヌ</td>
+          <td>ミルクタイプ 教育カル（5枚）→ 商材推薦カル</td>
         </tr>
       </tbody>
     </table>
-    <p style="font-size:12px;color:#888;margin-top:10px;">→ どちらの構造で組むかを確定してからロジック表を作成する。</p>
+    <div class="highlight" style="margin-top:12px;">Q1〜Q4の回答はタイプ判定には使わないが、将来的なパーソナライズ（推薦文言の出し分け等）に活用可能。</div>
   </div>
 
   <!-- タイプ別リサーチ結果 -->
@@ -382,7 +393,7 @@
   <div class="grid2">
     <div class="card" style="border-top:3px solid #fbbc04;">
       <h3 style="margin-top:0;">オイルタイプ</h3>
-      <p style="font-size:12px;color:#888;margin-bottom:8px;"><strong>ターゲット:</strong> 毛穴・くすみが気になる20〜40代。濃いめメイク派。Q5「汚れをしっかり落とす」「毛穴ケア」選択者</p>
+      <p style="font-size:12px;color:#888;margin-bottom:8px;"><strong>ターゲット:</strong> 毛穴・くすみが気になる20〜40代。濃いめメイク派。Q5「汚れをしっかり落としたい」選択者</p>
       <div class="highlight"><strong>感情の核:</strong> 「すっきり感＝ちゃんと落ちてる」の思い込み → 「乳化した瞬間が落ちてる証拠」という新体験</div>
       <p style="font-size:12px;font-weight:700;margin:10px 0 4px;">リアルボイス（出典: note/wisdom_hub, ameblo/momonodo）</p>
       <ul style="font-size:12px;color:#555;margin:0;padding-left:16px;">
@@ -544,7 +555,7 @@
       <thead><tr><th>ステップ</th><th>内容</th><th>状態</th></tr></thead>
       <tbody>
         <tr><td>① 5問フロー確定</td><td>Q1〜Q5の質問文・選択肢確定</td><td><span class="badge badge-green">✅ 完了</span></td></tr>
-        <tr><td>② 振り分けロジック表</td><td>全組み合わせパターンの網羅表。エッジケース処理含む</td><td><span class="badge badge-yellow">🔧 次</span></td></tr>
+        <tr><td>② 振り分けロジック表</td><td>案A確定（Q5直結型）。Q5の4択→4タイプ1:1対応</td><td><span class="badge badge-green">✅ 完了</span></td></tr>
         <tr><td>③ 結果メッセージ設計（教育カル）</td><td>タイプ別教育カルーセル × 4パターン。5枚構成・リサーチ済み</td><td><span class="badge badge-green">✅ 完了</span></td></tr>
         <tr><td>④ PU文言設計</td><td>9記事へのPUキャッチコピー案。デザイナー依頼書作成</td><td><span class="badge">待機中</span></td></tr>
         <tr><td>⑤ LINE実装</td><td>診断フローのLINE BOT実装</td><td><span class="badge">Ren確認後</span></td></tr>
