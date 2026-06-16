@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LINEワークフロー設計図 v1.0 | クレンジング選び診断 × Carena</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #2a1830;
+      padding: 40px 0 80px;
+      min-height: 100vh;
+    }
+    .page-wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+
+    /* ─── ページヘッダー ─── */
+    .back-link { display:inline-block; color:rgba(255,255,255,0.45); font-size:13px; text-decoration:none; margin-bottom:20px; }
+    .back-link:hover { color:white; }
+    .page-header { text-align:center; margin-bottom:12px; }
+    .page-header h1 { font-size:20px; font-weight:700; color:white; }
+    .page-header p  { font-size:13px; color:rgba(255,255,255,0.6); margin-top:6px; }
+    .version-badge { display:inline-block; background:rgba(201,86,124,0.35); color:#f4a3c0; font-size:11px; font-weight:700; padding:2px 10px; border-radius:10px; margin-top:6px; border:1px solid rgba(201,86,124,0.4); }
+
+    /* ─── サマリーボックス ─── */
+    .summary-box {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 28px;
+      color: white;
+    }
+    .summary-box h2 { font-size:12px; font-weight:700; color:rgba(255,255,255,0.5); letter-spacing:.1em; margin-bottom:12px; }
+    .summary-flow-row { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+    .sf-step { background:rgba(201,86,124,0.25); border:1px solid rgba(201,86,124,0.4); border-radius:6px; padding:4px 10px; font-size:12px; font-weight:600; color:#f4a3c0; white-space:nowrap; }
+    .sf-arrow { color:rgba(255,255,255,0.35); font-size:14px; }
+    .summary-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:4px; }
+    .summary-table th { text-align:left; color:rgba(255,255,255,0.45); font-weight:600; padding:4px 8px; border-bottom:1px solid rgba(255,255,255,0.1); }
+    .summary-table td { padding:5px 8px; color:rgba(255,255,255,0.8); border-bottom:1px solid rgba(255,255,255,0.06); vertical-align:top; }
+    .summary-table td:first-child { white-space:nowrap; color:rgba(255,255,255,0.4); }
+
+    /* ─── 凡例 ─── */
+    .legend {
+      display:flex; gap:12px; flex-wrap:wrap;
+      background:rgba(0,0,0,0.2); border-radius:10px;
+      padding:10px 16px; margin-bottom:28px;
+    }
+    .legend-item { display:flex; align-items:center; gap:6px; font-size:11px; color:rgba(255,255,255,0.75); }
+    .legend-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+    .ld-step   { background:#06c755; }
+    .ld-branch { background:#f59e0b; }
+    .ld-note   { background:#60a5fa; }
+    .ld-wip    { background:#9ca3af; }
+
+    /* ─── フロー共通 ─── */
+    .flow { max-width:440px; margin:0 auto; display:flex; flex-direction:column; align-items:center; }
+    .flow.wide { max-width:980px; }
+    .step-label { background:rgba(201,86,124,0.35); border:1px solid rgba(201,86,124,0.4); color:#f4a3c0; font-size:12px; font-weight:600; padding:5px 18px; border-radius:20px; margin-bottom:12px; white-space:nowrap; text-align:center; }
+    .arrow { width:2px; height:36px; background:rgba(255,255,255,0.3); position:relative; flex-shrink:0; }
+    .arrow::after { content:''; position:absolute; bottom:-7px; left:50%; transform:translateX(-50%); border-left:7px solid transparent; border-right:7px solid transparent; border-top:8px solid rgba(255,255,255,0.3); }
+    .step-note { font-size:12px; color:rgba(255,255,255,0.55); text-align:center; margin-top:8px; }
+
+    /* ─── 設計メモ（青） ─── */
+    .impl-note {
+      background:rgba(96,165,250,0.12);
+      border:1px dashed rgba(96,165,250,0.4);
+      border-radius:8px; padding:8px 14px;
+      font-size:11px; color:rgba(147,197,253,0.9);
+      margin-top:8px; width:100%; max-width:440px; text-align:left;
+    }
+    .impl-note strong { display:block; margin-bottom:3px; font-size:11px; }
+    .impl-note ul { padding-left:14px; }
+    .impl-note li { margin-bottom:2px; }
+
+    /* ─── 備考メモ（ピンク） ─── */
+    .warn-note {
+      background:rgba(201,86,124,0.12);
+      border:1px dashed rgba(201,86,124,0.4);
+      border-radius:8px; padding:8px 14px;
+      font-size:11px; color:rgba(244,163,192,0.9);
+      margin-top:8px; width:100%; max-width:440px; text-align:left;
+    }
+    .warn-note strong { display:block; margin-bottom:3px; }
+
+    /* ─── PUカード ─── */
+    .pu-wrap { width:100%; background:white; border-radius:16px; padding:18px; box-shadow:0 2px 16px rgba(0,0,0,0.3); }
+    .pu-label { font-size:11px; font-weight:700; color:#aaa; letter-spacing:.06em; margin-bottom:10px; }
+    .pu-inner { background:#fff5f8; border:1.5px solid #e8a0c0; border-radius:10px; padding:16px; text-align:center; }
+    .pu-headline { font-size:15px; font-weight:800; color:#c9567c; margin-bottom:6px; }
+    .pu-copy     { font-size:12px; color:#555; line-height:1.6; }
+    .pu-badge    { font-size:11px; color:#999; margin:8px 0 12px; }
+    .pu-buttons  { display:flex; gap:8px; }
+    .btn-yes { flex:1; background:#c9567c; color:white; border:none; border-radius:6px; padding:9px; font-size:13px; font-weight:700; }
+    .btn-no  { flex:1; background:#f0f0f0; color:#666;  border:none; border-radius:6px; padding:9px; font-size:13px; font-weight:700; }
+
+    /* ─── 友だち追加 ─── */
+    .friend-card { background:#06c755; border-radius:14px; width:100%; padding:26px 20px; text-align:center; box-shadow:0 2px 12px rgba(0,0,0,0.2); }
+    .friend-icon  { font-size:30px; margin-bottom:6px; }
+    .friend-title { font-size:20px; font-weight:800; color:white; margin-bottom:4px; }
+    .friend-sub   { font-size:13px; color:rgba(255,255,255,0.8); }
+    .friend-goal  { display:inline-block; background:rgba(255,255,255,0.25); color:white; font-size:12px; font-weight:700; padding:3px 12px; border-radius:20px; margin-top:8px; }
+
+    /* ─── LINEモック ─── */
+    .line-mock { width:100%; background:#c8e0f4; border-radius:16px; overflow:hidden; box-shadow:0 2px 14px rgba(0,0,0,0.25); }
+    .line-mock-header { background:#c9567c; padding:10px 14px; display:flex; align-items:center; gap:8px; }
+    .line-mock-icon { width:28px; height:28px; background:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+    .line-mock-name { font-size:13px; font-weight:700; color:white; }
+    .line-mock-body { padding:14px 12px; display:flex; flex-direction:column; gap:10px; }
+    .line-bubble { background:white; border-radius:0 10px 10px 10px; padding:12px 14px; font-size:13px; color:#222; line-height:1.6; max-width:90%; box-shadow:0 1px 3px rgba(0,0,0,0.08); }
+    .line-bubble strong { font-size:14px; font-weight:800; display:block; margin-bottom:4px; }
+    .timing-tag { display:inline-block; background:#e0f2e9; color:#16a34a; font-size:10px; font-weight:700; padding:1px 6px; border-radius:4px; margin-bottom:4px; }
+
+    /* ─── 診断スタートカード ─── */
+    .line-shindan-card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.1); }
+    .shindan-card-header { background:#f5f5f5; padding:10px 14px; display:flex; align-items:center; gap:6px; font-size:13px; font-weight:700; color:#333; border-bottom:1px solid #eee; }
+    .shindan-card-body { padding:12px 14px; }
+    .shindan-inner { background:#fff5f8; border:1px solid #e8a0c0; border-radius:8px; padding:10px 12px; font-size:12px; color:#555; line-height:1.6; margin-bottom:10px; }
+    .shindan-inner .shindan-title { font-size:13px; font-weight:700; color:#c9567c; margin-bottom:4px; }
+    .shindan-badge { display:inline-block; background:#fff0f5; color:#c9567c; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px; border:1px solid #e8a0c0; margin-top:4px; }
+    .shindan-start-btn { width:100%; background:#c9567c; color:white; border:none; border-radius:8px; padding:11px; font-size:14px; font-weight:800; letter-spacing:.03em; }
+
+    /* ─── 設問カード ─── */
+    .line-q-card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.1); }
+    .q-card-question { padding:12px 14px 10px; font-size:13px; font-weight:700; color:#111; border-bottom:1px solid #f0f0f0; line-height:1.5; }
+    .q-card-answers { padding:8px 10px; display:flex; flex-direction:column; gap:6px; }
+    .q-purpose-tag { display:inline-block; background:#fff5f8; color:#c9567c; font-size:10px; font-weight:700; padding:2px 7px; border-radius:4px; margin-left:6px; vertical-align:middle; }
+    .q-answer-btn { border:1.5px solid #c9567c; border-radius:8px; padding:8px 12px; font-size:12px; color:#c9567c; font-weight:600; display:flex; align-items:center; gap:8px; background:white; }
+    .q-answer-btn.branch-btn { border-color:#f59e0b; color:#92400e; }
+    .q-answer-key { background:#c9567c; color:white; width:20px; height:20px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex-shrink:0; }
+    .q-answer-key.branch { background:#f59e0b; color:#1a1a1a; }
+    .q-answer-branch { margin-left:auto; font-size:10px; font-weight:700; color:#f59e0b; white-space:nowrap; }
+    .q-branch-note { text-align:center; font-size:11px; color:#f59e0b; font-weight:700; padding:6px 0 8px; }
+
+    /* ─── 分岐ラベル ─── */
+    .branch-label { background:rgba(255,255,255,0.12); border:1px dashed rgba(255,255,255,0.35); color:white; font-size:13px; font-weight:700; padding:8px 24px; border-radius:20px; margin:4px 0; text-align:center; }
+
+    /* ─── 4列タイプ分岐エリア ─── */
+    .branch-area { width:100%; max-width:980px; margin:0 auto; }
+    .branch-cols { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; align-items:start; }
+    .type-col { display:flex; flex-direction:column; align-items:center; }
+    .type-badge { font-size:11px; font-weight:700; padding:4px 14px; border-radius:20px; margin-bottom:10px; white-space:nowrap; text-align:center; }
+    .badge-oil  { background:#d97706; color:white; }
+    .badge-gel  { background:#0d9488; color:white; }
+    .badge-cream{ background:#e56b6f; color:white; }
+    .badge-milk { background:#6366f1; color:white; }
+    .type-line-mock { width:100%; border-radius:14px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.25); }
+    .type-header-bar { padding:9px 12px; display:flex; align-items:center; gap:7px; }
+    .th-oil  { background:#92400e; }
+    .th-gel  { background:#065f46; }
+    .th-cream{ background:#9b1c1c; }
+    .th-milk { background:#3730a3; }
+    .type-icon { width:24px;height:24px; background:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+    .type-name-text { font-size:12px; font-weight:700; color:white; }
+    .type-body { background:#c8e0f4; padding:10px; display:flex; flex-direction:column; gap:8px; }
+
+    /* ─── 教育カルーセルカード ─── */
+    .edu-card { background:white; border-radius:8px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.1); display:flex; flex-direction:column; }
+    .edu-card-top { height:4px; }
+    .ec-oil  { background:#d97706; }
+    .ec-gel  { background:#0d9488; }
+    .ec-cream{ background:#e56b6f; }
+    .ec-milk { background:#6366f1; }
+    .edu-card-body { padding:8px 10px 10px; }
+    .ec-num  { font-size:9px; font-weight:700; color:#aaa; margin-bottom:3px; }
+    .ec-title{ font-size:11px; font-weight:800; color:#1a1a1a; line-height:1.4; margin-bottom:3px; }
+    .ec-copy { font-size:10px; color:#555; line-height:1.5; }
+    .ec-cta  { font-size:10px; font-weight:700; text-align:center; padding:5px; margin:4px 6px 6px; border-radius:4px; background:#06c755; color:white; }
+
+    /* ─── 結合バー ─── */
+    .merge-bar { width:100%; height:28px; position:relative; margin-top:6px; }
+    .merge-bar::before { content:''; position:absolute; top:0; left:8%; right:8%; height:2px; background:rgba(255,255,255,0.3); }
+    .merge-bar::after { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:2px; height:28px; background:rgba(255,255,255,0.3); }
+    .merge-note { background:rgba(255,255,255,0.12); border:1px dashed rgba(255,255,255,0.3); color:rgba(255,255,255,0.85); font-size:12px; padding:8px 20px; border-radius:20px; text-align:center; margin:4px 0; }
+
+    /* ─── 設計中バナー ─── */
+    .wip-card { background:rgba(156,163,175,0.15); border:2px dashed rgba(156,163,175,0.4); border-radius:14px; width:100%; padding:32px 22px; text-align:center; }
+    .wip-label { font-size:11px; font-weight:700; color:rgba(156,163,175,0.8); letter-spacing:.1em; margin-bottom:8px; }
+    .wip-title { font-size:16px; font-weight:800; color:rgba(255,255,255,0.6); margin-bottom:6px; }
+    .wip-sub   { font-size:12px; color:rgba(255,255,255,0.35); }
+    .wip-badge { display:inline-block; background:rgba(156,163,175,0.25); border:1px solid rgba(156,163,175,0.3); color:rgba(200,200,200,0.8); font-size:11px; font-weight:700; padding:3px 12px; border-radius:20px; margin-top:10px; }
+
+    /* ─── セクション区切り ─── */
+    .section-divider {
+      width:100%; text-align:center; margin:32px 0 20px;
+      position:relative;
+    }
+    .section-divider::before {
+      content:''; position:absolute; top:50%; left:0; right:0;
+      height:1px; background:rgba(255,255,255,0.15);
+    }
+    .section-divider span {
+      position:relative; background:#2a1830;
+      padding:0 14px; color:rgba(255,255,255,0.55);
+      font-size:12px; font-weight:700; letter-spacing:.06em;
+    }
+
+    @media (max-width:800px) { .branch-cols { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:480px) { .branch-cols { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+<a class="back-link" href="cosme-cleansing-diagnosis-design-2026-06-12.html">← 設計書に戻る</a>
+
+<div class="page-header">
+  <h1>🌸 LINEワークフロー設計図 | クレンジング選び診断 × Carena</h1>
+  <p>記事PU → 友達追加 → 診断（Q1〜Q5）→ 4タイプ分岐 → 教育カル（5枚）→ 商材推薦カル → CV</p>
+  <span class="version-badge">Ver 1.0 — 2026-06-16（教育カルまで設計完了）</span>
+</div>
+
+<!-- ══ フロー概要サマリー ══ -->
+<div class="summary-box">
+  <h2>FLOW OVERVIEW</h2>
+  <div class="summary-flow-row">
+    <span class="sf-step">STEP 00 PU/記事</span><span class="sf-arrow">→</span>
+    <span class="sf-step">STEP 01 友達追加</span><span class="sf-arrow">→</span>
+    <span class="sf-step">STEP 02 診断スタート</span><span class="sf-arrow">→</span>
+    <span class="sf-step">Q1〜Q5 診断</span><span class="sf-arrow">→</span>
+    <span class="sf-step">4タイプ分岐</span><span class="sf-arrow">→</span>
+    <span class="sf-step">教育カル（5枚）</span><span class="sf-arrow">→</span>
+    <span class="sf-step" style="color:rgba(200,200,200,0.6);border-color:rgba(150,150,150,0.3);background:rgba(100,100,100,0.15);">商材推薦カル（設計中）</span><span class="sf-arrow">→</span>
+    <span class="sf-step" style="color:rgba(200,200,200,0.6);border-color:rgba(150,150,150,0.3);background:rgba(100,100,100,0.15);">CV</span>
+  </div>
+  <table class="summary-table">
+    <tr><th>STEP</th><th>内容</th><th>分岐</th><th>タイミング</th></tr>
+    <tr><td>00</td><td>記事内PU — クレンジング系SEO記事9本から流入。「クレンジング選び診断」で友達追加誘導</td><td>—</td><td>記事流入</td></tr>
+    <tr><td>01</td><td>友達追加（ファーストゴール）</td><td>—</td><td>ユーザー操作</td></tr>
+    <tr><td>02</td><td>ウェルカムメッセージ ＋ 診断スタートカード</td><td>—</td><td>友達追加直後・即時</td></tr>
+    <tr><td>03〜06</td><td>診断Q1〜Q4（属性収集・情報収集。タイプ判定には使わない）</td><td>なし</td><td>前の回答後・即時</td></tr>
+    <tr><td>07</td><td>Q5：クレンジングで重視すること（この回答が結果タイプを直接決定）</td><td>4タイプに直結</td><td>Q4回答後・即時</td></tr>
+    <tr><td>08</td><td>タイプ別 教育カル（5枚）結果発表→ものさし→感触体験→リソミラ→橋渡し</td><td>—</td><td>Q5直後・即時</td></tr>
+    <tr><td>09</td><td>商材推薦カル（設計中）</td><td>—</td><td>教育カル後</td></tr>
+    <tr><td>10</td><td>CV（アフィリエイト）</td><td>—</td><td>推薦カル後</td></tr>
+  </table>
+</div>
+
+<!-- ══ 凡例 ══ -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot ld-step"></div>STEPラベル（フロー本線）</div>
+  <div class="legend-item"><div class="legend-dot ld-branch"></div>Q5分岐・4タイプルーティング</div>
+  <div class="legend-item"><div class="legend-dot ld-note"></div>設計メモ</div>
+  <div class="legend-item"><div class="legend-dot ld-wip"></div>設計中（次フェーズ）</div>
+</div>
+
+<!-- ══ メインフロー ══ -->
+<div class="flow">
+
+  <!-- STEP 00 -->
+  <div class="step-label">STEP 00 · PU / 記事内バナー（9記事）</div>
+  <div class="pu-wrap">
+    <div class="pu-label">PU IMAGE（例：クレンジング記事）</div>
+    <div class="pu-inner">
+      <div class="pu-headline">あなたの肌に合うクレンジング、知ってる？</div>
+      <div class="pu-copy">洗い方が合わないと、スキンケアの効果が半分以下に。<br>30秒診断で、あなたに合うタイプがわかります</div>
+      <div class="pu-badge">匿名・無料・LINEで完結</div>
+      <div class="pu-buttons">
+        <button class="btn-yes">診断してみる →</button>
+        <button class="btn-no">今はいい</button>
+      </div>
+    </div>
+  </div>
+  <div class="step-note">流入元：クレンジング系ノウハウ記事（cleansing-shihan / acne / fifties / nuretate / matsueku / milk / forties / nomakeup / keana）</div>
+  <div class="impl-note">
+    <strong>💡 設計メモ（9記事・PV合計 約21,274）</strong>
+    <ul>
+      <li>cleansing-shihan（4,855） / cleansing-acne（3,247） / cleansing-fifties（3,027）が上位3本</li>
+      <li>ノウハウ記事読者 = 「クレンジング選びで迷っている」フェーズ。診断との親和性◎</li>
+      <li>記事ごとにPU文言の最適化余地あり（例：肌荒れ記事→ミルクタイプ訴求）</li>
+    </ul>
+  </div>
+
+  <div class="arrow"></div>
+
+  <!-- STEP 01 -->
+  <div class="step-label">STEP 01 · 友達追加（ファーストゴール）</div>
+  <div class="friend-card">
+    <div class="friend-icon">＋</div>
+    <div class="friend-title">友達追加</div>
+    <div class="friend-sub">LINE公式アカウント登録</div>
+    <div class="friend-goal">← ファーストゴール達成</div>
+  </div>
+  <div class="step-note">KPI①：友達追加数</div>
+
+  <div class="arrow"></div>
+
+  <!-- STEP 02 -->
+  <div class="step-label">STEP 02 · ウェルカム ＋ 診断スタート（即時送信）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">🌸</div>
+      <div class="line-mock-name">クレンジング選び診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-bubble">
+        <span class="timing-tag">即時送信</span>
+        <strong>友達追加ありがとうございます！</strong>
+        あなたの肌に合うクレンジングタイプを診断します。<br>Q1〜Q5に答えるだけ、30秒で完了です。
+      </div>
+      <div class="line-shindan-card">
+        <div class="shindan-card-header">🌸 クレンジング選び診断</div>
+        <div class="shindan-card-body">
+          <div class="shindan-inner">
+            <div class="shindan-title">あなたに合うクレンジングタイプがわかる</div>
+            洗い方がタイプに合うだけで、肌の調子が変わります。5問でわかる無料診断。
+            <br><span class="shindan-badge">匿名・無料</span>
+          </div>
+          <button class="shindan-start-btn">診断スタート ▶</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="step-note">テキストバブル ＋ 診断スタートカードの2点送信</div>
+
+  <div class="arrow"></div>
+  <div class="branch-label">——— 診断フロー（Q1〜Q5）———</div>
+  <div class="arrow"></div>
+
+  <!-- STEP 03: Q1 -->
+  <div class="step-label">STEP 03 · Q1（年代）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">🌸</div>
+      <div class="line-mock-name">クレンジング選び診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-q-card">
+        <div class="q-card-question">
+          Q1. あなたの<strong style="color:#c9567c;">年代</strong>を教えてください
+          <span class="q-purpose-tag">属性収集</span>
+        </div>
+        <div class="q-card-answers">
+          <div class="q-answer-btn"><div class="q-answer-key">A</div>10〜20代</div>
+          <div class="q-answer-btn"><div class="q-answer-key">B</div>30代</div>
+          <div class="q-answer-btn"><div class="q-answer-key">C</div>40代</div>
+          <div class="q-answer-btn"><div class="q-answer-key">D</div>50代以上</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="step-note">属性収集。年代ごとに商材方向性を大枠で把握</div>
+
+  <div class="arrow"></div>
+
+  <!-- STEP 04: Q2 -->
+  <div class="step-label">STEP 04 · Q2（メイク習慣）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">🌸</div>
+      <div class="line-mock-name">クレンジング選び診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-q-card">
+        <div class="q-card-question">
+          Q2. 普段の<strong style="color:#c9567c;">メイク</strong>は？
+          <span class="q-purpose-tag">属性収集</span>
+        </div>
+        <div class="q-card-answers">
+          <div class="q-answer-btn"><div class="q-answer-key">A</div>しっかり・濃いめ</div>
+          <div class="q-answer-btn"><div class="q-answer-key">B</div>ナチュラル・薄め</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="step-note">洗浄力ニーズを把握。濃いめ→オイルタイプ（アテニア）に傾く</div>
+
+  <div class="arrow"></div>
+
+  <!-- STEP 05: Q3 -->
+  <div class="step-label">STEP 05 · Q3（肌悩み）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">🌸</div>
+      <div class="line-mock-name">クレンジング選び診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-q-card">
+        <div class="q-card-question">
+          Q3. 今一番気になる<strong style="color:#c9567c;">肌悩み</strong>は？
+          <span class="q-purpose-tag">情報収集</span>
+        </div>
+        <div class="q-card-answers">
+          <div class="q-answer-btn"><div class="q-answer-key">A</div>ニキビ・敏感肌</div>
+          <div class="q-answer-btn"><div class="q-answer-key">B</div>乾燥・ハリのなさ</div>
+          <div class="q-answer-btn"><div class="q-answer-key">C</div>毛穴・くすみ</div>
+          <div class="q-answer-btn"><div class="q-answer-key">D</div>ベタつき・テカリ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="step-note">設置9記事の読者インサイトに直結。将来的なパーソナライズ文言出し分けに活用可能</div>
+
+  <div class="arrow"></div>
+
+  <!-- STEP 06: Q4 -->
+  <div class="step-label">STEP 06 · Q4（仕上がり好み）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">🌸</div>
+      <div class="line-mock-name">クレンジング選び診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-q-card">
+        <div class="q-card-question">
+          Q4. クレンジング後の<strong style="color:#c9567c;">仕上がり</strong>の好みは？
+          <span class="q-purpose-tag">情報収集</span>
+        </div>
+        <div class="q-card-answers">
+          <div class="q-answer-btn"><div class="q-answer-key">A</div>さっぱり</div>
+          <div class="q-answer-btn"><div class="q-answer-key">B</div>しっとり</div>
+          <div class="q-answer-btn"><div class="q-answer-key">C</div>うるっとなめらか</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="step-note">仕上がり好みの確認。Q5の分岐前の最後の情報収集</div>
+
+  <div class="arrow"></div>
+
+  <!-- STEP 07: Q5（分岐） -->
+  <div class="step-label">STEP 07 · Q5（タイプ確定・分岐設問）</div>
+  <div class="line-mock">
+    <div class="line-mock-header">
+      <div class="line-mock-icon">🌸</div>
+      <div class="line-mock-name">クレンジング選び診断</div>
+    </div>
+    <div class="line-mock-body">
+      <div class="line-q-card">
+        <div class="q-card-question">
+          Q5. クレンジング選びで<strong style="color:#c9567c;">重視すること</strong>は？
+          <span class="q-purpose-tag">タイプ分岐</span>
+        </div>
+        <div class="q-card-answers">
+          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">A</div>汚れをしっかり落としたい<div class="q-answer-branch">→ オイル</div></div>
+          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">B</div>うるおいを残したい<div class="q-answer-branch">→ ゲル</div></div>
+          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">C</div>さっぱり・すっきり洗い上がりたい<div class="q-answer-branch">→ クリーム</div></div>
+          <div class="q-answer-btn branch-btn"><div class="q-answer-key branch">D</div>肌への優しさ・低刺激を大切にしたい<div class="q-answer-branch">→ ミルク</div></div>
+        </div>
+        <div class="q-branch-note">⚡ この回答でタイプが確定 → 教育カルへ</div>
+      </div>
+    </div>
+  </div>
+  <div class="step-note">Q5の回答のみでタイプを直接決定（案A: Q5直結型）。Q1〜Q4はパーソナライズ用途</div>
+  <div class="warn-note"><strong>💡 設計ポイント</strong>Q1〜Q4は情報収集のみ（タイプ判定に影響しない）。LINE BOTでのスコア加算型実装が困難なため、Q5直結の1:1マッピングを採用。シンプル実装・離脱防止の両立。</div>
+
+</div><!-- /flow -->
+
+<!-- ══ 4タイプ分岐 ══ -->
+<div class="section-divider"><span>4タイプ分岐 → 教育カル（5枚）</span></div>
+
+<div class="branch-area flow wide">
+
+  <div class="branch-label" style="margin-bottom:16px;">Q5の回答 → タイプ別 教育カルーセル（各5枚）</div>
+
+  <div class="branch-cols">
+
+    <!-- オイルタイプ -->
+    <div class="type-col">
+      <div class="type-badge badge-oil">オイル｜アテニア</div>
+      <div class="type-line-mock">
+        <div class="type-header-bar th-oil">
+          <div class="type-icon">🟠</div>
+          <div class="type-name-text">オイルタイプ</div>
+        </div>
+        <div class="type-body">
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-oil"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 1 ｜ 結果発表</div>
+              <div class="ec-title">あなたはオイルタイプ</div>
+              <div class="ec-copy">仕上がりしっとり × しっかり洗浄<br>バッジ: 高い洗浄力 ／ 毛穴汚れに効く ／ しっとり仕上がり</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-oil"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 2 ｜ 新しいものさし</div>
+              <div class="ec-title">毛穴まで落とせると、化粧水がちゃんと染み込む肌になる。</div>
+              <div class="ec-copy">洗浄不十分な肌では化粧水の浸透量が最大40〜50%低下</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-oil"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 3 ｜ 乳化体験</div>
+              <div class="ec-title">水を足すと、じゅわっと白く濁る。あれが毛穴の汚れが浮き出てる瞬間。</div>
+              <div class="ec-copy">つるんと落ちる感覚、これが正解。</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-oil"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 4 ｜ リソミラ</div>
+              <div class="ec-title">「ヌルつきゼロなのに、まるで美容液みたいにしっとり、もっちり」</div>
+              <div class="ec-copy">「ゴシゴシしなくてもWPマスカラまでするっと落ちた」</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-oil"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 5 ｜ 橋渡し</div>
+              <div class="ec-title">あなたのオイルタイプにぴったりのクレンジングを紹介します</div>
+            </div>
+            <div class="ec-cta">あなたに合うクレンジングを見る →</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ゲルタイプ -->
+    <div class="type-col">
+      <div class="type-badge badge-gel">ゲル｜マナラ</div>
+      <div class="type-line-mock">
+        <div class="type-header-bar th-gel">
+          <div class="type-icon">🟢</div>
+          <div class="type-name-text">ゲルタイプ</div>
+        </div>
+        <div class="type-body">
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-gel"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 1 ｜ 結果発表</div>
+              <div class="ec-title">あなたはゲルタイプ</div>
+              <div class="ec-copy">落としながら、うるおいが残る<br>バッジ: 乾燥肌向き ／ もっちり仕上がり ／ やさしい使い心地</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-gel"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 2 ｜ 新しいものさし</div>
+              <div class="ec-title">ゲルは汚れを落としながら、うるおいを守る設計。</div>
+              <div class="ec-copy">突っ張るのは、クレンジング選びの問題だった。</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-gel"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 3 ｜ 感触体験</div>
+              <div class="ec-title">するっとなじんで、すすいだ後もっちり。</div>
+              <div class="ec-copy">ぬるぬる感ゼロ。なのに突っ張らない。これがゲルの洗い上がり。</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-gel"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 4 ｜ リソミラ（未来の肌）</div>
+              <div class="ec-title">すすいだだけで、もうしっとりしてる。</div>
+              <div class="ec-copy">乾燥しない洗い上がりが、毎晩の当たり前になる。</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-gel"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 5 ｜ 橋渡し</div>
+              <div class="ec-title">あなたのゲルタイプにぴったりのクレンジングを紹介します</div>
+            </div>
+            <div class="ec-cta">あなたに合うクレンジングを見る →</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- クリームタイプ -->
+    <div class="type-col">
+      <div class="type-badge badge-cream">クリーム｜オルビス</div>
+      <div class="type-line-mock">
+        <div class="type-header-bar th-cream">
+          <div class="type-icon">🌸</div>
+          <div class="type-name-text">クリームタイプ</div>
+        </div>
+        <div class="type-body">
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-cream"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 1 ｜ 結果発表</div>
+              <div class="ec-title">あなたはクリームタイプ</div>
+              <div class="ec-copy">落としながら、肌にうるおいを届ける<br>バッジ: 極度乾燥肌向き ／ しっとりリッチ ／ やさしい使い心地</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-cream"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 2 ｜ 新しいものさし</div>
+              <div class="ec-title">落としても、乾燥しないクレンジングがある。</div>
+              <div class="ec-copy">クリームは保湿成分がベース。汚れだけ取って、うるおいは残す。</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-cream"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 3 ｜ 感触体験</div>
+              <div class="ec-title">ゴシゴシしなくていい。くるっと馴染ませるだけで落ちてる。</div>
+              <div class="ec-copy">そのまま洗い流すと、肌がやわらかくなってる。</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-cream"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 4 ｜ リソミラ（朝の弾力）</div>
+              <div class="ec-title">朝、肌を触ったとき弾力がある。</div>
+              <div class="ec-copy">クレンジングが変わると、肌が変わる。</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-cream"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 5 ｜ 橋渡し</div>
+              <div class="ec-title">あなたのクリームタイプにぴったりのクレンジングを紹介します</div>
+            </div>
+            <div class="ec-cta">あなたに合うクレンジングを見る →</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ミルクタイプ -->
+    <div class="type-col">
+      <div class="type-badge badge-milk">ミルク｜アクセーヌ</div>
+      <div class="type-line-mock">
+        <div class="type-header-bar th-milk">
+          <div class="type-icon">🔵</div>
+          <div class="type-name-text">ミルクタイプ</div>
+        </div>
+        <div class="type-body">
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-milk"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 1 ｜ 結果発表</div>
+              <div class="ec-title">あなたはミルクタイプ</div>
+              <div class="ec-copy">肌を傷めずに、やさしく落とす<br>バッジ: 敏感肌向き ／ 低刺激 ／ こすらずオフ</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-milk"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 2 ｜ 新しいものさし</div>
+              <div class="ec-title">ミルクで、ちゃんと落ちる。</div>
+              <div class="ec-copy">"落ちない"は先入観。こすらず馴染ませるだけで、負担なく落とせる。</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-milk"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 3 ｜ 感触体験</div>
+              <div class="ec-title">するっと馴染んで、ぬるつかない。</div>
+              <div class="ec-copy">摩擦なし。こすらずに落とせてる。</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-milk"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 4 ｜ リソミラ（翌朝の安心）</div>
+              <div class="ec-title">翌朝、肌が荒れてない。</div>
+              <div class="ec-copy">クレンジングを変えただけで、それが毎日続く。</div>
+            </div>
+          </div>
+
+          <div class="edu-card">
+            <div class="edu-card-top ec-milk"></div>
+            <div class="edu-card-body">
+              <div class="ec-num">CARD 5 ｜ 橋渡し</div>
+              <div class="ec-title">あなたのミルクタイプにぴったりのクレンジングを紹介します</div>
+            </div>
+            <div class="ec-cta">あなたに合うクレンジングを見る →</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /branch-cols -->
+
+  <!-- 結合バー -->
+  <div class="merge-bar"></div>
+  <div class="merge-note">全タイプ → 商材推薦カルへ合流（タイプ別に対応商材を提示）</div>
+  <div class="arrow"></div>
+
+  <!-- 商材推薦カル（設計中） -->
+  <div class="wip-card" style="max-width:600px;width:100%;">
+    <div class="wip-label">STEP 09 · 商材推薦カルーセル</div>
+    <div class="wip-title">タイプ別 おすすめ商材カル</div>
+    <div class="wip-sub">
+      オイル → アテニア スキンクリア（¥4,500）<br>
+      ゲル → マナラ ホットクレンジングゲル（¥6,000）<br>
+      クリーム → オルビス オフクリーム（¥5,000）<br>
+      ミルク → アクセーヌ（7.5%報酬）
+    </div>
+    <div class="wip-badge">🔧 設計中（次フェーズ）</div>
+  </div>
+
+  <div class="arrow" style="margin-top:20px;"></div>
+
+  <!-- CV -->
+  <div class="wip-card" style="max-width:440px;width:100%;margin-top:8px;">
+    <div class="wip-label">STEP 10 · CV（アフィリエイト）</div>
+    <div class="wip-title">外部LPへの遷移 → 購入</div>
+    <div class="wip-sub">リス（リサフィールド）経由。タイプごとに対応商材LPへ誘導</div>
+    <div class="wip-badge">🔧 設計中（次フェーズ）</div>
+  </div>
+
+</div><!-- /branch-area -->
+
+</div><!-- /page-wrap -->
+</body>
+</html>
