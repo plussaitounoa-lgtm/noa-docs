@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ダイエット 友達追加数減少の原因 — 2026-06-17</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 900px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue   { background: #3b82f6; }
+    .num-green  { background: #10b981; }
+    .num-amber  { background: #f59e0b; }
+    .num-red    { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub   { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .num-r { text-align: right; font-variant-numeric: tabular-nums; }
+    .center { text-align: center; }
+    .up   { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .bmi-row { background: #fff1f2; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .badge-red    { background: #fee2e2; color: #dc2626; }
+    .badge-green  { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray   { background: #f1f5f9; color: #475569; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-value.danger { color: #dc2626; }
+    .kpi-sub   { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red    { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green  { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue   { background: #eff6ff; border-left: 3px solid #3b82f6; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .pri-low  { background: #f1f5f9; color: #475569; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body p { font-size: 13px; color: #475569; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .box { background: #f8fafc; border-radius: 10px; padding: 16px 20px; }
+    .box-title { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+
+    .verdict { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 99px; }
+    .verdict-ng    { background: #fee2e2; color: #dc2626; }
+    .verdict-ok    { background: #dcfce7; color: #16a34a; }
+    .verdict-watch { background: #fef9c3; color: #ca8a04; }
+
+    .conclusion-box { background: #fffbeb; border: 1.5px solid #fcd34d; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; }
+    .conclusion-box .label { font-size: 11px; font-weight: 700; color: #92400e; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+    .conclusion-box .text { font-size: 15px; font-weight: 600; color: #78350f; line-height: 1.8; }
+
+    .flow-row { display: flex; align-items: center; gap: 8px; font-size: 13px; margin: 10px 0; }
+    .flow-box { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 8px 14px; text-align: center; }
+    .flow-box.bad { background: #fff1f2; border-color: #fca5a5; }
+    .flow-box .fb-label { font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+    .flow-box .fb-val { font-size: 14px; font-weight: 800; color: #0f172a; }
+    .flow-box.bad .fb-val { color: #dc2626; }
+    .flow-arrow { color: #94a3b8; font-size: 18px; }
+
+    h3 { font-size: 15px; font-weight: 700; color: #1e293b; margin-bottom: 10px; margin-top: 6px; }
+    p { font-size: 13px; color: #475569; line-height: 1.8; }
+    .mt8 { margin-top: 8px; }
+    .mt16 { margin-top: 16px; }
+
+    .checked { color: #16a34a; font-weight: 700; }
+    .cross   { color: #dc2626; font-weight: 700; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="page-header">
+    <div class="eyebrow">Medical Diet / LINE Friend Analysis</div>
+    <h1>直近のダイエット 友達追加数減少の原因</h1>
+    <div class="desc">分析日: 2026-06-17 ／ 対象: 医療ダイエット GLP-1 SEO記事 ／ データ: 2026年6月累計（6/1〜6/17）</div>
+  </div>
+
+  <!-- 結論 -->
+  <div class="conclusion-box">
+    <div class="label">結論（3行サマリー）</div>
+    <div class="text">
+      ダイエット記事全体のLP流入は充分あるが、<strong>BMI記事1本が全LP impの18%を占めながら友達追加への貢献がほぼゼロ</strong>になっている。<br>
+      原因は「bmi計算方法・bmiとは」といった<strong>辞書引き系検索クエリのユーザーが急増</strong>し、LINE友達追加の意向がない層が流入するようになったため。<br>
+      PU文言・LP・友達追加画面の設計に問題はなく、<strong>ユーザー層自体の変化</strong>なので、改修で解決できる問題ではない。
+    </div>
+  </div>
+
+  <!-- 1. 全体の状況 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">1</div>
+      <div>
+        <div class="section-title">全体の状況（2026年6月 累計）</div>
+        <div class="section-sub">GLP-1 SEO記事 全体 ／ 6/1〜6/17</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">LP 流入</div>
+          <div class="kpi-value">41,402</div>
+          <div class="kpi-sub">記事PV合計</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">友達追加</div>
+          <div class="kpi-value">218</div>
+          <div class="kpi-sub">6月累計</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">PVFR（全体）</div>
+          <div class="kpi-value">0.53%</div>
+          <div class="kpi-sub">基準 0.80〜1.00%</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">BMI記事 PVFR</div>
+          <div class="kpi-value danger">0.03%</div>
+          <div class="kpi-sub">全体平均の 1/18</div>
+        </div>
+      </div>
+
+      <h3>記事別 友達追加ファネル</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>記事</th>
+            <th class="num-r">LP流入</th>
+            <th class="num-r">LP流入比</th>
+            <th class="num-r">友達追加</th>
+            <th class="num-r">PVFR</th>
+            <th class="num-r">PU CTR</th>
+            <th class="num-r">追加率</th>
+            <th class="center">判定</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1日_摂取カロリー</td>
+            <td class="num-r">8,023</td>
+            <td class="num-r">19.4%</td>
+            <td class="num-r">45</td>
+            <td class="num-r">0.56%</td>
+            <td class="num-r">4.4%</td>
+            <td class="num-r">12.1%</td>
+            <td class="center"><span class="badge badge-yellow">改善余地あり</span></td>
+          </tr>
+          <tr class="bmi-row">
+            <td><strong>bmi</strong></td>
+            <td class="num-r"><strong>7,614</strong></td>
+            <td class="num-r warn"><strong>18.4%</strong></td>
+            <td class="num-r down"><strong>2</strong></td>
+            <td class="num-r down"><strong>0.03%</strong></td>
+            <td class="num-r down"><strong>3.9%</strong></td>
+            <td class="num-r down"><strong>0.6%</strong></td>
+            <td class="center"><span class="badge badge-red">構造的問題</span></td>
+          </tr>
+          <tr>
+            <td>ダイエットパッチ</td>
+            <td class="num-r">4,788</td>
+            <td class="num-r">11.6%</td>
+            <td class="num-r">19</td>
+            <td class="num-r">0.40%</td>
+            <td class="num-r">6.0%</td>
+            <td class="num-r">9.9%</td>
+            <td class="center"><span class="badge badge-yellow">改善余地あり</span></td>
+          </tr>
+          <tr>
+            <td>本気で痩せたい</td>
+            <td class="num-r">3,278</td>
+            <td class="num-r">7.9%</td>
+            <td class="num-r up">35</td>
+            <td class="num-r up">1.07%</td>
+            <td class="num-r">7.0%</td>
+            <td class="num-r up">15.8%</td>
+            <td class="center"><span class="badge badge-green">健全</span></td>
+          </tr>
+          <tr>
+            <td>その他（24記事）</td>
+            <td class="num-r">25,699</td>
+            <td class="num-r">62.1%</td>
+            <td class="num-r">117</td>
+            <td class="num-r">0.46%</td>
+            <td class="num-r">—</td>
+            <td class="num-r">—</td>
+            <td class="center"><span class="badge badge-gray">平均水準</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="insight insight-red">
+        <strong>BMI記事の異常:</strong> LP流入は全体の<strong>18.4%（2位）</strong>を占めながら、友達追加への貢献は<strong>全体の0.9%</strong>。流入は多いのに友達を生み出していない。
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 5月 vs 6月 変化 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">2</div>
+      <div>
+        <div class="section-title">何が変わったか（5月 vs 6月 BMI記事）</div>
+        <div class="section-sub">5月は31日間、6月は17日間</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>指標</th>
+            <th class="num-r">5月（31日）</th>
+            <th class="num-r">6月（17日）</th>
+            <th class="num-r">変化</th>
+            <th>意味</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>LP 流入（累計）</td>
+            <td class="num-r">16,217</td>
+            <td class="num-r">7,614</td>
+            <td class="num-r">日割り▲9%</td>
+            <td>流入自体はほぼ変わらず</td>
+          </tr>
+          <tr>
+            <td>PU CTR</td>
+            <td class="num-r">6.1%</td>
+            <td class="num-r down">3.9%</td>
+            <td class="num-r down"><strong>▲36%</strong></td>
+            <td>PUをクリックする率が急落</td>
+          </tr>
+          <tr>
+            <td>追加率</td>
+            <td class="num-r">2.1%</td>
+            <td class="num-r down">0.6%</td>
+            <td class="num-r down"><strong>▲71%</strong></td>
+            <td>クリックしても友達追加しない</td>
+          </tr>
+          <tr>
+            <td>PVFR</td>
+            <td class="num-r">0.10%</td>
+            <td class="num-r down">0.03%</td>
+            <td class="num-r down"><strong>▲70%</strong></td>
+            <td>記事から生まれる友達がほぼゼロ</td>
+          </tr>
+          <tr>
+            <td>月換算 友達追加数</td>
+            <td class="num-r">16人</td>
+            <td class="num-r down">≒4人</td>
+            <td class="num-r down"><strong>▲75%</strong></td>
+            <td>実数でも激減</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="flow-row">
+        <div class="flow-box">
+          <div class="fb-label">LP 流入</div>
+          <div class="fb-val">7,614</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box bad">
+          <div class="fb-label">PU CTR 3.9%</div>
+          <div class="fb-val">319 click</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box bad">
+          <div class="fb-label">追加率 0.6%</div>
+          <div class="fb-val">2 人</div>
+        </div>
+      </div>
+      <div style="font-size:12px; color:#94a3b8; margin-top:4px;">基準: CTR 13%以上 ／ 追加率 11%以上</div>
+    </div>
+  </div>
+
+  <!-- 3. 原因の特定 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">3</div>
+      <div>
+        <div class="section-title">原因の特定：ユーザー層の変化</div>
+        <div class="section-sub">Googleサーチコンソール（4/1〜5/13 vs 5/14〜6/15）で確認</div>
+      </div>
+    </div>
+    <div class="body">
+      <p>PU文言・LPデザイン・友達追加画面の設計はいずれも問題なし。<br>
+      サーチコンソールで検索クエリを分解したところ、<strong>5月中旬以降に記事へ流入するユーザーの種類が変化</strong>していることが判明した。</p>
+
+      <h3 class="mt16">検索クエリ別 クリック数の変化（日割り）</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>クエリ</th>
+            <th class="num-r">4月〜5/13</th>
+            <th class="num-r">5/14〜6/15</th>
+            <th class="num-r">変化</th>
+            <th>ユーザーの意図</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>bmi（単体）</td>
+            <td class="num-r">89.7 /日</td>
+            <td class="num-r">28.8 /日</td>
+            <td class="num-r down">▲68%</td>
+            <td>BMI全般への関心層</td>
+          </tr>
+          <tr>
+            <td>bmi 計算</td>
+            <td class="num-r">32.3 /日</td>
+            <td class="num-r">20.8 /日</td>
+            <td class="num-r down">▲36%</td>
+            <td>計算したい</td>
+          </tr>
+          <tr class="bmi-row">
+            <td><strong>bmi計算方法</strong></td>
+            <td class="num-r">1.6 /日</td>
+            <td class="num-r up"><strong>13.8 /日</strong></td>
+            <td class="num-r up"><strong>+763%</strong></td>
+            <td>計算式を知りたい（辞書引き）</td>
+          </tr>
+          <tr class="bmi-row">
+            <td><strong>bmiとは</strong></td>
+            <td class="num-r">0.2 /日</td>
+            <td class="num-r up"><strong>1.0 /日</strong></td>
+            <td class="num-r up"><strong>+400%</strong></td>
+            <td>用語を調べたい（辞書引き）</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="two-col mt16">
+        <div class="box">
+          <div class="box-title">以前のユーザー（4〜5月前半）</div>
+          <p>「bmi」「bmi 計算」で検索<br>→ 自分の体型が気になっている<br>→ LINE診断に興味を持つ余地がある<br>→ PUをクリックして友達追加</p>
+        </div>
+        <div class="box" style="background:#fff1f2; border: 1.5px solid #fca5a5;">
+          <div class="box-title" style="color:#dc2626;">5月後半〜現在のユーザー</div>
+          <p>「bmi計算方法」「bmiとは」で検索<br>→ 数値を計算・用語を確認するだけ<br>→ 情報を得たら終わり<br>→ LINE追加の動機がそもそもない</p>
+        </div>
+      </div>
+
+      <div class="insight insight-red mt8">
+        <strong>結論:</strong> 5/14前後に検索アルゴリズムの変動があり、「辞書引き系」ユーザーが大量流入するようになった。このユーザーはLINE追加を目的として来ていないため、どれだけ設計を改善しても追加率は上がらない。
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 確認したこと -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">4</div>
+      <div>
+        <div class="section-title">「設計の問題ではない」の確認事項</div>
+        <div class="section-sub">改修で解決できる問題かを切り分けた</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>確認項目</th>
+            <th class="center">状態</th>
+            <th>詳細</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PU文言の問題か</td>
+            <td class="center"><span class="verdict verdict-ng">NG</span></td>
+            <td>3種類の文言すべてでCTR低下。文言個別の問題ではなくユーザー層全体の問題</td>
+          </tr>
+          <tr>
+            <td>LINEアカウントの友達追加画面</td>
+            <td class="center"><span class="verdict verdict-ok">問題なし</span></td>
+            <td>実際に確認済み。アカウント名・説明文・ビジュアルに問題なし</td>
+          </tr>
+          <tr>
+            <td>LPへの中間ページ</td>
+            <td class="center"><span class="verdict verdict-ok">問題なし</span></td>
+            <td>PUクリック → LINE追加画面への直接遷移。フロー上の脱落点なし</td>
+          </tr>
+          <tr>
+            <td>サイト間の差異</td>
+            <td class="center"><span class="verdict verdict-ng">差なし</span></td>
+            <td>こいずみ・小田・渋谷の3サイト全てで追加率0〜1.2%。特定サイトの問題でない</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="insight insight-blue mt8">
+        <strong>設計を変えても解決しない理由:</strong> 追加率が低いのは「LP設計が悪い」のではなく「友達追加したいと思っていないユーザーが来ている」から。これはSEO（どのクエリで上位表示されるか）の問題であり、PU改修や友達追加画面の改修では解決できない。
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 対応方針 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">5</div>
+      <div>
+        <div class="section-title">対応方針</div>
+        <div class="section-sub">BMI記事への投資を止め、友達追加できる記事にリソースを集中する</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-high">停止</span>
+          <div class="action-body">
+            <strong>BMI記事 PU改修（t54）を一時凍結</strong>
+            <p>改修してもユーザー層の問題は解決しない。工数を他記事へ振り替える。BMI記事は長期的にSEO戦略の見直し（辞書引きユーザー向けの診断訴求設計）が必要で、短期解はない。</p>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">推進</span>
+          <div class="action-body">
+            <strong>「本気で痩せたい」「ダイエットパッチ」にリソース集中</strong>
+            <p>追加率15.8〜9.9%と健全。ユーザーは「痩せたい・方法を探している」フェーズ = LINE追加の動機がある。PU文言改善・新PU設置で友達追加数を増やせる余地がある。</p>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">注意</span>
+          <div class="action-body">
+            <strong>サプリ導線はBMI記事に乗せない</strong>
+            <p>LINE追加すらされない記事にサプリへの誘導を乗せても効果はゼロ。サプリ導線は「本気で痩せたい」「摂取カロリー」等の友達追加ができている記事に設計する。</p>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-low">長期</span>
+          <div class="action-body">
+            <strong>BMI記事の長期改善は記事の切り口変更で検討</strong>
+            <p>「bmi計算方法で来るユーザー」を友達追加させるには、訴求軸を「BMI正常でも体脂肪が多い→隠れ肥満・体質診断」に変更するなど、記事コンテンツ自体の刷新が必要。短期施策ではない。</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="text-align:center; color:#94a3b8; font-size:12px; margin-top:32px;">
+    作成: 2026-06-17 ／ 詳細分析: <a href="bmi-analysis-2026-06-17.html" style="color:#3b82f6;">BMI記事ボトルネック分析（CIO詳細版）</a>
+  </div>
+
+</div>
+</body>
+</html>
