@@ -102,7 +102,7 @@
       <div class="num num-red">!</div>
       <div>
         <div class="section-title">結論</div>
-        <div class="section-sub">二重ボトルネック。追加率（LP）が最優先主犯。改修前にサプリ導線は乗せない。</div>
+        <div class="section-sub">ユーザー層変化が真因と確定。LP・友達追加画面の設計は確認済みで問題なし（2026-06-17）。</div>
       </div>
     </div>
     <div class="body">
@@ -119,8 +119,8 @@
         </div>
       </div>
       <div class="insight insight-red">
-        <strong>追加率を11%に改善するだけで +35人/月（効果5.8倍）。CTRのみ改善では +6人/月（焼け石に水）。</strong><br>
-        追加率（LP・友達追加画面）の改修が最優先。CTRは二番手。
+        <strong>CTR低下・追加率壊滅ともに真因は「辞書引き系ユーザー急増」によるユーザー層変化。</strong><br>
+        LP・友達追加画面・PU文言の設計は確認済みで問題なし。PU改修（t54）では根本解決しない。訴求軸の刷新とSEOクエリ構成の見直しが必要。
       </div>
     </div>
   </div>
@@ -135,6 +135,28 @@
       </div>
     </div>
     <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">GLP-1全体 LP流入</div>
+          <div class="kpi-value">41,402</div>
+          <div class="kpi-sub">全記事合計</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">GLP-1全体 友達</div>
+          <div class="kpi-value">218</div>
+          <div class="kpi-sub">6月累計</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">GLP-1全体 PVFR</div>
+          <div class="kpi-value">0.53%</div>
+          <div class="kpi-sub">基準 0.80〜1.00%</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">BMI LP占有率</div>
+          <div class="kpi-value">18.4%</div>
+          <div class="kpi-sub">友達貢献は全体の0.9%</div>
+        </div>
+      </div>
       <table>
         <thead>
           <tr>
@@ -398,9 +420,57 @@
         <strong>16日間のうち14日が追加率0.0%。友達が出た2日も各1人。</strong><br>
         これは偶発ではなく構造的問題。244 clickのほぼ全員がLP到達後に離脱している。
       </div>
-      <div class="insight insight-yellow" style="margin-top:8px;">
-        <strong>推定原因: BMIユーザーとLP・友達追加画面のミスマッチ。</strong><br>
-        BMI記事の訪問者は「体重と身長でBMIを確認したい」フェーズ。LPが医療ダイエット・治療系の色合いが強い場合、「え、そういう話？自分には関係ない」で即離脱。5月2.1% → 6月0.6%への急落はLP側の何かが変わった可能性もあり要確認。
+      <div class="insight insight-blue" style="margin-top:8px;">
+        <strong>確定（2026-06-17 実機確認済み）: LP・友達追加画面の設計に問題なし。</strong><br>
+        LINEアカウントの友達追加画面（アカウント名・説明文・ビジュアル）、およびPUクリック→LINE追加画面の直接遷移フローを確認済み。設計起因の脱落はない。<br>
+        真因: 辞書引き系ユーザー（「bmi計算方法」「bmiとは」で流入）はLINE友達追加の動機がそもそもなく、クリックしても追加しない。
+      </div>
+    </div>
+  </div>
+
+  <!-- 確認事項 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">6</div>
+      <div>
+        <div class="section-title">「設計の問題ではない」確認事項</div>
+        <div class="section-sub">2026-06-17 実機確認済み。改修で解決できる問題かを切り分けた。</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>確認項目</th>
+            <th>状態</th>
+            <th>詳細</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PU文言の問題か</td>
+            <td><span class="verdict verdict-ng">問題ではない</span></td>
+            <td>3種類の文言すべてでCTR低下。文言個別の問題ではなくユーザー層全体の問題</td>
+          </tr>
+          <tr>
+            <td>LINEアカウントの友達追加画面</td>
+            <td><span class="verdict verdict-ok">確認済み・問題なし</span></td>
+            <td>アカウント名・説明文・ビジュアルを実際に確認。設計上の問題なし</td>
+          </tr>
+          <tr>
+            <td>LPへの中間ページ</td>
+            <td><span class="verdict verdict-ok">確認済み・問題なし</span></td>
+            <td>PUクリック → LINE追加画面への直接遷移。フロー上の脱落点なし</td>
+          </tr>
+          <tr>
+            <td>サイト間の差異</td>
+            <td><span class="verdict verdict-ng">差なし</span></td>
+            <td>こいずみ・小田・渋谷の3サイト全てで追加率0〜1.2%。特定サイトの問題でない</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-blue" style="margin-top:12px;">
+        <strong>設計を変えても解決しない:</strong> 追加率が低いのは設計の問題ではなく「友達追加したいと思っていないユーザーが来ている」から。PU改修や友達追加画面の改修では根本解決しない。
       </div>
     </div>
   </div>
@@ -408,7 +478,7 @@
   <!-- ⑦ インパクト定量化 -->
   <div class="section">
     <div class="section-head">
-      <div class="num num-green">6</div>
+      <div class="num num-green">7</div>
       <div>
         <div class="section-title">改善インパクト定量化</div>
         <div class="section-sub">どこを直せば何人増えるか</div>
@@ -444,7 +514,7 @@
   <!-- ⑧ 次のアクション -->
   <div class="section">
     <div class="section-head">
-      <div class="num num-blue">7</div>
+      <div class="num num-blue">8</div>
       <div>
         <div class="section-title">次のアクション</div>
         <div class="section-sub">優先順に実施。①が解決するまで②には進まない</div>
@@ -453,24 +523,24 @@
     <div class="body">
       <ul class="action-list">
         <li>
-          <span class="action-pri pri-high">最優先</span>
+          <span class="action-pri pri-high">停止</span>
           <div class="action-body">
-            <strong>LP・友達追加画面の確認と改修</strong>
-            <p>BMI記事からLPに来たユーザーが何を見てなぜ離脱しているかを特定する。友達追加画面のアカウント名・説明文・ビジュアルがBMI記事ユーザー（「体を把握したいフェーズ」）に対してダイエット治療訴求になっていないか確認。5月2.1% → 6月0.6%の急落はLP側に変更があった可能性も要調査。</p>
+            <strong>BMI記事 PU改修（t54）を一時凍結</strong>
+            <p>LP・友達追加画面の確認完了（問題なし）。CTR・追加率ともに真因はユーザー層変化であり、PU文言変更では根本解決しない。工数を他記事へ振り替える。</p>
           </div>
         </li>
         <li>
-          <span class="action-pri pri-mid">次点</span>
+          <span class="action-pri pri-mid">中期</span>
           <div class="action-body">
-            <strong>PU訴求軸の刷新（CMO設計）</strong>
-            <p>現行3文言（脂肪のつき方・体質タイプ・体の本当の状態）はどれも3〜6%で横並び。文言変更では改善余地が限定的と判明。「BMIが正常でも脂肪が多い人がいる → 体質診断」のような<strong>知識欲に乗る別軸</strong>での訴求設計を検討。追加率改修後に着手。</p>
+            <strong>訴求軸の刷新（CMO設計）</strong>
+            <p>「bmi計算方法」で来るユーザーを友達追加させるには、現行「体の状態系」訴求では刺さらない。「BMIが正常でも体脂肪が多い → 隠れ肥満・体質診断」のような<strong>知識欲に乗る別軸</strong>への転換を検討。これはSEOクエリ構成の変化への対応であり、短期施策ではない。</p>
           </div>
         </li>
         <li>
-          <span class="action-pri pri-low">条件付き</span>
+          <span class="action-pri pri-low">長期</span>
           <div class="action-body">
-            <strong>サプリ導線設計（追加率回復後）</strong>
-            <p>BMI記事は「体質改善したい」フェーズのユーザーとサプリの相性は高い。ただし友達数が月35人以上（追加率11%達成）になってから設計・実装する。現状4人/月ではA/Bテストも効果測定も不可能。</p>
+            <strong>サプリ導線はBMI記事に乗せない</strong>
+            <p>現状4人/月ではA/Bテストも効果測定も不可能。サプリ導線は「本気で痩せたい」（追加率15.8%）・「ダイエットパッチ」（9.9%）等、友達追加が機能している記事に設計する。</p>
           </div>
         </li>
       </ul>
