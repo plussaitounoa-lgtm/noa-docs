@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMI記事 PU改修設計 — 2026-06-17</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 900px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .back-link { display: inline-block; font-size: 13px; color: #3b82f6; text-decoration: none; margin-bottom: 24px; }
+    .back-link:hover { text-decoration: underline; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue   { background: #3b82f6; }
+    .num-green  { background: #10b981; }
+    .num-amber  { background: #f59e0b; }
+    .num-red    { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub   { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .num-r { text-align: right; font-variant-numeric: tabular-nums; }
+    .up   { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .badge-red    { background: #fee2e2; color: #dc2626; }
+    .badge-green  { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray   { background: #f1f5f9; color: #475569; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red    { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green  { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue   { background: #eff6ff; border-left: 3px solid #3b82f6; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .pri-low  { background: #f1f5f9; color: #475569; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body p { font-size: 13px; color: #475569; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .box { background: #f8fafc; border-radius: 10px; padding: 16px 20px; }
+    .box-title { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+
+    .highlight-box { background: #fffbeb; border: 1.5px solid #fcd34d; border-radius: 10px; padding: 16px 20px; margin-bottom: 16px; }
+    .highlight-box .label { font-size: 11px; font-weight: 700; color: #92400e; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .highlight-box .value { font-size: 18px; font-weight: 800; color: #78350f; }
+    .highlight-box .note  { font-size: 13px; color: #92400e; margin-top: 4px; }
+
+    .confirm-box { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 10px; padding: 16px 20px; margin-bottom: 16px; }
+    .confirm-box .label { font-size: 11px; font-weight: 700; color: #166534; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .confirm-box .value { font-size: 18px; font-weight: 800; color: #14532d; }
+    .confirm-box .note  { font-size: 13px; color: #166534; margin-top: 4px; }
+
+    h3 { font-size: 15px; font-weight: 700; color: #1e293b; margin-bottom: 10px; margin-top: 6px; }
+    p { font-size: 13px; color: #475569; margin-bottom: 10px; }
+
+    .step-flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 12px 0 16px; }
+    .step-item { background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 700; color: #1d4ed8; }
+    .step-arrow { color: #94a3b8; font-size: 16px; }
+
+    .pu-card { border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; margin-bottom: 10px; }
+    .pu-card.keep { border-color: #86efac; background: #f0fdf4; }
+    .pu-card.add  { border-color: #93c5fd; background: #eff6ff; }
+    .pu-card.del  { border-color: #fca5a5; background: #fff1f2; opacity: 0.75; }
+    .pu-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .pu-label.keep { color: #16a34a; }
+    .pu-label.add  { color: #1d4ed8; }
+    .pu-label.del  { color: #dc2626; }
+    .pu-copy { font-size: 15px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+    .pu-copy.del { text-decoration: line-through; color: #94a3b8; }
+    .pu-meta { font-size: 12px; color: #64748b; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← Docs トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">CMO設計書 · 2026-06-17</div>
+    <h1>BMI記事 PU改修設計</h1>
+    <div class="desc">3サイト（こいずみ・小田・渋谷）共通。ユーザー層変化に対応した訴求軸転換。</div>
+  </div>
+
+  <!-- ① 改修の背景 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">1</div>
+      <div>
+        <div class="section-title">改修の背景</div>
+        <div class="section-sub">なぜ今変えるのか</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="two-col">
+        <div class="box">
+          <div class="box-title">ユーザー層の変化（サチコ確認済み）</div>
+          <table>
+            <tr><th>クエリ</th><th>変化率</th></tr>
+            <tr><td>bmi計算方法</td><td class="down">+763%</td></tr>
+            <tr><td>bmiとは</td><td class="down">+400%</td></tr>
+          </table>
+          <p style="margin:0;">5/14以降、「計算式を知りたい」辞書引き系ユーザーが急増。現行訴求（痩せたいフェーズ向け）とのミスマッチが発生。</p>
+        </div>
+        <div class="box">
+          <div class="box-title">現在の数値（6月当月）</div>
+          <table>
+            <tr><th>指標</th><th>実績</th><th>基準</th></tr>
+            <tr><td>CTR</td><td class="down">3〜5%</td><td>13%以上</td></tr>
+            <tr><td>追加率</td><td class="down">0.6%</td><td>11%以上</td></tr>
+            <tr><td>PVFR</td><td class="down">0.03%</td><td>0.80%</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="insight insight-blue">
+        <strong>ピル横展の法則を適用：</strong> 吐き気記事で「汎用文言 PVFR 0.06%」→「検索意図直撃文言 PVFR 0.88%」（14.7倍）。ユーザーの検索意図 × PU文言の一致度が追加率を決める。
+      </div>
+    </div>
+  </div>
+
+  <!-- ② ユーザーダイブ -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">2</div>
+      <div>
+        <div class="section-title">ユーザーダイブ</div>
+        <div class="section-sub">「bmi計算方法」で来たユーザーの気持ち</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="step-flow">
+        <div class="step-item">BMI計算した</div>
+        <div class="step-arrow">→</div>
+        <div class="step-item">「標準」と出た</div>
+        <div class="step-arrow">→</div>
+        <div class="step-item">でも体型が気になる</div>
+        <div class="step-arrow">→</div>
+        <div class="step-item">「自分は隠れ肥満？」</div>
+        <div class="step-arrow">→</div>
+        <div class="step-item">チェックしたい</div>
+      </div>
+      <h3>知恵袋リアルワード</h3>
+      <table>
+        <tr><th>発言</th></tr>
+        <tr><td>「BMI19なのにお腹に肉あるし足も太い。数値的には標準なのに信じられない」</td></tr>
+        <tr><td>「BMI22は太って見えますか？体脂肪率の方が問題？」</td></tr>
+        <tr><td>「BMI標準なのに体脂肪が気になる。隠れ肥満なの？」</td></tr>
+        <tr><td>「BMI計算したら標準だった。でも本当に大丈夫？」</td></tr>
+      </table>
+      <div class="insight insight-green">
+        <strong>結論：</strong>「隠れ肥満」という概念はユーザーの気持ちに直結している。現行PUタイトル「隠れ肥満タイプ診断」はユーザー心理に合っており、<strong>診断名は変更しない</strong>。改修対象はPUコピー（中身の文言）のみ。
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ ブリッジテスト -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">3</div>
+      <div>
+        <div class="section-title">ブリッジテスト</div>
+        <div class="section-sub">診断体験 ↔ 検索意図の橋渡し確認</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <tr><th>ステップ</th><th>内容</th></tr>
+        <tr>
+          <td><strong>① 診断が提供する体験</strong></td>
+          <td>4問 → 体質タイプ4種判定（かくれ内臓脂肪 / 省エネ体質 / 食欲暴走 / リバウンドループ）。BMIが見落とすメカニズムを解説。</td>
+        </tr>
+        <tr>
+          <td><strong>② ユーザーの気持ち</strong></td>
+          <td>「BMI計算した → 数値は出た → でも本当に大丈夫？ 隠れ肥満じゃないか？ 自分の体質タイプを知りたい」</td>
+        </tr>
+        <tr>
+          <td><strong>③ ①を②の言葉で表現</strong></td>
+          <td>「BMI計算の次に体質タイプを確認する」→ 知識欲の続きとして自然に繋がる</td>
+        </tr>
+        <tr>
+          <td><strong>ブリッジ成立</strong></td>
+          <td><span class="badge badge-green">✅ 成立</span></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ④ 現行PU評価 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">4</div>
+      <div>
+        <div class="section-title">現行PU評価（6月当月）</div>
+        <div class="section-sub">3サイト × 3文言。タイトルは全PU共通「隠れ肥満タイプ診断」</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <tr><th>サイト</th><th>実際のコピー</th><th class="num-r">LP imp</th><th class="num-r">CTR</th><th>判定</th></tr>
+        <tr>
+          <td>こいずみ</td>
+          <td>BMIに出てこない <strong>体質のタイプ</strong> 知りたくない？</td>
+          <td class="num-r">1,946</td>
+          <td class="num-r warn">3.9%</td>
+          <td><span class="badge badge-green">残す</span></td>
+        </tr>
+        <tr>
+          <td>こいずみ</td>
+          <td>数字には出ない <strong>身体の本当の状態</strong> 気になりませんか？</td>
+          <td class="num-r">1,940</td>
+          <td class="num-r warn">4.0%</td>
+          <td><span class="badge badge-green">残す</span></td>
+        </tr>
+        <tr>
+          <td>こいずみ</td>
+          <td>BMIじゃ見えない <strong>脂肪の付き方</strong> 気になりませんか？</td>
+          <td class="num-r">1,967</td>
+          <td class="num-r warn">3.6%</td>
+          <td><span class="badge badge-red">削除</span></td>
+        </tr>
+        <tr>
+          <td>小田</td>
+          <td>数字には出ない <strong>身体の本当の状態</strong> 気になりませんか？</td>
+          <td class="num-r">284</td>
+          <td class="num-r warn">6.1%</td>
+          <td><span class="badge badge-green">残す</span></td>
+        </tr>
+        <tr>
+          <td>小田</td>
+          <td>BMIに出てこない <strong>体質のタイプ</strong> 知りたくない？</td>
+          <td class="num-r">288</td>
+          <td class="num-r warn">3.6%</td>
+          <td><span class="badge badge-red">削除</span></td>
+        </tr>
+        <tr>
+          <td>小田</td>
+          <td>BMIじゃ見えない <strong>脂肪の付き方</strong> 気になりませんか？</td>
+          <td class="num-r">310</td>
+          <td class="num-r warn">2.5%</td>
+          <td><span class="badge badge-red">削除</span></td>
+        </tr>
+        <tr>
+          <td>渋谷</td>
+          <td>BMIに出てこない <strong>体質のタイプ</strong> 知りたくない？</td>
+          <td class="num-r">286</td>
+          <td class="num-r warn">5.2%</td>
+          <td><span class="badge badge-green">残す</span></td>
+        </tr>
+        <tr>
+          <td>渋谷</td>
+          <td>BMIじゃ見えない <strong>脂肪の付き方</strong> 気になりませんか？</td>
+          <td class="num-r">291</td>
+          <td class="num-r warn">4.0%</td>
+          <td><span class="badge badge-red">削除</span></td>
+        </tr>
+        <tr>
+          <td>渋谷</td>
+          <td>数字には出ない <strong>身体の本当の状態</strong> 気になりませんか？</td>
+          <td class="num-r">295</td>
+          <td class="num-r warn">3.3%</td>
+          <td><span class="badge badge-red">削除</span></td>
+        </tr>
+      </table>
+      <div class="insight insight-yellow">
+        こいずみは4.0% vs 3.9%で差が僅少 → 両方残す。小田・渋谷は最高CTRの1本を保険として残し、残り2本を削除。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ 新規PU設計 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">5</div>
+      <div>
+        <div class="section-title">新規PU設計（確定）</div>
+        <div class="section-sub">3サイト共通で新規追加する1本</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="confirm-box">
+        <div class="label">確定コピー</div>
+        <div class="value">BMIの次は体質タイプを確認！あなたはどのタイプ？</div>
+        <div class="note">タイトル（共通）：「隠れ肥満」タイプ診断</div>
+      </div>
+      <h3>選定理由</h3>
+      <table>
+        <tr><th>観点</th><th>評価</th></tr>
+        <tr><td>ブリッジ整合性</td><td>「BMIの次は」= 計算直後のユーザーの行動継続として自然 ✅</td></tr>
+        <tr><td>はいタップ動機</td><td>「あなたはどのタイプ？」= 能動的な自分ごと化 ✅</td></tr>
+        <tr><td>現行との差別化</td><td>「BMIじゃ見えない〇〇」という既存パターンと被らない新角度 ✅</td></tr>
+        <tr><td>診断との整合</td><td>「体質タイプ」= 診断体験（タイプ4種判定）と一致 ✅</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ⑥ 最終構成 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">6</div>
+      <div>
+        <div class="section-title">改修後 最終構成</div>
+        <div class="section-sub">適用後の各サイトPU本数と内容</div>
+      </div>
+    </div>
+    <div class="body">
+      <h3>こいずみ（計3本）</h3>
+      <div class="pu-card keep">
+        <div class="pu-label keep">残す</div>
+        <div class="pu-copy">BMIに出てこない体質のタイプ知りたくない？</div>
+        <div class="pu-meta">CTR 3.9%</div>
+      </div>
+      <div class="pu-card keep">
+        <div class="pu-label keep">残す</div>
+        <div class="pu-copy">数字には出ない身体の本当の状態気になりませんか？</div>
+        <div class="pu-meta">CTR 4.0%（差が僅少のため両方保持）</div>
+      </div>
+      <div class="pu-card add">
+        <div class="pu-label add">新規追加</div>
+        <div class="pu-copy">BMIの次は体質タイプを確認！あなたはどのタイプ？</div>
+        <div class="pu-meta">デザイン依頼必要</div>
+      </div>
+      <div class="pu-card del">
+        <div class="pu-label del">削除</div>
+        <div class="pu-copy del">BMIじゃ見えない脂肪の付き方気になりませんか？</div>
+        <div class="pu-meta">CTR 3.6%（最低）</div>
+      </div>
+
+      <h3 style="margin-top:20px;">小田（計2本）</h3>
+      <div class="pu-card keep">
+        <div class="pu-label keep">残す</div>
+        <div class="pu-copy">数字には出ない身体の本当の状態気になりませんか？</div>
+        <div class="pu-meta">CTR 6.1%（最高）</div>
+      </div>
+      <div class="pu-card add">
+        <div class="pu-label add">新規追加</div>
+        <div class="pu-copy">BMIの次は体質タイプを確認！あなたはどのタイプ？</div>
+        <div class="pu-meta">デザイン依頼必要</div>
+      </div>
+      <div class="pu-card del">
+        <div class="pu-label del">削除</div>
+        <div class="pu-copy del">BMIに出てこない体質のタイプ知りたくない？</div>
+        <div class="pu-meta">CTR 3.6%</div>
+      </div>
+      <div class="pu-card del">
+        <div class="pu-label del">削除</div>
+        <div class="pu-copy del">BMIじゃ見えない脂肪の付き方気になりませんか？</div>
+        <div class="pu-meta">CTR 2.5%（最低）</div>
+      </div>
+
+      <h3 style="margin-top:20px;">渋谷（計2本）</h3>
+      <div class="pu-card keep">
+        <div class="pu-label keep">残す</div>
+        <div class="pu-copy">BMIに出てこない体質のタイプ知りたくない？</div>
+        <div class="pu-meta">CTR 5.2%（最高）</div>
+      </div>
+      <div class="pu-card add">
+        <div class="pu-label add">新規追加</div>
+        <div class="pu-copy">BMIの次は体質タイプを確認！あなたはどのタイプ？</div>
+        <div class="pu-meta">デザイン依頼必要</div>
+      </div>
+      <div class="pu-card del">
+        <div class="pu-label del">削除</div>
+        <div class="pu-copy del">BMIじゃ見えない脂肪の付き方気になりませんか？</div>
+        <div class="pu-meta">CTR 4.0%</div>
+      </div>
+      <div class="pu-card del">
+        <div class="pu-label del">削除</div>
+        <div class="pu-copy del">数字には出ない身体の本当の状態気になりませんか？</div>
+        <div class="pu-meta">CTR 3.3%（最低）</div>
+      </div>
+
+      <div class="insight insight-blue" style="margin-top:16px;">
+        <strong>期待値：</strong> PVFR 0.40〜0.50%（現状 0.03%）。LP PVが他ジャンルより多いため、文言改善が追加率に直結しやすい条件。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ 次のアクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">7</div>
+      <div>
+        <div class="section-title">次のアクション</div>
+        <div class="section-sub">実装に向けて</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-high">最優先</span>
+          <div class="action-body">
+            <strong>新規PUのデザイン依頼</strong>
+            <p>「BMIの次は体質タイプを確認！あなたはどのタイプ？」のデザインを依頼。現行と同フォーマット（タイトル「隠れ肥満タイプ診断」固定・はい/いいえボタン）。</p>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">最優先</span>
+          <div class="action-body">
+            <strong>既存PUの削除（各サイト担当者）</strong>
+            <p>各サイトで「削除」対象のPUを無効化。新規PU追加と同タイミングで実施。</p>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中期</span>
+          <div class="action-body">
+            <strong>効果検証（4週後）</strong>
+            <p>CTR・追加率・PVFRを改修前後で比較。期待値 PVFR 0.40〜0.50% を指標に判断。達成していればサプリ導線設計に進む。</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <p style="text-align:center; font-size:12px; color:#94a3b8; margin-top:32px;">
+    設計: CMO &nbsp;·&nbsp; 2026-06-17 &nbsp;·&nbsp; 根拠: Google Search Console + load_unified_data()
+  </p>
+
+</div>
+</body>
+</html>
