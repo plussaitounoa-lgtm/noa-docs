@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>+10人/日シミュレーション — 2026-06-17</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 940px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .ok { color: #3b82f6; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue { background: #dbeafe; color: #2563eb; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.ok-card { border-color: #86efac; background: #f0fdf4; }
+    .kpi-card.warn-card { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+    .kpi-card.ok-card .kpi-value { color: #16a34a; }
+    .kpi-card.warn-card .kpi-value { color: #dc2626; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+
+    .sim-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .sim-table th { background: #f8fafc; color: #475569; font-weight: 700; padding: 10px 14px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    .sim-table td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+    .sim-table tr:last-child td { border-bottom: none; }
+    .sim-table tr.total-row { background: #fafafa; font-weight: 700; }
+    .sim-table tr.total-row td { border-top: 2px solid #e2e8f0; font-size: 14px; }
+
+    .axis-label { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-right: 6px; }
+    .axis-volume { background: #dbeafe; color: #1d4ed8; }
+    .axis-rate { background: #fef9c3; color: #92400e; }
+
+    .gain { font-size: 16px; font-weight: 800; color: #16a34a; }
+    .gain-small { font-size: 13px; font-weight: 700; color: #10b981; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-green { background: #dcfce7; color: #15803d; border-left: 4px solid #22c55e; }
+    .verdict-amber { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+    h3 { font-size: 14px; font-weight: 700; color: #334155; margin-bottom: 10px; }
+
+    .funnel-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; }
+    .funnel-label { width: 120px; color: #64748b; font-weight: 600; }
+    .funnel-bar-wrap { flex: 1; background: #f1f5f9; border-radius: 4px; height: 24px; overflow: hidden; }
+    .funnel-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 11px; font-weight: 700; color: #fff; white-space: nowrap; }
+    .bar-ok { background: #10b981; }
+    .bar-warn { background: #f59e0b; }
+    .bar-bad { background: #ef4444; }
+    .funnel-value { width: 80px; text-align: right; font-weight: 700; font-size: 12px; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="page-header">
+    <div class="eyebrow">全体戦略 — 2026-06-17</div>
+    <h1>+10人/日 達成シミュレーション</h1>
+    <p class="desc">現状30人/日 → 目標40人/日。5月確定データ（SEOチャネル）ベースの打ち手別試算。</p>
+  </div>
+
+  <!-- 現状サマリー -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">S</div>
+      <div>
+        <div class="section-title">現状（5月確定値）</div>
+        <div class="section-sub">SEOチャネル PUタグ集計。総友達1,030人のうち835人がPU経由</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card warn-card">
+          <div class="kpi-label">友達/日（PU）</div>
+          <div class="kpi-value">26.9人</div>
+          <div class="kpi-sub">目標40人。▲13.1人</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">LP imp（月）</div>
+          <div class="kpi-value">109,853</div>
+          <div class="kpi-sub">3,544/日</div>
+        </div>
+        <div class="kpi-card warn-card">
+          <div class="kpi-label">表示率</div>
+          <div class="kpi-value">78.7%</div>
+          <div class="kpi-sub">基準92%。▲13pt</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">PVFR</div>
+          <div class="kpi-value">0.76%</div>
+          <div class="kpi-sub">基準0.80%。ほぼ達成</div>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card ok-card">
+          <div class="kpi-label">CTR（実態）</div>
+          <div class="kpi-value">14.9%</div>
+          <div class="kpi-sub">基準13%。✅ 超過</div>
+        </div>
+        <div class="kpi-card ok-card">
+          <div class="kpi-label">追加率</div>
+          <div class="kpi-value">13.0%</div>
+          <div class="kpi-sub">基準11%。✅ 超過</div>
+        </div>
+        <div class="kpi-card ok-card">
+          <div class="kpi-label">CTR（表示）</div>
+          <div class="kpi-value">7.4%</div>
+          <div class="kpi-sub">5/14仕様変更後の見かけ値</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">FCVR</div>
+          <div class="kpi-value">2.43%</div>
+          <div class="kpi-sub">基準3%。改善余地あり</div>
+        </div>
+      </div>
+
+      <div class="verdict verdict-green">
+        重要発見：5月は追加率13.0%・CTR実態14.9%ともに基準以上。転換効率は問題なし。
+        ボトルネックは「PV量（LP imp）」と「表示率78.7%（未設置記事）」。
+      </div>
+    </div>
+  </div>
+
+  <!-- ファネル診断 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">1</div>
+      <div>
+        <div class="section-title">ファネル診断</div>
+        <div class="section-sub">どの指標が課題か（5月確定値）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="funnel-row">
+        <div class="funnel-label">表示率</div>
+        <div class="funnel-bar-wrap">
+          <div class="funnel-bar bar-warn" style="width:85%">78.7%（基準92%）</div>
+        </div>
+        <div class="funnel-value"><span class="badge badge-yellow">要改善</span></div>
+      </div>
+      <div class="funnel-row">
+        <div class="funnel-label">CTR実態</div>
+        <div class="funnel-bar-wrap">
+          <div class="funnel-bar bar-ok" style="width:100%">14.9%（基準13%）</div>
+        </div>
+        <div class="funnel-value"><span class="badge badge-green">✅ 超過</span></div>
+      </div>
+      <div class="funnel-row">
+        <div class="funnel-label">追加率</div>
+        <div class="funnel-bar-wrap">
+          <div class="funnel-bar bar-ok" style="width:100%">13.0%（基準11%）</div>
+        </div>
+        <div class="funnel-value"><span class="badge badge-green">✅ 超過</span></div>
+      </div>
+      <div class="funnel-row">
+        <div class="funnel-label">PVFR</div>
+        <div class="funnel-bar-wrap">
+          <div class="funnel-bar bar-ok" style="width:95%">0.76%（基準0.80%）</div>
+        </div>
+        <div class="funnel-value"><span class="badge badge-blue">95%達成</span></div>
+      </div>
+      <div class="funnel-row">
+        <div class="funnel-label">LP imp量</div>
+        <div class="funnel-bar-wrap">
+          <div class="funnel-bar bar-bad" style="width:68%">109,853/月（目標163,000/月）</div>
+        </div>
+        <div class="funnel-value"><span class="badge badge-red">▲31%</span></div>
+      </div>
+
+      <div class="insight insight-yellow" style="margin-top:16px;">
+        <strong>PV量が最大のボトルネック。</strong>
+        現状PVFR（0.76%）で40人/日を達成するには月163,000LP impが必要。現状比＋53,000/月（約1,700/日）不足している。
+        記事消失（AGA・FAGA・ダイエットパッチ）が直撃している状態。
+      </div>
+      <div class="insight insight-yellow" style="margin-top:8px;">
+        <strong>表示率78.7%にも改善余地。</strong>
+        基準92%まで引き上げると、既存LP impだけで+3.9人/日相当の効果が出る計算。
+        未設置記事へのポップ展開が即効性最大。
+      </div>
+    </div>
+  </div>
+
+  <!-- ジャンル別状況 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">2</div>
+      <div>
+        <div class="section-title">ジャンル別 現状（5月）</div>
+        <div class="section-sub">どのジャンルがPVと友達を生んでいるか</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>ジャンル</th>
+            <th>LP imp/月</th>
+            <th>友達/月</th>
+            <th>友達/日</th>
+            <th>PVFR</th>
+            <th>コメント</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ダイエット（glp1）</strong></td>
+            <td>35,056</td>
+            <td>347</td>
+            <td>11.2</td>
+            <td class="ok">0.99%</td>
+            <td>最大貢献。高PVFR</td>
+          </tr>
+          <tr>
+            <td><strong>ダイエット（glp1_ava）</strong></td>
+            <td>22,296</td>
+            <td>287</td>
+            <td>9.3</td>
+            <td class="ok">1.29%</td>
+            <td>最高PVFR。施策効いている</td>
+          </tr>
+          <tr>
+            <td><strong>包茎（phimo）</strong></td>
+            <td>13,238</td>
+            <td>91</td>
+            <td>2.9</td>
+            <td>0.69%</td>
+            <td>3番手。PV安定</td>
+          </tr>
+          <tr>
+            <td><strong>ピル（pill）</strong></td>
+            <td>6,890</td>
+            <td>35</td>
+            <td>1.1</td>
+            <td>0.51%</td>
+            <td>PVFR改善余地あり</td>
+          </tr>
+          <tr>
+            <td><strong>ED</strong></td>
+            <td>3,836</td>
+            <td>25</td>
+            <td>0.8</td>
+            <td>0.65%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><strong>美容（mypicsc）</strong></td>
+            <td>7,137</td>
+            <td>20</td>
+            <td>0.6</td>
+            <td class="down">0.28%</td>
+            <td>PVFR低い</td>
+          </tr>
+          <tr>
+            <td><strong>AGA</strong></td>
+            <td>4,999</td>
+            <td>7</td>
+            <td>0.2</td>
+            <td class="down">0.14%</td>
+            <td>PV激減・記事消失</td>
+          </tr>
+          <tr>
+            <td><strong>いびき</strong></td>
+            <td>8,640</td>
+            <td>6</td>
+            <td>0.2</td>
+            <td class="down">0.07%</td>
+            <td>PVFR極低。PU見直し要</td>
+          </tr>
+          <tr>
+            <td><strong>その他（FAGA・ほくろ等）</strong></td>
+            <td>7,751</td>
+            <td>10</td>
+            <td>0.3</td>
+            <td>0.13%</td>
+            <td>サンプル小</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-blue">
+        <strong>ダイエット2アカ合計で20.5人/日（全体の76%）。</strong>
+        ダイエットジャンルへの依存度が高く、ここの流入回復が最優先。
+        いびき（0.07%PVFR）はLP imp 8,640があるのに友達6人しかいない ＝ PU設計の問題。
+      </div>
+    </div>
+  </div>
+
+  <!-- +10人/日シミュレーション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">3</div>
+      <div>
+        <div class="section-title">+10人/日 シミュレーション</div>
+        <div class="section-sub">打ち手別の試算。5月確定値ベース</div>
+      </div>
+    </div>
+    <div class="body">
+      <table class="sim-table">
+        <thead>
+          <tr>
+            <th>軸</th>
+            <th>打ち手</th>
+            <th>前提・根拠</th>
+            <th>+人/日</th>
+            <th>難易度</th>
+            <th>優先度</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="axis-label axis-volume">分母</span></td>
+            <td><strong>未設置記事ポップ展開</strong></td>
+            <td>表示率78.7%→92%。既存LP imp 109,853に対しPVFR +0.11%改善</td>
+            <td><span class="gain">+3.9</span></td>
+            <td><span class="badge badge-green">低</span></td>
+            <td>★★★</td>
+          </tr>
+          <tr>
+            <td><span class="axis-label axis-volume">分母</span></td>
+            <td><strong>ダイエットサプリ新設置</strong></td>
+            <td>月10,000 LP imp想定。PVFR 0.80%（ダイエット実績ベース）</td>
+            <td><span class="gain">+2.6</span></td>
+            <td><span class="badge badge-yellow">中</span></td>
+            <td>★★★</td>
+          </tr>
+          <tr>
+            <td><span class="axis-label axis-volume">分母</span></td>
+            <td><strong>SLILIN F PU設置</strong></td>
+            <td>月5,000 LP imp想定。PVFR 0.50%（新規ジャンル保守仮定）</td>
+            <td><span class="gain">+0.8</span></td>
+            <td><span class="badge badge-yellow">中</span></td>
+            <td>★★</td>
+          </tr>
+          <tr>
+            <td><span class="axis-label axis-volume">分母</span></td>
+            <td><strong>コスメ診断PU設置</strong></td>
+            <td>月3,000 LP imp想定。PVFR 0.50%（新規ジャンル保守仮定）</td>
+            <td><span class="gain">+0.5</span></td>
+            <td><span class="badge badge-yellow">中</span></td>
+            <td>★★</td>
+          </tr>
+          <tr>
+            <td><span class="axis-label axis-rate">転換率</span></td>
+            <td><strong>PVFR微改善（0.76%→0.80%）</strong></td>
+            <td>PU文言・診断改善。既存LP imp 109,853 × +0.04%</td>
+            <td><span class="gain-small">+1.4</span></td>
+            <td><span class="badge badge-yellow">中</span></td>
+            <td>★★</td>
+          </tr>
+          <tr>
+            <td><span class="axis-label axis-rate">転換率</span></td>
+            <td><strong>いびきジャンルPVFR改善</strong></td>
+            <td>現0.07%→0.40%。LP imp 8,640のPU根本見直し</td>
+            <td><span class="gain-small">+0.9</span></td>
+            <td><span class="badge badge-red">高</span></td>
+            <td>★</td>
+          </tr>
+          <tr class="total-row">
+            <td colspan="3" style="text-align:right; color:#475569;">合計（全施策実施時）</td>
+            <td><span class="gain" style="font-size:20px;">+10.1</span></td>
+            <td colspan="2"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="insight insight-green" style="margin-top:16px;">
+        <strong>現実的な積み上げで+10人/日は達成可能。</strong>
+        施策単体では2〜4人/日規模。組み合わせが必要。
+        未設置記事展開（+3.9）＋サプリ（+2.6）の2つで+6.5人/日確保できれば、残りは自然な改善で埋まる。
+      </div>
+    </div>
+  </div>
+
+  <!-- アクション優先順位 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">4</div>
+      <div>
+        <div class="section-title">アクション優先順位</div>
+        <div class="section-sub">何から着手するか</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>順位</th>
+            <th>アクション</th>
+            <th>期待効果</th>
+            <th>なぜ先か</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1</strong></td>
+            <td><strong>未設置記事へのポップ展開</strong></td>
+            <td class="up">+3.9人/日</td>
+            <td>追加LP imp不要。既存PVを今すぐ友達に変換。インターン委譲可</td>
+          </tr>
+          <tr>
+            <td><strong>2</strong></td>
+            <td><strong>ダイエットサプリ設置</strong></td>
+            <td class="up">+2.6人/日</td>
+            <td>ダイエット実績ベース（PVFR0.80%）で試算が堅い。LP impさえ確保できれば確実</td>
+          </tr>
+          <tr>
+            <td><strong>3</strong></td>
+            <td><strong>AGAポップ・GTM対応完了</strong></td>
+            <td>流入回復時に受皿</td>
+            <td>今は記事消失でPV少ないが、設置しておかないと回復時に損失</td>
+          </tr>
+          <tr>
+            <td><strong>4</strong></td>
+            <td><strong>SLILIN F / コスメ診断PU設置</strong></td>
+            <td class="up">+1.3人/日</td>
+            <td>コスメ診断は設計完了後すぐ設置。SLILIN Fは確認待ち</td>
+          </tr>
+          <tr>
+            <td><strong>5</strong></td>
+            <td><strong>PVFR改善（文言・診断）</strong></td>
+            <td class="up">+1.4人/日</td>
+            <td>継続施策。先に分母を増やす方が効率的</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="insight insight-blue" style="margin-top:12px;">
+        <strong>インターン活用方針との整合性：</strong>
+        Renの指摘「バナー設置・ポップ差し替えはインターンへ委譲」と合致。
+        未設置記事展開（1位）は設置作業が主体 → インターンに振れる。
+        NoaはLP imp計画・PVFR改善・施策優先判断に集中。
+      </div>
+    </div>
+  </div>
+
+  <!-- 注記・前提 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">N</div>
+      <div>
+        <div class="section-title">前提・注記</div>
+        <div class="section-sub">試算の精度と留意点</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul style="font-size:13px; padding-left:18px; color:#475569;">
+        <li>基準数値は5月2026確定値（SEOチャネルのみ）。バナー経由友達195人分は未集計</li>
+        <li>新規ジャンル（コスメ・SLILIN F）のLP imp想定は暫定値。実際のPV次第で上下する</li>
+        <li>5/14仕様変更によりpu_impが約2倍にカウントされているため、CTR表示値（7.4%）は実態（14.9%）の半分。追加率はpu_clickベースのため影響なし</li>
+        <li>表示率の目標を92%（=PVFR基準時の想定値）に設定。実態の未設置記事数によって変わる</li>
+        <li>ダイエットサプリのLP imp（月10,000）はまだ稼働前のため推計。実リリース後に数値を更新すること</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
