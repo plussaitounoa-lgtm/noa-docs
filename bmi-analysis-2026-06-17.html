@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMI記事 ボトルネック分析 — 2026-06-17</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 900px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue   { background: #3b82f6; }
+    .num-green  { background: #10b981; }
+    .num-amber  { background: #f59e0b; }
+    .num-red    { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub   { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .num-r { text-align: right; font-variant-numeric: tabular-nums; }
+    .up   { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .badge-red    { background: #fee2e2; color: #dc2626; }
+    .badge-green  { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub   { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red    { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green  { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue   { background: #eff6ff; border-left: 3px solid #3b82f6; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .pri-low  { background: #f1f5f9; color: #475569; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body p { font-size: 13px; color: #475569; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .box { background: #f8fafc; border-radius: 10px; padding: 16px 20px; }
+    .box-title { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+
+    .highlight-box { background: #fffbeb; border: 1.5px solid #fcd34d; border-radius: 10px; padding: 16px 20px; margin-bottom: 16px; }
+    .highlight-box .label { font-size: 11px; font-weight: 700; color: #92400e; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .highlight-box .value { font-size: 20px; font-weight: 800; color: #78350f; }
+    .highlight-box .note  { font-size: 13px; color: #92400e; margin-top: 4px; }
+
+    .verdict { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 99px; }
+    .verdict-ng    { background: #fee2e2; color: #dc2626; }
+    .verdict-ok    { background: #dcfce7; color: #16a34a; }
+    .verdict-watch { background: #fef9c3; color: #ca8a04; }
+
+    h3 { font-size: 15px; font-weight: 700; color: #1e293b; margin-bottom: 10px; margin-top: 6px; }
+    p  { font-size: 13px; color: #475569; margin-bottom: 8px; }
+    small { font-size: 12px; color: #94a3b8; }
+
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #3b82f6; text-decoration: none; margin-bottom: 24px; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a class="back-link" href="index.html">&#8592; Docs トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">分析レポート &nbsp;·&nbsp; 医療ダイエット</div>
+    <h1>BMI記事 ボトルネック分析</h1>
+    <div class="desc">対象: こいずみ・小田・渋谷 3サイト &nbsp;|&nbsp; 分析期間: 2026-06 当月累計（〜6/16）&nbsp;|&nbsp; 作成: 2026-06-17</div>
+  </div>
+
+  <!-- ① 結論 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">!</div>
+      <div>
+        <div class="section-title">結論</div>
+        <div class="section-sub">二重ボトルネック。追加率（LP）が最優先主犯。改修前にサプリ導線は乗せない。</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="two-col">
+        <div class="highlight-box">
+          <div class="label">現状 / 月換算</div>
+          <div class="value">友達 4人/月</div>
+          <div class="note">LP 7,614（GLP-1内2番目の規模）なのに</div>
+        </div>
+        <div class="highlight-box">
+          <div class="label">PVFR 0.80%達成時（期待値）</div>
+          <div class="value">友達 61人/月</div>
+          <div class="note">改善余地 +57人/月 &nbsp;=&nbsp; GOALギャップ▲313人の 18%</div>
+        </div>
+      </div>
+      <div class="insight insight-red">
+        <strong>追加率を11%に改善するだけで +35人/月（効果5.8倍）。CTRのみ改善では +6人/月（焼け石に水）。</strong><br>
+        追加率（LP・友達追加画面）の改修が最優先。CTRは二番手。
+      </div>
+    </div>
+  </div>
+
+  <!-- ② 全体ファネル -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">1</div>
+      <div>
+        <div class="section-title">GLP-1 記事別ファネル（6月当月）</div>
+        <div class="section-sub">BMIの位置づけを確認する</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>記事</th>
+            <th class="num-r">LP imp</th>
+            <th class="num-r">友達</th>
+            <th class="num-r">PVFR</th>
+            <th class="num-r">CTR</th>
+            <th class="num-r">追加率</th>
+            <th>判定</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>本気で痩せたい</td>
+            <td class="num-r">3,278</td>
+            <td class="num-r">68</td>
+            <td class="num-r up">2.07%</td>
+            <td class="num-r">7.0%</td>
+            <td class="num-r up">30.6%</td>
+            <td><span class="badge badge-green">機能中</span></td>
+          </tr>
+          <tr>
+            <td>痩せる薬</td>
+            <td class="num-r">1,847</td>
+            <td class="num-r">25</td>
+            <td class="num-r up">1.35%</td>
+            <td class="num-r">6.0%</td>
+            <td class="num-r up">20.5%</td>
+            <td><span class="badge badge-green">機能中</span></td>
+          </tr>
+          <tr>
+            <td>ダイエットパッチ</td>
+            <td class="num-r">4,788</td>
+            <td class="num-r">44</td>
+            <td class="num-r up">0.92%</td>
+            <td class="num-r">6.0%</td>
+            <td class="num-r up">23.0%</td>
+            <td><span class="badge badge-green">機能中</span></td>
+          </tr>
+          <tr>
+            <td>1日_摂取カロリー</td>
+            <td class="num-r">8,023</td>
+            <td class="num-r">45</td>
+            <td class="num-r warn">0.56%</td>
+            <td class="num-r">4.4%</td>
+            <td class="num-r up">12.1%</td>
+            <td><span class="badge badge-yellow">改修検討中</span></td>
+          </tr>
+          <tr style="background:#fff1f2">
+            <td><strong>bmi</strong></td>
+            <td class="num-r"><strong>7,614</strong></td>
+            <td class="num-r down"><strong>2</strong></td>
+            <td class="num-r down"><strong>0.03%</strong></td>
+            <td class="num-r down"><strong>3.9%</strong></td>
+            <td class="num-r down"><strong>0.6%</strong></td>
+            <td><span class="badge badge-red">壊滅</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top:4px;"><small>※ BMIは LP imp 規模がGLP-1内2位（摂取カロリーに次ぐ）にもかかわらず友達2人。PVFR 0.03%は基準の1/27。</small></p>
+    </div>
+  </div>
+
+  <!-- ③ BMI詳細 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">2</div>
+      <div>
+        <div class="section-title">BMI サイト × PU別詳細（6月当月）</div>
+        <div class="section-sub">3サイト × 3文言 = 9通りの全数確認</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>サイト</th>
+            <th>PU文言</th>
+            <th class="num-r">LP imp</th>
+            <th class="num-r">click</th>
+            <th class="num-r">CTR</th>
+            <th class="num-r">友達</th>
+            <th class="num-r">追加率</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>こいずみ</td><td>脂肪のつき方気になる</td>
+            <td class="num-r">1,967</td><td class="num-r">77</td><td class="num-r down">3.6%</td><td class="num-r">0</td><td class="num-r down">0.0%</td>
+          </tr>
+          <tr>
+            <td>こいずみ</td><td>体質タイプ知りたい</td>
+            <td class="num-r">1,946</td><td class="num-r">83</td><td class="num-r down">3.9%</td><td class="num-r">1</td><td class="num-r down">1.2%</td>
+          </tr>
+          <tr>
+            <td>こいずみ</td><td>体の本当の状態気になる</td>
+            <td class="num-r">1,940</td><td class="num-r">84</td><td class="num-r down">4.0%</td><td class="num-r">1</td><td class="num-r down">1.2%</td>
+          </tr>
+          <tr>
+            <td>小田</td><td>脂肪のつき方気になる</td>
+            <td class="num-r">310</td><td class="num-r">8</td><td class="num-r down">2.5%</td><td class="num-r">0</td><td class="num-r down">0.0%</td>
+          </tr>
+          <tr>
+            <td>小田</td><td>体質タイプ知りたい</td>
+            <td class="num-r">288</td><td class="num-r">10</td><td class="num-r down">3.6%</td><td class="num-r">0</td><td class="num-r down">0.0%</td>
+          </tr>
+          <tr>
+            <td>小田</td><td>体の本当の状態気になる</td>
+            <td class="num-r">284</td><td class="num-r">16</td><td class="num-r down">6.1%</td><td class="num-r">0</td><td class="num-r down">0.0%</td>
+          </tr>
+          <tr>
+            <td>渋谷</td><td>体の本当の状態気になる</td>
+            <td class="num-r">295</td><td class="num-r">11</td><td class="num-r down">3.3%</td><td class="num-r">0</td><td class="num-r down">0.0%</td>
+          </tr>
+          <tr>
+            <td>渋谷</td><td>脂肪のつき方気になる</td>
+            <td class="num-r">291</td><td class="num-r">13</td><td class="num-r down">4.0%</td><td class="num-r">0</td><td class="num-r down">0.0%</td>
+          </tr>
+          <tr style="background:#f8fafc">
+            <td>渋谷</td><td>体質タイプ知りたい</td>
+            <td class="num-r">286</td><td class="num-r">17</td><td class="num-r down">5.2%</td><td class="num-r">0</td><td class="num-r down">0.0%</td>
+          </tr>
+          <tr style="background:#fafafa;font-weight:700;">
+            <td colspan="2">合計（PU経由）</td>
+            <td class="num-r">7,614</td><td class="num-r">319</td><td class="num-r">—</td><td class="num-r down">2</td><td class="num-r down">0.6%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-red">
+        <strong>3サイト × 3文言すべてが同レベルで壊滅。</strong>
+        文言による差がほぼない（CTR 2.5〜6.1%）= 特定の文言の問題ではなく、記事ユーザー層 or LP の構造問題。
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 経時変化 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">3</div>
+      <div>
+        <div class="section-title">5月 vs 6月 比較（BMI全3サイト）</div>
+        <div class="section-sub">悪化トレンドを確認する</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card alert">
+          <div class="kpi-label">LP imp / 日</div>
+          <div class="kpi-value">476</div>
+          <div class="kpi-sub">5月 523 → <span class="down">▲9%</span></div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">CTR</div>
+          <div class="kpi-value">3.9%</div>
+          <div class="kpi-sub">5月 6.1% → <span class="down">▲36%</span></div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">追加率</div>
+          <div class="kpi-value">0.6%</div>
+          <div class="kpi-sub">5月 2.1% → <span class="down">▲71%</span></div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">PVFR</div>
+          <div class="kpi-value">0.03%</div>
+          <div class="kpi-sub">5月 0.10% → <span class="down">▲70%</span></div>
+        </div>
+      </div>
+      <div class="insight insight-red">
+        PVはわずか▲9%の自然減。だが友達数は5月16人 → 6月4人/月換算と壊滅。
+        <strong>PVの問題ではなく、CTR・追加率の構造的悪化が主因。</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ CTR低下の真因（サチコ） -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">4</div>
+      <div>
+        <div class="section-title">CTR低下の真因 — サーチコンソール分析</div>
+        <div class="section-sub">4/1〜5/13 vs 5/14〜6/15 のクエリ構成変化</div>
+      </div>
+    </div>
+    <div class="body">
+      <h3>BMI記事（/obesity/diet-bmi/）へのオーガニッククリック</h3>
+      <table>
+        <thead>
+          <tr><th>指標</th><th class="num-r">4/1〜5/13（43日）</th><th class="num-r">5/14〜6/15（33日）</th><th class="num-r">日割り変化</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>クリック数 / 日</td><td class="num-r">170.6</td><td class="num-r">143.9</td><td class="num-r down">▲16%</td></tr>
+          <tr><td>表示回数</td><td class="num-r">2,108,237</td><td class="num-r">1,817,877</td><td class="num-r">（維持）</td></tr>
+          <tr><td>検索 CTR</td><td class="num-r">0.35%</td><td class="num-r">0.26%</td><td class="num-r down">▲26%</td></tr>
+          <tr><td>掲載順位</td><td class="num-r">5.14位</td><td class="num-r">5.63位</td><td class="num-r down">やや低下</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top:20px;">流入クエリ構成の変化（主要クエリ 日割りクリック）</h3>
+      <table>
+        <thead>
+          <tr><th>クエリ</th><th>種別</th><th class="num-r">4月期 / 日</th><th class="num-r">5-6月期 / 日</th><th class="num-r">変化</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>bmi（単体）</td><td><span class="badge badge-yellow">ダイエット意欲あり</span></td>
+            <td class="num-r">89.7</td><td class="num-r">28.8</td><td class="num-r down"><strong>▲68%</strong></td>
+          </tr>
+          <tr>
+            <td>bmi 計算</td><td><span class="badge badge-yellow">ツール系（意欲混在）</span></td>
+            <td class="num-r">32.3</td><td class="num-r">20.8</td><td class="num-r down">▲36%</td>
+          </tr>
+          <tr style="background:#fff1f2">
+            <td>bmi計算方法</td><td><span class="badge badge-red">辞書引き（意欲なし）</span></td>
+            <td class="num-r">1.6</td><td class="num-r up"><strong>13.8</strong></td><td class="num-r up"><strong>+763%</strong></td>
+          </tr>
+          <tr style="background:#fff1f2">
+            <td>bmiとは</td><td><span class="badge badge-red">辞書引き（意欲なし）</span></td>
+            <td class="num-r">0.2</td><td class="num-r up">1.0</td><td class="num-r up">+400%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="insight insight-red" style="margin-top:12px;">
+        <strong>仮説B（ユーザー層変化）が確定。</strong><br>
+        「bmi計算方法」「bmiとは」という基礎知識・辞書引き系ユーザーが急増。これらのユーザーはBMIの数値を知りたいだけで、ダイエット行動への意欲がない。PU文言を変えても構造的な改善は限定的。
+      </div>
+      <div class="insight insight-yellow" style="margin-top:8px;">
+        <strong>5/14仕様変更の影響も重複。</strong><br>
+        5/14以降、通常PU＋WINUT（離脱防止）両方のimpがpu_impに加算され、CTRが見かけ上半減する既知現象。ユーザー層変化との複合でCTRが3〜5%に到達。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ 追加率壊滅の原因 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">5</div>
+      <div>
+        <div class="section-title">追加率0.6%壊滅の原因</div>
+        <div class="section-sub">319 click → 友達2人の構造を解剖する</div>
+      </div>
+    </div>
+    <div class="body">
+      <h3>日次推移（こいずみBMI / PU経由）</h3>
+      <table>
+        <thead>
+          <tr><th>日付</th><th class="num-r">LP imp</th><th class="num-r">click</th><th class="num-r">友達</th><th class="num-r">追加率</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>6/1〜6/7（7日）</td><td class="num-r">2,696</td><td class="num-r">106</td><td class="num-r down">0</td><td class="num-r down">0.0%</td></tr>
+          <tr><td>6/8</td><td class="num-r">872</td><td class="num-r">28</td><td class="num-r down">0</td><td class="num-r down">0.0%</td></tr>
+          <tr><td>6/9</td><td class="num-r">421</td><td class="num-r">12</td><td class="num-r up">1</td><td class="num-r warn">8.3%</td></tr>
+          <tr><td>6/10〜6/14（5日）</td><td class="num-r">1,869</td><td class="num-r">79</td><td class="num-r down">0</td><td class="num-r down">0.0%</td></tr>
+          <tr><td>6/11</td><td class="num-r">349</td><td class="num-r">14</td><td class="num-r up">1</td><td class="num-r warn">7.1%</td></tr>
+          <tr><td>6/15</td><td class="num-r">242</td><td class="num-r">5</td><td class="num-r down">0</td><td class="num-r down">0.0%</td></tr>
+          <tr style="font-weight:700;background:#f8fafc"><td colspan="2">合計（16日）</td><td class="num-r">244</td><td class="num-r down">2</td><td class="num-r down">0.8%</td></tr>
+        </tbody>
+      </table>
+      <div class="insight insight-red" style="margin-top:12px;">
+        <strong>16日間のうち14日が追加率0.0%。友達が出た2日も各1人。</strong><br>
+        これは偶発ではなく構造的問題。244 clickのほぼ全員がLP到達後に離脱している。
+      </div>
+      <div class="insight insight-yellow" style="margin-top:8px;">
+        <strong>推定原因: BMIユーザーとLP・友達追加画面のミスマッチ。</strong><br>
+        BMI記事の訪問者は「体重と身長でBMIを確認したい」フェーズ。LPが医療ダイエット・治療系の色合いが強い場合、「え、そういう話？自分には関係ない」で即離脱。5月2.1% → 6月0.6%への急落はLP側の何かが変わった可能性もあり要確認。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ インパクト定量化 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">6</div>
+      <div>
+        <div class="section-title">改善インパクト定量化</div>
+        <div class="section-sub">どこを直せば何人増えるか</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr><th>改善シナリオ</th><th>計算</th><th class="num-r">友達 / 月</th><th class="num-r">現状比</th></tr>
+        </thead>
+        <tbody>
+          <tr style="background:#fff1f2">
+            <td>現状（6月ペース）</td><td>LP 14,250 × PVFR 0.03%</td><td class="num-r down"><strong>4人</strong></td><td class="num-r">—</td>
+          </tr>
+          <tr>
+            <td>追加率のみ → 11%</td><td>click 638 × 11%</td><td class="num-r up"><strong>35人</strong></td><td class="num-r up">+31人</td>
+          </tr>
+          <tr>
+            <td>CTRのみ → 13%</td><td>PU imp × 13% × 0.6%</td><td class="num-r warn"><strong>6人</strong></td><td class="num-r">+2人（焼け石に水）</td>
+          </tr>
+          <tr style="background:#f0fdf4">
+            <td><strong>両方基準値達成（PVFR 0.80%）</strong></td><td>LP 14,250 × 0.80%</td><td class="num-r up"><strong>114人</strong></td><td class="num-r up">+110人</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-blue" style="margin-top:12px;">
+        PVFR 0.80%達成時、サプリFCVR 2%仮定で <strong>月2〜3件のCV追加</strong>ポテンシャル。
+        ただし現状（月4人）でサプリ導線を乗せても効果測定不能。<strong>まず追加率改修 → 月35人以上確保してから導線設計</strong>。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑧ 次のアクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">7</div>
+      <div>
+        <div class="section-title">次のアクション</div>
+        <div class="section-sub">優先順に実施。①が解決するまで②には進まない</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-high">最優先</span>
+          <div class="action-body">
+            <strong>LP・友達追加画面の確認と改修</strong>
+            <p>BMI記事からLPに来たユーザーが何を見てなぜ離脱しているかを特定する。友達追加画面のアカウント名・説明文・ビジュアルがBMI記事ユーザー（「体を把握したいフェーズ」）に対してダイエット治療訴求になっていないか確認。5月2.1% → 6月0.6%の急落はLP側に変更があった可能性も要調査。</p>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">次点</span>
+          <div class="action-body">
+            <strong>PU訴求軸の刷新（CMO設計）</strong>
+            <p>現行3文言（脂肪のつき方・体質タイプ・体の本当の状態）はどれも3〜6%で横並び。文言変更では改善余地が限定的と判明。「BMIが正常でも脂肪が多い人がいる → 体質診断」のような<strong>知識欲に乗る別軸</strong>での訴求設計を検討。追加率改修後に着手。</p>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-low">条件付き</span>
+          <div class="action-body">
+            <strong>サプリ導線設計（追加率回復後）</strong>
+            <p>BMI記事は「体質改善したい」フェーズのユーザーとサプリの相性は高い。ただし友達数が月35人以上（追加率11%達成）になってから設計・実装する。現状4人/月ではA/Bテストも効果測定も不可能。</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <p style="text-align:center; font-size:12px; color:#94a3b8; margin-top:32px;">
+    分析: CIO / CMO &nbsp;·&nbsp; 2026-06-17 &nbsp;·&nbsp; データソース: load_unified_data() + Google Search Console
+  </p>
+
+</div>
+</body>
+</html>
