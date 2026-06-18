@@ -7,114 +7,58 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #ddd; color: #1d1d1f; font-size: 13px; }
-  .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+  .container { max-width: 1300px; margin: 0 auto; padding: 32px 24px; }
   h1 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
   .meta { color: #888; font-size: 12px; margin-bottom: 8px; }
   .back-link { margin-bottom: 20px; font-size: 12px; }
   .back-link a { color: #4285f4; text-decoration: none; }
 
+  /* タイプセクション */
+  .type-section { margin-bottom: 48px; }
+  .type-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #ccc; }
+  .type-label { font-size: 16px; font-weight: 700; }
+  .type-sub { font-size: 11px; color: #888; }
+
   .cards-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 16px; align-items: flex-start; }
 
   /* ─── カード本体 ─── */
-  .card {
-    width: 220px;
-    min-width: 220px;
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.18);
-    display: flex;
-    flex-direction: column;
-    font-size: 12px;
-  }
+  .card { width: 220px; min-width: 220px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.18); display: flex; flex-direction: column; font-size: 12px; }
 
-  /* ブランドヘッダーバー */
-  .card-header {
-    background: linear-gradient(90deg, #c8861a 0%, #e8a830 100%);
-    padding: 6px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+  /* ヘッダー・ポイントバッジ（オイル用デフォルト） */
+  .card-header { background: linear-gradient(90deg, #c8861a 0%, #e8a830 100%); padding: 6px 10px; display: flex; align-items: center; justify-content: space-between; }
   .brand-name { color: #fff; font-weight: 800; font-size: 13px; letter-spacing: 0.04em; }
-  .pr-tag {
-    background: rgba(255,255,255,0.25);
-    color: #fff;
-    font-size: 9px;
-    font-weight: 700;
-    padding: 1px 5px;
-    border-radius: 3px;
-    letter-spacing: 0.05em;
-  }
-
-  /* ポイントバッジ行 */
-  .point-row {
-    background: #f5f0e8;
-    padding: 6px 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .point-badge {
-    background: linear-gradient(135deg, #c8861a, #e8a830);
-    color: #fff;
-    font-size: 9px;
-    font-weight: 800;
-    padding: 3px 8px;
-    border-radius: 4px;
-    white-space: nowrap;
-    line-height: 1.3;
-    text-align: center;
-  }
+  .pr-tag { background: rgba(255,255,255,0.25); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; letter-spacing: 0.05em; }
+  .point-row { background: #f5f0e8; padding: 6px 10px; display: flex; align-items: center; gap: 8px; }
+  .point-badge { background: linear-gradient(135deg, #c8861a, #e8a830); color: #fff; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 4px; white-space: nowrap; line-height: 1.3; text-align: center; }
   .point-badge .num { font-size: 16px; display: block; line-height: 1; }
   .point-headline { font-size: 12px; font-weight: 800; color: #222; line-height: 1.35; flex: 1; }
 
   /* 画像プレースホルダー */
-  .img-area {
-    background: #e8e0d4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 5px;
-    color: #9e8060;
-    font-size: 10px;
-    font-weight: 600;
-    position: relative;
-  }
+  .img-area { background: #e8e0d4; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 5px; color: #9e8060; font-size: 10px; font-weight: 600; }
   .img-area .img-icon { font-size: 26px; opacity: 0.5; }
   .img-area .img-label { font-size: 9px; color: #a08060; font-weight: 700; }
 
-  /* バッジ（素材・特徴表示） */
-  .feat-badge {
-    display: inline-block;
-    background: #fff;
-    border: 1.5px solid #c8861a;
-    color: #c8861a;
-    font-size: 9px;
-    font-weight: 700;
-    padding: 2px 7px;
-    border-radius: 4px;
-    margin: 2px 2px 0 0;
-  }
+  /* 特徴バッジ（オイル用デフォルト） */
+  .feat-badge { display: inline-block; background: #fff; border: 1.5px solid #c8861a; color: #c8861a; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 4px; margin: 2px 2px 0 0; }
   .feat-badge.filled { background: #c8861a; color: #fff; }
 
   /* テキストエリア */
   .card-body { padding: 10px 11px 8px; flex: 1; }
   .body-headline { font-size: 13px; font-weight: 800; color: #1a1a1a; margin-bottom: 6px; line-height: 1.45; }
   .body-text { font-size: 10.5px; color: #555; line-height: 1.75; }
-  .body-sub { font-size: 9px; color: #888; margin-top: 4px; }
   .divider { border: none; border-top: 1px solid #eeebe5; margin: 7px 0; }
   .badges-row { display: flex; flex-wrap: wrap; margin-top: 6px; }
 
-  /* 商品エリア（カード1用） */
+  /* 商品エリア */
   .product-section { padding: 8px 11px 4px; text-align: center; }
   .product-name { font-size: 12px; font-weight: 800; color: #1a1a1a; line-height: 1.4; margin-bottom: 5px; }
   .product-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 3px; margin-bottom: 8px; }
   .product-badge { background: #f5f0e8; border: 1px solid #c8a060; color: #7a4e20; font-size: 8.5px; padding: 2px 6px; border-radius: 3px; font-weight: 600; }
+  .product-badge.gel { background: #fdf0f3; border-color: #e0a0b0; color: #8a3050; }
 
   /* 価格エリア */
   .price-section { padding: 6px 11px; background: #fffaf3; border-top: 1px solid #f0e8d8; border-bottom: 1px solid #f0e8d8; }
+  .price-section.gel { background: #fffaf8; border-color: #f5e0e8; }
   .price-label-sm { font-size: 9px; color: #888; margin-bottom: 1px; }
   .price-cross { text-decoration: line-through; color: #bbb; font-size: 11px; }
   .price-main-row { display: flex; align-items: flex-end; gap: 5px; }
@@ -127,342 +71,326 @@
   .set-item { font-size: 10px; color: #333; padding: 3px 0 3px 12px; position: relative; border-bottom: 1px dotted #eee; line-height: 1.45; }
   .set-item:last-child { border-bottom: none; }
   .set-item::before { content: "●"; position: absolute; left: 0; color: #c8861a; font-size: 7px; top: 5px; }
+  .set-item.gel::before { color: #c84068; }
   .set-item .item-sub { font-size: 9px; color: #888; display: block; }
 
   /* 信頼バッジ */
   .trust-row { display: flex; gap: 4px; padding: 6px 11px; }
   .trust-badge { flex: 1; background: #f0f7ff; border: 1px solid #c0d8f8; border-radius: 5px; padding: 4px 2px; font-size: 8.5px; color: #1967d2; font-weight: 700; text-align: center; line-height: 1.4; }
+  .trust-badge.gel { background: #fff0f5; border-color: #f0c0d0; color: #b83058; }
 
   /* CTAボタン */
   .cta-wrap { padding: 8px 10px 10px; }
-  .cta-btn {
-    display: block;
-    width: 100%;
-    background: linear-gradient(180deg, #5cb85c 0%, #3d8b3d 100%);
-    border: none;
-    border-radius: 50px;
-    padding: 10px 8px;
-    font-size: 11px;
-    font-weight: 800;
-    color: #fff;
-    text-align: center;
-    cursor: pointer;
-    line-height: 1.35;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-    position: relative;
-  }
-  .cta-btn::before {
-    content: "＼初回価格 1,880円／";
-    display: block;
-    font-size: 9px;
-    font-weight: 700;
-    opacity: 0.9;
-    margin-bottom: 2px;
-  }
+  .cta-btn { display: block; width: 100%; background: linear-gradient(180deg, #5cb85c 0%, #3d8b3d 100%); border: none; border-radius: 50px; padding: 10px 8px; font-size: 11px; font-weight: 800; color: #fff; text-align: center; cursor: pointer; line-height: 1.35; box-shadow: 0 3px 6px rgba(0,0,0,0.2); position: relative; }
+  .cta-btn::before { content: "＼初回価格 1,880円／"; display: block; font-size: 9px; font-weight: 700; opacity: 0.9; margin-bottom: 2px; }
+  .cta-btn.gel::before { content: "＼特別価格 3,344円／"; }
   .cta-btn.no-price::before { display: none; }
   .cta-arrow { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.85; }
 
-  /* メモ */
   .wip-badge { display: inline-block; background: #fff3cd; border: 1px solid #f0c040; color: #7a5000; font-size: 9px; padding: 1px 6px; border-radius: 3px; margin-left: 4px; vertical-align: middle; font-weight: 600; }
 </style>
 </head>
 <body>
 <div class="container">
   <div class="back-link"><a href="cosme-cleansing-diagnosis-design-2026-06-12.html">← 設計書に戻る</a> ／ <a href="carousel-cosme-cleansing-cards-2026-06-18.html">教育カル カード図</a></div>
-  <h1>クレンジング診断 PRカル カード図 <span class="wip-badge">Card 3 再ブラッシュアップ予定</span></h1>
-  <p class="meta">2026-06-18　／　オイルタイプ（アテニア スキンクリア クレンズオイル）</p>
+  <h1>クレンジング診断 PRカル カード図</h1>
+  <p class="meta">2026-06-18　／　全タイプ</p>
 
-  <div class="cards-row">
-
-    <!-- ===== Card 1 | 商材発表 ===== -->
-    <div class="card">
-      <div class="card-header">
-        <span class="brand-name">ATTENIR</span>
-        <span class="pr-tag">PR</span>
-      </div>
-
-      <div class="img-area" style="height:150px;">
-        <div class="img-icon">🧴</div>
-        <div class="img-label">商品パッケージ写真</div>
-      </div>
-
-      <!-- アワードバッジエリア -->
-      <div style="background:#fffaf0;border-bottom:1px solid #f0e8d0;padding:6px 10px;display:flex;align-items:center;gap:8px;">
-        <!-- 総合大賞バッジ -->
-        <div style="flex-shrink:0;">
-          <svg width="52" height="52" viewBox="0 0 52 52">
-            <!-- 外周ゴールドリング -->
-            <circle cx="26" cy="26" r="25" fill="url(#gold1)" stroke="#c8860a" stroke-width="1.2"/>
-            <!-- 内側 -->
-            <circle cx="26" cy="26" r="21" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
-            <!-- 王冠 -->
-            <text x="26" y="16" text-anchor="middle" font-size="10" fill="#c8860a">👑</text>
-            <!-- @cosme -->
-            <text x="26" y="25" text-anchor="middle" font-size="5.5" font-weight="800" fill="#1a1a1a">@cosme</text>
-            <!-- 赤リボン -->
-            <rect x="8" y="29" width="36" height="10" rx="2" fill="#c0392b"/>
-            <text x="26" y="37" text-anchor="middle" font-size="6" font-weight="800" fill="#fff">総合大賞</text>
-            <!-- 年 -->
-            <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">2024・2025</text>
-            <defs>
-              <linearGradient id="gold1" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#f9d060"/>
-                <stop offset="50%" stop-color="#e8a820"/>
-                <stop offset="100%" stop-color="#c8860a"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-        <!-- クレンジング1位バッジ -->
-        <div style="flex-shrink:0;">
-          <svg width="52" height="52" viewBox="0 0 52 52">
-            <circle cx="26" cy="26" r="25" fill="url(#gold2)" stroke="#c8860a" stroke-width="1.2"/>
-            <circle cx="26" cy="26" r="21" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
-            <text x="26" y="16" text-anchor="middle" font-size="10" fill="#c8860a">👑</text>
-            <text x="26" y="25" text-anchor="middle" font-size="5.5" font-weight="800" fill="#1a1a1a">@cosme</text>
-            <rect x="5" y="29" width="42" height="10" rx="2" fill="#c8860a"/>
-            <text x="26" y="37" text-anchor="middle" font-size="5.5" font-weight="800" fill="#fff">クレンジング 1位</text>
-            <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">2024・2025</text>
-            <defs>
-              <linearGradient id="gold2" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#f9d060"/>
-                <stop offset="50%" stop-color="#e8a820"/>
-                <stop offset="100%" stop-color="#c8860a"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-        <div style="font-size:8.5px;font-weight:700;color:#7a4e10;line-height:1.5;">2年連続<br>受賞！</div>
-      </div>
-
-      <div class="product-section">
-        <div style="font-size:9px;color:#888;margin-bottom:3px;">あなたにおすすめのクレンジングはこちら</div>
-        <div class="product-name">スキンクリア クレンズオイル</div>
-        <div class="product-badges">
-          <span class="product-badge">メイク映えする素肌へ導く</span>
-          <span class="product-badge">W洗顔不要で時短ケア</span>
-          <span class="product-badge">乾燥による小ジワを目立たなくする＊</span>
-        </div>
-      </div>
-
-      <div class="price-section">
-        <div class="price-label-sm">公式限定・初回特別価格</div>
-        <div style="margin-bottom:2px;"><span class="price-cross">通常価格 ¥2,200</span></div>
-        <div class="price-main-row">
-          <span class="init-badge-sm">初回限定</span>
-          <span class="price-num">1,880</span>
-          <span class="price-suffix">円（税込）</span>
-        </div>
-      </div>
-
-      <div class="cta-wrap">
-        <button class="cta-btn no-price">お得に試してみる <span class="cta-arrow">›</span></button>
-      </div>
+  <!-- ========================================
+       🟡 オイルタイプ
+  ========================================= -->
+  <div class="type-section">
+    <div class="type-header">
+      <span class="type-label">🟡 オイルタイプ PRカル</span>
+      <span class="type-sub">アテニア スキンクリア クレンズオイル ／ CV単価 ¥4,500 <span class="wip-badge">Card 3 再調整予定</span></span>
     </div>
+    <div class="cards-row">
 
-    <!-- ===== Card 2 | クレンジング力 ===== -->
-    <div class="card">
-      <div class="card-header">
-        <span class="brand-name">ATTENIR</span>
-        <span class="pr-tag">PR</span>
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="card-header">
+          <span class="brand-name">ATTENIR</span>
+          <span class="pr-tag">PR</span>
+        </div>
+        <div class="img-area" style="height:150px;">
+          <div class="img-icon">🧴</div>
+          <div class="img-label">商品パッケージ写真</div>
+        </div>
+        <div style="background:#fffaf0;border-bottom:1px solid #f0e8d0;padding:6px 10px;display:flex;align-items:center;gap:8px;">
+          <div style="flex-shrink:0;">
+            <svg width="52" height="52" viewBox="0 0 52 52">
+              <defs><linearGradient id="gold1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f9d060"/><stop offset="50%" stop-color="#e8a820"/><stop offset="100%" stop-color="#c8860a"/></linearGradient></defs>
+              <circle cx="26" cy="26" r="25" fill="url(#gold1)" stroke="#c8860a" stroke-width="1.2"/>
+              <circle cx="26" cy="26" r="21" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
+              <text x="26" y="16" text-anchor="middle" font-size="10" fill="#c8860a">👑</text>
+              <text x="26" y="25" text-anchor="middle" font-size="5.5" font-weight="800" fill="#1a1a1a">@cosme</text>
+              <rect x="8" y="29" width="36" height="10" rx="2" fill="#c0392b"/>
+              <text x="26" y="37" text-anchor="middle" font-size="6" font-weight="800" fill="#fff">総合大賞</text>
+              <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">2024・2025</text>
+            </svg>
+          </div>
+          <div style="flex-shrink:0;">
+            <svg width="52" height="52" viewBox="0 0 52 52">
+              <defs><linearGradient id="gold2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f9d060"/><stop offset="50%" stop-color="#e8a820"/><stop offset="100%" stop-color="#c8860a"/></linearGradient></defs>
+              <circle cx="26" cy="26" r="25" fill="url(#gold2)" stroke="#c8860a" stroke-width="1.2"/>
+              <circle cx="26" cy="26" r="21" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
+              <text x="26" y="16" text-anchor="middle" font-size="10" fill="#c8860a">👑</text>
+              <text x="26" y="25" text-anchor="middle" font-size="5.5" font-weight="800" fill="#1a1a1a">@cosme</text>
+              <rect x="5" y="29" width="42" height="10" rx="2" fill="#c8860a"/>
+              <text x="26" y="37" text-anchor="middle" font-size="5.5" font-weight="800" fill="#fff">クレンジング 1位</text>
+              <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">2024・2025</text>
+            </svg>
+          </div>
+          <div style="font-size:8.5px;font-weight:700;color:#7a4e10;line-height:1.5;">2年連続<br>受賞！</div>
+        </div>
+        <div class="product-section">
+          <div style="font-size:9px;color:#888;margin-bottom:3px;">あなたにおすすめのクレンジングはこちら</div>
+          <div class="product-name">スキンクリア クレンズオイル</div>
+          <div class="product-badges">
+            <span class="product-badge">メイク映えする素肌へ導く</span>
+            <span class="product-badge">W洗顔不要で時短ケア</span>
+            <span class="product-badge">乾燥による小ジワを目立たなくする＊</span>
+          </div>
+        </div>
+        <div class="price-section">
+          <div class="price-label-sm">公式限定・初回特別価格</div>
+          <div style="margin-bottom:2px;"><span class="price-cross">通常価格 ¥2,200</span></div>
+          <div class="price-main-row">
+            <span class="init-badge-sm">初回限定</span>
+            <span class="price-num">1,880</span>
+            <span class="price-suffix">円（税込）</span>
+          </div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn no-price">お得に試してみる <span class="cta-arrow">›</span></button></div>
       </div>
 
-      <div class="point-row">
-        <div class="point-badge">Point<span class="num">1</span></div>
-        <div class="point-headline">摩擦レスで瞬時にオフ</div>
-      </div>
-
-      <!-- すべてOK バブルエリア -->
-      <div style="background:linear-gradient(180deg,#fffbe8 0%,#fff8d8 100%);padding:8px 6px 10px;text-align:center;">
-        <!-- すべてOK! リボンバナー -->
-        <div style="background:linear-gradient(90deg,#c8860a,#f0c030,#c8860a);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;letter-spacing:0.05em;text-shadow:0 1px 2px rgba(0,0,0,0.2);">すべてOK！</div>
-        <!-- 3バブル -->
-        <div style="display:flex;justify-content:center;gap:4px;">
-          <!-- 濡れた手 -->
-          <svg width="58" height="58" viewBox="0 0 58 58">
-            <defs>
-              <radialGradient id="b1" cx="35%" cy="30%">
-                <stop offset="0%" stop-color="#fdf0b0"/>
-                <stop offset="60%" stop-color="#f0c030"/>
-                <stop offset="100%" stop-color="#c8860a"/>
-              </radialGradient>
-            </defs>
-            <circle cx="29" cy="29" r="27" fill="url(#b1)" opacity="0.92"/>
-            <circle cx="29" cy="29" r="27" fill="none" stroke="#e8a820" stroke-width="1.2"/>
-            <!-- shine -->
-            <ellipse cx="21" cy="19" rx="7" ry="4" fill="rgba(255,255,255,0.4)" transform="rotate(-30 21 19)"/>
-            <text x="29" y="25" text-anchor="middle" font-size="14" fill="rgba(255,255,255,0.9)">💧</text>
-            <text x="29" y="38" text-anchor="middle" font-size="9" font-weight="700" fill="#5a3800">濡れた手</text>
-            <text x="29" y="49" text-anchor="middle" font-size="7.5" fill="#7a5000">でもOK</text>
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="card-header"><span class="brand-name">ATTENIR</span><span class="pr-tag">PR</span></div>
+        <div class="point-row">
+          <div class="point-badge">Point<span class="num">1</span></div>
+          <div class="point-headline">摩擦レスで瞬時にオフ</div>
+        </div>
+        <div style="background:linear-gradient(180deg,#fffbe8 0%,#fff8d8 100%);padding:8px 6px 10px;text-align:center;">
+          <div style="background:linear-gradient(90deg,#c8860a,#f0c030,#c8860a);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;letter-spacing:0.05em;text-shadow:0 1px 2px rgba(0,0,0,0.2);">すべてOK！</div>
+          <div style="display:flex;justify-content:center;gap:4px;">
+            <svg width="58" height="58" viewBox="0 0 58 58"><defs><radialGradient id="b1" cx="35%" cy="30%"><stop offset="0%" stop-color="#fdf0b0"/><stop offset="60%" stop-color="#f0c030"/><stop offset="100%" stop-color="#c8860a"/></radialGradient></defs><circle cx="29" cy="29" r="27" fill="url(#b1)" opacity="0.92"/><circle cx="29" cy="29" r="27" fill="none" stroke="#e8a820" stroke-width="1.2"/><ellipse cx="21" cy="19" rx="7" ry="4" fill="rgba(255,255,255,0.4)" transform="rotate(-30 21 19)"/><text x="29" y="25" text-anchor="middle" font-size="14">💧</text><text x="29" y="38" text-anchor="middle" font-size="9" font-weight="700" fill="#5a3800">濡れた手</text><text x="29" y="49" text-anchor="middle" font-size="7.5" fill="#7a5000">でもOK</text></svg>
+            <svg width="58" height="58" viewBox="0 0 58 58"><defs><radialGradient id="b2" cx="35%" cy="30%"><stop offset="0%" stop-color="#fdf0b0"/><stop offset="60%" stop-color="#f0c030"/><stop offset="100%" stop-color="#c8860a"/></radialGradient></defs><circle cx="29" cy="29" r="27" fill="url(#b2)" opacity="0.92"/><circle cx="29" cy="29" r="27" fill="none" stroke="#e8a820" stroke-width="1.2"/><ellipse cx="21" cy="19" rx="7" ry="4" fill="rgba(255,255,255,0.4)" transform="rotate(-30 21 19)"/><text x="29" y="25" text-anchor="middle" font-size="13">✨</text><text x="29" y="37" text-anchor="middle" font-size="9" font-weight="700" fill="#5a3800">まつエク</text><text x="29" y="48" text-anchor="middle" font-size="6.5" fill="#7a5000">※1 でもOK</text></svg>
+            <svg width="58" height="58" viewBox="0 0 58 58"><defs><radialGradient id="b3" cx="35%" cy="30%"><stop offset="0%" stop-color="#fdf0b0"/><stop offset="60%" stop-color="#f0c030"/><stop offset="100%" stop-color="#c8860a"/></radialGradient></defs><circle cx="29" cy="29" r="27" fill="url(#b3)" opacity="0.92"/><circle cx="29" cy="29" r="27" fill="none" stroke="#e8a820" stroke-width="1.2"/><ellipse cx="21" cy="19" rx="7" ry="4" fill="rgba(255,255,255,0.4)" transform="rotate(-30 21 19)"/><text x="29" y="24" text-anchor="middle" font-size="12">🙆</text><text x="29" y="36" text-anchor="middle" font-size="9" font-weight="700" fill="#5a3800">W洗顔</text><text x="29" y="47" text-anchor="middle" font-size="9" font-weight="700" fill="#5a3800">不要</text></svg>
+          </div>
+        </div>
+        <div class="card-body" style="padding-bottom:10px;">
+          <svg width="100%" height="82" viewBox="0 0 196 82" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:8px;">
+            <rect width="196" height="82" fill="#fff8f0"/>
+            <rect x="2"   y="60" width="28" height="18" rx="9" fill="#f0b8a8" stroke="#e8a090" stroke-width="0.6"/><rect x="34"  y="60" width="28" height="18" rx="9" fill="#f0b8a8" stroke="#e8a090" stroke-width="0.6"/><rect x="66"  y="60" width="28" height="18" rx="9" fill="#f0b8a8" stroke="#e8a090" stroke-width="0.6"/><rect x="98"  y="60" width="28" height="18" rx="9" fill="#f0b8a8" stroke="#e8a090" stroke-width="0.6"/><rect x="130" y="60" width="28" height="18" rx="9" fill="#f0b8a8" stroke="#e8a090" stroke-width="0.6"/><rect x="162" y="60" width="28" height="18" rx="9" fill="#f0b8a8" stroke="#e8a090" stroke-width="0.6"/>
+            <rect x="2"   y="40" width="28" height="18" rx="9" fill="#f8cfc0" stroke="#e8b8a8" stroke-width="0.6"/><rect x="34"  y="40" width="28" height="18" rx="9" fill="#f8cfc0" stroke="#e8b8a8" stroke-width="0.6"/><rect x="66"  y="40" width="28" height="18" rx="9" fill="#f8cfc0" stroke="#e8b8a8" stroke-width="0.6"/><rect x="98"  y="40" width="28" height="18" rx="9" fill="#f8cfc0" stroke="#e8b8a8" stroke-width="0.6"/><rect x="130" y="40" width="28" height="18" rx="9" fill="#f8cfc0" stroke="#e8b8a8" stroke-width="0.6"/><rect x="162" y="40" width="28" height="18" rx="9" fill="#f8cfc0" stroke="#e8b8a8" stroke-width="0.6"/>
+            <circle cx="18" cy="36" r="4.5" fill="#5baad8"/><circle cx="48" cy="36" r="4.5" fill="#5baad8"/><circle cx="78" cy="36" r="4.5" fill="#5baad8"/><circle cx="108" cy="36" r="4.5" fill="#5baad8"/><circle cx="138" cy="36" r="4.5" fill="#5baad8"/><circle cx="168" cy="36" r="4.5" fill="#5baad8"/>
+            <rect x="0" y="13" width="196" height="20" fill="#c8a040"/>
+            <path d="M0 13 Q32 7 65 13 Q98 19 131 13 Q164 7 196 13 L196 0 L0 0 Z" fill="#e8c060"/>
+            <rect x="0" y="13" width="196" height="4" fill="rgba(255,230,120,0.35)"/>
           </svg>
-          <!-- まつエク -->
-          <svg width="58" height="58" viewBox="0 0 58 58">
-            <defs>
-              <radialGradient id="b2" cx="35%" cy="30%">
-                <stop offset="0%" stop-color="#fdf0b0"/>
-                <stop offset="60%" stop-color="#f0c030"/>
-                <stop offset="100%" stop-color="#c8860a"/>
-              </radialGradient>
-            </defs>
-            <circle cx="29" cy="29" r="27" fill="url(#b2)" opacity="0.92"/>
-            <circle cx="29" cy="29" r="27" fill="none" stroke="#e8a820" stroke-width="1.2"/>
-            <ellipse cx="21" cy="19" rx="7" ry="4" fill="rgba(255,255,255,0.4)" transform="rotate(-30 21 19)"/>
-            <text x="29" y="25" text-anchor="middle" font-size="13" fill="rgba(255,255,255,0.9)">✨</text>
-            <text x="29" y="37" text-anchor="middle" font-size="9" font-weight="700" fill="#5a3800">まつエク</text>
-            <text x="29" y="48" text-anchor="middle" font-size="6.5" fill="#7a5000">※1 でもOK</text>
-          </svg>
-          <!-- W洗顔不要 -->
-          <svg width="58" height="58" viewBox="0 0 58 58">
-            <defs>
-              <radialGradient id="b3" cx="35%" cy="30%">
-                <stop offset="0%" stop-color="#fdf0b0"/>
-                <stop offset="60%" stop-color="#f0c030"/>
-                <stop offset="100%" stop-color="#c8860a"/>
-              </radialGradient>
-            </defs>
-            <circle cx="29" cy="29" r="27" fill="url(#b3)" opacity="0.92"/>
-            <circle cx="29" cy="29" r="27" fill="none" stroke="#e8a820" stroke-width="1.2"/>
-            <ellipse cx="21" cy="19" rx="7" ry="4" fill="rgba(255,255,255,0.4)" transform="rotate(-30 21 19)"/>
-            <text x="29" y="24" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.9)">🙆</text>
-            <text x="29" y="36" text-anchor="middle" font-size="9" font-weight="700" fill="#5a3800">W洗顔</text>
-            <text x="29" y="47" text-anchor="middle" font-size="9" font-weight="700" fill="#5a3800">不要</text>
-          </svg>
+          <div style="text-align:center;">
+            <div style="font-size:10px;color:#666;margin-bottom:2px;">弾力オイルがメイクにしっかり絡む</div>
+            <div style="font-size:13px;color:#c8860a;font-weight:900;margin-bottom:1px;">↓</div>
+            <div style="font-size:11.5px;font-weight:800;color:#1a1a1a;">なじませるだけで浮き上がる！</div>
+          </div>
         </div>
+        <div class="cta-wrap"><button class="cta-btn">お得に試してみる <span class="cta-arrow">›</span></button></div>
       </div>
 
-      <div class="card-body" style="padding-bottom:10px;">
-        <!-- 皮膚断面イラスト -->
-        <svg width="100%" height="82" viewBox="0 0 196 82" style="display:block;border-radius:6px;overflow:hidden;margin-bottom:8px;">
-          <!-- 背景 -->
-          <rect width="196" height="82" fill="#fff8f0"/>
-          <!-- 皮膚細胞 下段 -->
-          <rect x="2"   y="60" width="28" height="18" rx="9" fill="#f0b8a8" stroke="#e8a090" stroke-width="0.6"/>
-          <rect x="34"  y="60" width="28" height="18" rx="9" fill="#f0b8a8" stroke="#e8a090" stroke-width="0.6"/>
-          <rect x="66"  y="60" width="28" height="18" rx="9" fill="#f0b8a8" stroke="#e8a090" stroke-width="0.6"/>
-          <rect x="98"  y="60" width="28" height="18" rx="9" fill="#f0b8a8" stroke="#e8a090" stroke-width="0.6"/>
-          <rect x="130" y="60" width="28" height="18" rx="9" fill="#f0b8a8" stroke="#e8a090" stroke-width="0.6"/>
-          <rect x="162" y="60" width="28" height="18" rx="9" fill="#f0b8a8" stroke="#e8a090" stroke-width="0.6"/>
-          <!-- 皮膚細胞 上段 -->
-          <rect x="2"   y="40" width="28" height="18" rx="9" fill="#f8cfc0" stroke="#e8b8a8" stroke-width="0.6"/>
-          <rect x="34"  y="40" width="28" height="18" rx="9" fill="#f8cfc0" stroke="#e8b8a8" stroke-width="0.6"/>
-          <rect x="66"  y="40" width="28" height="18" rx="9" fill="#f8cfc0" stroke="#e8b8a8" stroke-width="0.6"/>
-          <rect x="98"  y="40" width="28" height="18" rx="9" fill="#f8cfc0" stroke="#e8b8a8" stroke-width="0.6"/>
-          <rect x="130" y="40" width="28" height="18" rx="9" fill="#f8cfc0" stroke="#e8b8a8" stroke-width="0.6"/>
-          <rect x="162" y="40" width="28" height="18" rx="9" fill="#f8cfc0" stroke="#e8b8a8" stroke-width="0.6"/>
-          <!-- オイル分子（青ドット） -->
-          <circle cx="18"  cy="36" r="4.5" fill="#5baad8"/>
-          <circle cx="48"  cy="36" r="4.5" fill="#5baad8"/>
-          <circle cx="78"  cy="36" r="4.5" fill="#5baad8"/>
-          <circle cx="108" cy="36" r="4.5" fill="#5baad8"/>
-          <circle cx="138" cy="36" r="4.5" fill="#5baad8"/>
-          <circle cx="168" cy="36" r="4.5" fill="#5baad8"/>
-          <!-- メイク層（上部スラブ） -->
-          <rect x="0" y="13" width="196" height="20" fill="#c8a040"/>
-          <!-- メイク層 上面（ゆるい波） -->
-          <path d="M0 13 Q32 7 65 13 Q98 19 131 13 Q164 7 196 13 L196 0 L0 0 Z" fill="#e8c060"/>
-          <!-- メイク層 光沢 -->
-          <rect x="0" y="13" width="196" height="4" fill="rgba(255,230,120,0.35)"/>
-        </svg>
-        <!-- テキスト -->
-        <div style="text-align:center;">
-          <div style="font-size:10px;color:#666;margin-bottom:2px;">弾力オイルがメイクにしっかり絡む</div>
-          <div style="font-size:13px;color:#c8860a;font-weight:900;margin-bottom:1px;">↓</div>
-          <div style="font-size:11.5px;font-weight:800;color:#1a1a1a;">なじませるだけで浮き上がる！</div>
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="card-header"><span class="brand-name">ATTENIR</span><span class="pr-tag">PR</span></div>
+        <div class="point-row">
+          <div class="point-badge">Point<span class="num">2</span></div>
+          <div class="point-headline">くすみケアで洗うたびに明るい素肌へ<span class="wip-badge">再調整予定</span></div>
         </div>
+        <div style="background:linear-gradient(180deg,#fffbe8 0%,#fff8d8 100%);padding:8px 8px 10px;text-align:center;">
+          <div style="background:linear-gradient(90deg,#c8860a,#f0c030,#c8860a);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;letter-spacing:0.05em;text-shadow:0 1px 2px rgba(0,0,0,0.2);">8つの植物美容オイル</div>
+          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;">
+            <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;line-height:1;">🌸</div>
+            <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;line-height:1;">🌺</div>
+            <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;line-height:1;">🌼</div>
+            <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;line-height:1;">🌻</div>
+            <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;line-height:1;">🌿</div>
+            <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;line-height:1;">🍃</div>
+            <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;line-height:1;">🫒</div>
+            <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;line-height:1;">🌾</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="body-text">植物由来の美容オイルが角層を柔らかくし、<br><strong>洗うたびに透明感あふれる素肌へ</strong></div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn">お得に試してみる <span class="cta-arrow">›</span></button></div>
       </div>
 
-      <div class="cta-wrap">
-        <button class="cta-btn">お得に試してみる <span class="cta-arrow">›</span></button>
+      <!-- Card 4 -->
+      <div class="card">
+        <div class="card-header"><span class="brand-name">ATTENIR</span><span class="pr-tag">PR</span></div>
+        <div class="card-body" style="padding-bottom:4px;">
+          <div class="body-headline">公式限定！<br>36％オフでお得に試せる</div>
+        </div>
+        <div class="set-section">
+          <div class="set-item">クレンジングオイル（175mL）<span class="item-sub">たっぷり2カ月分</span></div>
+          <div class="set-item">ドレスリフトローション（30mL）<span class="item-sub">シワ改善・ハリ肌へ。14日分おまけ</span></div>
+        </div>
+        <div class="price-section">
+          <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;"><span class="price-cross">2,948円相当</span><span style="font-size:13px;color:#c0392b;font-weight:700;">→</span></div>
+          <div class="price-main-row"><span class="init-badge-sm">初回限定</span><span class="price-num">1,880</span><span class="price-suffix">円（税込）</span></div>
+        </div>
+        <div class="trust-row">
+          <div class="trust-badge">🚚<br>送料<br>負担なし</div>
+          <div class="trust-badge">↩️<br>14日以内<br>返品OK</div>
+          <div class="trust-badge">⚡<br>最短<br>翌日発送</div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn">お得に試してみる <span class="cta-arrow">›</span></button></div>
       </div>
+
     </div>
-
-    <!-- ===== Card 3 | くすみ・角質ケア ===== -->
-    <div class="card">
-      <div class="card-header">
-        <span class="brand-name">ATTENIR</span>
-        <span class="pr-tag">PR</span>
-      </div>
-
-      <div class="point-row">
-        <div class="point-badge">Point<span class="num">2</span></div>
-        <div class="point-headline">くすみケアで洗うたびに明るい素肌へ<span class="wip-badge">再調整予定</span></div>
-      </div>
-
-      <!-- 植物美容オイルエリア -->
-      <div style="background:linear-gradient(180deg,#fffbe8 0%,#fff8d8 100%);padding:8px 8px 10px;text-align:center;">
-        <!-- バナー -->
-        <div style="background:linear-gradient(90deg,#c8860a,#f0c030,#c8860a);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;letter-spacing:0.05em;text-shadow:0 1px 2px rgba(0,0,0,0.2);">8つの植物美容オイル</div>
-        <!-- 8バッジ 2行×4 -->
-        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;">
-          <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;color:#7a4e10;display:flex;align-items:center;gap:2px;line-height:1;">🌸</div>
-          <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;color:#7a4e10;display:flex;align-items:center;gap:2px;line-height:1;">🌺</div>
-          <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;color:#7a4e10;display:flex;align-items:center;gap:2px;line-height:1;">🌼</div>
-          <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;color:#7a4e10;display:flex;align-items:center;gap:2px;line-height:1;">🌻</div>
-          <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;color:#7a4e10;display:flex;align-items:center;gap:2px;line-height:1;">🌿</div>
-          <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;color:#7a4e10;display:flex;align-items:center;gap:2px;line-height:1;">🍃</div>
-          <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;color:#7a4e10;display:flex;align-items:center;gap:2px;line-height:1;">🫒</div>
-          <div style="background:#fff;border:1.5px solid #e8a820;border-radius:16px;padding:3px 7px;font-size:11px;color:#7a4e10;display:flex;align-items:center;gap:2px;line-height:1;">🌾</div>
-        </div>
-      </div>
-
-      <div class="card-body">
-        <div class="body-text">
-          植物由来の美容オイルが角層を柔らかくし、<br>
-          <strong>洗うたびに透明感あふれる素肌へ</strong>
-        </div>
-      </div>
-
-      <div class="cta-wrap">
-        <button class="cta-btn">お得に試してみる <span class="cta-arrow">›</span></button>
-      </div>
-    </div>
-
-    <!-- ===== Card 4 | セット内容＋CV ===== -->
-    <div class="card">
-      <div class="card-header">
-        <span class="brand-name">ATTENIR</span>
-        <span class="pr-tag">PR</span>
-      </div>
-
-      <div class="card-body" style="padding-bottom:4px;">
-        <div class="body-headline">公式限定！<br>36％オフでお得に試せる</div>
-      </div>
-
-      <div class="set-section">
-        <div class="set-item">
-          クレンジングオイル（175mL）
-          <span class="item-sub">たっぷり2カ月分</span>
-        </div>
-        <div class="set-item">
-          ドレスリフトローション（30mL）
-          <span class="item-sub">シワ改善・ハリ肌へ。14日分おまけ</span>
-        </div>
-      </div>
-
-      <div class="price-section">
-        <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;">
-          <span class="price-cross">2,948円相当</span>
-          <span style="font-size:13px;color:#c0392b;font-weight:700;">→</span>
-        </div>
-        <div class="price-main-row">
-          <span class="init-badge-sm">初回限定</span>
-          <span class="price-num">1,880</span>
-          <span class="price-suffix">円（税込）</span>
-        </div>
-      </div>
-
-      <div class="trust-row">
-        <div class="trust-badge">🚚<br>送料<br>負担なし</div>
-        <div class="trust-badge">↩️<br>14日以内<br>返品OK</div>
-        <div class="trust-badge">⚡<br>最短<br>翌日発送</div>
-      </div>
-
-      <div class="cta-wrap">
-        <button class="cta-btn">お得に試してみる <span class="cta-arrow">›</span></button>
-      </div>
-    </div>
-
   </div>
+
+  <!-- ========================================
+       🩷 ジェルタイプ
+  ========================================= -->
+  <div class="type-section">
+    <div class="type-header">
+      <span class="type-label">🩷 ジェルタイプ PRカル</span>
+      <span class="type-sub">マナラ ホットクレンジングゲル マッサージプラス</span>
+    </div>
+    <div class="cards-row">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="card-header" style="background:linear-gradient(90deg,#b83058,#d85878);">
+          <span class="brand-name">MANARA</span><span class="pr-tag">PR</span>
+        </div>
+        <div class="img-area" style="height:150px;background:#f5e8ec;">
+          <div class="img-icon">🧴</div>
+          <div class="img-label" style="color:#a07080;">商品パッケージ写真</div>
+        </div>
+        <div style="background:#fdf5f7;border-bottom:1px solid #f0d8e0;padding:6px 10px;display:flex;align-items:center;gap:8px;">
+          <div style="flex-shrink:0;">
+            <svg width="52" height="52" viewBox="0 0 52 52">
+              <defs><linearGradient id="mg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f9d060"/><stop offset="50%" stop-color="#e8a820"/><stop offset="100%" stop-color="#c8860a"/></linearGradient></defs>
+              <circle cx="26" cy="26" r="25" fill="url(#mg1)" stroke="#c8860a" stroke-width="1.2"/>
+              <circle cx="26" cy="26" r="21" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
+              <text x="26" y="16" text-anchor="middle" font-size="10" fill="#c8860a">🏅</text>
+              <text x="26" y="24" text-anchor="middle" font-size="5" font-weight="800" fill="#1a1a1a">モンドセレクション</text>
+              <rect x="8" y="28" width="36" height="10" rx="2" fill="#c8860a"/>
+              <text x="26" y="36" text-anchor="middle" font-size="5.5" font-weight="800" fill="#fff">15年連続金賞</text>
+              <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">累計2,200万個</text>
+            </svg>
+          </div>
+          <div style="flex-shrink:0;">
+            <svg width="52" height="52" viewBox="0 0 52 52">
+              <defs><linearGradient id="mg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f9d060"/><stop offset="50%" stop-color="#e8a820"/><stop offset="100%" stop-color="#c8860a"/></linearGradient></defs>
+              <circle cx="26" cy="26" r="25" fill="url(#mg2)" stroke="#c8860a" stroke-width="1.2"/>
+              <circle cx="26" cy="26" r="21" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
+              <text x="26" y="16" text-anchor="middle" font-size="10" fill="#c8860a">👑</text>
+              <text x="26" y="24" text-anchor="middle" font-size="5" font-weight="800" fill="#1a1a1a">温感ゲル部門</text>
+              <rect x="6" y="28" width="40" height="10" rx="2" fill="#b83058"/>
+              <text x="26" y="36" text-anchor="middle" font-size="6" font-weight="800" fill="#fff">売上シェア1位</text>
+              <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">毛穴ケア部門も</text>
+            </svg>
+          </div>
+          <div style="font-size:8.5px;font-weight:700;color:#8a3050;line-height:1.5;">累計<br>2,200万個！</div>
+        </div>
+        <div class="product-section">
+          <div style="font-size:9px;color:#888;margin-bottom:3px;">あなたにおすすめのクレンジングはこちら</div>
+          <div class="product-name">ホットクレンジングゲル<br>マッサージプラス</div>
+          <div class="product-badges">
+            <span class="product-badge gel">乾燥しない洗い上がり</span>
+            <span class="product-badge gel">W洗顔不要</span>
+            <span class="product-badge gel">91.3%美容成分配合</span>
+          </div>
+        </div>
+        <div class="price-section gel">
+          <div class="price-label-sm">特別価格（定期）</div>
+          <div class="price-main-row">
+            <span class="init-badge-sm">特別価格</span>
+            <span class="price-num">3,344</span>
+            <span class="price-suffix">円（税込）</span>
+          </div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn no-price">お得に試してみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div class="card-header" style="background:linear-gradient(90deg,#b83058,#d85878);"><span class="brand-name">MANARA</span><span class="pr-tag">PR</span></div>
+        <div class="point-row" style="background:#fdf0f3;">
+          <div class="point-badge" style="background:linear-gradient(135deg,#b83058,#d85878);">Point<span class="num">1</span></div>
+          <div class="point-headline">乾燥しない、摩擦レスな洗い上がり。</div>
+        </div>
+        <div style="background:linear-gradient(180deg,#fdf5f7,#faeaee);padding:8px 6px 10px;text-align:center;">
+          <div style="background:linear-gradient(90deg,#b83058,#e07090,#b83058);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;text-shadow:0 1px 2px rgba(0,0,0,0.2);">すべてOK！</div>
+          <div style="display:flex;justify-content:center;gap:4px;">
+            <svg width="58" height="58" viewBox="0 0 58 58"><defs><radialGradient id="gb1" cx="35%" cy="30%"><stop offset="0%" stop-color="#fde0ea"/><stop offset="60%" stop-color="#e87090"/><stop offset="100%" stop-color="#b83058"/></radialGradient></defs><circle cx="29" cy="29" r="27" fill="url(#gb1)" opacity="0.92"/><circle cx="29" cy="29" r="27" fill="none" stroke="#d06080" stroke-width="1.2"/><ellipse cx="21" cy="19" rx="7" ry="4" fill="rgba(255,255,255,0.4)" transform="rotate(-30 21 19)"/><text x="29" y="25" text-anchor="middle" font-size="13">💧</text><text x="29" y="37" text-anchor="middle" font-size="8.5" font-weight="700" fill="#5a1830">乾燥肌</text><text x="29" y="48" text-anchor="middle" font-size="7.5" fill="#7a3050">向きOK</text></svg>
+            <svg width="58" height="58" viewBox="0 0 58 58"><defs><radialGradient id="gb2" cx="35%" cy="30%"><stop offset="0%" stop-color="#fde0ea"/><stop offset="60%" stop-color="#e87090"/><stop offset="100%" stop-color="#b83058"/></radialGradient></defs><circle cx="29" cy="29" r="27" fill="url(#gb2)" opacity="0.92"/><circle cx="29" cy="29" r="27" fill="none" stroke="#d06080" stroke-width="1.2"/><ellipse cx="21" cy="19" rx="7" ry="4" fill="rgba(255,255,255,0.4)" transform="rotate(-30 21 19)"/><text x="29" y="25" text-anchor="middle" font-size="13">🌸</text><text x="29" y="37" text-anchor="middle" font-size="8.5" font-weight="700" fill="#5a1830">敏感肌</text><text x="29" y="48" text-anchor="middle" font-size="7.5" fill="#7a3050">でもOK</text></svg>
+            <svg width="58" height="58" viewBox="0 0 58 58"><defs><radialGradient id="gb3" cx="35%" cy="30%"><stop offset="0%" stop-color="#fde0ea"/><stop offset="60%" stop-color="#e87090"/><stop offset="100%" stop-color="#b83058"/></radialGradient></defs><circle cx="29" cy="29" r="27" fill="url(#gb3)" opacity="0.92"/><circle cx="29" cy="29" r="27" fill="none" stroke="#d06080" stroke-width="1.2"/><ellipse cx="21" cy="19" rx="7" ry="4" fill="rgba(255,255,255,0.4)" transform="rotate(-30 21 19)"/><text x="29" y="24" text-anchor="middle" font-size="12">🙆</text><text x="29" y="36" text-anchor="middle" font-size="8.5" font-weight="700" fill="#5a1830">W洗顔</text><text x="29" y="47" text-anchor="middle" font-size="8.5" font-weight="700" fill="#5a1830">不要</text></svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="badges-row" style="margin-bottom:7px;"><span class="feat-badge filled" style="background:#c84068;border-color:#c84068;">オイルクラッシュ処方</span></div>
+          <div class="body-text">ゲルが指と肌の間に入り、<strong>こすらずするっと</strong>なじむ。</div>
+          <div class="divider"></div>
+          <div class="body-text" style="color:#888;font-size:10px;">摩擦レスで洗い上がりしっとり。乾燥・肌荒れしにくい。</div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn gel">お得に試してみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="card-header" style="background:linear-gradient(90deg,#b83058,#d85878);"><span class="brand-name">MANARA</span><span class="pr-tag">PR</span></div>
+        <div class="point-row" style="background:#fdf0f3;">
+          <div class="point-badge" style="background:linear-gradient(135deg,#b83058,#d85878);">Point<span class="num">2</span></div>
+          <div class="point-headline">温感×マッサージで毛穴・くすみケア</div>
+        </div>
+        <div style="background:linear-gradient(180deg,#fdf5f7,#faeaee);padding:8px 6px 10px;text-align:center;">
+          <div style="background:linear-gradient(90deg,#b83058,#e07090,#b83058);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;text-shadow:0 1px 2px rgba(0,0,0,0.2);">透明感のある美肌へ</div>
+          <div style="display:flex;justify-content:center;gap:10px;">
+            <svg width="70" height="70" viewBox="0 0 70 70"><defs><radialGradient id="gc1" cx="35%" cy="30%"><stop offset="0%" stop-color="#fde0ea"/><stop offset="60%" stop-color="#e87090"/><stop offset="100%" stop-color="#b83058"/></radialGradient></defs><circle cx="35" cy="35" r="33" fill="url(#gc1)" opacity="0.92"/><circle cx="35" cy="35" r="33" fill="none" stroke="#d06080" stroke-width="1.2"/><ellipse cx="25" cy="22" rx="9" ry="5" fill="rgba(255,255,255,0.4)" transform="rotate(-30 25 22)"/><text x="35" y="30" text-anchor="middle" font-size="14">🔥</text><text x="35" y="44" text-anchor="middle" font-size="9.5" font-weight="700" fill="#5a1830">毛穴汚れ</text><text x="35" y="56" text-anchor="middle" font-size="8" fill="#7a3050">温感でオフ</text></svg>
+            <svg width="70" height="70" viewBox="0 0 70 70"><defs><radialGradient id="gc2" cx="35%" cy="30%"><stop offset="0%" stop-color="#fde0ea"/><stop offset="60%" stop-color="#e87090"/><stop offset="100%" stop-color="#b83058"/></radialGradient></defs><circle cx="35" cy="35" r="33" fill="url(#gc2)" opacity="0.92"/><circle cx="35" cy="35" r="33" fill="none" stroke="#d06080" stroke-width="1.2"/><ellipse cx="25" cy="22" rx="9" ry="5" fill="rgba(255,255,255,0.4)" transform="rotate(-30 25 22)"/><text x="35" y="30" text-anchor="middle" font-size="14">✨</text><text x="35" y="44" text-anchor="middle" font-size="9.5" font-weight="700" fill="#5a1830">くすみ</text><text x="35" y="56" text-anchor="middle" font-size="8" fill="#7a3050">ハリケア</text></svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="badges-row" style="margin-bottom:7px;"><span class="feat-badge filled" style="background:#c84068;border-color:#c84068;">20秒マッサージ</span></div>
+          <div class="body-text">手のひらの温度でゲルが温感に変化。毛穴が開いて汚れが浮き上がる。</div>
+          <div class="divider"></div>
+          <div class="body-text">洗うたびに<strong>くすみが取れ、透明感あふれる素肌へ。</strong></div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn gel">お得に試してみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card">
+        <div class="card-header" style="background:linear-gradient(90deg,#b83058,#d85878);"><span class="brand-name">MANARA</span><span class="pr-tag">PR</span></div>
+        <div class="card-body" style="padding-bottom:4px;">
+          <div class="body-headline">45日間返金保証で、<br>まずは試せる。</div>
+        </div>
+        <div class="set-section">
+          <div class="set-item gel">ホットクレンジングゲル マッサージプラス<span class="item-sub">約2カ月分（200g）</span></div>
+          <div class="set-item gel">豪華プレゼント付き<span class="item-sub">定期継続でプレゼント進呈</span></div>
+        </div>
+        <div class="price-section gel">
+          <div class="price-label-sm">定期・特別価格</div>
+          <div class="price-main-row">
+            <span class="init-badge-sm">ずっと20%OFF</span>
+            <span class="price-num">3,344</span>
+            <span class="price-suffix">円（税込）</span>
+          </div>
+        </div>
+        <div class="trust-row">
+          <div class="trust-badge gel">🛡️<br>45日間<br>返金保証</div>
+          <div class="trust-badge gel">🎁<br>豪華<br>特典付き</div>
+          <div class="trust-badge gel">♾️<br>ずっと<br>20%OFF</div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn gel">お得に試してみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 </body>
 </html>
