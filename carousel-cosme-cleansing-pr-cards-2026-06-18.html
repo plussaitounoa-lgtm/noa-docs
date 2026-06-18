@@ -6,281 +6,328 @@
 <title>クレンジング診断 PRカル カード図 2026-06-18</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #e0e0e0; color: #1d1d1f; font-size: 13px; line-height: 1.6; }
-  .container { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
-  h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
-  .meta { color: #888; font-size: 12px; margin-bottom: 36px; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #ddd; color: #1d1d1f; font-size: 13px; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 8px; }
   .back-link { margin-bottom: 20px; font-size: 12px; }
   .back-link a { color: #4285f4; text-decoration: none; }
-  .type-section { margin-bottom: 52px; }
-  .type-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #ccc; }
-  .type-label { font-size: 16px; font-weight: 700; }
-  .type-sub { font-size: 11px; color: #888; }
-  .cards-row { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 12px; align-items: flex-start; }
 
-  /* LINE card */
-  .line-card {
-    min-width: 215px;
-    max-width: 215px;
+  .cards-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 16px; align-items: flex-start; }
+
+  /* ─── カード本体 ─── */
+  .card {
+    width: 220px;
+    min-width: 220px;
     background: #fff;
-    border-radius: 16px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.18);
     display: flex;
     flex-direction: column;
-    flex-shrink: 0;
+    font-size: 12px;
   }
 
-  /* Hero image area */
-  .card-hero {
-    width: 100%;
-    height: 140px;
-    position: relative;
+  /* ブランドヘッダーバー */
+  .card-header {
+    background: linear-gradient(90deg, #c8861a 0%, #e8a830 100%);
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand-name { color: #fff; font-weight: 800; font-size: 13px; letter-spacing: 0.04em; }
+  .pr-tag {
+    background: rgba(255,255,255,0.25);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ポイントバッジ行 */
+  .point-row {
+    background: #f5f0e8;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .point-badge {
+    background: linear-gradient(135deg, #c8861a, #e8a830);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    line-height: 1.3;
+    text-align: center;
+  }
+  .point-badge .num { font-size: 16px; display: block; line-height: 1; }
+  .point-headline { font-size: 12px; font-weight: 800; color: #222; line-height: 1.35; flex: 1; }
+
+  /* 画像プレースホルダー */
+  .img-area {
+    background: #e8e0d4;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    flex-direction: column;
+    gap: 5px;
+    color: #9e8060;
+    font-size: 10px;
+    font-weight: 600;
+    position: relative;
   }
-  .card-hero svg { position: relative; z-index: 1; }
-  .hero-label {
-    position: absolute;
-    bottom: 8px;
-    left: 0; right: 0;
-    text-align: center;
+  .img-area .img-icon { font-size: 26px; opacity: 0.5; }
+  .img-area .img-label { font-size: 9px; color: #a08060; font-weight: 700; }
+
+  /* バッジ（素材・特徴表示） */
+  .feat-badge {
+    display: inline-block;
+    background: #fff;
+    border: 1.5px solid #c8861a;
+    color: #c8861a;
     font-size: 9px;
     font-weight: 700;
-    color: rgba(255,255,255,0.85);
-    letter-spacing: 0.05em;
-    z-index: 2;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin: 2px 2px 0 0;
   }
+  .feat-badge.filled { background: #c8861a; color: #fff; }
 
-  /* Card body */
-  .card-inner { padding: 12px 14px 14px; flex: 1; display: flex; flex-direction: column; }
-  .card-meta { display: flex; align-items: center; gap: 5px; margin-bottom: 6px; }
-  .card-num { font-size: 10px; font-weight: 700; color: #ccc; letter-spacing: 0.08em; }
-  .card-role-badge { font-size: 9px; font-weight: 700; padding: 1px 7px; border-radius: 3px; color: #fff; }
-  .card-headline { font-size: 12px; font-weight: 700; line-height: 1.5; margin-bottom: 7px; }
-  .divider { border: none; border-top: 1px solid #f0f0f0; margin: 7px 0; }
-  .card-body { font-size: 11px; color: #555; line-height: 1.7; white-space: pre-line; flex: 1; }
-  .badges { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 8px; }
-  .badge { background: #f5f5f7; border-radius: 4px; padding: 2px 6px; font-size: 9px; color: #555; }
-  .cta-wrap { margin-top: 10px; }
-  .cta-btn { display: block; width: 100%; padding: 9px 6px; border-radius: 8px; font-size: 11px; font-weight: 700; text-align: center; color: #fff; border: none; cursor: pointer; line-height: 1.3; }
-  .product-name { font-size: 13px; font-weight: 700; text-align: center; margin: 4px 0 3px; line-height: 1.4; }
-  .price-area { text-align: center; margin: 6px 0; }
-  .price-label { font-size: 9px; color: #999; margin-bottom: 2px; }
-  .price-main { font-size: 20px; font-weight: 700; color: #c0392b; }
-  .price-tax { font-size: 10px; color: #888; }
-  .set-item { font-size: 10px; color: #333; margin: 3px 0; padding-left: 10px; position: relative; }
-  .set-item::before { content: "・"; position: absolute; left: 0; }
-  .trust-row { display: flex; gap: 3px; margin-top: 7px; }
-  .trust-badge { background: #f0f7ff; border: 1px solid #cce0ff; border-radius: 4px; padding: 3px 4px; font-size: 8.5px; color: #1967d2; font-weight: 600; text-align: center; flex: 1; line-height: 1.3; }
+  /* テキストエリア */
+  .card-body { padding: 10px 11px 8px; flex: 1; }
+  .body-headline { font-size: 13px; font-weight: 800; color: #1a1a1a; margin-bottom: 6px; line-height: 1.45; }
+  .body-text { font-size: 10.5px; color: #555; line-height: 1.75; }
+  .body-sub { font-size: 9px; color: #888; margin-top: 4px; }
+  .divider { border: none; border-top: 1px solid #eeebe5; margin: 7px 0; }
+  .badges-row { display: flex; flex-wrap: wrap; margin-top: 6px; }
+
+  /* 商品エリア（カード1用） */
+  .product-section { padding: 8px 11px 4px; text-align: center; }
+  .product-name { font-size: 12px; font-weight: 800; color: #1a1a1a; line-height: 1.4; margin-bottom: 5px; }
+  .product-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 3px; margin-bottom: 8px; }
+  .product-badge { background: #f5f0e8; border: 1px solid #c8a060; color: #7a4e20; font-size: 8.5px; padding: 2px 6px; border-radius: 3px; font-weight: 600; }
+
+  /* 価格エリア */
+  .price-section { padding: 6px 11px; background: #fffaf3; border-top: 1px solid #f0e8d8; border-bottom: 1px solid #f0e8d8; }
+  .price-label-sm { font-size: 9px; color: #888; margin-bottom: 1px; }
   .price-cross { text-decoration: line-through; color: #bbb; font-size: 11px; }
-  .init-badge { display: inline-block; background: #c0392b; color: #fff; font-size: 9px; font-weight: 700; padding: 1px 7px; border-radius: 3px; margin-bottom: 4px; }
+  .price-main-row { display: flex; align-items: flex-end; gap: 5px; }
+  .init-badge-sm { background: #c0392b; color: #fff; font-size: 8px; font-weight: 800; padding: 1px 6px; border-radius: 3px; white-space: nowrap; align-self: center; }
+  .price-num { font-size: 26px; font-weight: 900; color: #c0392b; line-height: 1; }
+  .price-suffix { font-size: 10px; color: #888; }
+
+  /* セット内容 */
+  .set-section { padding: 7px 11px; }
+  .set-item { font-size: 10px; color: #333; padding: 3px 0 3px 12px; position: relative; border-bottom: 1px dotted #eee; line-height: 1.45; }
+  .set-item:last-child { border-bottom: none; }
+  .set-item::before { content: "●"; position: absolute; left: 0; color: #c8861a; font-size: 7px; top: 5px; }
+  .set-item .item-sub { font-size: 9px; color: #888; display: block; }
+
+  /* 信頼バッジ */
+  .trust-row { display: flex; gap: 4px; padding: 6px 11px; }
+  .trust-badge { flex: 1; background: #f0f7ff; border: 1px solid #c0d8f8; border-radius: 5px; padding: 4px 2px; font-size: 8.5px; color: #1967d2; font-weight: 700; text-align: center; line-height: 1.4; }
+
+  /* CTAボタン */
+  .cta-wrap { padding: 8px 10px 10px; }
+  .cta-btn {
+    display: block;
+    width: 100%;
+    background: linear-gradient(180deg, #5cb85c 0%, #3d8b3d 100%);
+    border: none;
+    border-radius: 50px;
+    padding: 10px 8px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    line-height: 1.35;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    position: relative;
+  }
+  .cta-btn::before {
+    content: "＼初回価格 1,880円／";
+    display: block;
+    font-size: 9px;
+    font-weight: 700;
+    opacity: 0.9;
+    margin-bottom: 2px;
+  }
+  .cta-btn.no-price::before { display: none; }
+  .cta-arrow { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.85; }
+
+  /* メモ */
+  .wip-badge { display: inline-block; background: #fff3cd; border: 1px solid #f0c040; color: #7a5000; font-size: 9px; padding: 1px 6px; border-radius: 3px; margin-left: 4px; vertical-align: middle; font-weight: 600; }
 </style>
 </head>
 <body>
 <div class="container">
   <div class="back-link"><a href="cosme-cleansing-diagnosis-design-2026-06-12.html">← 設計書に戻る</a> ／ <a href="carousel-cosme-cleansing-cards-2026-06-18.html">教育カル カード図</a></div>
-  <h1>クレンジング診断 PRカル カード図</h1>
-  <p class="meta">2026-06-18　／　教育カル完了後に表示　／　※Card 3 再ブラッシュアップ予定</p>
+  <h1>クレンジング診断 PRカル カード図 <span class="wip-badge">Card 3 再ブラッシュアップ予定</span></h1>
+  <p class="meta">2026-06-18　／　オイルタイプ（アテニア スキンクリア クレンズオイル）</p>
 
-  <div class="type-section">
-    <div class="type-header">
-      <span class="type-label">🟡 オイルタイプ PRカル</span>
-      <span class="type-sub">アテニア スキンクリア クレンズオイル ／ CV単価 ¥4,500</span>
+  <div class="cards-row">
+
+    <!-- ===== Card 1 | 商材発表 ===== -->
+    <div class="card">
+      <div class="card-header">
+        <span class="brand-name">ATTENIR</span>
+        <span class="pr-tag">PR</span>
+      </div>
+
+      <div class="img-area" style="height:150px;">
+        <div class="img-icon">🧴</div>
+        <div class="img-label">商品パッケージ写真</div>
+      </div>
+
+      <div class="product-section">
+        <div style="font-size:9px;color:#888;margin-bottom:3px;">あなたにおすすめのクレンジングはこちら</div>
+        <div class="product-name">スキンクリア クレンズオイル</div>
+        <div class="product-badges">
+          <span class="product-badge">メイク映えする素肌へ導く</span>
+          <span class="product-badge">W洗顔不要で時短ケア</span>
+          <span class="product-badge">乾燥による小ジワを目立たなくする＊</span>
+        </div>
+      </div>
+
+      <div class="price-section">
+        <div class="price-label-sm">公式限定・初回特別価格</div>
+        <div style="margin-bottom:2px;"><span class="price-cross">通常価格 ¥2,200</span></div>
+        <div class="price-main-row">
+          <span class="init-badge-sm">初回限定</span>
+          <span class="price-num">1,880</span>
+          <span class="price-suffix">円（税込）</span>
+        </div>
+      </div>
+
+      <div class="cta-wrap">
+        <button class="cta-btn no-price">公式サイトで見てみる <span class="cta-arrow">›</span></button>
+      </div>
     </div>
-    <div class="cards-row">
 
-      <!-- ===== Card 1 ===== -->
-      <div class="line-card">
-        <div class="card-hero" style="background: linear-gradient(145deg, #ffe082 0%, #f9ab00 60%, #e65100 100%);">
-          <!-- Pump bottle illustration -->
-          <svg width="90" height="120" viewBox="0 0 90 120">
-            <!-- Bottle body -->
-            <rect x="22" y="50" width="46" height="62" rx="12" fill="rgba(255,255,255,0.88)"/>
-            <!-- Neck -->
-            <rect x="34" y="30" width="22" height="24" rx="5" fill="rgba(255,255,255,0.75)"/>
-            <!-- Pump head -->
-            <rect x="27" y="20" width="36" height="13" rx="6" fill="rgba(255,255,255,0.7)"/>
-            <!-- Nozzle -->
-            <rect x="60" y="14" width="20" height="7" rx="3.5" fill="rgba(255,255,255,0.65)"/>
-            <!-- Label on bottle -->
-            <rect x="27" y="68" width="36" height="32" rx="4" fill="rgba(249,171,0,0.22)"/>
-            <rect x="32" y="74" width="26" height="3" rx="2" fill="rgba(249,171,0,0.55)"/>
-            <rect x="32" y="81" width="18" height="2.5" rx="1.5" fill="rgba(249,171,0,0.38)"/>
-            <rect x="32" y="87" width="22" height="2.5" rx="1.5" fill="rgba(249,171,0,0.38)"/>
-            <!-- Shine -->
-            <ellipse cx="31" cy="72" rx="4" ry="12" fill="rgba(255,255,255,0.28)" transform="rotate(-15 31 72)"/>
-            <!-- Sparkles -->
-            <text x="5" y="38" font-size="11" opacity="0.7">✨</text>
-            <text x="68" y="55" font-size="9" opacity="0.6">✨</text>
-          </svg>
-          <div class="hero-label">ATTENIR SKIN CLEAR CLEANSE OIL</div>
+    <!-- ===== Card 2 | クレンジング力 ===== -->
+    <div class="card">
+      <div class="card-header">
+        <span class="brand-name">ATTENIR</span>
+        <span class="pr-tag">PR</span>
+      </div>
+
+      <div class="point-row">
+        <div class="point-badge">Point<span class="num">1</span></div>
+        <div class="point-headline">ウォータープルーフも、W洗顔なしで落とせる。</div>
+      </div>
+
+      <div class="img-area" style="height:120px;">
+        <div class="img-icon">✨</div>
+        <div class="img-label">メイクオフ・洗浄イメージ写真</div>
+      </div>
+
+      <div class="card-body">
+        <div class="badges-row" style="margin-bottom:7px;">
+          <span class="feat-badge filled">スピーディメルティング処方</span>
         </div>
-        <div class="card-inner">
-          <div class="card-meta">
-            <span class="card-num">CARD 1</span>
-            <span class="card-role-badge" style="background:#f9ab00;">商材発表</span>
-          </div>
-          <div style="font-size:9px;color:#aaa;text-align:center;margin-bottom:3px;">あなたにおすすめのクレンジングはこちら</div>
-          <div class="product-name">アテニア<br>スキンクリア クレンズオイル</div>
-          <hr class="divider">
-          <div class="price-area">
-            <div class="price-label">公式限定価格</div>
-            <div><span class="price-main">1,880</span><span class="price-tax">円（税込）</span></div>
-          </div>
-          <hr class="divider">
-          <div class="badges">
-            <span class="badge">メイク映えする素肌へ導く</span>
-            <span class="badge">W洗顔不要で時短ケア</span>
-            <span class="badge">乾燥による小ジワを目立たなくする＊</span>
-          </div>
+        <div class="body-text">
+          メイクを<strong>瞬時に浮かせて</strong>オフ。<br>
+          こすらず落として、摩擦レス。
+        </div>
+        <div class="divider"></div>
+        <div class="body-text" style="color:#888;font-size:10px;">
+          ウォータープルーフのマスカラも、重ねメイクも、なじませるだけで浮き上がる。
         </div>
       </div>
 
-      <!-- ===== Card 2 ===== -->
-      <div class="line-card">
-        <div class="card-hero" style="background: linear-gradient(145deg, #b3e0f0 0%, #4db8d8 60%, #1a7a99 100%);">
-          <!-- Cleansing / makeup removal illustration -->
-          <svg width="110" height="120" viewBox="0 0 110 120">
-            <!-- Face outline -->
-            <ellipse cx="55" cy="72" rx="32" ry="36" fill="rgba(255,255,255,0.82)"/>
-            <!-- Eyes -->
-            <ellipse cx="44" cy="68" rx="5" ry="3.5" fill="rgba(100,160,180,0.5)"/>
-            <ellipse cx="66" cy="68" rx="5" ry="3.5" fill="rgba(100,160,180,0.5)"/>
-            <!-- Lips -->
-            <path d="M46 82 Q55 88 64 82" stroke="rgba(200,120,130,0.6)" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <!-- Makeup sparkles floating away -->
-            <circle cx="20" cy="45" r="4" fill="rgba(255,100,120,0.55)"/>
-            <circle cx="30" cy="30" r="3" fill="rgba(180,80,200,0.45)"/>
-            <circle cx="85" cy="40" r="4" fill="rgba(255,150,50,0.55)"/>
-            <circle cx="92" cy="58" r="3" fill="rgba(200,50,100,0.45)"/>
-            <!-- Arrows showing makeup floating away -->
-            <path d="M28 48 L18 38" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <path d="M82 46 L90 36" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-dasharray="3,2"/>
-            <!-- Oil drops -->
-            <path d="M55 20 C55 20 49 30 49 34 a6 6 0 0 0 12 0 C61 30 55 20 55 20z" fill="rgba(255,220,100,0.75)"/>
-            <text x="8" y="28" font-size="10" opacity="0.75">✨</text>
-            <text x="88" y="25" font-size="9" opacity="0.65">✨</text>
-          </svg>
-          <div class="hero-label">SPEEDY MELTING FORMULA</div>
-        </div>
-        <div class="card-inner">
-          <div class="card-meta">
-            <span class="card-num">CARD 2</span>
-            <span class="card-role-badge" style="background:#f9ab00;">クレンジング力</span>
-          </div>
-          <div class="card-headline">ウォータープルーフも、W洗顔なしで落とせる。</div>
-          <hr class="divider">
-          <div class="card-body">スピーディメルティング処方で、メイクを瞬時に浮かせてオフ。
-
-こすらず落として、摩擦レス。</div>
-        </div>
+      <div class="cta-wrap">
+        <button class="cta-btn">公式サイトで見てみる <span class="cta-arrow">›</span></button>
       </div>
-
-      <!-- ===== Card 3 ===== -->
-      <div class="line-card">
-        <div class="card-hero" style="background: linear-gradient(145deg, #fce4b0 0%, #f5c26b 55%, #e8962a 100%);">
-          <!-- Radiant skin / glow illustration -->
-          <svg width="110" height="120" viewBox="0 0 110 120">
-            <!-- Glow rays -->
-            <line x1="55" y1="18" x2="55" y2="8" stroke="rgba(255,255,255,0.65)" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="76" y1="24" x2="83" y2="16" stroke="rgba(255,255,255,0.55)" stroke-width="2" stroke-linecap="round"/>
-            <line x1="34" y1="24" x2="27" y2="16" stroke="rgba(255,255,255,0.55)" stroke-width="2" stroke-linecap="round"/>
-            <line x1="85" y1="42" x2="96" y2="38" stroke="rgba(255,255,255,0.45)" stroke-width="1.5" stroke-linecap="round"/>
-            <line x1="25" y1="42" x2="14" y2="38" stroke="rgba(255,255,255,0.45)" stroke-width="1.5" stroke-linecap="round"/>
-            <!-- Face -->
-            <ellipse cx="55" cy="72" rx="33" ry="37" fill="rgba(255,255,255,0.85)"/>
-            <!-- Inner glow on face -->
-            <ellipse cx="55" cy="65" rx="22" ry="18" fill="rgba(255,220,160,0.3)"/>
-            <!-- Eyes happy -->
-            <path d="M43 65 Q46 61 49 65" stroke="rgba(140,100,60,0.6)" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <path d="M61 65 Q64 61 67 65" stroke="rgba(140,100,60,0.6)" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <!-- Smile -->
-            <path d="M44 80 Q55 89 66 80" stroke="rgba(200,120,100,0.6)" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <!-- Sparkle on cheek -->
-            <text x="22" y="80" font-size="9" opacity="0.7">✨</text>
-            <text x="80" y="78" font-size="9" opacity="0.7">✨</text>
-          </svg>
-          <div class="hero-label">8種の植物美容オイル配合</div>
-        </div>
-        <div class="card-inner">
-          <div class="card-meta">
-            <span class="card-num">CARD 3</span>
-            <span class="card-role-badge" style="background:#f9ab00;">くすみ・角質ケア</span>
-          </div>
-          <div class="card-headline">くすみの原因から、変えていく。</div>
-          <hr class="divider">
-          <div class="card-body">加齢や摩擦で、角層が少しずつ硬くなる。それがくすみ・透明感ダウンの原因に。
-
-8種の植物美容オイルが角質をほぐして、明るく際立つ肌へ。</div>
-        </div>
-      </div>
-
-      <!-- ===== Card 4 ===== -->
-      <div class="line-card">
-        <div class="card-hero" style="background: linear-gradient(145deg, #fff3cd 0%, #f9ab00 55%, #c67c00 100%);">
-          <!-- Two bottles set illustration -->
-          <svg width="110" height="120" viewBox="0 0 110 120">
-            <!-- Bottle 1 (large oil) -->
-            <rect x="14" y="42" width="38" height="70" rx="10" fill="rgba(255,255,255,0.88)"/>
-            <rect x="24" y="24" width="18" height="22" rx="4" fill="rgba(255,255,255,0.75)"/>
-            <rect x="19" y="15" width="28" height="12" rx="5" fill="rgba(255,255,255,0.7)"/>
-            <rect x="45" y="10" width="14" height="6" rx="3" fill="rgba(255,255,255,0.65)"/>
-            <!-- Label bottle 1 -->
-            <rect x="18" y="60" width="30" height="28" rx="3" fill="rgba(249,171,0,0.25)"/>
-            <rect x="22" y="66" width="22" height="2.5" rx="1.5" fill="rgba(249,171,0,0.55)"/>
-            <rect x="22" y="72" width="16" height="2" rx="1" fill="rgba(249,171,0,0.38)"/>
-            <rect x="22" y="77" width="19" height="2" rx="1" fill="rgba(249,171,0,0.38)"/>
-            <!-- "たっぷり2カ月分" label -->
-            <rect x="8" y="38" width="30" height="12" rx="6" fill="rgba(255,255,255,0.75)"/>
-            <text x="11" y="47" font-size="7" fill="#c67c00" font-weight="700">たっぷり2カ月分</text>
-            <!-- Shine bottle 1 -->
-            <ellipse cx="22" cy="58" rx="3" ry="10" fill="rgba(255,255,255,0.28)" transform="rotate(-15 22 58)"/>
-            <!-- Bottle 2 (small lotion) -->
-            <rect x="64" y="58" width="28" height="52" rx="8" fill="rgba(255,255,255,0.85)"/>
-            <rect x="72" y="44" width="12" height="17" rx="3" fill="rgba(255,255,255,0.72)"/>
-            <!-- Label bottle 2 -->
-            <rect x="67" y="72" width="22" height="22" rx="3" fill="rgba(120,60,140,0.15)"/>
-            <rect x="70" y="77" width="16" height="2" rx="1" fill="rgba(120,60,140,0.4)"/>
-            <rect x="70" y="83" width="12" height="2" rx="1" fill="rgba(120,60,140,0.28)"/>
-            <!-- "14日分" label -->
-            <rect x="60" y="53" width="22" height="11" rx="5.5" fill="rgba(255,255,255,0.75)"/>
-            <text x="63" y="61" font-size="7" fill="#7b3fa0" font-weight="700">14日分おまけ</text>
-            <!-- Plus sign -->
-            <text x="56" y="83" font-size="14" fill="rgba(255,255,255,0.8)" font-weight="700">+</text>
-          </svg>
-          <div class="hero-label">公式ページ限定セット</div>
-        </div>
-        <div class="card-inner">
-          <div class="card-meta">
-            <span class="card-num">CARD 4</span>
-            <span class="card-role-badge" style="background:#f9ab00;">セット内容＋CV</span>
-          </div>
-          <div class="card-headline">公式ページ限定のセット価格。</div>
-          <hr class="divider">
-          <div class="set-item">クレンジングオイル（175mL・2カ月分）</div>
-          <div class="set-item">ドレスリフトローション 14日分（30mL）<br><span style="font-size:9px;color:#888;">シワ改善・湧き上がるハリ肌へ</span></div>
-          <hr class="divider">
-          <div style="text-align:center;">
-            <div class="init-badge">初回限定</div>
-            <div><span class="price-cross">2,948円</span> → <span class="price-main">1,880</span><span class="price-tax">円（税込）</span></div>
-          </div>
-          <div class="trust-row">
-            <div class="trust-badge">送料<br>負担なし</div>
-            <div class="trust-badge">14日以内<br>返品OK</div>
-            <div class="trust-badge">最短<br>翌日発送</div>
-          </div>
-          <div class="cta-wrap">
-            <button class="cta-btn" style="background:#f9ab00;">アテニア 公式サイトで見る →</button>
-          </div>
-        </div>
-      </div>
-
     </div>
+
+    <!-- ===== Card 3 | くすみ・角質ケア ===== -->
+    <div class="card">
+      <div class="card-header">
+        <span class="brand-name">ATTENIR</span>
+        <span class="pr-tag">PR</span>
+      </div>
+
+      <div class="point-row">
+        <div class="point-badge">Point<span class="num">2</span></div>
+        <div class="point-headline">くすみの原因から、変えていく。<span class="wip-badge">再調整予定</span></div>
+      </div>
+
+      <div class="img-area" style="height:120px;">
+        <div class="img-icon">🌿</div>
+        <div class="img-label">植物オイル・素材イメージ写真</div>
+      </div>
+
+      <div class="card-body">
+        <div class="badges-row" style="margin-bottom:7px;">
+          <span class="feat-badge filled">8種の植物美容オイル</span>
+        </div>
+        <div class="body-text">
+          加齢や摩擦で角層が少しずつ硬くなる。それがくすみ・透明感ダウンの原因に。
+        </div>
+        <div class="divider"></div>
+        <div class="body-text">
+          植物美容オイルが角質をほぐして、<strong>明るく際立つ肌へ。</strong>
+        </div>
+      </div>
+
+      <div class="cta-wrap">
+        <button class="cta-btn">公式サイトで見てみる <span class="cta-arrow">›</span></button>
+      </div>
+    </div>
+
+    <!-- ===== Card 4 | セット内容＋CV ===== -->
+    <div class="card">
+      <div class="card-header">
+        <span class="brand-name">ATTENIR</span>
+        <span class="pr-tag">PR</span>
+      </div>
+
+      <div class="card-body" style="padding-bottom:4px;">
+        <div class="body-headline">公式ページ限定の<br>セット価格。</div>
+      </div>
+
+      <div class="set-section">
+        <div class="set-item">
+          クレンジングオイル（175mL）
+          <span class="item-sub">たっぷり2カ月分</span>
+        </div>
+        <div class="set-item">
+          ドレスリフトローション（30mL）
+          <span class="item-sub">シワ改善・ハリ肌へ。14日分おまけ</span>
+        </div>
+      </div>
+
+      <div class="price-section">
+        <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;">
+          <span class="price-cross">2,948円相当</span>
+          <span style="font-size:13px;color:#c0392b;font-weight:700;">→</span>
+        </div>
+        <div class="price-main-row">
+          <span class="init-badge-sm">初回限定</span>
+          <span class="price-num">1,880</span>
+          <span class="price-suffix">円（税込）</span>
+        </div>
+      </div>
+
+      <div class="trust-row">
+        <div class="trust-badge">送料<br>負担なし</div>
+        <div class="trust-badge">14日以内<br>返品OK</div>
+        <div class="trust-badge">最短<br>翌日発送</div>
+      </div>
+
+      <div class="cta-wrap">
+        <button class="cta-btn">公式サイトで見てみる <span class="cta-arrow">›</span></button>
+      </div>
+    </div>
+
   </div>
-
 </div>
 </body>
 </html>
