@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PU文言改修設計：摂取カロリー（t109）2026-06-19</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header p { color: #aaa; font-size: 14px; }
+    .update-banner { background: #1a2e2e; color: #7effd4; font-size: 13px; padding: 10px 32px; }
+    main { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 600; margin: 24px 0 10px; color: #333; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    ul { padding-left: 20px; margin-bottom: 10px; }
+    li { font-size: 14px; line-height: 1.8; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 8px 10px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; font-size: 11px; }
+    td { padding: 7px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+    .red   { background: #fff0f0; color: #c0392b; }
+    .green { background: #f0fff4; color: #27ae60; }
+    .blue  { background: #f0f4ff; color: #2c52b0; }
+    .gray  { background: #f0f0f0; color: #888; }
+    .orange{ background: #fff8f0; color: #b05f00; }
+
+    .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .alert     { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good      { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .info      { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+
+    .copy-card { border-radius: 10px; padding: 20px 24px; margin: 16px 0; border: 2px solid #e8e8e8; background: white; }
+    .copy-card.recommended { border-color: #f39c12; background: #fffbf0; }
+    .copy-card .card-label { font-size: 11px; font-weight: 700; color: #888; margin-bottom: 8px; }
+    .copy-card .hook { font-size: 20px; font-weight: 800; color: #1a1a2e; margin-bottom: 8px; }
+    .copy-card .copy-body { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 10px; }
+    .copy-card .buttons { display: flex; gap: 8px; margin-top: 10px; }
+    .copy-card .btn-yes { background: #1a1a2e; color: white; padding: 6px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; display: inline-block; }
+    .copy-card .btn-no  { background: #f0f0f0; color: #888; padding: 6px 16px; border-radius: 6px; font-size: 13px; display: inline-block; }
+    .copy-card .point-list { margin-top: 12px; padding-top: 12px; border-top: 1px solid #e8e8e8; }
+    .copy-card .point-list li { font-size: 13px; line-height: 1.7; color: #444; }
+
+    .week-row-good { background: #f0fff4; }
+    .week-row-bad  { background: #fff0f0; }
+
+    .bridge-step { display: flex; gap: 16px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid #f0f0f0; }
+    .bridge-step:last-child { border-bottom: none; }
+    .bridge-num { min-width: 28px; height: 28px; border-radius: 50%; background: #1a1a2e; color: white; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .bridge-body { flex: 1; }
+    .bridge-label { font-size: 11px; font-weight: 700; color: #888; margin-bottom: 4px; }
+    .bridge-text  { font-size: 14px; line-height: 1.7; }
+
+    footer { text-align: center; padding: 40px; color: #bbb; font-size: 12px; }
+    a.back { display: inline-block; margin-bottom: 32px; font-size: 13px; color: #888; text-decoration: none; }
+    a.back:hover { color: #333; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>PU文言改修設計：摂取カロリー（t109）</h1>
+  <p>2026-06-19 策定｜記事：こいずみ_1日_摂取カロリー（glp1_seo）</p>
+</header>
+<div class="update-banner">現行PU：「1日で食べていい量」｜ボトルネック：CTR 4.2%（真8.4%）🔴｜FR 13.8% ✅｜PVFR 0.56% 🔴（目標 0.80%）</div>
+
+<main>
+  <a class="back" href="index.html">← トップへ</a>
+
+  <!-- 現状数値 -->
+  <div class="section">
+    <div class="section-title">Current Status</div>
+    <h2>現状数値と週次推移</h2>
+    <table>
+      <tr>
+        <th>指標</th>
+        <th>現行値</th>
+        <th>目標</th>
+        <th>判定</th>
+      </tr>
+      <tr>
+        <td>PVFR</td>
+        <td>0.56%</td>
+        <td>0.80%</td>
+        <td><span class="badge red">🔴 基準割れ</span></td>
+      </tr>
+      <tr>
+        <td>CTR（見かけ）</td>
+        <td>4.2%</td>
+        <td>13%</td>
+        <td><span class="badge red">🔴 基準割れ</span></td>
+      </tr>
+      <tr>
+        <td>CTR（真・×2補正）</td>
+        <td>約8.4%</td>
+        <td>13%</td>
+        <td><span class="badge red">🔴 基準割れ</span></td>
+      </tr>
+      <tr>
+        <td>FR</td>
+        <td>13.8%</td>
+        <td>11%</td>
+        <td><span class="badge green">✅ 基準クリア</span></td>
+      </tr>
+    </table>
+
+    <h3>週次 PVFR 推移</h3>
+    <table>
+      <tr>
+        <th>週</th>
+        <th>PVFR</th>
+        <th>LP imp</th>
+        <th>稼働PU</th>
+        <th>状況</th>
+      </tr>
+      <tr class="week-row-good">
+        <td>W22（5/25〜）</td>
+        <td>0.88%</td>
+        <td>1,479</td>
+        <td>食べていい量 ＋ 適正カロリー気になる</td>
+        <td><span class="badge green">✅</span></td>
+      </tr>
+      <tr class="week-row-bad">
+        <td>W23（6/1〜）</td>
+        <td>0.69%</td>
+        <td>1,891</td>
+        <td>食べていい量 ＋ 適正カロリー ＋ 食事量（追加）</td>
+        <td><span class="badge red">🔴</span></td>
+      </tr>
+      <tr class="week-row-bad">
+        <td>W24（6/9〜）</td>
+        <td>0.59%</td>
+        <td>2,867</td>
+        <td>食べていい量 ＋ 食事量あっているか知りたい</td>
+        <td><span class="badge red">🔴</span></td>
+      </tr>
+      <tr class="week-row-bad">
+        <td>W25（6/16〜・途中）</td>
+        <td>0.56%</td>
+        <td>1,239</td>
+        <td><strong>食べていい量 のみ（1本化完了）</strong></td>
+        <td><span class="badge red">🔴</span></td>
+      </tr>
+    </table>
+
+    <div class="highlight">
+      <strong>ボトルネック確定：CTR</strong><br>
+      FR=13.8%（目標クリア）なのでLP・友達追加画面は機能している。PUを見てもクリックしない＝文言の問題。
+    </div>
+  </div>
+
+  <!-- 1本化施策の結果 -->
+  <div class="section">
+    <div class="section-title">Consolidation Result</div>
+    <h2>1本化施策の効果測定（6/11実施）</h2>
+    <p>「食事量あっているか知りたい」（ABテスト敗北版）を6/11に削除。「1日で食べていい量」1本に絞った。</p>
+    <table>
+      <tr>
+        <th>期間</th>
+        <th>1日平均友達</th>
+        <th>平均LP imp/日</th>
+        <th>状態</th>
+      </tr>
+      <tr>
+        <td>1本化前（6/5〜6/10）</td>
+        <td>2.67人/日</td>
+        <td>約280</td>
+        <td>食べていい量 ＋ 食事量 並走</td>
+      </tr>
+      <tr class="week-row-bad">
+        <td>1本化後（6/11〜6/17）</td>
+        <td>2.14人/日</td>
+        <td>約454</td>
+        <td>食べていい量 1本</td>
+      </tr>
+    </table>
+    <div class="alert">
+      <strong>結論：1本化しても改善なし。むしろ微減。</strong><br>
+      「食事量」削除で直接損失（0.3人/日）＋LP imp急増（280→454/日）にもかかわらず友達数が伸びない。<br>
+      1本化は整理にはなったが、CTR自体は何も変わっていない。文言改修が本質的な解決策。
+    </div>
+  </div>
+
+  <!-- ブリッジテスト -->
+  <div class="section">
+    <div class="section-title">Bridge Test</div>
+    <h2>ブリッジテスト</h2>
+    <div class="bridge-step">
+      <div class="bridge-num">①</div>
+      <div class="bridge-body">
+        <div class="bridge-label">診断が実際に提供する体験</div>
+        <div class="bridge-text">4問答えると、自分の適正カロリー（kcal数値）が出る。カロリーが続かない理由（食欲ホルモンの仕組み）の理解と、GLP-1という選択肢への橋渡しまでセット。</div>
+      </div>
+    </div>
+    <div class="bridge-step">
+      <div class="bridge-num">②</div>
+      <div class="bridge-body">
+        <div class="bridge-label">このKWで検索した人の今の気持ち</div>
+        <div class="bridge-text">「ダイエット始めようとしてる。1日何カロリー食べていいか、数字で知りたい。カロリー計算ツールを探してる。感情ケアより先に、まず自分の数字が欲しい」</div>
+      </div>
+    </div>
+    <div class="bridge-step">
+      <div class="bridge-num">③</div>
+      <div class="bridge-body">
+        <div class="bridge-label">①を②の言葉で翻訳 → PU文言の原型</div>
+        <div class="bridge-text"><strong>「あなたの適正カロリー（数値）が4問で出る」</strong></div>
+      </div>
+    </div>
+    <div class="alert" style="margin-top: 16px;">
+      <strong>現行「1日で食べていい量」の問題点</strong><br>
+      ・「量」が曖昧 → 検索者が欲しいのは「数字（kcal）」<br>
+      ・「食べていい」は受動的な許可イメージで、自分専用感が薄い<br>
+      ・「診断で自分の数値が出る」という期待値が伝わっていない → CTR低迷の核心
+    </div>
+  </div>
+
+  <!-- 改修案 -->
+  <div class="section">
+    <div class="section-title">Copy Proposals</div>
+    <h2>改修PU案（訴求軸維持）</h2>
+
+    <!-- 案A -->
+    <div class="copy-card recommended">
+      <div class="card-label">案A【推奨】</div>
+      <div class="hook">自分のカロリー、数字で出してみる？</div>
+      <div class="copy-body">
+        生活スタイルを4問答えると、1日に食べていいkcalがわかる<br>
+        <span style="font-size:12px; color:#999;">バッジ：匿名・LINEで簡単</span>
+      </div>
+      <div class="buttons">
+        <div class="btn-yes">出してみる</div>
+        <div class="btn-no">いい</div>
+      </div>
+      <div class="point-list">
+        <ul>
+          <li>「数字で出す」＝曖昧な「量」から具体的な「kcal」へ。計算機モードの検索者に直刺さり</li>
+          <li>「出してみる？」＝能動的なタップ動機。FR=13.8%維持の設計</li>
+          <li>「自分の」＝パーソナライズ感。一般情報ページとの差別化</li>
+          <li>LP「適正カロリーが30秒でわかる」との整合性 ✅</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 案B -->
+    <div class="copy-card">
+      <div class="card-label">案B</div>
+      <div class="hook">今日いくつ食べていいか、30秒で出る</div>
+      <div class="copy-body">
+        自分の生活スタイルに合ったカロリーをLINEで診断<br>
+        <span style="font-size:12px; color:#999;">バッジ：匿名・無料</span>
+      </div>
+      <div class="buttons">
+        <div class="btn-yes">調べてみる</div>
+        <div class="btn-no">あとで</div>
+      </div>
+      <div class="point-list">
+        <ul>
+          <li>「今日いくつ」＝検索KWに最も近い口語表現</li>
+          <li>「30秒で出る」＝スピードと具体性</li>
+          <li>リスク：「自分専用感」がやや薄い</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 案C -->
+    <div class="copy-card">
+      <div class="card-label">案C</div>
+      <div class="hook">あなたの適正カロリー、計算します</div>
+      <div class="copy-body">
+        4問答えると自分に合ったカロリー数値が出てくる<br>
+        <span style="font-size:12px; color:#999;">バッジ：匿名・30秒</span>
+      </div>
+      <div class="buttons">
+        <div class="btn-yes">計算してもらう</div>
+        <div class="btn-no">いい</div>
+      </div>
+      <div class="point-list">
+        <ul>
+          <li>「計算します」＝診断が「私のために動いてくれる」感覚</li>
+          <li>「計算してもらう」＝行動ハードルが最も低いボタン文言</li>
+          <li>リスク：やや機械的・冷たい印象になる可能性</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>訴求軸変更アイデア（別枠・参考）</h3>
+    <table>
+      <tr>
+        <th>案</th>
+        <th>フック</th>
+        <th>軸の変化</th>
+        <th>リスク</th>
+      </tr>
+      <tr>
+        <td><span class="badge orange">案D</span></td>
+        <td>そのカロリー設定、合ってる？</td>
+        <td>問題提起軸</td>
+        <td>追加率がFRより下がる可能性あり</td>
+      </tr>
+      <tr>
+        <td><span class="badge gray">案E</span></td>
+        <td>カロリー計算、自分でやらなくていい</td>
+        <td>楽さ訴求軸</td>
+        <td>精度への不安を与える可能性あり</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 推奨と実装方針 -->
+  <div class="section">
+    <div class="section-title">Recommendation</div>
+    <h2>推奨と実装方針</h2>
+
+    <div class="good">
+      <strong>推奨案：案A「自分のカロリー、数字で出してみる？」</strong><br>
+      ブリッジテスト✅ · 既存並走PUとの差別化✅ · FR=13.8%維持設計✅
+    </div>
+
+    <h3>実装ステップ</h3>
+    <ul>
+      <li>「1日で食べていい量」を案Aに差し替え（単独稼働）</li>
+      <li>1週間（7日分）データが揃ったらPVFR/CTR/FRで判定</li>
+    </ul>
+
+    <h3>改善インパクト試算</h3>
+    <table>
+      <tr>
+        <th>シナリオ</th>
+        <th>想定CTR（真）</th>
+        <th>月間友達</th>
+        <th>現行比</th>
+      </tr>
+      <tr>
+        <td>現行</td>
+        <td>8.4%</td>
+        <td>37人</td>
+        <td>—</td>
+      </tr>
+      <tr class="week-row-good">
+        <td>案A 目標達成時</td>
+        <td>13%</td>
+        <td>約57人</td>
+        <td>+20人/月</td>
+      </tr>
+      <tr>
+        <td>現実的改善（+α）</td>
+        <td>10%</td>
+        <td>約44人</td>
+        <td>+7〜10人/月</td>
+      </tr>
+    </table>
+    <p style="color:#888; font-size:12px;">lp_imp 月換算約10,000、FR=13.8%維持の前提</p>
+  </div>
+
+</main>
+
+<footer>
+  作成：2026-06-19 ／ 担当：CMO（Noa）
+</footer>
+
+</body>
+</html>
