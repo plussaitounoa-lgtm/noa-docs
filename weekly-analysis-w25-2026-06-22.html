@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>週次分析 W25 — 2026-06-15〜06-21</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 900px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-card.warn-card { border-color: #fde68a; background: #fffbeb; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .pill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+    .pill-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px; }
+    .pill-card.bad { border-color: #fca5a5; background: #fff1f2; }
+    .pill-card.mixed { border-color: #fde68a; background: #fffbeb; }
+    .pill-title { font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 8px; }
+    .pill-metric { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 3px; }
+    .pill-metric .label { color: #64748b; }
+    .pill-metric .val { font-weight: 700; color: #0f172a; }
+    .pill-metric .val.bad { color: #dc2626; }
+    .pill-metric .val.good { color: #16a34a; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">週次分析 — W25</div>
+    <h1>2026-06-15〜06-21 週次分析レポート</h1>
+    <p class="desc">作成: 2026-06-22 ／ 前週: W24（6/8〜6/14）</p>
+  </div>
+
+  <!-- ① 6月GOAL進捗 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">1</div>
+      <div>
+        <div class="section-title">6月 GOAL進捗</div>
+        <div class="section-sub">目標1,200人 に対する当月累計（21日時点）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card alert">
+          <div class="kpi-label">6月累計</div>
+          <div class="kpi-value">604人</div>
+          <div class="kpi-sub">21日経過（50.3%）</div>
+        </div>
+        <div class="kpi-card warn-card">
+          <div class="kpi-label">日均</div>
+          <div class="kpi-value">24.3人</div>
+          <div class="kpi-sub">必要日均 40人</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">月末予測</div>
+          <div class="kpi-value">891人</div>
+          <div class="kpi-sub">目標比 74%</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">GOALギャップ</div>
+          <div class="kpi-value">▲309人</div>
+          <div class="kpi-sub">残9日で要回収</div>
+        </div>
+      </div>
+      <div class="insight insight-red">
+        <strong>月末予測891人 = 目標1,200人の74%。</strong>
+        W24・W25と連続して日均24人台が続いており、目標達成には40人/日が必要。PU文言改修による底上げが最優先。
+      </div>
+    </div>
+  </div>
+
+  <!-- ② W25全体ファネル -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">2</div>
+      <div>
+        <div class="section-title">W25 週次パフォーマンス</div>
+        <div class="section-sub">6/15〜6/21 vs 6/8〜6/14（W24）比較</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>指標</th>
+            <th>W25（6/15〜6/21）</th>
+            <th>W24（6/8〜6/14）</th>
+            <th>前週比</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>友達合計</strong></td>
+            <td><strong>170人</strong>（PU104 + バナー66）</td>
+            <td>200人（PU117 + バナー83）</td>
+            <td class="down">▲30人（-15.0%）</td>
+          </tr>
+          <tr>
+            <td>LP imp</td>
+            <td>26,134</td>
+            <td>32,726</td>
+            <td class="down">▲6,592（-20.1%）</td>
+          </tr>
+          <tr>
+            <td>PU imp</td>
+            <td>24,453</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>CTR（5/14仕様後）</td>
+            <td>5.5%</td>
+            <td>—</td>
+            <td class="up">微改善</td>
+          </tr>
+          <tr>
+            <td>友達追加率（PU）</td>
+            <td>7.7%</td>
+            <td>—</td>
+            <td class="up">微改善</td>
+          </tr>
+          <tr>
+            <td>PVFR（PUのみ）</td>
+            <td class="warn">0.40%</td>
+            <td class="warn">0.36%</td>
+            <td class="up">+0.04pt 微改善</td>
+          </tr>
+          <tr>
+            <td>日均</td>
+            <td>24.3人</td>
+            <td>28.6人</td>
+            <td class="down">▲4.3人</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-red">
+        <strong>主犯: LP imp -20.1%（SEO順位変動継続）。</strong>
+        PVFR・CTR・追加率は微改善しており、PU効率は底打ちの兆し。ただしLP impが下がり続ける限り友達は増えない。SEO回復待ちではなく、PU文言改修で単位効率を引き上げるしかない。
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ ジャンル別 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">3</div>
+      <div>
+        <div class="section-title">ジャンル別 W25 vs W24</div>
+        <div class="section-sub">友達増減の内訳</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>ジャンル</th>
+            <th>W25 友達</th>
+            <th>W24 友達</th>
+            <th>差</th>
+            <th>内訳（PU/バナー）</th>
+            <th>判定</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>医療ダイエット(GLP-1)</strong></td>
+            <td><strong>129人</strong></td>
+            <td>138人</td>
+            <td class="down">▲9人</td>
+            <td>PU74（glp1 49 + ava 25）+ バナー55（こいずみ32 + AVA23）</td>
+            <td><span class="badge badge-yellow">LP imp落ち</span></td>
+          </tr>
+          <tr>
+            <td>包茎手術(PLUS)</td>
+            <td>15人</td>
+            <td>—</td>
+            <td>—</td>
+            <td>PU5 + バナー10</td>
+            <td><span class="badge badge-yellow">横ばい</span></td>
+          </tr>
+          <tr>
+            <td>オンラインピル</td>
+            <td>13人</td>
+            <td>—</td>
+            <td>—</td>
+            <td>PU13 + バナー0</td>
+            <td><span class="badge badge-green">安定</span></td>
+          </tr>
+          <tr>
+            <td>ICL（ほんべ）</td>
+            <td>5人</td>
+            <td>—</td>
+            <td>—</td>
+            <td>PU5</td>
+            <td><span class="badge badge-yellow">安定</span></td>
+          </tr>
+          <tr>
+            <td>AGA</td>
+            <td>3人</td>
+            <td>—</td>
+            <td>—</td>
+            <td>PU2 + バナー1</td>
+            <td><span class="badge badge-gray">imp少</span></td>
+          </tr>
+          <tr>
+            <td>いびき</td>
+            <td>2人</td>
+            <td>—</td>
+            <td>—</td>
+            <td>PU2</td>
+            <td><span class="badge badge-gray">imp少</span></td>
+          </tr>
+          <tr>
+            <td>ED</td>
+            <td>0人</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td><span class="badge badge-gray">—</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-yellow">
+        <strong>ダイエット129人がほぼ全体を占める構造は変わらず。</strong>
+        PU系（GLP-1）74人 + バナー系55人。バナーはこいずみ・AVAで安定稼働中。
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 注目: BMI記事LP imp半減 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">4</div>
+      <div>
+        <div class="section-title">注目: BMI記事 LP imp 半減</div>
+        <div class="section-sub">ダイエットの最大記事で顕著な落ち込み</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>記事</th>
+            <th>W25 LP imp</th>
+            <th>W24 LP imp</th>
+            <th>前週比</th>
+            <th>PVFR</th>
+            <th>判定</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>BMI（肥満度チェック）</strong></td>
+            <td class="down"><strong>2,042</strong></td>
+            <td>4,016</td>
+            <td class="down">▲1,974（-49%）</td>
+            <td class="down">0.05%</td>
+            <td><span class="badge badge-red">SEO落ち + PVFR壊滅</span></td>
+          </tr>
+          <tr>
+            <td>摂取カロリー（1日で食べていい量）</td>
+            <td>3,094</td>
+            <td>2,867</td>
+            <td class="up">+227（+7.9%）</td>
+            <td class="warn">0.58%</td>
+            <td><span class="badge badge-yellow">PVFR改善余地あり</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-red">
+        <strong>BMI記事: LP imp半減（4,016→2,042）かつPVFR 0.05%で壊滅状態。</strong>
+        SEO順位落ちとPU効率の二重苦。LP imp 2,042/週のポテンシャルを活かすには、PU文言の訴求軸転換（「知識欲の続き」アプローチ）が有効。CMO依頼予定（t54）。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ PU改修振り返り -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">5</div>
+      <div>
+        <div class="section-title">PU改修2週目 — 振り返り</div>
+        <div class="section-sub">摂取カロリー1本体制 / ピルPU2件の2週目確認</div>
+      </div>
+    </div>
+    <div class="body">
+
+      <!-- 摂取カロリー -->
+      <p style="font-size:13px; font-weight:700; color:#475569; margin-bottom:8px;">■ 摂取カロリーPU「1日で食べていい量」1本体制 — 2週目</p>
+      <div class="verdict verdict-yellow">△ PVFR 0.58%（基準 0.80%）— 横ばい継続。文言改修が必要。</div>
+      <table>
+        <thead>
+          <tr><th>期間</th><th>LP imp</th><th>PU imp</th><th>CTR</th><th>追加率</th><th>友達</th><th>PVFR</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>W25（6/15〜6/21）</td>
+            <td>3,094</td>
+            <td>3,315</td>
+            <td>4.4%</td>
+            <td>12.2%</td>
+            <td>18人</td>
+            <td class="warn"><strong>0.58%</strong></td>
+          </tr>
+          <tr>
+            <td>W24（6/8〜6/14）4日データ</td>
+            <td>2,867</td>
+            <td>—</td>
+            <td>3.8%</td>
+            <td>15.0%</td>
+            <td>17人</td>
+            <td class="warn">0.59%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-yellow">
+        7日間フルデータで0.58%。4日間データ(0.68%)より下がったが、これは期間差。実態は横ばい（≒0.58〜0.59%）で、基準0.80%まで▲0.22pt不足。文言改修で月+6〜10人の積み増しが見込める。
+      </div>
+
+      <hr>
+
+      <!-- ピルPU 2件 -->
+      <p style="font-size:13px; font-weight:700; color:#475569; margin:16px 0 8px;">■ ピルPU改修2件 — 2週目確認</p>
+      <div class="pill-grid">
+        <div class="pill-card bad">
+          <div class="pill-title">✕ 「ピルは興味あるけど不安」（生理遅らせる記事）</div>
+          <div class="pill-metric"><span class="label">imp</span><span class="val bad">248</span></div>
+          <div class="pill-metric"><span class="label">CTR</span><span class="val bad">3.6%（前週5.9%）</span></div>
+          <div class="pill-metric"><span class="label">追加率</span><span class="val bad">0.0%（前週7.7%）</span></div>
+          <div class="pill-metric"><span class="label">友達</span><span class="val bad">0人（前週1人）</span></div>
+          <div class="pill-metric"><span class="label">PVFR</span><span class="val bad">0.0%（前週0.52%）</span></div>
+          <p style="font-size:12px; color:#dc2626; margin-top:8px; font-weight:700;">2週連続で友達0人。CTR・追加率ともに低下。再設計が必要。</p>
+        </div>
+        <div class="pill-card mixed">
+          <div class="pill-title">△ 「そのピル合ってないかも」（吐き気記事）</div>
+          <div class="pill-metric"><span class="label">imp</span><span class="val">232</span></div>
+          <div class="pill-metric"><span class="label">CTR</span><span class="val good">7.8%（前週5.5%）↑</span></div>
+          <div class="pill-metric"><span class="label">追加率</span><span class="val bad">5.6%（前週16.7%）↓</span></div>
+          <div class="pill-metric"><span class="label">友達</span><span class="val">1人（前週1人）</span></div>
+          <div class="pill-metric"><span class="label">PVFR</span><span class="val bad">0.49%（前週1.14%）</span></div>
+          <p style="font-size:12px; color:#b45309; margin-top:8px; font-weight:700;">CTRは改善も追加率が16.7%→5.6%に大幅悪化。PVFRも落ちた。追加率がボトルネック。</p>
+        </div>
+      </div>
+      <div class="insight insight-red" style="margin-top:12px;">
+        <strong>2件とも改善なし。</strong>
+        生理遅らせる：CTR・追加率とも低下→文言自体が刺さっていない。吐き気：CTRは伸びたが追加率が崩壊→友達追加画面またはオファー設計の問題。どちらも再設計フェーズへ。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ ネクストアクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">6</div>
+      <div>
+        <div class="section-title">W26 ネクストアクション（6/23〜6/29）</div>
+        <div class="section-sub">優先度順</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-high">高</span>
+          <div class="action-body">
+            <strong>摂取カロリーPU 文言改修（t109・CMO依頼）</strong>
+            <span>PVFR 0.58%→0.80%目標。7日フルで横ばい確認。文言改修で月+6〜10人見込み。LP imp 3,094/週のポテンシャルがある。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">高</span>
+          <div class="action-body">
+            <strong>BMI PU 文言+診断名改修（t54・CMO依頼）</strong>
+            <span>PVFR 0.05%で壊滅中。LP imp 2,042/週のポテンシャルあり。訴求軸転換「知識欲の続き」アプローチで推進。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中</span>
+          <div class="action-body">
+            <strong>コスメ 振り分けロジック確定→ロジック表作成</strong>
+            <span>4タイプ（ゲル・クリーム・ミルク・オイル）教育カル完成済み。案A（Q5の4択=4タイプ1:1対応）Ren確認後に着手。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中</span>
+          <div class="action-body">
+            <strong>ピルPU 生理遅らせる 再設計</strong>
+            <span>2週目で友達0人・追加率0%確定。文言/追加率問題の切り分けと再設計。吐き気PUも追加率問題の根本確認。</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ⑦ 総括 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">7</div>
+      <div>
+        <div class="section-title">週次総括</div>
+        <div class="section-sub">W25の因果関係まとめ</div>
+      </div>
+    </div>
+    <div class="body">
+      <p><strong>今週の一言:</strong> LP imp -20%という逆風の中、PVFR 0.40%（前週0.36%）と微改善。PU効率は底打ちの兆しがある。</p>
+      <hr>
+      <p><strong>なぜ友達が減ったか:</strong></p>
+      <p>友達170人（前週200人、-15%）。最大要因はLP imp -20.1%（26,134 vs 32,726）。SEO順位変動によるPV落ちが全体を牽引。特にBMI記事が半減（4,016→2,042）。バナーも83→66人に減少（LP imp落ちと連動）。</p>
+      <hr>
+      <p><strong>PVFR微改善の理由:</strong></p>
+      <p>CTR 5.5%・追加率 7.7%と前週から微改善。ただし基準値（PVFR 0.80%）には遠く、PU文言改修の余地が大きい。摂取カロリーPUは0.58%で横ばい継続中。BMIはPU効率が壊滅的（0.05%）。</p>
+      <hr>
+      <p><strong>今週実施した施策の結果:</strong></p>
+      <p>ピルPU改修2件とも2週目で改善なし（生理遅らせる×、吐き気△）。コスメ4タイプ教育カル設計完了・LINE Console後半接続完了・ダイエット全記事PVFR分析完了。</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
