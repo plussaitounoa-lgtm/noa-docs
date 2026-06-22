@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ダイエット系PU 診断型訴求転換 設計書 — 2026-06-22</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 900px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue   { background: #3b82f6; }
+    .num-red    { background: #ef4444; }
+    .num-amber  { background: #f59e0b; }
+    .num-green  { background: #10b981; }
+    .num-purple { background: #8b5cf6; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub   { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; overflow-x: auto; display: block; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; white-space: nowrap; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    .up   { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .badge-red    { background: #fee2e2; color: #dc2626; }
+    .badge-green  { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray   { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub   { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red    { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green  { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue   { background: #eff6ff; border-left: 3px solid #3b82f6; }
+
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .compare-card { border-radius: 10px; padding: 16px 18px; }
+    .compare-card.before { background: #fff1f2; border: 1.5px solid #fca5a5; }
+    .compare-card.after  { background: #f0fdf4; border: 1.5px solid #86efac; }
+    .compare-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+    .compare-label.before { color: #dc2626; }
+    .compare-label.after  { color: #16a34a; }
+    .compare-card .flow { font-size: 13px; color: #374151; }
+    .compare-card .flow .arrow { color: #94a3b8; margin: 4px 0; }
+
+    .pu-box { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 20px 24px; margin-bottom: 16px; }
+    .pu-box .pu-label { font-size: 11px; font-weight: 700; color: #64748b; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+    .pu-hook { font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+    .pu-copy { font-size: 13px; color: #475569; margin-bottom: 10px; }
+    .pu-buttons { display: flex; gap: 8px; }
+    .btn-yes { background: #1a4d9e; color: #fff; font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 6px; }
+    .btn-no  { background: #f1f5f9; color: #64748b; font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 6px; }
+
+    .bridge { background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: 10px; padding: 18px 22px; margin-bottom: 16px; }
+    .bridge-title { font-size: 12px; font-weight: 800; color: #1d4ed8; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+    .bridge-row { display: grid; grid-template-columns: 28px 1fr; gap: 10px; margin-bottom: 8px; align-items: start; }
+    .bridge-num { width: 24px; height: 24px; background: #1d4ed8; color: white; border-radius: 50%; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .bridge-text { font-size: 13px; color: #1e3a8a; }
+    .bridge-match { font-size: 12px; font-weight: 700; color: #16a34a; background: #dcfce7; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-top: 6px; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red    { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green  { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .pri-low  { background: #f1f5f9; color: #64748b; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+    ul.plain { list-style: none; }
+    ul.plain li { font-size: 14px; padding: 4px 0; }
+    ul.plain li::before { content: "・"; color: #94a3b8; }
+
+    .back-link { display: inline-block; font-size: 12px; color: #64748b; text-decoration: none; margin-bottom: 24px; }
+    .back-link:hover { color: #1a4d9e; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">PU改修設計書 / 2026-06-22</div>
+    <h1>ダイエット系PU — 診断型訴求への転換</h1>
+    <p class="desc">友達追加ペース悪化の要因分析と、訴求ミスマッチ解消のための改修設計</p>
+  </div>
+
+  <!-- ① 現状と問題 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">1</div>
+      <div>
+        <div class="section-title">現状数値（2026-06-22時点）</div>
+        <div class="section-sub">目標1,200人に対してGAP▲333人ペース</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card alert">
+          <div class="kpi-label">月累計</div>
+          <div class="kpi-value">635人</div>
+          <div class="kpi-sub">22日 / 目標1,200人</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">日均</div>
+          <div class="kpi-value">28.9人</div>
+          <div class="kpi-sub">月末予測 約867人</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">GAP</div>
+          <div class="kpi-value">▲333人</div>
+          <div class="kpi-sub">月末予測ベース</div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>ジャンル</th><th>友達</th><th>PVFR</th><th>CTR</th><th>追加率</th><th>ボトルネック</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>医療ダイエット(GLP-1)</td><td>293</td><td class="down">0.5%🔴</td><td class="down">6.0%🔴</td><td class="down">9.5%🔴</td><td>文言＋LP</td></tr>
+          <tr><td>オンラインピル</td><td>36</td><td class="down">0.6%🔴</td><td class="down">4.8%🔴</td><td class="down">10.4%🔴</td><td>文言＋LP</td></tr>
+          <tr><td>包茎手術</td><td>20</td><td class="down">0.2%🔴</td><td class="down">5.4%🔴</td><td class="down">3.8%🔴</td><td>文言＋LP</td></tr>
+          <tr><td>AGA</td><td>11</td><td class="down">0.2%🔴</td><td class="down">4.0%🔴</td><td class="down">4.9%🔴</td><td>文言＋LP</td></tr>
+          <tr><td>ED</td><td>10</td><td class="up">1.0%✅</td><td class="down">10.1%🔴</td><td class="up">11.5%✅</td><td>機能中</td></tr>
+        </tbody>
+      </table>
+
+      <div class="insight insight-red">
+        基準（PVFR≥0.80% / CTR≥13% / 追加率≥11%）を超えているジャンルがほぼゼロ。全体的な底上げが必要。
+      </div>
+    </div>
+  </div>
+
+  <!-- ② 要因分析 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">2</div>
+      <div>
+        <div class="section-title">要因分析（ファネル構造で整理）</div>
+        <div class="section-sub">3つのボトルネックが重なっている</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr><th>ボトルネック</th><th>現状</th><th>基準</th><th>原因</th><th>Noaが触れるか</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>① 流入（LP imp）低下</strong></td>
+            <td class="down">日均4,364</td>
+            <td>—</td>
+            <td>SEO順位変動によるPV落ち。BMI記事が先週だけで半減（4,016→2,042）</td>
+            <td><span class="badge badge-red">直接は難しい</span></td>
+          </tr>
+          <tr>
+            <td><strong>② CTR低下（PU文言）</strong></td>
+            <td class="down">5〜7%台</td>
+            <td>13%</td>
+            <td>PU文言がクリニック誘導型。潜在層に刺さらない</td>
+            <td><span class="badge badge-green">改修可能</span></td>
+          </tr>
+          <tr>
+            <td><strong>③ 追加率低下（LP）</strong></td>
+            <td class="down">4〜10%台</td>
+            <td>11%</td>
+            <td>LP側（クリニックの作成物）の問題が大部分。ただしPU訴求とLPの約束のズレも影響</td>
+            <td><span class="badge badge-yellow">一部改善可能</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="insight insight-yellow">
+        <strong>今回の着眼点:</strong> ②CTRと③追加率は「訴求ミスマッチ」が根本原因。PU文言を診断型に変えるだけで両方を同時に改善できる可能性がある。
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 訴求ミスマッチの構造 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">3</div>
+      <div>
+        <div class="section-title">問題の核心 — 訴求とコンテンツのミスマッチ</div>
+        <div class="section-sub">PU文言が「クリニック誘導」なのに、LINE内は「診断」</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="compare-grid">
+        <div class="compare-card before">
+          <div class="compare-label before">現状（ミスマッチ）</div>
+          <div class="flow">
+            PU文言<br>
+            <strong>「GLP-1で痩せたい方はこちら」</strong><br>
+            <div class="arrow">↓ クリック</div>
+            友達追加<br>
+            <div class="arrow">↓ LINE内</div>
+            <strong>診断コンテンツが表示される</strong>
+          </div>
+        </div>
+        <div class="compare-card after">
+          <div class="compare-label after">改修後（一致）</div>
+          <div class="flow">
+            PU文言<br>
+            <strong>「あなたが痩せない原因を診断する」</strong><br>
+            <div class="arrow">↓ クリック</div>
+            友達追加<br>
+            <div class="arrow">↓ LINE内</div>
+            <strong>診断コンテンツが表示される ✅</strong>
+          </div>
+        </div>
+      </div>
+
+      <p>ユーザーは「クリニックに行く気はないけど診断は受けてみたい」という潜在層。PU文言で「クリニック誘導」と見えた瞬間に離脱する。<strong>LINE内のコンテンツは診断なのに、入口の文言がクリニック誘導になっていた。</strong>これが CTR低迷・追加率低迷の真因。</p>
+
+      <div class="insight insight-blue">
+        <strong>診断型PUが追加率を上げる理由:</strong> 「診断を受けるために追加する」という自発的な動機が生まれる。「クリニック誘導」では顕在層しか反応しないが、「診断型」なら潜在層も反応する。
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 摂取カロリーPU改修案（t109） -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">4</div>
+      <div>
+        <div class="section-title">摂取カロリーPU改修案（t109）</div>
+        <div class="section-sub">こいずみ_1日_摂取カロリー / 現行PVFR 0.58%（基準0.80%）</div>
+      </div>
+    </div>
+    <div class="body">
+
+      <div class="verdict verdict-red">ボトルネック: CTR。「量」という曖昧な表現で数字を求めているユーザーに刺さっていない。</div>
+
+      <div class="bridge">
+        <div class="bridge-title">ブリッジテスト</div>
+        <div class="bridge-row">
+          <div class="bridge-num">1</div>
+          <div class="bridge-text"><strong>診断が提供する体験:</strong> 4問答えると、自分の適正カロリー（kcal数値）が出る。カロリーが続かない理由（食欲ホルモンの仕組み）の理解と、GLP-1という選択肢への橋渡しまでセット</div>
+        </div>
+        <div class="bridge-row">
+          <div class="bridge-num">2</div>
+          <div class="bridge-text"><strong>ユーザーの今の気持ち:</strong> 「ダイエット始めようとしてる。1日何カロリー食べていいか、数字で知りたい。カロリー計算ツールを探してる。感情ケアより先に、まず自分の数字が欲しい」</div>
+        </div>
+        <div class="bridge-row">
+          <div class="bridge-num">3</div>
+          <div class="bridge-text"><strong>①を②の言葉で翻訳:</strong> 「あなたの適正カロリー（数値）が4問で出る」→ これがPU文言の原型</div>
+        </div>
+        <div class="bridge-match">① と ③ は同じ体験を指している ✅</div>
+      </div>
+
+      <p><strong>推奨案A —「自分のカロリー、数字で出してみる？」</strong></p>
+      <div class="pu-box">
+        <div class="pu-label">診断名</div>
+        <div class="pu-hook">自分のカロリー、数字で出してみる？</div>
+        <div class="pu-copy">生活スタイルを4問答えると、1日に食べていいkcalがわかる</div>
+        <div style="font-size:11px;color:#94a3b8;margin-bottom:10px;">匿名・LINEで簡単</div>
+        <div class="pu-buttons">
+          <span class="btn-yes">出してみる</span>
+          <span class="btn-no">いい</span>
+        </div>
+      </div>
+
+      <table>
+        <thead><tr><th>ポイント</th><th>説明</th></tr></thead>
+        <tbody>
+          <tr><td>「数字で出す」</td><td>曖昧な「量」→ 具体的な「kcal」へ。計算機モードの検索者に直刺さり</td></tr>
+          <tr><td>「出してみる？」</td><td>能動的なタップ動機。「出してみる→はい」形式で追加率を維持</td></tr>
+          <tr><td>「自分の」</td><td>パーソナライズ感。一般情報ページとの差別化</td></tr>
+          <tr><td>FR維持根拠</td><td>「数字を出す」体験がLPの「適正カロリーが30秒でわかる」と完全一致</td></tr>
+        </tbody>
+      </table>
+
+      <div class="insight insight-green">
+        <strong>インパクト試算:</strong> CTR 8.4%→13%改善で月+20人/月。現実的には+7〜10人/月。今日実装可能（ブリーフ作成済み）。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ BMI PU改修案（t54） -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">5</div>
+      <div>
+        <div class="section-title">BMI PU改修案（t54）</div>
+        <div class="section-sub">BMI記事全般 / 現行PVFR 0.05%（壊滅レベル）</div>
+      </div>
+    </div>
+    <div class="body">
+
+      <div class="verdict verdict-red">ボトルネック: 全指標でNG。「体型系」「肥満チェック」訴求は全サイト共通でCTR 7〜11%と不発。訴求軸ごと転換が必要。</div>
+
+      <div class="insight insight-yellow" style="margin-bottom:16px;">
+        <strong>BMI記事ユーザーの特性（genre-insights.mdより）:</strong> 「現状把握」フェーズ。BMI計算後の人に「痩せたい」訴求は刺さらない。「体の状態系」への転換が必要。有望訴求:「脂肪のつき方気になる」「体質タイプ知りたい」「体の本当の状態気になる」
+      </div>
+
+      <div class="bridge">
+        <div class="bridge-title">ブリッジテスト</div>
+        <div class="bridge-row">
+          <div class="bridge-num">1</div>
+          <div class="bridge-text"><strong>診断が提供する体験（太りやすさタイプ診断 v6）:</strong> 太りやすさタイプ（4タイプ）を診断して、タイプ別の対策・改善アドバイスを提案する</div>
+        </div>
+        <div class="bridge-row">
+          <div class="bridge-num">2</div>
+          <div class="bridge-text"><strong>ユーザーの今の気持ち:</strong> 「BMI出た。数字はわかった。でもこれって実際やばいの？自分はどういう体型なの？何をしたらいいかわからない」</div>
+        </div>
+        <div class="bridge-row">
+          <div class="bridge-num">3</div>
+          <div class="bridge-text"><strong>①を②の言葉で翻訳:</strong> 「そのBMI、どの体型タイプ？」→ 数値の次の疑問（タイプ・原因・対策）を満たす訴求</div>
+        </div>
+        <div class="bridge-match">① と ③ は同じ体験を指している ✅</div>
+      </div>
+
+      <p><strong>改修案 —「そのBMI、どの体型タイプ？」</strong></p>
+      <div class="pu-box">
+        <div class="pu-label">診断名</div>
+        <div class="pu-hook">そのBMI、どの体型タイプ？</div>
+        <div class="pu-copy">数値だけじゃわからない。30秒でタイプ別の対策がわかる</div>
+        <div style="font-size:11px;color:#94a3b8;margin-bottom:10px;">匿名・無料</div>
+        <div class="pu-buttons">
+          <span class="btn-yes">診断してみる</span>
+          <span class="btn-no">いい</span>
+        </div>
+      </div>
+
+      <table>
+        <thead><tr><th>ポイント</th><th>説明</th></tr></thead>
+        <tbody>
+          <tr><td>「そのBMI、」</td><td>BMIを計算した直後のユーザーに直接話しかける文脈継続型。「自分のことを言われてる」感覚</td></tr>
+          <tr><td>「どの体型タイプ？」</td><td>数値の次に湧く疑問（「で、自分はどういう体なの？」）を先取りする</td></tr>
+          <tr><td>「数値だけじゃわからない」</td><td>BMI計算後の「で、これって何？」という宙ぶらりん感を言語化</td></tr>
+          <tr><td>「30秒で対策がわかる」</td><td>スピード＋具体的なアウトプット（対策）を約束。「診断して終わり」ではないことを示す</td></tr>
+        </tbody>
+      </table>
+
+      <div class="insight insight-yellow">
+        <strong>注意点:</strong> 太りやすさタイプ診断v6の効果データが現時点で未確定。PU文言を変えても診断コンテンツの質が問題な場合は追加率は改善しない。PU改修と並行してLINE内の診断内容も確認が必要。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ NA -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">6</div>
+      <div>
+        <div class="section-title">ネクストアクション</div>
+        <div class="section-sub">優先度順</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-high">高</span>
+          <div class="action-body">
+            <strong>摂取カロリーPU（t109）案Aを実装</strong>
+            <span>ブリーフ作成済み。「自分のカロリー、数字で出してみる？」に差し替え。1週間データで効果判定。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">高</span>
+          <div class="action-body">
+            <strong>BMI PU（t54）「そのBMI、どの体型タイプ？」を設計・実装</strong>
+            <span>本設計書の案でブリーフを仕上げ→CMO依頼。同時にLINE内の太りやすさタイプ診断v6の状態を確認。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中</span>
+          <div class="action-body">
+            <strong>ダイエット系その他PUを診断型訴求に横展開</strong>
+            <span>GLP-1全般（CTR 6.0%）に対して同じアプローチを適用。各記事のLINE内診断コンテンツを確認してから設計。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-low">低</span>
+          <div class="action-body">
+            <strong>流入（LP imp）の回復は中長期で対処</strong>
+            <span>SEO記事の量産体制（外注・インターン活用）が根本打ち手。今月中の数値改善への貢献は限定的。</span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="insight insight-blue" style="margin-top:16px;">
+        <strong>今月のGAP試算:</strong> 摂取カロリーPU改修で+7〜20人/月。BMI PU改修で効果未知数。チリツモで月10〜30人の改善が現実的な上限。目標1,200人へのGAP（▲333人）は今月中の挽回は困難。来月の設計に向けてコスメ・サプリの立ち上げを優先する。
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
