@@ -297,6 +297,39 @@ body {
   .pivot-arrow { padding: 12px 0; transform: rotate(90deg); }
 }
 
+/* ─── 3-LAYER LIST ─── */
+.layer-list { display: flex; flex-direction: column; gap: 10px; }
+.layer-item {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  padding: 14px 18px;
+}
+.layer-num {
+  width: 36px; height: 36px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 16px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.layer-title { font-weight: 700; font-size: 14px; }
+.layer-desc { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.layer-impact {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+  white-space: nowrap;
+  font-family: var(--font-mono);
+}
+
 /* ─── GENRE PRIORITY ─── */
 .genre-list { display: flex; flex-direction: column; gap: 12px; }
 .genre-item {
@@ -566,6 +599,36 @@ body {
         <p style="margin-top:14px;">「この施策は優先度が高いか？」を逆算で問い直す。</p>
       </div>
     </div>
+
+    <div style="margin-top:32px;">
+      <p style="font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">700人GAPを埋める 3層アプローチ</p>
+      <div class="layer-list">
+        <div class="layer-item">
+          <div class="layer-num">①</div>
+          <div class="layer-body">
+            <div class="layer-title">改修・改善（既存施策）</div>
+            <div class="layer-desc">摂取カロリーPU文言変更（t109）・BMI PU診断型実装（t54）。即着手・即効性あり。ただし上限は +20〜40人/月</div>
+          </div>
+          <div class="layer-impact">+40人</div>
+        </div>
+        <div class="layer-item">
+          <div class="layer-num">②</div>
+          <div class="layer-body">
+            <div class="layer-title">新規案件（コスメ3ジャンル）</div>
+            <div class="layer-desc">クレンジング→スキンケア→ファンデの記事体制を構築。必要PV 5〜6万 = 記事70本。インターン・外注への委譲が前提</div>
+          </div>
+          <div class="layer-impact">+600〜700人</div>
+        </div>
+        <div class="layer-item" style="border-color:var(--blue);">
+          <div class="layer-num" style="background:var(--blue);">③</div>
+          <div class="layer-body">
+            <div class="layer-title">新チャネル（Instagram × LINE）</div>
+            <div class="layer-desc">re.cosme（5.2万フォロワー）は既存チャネル。他の新規開拓より先にLINE導線を接続できる。コスメ診断とセットで設計</div>
+          </div>
+          <div class="layer-impact">効果確認中</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ───────────────────────────────── -->
@@ -611,6 +674,12 @@ body {
         <div class="genre-badge" style="background:#F5F3FF;color:#6D28D9;">並行継続</div>
       </div>
     </div>
+
+    <div style="margin-top:28px;padding:20px 24px;background:#EFF6FF;border-left:4px solid var(--blue);border-radius:8px;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--blue);margin-bottom:8px;">③ 新チャネル — Instagram × LINE</div>
+      <p style="font-size:14px;margin:0 0 10px;font-weight:600;">re.cosme（Instagram 5.2万フォロワー）→ LINE導線接続</p>
+      <p style="font-size:13px;color:#374151;margin:0;">他の新規チャネルは完全ゼロからの開拓になるが、re.cosmeは既にアカウントが整っている。最速でLINEに繋げられる既存資産。コスメ診断設計と並行して導線を設計する。</p>
+    </div>
   </section>
 
   <!-- ───────────────────────────────── -->
@@ -622,7 +691,8 @@ body {
     <div class="tbd-block">
       <div class="tbd-label">⚠ 要詰め — 木曜MTGまでに確定</div>
       <h3>体制・施策の具体化（詰め中）</h3>
-      <p>記事制作の本数・担当・AI活用方針をRenと合意してから記入。以下は骨格案。</p>
+      <p style="margin-bottom:12px;">記事制作の本数・担当・AI活用方針をRenと合意してから記入。以下は骨格案。</p>
+      <p style="font-size:13px;color:#92400E;background:#FFFBEB;border:1px solid #FDE68A;padding:10px 14px;border-radius:6px;margin-bottom:16px;">前提: 目標PVに必要な記事は約70本。自力では物理的に不可能。<strong>インターン・外注への委譲体制の設計が先決</strong>（Renからの宿題: 誰に何を任せるかを木曜MTGまでに明確化）</p>
       <div class="tbd-scaffold">
         <div class="tbd-row">
           <div class="col-label">クレンジング記事</div>
