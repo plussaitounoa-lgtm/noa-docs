@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>スキンケア方法診断 フロー図 2026-06-26</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f0f2f0; color: #1d1d1f; font-size: 13px; padding: 40px 24px 60px; }
+  .container { max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 32px; }
+
+  /* ─── ノード共通 ─── */
+  .node {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 20px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.07);
+    text-align: center;
+    margin: 0 auto;
+  }
+  .node-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: #aaa; margin-bottom: 4px;
+  }
+  .node-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .node-choices { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 6px; }
+  .choice { font-size: 11px; background: #f5f5f7; border-radius: 5px; padding: 3px 10px; }
+
+  /* ─── スタートノード ─── */
+  .node-start { background: #4a6a5a; color: #fff; max-width: 420px; }
+  .node-start .node-label { color: #a5c5b5; }
+  .node-start .node-title { color: #fff; font-size: 15px; }
+  .node-start .node-sub { color: #c5ddd5; font-size: 11px; margin-top: 4px; }
+
+  /* ─── Q ノード ─── */
+  .node-q { max-width: 520px; }
+  .node-q1 { border-left: 4px solid #bdbdbd; }
+  .node-q2 { border-left: 4px solid #bdbdbd; }
+  .node-q3 { border-left: 4px solid #4a6a5a; border-top: 2px solid #4a6a5a; }
+  .node-q4 { border-left: 4px dashed #5c6bc0; background: #f8f9ff; max-width: 520px; }
+  .node-q4 .node-label { color: #5c6bc0; }
+  .node-q5 { border-left: 4px solid #4a6a5a; border: 2px solid #4a6a5a; max-width: 520px; }
+  .node-q5 .node-label { color: #4a6a5a; }
+
+  /* ─── 矢印 ─── */
+  .arr { text-align: center; color: #ccc; font-size: 22px; line-height: 1; margin: 4px 0; }
+  .arr-label { font-size: 10px; color: #aaa; display: block; margin-top: -2px; }
+
+  /* ─── Q2 分岐セクション ─── */
+  .branch-wrap { max-width: 520px; margin: 0 auto; display: grid; grid-template-columns: 1fr 8px 1fr; gap: 0; }
+  .branch-col { display: flex; flex-direction: column; align-items: center; }
+  .branch-center { display: flex; flex-direction: column; align-items: center; }
+  .branch-line-v { width: 2px; background: #e0e0e0; flex: 1; min-height: 8px; }
+  .branch-bar-h { height: 2px; background: #e0e0e0; width: 100%; }
+  .branch-label { font-size: 10px; font-weight: 700; color: #888; background: #fff; border: 1px solid #e0e0e0; border-radius: 4px; padding: 2px 8px; margin: 4px 0; }
+  .mid-msg-box {
+    background: #e8f5e9; border: 1px solid #81c784; border-radius: 8px;
+    padding: 8px 12px; font-size: 11px; color: #2e7d32; text-align: center; margin: 4px 0;
+    max-width: 200px;
+  }
+  .merge-arrow { text-align: center; color: #ccc; font-size: 22px; margin: 2px 0; }
+
+  /* ─── Q5 → 4分岐 ─── */
+  .split-header { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; max-width: 860px; margin: 4px auto; text-align: center; }
+  .split-arr { font-size: 20px; }
+
+  /* ─── タイプノード ─── */
+  .type-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; max-width: 860px; margin: 0 auto; }
+  .type-node { border-radius: 10px; padding: 12px 10px; text-align: center; }
+  .type-node .cond { font-size: 10px; font-weight: 700; margin-bottom: 5px; }
+  .type-node .name { font-size: 12px; font-weight: 700; line-height: 1.4; }
+  .type-node .desc { font-size: 10px; color: #666; margin-top: 4px; line-height: 1.4; }
+  .type-a { background: #fff3e0; border: 2px solid #f4a460; }
+  .type-a .cond { color: #bf360c; }
+  .type-b { background: #e3f2fd; border: 2px solid #64b5f6; }
+  .type-b .cond { color: #0d47a1; }
+  .type-c { background: #e8f5e9; border: 2px solid #81c784; }
+  .type-c .cond { color: #1b5e20; }
+  .type-d { background: #f3e5f5; border: 2px solid #ce93d8; }
+  .type-d .cond { color: #4a148c; }
+
+  /* ─── 結果カード行 ─── */
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; max-width: 860px; margin: 0 auto; }
+  .card-node { border-radius: 8px; padding: 10px 8px; text-align: center; background: #fafafa; border: 1px solid #e8e8e8; font-size: 10px; color: #555; line-height: 1.6; }
+  .card-node strong { display: block; font-size: 11px; color: #333; margin-bottom: 3px; }
+
+  /* ─── CV ─── */
+  .cv-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; max-width: 860px; margin: 0 auto; }
+  .cv-node { border-radius: 8px; padding: 10px 8px; text-align: center; color: #fff; font-size: 11px; line-height: 1.5; }
+  .cv-node .cv-label { font-size: 9px; font-weight: 700; opacity: .8; margin-bottom: 2px; }
+  .cv-node .cv-name { font-weight: 700; }
+  .cv-node .cv-price { font-size: 10px; opacity: .85; margin-top: 2px; }
+  .cv-a { background: #e07040; }
+  .cv-b { background: #4a90d9; }
+  .cv-c { background: #4caf7a; }
+  .cv-d { background: #ab6cc6; }
+
+  /* ─── 凡例 ─── */
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 24px 0 16px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #666; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .back-link { margin-top: 48px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 13px; }
+
+  /* section divider */
+  .section-divider { text-align: center; font-size: 10px; color: #aaa; letter-spacing: .1em; font-weight: 700; margin: 6px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>スキンケア方法診断 フロー図</h1>
+  <div class="meta">2026-06-26 ｜ 全5問 ｜ Q3×Q5で4タイプ判定 ｜ Q4（環境軸）は分岐前収集・Card2パーソナライズ用</div>
+
+  <!-- ── 凡例 ── -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#bdbdbd;"></div>補助軸（振り分けに使わない）</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#4a6a5a;"></div>振り分け主軸</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#5c6bc0;"></div>環境補助軸（Card2パーソナライズ）</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#81c784;"></div>途中メッセージ（A・C回答時）</div>
+  </div>
+
+  <!-- ── START ── -->
+  <div class="node node-start">
+    <div class="node-label">START</div>
+    <div class="node-title">あなたにぴったりのスキンケア方法診断</div>
+    <div class="node-sub">5問でわかる無料診断｜匿名・無料</div>
+  </div>
+
+  <!-- ── Q1 ── -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q1">
+    <div class="node-label">Q1 ── 補助軸（年代）</div>
+    <div class="node-title">あなたの年代を教えてください</div>
+    <div class="node-choices">
+      <div class="choice">A: 10〜20代</div>
+      <div class="choice">B: 30代</div>
+      <div class="choice">C: 40代以上</div>
+    </div>
+  </div>
+
+  <!-- ── Q2 ── -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q2">
+    <div class="node-label">Q2 ── 感情温度・補助軸</div>
+    <div class="node-title">今のスキンケアの手応えは？</div>
+    <div class="node-choices">
+      <div class="choice" style="background:#e8f5e9;color:#2e7d32;">A: 何を使っても変わらない</div>
+      <div class="choice">B: 少し改善してきている</div>
+      <div class="choice" style="background:#e8f5e9;color:#2e7d32;">C: 何が正解かわからない</div>
+    </div>
+  </div>
+
+  <!-- ── Q2 分岐 ── -->
+  <div class="branch-wrap" style="margin-top:4px;">
+    <!-- B path -->
+    <div class="branch-col">
+      <div class="branch-bar-h"></div>
+      <div class="branch-label">B そのまま通過</div>
+      <div class="branch-line-v"></div>
+    </div>
+    <!-- center line -->
+    <div class="branch-center">
+      <div class="branch-line-v"></div>
+    </div>
+    <!-- A・C path -->
+    <div class="branch-col">
+      <div class="branch-bar-h"></div>
+      <div class="branch-label" style="color:#2e7d32;border-color:#81c784;">A・C → 途中メッセージ</div>
+      <div class="mid-msg-box">「肌タイプに合っていないスキンケアを続けている可能性があります。次の質問で確認してみましょう💡」</div>
+    </div>
+  </div>
+  <!-- merge -->
+  <div style="max-width:520px;margin:0 auto;display:flex;justify-content:space-around;">
+    <div style="font-size:18px;color:#ccc;">↘</div>
+    <div style="font-size:18px;color:#ccc;">↙</div>
+  </div>
+
+  <!-- ── Q3 ── -->
+  <div class="node node-q node-q3">
+    <div class="node-label" style="color:#4a6a5a;">Q3 ── 振り分け主軸①</div>
+    <div class="node-title">洗顔後、何もつけずに30分放置したら？</div>
+    <div class="node-choices">
+      <div class="choice">A: 全体つっぱる</div>
+      <div class="choice">B: Tゾーンテカ×頬つっぱる</div>
+      <div class="choice">C: 全体テカる</div>
+      <div class="choice">D: 変化なし・わからない</div>
+    </div>
+  </div>
+
+  <!-- ── Q4 ── -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q4">
+    <div class="node-label">Q4 ── 環境補助軸（分岐前収集 / 振り分けには使用しない）</div>
+    <div class="node-title">普段の生活で、肌に影響していそうなものは？</div>
+    <div class="node-choices">
+      <div class="choice" style="background:#e8eaf6;color:#3949ab;">A: エアコン・空気の乾燥</div>
+      <div class="choice" style="background:#e8eaf6;color:#3949ab;">B: 紫外線・大気汚染</div>
+      <div class="choice" style="background:#e8eaf6;color:#3949ab;">C: ストレス・睡眠不足</div>
+      <div class="choice" style="background:#e8eaf6;color:#3949ab;">D: 特に思い当たらない</div>
+    </div>
+    <div style="font-size:10px;color:#5c6bc0;margin-top:6px;font-weight:600;">→ 結果Card2のパーソナライズに使用（例: Q4-A×保湿型 →「エアコン環境は水分蒸発をさらに加速させます」）</div>
+  </div>
+
+  <!-- ── Q5 (分岐点) ── -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q5">
+    <div class="node-label">Q5 ── 振り分け主軸② ／ 分岐点</div>
+    <div class="node-title">今、一番気になる肌の悩みは？</div>
+    <div class="node-choices">
+      <div class="choice" style="background:#fff3e0;color:#bf360c;font-weight:700;">A: 毛穴・皮脂テカり</div>
+      <div class="choice" style="background:#e3f2fd;color:#0d47a1;font-weight:700;">B: 乾燥してるのにべたつく</div>
+      <div class="choice" style="background:#e8f5e9;color:#1b5e20;font-weight:700;">C: 繰り返すニキビ・肌荒れ</div>
+      <div class="choice" style="background:#f3e5f5;color:#4a148c;font-weight:700;">D: シミ・くすみ</div>
+    </div>
+  </div>
+
+  <!-- ── 分岐矢印 ── -->
+  <div class="split-header" style="margin-top:8px;">
+    <div class="split-arr" style="color:#e07040;">↓</div>
+    <div class="split-arr" style="color:#4a90d9;">↓</div>
+    <div class="split-arr" style="color:#4caf7a;">↓</div>
+    <div class="split-arr" style="color:#ab6cc6;">↓</div>
+  </div>
+
+  <!-- ── 4タイプ ── -->
+  <div class="section-divider">── 診断結果タイプ ──</div>
+  <div class="type-grid">
+    <div class="type-node type-a">
+      <div class="cond">Q3-C × Q5-A</div>
+      <div class="name">皮脂コントロール型</div>
+      <div class="desc">全体テカ<br>× 毛穴・皮脂テカり</div>
+    </div>
+    <div class="type-node type-b">
+      <div class="cond">Q3-B × Q5-B</div>
+      <div class="name">保湿バリア修復型</div>
+      <div class="desc">Tゾーンテカ×頬つっぱり<br>× インナードライ</div>
+    </div>
+    <div class="type-node type-c">
+      <div class="cond">Q3-A or B × Q5-C</div>
+      <div class="name">低刺激・<br>環境改善型</div>
+      <div class="desc">つっぱり or 混合肌<br>× ニキビ・肌荒れ</div>
+    </div>
+    <div class="type-node type-d">
+      <div class="cond">Q3-A or D × Q5-D</div>
+      <div class="name">美白・<br>エイジングケア型</div>
+      <div class="desc">つっぱり or 変化なし<br>× シミ・くすみ</div>
+    </div>
+  </div>
+
+  <!-- ── 矢印 ── -->
+  <div class="split-header" style="margin-top:6px;">
+    <div class="split-arr" style="color:#ccc;">↓</div>
+    <div class="split-arr" style="color:#ccc;">↓</div>
+    <div class="split-arr" style="color:#ccc;">↓</div>
+    <div class="split-arr" style="color:#ccc;">↓</div>
+  </div>
+
+  <!-- ── 結果カード ── -->
+  <div class="section-divider">── 結果カード（各タイプ 4枚構成）──</div>
+  <div class="card-grid">
+    <div class="card-node">
+      <strong>Card 1</strong>あなたにぴったりの<br>スキンケア方法は…
+    </div>
+    <div class="card-node">
+      <strong>Card 2</strong>根本示唆<br>（Q4の環境軸を反映）
+    </div>
+    <div class="card-node">
+      <strong>Card 3</strong>感触・体験イメージ
+    </div>
+    <div class="card-node">
+      <strong>Card 4</strong>未来の肌状態<br>＋ CTA
+    </div>
+  </div>
+
+  <!-- ── 矢印 ── -->
+  <div class="arr" style="margin-top:6px;">↓</div>
+
+  <!-- ── CV ── -->
+  <div class="section-divider">── CV（商材リンク）──</div>
+  <div class="cv-grid">
+    <div class="cv-node cv-a">
+      <div class="cv-label">皮脂コントロール型</div>
+      <div class="cv-name">オルビス クリアフル</div>
+      <div class="cv-price">¥6,500</div>
+    </div>
+    <div class="cv-node cv-b">
+      <div class="cv-label">保湿バリア修復型</div>
+      <div class="cv-name">ビーグレン</div>
+      <div class="cv-price">¥3,000</div>
+    </div>
+    <div class="cv-node cv-c">
+      <div class="cv-label">低刺激・環境改善型</div>
+      <div class="cv-name">ファンケル<br>アクネケア</div>
+      <div class="cv-price">¥7,692</div>
+    </div>
+    <div class="cv-node cv-d">
+      <div class="cv-label">美白・エイジング型</div>
+      <div class="cv-name">VCスターター<br>セット</div>
+      <div class="cv-price">¥5,000</div>
+    </div>
+  </div>
+
+  <div class="back-link"><a href="index.html">← トップへ</a></div>
+
+</div>
+</body>
+</html>
