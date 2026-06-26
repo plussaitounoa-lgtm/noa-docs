@@ -258,21 +258,127 @@
     <div class="split-arr" style="color:#ccc;">↓</div>
   </div>
 
-  <!-- ── 結果カード ── -->
-  <div class="section-divider">── 結果カード（各タイプ 4枚構成）──</div>
-  <div class="card-grid">
-    <div class="card-node">
-      <strong>Card 1</strong>あなたにぴったりの<br>スキンケア方法は…
+  <!-- ── 結果カード詳細 ── -->
+  <div class="section-divider">── 結果カード（4タイプ × 4枚）──</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;max-width:860px;margin:0 auto;">
+
+    <!-- ── タイプA 列 ── -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:#fff3e0;border:2px solid #f4a460;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#e07040;margin-bottom:4px;">Card 1 | 方法の発表</div>
+        あなたにぴったりのスキンケア方法は…<br>
+        <strong>皮脂の分泌をコントロールするアプローチです</strong><br>
+        <span style="color:#aaa;">毛穴レス設計 ／ テカりを出さない ／ さらっと仕上がり</span>
+      </div>
+      <div style="background:#fff;border:1px solid #f4a460;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#e07040;margin-bottom:4px;">Card 2 | 根本示唆</div>
+        テカるのは、洗い方の問題じゃない。<br>
+        皮脂が出すぎるのは、肌が「乾燥から守ろうとしているサイン」。洗浄力で取り除くほど、肌は防御のためにさらに皮脂を出す。このサイクルを断つには、皮脂分泌を根本から整える成分が必要。<br>
+        <span style="color:#5c6bc0;">※Q4-A:「乾燥した空気が皮脂分泌をさらに促しています」</span>
+      </div>
+      <div style="background:#fff;border:1px solid #f4a460;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#e07040;margin-bottom:4px;">Card 3 | 体験イメージ</div>
+        朝、鏡を見てもさらっとしてる。<br>
+        つるんとなめらかで、テカっていない。<br>
+        これが、皮脂コントロールの仕上がり。
+      </div>
+      <div style="background:#fff;border:1px solid #f4a460;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#e07040;margin-bottom:4px;">Card 4 | 未来の肌 ＋ CTA</div>
+        テカらない日が、当たり前になる。<br>
+        「スキンケア変えたら、昼まで崩れなくなった」<br>
+        毛穴が目立たず、さらさらした肌の毎日へ。<br>
+        <span style="display:inline-block;background:#e07040;color:#fff;border-radius:4px;padding:2px 10px;margin-top:4px;">あなたに合うスキンケアを見る →</span>
+      </div>
     </div>
-    <div class="card-node">
-      <strong>Card 2</strong>根本示唆<br>（Q4の環境軸を反映）
+
+    <!-- ── タイプB 列 ── -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:#e3f2fd;border:2px solid #64b5f6;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#1565c0;margin-bottom:4px;">Card 1 | 方法の発表</div>
+        あなたにぴったりのスキンケア方法は…<br>
+        <strong>バリアに水分を届けるアプローチです</strong><br>
+        <span style="color:#aaa;">インナードライ向き ／ もっちり仕上がり ／ じゅわっと染み込む</span>
+      </div>
+      <div style="background:#fff;border:1px solid #64b5f6;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#1565c0;margin-bottom:4px;">Card 2 | 根本示唆</div>
+        乾燥してるのにべたつく。それ、インナードライのサインです。<br>
+        肌のバリア機能が低下すると、補った水分がすぐ蒸発してしまう。肌は守ろうと皮脂を増やすから、乾燥もテカりも同時に起きる。バリアを修復すれば、両方が落ち着く。<br>
+        <span style="color:#5c6bc0;">※Q4-A:「エアコンの乾燥が水分蒸発をさらに加速させています」</span>
+      </div>
+      <div style="background:#fff;border:1px solid #64b5f6;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#1565c0;margin-bottom:4px;">Card 3 | 体験イメージ</div>
+        じゅわっと染み込む感覚。<br>
+        化粧水がスーッと入っていく。<br>
+        「水分が足りてなかったんだ」とわかる瞬間。
+      </div>
+      <div style="background:#fff;border:1px solid #64b5f6;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#1565c0;margin-bottom:4px;">Card 4 | 未来の肌 ＋ CTA</div>
+        もっちりした肌が、毎朝の当たり前になる。<br>
+        「ケア変えてから、べたつきも乾燥もなくなった」<br>
+        乾燥しない。べたつかない。バランスのとれた肌へ。<br>
+        <span style="display:inline-block;background:#4a90d9;color:#fff;border-radius:4px;padding:2px 10px;margin-top:4px;">あなたに合うスキンケアを見る →</span>
+      </div>
     </div>
-    <div class="card-node">
-      <strong>Card 3</strong>感触・体験イメージ
+
+    <!-- ── タイプC 列 ── -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:#e8f5e9;border:2px solid #81c784;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#2e7d32;margin-bottom:4px;">Card 1 | 方法の発表</div>
+        あなたにぴったりのスキンケア方法は…<br>
+        <strong>刺激をゼロにして肌環境を整えるアプローチです</strong><br>
+        <span style="color:#aaa;">敏感肌向き ／ 低刺激設計 ／ 荒れないサイクルへ</span>
+      </div>
+      <div style="background:#fff;border:1px solid #81c784;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#2e7d32;margin-bottom:4px;">Card 2 | 根本示唆</div>
+        繰り返すのは、肌環境が慢性的に乱れているから。<br>
+        スキンケアの成分・洗顔の摩擦・外部刺激が積み重なり、肌のバリアが弱った状態に。表面のニキビを対処しても根本が変わらないから、また出る。刺激をゼロにして整えると、ループから抜け出せる。<br>
+        <span style="color:#5c6bc0;">※Q4-C:「ストレスはホルモンバランスを乱し、皮脂分泌を増やして肌荒れを悪化させます」</span>
+      </div>
+      <div style="background:#fff;border:1px solid #81c784;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#2e7d32;margin-bottom:4px;">Card 3 | 体験イメージ</div>
+        使うたびに、肌が落ち着いていく。<br>
+        「あれ、荒れていない」<br>
+        その感覚が続く日が来る。
+      </div>
+      <div style="background:#fff;border:1px solid #81c784;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#2e7d32;margin-bottom:4px;">Card 4 | 未来の肌 ＋ CTA</div>
+        「また荒れた」から卒業できる。<br>
+        「スキンケア変えてから、肌荒れを気にしなくなった」<br>
+        荒れない日が続く肌へ。ループを止めるのは、刺激ゼロのケア。<br>
+        <span style="display:inline-block;background:#4caf7a;color:#fff;border-radius:4px;padding:2px 10px;margin-top:4px;">あなたに合うスキンケアを見る →</span>
+      </div>
     </div>
-    <div class="card-node">
-      <strong>Card 4</strong>未来の肌状態<br>＋ CTA
+
+    <!-- ── タイプD 列 ── -->
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="background:#f3e5f5;border:2px solid #ce93d8;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#6a1b9a;margin-bottom:4px;">Card 1 | 方法の発表</div>
+        あなたにぴったりのスキンケア方法は…<br>
+        <strong>有効成分でシミ・くすみに直接アプローチする方法です</strong><br>
+        <span style="color:#aaa;">VC（ビタミンC）配合 ／ くすみケア ／ 透明感アップ</span>
+      </div>
+      <div style="background:#fff;border:1px solid #ce93d8;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#6a1b9a;margin-bottom:4px;">Card 2 | 根本示唆</div>
+        「試したけど効かなかった」は、アプローチが合っていなかっただけ。<br>
+        シミは紫外線で過剰に作られたメラニンが角層に沈着したもの。くすみはターンオーバーの乱れで古い角質が残った状態。VC（ビタミンC誘導体）はメラニン抑制とターンオーバー促進、両方に効く。<br>
+        <span style="color:#5c6bc0;">※Q4-B:「紫外線を浴びるほどメラニンは増え続けます。日焼け止めとのセット運用が必須です」</span>
+      </div>
+      <div style="background:#fff;border:1px solid #ce93d8;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#6a1b9a;margin-bottom:4px;">Card 3 | 体験イメージ</div>
+        透明感が、にじみ出てくる。<br>
+        くすみが取れた肌は、光の当たり方が変わる。<br>
+        「なんか今日、肌きれいだね」そう言われる日が来る。
+      </div>
+      <div style="background:#fff;border:1px solid #ce93d8;border-radius:10px;padding:10px;font-size:11px;line-height:1.6;">
+        <div style="font-size:10px;font-weight:700;color:#6a1b9a;margin-bottom:4px;">Card 4 | 未来の肌 ＋ CTA</div>
+        明るい素肌が、当たり前になる。<br>
+        「正しい成分に変えてから、くすみが気にならなくなった」<br>
+        透明感あふれる肌へ。試行錯誤を終わりにする。<br>
+        <span style="display:inline-block;background:#ab6cc6;color:#fff;border-radius:4px;padding:2px 10px;margin-top:4px;">あなたに合うスキンケアを見る →</span>
+      </div>
     </div>
+
   </div>
 
   <!-- ── 矢印 ── -->
