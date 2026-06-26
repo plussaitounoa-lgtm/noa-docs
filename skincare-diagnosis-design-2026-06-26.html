@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>スキンケア方法診断 設計書 2026-06-26</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f5f5f7; color: #1d1d1f; font-size: 14px; line-height: 1.7; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 36px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
+  h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #444; }
+  .card { background: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #4a6a5a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:hover td { background: #fafafa; }
+  .highlight { background: #fffde7; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .note { background: #e8f5e9; border-left: 3px solid #34a853; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .warn { background: #fff8e1; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-green  { background: #e6f4ea; color: #1e8e3e; }
+  .badge-blue   { background: #e8f0fe; color: #1967d2; }
+  .badge-yellow { background: #fff8e1; color: #e37400; }
+  .badge-red    { background: #fce8e6; color: #c5221f; }
+  .badge-teal   { background: #e0f2f1; color: #00796b; }
+  .funnel { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+  .funnel-step { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; }
+  .funnel-arrow { color: #aaa; font-size: 18px; }
+  .q-block { background: #fff; border-radius: 10px; padding: 16px 20px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.06); border-left: 4px solid #4a6a5a; }
+  .q-num { font-size: 11px; font-weight: 700; color: #888; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .q-text { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .choices { display: flex; gap: 8px; flex-wrap: wrap; }
+  .choice { background: #f5f5f7; border-radius: 6px; padding: 6px 14px; font-size: 13px; }
+  .choice.key { background: #e0f2f1; color: #00796b; font-weight: 600; }
+  .mid-msg { background: #e8f5e9; border: 1px dashed #34a853; border-radius: 8px; padding: 10px 16px; font-size: 13px; margin: 8px 0; display: flex; align-items: flex-start; gap: 8px; }
+  .mid-msg-icon { font-size: 16px; margin-top: 1px; }
+  .result-card-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .result-block { background: #fff; border-radius: 10px; padding: 16px 20px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .result-type { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .result-product { font-size: 12px; color: #555; margin-bottom: 8px; }
+  .pu-box { background: #f8f9ff; border: 1px solid #c5cae9; border-radius: 8px; padding: 14px 18px; margin-bottom: 12px; }
+  .pu-label { font-size: 11px; font-weight: 700; color: #5c6bc0; margin-bottom: 6px; letter-spacing: 0.05em; }
+  .pu-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .pu-copy { font-size: 13px; color: #333; margin-bottom: 8px; }
+  .pu-btn { display: inline-block; background: #4a6a5a; color: #fff; border-radius: 6px; padding: 4px 14px; font-size: 12px; margin-right: 6px; }
+  .sim-block { background: #fff; border-radius: 10px; padding: 16px 20px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .sim-persona { font-size: 12px; color: #888; margin-bottom: 8px; }
+  .sim-flow { font-size: 13px; color: #444; margin-bottom: 4px; }
+  .check { color: #1e8e3e; font-weight: 700; }
+  .tri { color: #e37400; font-weight: 700; }
+  ul { padding-left: 18px; }
+  li { margin-bottom: 4px; }
+  p { margin-bottom: 8px; }
+  .logic-row { display: flex; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+  .logic-row:last-child { border-bottom: none; }
+  .logic-cond { color: #555; flex: 1; }
+  .logic-arrow { color: #aaa; }
+  .logic-result { font-weight: 700; color: #00796b; }
+  .card-preview { background: #f8faf9; border: 1px solid #e0e0e0; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; font-size: 13px; }
+  .card-preview-num { font-size: 11px; font-weight: 700; color: #888; margin-bottom: 4px; }
+  .card-preview-text { color: #333; white-space: pre-line; }
+  .back-link { margin-top: 48px; padding-top: 20px; border-top: 1px solid #e0e0e0; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>スキンケア方法診断 設計書</h1>
+  <div class="meta">2026-06-26 ｜ Carena（carenacosmetic.co.jp）× LINE診断 ｜ ステータス: 設計完了・デザイン依頼待ち</div>
+
+  <!-- ファネル位置づけ -->
+  <h2>ファネル上の位置づけ</h2>
+  <div class="card">
+    <div class="funnel">
+      <div class="funnel-step">Carena スキンケア記事<br><small style="color:#888;font-weight:400">23記事 / CL 4,997/月</small></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">PU設置<br><small style="color:#888;font-weight:400">「スキンケア方法診断」</small></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">LINE友達追加</div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step" style="border-color:#34a853;background:#e8f5e9;color:#1e8e3e;">LINE内 スキンケア方法診断<br><small style="font-weight:400">←ここの設計</small></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">タイプ判定 + 教育カル</div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">おすすめ基礎化粧品 → CV</div>
+    </div>
+    <div class="note">差別化軸：既存の肌質診断は「あなたは乾燥肌です」で終わる。本診断は「スキンケアのアプローチ（方法）＋商材推薦」まで提示する。これがリサーチで確認できた空白地帯。</div>
+  </div>
+
+  <!-- ものさしづくり -->
+  <h2>1. ものさしづくり</h2>
+  <div class="card">
+    <h3>今のものさし（診断前）</h3>
+    <div class="card-preview">
+      <div class="card-preview-text">「肌タイプ = 乾燥肌 / 脂性肌 / 混合肌 / 普通肌のどれかに当てはまる」
+  ↓
+「どれかわからないまま、なんとなくよさそうなものを選んでいる」
+  ↓
+「なんか変わらない。でも何が悪いかわからない」</div>
+    </div>
+    <div class="highlight">
+      リアルボイス:「自分の肌質が何なのか全くわかりません」「洗顔後は突っ張るのに昼過ぎはテカります」「約1年エステに通ったが改善しない。お金もかかるし精神的に辛い」
+    </div>
+
+    <h3>新しいものさし（診断が提供する視点の変換）</h3>
+    <div class="card-preview">
+      <div class="card-preview-text">「肌タイプの分類がわからないのは当然。
+正確には『スキンケアのアプローチのタイプ』が合っているかどうかが問題」
+  ↓
+「洗顔後30分の肌状態と悩みの組み合わせで、自分に合ったアプローチが特定できる」
+  ↓
+「パーソナルカラーや骨格診断のように、肌にも正解がある。今日からそのアプローチに切り替えればいい」</div>
+    </div>
+
+    <h3>ハンマー</h3>
+    <p>この4問診断 + タイプ別結果カード。「洗顔後30分の自分の肌」という具体的な事実を入口にし、タイプ判明後に「だから○○を使えばいい」まで言い切ることでスキンケアジプシーを終わらせる。</p>
+  </div>
+
+  <!-- 4商材の核心機能 -->
+  <h2>2. 4商材 × 核心訴求</h2>
+  <div class="result-card-wrap">
+    <div class="result-block" style="border-top: 3px solid #f4a460;">
+      <div class="result-type">皮脂コントロール型</div>
+      <div class="result-product">オルビス クリアフル ¥6,500</div>
+      <div style="font-size:12px;color:#888;margin-bottom:8px;">Q3-C（全体テカ）× Q4-A（毛穴・皮脂）</div>
+      <div style="font-size:13px;"><strong>核心訴求:</strong> 洗っても崩れる → 皮脂の根本をコントロールする設計に変える<br>
+      <strong>感覚語:</strong> さらっと / 毛穴レス / テカらない<br>
+      <strong>感情ゴール:</strong> 「なんで洗ってもすぐテカるんだろう」→「アプローチが間違ってた」</div>
+    </div>
+    <div class="result-block" style="border-top: 3px solid #64b5f6;">
+      <div class="result-type">保湿バリア修復型</div>
+      <div class="result-product">ビーグレン ¥3,000</div>
+      <div style="font-size:12px;color:#888;margin-bottom:8px;">Q3-B（混合肌）× Q4-B（インナードライ）</div>
+      <div style="font-size:13px;"><strong>核心訴求:</strong> 乾燥もテカりも同時に起きる矛盾 → 水分不足が原因。バリアを修復すれば両方落ち着く<br>
+      <strong>感覚語:</strong> じゅわっと染み込む / もっちり / 乾燥しない<br>
+      <strong>感情ゴール:</strong> 「乾燥してるのにべたつく謎」→「水分が足りてなかっただけ」</div>
+    </div>
+    <div class="result-block" style="border-top: 3px solid #81c784;">
+      <div class="result-type">低刺激・肌環境改善型</div>
+      <div class="result-product">ファンケル アクネケア ¥7,692</div>
+      <div style="font-size:12px;color:#888;margin-bottom:8px;">Q3-A or B × Q4-C（ニキビ・肌荒れ）</div>
+      <div style="font-size:13px;"><strong>核心訴求:</strong> また出た → 刺激が積み重なって肌環境が乱れている。刺激ゼロで肌環境ごと整える<br>
+      <strong>感覚語:</strong> 整っていく感 / 肌が落ち着く / 荒れない日が続く<br>
+      <strong>感情ゴール:</strong> 「また繰り返した」絶望 → 「ループから抜け出せる」</div>
+    </div>
+    <div class="result-block" style="border-top: 3px solid #ce93d8;">
+      <div class="result-type">美白・エイジングケア型</div>
+      <div class="result-product">VCスターターセット ¥5,000</div>
+      <div style="font-size:12px;color:#888;margin-bottom:8px;">Q3-A or D × Q4-D（シミ・くすみ）</div>
+      <div style="font-size:13px;"><strong>核心訴求:</strong> 試したが効果なし → 正しいアプローチで攻めていなかっただけ。VC（ビタミンC誘導体）で正しく戦う<br>
+      <strong>感覚語:</strong> くすみが取れる感 / 透明感 / 明るくなっていく<br>
+      <strong>感情ゴール:</strong> 「どうせ効かない」疲弊 → 「正しいアプローチを手に入れた」</div>
+    </div>
+  </div>
+
+  <!-- 診断フロー -->
+  <h2>3. 診断フロー（全4問）</h2>
+
+  <div class="card" style="margin-bottom:14px;">
+    <div class="q-num">WELCOME</div>
+    <div class="q-text">あなたにぴったりのスキンケア方法診断</div>
+    <div style="font-size:13px;color:#555;">「何を使っても変わらない」のは、スキンケアのアプローチが合っていないから。4問でわかる無料診断。匿名・無料</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">Q1</div>
+    <div class="q-text">あなたの年代を教えてください</div>
+    <div class="choices">
+      <div class="choice">A: 10〜20代</div>
+      <div class="choice">B: 30代</div>
+      <div class="choice">C: 40代以上</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">※ 補助軸。年代により美白・エイジング訴求の強度を調整</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">Q2</div>
+    <div class="q-text">今のスキンケアの手応えは？</div>
+    <div class="choices">
+      <div class="choice key">A: 何を使っても変わらない</div>
+      <div class="choice">B: 少し改善してきている</div>
+      <div class="choice key">C: 何が正解かわからない</div>
+    </div>
+    <div class="mid-msg" style="margin-top:10px;">
+      <div class="mid-msg-icon">💡</div>
+      <div><strong>A or C を選んだ場合 → 途中メッセージを挿入してからQ3へ</strong><br>
+      「実は肌タイプに合っていないスキンケアを続けている可能性があります。次の質問で確認してみましょう💡」</div>
+    </div>
+    <div style="font-size:12px;color:#888;">B（改善中）はそのままQ3へスルー</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">Q3 — 振り分け主軸①</div>
+    <div class="q-text">洗顔後、何もつけずに30分放置したら？</div>
+    <div class="choices">
+      <div class="choice">A: 全体がつっぱる感じがする</div>
+      <div class="choice">B: Tゾーン（額・鼻）はテカり、頬はつっぱる</div>
+      <div class="choice">C: 全体的にテカる</div>
+      <div class="choice">D: 変化なし、またはよくわからない</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">「洗顔後30分」という具体状況設定で自分ごと化しやすい。4タイプ振り分けの主軸</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">Q4 — 振り分け主軸②</div>
+    <div class="q-text">今、一番気になる肌の悩みは？</div>
+    <div class="choices">
+      <div class="choice">A: 毛穴・皮脂のテカり</div>
+      <div class="choice">B: 乾燥しているのにべたつく</div>
+      <div class="choice">C: 繰り返すニキビ・肌荒れ</div>
+      <div class="choice">D: シミ・くすみ</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">Q3+Q4の組み合わせで4タイプに振り分け。Q4の悩みが切実度のより高い軸として優先</div>
+  </div>
+
+  <!-- 振り分けロジック -->
+  <h2>4. 振り分けロジック（Q3 × Q4）</h2>
+  <div class="card">
+    <div class="logic-row">
+      <div class="logic-cond">Q3-C（全体テカ）× Q4-A（毛穴・皮脂）</div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-result">皮脂コントロール型 / オルビス クリアフル</div>
+    </div>
+    <div class="logic-row">
+      <div class="logic-cond">Q3-B（混合肌）× Q4-B（インナードライ）</div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-result">保湿バリア修復型 / ビーグレン</div>
+    </div>
+    <div class="logic-row">
+      <div class="logic-cond">Q3-A or B × Q4-C（ニキビ・肌荒れ）</div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-result">低刺激・肌環境改善型 / ファンケル アクネケア</div>
+    </div>
+    <div class="logic-row">
+      <div class="logic-cond">Q3-A or D × Q4-D（シミ・くすみ）</div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-result">美白・エイジングケア型 / VCスターターセット</div>
+    </div>
+    <div class="highlight" style="margin-top:12px;">Q3とQ4の組み合わせが競合する場合（例：Q3-C × Q4-D）はQ4悩み軸を優先。切実度が高い方を採る。</div>
+  </div>
+
+  <!-- 結果カード設計 -->
+  <h2>5. 結果カード設計（4タイプ × 4枚構成）</h2>
+  <div class="note">構成: Card1（タイプ発表＋期待感）→ Card2（新しいものさし）→ Card3（感触・体験イメージ）→ Card4（未来の肌状態＋CTA）</div>
+
+  <h3 style="margin-top:20px;">タイプA：皮脂コントロール型</h3>
+  <div class="grid2">
+    <div class="card-preview"><div class="card-preview-num">Card 1 | タイプ発表</div><div class="card-preview-text">あなたのスキンケアタイプは…
+
+【皮脂コントロール型】
+
+皮脂の根本から整える
+
+バッジ: 毛穴レス設計 ／ テカりを出さない ／ さらっと仕上がり</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 2 | 新しいものさし</div><div class="card-preview-text">テカるのは、洗い方の問題じゃない。
+
+皮脂は洗いすぎると逆に増える。
+肌を乾燥させないよう皮脂が分泌されるから。
+
+皮脂コントロール型のケアは、
+洗浄力ではなく「皮脂分泌を整える成分」で戦う。</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 3 | 体験イメージ</div><div class="card-preview-text">朝、鏡を見てもさらっとしてる。
+
+つるんとなめらかで、テカっていない。
+
+これが、皮脂コントロール型の仕上がり。</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 4 | 未来の肌 ＋ CTA</div><div class="card-preview-text">テカらない日が、当たり前になる。
+
+「スキンケア変えたら、昼まで崩れなくなった」
+
+毛穴が目立たず、さらさらした肌の毎日へ。
+
+[ボタン] あなたに合うスキンケアを見る →</div></div>
+  </div>
+
+  <h3>タイプB：保湿バリア修復型</h3>
+  <div class="grid2">
+    <div class="card-preview"><div class="card-preview-num">Card 1 | タイプ発表</div><div class="card-preview-text">あなたのスキンケアタイプは…
+
+【保湿バリア修復型】
+
+水分不足から整える
+
+バッジ: インナードライ向き ／ もっちり仕上がり ／ じゅわっと染み込む</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 2 | 新しいものさし</div><div class="card-preview-text">乾燥してるのにべたつく。
+それ、水分不足のサインです。
+
+肌の表面は皮脂でべたつくのに、
+内側は水分が足りていない状態。
+
+水分が入れば、皮脂は自然と落ち着く。
+「べたつき」も「乾燥」も、同時に解決できる。</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 3 | 体験イメージ</div><div class="card-preview-text">じゅわっと染み込む感覚。
+
+化粧水がスーッと入っていく。
+
+「水分が足りてなかったんだ」
+とわかる瞬間。</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 4 | 未来の肌 ＋ CTA</div><div class="card-preview-text">もっちりした肌が、毎朝の当たり前になる。
+
+「ケア変えてから、べたつきも乾燥もなくなった」
+
+乾燥しない。べたつかない。
+バランスのとれた肌へ。
+
+[ボタン] あなたに合うスキンケアを見る →</div></div>
+  </div>
+
+  <h3>タイプC：低刺激・肌環境改善型</h3>
+  <div class="grid2">
+    <div class="card-preview"><div class="card-preview-num">Card 1 | タイプ発表</div><div class="card-preview-text">あなたのスキンケアタイプは…
+
+【低刺激・肌環境改善型】
+
+刺激ゼロで、肌環境から整える
+
+バッジ: 敏感肌向き ／ 低刺激設計 ／ 荒れないサイクルへ</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 2 | 新しいものさし</div><div class="card-preview-text">繰り返すのは、肌環境が乱れているから。
+
+ニキビが治っても、また出る。
+それは表面の対処が足りないのではなく、
+肌のバリアが弱っているから。
+
+刺激をゼロにして肌環境ごと整えると、
+ループから抜け出せる。</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 3 | 体験イメージ</div><div class="card-preview-text">使うたびに、肌が落ち着いていく。
+
+「あれ、荒れていない」
+
+その感覚が続く日が来る。
+低刺激ケアは、肌が整っていく感覚を作る。</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 4 | 未来の肌 ＋ CTA</div><div class="card-preview-text">「また荒れた」から卒業できる。
+
+「スキンケア変えてから、肌荒れを気にしなくなった」
+
+荒れない日が続く肌へ。
+ループを止めるのは、刺激ゼロのケア。
+
+[ボタン] あなたに合うスキンケアを見る →</div></div>
+  </div>
+
+  <h3>タイプD：美白・エイジングケア型</h3>
+  <div class="grid2">
+    <div class="card-preview"><div class="card-preview-num">Card 1 | タイプ発表</div><div class="card-preview-text">あなたのスキンケアタイプは…
+
+【美白・エイジングケア型】
+
+シミ・くすみに正しく効くアプローチへ
+
+バッジ: VC（ビタミンC）配合 ／ くすみケア ／ 透明感アップ</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 2 | 新しいものさし</div><div class="card-preview-text">「試したけど効かなかった」は、
+アプローチが合っていなかっただけ。
+
+シミ・くすみには効く成分がある。
+VC（ビタミンC誘導体）は、
+肌の中でメラニンの生成を抑え、くすみを明るくする。
+
+「正しい成分で正しく戦う」に切り替えるだけでいい。</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 3 | 体験イメージ</div><div class="card-preview-text">透明感が、にじみ出てくる。
+
+くすみが取れた肌は、
+光の当たり方が変わる。
+
+「なんか今日、肌きれいだね」
+そう言われる日が来る。</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 4 | 未来の肌 ＋ CTA</div><div class="card-preview-text">明るい素肌が、当たり前になる。
+
+「正しい成分に変えてから、
+くすみが気にならなくなった」
+
+透明感あふれる肌へ。
+試行錯誤を終わりにする。
+
+[ボタン] あなたに合うスキンケアを見る →</div></div>
+  </div>
+
+  <!-- PU文言 -->
+  <h2>6. PU文言</h2>
+
+  <div class="card" style="margin-bottom:8px;">
+    <div style="font-size:12px;font-weight:700;color:#888;margin-bottom:8px;">ブリッジテスト</div>
+    <table>
+      <tr><th>①診断体験</th><td>4問答えると洗顔後の肌状態×悩みでアプローチタイプが判定され、タイプ別商材まで提示される</td></tr>
+      <tr><th>②検索者の気持ち</th><td>「何を使えばいいかわからない。何試しても変わらなくて疲れた。パーソナルカラーみたいにちゃんと診断してほしい」</td></tr>
+      <tr><th>③翻訳</th><td>「あなたの肌、ちゃんと合うスキンケアで試してる？4問で自分のタイプがわかる」→ ①と③が同じ体験を指している ✅</td></tr>
+    </table>
+  </div>
+
+  <div class="pu-box">
+    <div class="pu-label">案A — ギャップ埋め型（主推薦）</div>
+    <div class="pu-title">あなたにぴったりのスキンケア方法診断</div>
+    <div class="pu-copy">何を使っても変わらないのは、アプローチが合っていないから。<br>/カンタン4問診断</div>
+    <span class="pu-btn">はい、気になる</span><span style="font-size:12px;color:#888;">/ いいえ</span>
+  </div>
+  <div class="pu-box">
+    <div class="pu-label">案B — 問いかけ型</div>
+    <div class="pu-title">あなたにぴったりのスキンケア方法診断</div>
+    <div class="pu-copy">その肌悩み、スキンケアの「方法」から見直してみませんか？<br>/カンタン4問診断</div>
+    <span class="pu-btn">やってみる</span><span style="font-size:12px;color:#888;">/ いいえ</span>
+  </div>
+  <div class="pu-box">
+    <div class="pu-label">案C — 能動意欲型（CTR特化）</div>
+    <div class="pu-title">あなたにぴったりのスキンケア方法診断</div>
+    <div class="pu-copy">私に合うスキンケアの方法を知りたい！<br>/カンタン4問診断</div>
+    <span class="pu-btn">知りたい！</span><span style="font-size:12px;color:#888;">/ いいえ</span>
+  </div>
+
+  <h3>記事別PU文言使い分け</h3>
+  <div class="card">
+    <table>
+      <tr><th>記事KW</th><th>読者の状態</th><th>推奨案</th></tr>
+      <tr><td>スキンケア 順番 / 方法</td><td>基礎知識を調べている</td><td>案A</td></tr>
+      <tr><td>肌質 種類 / 肌タイプ 調べ方</td><td>自分の肌タイプを特定したい</td><td>案B</td></tr>
+      <tr><td>スキンケア 変わらない / 効果ない</td><td>試行錯誤で疲れている</td><td>案A</td></tr>
+      <tr><td>ニキビ スキンケア / ニキビ 繰り返す</td><td>ニキビループに悩む</td><td>案A（強調）</td></tr>
+      <tr><td>シミ スキンケア / くすみ 改善</td><td>シミ・くすみを何とかしたい（切実）</td><td>案A特化版 or 案C</td></tr>
+      <tr><td>インナードライ / 混合肌</td><td>矛盾する肌状態に混乱している</td><td>案B</td></tr>
+    </table>
+    <div class="warn" style="margin-top:12px;">シミ・くすみ系記事（40代疲弊層）への案Aは「またか」感が出るリスクあり。特化版コピー「そのシミケア、正しい成分で戦えていますか？」の使用を推奨。</div>
+  </div>
+
+  <!-- 通しシミュレーション -->
+  <h2>7. 通しシミュレーション</h2>
+
+  <div class="sim-block">
+    <div class="sim-persona">ペルソナ①：32歳女性 / 半年で3ブランド試したが改善なし / 「スキンケア 変わらない 原因」検索</div>
+    <div class="sim-flow">案A PU → <span class="badge badge-green">◎</span> 「これ私のことじゃん」→ Q1(30代)→ Q2(A:変わらない)→ 途中メッセージ「やっぱり！」感情温度が上がる → Q3(B混合)→ Q4(B:インナードライ)→ 結果：保湿バリア修復型 → Card2「乾燥してるのにべたつくのは水分不足」で「謎が解けた」感</div>
+    <div><span class="badge badge-green">問題なし。最もスムーズな体験。</span></div>
+  </div>
+
+  <div class="sim-block">
+    <div class="sim-persona">ペルソナ②：42歳女性 / 「40代に入ってからシミが急増。いろいろ試したが全く効果なし」/ 疲弊感強め</div>
+    <div class="sim-flow">案A PU → <span class="badge badge-yellow">△</span> 半信半疑でタップ → Q2(A)→ 途中メッセージ「また同じこと言われた」感じる可能性あり → 結果：美白エイジングケア型 → Card2「アプローチが合っていなかっただけ」＋VC成分説明で信頼感◎ → Card4「試行錯誤を終わりにする」刺さる</div>
+    <div><span class="badge badge-yellow">PU文言はシミ特化版を使用推奨。結果カードはこのペルソナに強く刺さる。</span></div>
+  </div>
+
+  <div class="sim-block">
+    <div class="sim-persona">ペルソナ③：18歳女性 / 脂性肌・昼間ずっとテカる / 「脂性肌 スキンケア」検索</div>
+    <div class="sim-flow">案C PU → <span class="badge badge-green">◎</span> 「知りたい！」ボタンが刺さる → Q3(C:全体テカ)→ Q4(A:毛穴・皮脂)→ 結果：皮脂コントロール型 → Card2「洗いすぎると皮脂が逆に増える」で「やっぱり！」共感</div>
+    <div><span class="badge badge-blue">10代・脂性肌記事には案Cのテストを推奨。</span></div>
+  </div>
+
+  <!-- 期待効果 -->
+  <h2>8. 期待効果</h2>
+  <div class="card">
+    <table>
+      <tr><th>指標</th><th>値</th><th>備考</th></tr>
+      <tr><td>対象記事</td><td>23記事</td><td>スキンケア系ノウハウ記事</td></tr>
+      <tr><td>月間CL</td><td>4,997/月</td><td>Carena実績値</td></tr>
+      <tr><td>PV換算</td><td>約6,000/月</td><td>CL×1.2倍仮定</td></tr>
+      <tr><td>目標PVFR</td><td>0.70%</td><td>初回・保守的設定</td></tr>
+      <tr><td><strong>友達追加数（目標）</strong></td><td><strong>+42人/月</strong></td><td>6,000 × 0.70%</td></tr>
+      <tr><td>上振れシナリオ</td><td>+60人/月</td><td>PVFR 1.0%時</td></tr>
+    </table>
+    <div class="note" style="margin-top:12px;">スキンケア系は「肌タイプがわからない」という強い普遍ペインがあるため、クレンジング診断（目標PVFR 0.70%）と同等以上のパフォーマンスが期待できる。</div>
+  </div>
+
+  <!-- 残タスク -->
+  <h2>残タスク</h2>
+  <div class="card">
+    <ul>
+      <li>[ ] 商材のアフィリリンク・報酬確認（ビーグレン / オルビス クリアフル / ファンケル アクネケア / VCスターターセット）</li>
+      <li>[ ] デザイン依頼書作成（Notion）</li>
+      <li>[ ] PU案A/C ABテスト設計（記事タイプ別の使い分け方針確定）</li>
+      <li>[ ] シミ・くすみ系記事用PU文言特化版（「そのシミケア、正しい成分で戦えていますか？」）</li>
+      <li>[ ] 診断実装（LINE構築）</li>
+      <li>[ ] 設置記事URL確定・設置優先順位決め（CL上位から）</li>
+      <li>[ ] 教育カル → PRカル → CVのデザイン依頼書（クレンジング設計書と同フォーマット）</li>
+    </ul>
+  </div>
+
+  <div class="back-link"><a href="index.html">← トップへ</a></div>
+
+</div>
+</body>
+</html>
