@@ -1,0 +1,461 @@
+<title>結果カード図 | スキンケア方法診断</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; background: #f0f4f8; color: #333; }
+
+  /* ── ヘッダー ── */
+  .page-header {
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 16px 24px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .page-header h1 { font-size: 15px; font-weight: 700; color: #333; }
+  .page-header p { font-size: 11px; color: #888; margin-top: 2px; }
+
+  /* ── タイプタブ ── */
+  .type-tabs {
+    display: flex; gap: 8px;
+    padding: 16px 24px 0;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    font-size: 13px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    background: #fff;
+    transition: all 0.2s;
+  }
+  .tab-btn.tab-a { border-color: #f4a460; color: #e07040; }
+  .tab-btn.tab-a.active { background: #e07040; color: #fff; }
+  .tab-btn.tab-b { border-color: #64b5f6; color: #1565c0; }
+  .tab-btn.tab-b.active { background: #4a90d9; color: #fff; }
+  .tab-btn.tab-c { border-color: #81c784; color: #2e7d32; }
+  .tab-btn.tab-c.active { background: #4caf7a; color: #fff; }
+  .tab-btn.tab-d { border-color: #ce93d8; color: #6a1b9a; }
+  .tab-btn.tab-d.active { background: #ab6cc6; color: #fff; }
+
+  /* ── カード列 ── */
+  .cards-section { display: none; padding: 20px 24px 40px; }
+  .cards-section.active { display: block; }
+
+  .cards-row {
+    display: grid;
+    grid-template-columns: repeat(4, 280px);
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  /* ── 1枚のカード（LINEカルーセルイメージ） ── */
+  .line-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+  }
+
+  /* カードヘッダー（カラー帯） */
+  .card-header {
+    padding: 18px 16px 14px;
+    color: #fff;
+    position: relative;
+  }
+  .card-num {
+    font-size: 10px;
+    font-weight: 700;
+    opacity: 0.85;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.4;
+  }
+  .card-tags {
+    margin-top: 8px;
+    font-size: 10px;
+    opacity: 0.80;
+    line-height: 1.8;
+  }
+
+  /* カード本文 */
+  .card-body {
+    padding: 14px 16px;
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: #444;
+    flex: 1;
+  }
+  .card-lead {
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .card-env {
+    margin-top: 10px;
+    padding: 8px 10px;
+    background: #f0f4ff;
+    border-left: 3px solid #7986cb;
+    border-radius: 0 6px 6px 0;
+    font-size: 11px;
+    color: #3d4f9f;
+    line-height: 1.6;
+  }
+  .card-quote {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #fafafa;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #666;
+    font-style: italic;
+    border: 1px solid #eee;
+  }
+  .card-quote::before { content: '"'; }
+  .card-quote::after  { content: '"'; }
+
+  /* CTAボタン */
+  .card-cta {
+    display: block;
+    text-align: center;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 0 0 16px 16px;
+    cursor: default;
+    letter-spacing: 0.5px;
+  }
+
+  /* タイプ別カラー */
+  .type-a .card-header { background: linear-gradient(135deg, #f4a460, #e07040); }
+  .type-a .card-cta    { background: #e07040; }
+
+  .type-b .card-header { background: linear-gradient(135deg, #64b5f6, #4a90d9); }
+  .type-b .card-cta    { background: #4a90d9; }
+
+  .type-c .card-header { background: linear-gradient(135deg, #81c784, #4caf7a); }
+  .type-c .card-cta    { background: #4caf7a; }
+
+  .type-d .card-header { background: linear-gradient(135deg, #ce93d8, #ab6cc6); }
+  .type-d .card-cta    { background: #ab6cc6; }
+
+  /* ── セクションラベル ── */
+  .type-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #666;
+    margin-bottom: 12px;
+  }
+  .type-label span {
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #fff;
+    margin-right: 8px;
+  }
+  .type-a-label span { background: #e07040; }
+  .type-b-label span { background: #4a90d9; }
+  .type-c-label span { background: #4caf7a; }
+  .type-d-label span { background: #ab6cc6; }
+
+  .back-link {
+    display: inline-block;
+    margin: 20px 24px 0;
+    font-size: 12px;
+    color: #888;
+    text-decoration: none;
+  }
+  .back-link:hover { color: #555; }
+
+  @media (max-width: 700px) {
+    .cards-row { grid-template-columns: repeat(4, 240px); }
+  }
+</style>
+
+<div class="page-header">
+  <h1>スキンケア方法診断 — 結果カード図</h1>
+  <p>4タイプ × Card 1〜4 のテキスト確認用。タブでタイプを切り替え。</p>
+</div>
+
+<div class="type-tabs">
+  <button class="tab-btn tab-a active" onclick="switchTab('a')">タイプA｜皮脂コントロール</button>
+  <button class="tab-btn tab-b" onclick="switchTab('b')">タイプB｜保湿バリア修復</button>
+  <button class="tab-btn tab-c" onclick="switchTab('c')">タイプC｜低刺激・肌環境改善</button>
+  <button class="tab-btn tab-d" onclick="switchTab('d')">タイプD｜美白・エイジングケア</button>
+</div>
+
+<!-- ══ タイプA ══ -->
+<div class="cards-section active" id="section-a">
+  <div class="type-label type-a-label" style="padding-top:12px;">
+    <span>タイプA</span>皮脂コントロール型 ／ 商材：オルビス クリアフル ¥6,500
+  </div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <div class="line-card type-a">
+      <div class="card-header">
+        <div class="card-num">Card 1 — 方法の発表</div>
+        <div class="card-title">あなたにぴったりのスキンケア方法は…<br>皮脂の分泌を<br>コントロールする<br>アプローチです</div>
+        <div class="card-tags">毛穴レス設計 ／ テカりを出さない ／ さらっと仕上がり</div>
+      </div>
+      <div class="card-body">
+        <div class="card-lead">洗っても洗ってもテカる、その悩みに正面から向き合う方法です。</div>
+        皮脂そのものの分泌量をコントロールし、毛穴が目立たないさらっとした肌をつくります。
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="line-card type-a">
+      <div class="card-header">
+        <div class="card-num">Card 2 — 根本示唆</div>
+        <div class="card-title">テカるのは、<br>洗い方の<br>問題じゃない。</div>
+      </div>
+      <div class="card-body">
+        皮脂が出すぎるのは、肌が「乾燥から守ろうとしているサイン」。洗浄力で取り除くほど、肌は防御のためにさらに皮脂を出す。<br><br>
+        このサイクルを断つには、皮脂分泌を根本から整える成分が必要。
+        <div class="card-env">Q4：エアコンの乾燥が皮脂分泌をさらに促しています。保湿で乾燥を防ぐことが先決です。</div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="line-card type-a">
+      <div class="card-header">
+        <div class="card-num">Card 3 — 体験イメージ</div>
+        <div class="card-title">朝、鏡を見ても<br>さらっとしてる。</div>
+      </div>
+      <div class="card-body">
+        つるんとなめらかで、テカっていない。<br><br>
+        メイクを直さなくてもいい午後。「今日なんか肌調子いいな」がデフォルトになる。<br><br>
+        これが、皮脂コントロールの仕上がり。
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="line-card type-a">
+      <div class="card-header">
+        <div class="card-num">Card 4 — 未来の肌 ＋ CTA</div>
+        <div class="card-title">テカらない日が、<br>当たり前になる。</div>
+      </div>
+      <div class="card-body">
+        <div class="card-quote">スキンケア変えたら、昼まで崩れなくなった</div>
+        毛穴が目立たず、さらさらした肌の毎日へ。<br><br>
+        皮脂コントロール型のあなたには、<strong>オルビス クリアフル</strong>が合っています。
+      </div>
+      <div class="card-cta">あなたに合うスキンケアを見る →</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ タイプB ══ -->
+<div class="cards-section" id="section-b">
+  <div class="type-label type-b-label" style="padding-top:12px;">
+    <span>タイプB</span>保湿バリア修復型 ／ 商材：ビーグレン ¥3,000
+  </div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <div class="line-card type-b">
+      <div class="card-header">
+        <div class="card-num">Card 1 — 方法の発表</div>
+        <div class="card-title">あなたにぴったりのスキンケア方法は…<br>バリアに水分を<br>届けるアプローチです</div>
+        <div class="card-tags">インナードライ向き ／ もっちり仕上がり ／ じゅわっと染み込む</div>
+      </div>
+      <div class="card-body">
+        <div class="card-lead">乾燥してるのにべたつく、その矛盾に答える方法です。</div>
+        肌バリアを修復しながら水分を補給し、乾燥もテカりも両方落ち着かせます。
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="line-card type-b">
+      <div class="card-header">
+        <div class="card-num">Card 2 — 根本示唆</div>
+        <div class="card-title">乾燥してるのに<br>べたつく。それ、<br>インナードライの<br>サインです。</div>
+      </div>
+      <div class="card-body">
+        肌のバリア機能が低下すると、補った水分がすぐ蒸発してしまう。肌は守ろうと皮脂を増やすから、乾燥もテカりも同時に起きる。<br><br>
+        バリアを修復すれば、両方が落ち着く。
+        <div class="card-env">Q4：エアコンの乾燥が水分蒸発をさらに加速させています。バリアケアは今すぐ始めるべきです。</div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="line-card type-b">
+      <div class="card-header">
+        <div class="card-num">Card 3 — 体験イメージ</div>
+        <div class="card-title">じゅわっと<br>染み込む感覚。</div>
+      </div>
+      <div class="card-body">
+        化粧水がスーッと入っていく。<br><br>
+        「水分が足りてなかったんだ」とわかる瞬間。<br><br>
+        乾燥もべたつきも同時になくなっていく感覚。
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="line-card type-b">
+      <div class="card-header">
+        <div class="card-num">Card 4 — 未来の肌 ＋ CTA</div>
+        <div class="card-title">もっちりした肌が、<br>毎朝の当たり前になる。</div>
+      </div>
+      <div class="card-body">
+        <div class="card-quote">ケア変えてから、べたつきも乾燥もなくなった</div>
+        乾燥しない。べたつかない。バランスのとれた肌へ。<br><br>
+        保湿バリア修復型のあなたには、<strong>ビーグレン</strong>が合っています。
+      </div>
+      <div class="card-cta">あなたに合うスキンケアを見る →</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ タイプC ══ -->
+<div class="cards-section" id="section-c">
+  <div class="type-label type-c-label" style="padding-top:12px;">
+    <span>タイプC</span>低刺激・肌環境改善型 ／ 商材：ファンケル アクネケア ¥7,692
+  </div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <div class="line-card type-c">
+      <div class="card-header">
+        <div class="card-num">Card 1 — 方法の発表</div>
+        <div class="card-title">あなたにぴったりのスキンケア方法は…<br>刺激をゼロにして<br>肌環境を整える<br>アプローチです</div>
+        <div class="card-tags">敏感肌向き ／ 低刺激設計 ／ 荒れないサイクルへ</div>
+      </div>
+      <div class="card-body">
+        <div class="card-lead">繰り返す肌荒れを止める方法は、対処ではなく環境を変えることです。</div>
+        刺激をゼロにして肌バリアを修復し、荒れにくい肌のベースをつくります。
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="line-card type-c">
+      <div class="card-header">
+        <div class="card-num">Card 2 — 根本示唆</div>
+        <div class="card-title">繰り返すのは、<br>肌環境が慢性的に<br>乱れているから。</div>
+      </div>
+      <div class="card-body">
+        スキンケアの成分・洗顔の摩擦・外部刺激が積み重なり、肌のバリアが弱った状態に。表面のニキビを対処しても根本が変わらないから、また出る。<br><br>
+        刺激をゼロにして整えると、ループから抜け出せる。
+        <div class="card-env">Q4：ストレスはホルモンバランスを乱し、皮脂分泌を増やして肌荒れを悪化させます。内側からのケアも検討を。</div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="line-card type-c">
+      <div class="card-header">
+        <div class="card-num">Card 3 — 体験イメージ</div>
+        <div class="card-title">使うたびに、<br>肌が落ち着いていく。</div>
+      </div>
+      <div class="card-body">
+        「あれ、荒れていない」<br><br>
+        今まではケアするたびに悪化していた気がしていた。でも今は、使うたびに肌が安定していく。<br><br>
+        その感覚が続く日が来る。
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="line-card type-c">
+      <div class="card-header">
+        <div class="card-num">Card 4 — 未来の肌 ＋ CTA</div>
+        <div class="card-title">「また荒れた」から<br>卒業できる。</div>
+      </div>
+      <div class="card-body">
+        <div class="card-quote">スキンケア変えてから、肌荒れを気にしなくなった</div>
+        荒れない日が続く肌へ。ループを止めるのは、刺激ゼロのケア。<br><br>
+        低刺激・肌環境改善型のあなたには、<strong>ファンケル アクネケア</strong>が合っています。
+      </div>
+      <div class="card-cta">あなたに合うスキンケアを見る →</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ タイプD ══ -->
+<div class="cards-section" id="section-d">
+  <div class="type-label type-d-label" style="padding-top:12px;">
+    <span>タイプD</span>美白・エイジングケア型 ／ 商材：VCスターターセット ¥5,000
+  </div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <div class="line-card type-d">
+      <div class="card-header">
+        <div class="card-num">Card 1 — 方法の発表</div>
+        <div class="card-title">あなたにぴったりのスキンケア方法は…<br>有効成分でシミ・くすみに<br>直接アプローチ<br>する方法です</div>
+        <div class="card-tags">VC（ビタミンC）配合 ／ くすみケア ／ 透明感アップ</div>
+      </div>
+      <div class="card-body">
+        <div class="card-lead">「なんとなくくすんでる」「シミが増えてきた」に正解を出す方法です。</div>
+        メラニン抑制とターンオーバー促進、両方に働くVC成分で透明感をつくります。
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="line-card type-d">
+      <div class="card-header">
+        <div class="card-num">Card 2 — 根本示唆</div>
+        <div class="card-title">「試したけど<br>効かなかった」は、<br>アプローチが<br>合っていなかっただけ。</div>
+      </div>
+      <div class="card-body">
+        シミは紫外線で過剰に作られたメラニンが角層に沈着したもの。くすみはターンオーバーの乱れで古い角質が残った状態。<br><br>
+        VC（ビタミンC誘導体）はメラニン抑制とターンオーバー促進、両方に効く。
+        <div class="card-env">Q4：紫外線を浴びるほどメラニンは増え続けます。日焼け止めとのセット運用が必須です。</div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="line-card type-d">
+      <div class="card-header">
+        <div class="card-num">Card 3 — 体験イメージ</div>
+        <div class="card-title">透明感が、<br>にじみ出てくる。</div>
+      </div>
+      <div class="card-body">
+        くすみが取れた肌は、光の当たり方が変わる。<br><br>
+        スッピンでも「なんか今日きれいだね」と言われる日。<br><br>
+        「なんか今日、肌きれいだね」そう言われる日が来る。
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="line-card type-d">
+      <div class="card-header">
+        <div class="card-num">Card 4 — 未来の肌 ＋ CTA</div>
+        <div class="card-title">明るい素肌が、<br>当たり前になる。</div>
+      </div>
+      <div class="card-body">
+        <div class="card-quote">正しい成分に変えてから、くすみが気にならなくなった</div>
+        透明感あふれる肌へ。試行錯誤を終わりにする。<br><br>
+        美白・エイジングケア型のあなたには、<strong>VCスターターセット</strong>が合っています。
+      </div>
+      <div class="card-cta">あなたに合うスキンケアを見る →</div>
+    </div>
+
+  </div>
+</div>
+
+<a class="back-link" href="index.html">← トップへ</a>
+
+<script>
+function switchTab(type) {
+  // セクション切り替え
+  document.querySelectorAll('.cards-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-' + type).classList.add('active');
+  // タブ切り替え
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.tab-' + type).classList.add('active');
+}
+</script>
