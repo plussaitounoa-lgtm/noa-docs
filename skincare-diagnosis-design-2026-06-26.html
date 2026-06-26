@@ -164,7 +164,7 @@
   <div class="card" style="margin-bottom:14px;">
     <div class="q-num">WELCOME</div>
     <div class="q-text">あなたにぴったりのスキンケア方法診断</div>
-    <div style="font-size:13px;color:#555;">「何を使っても変わらない」のは、スキンケアのアプローチが合っていないから。4問でわかる無料診断。匿名・無料</div>
+    <div style="font-size:13px;color:#555;">「何を使っても変わらない」のは、スキンケアのアプローチが合っていないから。5問でわかる無料診断。匿名・無料</div>
   </div>
 
   <div class="q-block">
@@ -218,6 +218,18 @@
     <div style="font-size:12px;color:#888;margin-top:8px;">Q3+Q4の組み合わせで4タイプに振り分け。Q4の悩みが切実度のより高い軸として優先</div>
   </div>
 
+  <div class="q-block">
+    <div class="q-num">Q5 — 環境補助軸</div>
+    <div class="q-text">普段の生活で、肌に影響していそうなものは？</div>
+    <div class="choices">
+      <div class="choice">A: エアコン・空気の乾燥</div>
+      <div class="choice">B: 紫外線・大気汚染</div>
+      <div class="choice">C: ストレス・睡眠不足</div>
+      <div class="choice">D: 特に思い当たらない</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">振り分け軸ではなく、結果Card2のパーソナライズに使用。「エアコン環境にいるため水分が蒸発しやすい」など外部要因を結果に反映し説得力を上げる</div>
+  </div>
+
   <!-- 振り分けロジック -->
   <h2>4. 振り分けロジック（Q3 × Q4）</h2>
   <div class="card">
@@ -242,6 +254,7 @@
       <div class="logic-result">美白・エイジングケア型 / VCスターターセット</div>
     </div>
     <div class="highlight" style="margin-top:12px;">Q3とQ4の組み合わせが競合する場合（例：Q3-C × Q4-D）はQ4悩み軸を優先。切実度が高い方を採る。</div>
+    <div class="note" style="margin-top:8px;">Q5（環境軸）は振り分けに使用しない。タイプ確定後のCard2テキストを分岐させてパーソナライズする用途。例：保湿型×A（エアコン）→「エアコン環境は特に水分が蒸発しやすく、バリアが弱りやすい」追記</div>
   </div>
 
   <!-- 結果カード設計 -->
@@ -250,20 +263,18 @@
 
   <h3 style="margin-top:20px;">タイプA：皮脂コントロール型</h3>
   <div class="grid2">
-    <div class="card-preview"><div class="card-preview-num">Card 1 | タイプ発表</div><div class="card-preview-text">あなたのスキンケアタイプは…
+    <div class="card-preview"><div class="card-preview-num">Card 1 | 方法の発表</div><div class="card-preview-text">あなたにぴったりのスキンケア方法は…
 
-【皮脂コントロール型】
-
-皮脂の根本から整える
+皮脂の分泌をコントロールするアプローチです
 
 バッジ: 毛穴レス設計 ／ テカりを出さない ／ さらっと仕上がり</div></div>
-    <div class="card-preview"><div class="card-preview-num">Card 2 | 新しいものさし</div><div class="card-preview-text">テカるのは、洗い方の問題じゃない。
+    <div class="card-preview"><div class="card-preview-num">Card 2 | 根本示唆</div><div class="card-preview-text">テカるのは、洗い方の問題じゃない。
 
-皮脂は洗いすぎると逆に増える。
-肌を乾燥させないよう皮脂が分泌されるから。
+皮脂が出すぎるのは、肌が「乾燥から守ろうとしているサイン」。
+洗浄力で取り除くほど、肌は防御のためにさらに皮脂を出す。
+このサイクルを断つには、皮脂分泌を根本から整える成分が必要。
 
-皮脂コントロール型のケアは、
-洗浄力ではなく「皮脂分泌を整える成分」で戦う。</div></div>
+※Q5-A（エアコン）の場合：「乾燥した空気が皮脂分泌をさらに促しています」追記</div></div>
     <div class="card-preview"><div class="card-preview-num">Card 3 | 体験イメージ</div><div class="card-preview-text">朝、鏡を見てもさらっとしてる。
 
 つるんとなめらかで、テカっていない。
@@ -280,21 +291,19 @@
 
   <h3>タイプB：保湿バリア修復型</h3>
   <div class="grid2">
-    <div class="card-preview"><div class="card-preview-num">Card 1 | タイプ発表</div><div class="card-preview-text">あなたのスキンケアタイプは…
+    <div class="card-preview"><div class="card-preview-num">Card 1 | 方法の発表</div><div class="card-preview-text">あなたにぴったりのスキンケア方法は…
 
-【保湿バリア修復型】
-
-水分不足から整える
+バリアに水分を届けるアプローチです
 
 バッジ: インナードライ向き ／ もっちり仕上がり ／ じゅわっと染み込む</div></div>
-    <div class="card-preview"><div class="card-preview-num">Card 2 | 新しいものさし</div><div class="card-preview-text">乾燥してるのにべたつく。
-それ、水分不足のサインです。
+    <div class="card-preview"><div class="card-preview-num">Card 2 | 根本示唆</div><div class="card-preview-text">乾燥してるのにべたつく。
+それ、インナードライのサインです。
 
-肌の表面は皮脂でべたつくのに、
-内側は水分が足りていない状態。
+肌のバリア機能が低下すると、補った水分がすぐ蒸発してしまう。
+肌は守ろうと皮脂を増やすから、乾燥もテカりも同時に起きる。
+バリアを修復すれば、両方が落ち着く。
 
-水分が入れば、皮脂は自然と落ち着く。
-「べたつき」も「乾燥」も、同時に解決できる。</div></div>
+※Q5-A（エアコン）の場合：「エアコンの乾燥した空気が、バリアからの水分蒸発をさらに加速させています」追記</div></div>
     <div class="card-preview"><div class="card-preview-num">Card 3 | 体験イメージ</div><div class="card-preview-text">じゅわっと染み込む感覚。
 
 化粧水がスーッと入っていく。
@@ -313,21 +322,19 @@
 
   <h3>タイプC：低刺激・肌環境改善型</h3>
   <div class="grid2">
-    <div class="card-preview"><div class="card-preview-num">Card 1 | タイプ発表</div><div class="card-preview-text">あなたのスキンケアタイプは…
+    <div class="card-preview"><div class="card-preview-num">Card 1 | 方法の発表</div><div class="card-preview-text">あなたにぴったりのスキンケア方法は…
 
-【低刺激・肌環境改善型】
-
-刺激ゼロで、肌環境から整える
+刺激をゼロにして肌環境を整えるアプローチです
 
 バッジ: 敏感肌向き ／ 低刺激設計 ／ 荒れないサイクルへ</div></div>
-    <div class="card-preview"><div class="card-preview-num">Card 2 | 新しいものさし</div><div class="card-preview-text">繰り返すのは、肌環境が乱れているから。
+    <div class="card-preview"><div class="card-preview-num">Card 2 | 根本示唆</div><div class="card-preview-text">繰り返すのは、肌環境が慢性的に乱れているから。
 
-ニキビが治っても、また出る。
-それは表面の対処が足りないのではなく、
-肌のバリアが弱っているから。
+スキンケアの成分・洗顔の摩擦・外部刺激が積み重なり、
+肌のバリアが弱った状態になっている。
+表面のニキビを対処しても根本が変わらないから、また出る。
+刺激をゼロにして肌環境ごと整えると、ループから抜け出せる。
 
-刺激をゼロにして肌環境ごと整えると、
-ループから抜け出せる。</div></div>
+※Q5-C（ストレス・睡眠不足）の場合：「ストレスはホルモンバランスを乱し、皮脂分泌を増やして肌荒れを悪化させます」追記</div></div>
     <div class="card-preview"><div class="card-preview-num">Card 3 | 体験イメージ</div><div class="card-preview-text">使うたびに、肌が落ち着いていく。
 
 「あれ、荒れていない」
@@ -346,21 +353,19 @@
 
   <h3>タイプD：美白・エイジングケア型</h3>
   <div class="grid2">
-    <div class="card-preview"><div class="card-preview-num">Card 1 | タイプ発表</div><div class="card-preview-text">あなたのスキンケアタイプは…
+    <div class="card-preview"><div class="card-preview-num">Card 1 | 方法の発表</div><div class="card-preview-text">あなたにぴったりのスキンケア方法は…
 
-【美白・エイジングケア型】
-
-シミ・くすみに正しく効くアプローチへ
+有効成分でシミ・くすみに直接アプローチする方法です
 
 バッジ: VC（ビタミンC）配合 ／ くすみケア ／ 透明感アップ</div></div>
-    <div class="card-preview"><div class="card-preview-num">Card 2 | 新しいものさし</div><div class="card-preview-text">「試したけど効かなかった」は、
-アプローチが合っていなかっただけ。
+    <div class="card-preview"><div class="card-preview-num">Card 2 | 根本示唆</div><div class="card-preview-text">「試したけど効かなかった」は、アプローチが合っていなかっただけ。
 
-シミ・くすみには効く成分がある。
-VC（ビタミンC誘導体）は、
-肌の中でメラニンの生成を抑え、くすみを明るくする。
+シミは、紫外線で過剰に作られたメラニンが角層に沈着したもの。
+くすみは、ターンオーバーの乱れで古い角質が残り透明感が失われた状態。
+どちらも「正しい成分を選ぶ」かどうかで結果が変わる。
+VC（ビタミンC誘導体）はメラニン抑制とターンオーバー促進、両方に効く。
 
-「正しい成分で正しく戦う」に切り替えるだけでいい。</div></div>
+※Q5-B（紫外線）の場合：「紫外線を浴びるほどメラニンは増え続けます。日焼け止めとのセット運用が必須です」追記</div></div>
     <div class="card-preview"><div class="card-preview-num">Card 3 | 体験イメージ</div><div class="card-preview-text">透明感が、にじみ出てくる。
 
 くすみが取れた肌は、
@@ -385,7 +390,7 @@ VC（ビタミンC誘導体）は、
   <div class="card" style="margin-bottom:8px;">
     <div style="font-size:12px;font-weight:700;color:#888;margin-bottom:8px;">ブリッジテスト</div>
     <table>
-      <tr><th>①診断体験</th><td>4問答えると洗顔後の肌状態×悩みでアプローチタイプが判定され、タイプ別商材まで提示される</td></tr>
+      <tr><th>①診断体験</th><td>5問答えると洗顔後の肌状態×悩み×生活環境でアプローチ方法が判定され、方法別商材まで提示される</td></tr>
       <tr><th>②検索者の気持ち</th><td>「何を使えばいいかわからない。何試しても変わらなくて疲れた。パーソナルカラーみたいにちゃんと診断してほしい」</td></tr>
       <tr><th>③翻訳</th><td>「あなたの肌、ちゃんと合うスキンケアで試してる？4問で自分のタイプがわかる」→ ①と③が同じ体験を指している ✅</td></tr>
     </table>
