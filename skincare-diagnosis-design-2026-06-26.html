@@ -207,19 +207,7 @@
   </div>
 
   <div class="q-block">
-    <div class="q-num">Q4 — 振り分け主軸②</div>
-    <div class="q-text">今、一番気になる肌の悩みは？</div>
-    <div class="choices">
-      <div class="choice">A: 毛穴・皮脂のテカり</div>
-      <div class="choice">B: 乾燥しているのにべたつく</div>
-      <div class="choice">C: 繰り返すニキビ・肌荒れ</div>
-      <div class="choice">D: シミ・くすみ</div>
-    </div>
-    <div style="font-size:12px;color:#888;margin-top:8px;">Q3+Q4の組み合わせで4タイプに振り分け。Q4の悩みが切実度のより高い軸として優先</div>
-  </div>
-
-  <div class="q-block">
-    <div class="q-num">Q5 — 環境補助軸</div>
+    <div class="q-num">Q4 — 環境補助軸</div>
     <div class="q-text">普段の生活で、肌に影響していそうなものは？</div>
     <div class="choices">
       <div class="choice">A: エアコン・空気の乾燥</div>
@@ -227,34 +215,46 @@
       <div class="choice">C: ストレス・睡眠不足</div>
       <div class="choice">D: 特に思い当たらない</div>
     </div>
-    <div style="font-size:12px;color:#888;margin-top:8px;">振り分け軸ではなく、結果Card2のパーソナライズに使用。「エアコン環境にいるため水分が蒸発しやすい」など外部要因を結果に反映し説得力を上げる</div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">振り分け軸ではなく結果Card2のパーソナライズ用。分岐前に収集することでLINE実装の工数削減</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">Q5 — 振り分け主軸②</div>
+    <div class="q-text">今、一番気になる肌の悩みは？</div>
+    <div class="choices">
+      <div class="choice">A: 毛穴・皮脂のテカり</div>
+      <div class="choice">B: 乾燥しているのにべたつく</div>
+      <div class="choice">C: 繰り返すニキビ・肌荒れ</div>
+      <div class="choice">D: シミ・くすみ</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">Q3+Q5の組み合わせで4タイプに振り分け。Q5の悩みが切実度のより高い軸として優先</div>
   </div>
 
   <!-- 振り分けロジック -->
-  <h2>4. 振り分けロジック（Q3 × Q4）</h2>
+  <h2>4. 振り分けロジック（Q3 × Q5）</h2>
   <div class="card">
     <div class="logic-row">
-      <div class="logic-cond">Q3-C（全体テカ）× Q4-A（毛穴・皮脂）</div>
+      <div class="logic-cond">Q3-C（全体テカ）× Q5-A（毛穴・皮脂）</div>
       <div class="logic-arrow">→</div>
       <div class="logic-result">皮脂コントロール型 / オルビス クリアフル</div>
     </div>
     <div class="logic-row">
-      <div class="logic-cond">Q3-B（混合肌）× Q4-B（インナードライ）</div>
+      <div class="logic-cond">Q3-B（混合肌）× Q5-B（インナードライ）</div>
       <div class="logic-arrow">→</div>
       <div class="logic-result">保湿バリア修復型 / ビーグレン</div>
     </div>
     <div class="logic-row">
-      <div class="logic-cond">Q3-A or B × Q4-C（ニキビ・肌荒れ）</div>
+      <div class="logic-cond">Q3-A or B × Q5-C（ニキビ・肌荒れ）</div>
       <div class="logic-arrow">→</div>
       <div class="logic-result">低刺激・肌環境改善型 / ファンケル アクネケア</div>
     </div>
     <div class="logic-row">
-      <div class="logic-cond">Q3-A or D × Q4-D（シミ・くすみ）</div>
+      <div class="logic-cond">Q3-A or D × Q5-D（シミ・くすみ）</div>
       <div class="logic-arrow">→</div>
       <div class="logic-result">美白・エイジングケア型 / VCスターターセット</div>
     </div>
-    <div class="highlight" style="margin-top:12px;">Q3とQ4の組み合わせが競合する場合（例：Q3-C × Q4-D）はQ4悩み軸を優先。切実度が高い方を採る。</div>
-    <div class="note" style="margin-top:8px;">Q5（環境軸）は振り分けに使用しない。タイプ確定後のCard2テキストを分岐させてパーソナライズする用途。例：保湿型×A（エアコン）→「エアコン環境は特に水分が蒸発しやすく、バリアが弱りやすい」追記</div>
+    <div class="highlight" style="margin-top:12px;">Q3とQ5の組み合わせが競合する場合（例：Q3-C × Q5-D）はQ5悩み軸を優先。切実度が高い方を採る。</div>
+    <div class="note" style="margin-top:8px;">Q4（環境軸）は振り分けに使用しない。分岐前に収集→Card2テキストのパーソナライズに使用。例：保湿型×Q4-A（エアコン）→「エアコン環境は特に水分が蒸発しやすく、バリアが弱りやすい」追記</div>
   </div>
 
   <!-- 結果カード設計 -->
