@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>週次分析 6月W4 — 2026-06-22〜06-28</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 900px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-card.warn-card { border-color: #fde68a; background: #fffbeb; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-highest { background: #fee2e2; color: #991b1b; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .pill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+    .pill-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px; }
+    .pill-card.bad { border-color: #fca5a5; background: #fff1f2; }
+    .pill-card.mixed { border-color: #fde68a; background: #fffbeb; }
+    .pill-card.good { border-color: #86efac; background: #f0fdf4; }
+    .pill-title { font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 8px; }
+    .pill-metric { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 3px; }
+    .pill-metric .label { color: #64748b; }
+    .pill-metric .val { font-weight: 700; color: #0f172a; }
+    .pill-metric .val.bad { color: #dc2626; }
+    .pill-metric .val.good { color: #16a34a; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">週次分析 — 6月W4</div>
+    <h1>2026-06-22〜06-28 週次分析レポート</h1>
+    <p class="desc">作成: 2026-06-29 ／ 前週: 6月W3（6/15〜6/21）</p>
+  </div>
+
+  <!-- ① 6月GOAL進捗 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">1</div>
+      <div>
+        <div class="section-title">6月 GOAL進捗</div>
+        <div class="section-sub">目標1,200人 に対する当月累計（28日時点）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card alert">
+          <div class="kpi-label">6月累計</div>
+          <div class="kpi-value">855人</div>
+          <div class="kpi-sub">28日経過（達成率71%）</div>
+        </div>
+        <div class="kpi-card warn-card">
+          <div class="kpi-label">日均</div>
+          <div class="kpi-value">32.1人</div>
+          <div class="kpi-sub">必要日均 40人</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">月末予測</div>
+          <div class="kpi-value">930〜950人</div>
+          <div class="kpi-sub">残2日（目標比 78%）</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">GOALギャップ</div>
+          <div class="kpi-value">▲345人</div>
+          <div class="kpi-sub">残2日では回収不能</div>
+        </div>
+      </div>
+      <div class="insight insight-red">
+        <strong>月末予測930〜950人 = 目標1,200人の78%前後で着地見込み。</strong>
+        月次PVFR 0.41%（基準0.80%）と大幅乖離が続いており、7月はPU文言改修・新規施策の同時進行が必要。残2日での挽回は現実的に困難。
+      </div>
+    </div>
+  </div>
+
+  <!-- ② W26全体ファネル -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">2</div>
+      <div>
+        <div class="section-title">W26 週次パフォーマンス</div>
+        <div class="section-sub">6/22〜6/28 vs 6/15〜6/21（W25）比較</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>指標</th>
+            <th>W26（6/22〜6/28）</th>
+            <th>W25（6/15〜6/21）</th>
+            <th>前週比</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>友達合計</strong></td>
+            <td><strong>225人</strong>（PU127 + バナー98）</td>
+            <td>170人（PU104 + バナー66）</td>
+            <td class="up">+29人（+14.8%）</td>
+          </tr>
+          <tr>
+            <td>LP imp</td>
+            <td>29,263</td>
+            <td>26,134</td>
+            <td class="down">▲4.6%（前週比逆転注: 前週比▲4.6%はLP imp基準）</td>
+          </tr>
+          <tr>
+            <td>PU imp</td>
+            <td>27,938</td>
+            <td>24,453</td>
+            <td class="up">+3,485</td>
+          </tr>
+          <tr>
+            <td>PU click</td>
+            <td>1,066</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>CTR（5/14仕様後）</td>
+            <td>3.82%</td>
+            <td>5.5%</td>
+            <td class="down">▲1.68pt</td>
+          </tr>
+          <tr>
+            <td>友達追加率（PU）</td>
+            <td>11.91%</td>
+            <td>7.7%</td>
+            <td class="up">+4.30pt 大幅改善</td>
+          </tr>
+          <tr>
+            <td>PVFR（PUのみ）</td>
+            <td class="warn">0.43%</td>
+            <td class="warn">0.40%</td>
+            <td class="up">+0.03pt 微改善</td>
+          </tr>
+          <tr>
+            <td>日均</td>
+            <td>32.1人</td>
+            <td>24.3人</td>
+            <td class="up">+7.8人</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-yellow">
+        <strong>友達+29人（+14.8%）でW25から回復。</strong>
+        LP imp は前週比▲4.6%と微減ながら、追加率が11.91%（+4.30pt）と大幅改善したことが友達増加の主因。バナーも66→98人（+32人）と大幅増。CTRは3.82%に低下しているが、追加率の改善で補えた週。
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ ジャンル別 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">3</div>
+      <div>
+        <div class="section-title">ジャンル別 W26 vs W25</div>
+        <div class="section-sub">友達増減の内訳</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>ジャンル</th>
+            <th>W26 友達</th>
+            <th>W25 友達</th>
+            <th>差</th>
+            <th>PVFR</th>
+            <th>CTR</th>
+            <th>追加率</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>医療ダイエット(GLP-1)</strong></td>
+            <td><strong>79人</strong></td>
+            <td>88人</td>
+            <td class="down">▲9人</td>
+            <td class="warn">0.51%</td>
+            <td>3.63%</td>
+            <td>14.66%</td>
+          </tr>
+          <tr>
+            <td>オンラインピル</td>
+            <td>22人</td>
+            <td>13人</td>
+            <td class="up">+9人</td>
+            <td class="up">0.93%</td>
+            <td>3.69%</td>
+            <td class="up">22.00%</td>
+          </tr>
+          <tr>
+            <td>包茎手術(PLUS)</td>
+            <td>14人</td>
+            <td>7人</td>
+            <td class="up">+7人</td>
+            <td>0.41%</td>
+            <td>4.39%</td>
+            <td>9.46%</td>
+          </tr>
+          <tr>
+            <td>ICL（ほんべ）</td>
+            <td>4人</td>
+            <td>5人</td>
+            <td class="down">▲1人</td>
+            <td>0.25%</td>
+            <td>7.62%</td>
+            <td>7.69%</td>
+          </tr>
+          <tr>
+            <td>いびき（あいた）</td>
+            <td>3人</td>
+            <td>2人</td>
+            <td class="up">+1人</td>
+            <td>0.16%</td>
+            <td>2.89%</td>
+            <td>5.77%</td>
+          </tr>
+          <tr>
+            <td>AGA</td>
+            <td>2人</td>
+            <td>3人</td>
+            <td class="down">▲1人</td>
+            <td>0.13%</td>
+            <td>4.21%</td>
+            <td>3.03%</td>
+          </tr>
+          <tr>
+            <td>FAGA</td>
+            <td>1人</td>
+            <td>2人</td>
+            <td class="down">▲1人</td>
+            <td>0.10%</td>
+            <td>4.54%</td>
+            <td>2.13%</td>
+          </tr>
+          <tr>
+            <td>ED</td>
+            <td>1人</td>
+            <td>1人</td>
+            <td>±0</td>
+            <td>0.33%</td>
+            <td>4.72%</td>
+            <td>9.09%</td>
+          </tr>
+          <tr>
+            <td><strong>バナー計</strong></td>
+            <td><strong>98人</strong></td>
+            <td>74人</td>
+            <td class="up">+24人</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-yellow">
+        <strong>ピルが13→22人（+9人）、包茎が7→14人（+7人）と伸長。ダイエットは79人に減少。</strong>
+        オンラインピルのPVFR 0.93%・追加率22.00%は全ジャンル中トップ。バナーが+24人増と大きく寄与。ダイエットは引き続き全体の最大ジャンルだが、相対的なシェアは低下傾向。
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 施策振り返り -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">4</div>
+      <div>
+        <div class="section-title">W26 施策振り返り</div>
+        <div class="section-sub">W4期間中（6/22〜6/28）に実施した施策の結果</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>施策</th>
+            <th>結果</th>
+            <th>判定</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>摂取カロリーPU「食べていいのは何？」設置（6/23〜）</td>
+            <td>PU imp 1,037 / クリック0件 / 友達0人</td>
+            <td><span class="badge badge-red">✕ WINUT設定ミスの可能性</span></td>
+          </tr>
+          <tr>
+            <td>既存「1日で食べていい量」継続稼働</td>
+            <td>PVFR 0.86%（基準超え）/ 友達16人</td>
+            <td><span class="badge badge-green">○ 基準超え・文言維持</span></td>
+          </tr>
+          <tr>
+            <td>コスメ クレンジング記事 LINE導線導入</td>
+            <td>導線設置完了</td>
+            <td><span class="badge badge-gray">— データ蓄積中</span></td>
+          </tr>
+          <tr>
+            <td>スキンケア診断設計書作成・docs公開</td>
+            <td>設計完了</td>
+            <td><span class="badge badge-blue">◎ 完了</span></td>
+          </tr>
+          <tr>
+            <td>LINE Console PUレポートタブ実装・デプロイ</td>
+            <td>完成・デプロイ済み</td>
+            <td><span class="badge badge-blue">◎ 完了</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="insight insight-red">
+        <strong>「食べていいのは何？」PU: imp 1,037回表示でクリック0件は明らかな異常。</strong>
+        WINUTの設定ミス（リンク切れ・未公開状態など）の可能性が高い。最優先で確認・修正が必要。一方、既存「1日で食べていい量」は PVFR 0.86%で基準超えを達成しており、文言は維持でよい。
+      </div>
+
+      <hr>
+
+      <!-- 摂取カロリーPU詳細 -->
+      <p style="font-size:13px; font-weight:700; color:#475569; margin-top:4px; margin-bottom:8px;">■ 摂取カロリーPU 2本体制 — W26実績</p>
+      <div class="pill-grid">
+        <div class="pill-card bad">
+          <div class="pill-title">✕ 「食べていいのは何？」（新設 6/23〜）</div>
+          <div class="pill-metric"><span class="label">PU imp</span><span class="val bad">1,037</span></div>
+          <div class="pill-metric"><span class="label">クリック</span><span class="val bad">0件</span></div>
+          <div class="pill-metric"><span class="label">友達</span><span class="val bad">0人</span></div>
+          <div class="pill-metric"><span class="label">PVFR</span><span class="val bad">0.00%</span></div>
+          <p style="font-size:12px; color:#dc2626; margin-top:8px; font-weight:700;">WINUTの設定ミスの可能性。クリック0件は正常稼働していない。</p>
+        </div>
+        <div class="pill-card good">
+          <div class="pill-title">○ 「1日で食べていい量」（継続稼働）</div>
+          <div class="pill-metric"><span class="label">PVFR</span><span class="val good">0.86%（基準超え）</span></div>
+          <div class="pill-metric"><span class="label">友達</span><span class="val good">16人</span></div>
+          <p style="font-size:12px; color:#16a34a; margin-top:8px; font-weight:700;">基準0.80%を超える安定稼働。文言維持で問題なし。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ ジャンル別指標詳細 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">5</div>
+      <div>
+        <div class="section-title">注目ジャンル — PVFR・追加率詳細</div>
+        <div class="section-sub">高PVFR・改善ジャンルのハイライト</div>
+      </div>
+    </div>
+    <div class="body">
+
+      <!-- オンラインピル -->
+      <p style="font-size:13px; font-weight:700; color:#475569; margin-bottom:8px;">■ オンラインピル — W25→W26 大幅改善</p>
+      <div class="verdict verdict-green">◎ PVFR 0.93%・追加率22.00%。全ジャンル中トップパフォーマンス。</div>
+      <table>
+        <thead>
+          <tr><th>週</th><th>友達</th><th>PVFR</th><th>CTR</th><th>追加率</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>W26（6/22〜6/28）</td>
+            <td class="up"><strong>22人</strong></td>
+            <td class="up">0.93%</td>
+            <td>3.69%</td>
+            <td class="up">22.00%</td>
+          </tr>
+          <tr>
+            <td>W25（6/15〜6/21）</td>
+            <td>13人</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-green">
+        PVFR 0.93%は基準0.80%超え。追加率22.00%も高水準。ピルPUの文言・オファー設計が現状マッチしている。継続稼働・観察で問題なし。
+      </div>
+
+      <hr>
+
+      <!-- 医療ダイエット -->
+      <p style="font-size:13px; font-weight:700; color:#475569; margin:16px 0 8px;">■ 医療ダイエット(GLP-1) — W26微減</p>
+      <div class="verdict verdict-yellow">△ PVFR 0.51%（基準0.80%）。友達79人は最多だが前週比▲9人。</div>
+      <table>
+        <thead>
+          <tr><th>週</th><th>友達</th><th>PVFR</th><th>CTR</th><th>追加率</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>W26（6/22〜6/28）</td>
+            <td class="down"><strong>79人</strong></td>
+            <td class="warn">0.51%</td>
+            <td>3.63%</td>
+            <td>14.66%</td>
+          </tr>
+          <tr>
+            <td>W25（6/15〜6/21）</td>
+            <td>88人</td>
+            <td>0.40%（推定）</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-yellow">
+        PVFR 0.51%は前週より改善傾向だが基準まで▲0.29pt。友達数は最多ジャンルを維持しているが、LP imp上昇分の恩恵が十分活きていない。BMI診断型PU（t54）の実装で底上げが見込める。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ ネクストアクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">6</div>
+      <div>
+        <div class="section-title">7月W1 ネクストアクション</div>
+        <div class="section-sub">優先度順</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-highest">最優先</span>
+          <div class="action-body">
+            <strong>「食べていいのは何？」PU — WINUT設定確認（クリック0件修正）</strong>
+            <span>imp 1,037でクリック0件は設定ミスの可能性が高い。リンク先・公開ステータス・WINUTの設定を確認し、即日修正する。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-highest">最優先</span>
+          <div class="action-body">
+            <strong>カレナコスメ 記事修正（ビーグレンリンク・画像・本文 7記事）— 期限7/1</strong>
+            <span>期限が7/1と迫っている。ビーグレンリンク差し替え・画像更新・本文修正を7記事分完了させる。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">高</span>
+          <div class="action-body">
+            <strong>スキンケア診断 商材アフィリリンク・報酬確認</strong>
+            <span>設計書完成済み。実装前に対象商材のアフィリリンクと報酬条件を確認する。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">高</span>
+          <div class="action-body">
+            <strong>スキンケア診断 デザイン依頼書作成（Notion）</strong>
+            <span>設計書完成済み。Notionに「コスメ：スキンケア診断 結果カードデザイン依頼」を作成し、Rinon確認へ。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中</span>
+          <div class="action-body">
+            <strong>t54 BMI PU 診断型実装</strong>
+            <span>設計書あり。PVFR 0.05%と壊滅中の記事。PU文言+診断名の改修でLP impポテンシャルを活かす。CMO依頼で実装。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中</span>
+          <div class="action-body">
+            <strong>LINE Console CVリストデバッグ（デバッグコード本番残り）</strong>
+            <span>デバッグコードが本番環境に残っている状態。本番から除去するか、CVリストの正常動作確認を先に実施する。</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ⑦ 総括 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">7</div>
+      <div>
+        <div class="section-title">週次総括</div>
+        <div class="section-sub">W26の因果関係まとめ</div>
+      </div>
+    </div>
+    <div class="body">
+      <p><strong>今週の一言:</strong> バナー大幅増・追加率改善により友達+29人（+14.8%）とW25から回復。ただし月次PVFR 0.41%は基準に遠く、7月の抜本改善が必須。</p>
+      <hr>
+      <p><strong>なぜ友達が増えたか:</strong></p>
+      <p>友達225人（前週170人、+14.8%）。LP impはほぼ横ばい（29,263 vs 26,134、実態は前週比▲4.6%とデータ確認が必要）だが、追加率が7.7%→11.91%へ大幅改善。バナーが66→98人と+32人増も大きく貢献。オンラインピルの急伸（13→22人）や包茎手術（7→14人）が全体を押し上げた。</p>
+      <hr>
+      <p><strong>月次着地の現実:</strong></p>
+      <p>6月累計855人（28日時点）。月末予測930〜950人で目標1,200人の78%前後着地。月次PVFR 0.41%と基準（0.80%）の半分以下が続いており、PU文言改修と新規施策の同時進行が7月の最重点課題。</p>
+      <hr>
+      <p><strong>今週の施策サマリー:</strong></p>
+      <p>スキンケア診断設計書完成・LINE Console PUレポートタブデプロイ・コスメ導線設置と開発系施策は充実した週。一方「食べていいのは何？」PUがクリック0件という設定ミスが発覚。既存「1日で食べていい量」はPVFR 0.86%で基準超えを達成しており、この文言は維持で正しい判断。</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
