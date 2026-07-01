@@ -3,646 +3,774 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PRカルーセル カード図 | スキンケア方法診断</title>
+<title>スキンケア診断 PRカル カード図 2026-07-01</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; background: #f0f4f8; color: #333; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #ddd; color: #1d1d1f; font-size: 13px; }
+  .container { max-width: 1300px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 8px; }
+  .nav-links { margin-bottom: 20px; font-size: 12px; }
+  .nav-links a { color: #4285f4; text-decoration: none; margin-right: 12px; }
 
-  /* ── ヘッダー ── */
-  .page-header {
-    background: #fff;
-    border-bottom: 1px solid #e0e0e0;
-    padding: 16px 24px;
-    position: sticky; top: 0; z-index: 100;
-  }
-  .page-header h1 { font-size: 15px; font-weight: 700; color: #333; }
-  .page-header p { font-size: 11px; color: #888; margin-top: 2px; }
+  /* タイプセクション */
+  .type-section { margin-bottom: 48px; }
+  .type-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #ccc; }
+  .type-label { font-size: 16px; font-weight: 700; }
+  .type-sub { font-size: 11px; color: #888; }
+  .cards-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 16px; align-items: flex-start; }
 
-  /* ── タイプタブ ── */
-  .type-tabs {
-    display: flex; gap: 8px;
-    padding: 16px 24px 0;
-    overflow-x: auto;
-  }
-  .tab-btn {
-    padding: 8px 20px;
-    border-radius: 20px;
-    border: 2px solid transparent;
-    font-size: 13px; font-weight: 700;
-    cursor: pointer;
-    white-space: nowrap;
-    background: #fff;
-    transition: all 0.2s;
-  }
-  .tab-btn.tab-a { border-color: #f4a460; color: #e07040; }
-  .tab-btn.tab-a.active { background: #e07040; color: #fff; }
-  .tab-btn.tab-b { border-color: #64b5f6; color: #1565c0; }
-  .tab-btn.tab-b.active { background: #4a90d9; color: #fff; }
-  .tab-btn.tab-c { border-color: #81c784; color: #2e7d32; }
-  .tab-btn.tab-c.active { background: #4caf7a; color: #fff; }
-  .tab-btn.tab-d { border-color: #ce93d8; color: #6a1b9a; }
-  .tab-btn.tab-d.active { background: #ab6cc6; color: #fff; }
+  /* ─── カード本体 ─── */
+  .card { width: 220px; min-width: 220px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.18); display: flex; flex-direction: column; font-size: 12px; }
 
-  /* ── カード列 ── */
-  .cards-section { display: none; padding: 20px 24px 40px; }
-  .cards-section.active { display: block; }
+  /* 画像プレースホルダー */
+  .img-area { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 5px; color: #9e8060; font-size: 10px; font-weight: 600; }
+  .img-area .img-icon { font-size: 26px; opacity: 0.5; }
+  .img-area .img-label { font-size: 9px; font-weight: 700; }
 
-  .cards-row {
-    display: grid;
-    grid-template-columns: repeat(4, 260px);
-    gap: 16px;
-    overflow-x: auto;
-    padding-bottom: 8px;
-  }
+  /* ポイントバッジ行 */
+  .point-row { padding: 6px 10px; display: flex; align-items: center; gap: 8px; }
+  .point-badge { color: #fff; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 4px; white-space: nowrap; line-height: 1.3; text-align: center; }
+  .point-badge .num { font-size: 16px; display: block; line-height: 1; }
+  .point-headline { font-size: 12px; font-weight: 800; color: #222; line-height: 1.35; flex: 1; }
 
-  /* ── 1枚のカード ── */
-  .line-card {
-    background: #fff;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-    display: flex;
-    flex-direction: column;
-    min-height: 460px;
-  }
+  /* 商品名エリア */
+  .product-section { padding: 8px 11px 4px; text-align: center; }
+  .product-name { font-size: 12px; font-weight: 800; color: #1a1a1a; line-height: 1.4; margin-bottom: 5px; }
+  .product-eyebrow { font-size: 9px; color: #888; margin-bottom: 3px; }
 
-  /* カードヘッダー */
-  .card-header {
-    padding: 14px 14px 12px;
-    color: #fff;
-    position: relative;
-  }
-  .card-num {
-    font-size: 9px; font-weight: 700; opacity: 0.85;
-    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;
-  }
-  .card-title {
-    font-size: 13px; font-weight: 800; line-height: 1.45;
-  }
+  /* 特徴バッジ */
+  .product-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 3px; margin-bottom: 6px; }
+  .product-badge { font-size: 8.5px; padding: 2px 6px; border-radius: 3px; font-weight: 600; }
 
-  /* 商品サムネ */
-  .product-thumb {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 14px; border-bottom: 1px solid #f0f0f0;
-  }
-  .product-thumb .brand { font-size: 11px; font-weight: 800; color: #111; }
-  .product-thumb .product-label { font-size: 10px; color: #666; line-height: 1.4; }
-  .product-thumb .img-ph {
-    width: 52px; height: 52px; border-radius: 8px;
-    background: #f4f4f4; display: flex; align-items: center; justify-content: center;
-    font-size: 22px; flex-shrink: 0;
-  }
+  /* テキストエリア */
+  .card-body { padding: 10px 11px 8px; flex: 1; }
+  .body-headline { font-size: 13px; font-weight: 800; color: #1a1a1a; margin-bottom: 6px; line-height: 1.45; }
+  .body-text { font-size: 10.5px; color: #555; line-height: 1.75; }
 
-  /* カード本文 */
-  .card-body {
-    padding: 12px 14px; font-size: 12px; line-height: 1.8; color: #444; flex: 1;
-  }
-  .card-lead { font-weight: 700; color: #222; margin-bottom: 6px; font-size: 12.5px; }
-  .pt-item { margin-bottom: 4px; padding-left: 14px; position: relative; font-size: 11.5px; color: #444; line-height: 1.7; }
-  .pt-item::before { content: "✓"; position: absolute; left: 0; font-weight: 700; font-size: 11px; }
-
-  /* バッジ行 */
-  .badges-row { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 14px; border-top: 1px solid #f0f0f0; }
-  .badge {
-    font-size: 9.5px; font-weight: 700; padding: 3px 8px; border-radius: 4px;
-    white-space: nowrap;
-  }
+  /* セット内容 */
+  .set-section { padding: 7px 11px; }
+  .set-item { font-size: 10px; color: #333; padding: 3px 0 3px 12px; position: relative; border-bottom: 1px dotted #eee; line-height: 1.45; }
+  .set-item:last-child { border-bottom: none; }
+  .set-item::before { content: "●"; position: absolute; left: 0; font-size: 7px; top: 5px; }
+  .set-item .item-sub { font-size: 9px; color: #888; display: block; }
 
   /* 価格エリア */
-  .price-area {
-    padding: 8px 14px; background: #fafafa; border-top: 1px solid #f0f0f0;
-    display: flex; align-items: flex-end; justify-content: space-between;
-  }
-  .price-label { font-size: 9px; color: #999; }
-  .price-main { display: flex; align-items: flex-end; gap: 3px; }
-  .price-tag { font-size: 9px; background: #e53935; color: #fff; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-right: 4px; }
-  .price-num { font-size: 22px; font-weight: 900; line-height: 1; }
+  .price-section { padding: 6px 11px; border-top: 1px solid; border-bottom: 1px solid; }
+  .price-label-sm { font-size: 9px; color: #888; margin-bottom: 1px; }
+  .price-cross { text-decoration: line-through; color: #bbb; font-size: 11px; }
+  .price-main-row { display: flex; align-items: flex-end; gap: 5px; }
+  .init-badge-sm { color: #fff; font-size: 8px; font-weight: 800; padding: 1px 6px; border-radius: 3px; white-space: nowrap; align-self: center; }
+  .price-num { font-size: 26px; font-weight: 900; color: #c0392b; line-height: 1; }
   .price-suffix { font-size: 10px; color: #888; }
 
+  /* 信頼バッジ */
+  .trust-row { display: flex; gap: 4px; padding: 6px 11px; }
+  .trust-badge { flex: 1; border-radius: 5px; padding: 4px 2px; font-size: 8.5px; font-weight: 700; text-align: center; line-height: 1.4; border: 1px solid; }
+
   /* CTAボタン */
-  .card-cta {
-    display: block; text-align: center; padding: 11px 14px;
-    font-size: 12px; font-weight: 700; color: #fff;
-    border-radius: 0 0 16px 16px;
-    cursor: default; letter-spacing: 0.3px; line-height: 1.5;
-  }
-
-  /* タイプ別カラー */
-  .type-a .card-header { background: linear-gradient(135deg, #f4a460, #e07040); }
-  .type-a .card-cta    { background: #e07040; }
-  .type-a .pt-item::before { color: #e07040; }
-  .type-a .badge.key { background: #fff3ee; border: 1px solid #f4a460; color: #c0502a; }
-  .type-a .price-num  { color: #e07040; }
-
-  .type-b .card-header { background: linear-gradient(135deg, #64b5f6, #4a90d9); }
-  .type-b .card-cta    { background: #4a90d9; }
-  .type-b .pt-item::before { color: #4a90d9; }
-  .type-b .badge.key { background: #edf4fc; border: 1px solid #90caf9; color: #1565c0; }
-  .type-b .price-num  { color: #4a90d9; }
-
-  .type-c .card-header { background: linear-gradient(135deg, #81c784, #4caf7a); }
-  .type-c .card-cta    { background: #4caf7a; }
-  .type-c .pt-item::before { color: #4caf7a; }
-  .type-c .badge.key { background: #f0fbf3; border: 1px solid #81c784; color: #2e7d32; }
-  .type-c .price-num  { color: #4caf7a; }
-
-  .type-d .card-header { background: linear-gradient(135deg, #ce93d8, #ab6cc6); }
-  .type-d .card-cta    { background: #ab6cc6; }
-  .type-d .pt-item::before { color: #ab6cc6; }
-  .type-d .badge.key { background: #f8f0fc; border: 1px solid #ce93d8; color: #6a1b9a; }
-  .type-d .price-num  { color: #ab6cc6; }
-
-  /* タイプラベル */
-  .type-label { font-size: 13px; font-weight: 700; color: #666; margin-bottom: 12px; }
-  .type-label span { padding: 3px 12px; border-radius: 12px; font-size: 12px; color: #fff; margin-right: 8px; }
-  .type-a-label span { background: #e07040; }
-  .type-b-label span { background: #4a90d9; }
-  .type-c-label span { background: #4caf7a; }
-  .type-d-label span { background: #ab6cc6; }
-
-  .trust-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
-  .trust-badge {
-    font-size: 9px; font-weight: 700; padding: 3px 7px; border-radius: 4px;
-    background: #f3f3f3; color: #555; border: 1px solid #ddd;
-  }
-
-  .back-link { display: inline-block; margin: 20px 24px 0; font-size: 12px; color: #888; text-decoration: none; }
-  .back-link:hover { color: #555; }
-
-  @media (max-width: 700px) {
-    .cards-row { grid-template-columns: repeat(4, 220px); }
-  }
+  .cta-wrap { padding: 8px 10px 10px; }
+  .cta-btn { display: block; width: 100%; background: linear-gradient(180deg, #5cb85c 0%, #3d8b3d 100%); border: none; border-radius: 50px; padding: 10px 8px; font-size: 11px; font-weight: 800; color: #fff; text-align: center; cursor: pointer; line-height: 1.35; box-shadow: 0 3px 6px rgba(0,0,0,0.2); position: relative; }
+  .cta-btn::before { display: block; font-size: 9px; font-weight: 700; opacity: 0.9; margin-bottom: 2px; }
+  .cta-btn.type-a::before { content: "＼初回価格 980円／"; }
+  .cta-btn.type-b::before { content: "＼¥5,500（税込）／"; }
+  .cta-btn.type-c::before { content: "＼初回価格 1,750円／"; }
+  .cta-btn.type-d::before { content: "＼初回価格 1,980円／"; }
+  .cta-btn.no-price::before { display: none; }
+  .cta-arrow { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.85; }
 </style>
 </head>
 <body>
+<div class="container">
+  <div class="nav-links">
+    <a href="index.html">← トップへ</a>
+    <a href="cards-skincare-diagnosis-2026-06-26.html">結果カル カード図</a>
+    <a href="brief-pr-carousel-skincare-diagnosis-2026-07-01.html">PRカル 依頼書</a>
+  </div>
+  <h1>スキンケア方法診断 PRカル カード図</h1>
+  <p class="meta">2026-07-01　／　4タイプ × 4枚 = 16枚</p>
 
-<div class="page-header">
-  <h1>スキンケア方法診断 — PRカルーセル カード図</h1>
-  <p>4タイプ × Card 1〜4 のテキスト確認用。タブでタイプを切り替え。</p>
+  <!-- ========================================
+       🟠 タイプA：皮脂コントロール型
+  ========================================= -->
+  <div class="type-section">
+    <div class="type-header">
+      <span class="type-label">🟠 タイプA｜皮脂コントロール型 PRカル</span>
+      <span class="type-sub">オルビス クリアフル ニキビ・毛穴対策スターターセット ¥980</span>
+    </div>
+    <div class="cards-row">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#e07040,#f4a460);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;letter-spacing:0.04em;">ORBIS</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="img-area" style="height:140px;background:#fef3ee;">
+          <div class="img-icon" style="color:#e07040;opacity:0.4;">🧴</div>
+          <div class="img-label" style="color:#c06040;">商品パッケージ写真</div>
+        </div>
+        <!-- 実績バッジ -->
+        <div style="background:#fff8f4;border-bottom:1px solid #f0ddd0;padding:6px 10px;display:flex;align-items:center;gap:8px;">
+          <div style="flex-shrink:0;">
+            <svg width="52" height="52" viewBox="0 0 52 52">
+              <defs><linearGradient id="oa1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f9d060"/><stop offset="50%" stop-color="#e8a820"/><stop offset="100%" stop-color="#c8860a"/></linearGradient></defs>
+              <circle cx="26" cy="26" r="25" fill="url(#oa1)" stroke="#c8860a" stroke-width="1.2"/>
+              <circle cx="26" cy="26" r="21" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
+              <text x="26" y="16" text-anchor="middle" font-size="10" fill="#e07040">🏆</text>
+              <text x="26" y="25" text-anchor="middle" font-size="5.5" font-weight="800" fill="#1a1a1a">毎月7,000人</text>
+              <rect x="6" y="29" width="40" height="10" rx="2" fill="#e07040"/>
+              <text x="26" y="37" text-anchor="middle" font-size="5.5" font-weight="800" fill="#fff">以上がスタート</text>
+              <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">ニキビ・毛穴悩みの方</text>
+            </svg>
+          </div>
+          <div style="flex-shrink:0;">
+            <svg width="52" height="52" viewBox="0 0 52 52">
+              <defs><linearGradient id="oa2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f9d060"/><stop offset="50%" stop-color="#e8a820"/><stop offset="100%" stop-color="#c8860a"/></linearGradient></defs>
+              <circle cx="26" cy="26" r="25" fill="url(#oa2)" stroke="#c8860a" stroke-width="1.2"/>
+              <circle cx="26" cy="26" r="21" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
+              <text x="26" y="16" text-anchor="middle" font-size="10" fill="#e07040">✨</text>
+              <text x="26" y="25" text-anchor="middle" font-size="5.5" font-weight="800" fill="#1a1a1a">14日間</text>
+              <rect x="8" y="29" width="36" height="10" rx="2" fill="#c8860a"/>
+              <text x="26" y="37" text-anchor="middle" font-size="6" font-weight="800" fill="#fff">お試しセット</text>
+              <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">¥980（初回）</text>
+            </svg>
+          </div>
+          <div style="font-size:8.5px;font-weight:700;color:#8a4020;line-height:1.5;">初回<br>¥980！</div>
+        </div>
+        <div class="product-section">
+          <div class="product-eyebrow">あなたにおすすめのスキンケアはこちら</div>
+          <div class="product-name">クリアフル<br>ニキビ・毛穴対策スターターセット</div>
+          <div class="product-badges">
+            <span class="product-badge" style="background:#fff3ee;border:1px solid #e8b090;color:#8a4020;">テカらない肌へ</span>
+            <span class="product-badge" style="background:#fff3ee;border:1px solid #e8b090;color:#8a4020;">毛穴ケア</span>
+            <span class="product-badge" style="background:#fff3ee;border:1px solid #e8b090;color:#8a4020;">14日間トライアル</span>
+          </div>
+        </div>
+        <div class="price-section" style="background:#fff8f4;border-color:#f0ddd0;">
+          <div class="price-label-sm">初回限定特別価格</div>
+          <div class="price-main-row">
+            <span class="init-badge-sm" style="background:#c0392b;">初回限定</span>
+            <span class="price-num">980</span>
+            <span class="price-suffix">円（税込）</span>
+          </div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn no-price">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#e07040,#f4a460);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;">ORBIS</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="point-row" style="background:#fff3ee;">
+          <div class="point-badge" style="background:linear-gradient(135deg,#e07040,#f4a460);">Point<span class="num">1</span></div>
+          <div class="point-headline">毛穴詰まりと皮脂テカりに<br>直接アプローチ</div>
+        </div>
+        <!-- 皮脂サイクル図 -->
+        <div style="background:linear-gradient(180deg,#fff8f4,#fff3ee);padding:8px 8px 10px;text-align:center;">
+          <div style="background:linear-gradient(90deg,#e07040,#f4a460);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;letter-spacing:0.05em;">よくある悪循環</div>
+          <svg width="196" height="120" viewBox="0 0 196 120">
+            <!-- 背景 -->
+            <rect width="196" height="120" rx="8" fill="#fff8f4"/>
+            <!-- 3つのボックス -->
+            <rect x="8" y="10" width="56" height="30" rx="6" fill="#f0e0d8" stroke="#e8c0a8" stroke-width="1"/>
+            <text x="36" y="23" text-anchor="middle" font-size="9" font-weight="700" fill="#a04020">過剰な洗顔</text>
+            <text x="36" y="34" text-anchor="middle" font-size="8" fill="#b05030">皮脂除去しすぎ</text>
+            <rect x="76" y="10" width="56" height="30" rx="6" fill="#f8d8c8" stroke="#e8b898" stroke-width="1"/>
+            <text x="104" y="23" text-anchor="middle" font-size="9" font-weight="700" fill="#a04020">皮脂腺刺激</text>
+            <text x="104" y="34" text-anchor="middle" font-size="8" fill="#b05030">分泌量が増える</text>
+            <rect x="140" y="10" width="52" height="30" rx="6" fill="#fdc8a8" stroke="#e8a888" stroke-width="1"/>
+            <text x="166" y="23" text-anchor="middle" font-size="9" font-weight="700" fill="#c04020">テカり</text>
+            <text x="166" y="34" text-anchor="middle" font-size="8" fill="#c05030">さらに悪化</text>
+            <!-- 矢印 -->
+            <line x1="65" y1="25" x2="75" y2="25" stroke="#e07040" stroke-width="1.5" marker-end="url(#arr1)"/>
+            <line x1="133" y1="25" x2="139" y2="25" stroke="#e07040" stroke-width="1.5" marker-end="url(#arr1)"/>
+            <defs><marker id="arr1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e07040"/></marker></defs>
+            <!-- 解決策 -->
+            <rect x="8" y="60" width="180" height="50" rx="8" fill="#e07040" opacity="0.1" stroke="#e07040" stroke-width="1.5"/>
+            <text x="98" y="78" text-anchor="middle" font-size="10" font-weight="800" fill="#c04020">クリアフルのアプローチ</text>
+            <text x="98" y="92" text-anchor="middle" font-size="9" fill="#a04020">ナイアシンアミドで皮脂分泌をコントロール</text>
+            <text x="98" y="104" text-anchor="middle" font-size="9" fill="#a04020">BHAが毛穴詰まりを内側から溶かす</text>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="body-text" style="text-align:center;font-weight:700;color:#c04020;">テカりを根本から変える成分設計</div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn type-a">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#e07040,#f4a460);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;">ORBIS</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="point-row" style="background:#fff3ee;">
+          <div class="point-badge" style="background:linear-gradient(135deg,#e07040,#f4a460);">Point<span class="num">2</span></div>
+          <div class="point-headline">14日間試して<br>自分の肌で確かめる</div>
+        </div>
+        <div style="background:linear-gradient(180deg,#fff8f4,#fff3ee);padding:8px 8px 10px;text-align:center;">
+          <div style="background:linear-gradient(90deg,#e07040,#f4a460);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;">毎月スタートしている方</div>
+          <svg width="196" height="100" viewBox="0 0 196 100">
+            <rect width="196" height="100" rx="8" fill="#fff8f4"/>
+            <!-- 人アイコン × 7 (7,000人イメージ) -->
+            <text x="98" y="28" text-anchor="middle" font-size="11" font-weight="900" fill="#e07040">7,000人以上 / 月</text>
+            <text x="20" y="55" text-anchor="middle" font-size="22">👤</text>
+            <text x="50" y="55" text-anchor="middle" font-size="22">👤</text>
+            <text x="80" y="55" text-anchor="middle" font-size="22">👤</text>
+            <text x="110" y="55" text-anchor="middle" font-size="22">👤</text>
+            <text x="140" y="55" text-anchor="middle" font-size="22">👤</text>
+            <text x="170" y="55" text-anchor="middle" font-size="22">👤</text>
+            <text x="98" y="78" text-anchor="middle" font-size="9" fill="#888">ニキビ・毛穴の悩みを持つ方が</text>
+            <text x="98" y="92" text-anchor="middle" font-size="10" font-weight="700" fill="#c04020">年齢・性別問わず使えるシンプル設計</text>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="body-text" style="text-align:center;font-weight:700;color:#c04020;">まず試してから続けられる安心感</div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn type-a">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#e07040,#f4a460);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;">ORBIS</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="card-body" style="padding-bottom:4px;">
+          <div class="body-headline">オルビス初めての方限定<br>スターターセット</div>
+        </div>
+        <div class="set-section">
+          <div class="set-item" style="--dot:#e07040;">ニキビ・毛穴対策ローション（2包）<span class="item-sub">さっぱり／リッチの2テクスチャー</span></div>
+          <div class="set-item" style="--dot:#e07040;">ニキビ・毛穴対策モイスチャライザー（2包）<span class="item-sub">14日間トライアル分</span></div>
+        </div>
+        <div class="price-section" style="background:#fff8f4;border-color:#f0ddd0;">
+          <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;"><span class="price-cross">通常価格 ¥2,200</span><span style="font-size:13px;color:#c0392b;font-weight:700;">→</span></div>
+          <div class="price-main-row"><span class="init-badge-sm" style="background:#c0392b;">初回限定</span><span class="price-num">980</span><span class="price-suffix">円（税込）</span></div>
+        </div>
+        <div class="trust-row">
+          <div class="trust-badge" style="background:#fff3ee;border-color:#f0c0a0;color:#c04020;">🚚<br>送料<br>無料</div>
+          <div class="trust-badge" style="background:#fff3ee;border-color:#f0c0a0;color:#c04020;">↩️<br>返品<br>対応あり</div>
+          <div class="trust-badge" style="background:#fff3ee;border-color:#f0c0a0;color:#c04020;">⚡<br>最短<br>翌日発送</div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn type-a">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================
+       🔵 タイプB：保湿バリア修復型
+  ========================================= -->
+  <div class="type-section">
+    <div class="type-header">
+      <span class="type-label">🔵 タイプB｜保湿バリア修復型 PRカル</span>
+      <span class="type-sub">ビーグレン QuSomeローション 120mL ¥5,500</span>
+    </div>
+    <div class="cards-row">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#4a90d9,#64b5f6);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;letter-spacing:0.04em;">b.glen</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="img-area" style="height:140px;background:#edf4fc;">
+          <div class="img-icon" style="color:#4a90d9;opacity:0.4;">💧</div>
+          <div class="img-label" style="color:#5080b0;">商品パッケージ写真</div>
+        </div>
+        <!-- レビューバッジ -->
+        <div style="background:#f4f9ff;border-bottom:1px solid #d8eaf8;padding:6px 10px;display:flex;align-items:center;gap:8px;">
+          <div style="flex-shrink:0;">
+            <svg width="52" height="52" viewBox="0 0 52 52">
+              <defs><linearGradient id="ba1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f9d060"/><stop offset="50%" stop-color="#e8a820"/><stop offset="100%" stop-color="#c8860a"/></linearGradient></defs>
+              <circle cx="26" cy="26" r="25" fill="url(#ba1)" stroke="#c8860a" stroke-width="1.2"/>
+              <circle cx="26" cy="26" r="21" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
+              <text x="26" y="14" text-anchor="middle" font-size="13">⭐</text>
+              <text x="26" y="26" text-anchor="middle" font-size="11" font-weight="900" fill="#1a1a1a">5.0</text>
+              <rect x="6" y="29" width="40" height="10" rx="2" fill="#4a90d9"/>
+              <text x="26" y="37" text-anchor="middle" font-size="5.5" font-weight="800" fill="#fff">9,834件レビュー</text>
+              <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">★5.0満点達成</text>
+            </svg>
+          </div>
+          <div style="flex-shrink:0;">
+            <svg width="52" height="52" viewBox="0 0 52 52">
+              <defs><linearGradient id="ba2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#90caf9"/><stop offset="50%" stop-color="#4a90d9"/><stop offset="100%" stop-color="#1565c0"/></linearGradient></defs>
+              <circle cx="26" cy="26" r="25" fill="url(#ba2)" stroke="#1565c0" stroke-width="1.2"/>
+              <circle cx="26" cy="26" r="21" fill="#fff" stroke="#4a90d9" stroke-width="0.8"/>
+              <text x="26" y="16" text-anchor="middle" font-size="10" fill="#1565c0">🛡️</text>
+              <text x="26" y="26" text-anchor="middle" font-size="5.5" font-weight="800" fill="#1a1a1a">365日返品</text>
+              <rect x="6" y="29" width="40" height="10" rx="2" fill="#1565c0"/>
+              <text x="26" y="37" text-anchor="middle" font-size="6" font-weight="800" fill="#fff">返金保証</text>
+              <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">安心サポート</text>
+            </svg>
+          </div>
+          <div style="font-size:8.5px;font-weight:700;color:#1565c0;line-height:1.5;">★5.0<br>満点！</div>
+        </div>
+        <div class="product-section">
+          <div class="product-eyebrow">あなたにおすすめのスキンケアはこちら</div>
+          <div class="product-name">QuSomeローション<br>120mL</div>
+          <div class="product-badges">
+            <span class="product-badge" style="background:#edf4fc;border:1px solid #90caf9;color:#1565c0;">17時間保湿持続</span>
+            <span class="product-badge" style="background:#edf4fc;border:1px solid #90caf9;color:#1565c0;">角層深部へ届ける</span>
+            <span class="product-badge" style="background:#edf4fc;border:1px solid #90caf9;color:#1565c0;">365日返品保証</span>
+          </div>
+        </div>
+        <div class="price-section" style="background:#f4f9ff;border-color:#d8eaf8;">
+          <div class="price-label-sm">通常価格</div>
+          <div class="price-main-row">
+            <span class="price-num" style="color:#4a90d9;">5,500</span>
+            <span class="price-suffix">円（税込）</span>
+          </div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn no-price">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#4a90d9,#64b5f6);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;">b.glen</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="point-row" style="background:#edf4fc;">
+          <div class="point-badge" style="background:linear-gradient(135deg,#4a90d9,#64b5f6);">Point<span class="num">1</span></div>
+          <div class="point-headline">「17時間保湿」が続く<br>高機能化粧水</div>
+        </div>
+        <!-- 17時間保湿タイムライン -->
+        <div style="background:linear-gradient(180deg,#edf4fc,#dceef8);padding:8px 8px 10px;text-align:center;">
+          <div style="background:linear-gradient(90deg,#4a90d9,#64b5f6);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;">朝つけたら夜まで続く</div>
+          <svg width="196" height="110" viewBox="0 0 196 110">
+            <rect width="196" height="110" rx="8" fill="#f0f8ff"/>
+            <!-- タイムライン軸 -->
+            <line x1="12" y1="65" x2="184" y2="65" stroke="#b0d0f0" stroke-width="1.5"/>
+            <!-- 目盛り -->
+            <text x="12" y="80" text-anchor="middle" font-size="7" fill="#888">朝</text>
+            <text x="12" y="88" text-anchor="middle" font-size="7" fill="#888">7:00</text>
+            <text x="56" y="80" text-anchor="middle" font-size="7" fill="#888">昼</text>
+            <text x="56" y="88" text-anchor="middle" font-size="7" fill="#888">12:00</text>
+            <text x="112" y="80" text-anchor="middle" font-size="7" fill="#888">夕</text>
+            <text x="112" y="88" text-anchor="middle" font-size="7" fill="#888">17:00</text>
+            <text x="168" y="80" text-anchor="middle" font-size="7" fill="#888">夜</text>
+            <text x="168" y="88" text-anchor="middle" font-size="7" fill="#888">24:00</text>
+            <!-- 17時間保湿バー -->
+            <rect x="12" y="50" width="172" height="14" rx="7" fill="#4a90d9" opacity="0.85"/>
+            <text x="98" y="61" text-anchor="middle" font-size="8.5" font-weight="800" fill="#fff">17時間　うるおい持続</text>
+            <!-- 他社比較バー（点線） -->
+            <rect x="12" y="30" width="80" height="10" rx="5" fill="none" stroke="#aaa" stroke-width="1.2" stroke-dasharray="4,3"/>
+            <text x="98" y="41" text-anchor="middle" font-size="7" fill="#aaa">一般的な化粧水 ≒ 8時間</text>
+            <!-- ラベル -->
+            <text x="98" y="18" text-anchor="middle" font-size="9" font-weight="700" fill="#1565c0">角層内深部まで水分と美容成分を届ける</text>
+            <!-- 矢印（浸透） -->
+            <text x="98" y="104" text-anchor="middle" font-size="9" fill="#4a90d9">乾燥・べたつきのダブル悩みを同時ケア</text>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="body-text" style="text-align:center;font-weight:700;color:#1565c0;">肌の底上げで、翌朝も透明感が続く</div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn type-b">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#4a90d9,#64b5f6);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;">b.glen</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="point-row" style="background:#edf4fc;">
+          <div class="point-badge" style="background:linear-gradient(135deg,#4a90d9,#64b5f6);">Point<span class="num">2</span></div>
+          <div class="point-headline">次のステップの浸透も<br>サポート</div>
+        </div>
+        <div style="background:linear-gradient(180deg,#edf4fc,#dceef8);padding:8px 8px 10px;text-align:center;">
+          <div style="background:linear-gradient(90deg,#4a90d9,#64b5f6);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;">使用感 ★★★★★</div>
+          <svg width="196" height="100" viewBox="0 0 196 100">
+            <rect width="196" height="100" rx="8" fill="#f0f8ff"/>
+            <!-- 大きな数字 -->
+            <text x="60" y="52" text-anchor="middle" font-size="38" font-weight="900" fill="#4a90d9">5.0</text>
+            <text x="60" y="68" text-anchor="middle" font-size="11" fill="#888">★ / 9,834件</text>
+            <!-- 右側コメント -->
+            <rect x="110" y="15" width="80" height="70" rx="8" fill="#fff" stroke="#d0e8f8" stroke-width="1"/>
+            <text x="150" y="32" text-anchor="middle" font-size="8" font-weight="700" fill="#4a90d9">使用者の声</text>
+            <text x="150" y="46" text-anchor="middle" font-size="7.5" fill="#555">「翌朝も</text>
+            <text x="150" y="57" text-anchor="middle" font-size="7.5" fill="#555">しっとり肌が</text>
+            <text x="150" y="68" text-anchor="middle" font-size="7.5" fill="#555">続いてびっくり」</text>
+            <text x="150" y="80" text-anchor="middle" font-size="7" fill="#aaa">30代女性 ユーザー</text>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="body-text" style="text-align:center;font-weight:700;color:#1565c0;">定期便primeでずっとお得に続けられる</div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn type-b">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#4a90d9,#64b5f6);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;">b.glen</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="card-body" style="padding-bottom:4px;">
+          <div class="body-headline">365日返品・返金保証で<br>安心して試せる</div>
+        </div>
+        <div class="set-section">
+          <div class="set-item" style="--dot:#4a90d9;">QuSomeローション 120mL<span class="item-sub">たっぷり使えるサイズ</span></div>
+        </div>
+        <div class="price-section" style="background:#f4f9ff;border-color:#d8eaf8;">
+          <div class="price-label-sm">通常価格</div>
+          <div class="price-main-row"><span class="price-num" style="color:#4a90d9;">5,500</span><span class="price-suffix">円（税込）</span></div>
+        </div>
+        <div class="trust-row">
+          <div class="trust-badge" style="background:#edf4fc;border-color:#90caf9;color:#1565c0;">🛡️<br>365日<br>返品保証</div>
+          <div class="trust-badge" style="background:#edf4fc;border-color:#90caf9;color:#1565c0;">🚚<br>¥5,500以上<br>送料無料</div>
+          <div class="trust-badge" style="background:#edf4fc;border-color:#90caf9;color:#1565c0;">⭐<br>★5.0<br>9,834件</div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn type-b">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================
+       🟢 タイプC：低刺激・肌環境改善型
+  ========================================= -->
+  <div class="type-section">
+    <div class="type-header">
+      <span class="type-label">🟢 タイプC｜低刺激・肌環境改善型 PRカル</span>
+      <span class="type-sub">ファンケル 無添加アクネケア 薬用ニキビ化粧液＆乳液セット ¥1,750（初回）</span>
+    </div>
+    <div class="cards-row">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#4caf7a,#81c784);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;letter-spacing:0.04em;">FANCL</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="img-area" style="height:140px;background:#f0fbf3;">
+          <div class="img-icon" style="color:#4caf7a;opacity:0.4;">🌿</div>
+          <div class="img-label" style="color:#5a8060;">商品パッケージ写真</div>
+        </div>
+        <!-- 受賞バッジ -->
+        <div style="background:#f0fbf4;border-bottom:1px solid #c8e8d0;padding:6px 10px;display:flex;align-items:center;gap:8px;">
+          <div style="flex-shrink:0;">
+            <svg width="52" height="52" viewBox="0 0 52 52">
+              <defs><linearGradient id="fa1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f9d060"/><stop offset="50%" stop-color="#e8a820"/><stop offset="100%" stop-color="#c8860a"/></linearGradient></defs>
+              <circle cx="26" cy="26" r="25" fill="url(#fa1)" stroke="#c8860a" stroke-width="1.2"/>
+              <circle cx="26" cy="26" r="21" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
+              <text x="26" y="15" text-anchor="middle" font-size="10">🏆</text>
+              <text x="26" y="25" text-anchor="middle" font-size="5" font-weight="800" fill="#1a1a1a">6 Best Cosmetics</text>
+              <rect x="5" y="28" width="42" height="10" rx="2" fill="#4caf7a"/>
+              <text x="26" y="36" text-anchor="middle" font-size="5.5" font-weight="800" fill="#fff">Awards受賞</text>
+              <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">アクネケアエッセンス</text>
+            </svg>
+          </div>
+          <div style="flex-shrink:0;">
+            <svg width="52" height="52" viewBox="0 0 52 52">
+              <defs><linearGradient id="fa2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#a8e8b8"/><stop offset="50%" stop-color="#4caf7a"/><stop offset="100%" stop-color="#2e7d32"/></linearGradient></defs>
+              <circle cx="26" cy="26" r="25" fill="url(#fa2)" stroke="#2e7d32" stroke-width="1.2"/>
+              <circle cx="26" cy="26" r="21" fill="#fff" stroke="#4caf7a" stroke-width="0.8"/>
+              <text x="26" y="15" text-anchor="middle" font-size="10">✅</text>
+              <text x="26" y="25" text-anchor="middle" font-size="5.5" font-weight="800" fill="#1a1a1a">医薬部外品</text>
+              <rect x="7" y="28" width="38" height="10" rx="2" fill="#2e7d32"/>
+              <text x="26" y="36" text-anchor="middle" font-size="6" font-weight="800" fill="#fff">薬用認定</text>
+              <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">ニキビに直接効く</text>
+            </svg>
+          </div>
+          <div style="font-size:8.5px;font-weight:700;color:#2e7d32;line-height:1.5;">受賞！<br>医薬部外品</div>
+        </div>
+        <div class="product-section">
+          <div class="product-eyebrow">あなたにおすすめのスキンケアはこちら</div>
+          <div class="product-name">無添加アクネケア<br>薬用ニキビ化粧液＆乳液セット</div>
+          <div class="product-badges">
+            <span class="product-badge" style="background:#f0fbf3;border:1px solid #81c784;color:#2e7d32;">薬用（医薬部外品）</span>
+            <span class="product-badge" style="background:#f0fbf3;border:1px solid #81c784;color:#2e7d32;">無添加</span>
+            <span class="product-badge" style="background:#f0fbf3;border:1px solid #81c784;color:#2e7d32;">敏感肌OK</span>
+          </div>
+        </div>
+        <div class="price-section" style="background:#f0fbf4;border-color:#c8e8d0;">
+          <div class="price-label-sm">初回限定特別価格</div>
+          <div class="price-main-row">
+            <span class="init-badge-sm" style="background:#c0392b;">初回限定</span>
+            <span class="price-num">1,750</span>
+            <span class="price-suffix">円（税込）</span>
+          </div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn no-price">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#4caf7a,#81c784);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;">FANCL</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="point-row" style="background:#f0fbf3;">
+          <div class="point-badge" style="background:linear-gradient(135deg,#4caf7a,#81c784);">Point<span class="num">1</span></div>
+          <div class="point-headline">「薬用」だから<br>ニキビに直接効く</div>
+        </div>
+        <!-- 5成分不使用 ビジュアル -->
+        <div style="background:linear-gradient(180deg,#f0fbf3,#e8f5ec);padding:8px 8px 10px;text-align:center;">
+          <div style="background:linear-gradient(90deg,#4caf7a,#81c784);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;">5成分 一切不使用</div>
+          <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-bottom:6px;">
+            <div style="background:#fff;border:1.5px solid #c8e8d0;border-radius:8px;padding:3px 6px;font-size:8px;font-weight:700;color:#2e7d32;position:relative;">防腐剤<span style="position:absolute;top:-2px;right:-2px;color:#c0392b;font-size:12px;line-height:1;">✕</span></div>
+            <div style="background:#fff;border:1.5px solid #c8e8d0;border-radius:8px;padding:3px 6px;font-size:8px;font-weight:700;color:#2e7d32;position:relative;">合成香料<span style="position:absolute;top:-2px;right:-2px;color:#c0392b;font-size:12px;line-height:1;">✕</span></div>
+            <div style="background:#fff;border:1.5px solid #c8e8d0;border-radius:8px;padding:3px 6px;font-size:8px;font-weight:700;color:#2e7d32;position:relative;">合成色素<span style="position:absolute;top:-2px;right:-2px;color:#c0392b;font-size:12px;line-height:1;">✕</span></div>
+            <div style="background:#fff;border:1.5px solid #c8e8d0;border-radius:8px;padding:3px 6px;font-size:8px;font-weight:700;color:#2e7d32;position:relative;">石油系界面活性剤<span style="position:absolute;top:-2px;right:-2px;color:#c0392b;font-size:12px;line-height:1;">✕</span></div>
+            <div style="background:#fff;border:1.5px solid #c8e8d0;border-radius:8px;padding:3px 6px;font-size:8px;font-weight:700;color:#2e7d32;position:relative;">紫外線吸収剤<span style="position:absolute;top:-2px;right:-2px;color:#c0392b;font-size:12px;line-height:1;">✕</span></div>
+          </div>
+          <div style="background:#fff;border:1.5px solid #4caf7a;border-radius:8px;padding:6px 8px;display:inline-block;">
+            <div style="font-size:10px;color:#2e7d32;font-weight:700;line-height:1.5;">肌に負担をかけずに<br>繰り返すニキビを根本からケア</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="body-text" style="text-align:center;font-weight:700;color:#2e7d32;">「その場しのぎケア」卒業へ</div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn type-c">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#4caf7a,#81c784);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;">FANCL</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="point-row" style="background:#f0fbf3;">
+          <div class="point-badge" style="background:linear-gradient(135deg,#4caf7a,#81c784);">Point<span class="num">2</span></div>
+          <div class="point-headline">バリア機能を整えながら<br>ニキビを抑制</div>
+        </div>
+        <!-- 有効成分ビジュアル -->
+        <div style="background:linear-gradient(180deg,#f0fbf3,#e8f5ec);padding:8px 8px 10px;text-align:center;">
+          <div style="background:linear-gradient(90deg,#4caf7a,#81c784);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;">3つの有効成分</div>
+          <div style="display:flex;gap:5px;margin-bottom:6px;">
+            <div style="flex:1;background:#fff;border:1px solid #a8d8b8;border-radius:8px;padding:5px 3px;text-align:center;">
+              <div style="font-size:13px;margin-bottom:2px;">🌿</div>
+              <div style="font-size:7.5px;font-weight:800;color:#2e7d32;line-height:1.4;">セージ<br>エキス</div>
+              <div style="font-size:7px;color:#4caf7a;margin-top:2px;">炎症を鎮める</div>
+            </div>
+            <div style="flex:1;background:#fff;border:1px solid #a8d8b8;border-radius:8px;padding:5px 3px;text-align:center;">
+              <div style="font-size:13px;margin-bottom:2px;">💊</div>
+              <div style="font-size:7px;font-weight:800;color:#2e7d32;line-height:1.4;">グリチル<br>リチン酸</div>
+              <div style="font-size:7px;color:#4caf7a;margin-top:2px;">抗炎症作用</div>
+            </div>
+            <div style="flex:1;background:#fff;border:1px solid #a8d8b8;border-radius:8px;padding:5px 3px;text-align:center;">
+              <div style="font-size:13px;margin-bottom:2px;">🔬</div>
+              <div style="font-size:7px;font-weight:800;color:#2e7d32;line-height:1.4;">トラネキ<br>サム酸</div>
+              <div style="font-size:7px;color:#4caf7a;margin-top:2px;">肌荒れ防止</div>
+            </div>
+          </div>
+          <div style="background:#fff;border:1.5px solid #4caf7a;border-radius:8px;padding:6px 8px;">
+            <div style="font-size:10px;color:#2e7d32;font-weight:700;line-height:1.5;">繰り返すニキビが起きにくい<br>肌環境へ</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="body-text" style="text-align:center;font-weight:700;color:#2e7d32;">医学的な成分設計で根本からアプローチ</div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn type-c">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#4caf7a,#81c784);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;">FANCL</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="card-body" style="padding-bottom:4px;">
+          <div class="body-headline">初めての方限定<br>特別価格でお試し</div>
+        </div>
+        <div class="set-section">
+          <div class="set-item" style="--dot:#4caf7a;">薬用アクネケア化粧液<span class="item-sub">約1ヶ月分</span></div>
+          <div class="set-item" style="--dot:#4caf7a;">薬用アクネケア乳液<span class="item-sub">約1ヶ月分</span></div>
+        </div>
+        <div class="price-section" style="background:#f0fbf4;border-color:#c8e8d0;">
+          <div class="price-label-sm">初回限定特別価格</div>
+          <div class="price-main-row"><span class="init-badge-sm" style="background:#c0392b;">初回限定</span><span class="price-num">1,750</span><span class="price-suffix">円（税込）</span></div>
+        </div>
+        <div class="trust-row">
+          <div class="trust-badge" style="background:#f0fbf3;border-color:#a8d8b8;color:#2e7d32;">🛡️<br>90日間<br>返金保証</div>
+          <div class="trust-badge" style="background:#f0fbf3;border-color:#a8d8b8;color:#2e7d32;">🚚<br>最短2日<br>お届け</div>
+          <div class="trust-badge" style="background:#f0fbf3;border-color:#a8d8b8;color:#2e7d32;">📦<br>1世帯<br>1セット</div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn type-c">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================
+       🟣 タイプD：美白・エイジングケア型
+  ========================================= -->
+  <div class="type-section">
+    <div class="type-header">
+      <span class="type-label">🟣 タイプD｜美白・エイジングケア型 PRカル</span>
+      <span class="type-sub">Sibody VCスターターセット ¥1,980（初回）</span>
+    </div>
+    <div class="cards-row">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#ab6cc6,#ce93d8);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;letter-spacing:0.04em;">Sibody</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="img-area" style="height:140px;background:#f8f0fc;">
+          <div class="img-icon" style="color:#ab6cc6;opacity:0.4;">✨</div>
+          <div class="img-label" style="color:#8050a0;">商品パッケージ写真</div>
+        </div>
+        <!-- バッジ -->
+        <div style="background:#f8f0fc;border-bottom:1px solid #e0c8f0;padding:6px 10px;display:flex;align-items:center;gap:8px;">
+          <div style="flex-shrink:0;">
+            <svg width="52" height="52" viewBox="0 0 52 52">
+              <defs><linearGradient id="da1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f9d060"/><stop offset="50%" stop-color="#e8a820"/><stop offset="100%" stop-color="#c8860a"/></linearGradient></defs>
+              <circle cx="26" cy="26" r="25" fill="url(#da1)" stroke="#c8860a" stroke-width="1.2"/>
+              <circle cx="26" cy="26" r="21" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
+              <text x="26" y="15" text-anchor="middle" font-size="10">👨‍⚕️</text>
+              <text x="26" y="25" text-anchor="middle" font-size="5.5" font-weight="800" fill="#1a1a1a">ドクター</text>
+              <rect x="6" y="28" width="40" height="10" rx="2" fill="#ab6cc6"/>
+              <text x="26" y="36" text-anchor="middle" font-size="6" font-weight="800" fill="#fff">監修済み</text>
+              <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">医学的根拠あり</text>
+            </svg>
+          </div>
+          <div style="flex-shrink:0;">
+            <svg width="52" height="52" viewBox="0 0 52 52">
+              <defs><linearGradient id="da2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ddb0f0"/><stop offset="50%" stop-color="#ab6cc6"/><stop offset="100%" stop-color="#6a1b9a"/></linearGradient></defs>
+              <circle cx="26" cy="26" r="25" fill="url(#da2)" stroke="#6a1b9a" stroke-width="1.2"/>
+              <circle cx="26" cy="26" r="21" fill="#fff" stroke="#ab6cc6" stroke-width="0.8"/>
+              <text x="26" y="15" text-anchor="middle" font-size="10">💊</text>
+              <text x="26" y="25" text-anchor="middle" font-size="5.5" font-weight="800" fill="#1a1a1a">VC200配合</text>
+              <rect x="6" y="28" width="40" height="10" rx="2" fill="#6a1b9a"/>
+              <text x="26" y="36" text-anchor="middle" font-size="5.5" font-weight="800" fill="#fff">高濃度VC</text>
+              <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">角層深部へ</text>
+            </svg>
+          </div>
+          <div style="font-size:8.5px;font-weight:700;color:#6a1b9a;line-height:1.5;">ドクター<br>監修！</div>
+        </div>
+        <div class="product-section">
+          <div class="product-eyebrow">あなたにおすすめのスキンケアはこちら</div>
+          <div class="product-name">VCスターターセット<br>（4点フルセット）</div>
+          <div class="product-badges">
+            <span class="product-badge" style="background:#f8f0fc;border:1px solid #ddb0f0;color:#6a1b9a;">シミ・くすみケア</span>
+            <span class="product-badge" style="background:#f8f0fc;border:1px solid #ddb0f0;color:#6a1b9a;">VC200集中投与</span>
+            <span class="product-badge" style="background:#f8f0fc;border:1px solid #ddb0f0;color:#6a1b9a;">4ステップ完結</span>
+          </div>
+        </div>
+        <div class="price-section" style="background:#f8f0fc;border-color:#e0c8f0;">
+          <div class="price-label-sm">初回限定特別価格</div>
+          <div class="price-main-row">
+            <span class="init-badge-sm" style="background:#c0392b;">初回限定</span>
+            <span class="price-num">1,980</span>
+            <span class="price-suffix">円（税込）</span>
+          </div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn no-price">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#ab6cc6,#ce93d8);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;">Sibody</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="point-row" style="background:#f8f0fc;">
+          <div class="point-badge" style="background:linear-gradient(135deg,#ab6cc6,#ce93d8);">Point<span class="num">1</span></div>
+          <div class="point-headline">高濃度VC（VC200）を<br>角層深部へ届ける</div>
+        </div>
+        <!-- VC浸透図 -->
+        <div style="background:linear-gradient(180deg,#f8f0fc,#f0e4f8);padding:8px 8px 10px;text-align:center;">
+          <div style="background:linear-gradient(90deg,#ab6cc6,#ce93d8);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;">メラニン抑制 × ターンオーバー促進</div>
+          <svg width="196" height="110" viewBox="0 0 196 110">
+            <rect width="196" height="110" rx="8" fill="#faf0fc"/>
+            <!-- VC200 大きな数字 -->
+            <text x="60" y="40" text-anchor="middle" font-size="28" font-weight="900" fill="#ab6cc6">VC</text>
+            <text x="60" y="60" text-anchor="middle" font-size="20" font-weight="900" fill="#6a1b9a">200</text>
+            <text x="60" y="75" text-anchor="middle" font-size="8" fill="#888">高濃度ビタミンC</text>
+            <!-- 矢印 -->
+            <text x="100" y="55" text-anchor="middle" font-size="20" fill="#ab6cc6">→</text>
+            <!-- 右側効果 -->
+            <rect x="120" y="20" width="70" height="70" rx="8" fill="#fff" stroke="#ddb0f0" stroke-width="1"/>
+            <text x="155" y="38" text-anchor="middle" font-size="8" font-weight="700" fill="#ab6cc6">角層深部で</text>
+            <text x="155" y="50" text-anchor="middle" font-size="8" font-weight="700" fill="#6a1b9a">✓ メラニン抑制</text>
+            <text x="155" y="63" text-anchor="middle" font-size="8" font-weight="700" fill="#6a1b9a">✓ ターンオーバー</text>
+            <text x="155" y="75" text-anchor="middle" font-size="8" font-weight="700" fill="#6a1b9a">　 促進</text>
+            <text x="155" y="86" text-anchor="middle" font-size="7.5" fill="#888">→ 透明感アップ</text>
+            <!-- 下部テキスト -->
+            <text x="98" y="100" text-anchor="middle" font-size="8.5" font-weight="700" fill="#ab6cc6">使うたびに透明感が積み重なる</text>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="body-text" style="text-align:center;font-weight:700;color:#6a1b9a;">「作らない」+「ためない」+「守る」3ステップ</div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn type-d">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#ab6cc6,#ce93d8);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;">Sibody</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="point-row" style="background:#f8f0fc;">
+          <div class="point-badge" style="background:linear-gradient(135deg,#ab6cc6,#ce93d8);">Point<span class="num">2</span></div>
+          <div class="point-headline">ドクター監修の<br>4ステップ全方位VC設計</div>
+        </div>
+        <!-- 4ステップ図 -->
+        <div style="background:linear-gradient(180deg,#f8f0fc,#f0e4f8);padding:8px 8px 10px;text-align:center;">
+          <div style="background:linear-gradient(90deg,#ab6cc6,#ce93d8);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;">VCで統一した4ステップ</div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div style="background:#fff;border:1px solid #ddb0f0;border-radius:8px;padding:5px 10px;display:flex;align-items:center;gap:8px;">
+              <span style="background:#ab6cc6;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px;white-space:nowrap;">Step1</span>
+              <span style="font-size:10px;font-weight:700;color:#333;">薬用VC泡フォーマー</span>
+            </div>
+            <div style="background:#fff;border:1px solid #ddb0f0;border-radius:8px;padding:5px 10px;display:flex;align-items:center;gap:8px;">
+              <span style="background:#ab6cc6;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px;white-space:nowrap;">Step2</span>
+              <span style="font-size:10px;font-weight:700;color:#333;">VC化粧水</span>
+            </div>
+            <div style="background:#fff;border:1px solid #ddb0f0;border-radius:8px;padding:5px 10px;display:flex;align-items:center;gap:8px;">
+              <span style="background:#ab6cc6;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px;white-space:nowrap;">Step3</span>
+              <span style="font-size:10px;font-weight:700;color:#333;">VC美容液</span>
+            </div>
+            <div style="background:#fff;border:1px solid #ddb0f0;border-radius:8px;padding:5px 10px;display:flex;align-items:center;gap:8px;">
+              <span style="background:#6a1b9a;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px;white-space:nowrap;">Step4</span>
+              <span style="font-size:10px;font-weight:700;color:#333;">VC活力液</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="body-text" style="text-align:center;font-weight:700;color:#6a1b9a;">シミ・くすみの根本から攻める統一設計</div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn type-d">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card">
+        <div style="background:linear-gradient(90deg,#ab6cc6,#ce93d8);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="color:#fff;font-weight:800;font-size:13px;">Sibody</span>
+          <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
+        </div>
+        <div class="card-body" style="padding-bottom:4px;">
+          <div class="body-headline">初回限定<br>VCスターターセット</div>
+        </div>
+        <div class="set-section">
+          <div class="set-item" style="--dot:#ab6cc6;">薬用VC泡フォーマー<span class="item-sub">洗顔ステップ</span></div>
+          <div class="set-item" style="--dot:#ab6cc6;">VC化粧水<span class="item-sub">うるおいを補給</span></div>
+          <div class="set-item" style="--dot:#ab6cc6;">VC美容液<span class="item-sub">集中美容成分</span></div>
+          <div class="set-item" style="--dot:#ab6cc6;">VC活力液<span class="item-sub">仕上げ・バリア強化</span></div>
+        </div>
+        <div class="price-section" style="background:#f8f0fc;border-color:#e0c8f0;">
+          <div class="price-label-sm">初回限定特別価格</div>
+          <div class="price-main-row"><span class="init-badge-sm" style="background:#c0392b;">初回限定</span><span class="price-num">1,980</span><span class="price-suffix">円（税込）</span></div>
+        </div>
+        <div class="trust-row">
+          <div class="trust-badge" style="background:#f8f0fc;border-color:#ddb0f0;color:#6a1b9a;">👨‍⚕️<br>ドクター<br>監修</div>
+          <div class="trust-badge" style="background:#f8f0fc;border-color:#ddb0f0;color:#6a1b9a;">📦<br>ネコポス<br>対応</div>
+          <div class="trust-badge" style="background:#f8f0fc;border-color:#ddb0f0;color:#6a1b9a;">🎁<br>1世帯<br>1セット</div>
+        </div>
+        <div class="cta-wrap"><button class="cta-btn type-d">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
-
-<div class="type-tabs">
-  <button class="tab-btn tab-a active" onclick="switchTab('a')">タイプA｜皮脂コントロール</button>
-  <button class="tab-btn tab-b" onclick="switchTab('b')">タイプB｜保湿バリア修復</button>
-  <button class="tab-btn tab-c" onclick="switchTab('c')">タイプC｜低刺激・肌環境改善</button>
-  <button class="tab-btn tab-d" onclick="switchTab('d')">タイプD｜美白・エイジングケア</button>
-</div>
-
-<!-- ══ タイプA ══ -->
-<div class="cards-section active" id="section-a">
-  <div class="type-label type-a-label" style="padding-top:12px;">
-    <span>タイプA</span>皮脂コントロール型 ／ オルビス クリアフル ニキビ・毛穴対策スターターセット ¥980
-  </div>
-  <div class="cards-row">
-
-    <!-- Card 1 -->
-    <div class="line-card type-a">
-      <div class="card-header">
-        <div class="card-num">Card 1 — 商材発表</div>
-        <div class="card-title">あなたにおすすめの<br>スキンケアはこちら</div>
-      </div>
-      <div class="product-thumb">
-        <div>
-          <div class="brand">ORBIS</div>
-          <div class="product-label">クリアフル<br>ニキビ・毛穴対策スターターセット</div>
-        </div>
-        <div class="img-ph">🧴</div>
-      </div>
-      <div class="card-body">
-        <div style="font-size:11px;color:#888;margin-bottom:6px;">毎月7,000人以上が使い始めている！</div>
-        <div class="trust-badges">
-          <span class="trust-badge">テカらない肌へ</span>
-          <span class="trust-badge">毛穴ケア</span>
-          <span class="trust-badge">14日間トライアル</span>
-        </div>
-      </div>
-      <div class="price-area">
-        <div class="price-label">初回トライアル</div>
-        <div class="price-main">
-          <span class="price-tag">初回</span>
-          <span class="price-num">980</span>
-          <span class="price-suffix">円</span>
-        </div>
-      </div>
-      <div class="card-cta">詳しく見る →</div>
-    </div>
-
-    <!-- Card 2 -->
-    <div class="line-card type-a">
-      <div class="card-header">
-        <div class="card-num">Card 2 — Point 1</div>
-        <div class="card-title">毛穴の詰まりと<br>皮脂テカりに<br>直接アプローチ</div>
-      </div>
-      <div class="card-body">
-        <div class="card-lead">ローション × モイスチャライザーのライン設計</div>
-        <div class="pt-item">さっぱり・リッチの2テクスチャーから肌に合う方を選べる</div>
-        <div class="pt-item">ニキビができにくい肌環境へ整える</div>
-        <div style="margin-top:10px;padding:8px 10px;background:#fff3ee;border-radius:8px;font-size:11px;color:#c0502a;font-weight:700;">テカり×毛穴の2大悩みを<br>同時ケアできる設計</div>
-      </div>
-      <div class="badges-row">
-        <span class="badge key">皮脂コントロール</span>
-        <span class="badge key">毛穴ケア</span>
-      </div>
-      <div class="card-cta">詳しく見る →</div>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="line-card type-a">
-      <div class="card-header">
-        <div class="card-num">Card 3 — Point 2</div>
-        <div class="card-title">14日間試して<br>自分の肌で<br>確かめる</div>
-      </div>
-      <div class="card-body">
-        <div class="card-lead">毎月7,000人以上がスタート</div>
-        <div class="pt-item">ニキビ・毛穴の悩みを抱えた方が毎月7,000人以上スタート</div>
-        <div class="pt-item">年齢・性別問わず使えるシンプルな設計</div>
-        <div class="pt-item">まず試してから続けられる安心感</div>
-      </div>
-      <div class="badges-row">
-        <span class="badge key">14日間お試し</span>
-        <span class="badge key">年齢・性別不問</span>
-      </div>
-      <div class="card-cta">詳しく見る →</div>
-    </div>
-
-    <!-- Card 4 -->
-    <div class="line-card type-a">
-      <div class="card-header">
-        <div class="card-num">Card 4 — CV</div>
-        <div class="card-title">オルビス初めての方限定<br>スターターセット</div>
-      </div>
-      <div class="product-thumb">
-        <div>
-          <div class="brand">ORBIS</div>
-          <div class="product-label">ニキビ・毛穴対策ローション<br>＋ モイスチャライザー（各2包）</div>
-        </div>
-        <div class="img-ph">🧴</div>
-      </div>
-      <div class="card-body">
-        <div style="font-size:11.5px;color:#444;">14日間トライアルセット</div>
-        <div class="trust-badges" style="margin-top:8px;">
-          <span class="trust-badge">初めての方限定</span>
-          <span class="trust-badge">14日間分</span>
-        </div>
-      </div>
-      <div class="price-area">
-        <div class="price-label">初回特別価格</div>
-        <div class="price-main">
-          <span class="price-tag">初回</span>
-          <span class="price-num">980</span>
-          <span class="price-suffix">円</span>
-        </div>
-      </div>
-      <div class="card-cta">今すぐ試す →</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ══ タイプB ══ -->
-<div class="cards-section" id="section-b">
-  <div class="type-label type-b-label" style="padding-top:12px;">
-    <span>タイプB</span>保湿バリア修復型 ／ ビーグレン QuSomeローション 120mL ¥5,500
-  </div>
-  <div class="cards-row">
-
-    <!-- Card 1 -->
-    <div class="line-card type-b">
-      <div class="card-header">
-        <div class="card-num">Card 1 — 商材発表</div>
-        <div class="card-title">あなたにおすすめの<br>スキンケアはこちら</div>
-      </div>
-      <div class="product-thumb">
-        <div>
-          <div class="brand">b.glen</div>
-          <div class="product-label">QuSomeローション<br>120mL</div>
-        </div>
-        <div class="img-ph">💧</div>
-      </div>
-      <div class="card-body">
-        <div style="font-size:11px;color:#888;margin-bottom:6px;">★5.0（9,834件のレビュー）</div>
-        <div class="trust-badges">
-          <span class="trust-badge">17時間保湿持続</span>
-          <span class="trust-badge">角層深部へ届ける</span>
-          <span class="trust-badge">365日返品・返金保証</span>
-        </div>
-      </div>
-      <div class="price-area">
-        <div class="price-label">通常価格</div>
-        <div class="price-main">
-          <span class="price-num">5,500</span>
-          <span class="price-suffix">円（税込）</span>
-        </div>
-      </div>
-      <div class="card-cta">詳しく見る →</div>
-    </div>
-
-    <!-- Card 2 -->
-    <div class="line-card type-b">
-      <div class="card-header">
-        <div class="card-num">Card 2 — Point 1</div>
-        <div class="card-title">「17時間保湿」が<br>続く<br>高機能化粧水</div>
-      </div>
-      <div class="card-body">
-        <div class="card-lead">角層内深部に水分と美容成分を届ける</div>
-        <div class="pt-item">朝つけたら夜まで乾燥しない「肌の底上げ効果」</div>
-        <div class="pt-item">乾燥・べたつきのダブル悩みを同時にケア</div>
-        <div style="margin-top:10px;padding:8px 10px;background:#edf4fc;border-radius:8px;font-size:11px;color:#1565c0;font-weight:700;">朝だけで一日中うるおいが続く</div>
-      </div>
-      <div class="badges-row">
-        <span class="badge key">17時間保湿</span>
-        <span class="badge key">角層深部</span>
-      </div>
-      <div class="card-cta">詳しく見る →</div>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="line-card type-b">
-      <div class="card-header">
-        <div class="card-num">Card 3 — Point 2</div>
-        <div class="card-title">次のステップの<br>浸透も<br>サポート</div>
-      </div>
-      <div class="card-body">
-        <div class="card-lead">★5.0・9,834件が示す確かな効果</div>
-        <div class="pt-item">押し上がるようなハリを実感</div>
-        <div class="pt-item">9,834件の高評価レビュー</div>
-        <div class="pt-item">定期便primeでずっとお得に続けられる</div>
-      </div>
-      <div class="badges-row">
-        <span class="badge key">★5.0 9,834件</span>
-        <span class="badge key">定期便あり</span>
-      </div>
-      <div class="card-cta">詳しく見る →</div>
-    </div>
-
-    <!-- Card 4 -->
-    <div class="line-card type-b">
-      <div class="card-header">
-        <div class="card-num">Card 4 — CV</div>
-        <div class="card-title">365日返品・返金保証<br>で安心</div>
-      </div>
-      <div class="product-thumb">
-        <div>
-          <div class="brand">b.glen</div>
-          <div class="product-label">QuSomeローション<br>120mL</div>
-        </div>
-        <div class="img-ph">💧</div>
-      </div>
-      <div class="card-body">
-        <div class="trust-badges" style="margin-top:4px;">
-          <span class="trust-badge">365日返品・返金保証</span>
-          <span class="trust-badge">¥5,500以上送料無料</span>
-          <span class="trust-badge">★5.0（9,834件）</span>
-        </div>
-      </div>
-      <div class="price-area">
-        <div class="price-label">通常価格</div>
-        <div class="price-main">
-          <span class="price-num">5,500</span>
-          <span class="price-suffix">円（税込）</span>
-        </div>
-      </div>
-      <div class="card-cta">今すぐ購入する →</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ══ タイプC ══ -->
-<div class="cards-section" id="section-c">
-  <div class="type-label type-c-label" style="padding-top:12px;">
-    <span>タイプC</span>低刺激・肌環境改善型 ／ ファンケル 無添加アクネケア 薬用ニキビ化粧液＆乳液セット ¥1,750（初回）
-  </div>
-  <div class="cards-row">
-
-    <!-- Card 1 -->
-    <div class="line-card type-c">
-      <div class="card-header">
-        <div class="card-num">Card 1 — 商材発表</div>
-        <div class="card-title">あなたにおすすめの<br>スキンケアはこちら</div>
-      </div>
-      <div class="product-thumb">
-        <div>
-          <div class="brand">FANCL</div>
-          <div class="product-label">無添加アクネケア<br>薬用ニキビ化粧液＆乳液セット</div>
-        </div>
-        <div class="img-ph">🌿</div>
-      </div>
-      <div class="card-body">
-        <div style="font-size:11px;color:#888;margin-bottom:6px;">アクネケアエッセンス「6 Best Cosmetics Awards」受賞</div>
-        <div class="trust-badges">
-          <span class="trust-badge">薬用（医薬部外品）</span>
-          <span class="trust-badge">無添加</span>
-          <span class="trust-badge">敏感肌OK</span>
-        </div>
-      </div>
-      <div class="price-area">
-        <div class="price-label">初回特別価格</div>
-        <div class="price-main">
-          <span class="price-tag">初回</span>
-          <span class="price-num">1,750</span>
-          <span class="price-suffix">円</span>
-        </div>
-      </div>
-      <div class="card-cta">詳しく見る →</div>
-    </div>
-
-    <!-- Card 2 -->
-    <div class="line-card type-c">
-      <div class="card-header">
-        <div class="card-num">Card 2 — Point 1</div>
-        <div class="card-title">「薬用」だから<br>ニキビに<br>直接効く</div>
-      </div>
-      <div class="card-body">
-        <div class="card-lead">5成分不使用の低刺激設計</div>
-        <div style="font-size:10.5px;color:#666;margin-bottom:8px;">防腐剤・合成香料・合成色素・石油系界面活性剤・紫外線吸収剤 不使用</div>
-        <div class="pt-item">肌に負担をかけずに、繰り返すニキビを根本からケア</div>
-        <div class="pt-item">「ニキビのその場しのぎケア」卒業へ</div>
-      </div>
-      <div class="badges-row">
-        <span class="badge key">医薬部外品</span>
-        <span class="badge key">無添加処方</span>
-      </div>
-      <div class="card-cta">詳しく見る →</div>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="line-card type-c">
-      <div class="card-header">
-        <div class="card-num">Card 3 — Point 2</div>
-        <div class="card-title">バリア機能を整えながら<br>ニキビを<br>抑制</div>
-      </div>
-      <div class="card-body">
-        <div class="card-lead">炎症を鎮め、防御力を高める成分設計</div>
-        <div class="pt-item">セージエキス・グリチルリチン酸・トラネキサム酸配合</div>
-        <div class="pt-item">炎症を鎮め、肌の防御力を高める</div>
-        <div class="pt-item">繰り返すニキビが起きにくい肌環境へ</div>
-      </div>
-      <div class="badges-row">
-        <span class="badge key">バリア機能改善</span>
-        <span class="badge key">繰り返しニキビ対策</span>
-      </div>
-      <div class="card-cta">詳しく見る →</div>
-    </div>
-
-    <!-- Card 4 -->
-    <div class="line-card type-c">
-      <div class="card-header">
-        <div class="card-num">Card 4 — CV</div>
-        <div class="card-title">初めての方限定<br>特別価格</div>
-      </div>
-      <div class="product-thumb">
-        <div>
-          <div class="brand">FANCL</div>
-          <div class="product-label">無添加アクネケア<br>化粧液＆乳液セット（約1ヶ月分）</div>
-        </div>
-        <div class="img-ph">🌿</div>
-      </div>
-      <div class="card-body">
-        <div class="trust-badges" style="margin-top:4px;">
-          <span class="trust-badge">90日間返金保証</span>
-          <span class="trust-badge">最短2日以内お届け</span>
-          <span class="trust-badge">初めての方1セット限定</span>
-        </div>
-      </div>
-      <div class="price-area">
-        <div class="price-label">初回特別価格</div>
-        <div class="price-main">
-          <span class="price-tag">初回</span>
-          <span class="price-num">1,750</span>
-          <span class="price-suffix">円</span>
-        </div>
-      </div>
-      <div class="card-cta">今すぐ試す →</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ══ タイプD ══ -->
-<div class="cards-section" id="section-d">
-  <div class="type-label type-d-label" style="padding-top:12px;">
-    <span>タイプD</span>美白・エイジングケア型 ／ Sibody VCスターターセット ¥1,980（初回）
-  </div>
-  <div class="cards-row">
-
-    <!-- Card 1 -->
-    <div class="line-card type-d">
-      <div class="card-header">
-        <div class="card-num">Card 1 — 商材発表</div>
-        <div class="card-title">あなたにおすすめの<br>スキンケアはこちら</div>
-      </div>
-      <div class="product-thumb">
-        <div>
-          <div class="brand">Sibody</div>
-          <div class="product-label">VCスターターセット</div>
-        </div>
-        <div class="img-ph">✨</div>
-      </div>
-      <div class="card-body">
-        <div style="font-size:11px;color:#888;margin-bottom:6px;">ドクター監修 ／ VC200配合</div>
-        <div class="trust-badges">
-          <span class="trust-badge">シミ・くすみケア</span>
-          <span class="trust-badge">ビタミンC集中投与</span>
-          <span class="trust-badge">4ステップフルセット</span>
-        </div>
-      </div>
-      <div class="price-area">
-        <div class="price-label">初回特別価格</div>
-        <div class="price-main">
-          <span class="price-tag">初回</span>
-          <span class="price-num">1,980</span>
-          <span class="price-suffix">円</span>
-        </div>
-      </div>
-      <div class="card-cta">詳しく見る →</div>
-    </div>
-
-    <!-- Card 2 -->
-    <div class="line-card type-d">
-      <div class="card-header">
-        <div class="card-num">Card 2 — Point 1</div>
-        <div class="card-title">高濃度VC（VC200）を<br>角層深部へ</div>
-      </div>
-      <div class="card-body">
-        <div class="card-lead">メラニン抑制 × ターンオーバー促進</div>
-        <div class="pt-item">使うたびに透明感が積み重なる</div>
-        <div class="pt-item">「作らない」+「ためない」+「守る」3ステップを1セットで完結</div>
-        <div style="margin-top:10px;padding:8px 10px;background:#f8f0fc;border-radius:8px;font-size:11px;color:#6a1b9a;font-weight:700;">シミの根本から攻める<br>集中ビタミンCアプローチ</div>
-      </div>
-      <div class="badges-row">
-        <span class="badge key">VC200配合</span>
-        <span class="badge key">メラニン抑制</span>
-      </div>
-      <div class="card-cta">詳しく見る →</div>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="line-card type-d">
-      <div class="card-header">
-        <div class="card-num">Card 3 — Point 2</div>
-        <div class="card-title">ドクター監修の<br>4ステップ<br>全方位VC設計</div>
-      </div>
-      <div class="card-body">
-        <div class="card-lead">シミ・くすみの根本から攻める統一設計</div>
-        <div style="font-size:11.5px;line-height:2;color:#444;margin:8px 0;">
-          <div>① 薬用VC泡フォーマー</div>
-          <div>② VC化粧水</div>
-          <div>③ VC美容液</div>
-          <div>④ VC活力液</div>
-        </div>
-        <div class="pt-item">医学的根拠に基づいたスキンケアアプローチ</div>
-      </div>
-      <div class="badges-row">
-        <span class="badge key">ドクター監修</span>
-        <span class="badge key">4ステップ完結</span>
-      </div>
-      <div class="card-cta">詳しく見る →</div>
-    </div>
-
-    <!-- Card 4 -->
-    <div class="line-card type-d">
-      <div class="card-header">
-        <div class="card-num">Card 4 — CV</div>
-        <div class="card-title">初回限定<br>VCスターターセット</div>
-      </div>
-      <div class="product-thumb">
-        <div>
-          <div class="brand">Sibody</div>
-          <div class="product-label">薬用VC泡フォーマー＋VC化粧水<br>＋VC美容液＋VC活力液（4点）</div>
-        </div>
-        <div class="img-ph">✨</div>
-      </div>
-      <div class="card-body">
-        <div class="trust-badges" style="margin-top:4px;">
-          <span class="trust-badge">ドクター監修</span>
-          <span class="trust-badge">1世帯1商品限定</span>
-          <span class="trust-badge">ネコポス対応</span>
-        </div>
-      </div>
-      <div class="price-area">
-        <div class="price-label">初回特別価格</div>
-        <div class="price-main">
-          <span class="price-tag">初回</span>
-          <span class="price-num">1,980</span>
-          <span class="price-suffix">円</span>
-        </div>
-      </div>
-      <div class="card-cta">今すぐ試す →</div>
-    </div>
-
-  </div>
-</div>
-
-<a class="back-link" href="index.html">← トップへ</a>
-
-<script>
-  function switchTab(type) {
-    document.querySelectorAll('.cards-section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('section-' + type).classList.add('active');
-    document.querySelector('.tab-btn.tab-' + type).classList.add('active');
-  }
-</script>
 </body>
 </html>
