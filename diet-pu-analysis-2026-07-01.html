@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ダイエットPU現状分析 — 2026-07-01</title>
+  <meta name="description" content="医療ダイエット（GLP-1）ジャンルのPU改修着手前の現状分析。記事別ボトルネックと改修優先度。">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+      background: #f0f4f8;
+      color: #1e293b;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .wrap { max-width: 920px; margin: 0 auto; padding: 40px 20px 88px; }
+
+    /* ── back link ── */
+    .back { display: inline-block; font-size: 12px; color: #64748b; text-decoration: none; margin-bottom: 28px; }
+    .back:hover { color: #1a4d9e; }
+
+    /* ── page header ── */
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #64748b; margin-bottom: 6px; }
+    .page-header h1 { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 6px; text-wrap: balance; }
+    .page-header .meta { font-size: 12px; color: #94a3b8; }
+
+    /* ── summary strip ── */
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .s-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px 18px;
+      border: 1.5px solid #e2e8f0;
+    }
+    .s-card.alert { border-color: #fca5a5; background: #fff8f8; }
+    .s-card.ok    { border-color: #86efac; background: #f7fdf9; }
+    .s-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #94a3b8; margin-bottom: 4px; }
+    .s-val { font-size: 26px; font-weight: 800; color: #0f172a; font-variant-numeric: tabular-nums; line-height: 1.1; margin-bottom: 2px; }
+    .s-sub { font-size: 12px; color: #64748b; }
+    .s-card.alert .s-val { color: #dc2626; }
+    .s-card.ok    .s-val { color: #16a34a; }
+
+    /* ── sections ── */
+    .section {
+      background: #fff;
+      border-radius: 14px;
+      padding: 26px 28px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    }
+    .section-head { margin-bottom: 18px; }
+    .section-head h2 { font-size: 15px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .section-head .sub { font-size: 12px; color: #64748b; }
+
+    /* ── tables ── */
+    .tbl-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+    }
+    th {
+      background: #f8fafc;
+      color: #475569;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      padding: 9px 12px;
+      text-align: left;
+      border-bottom: 2px solid #e2e8f0;
+      white-space: nowrap;
+    }
+    td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f8fafc; }
+    td.num { text-align: right; }
+
+    .up   { color: #16a34a; font-weight: 700; }
+    .down { color: #dc2626; font-weight: 700; }
+    .warn { color: #b45309; font-weight: 700; }
+    .muted { color: #94a3b8; }
+
+    /* ── badges ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 99px;
+      white-space: nowrap;
+    }
+    .badge-red    { background: #fee2e2; color: #dc2626; }
+    .badge-green  { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #b45309; }
+    .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray   { background: #f1f5f9; color: #64748b; }
+
+    /* ── insight boxes ── */
+    .insight {
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      margin-top: 14px;
+      line-height: 1.6;
+    }
+    .insight-red    { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green  { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue   { background: #eff6ff; border-left: 3px solid #3b82f6; }
+
+    /* ── article cards ── */
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .a-card {
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+    .a-card.danger  { border-color: #fca5a5; background: #fff8f8; }
+    .a-card.caution { border-color: #fde68a; background: #fffdf0; }
+    .a-card.good    { border-color: #86efac; background: #f7fdf9; }
+    .a-name { font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 8px; }
+    .a-kpi-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+    .a-kpi-label { font-size: 11px; color: #64748b; }
+    .a-kpi-val { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .a-divider { border: none; border-top: 1px solid #f1f5f9; margin: 10px 0; }
+    .a-action { font-size: 12px; color: #475569; margin-top: 6px; }
+    .a-action strong { color: #0f172a; }
+
+    /* ── bottleneck visual ── */
+    .funnel-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 8px;
+    }
+    .funnel-step {
+      flex: 1;
+      text-align: center;
+      padding: 10px 6px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+    .funnel-step .val { font-size: 18px; font-weight: 800; font-variant-numeric: tabular-nums; display: block; }
+    .funnel-step .lbl { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #64748b; }
+    .funnel-arrow { font-size: 18px; color: #cbd5e1; padding: 0 4px; flex-shrink: 0; }
+    .step-ok  { background: #f0fdf4; }
+    .step-ng  { background: #fff1f2; }
+    .step-ok  .val { color: #16a34a; }
+    .step-ng  .val { color: #dc2626; }
+
+    /* ── action list ── */
+    .action-list { list-style: none; }
+    .action-list li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid #f1f5f9;
+      align-items: start;
+    }
+    .action-list li:last-child { border-bottom: none; }
+    .pri-chip {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 99px;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #b45309; }
+    .pri-low  { background: #f1f5f9; color: #64748b; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span   { font-size: 13px; color: #475569; }
+
+    /* ── note band ── */
+    .note { font-size: 11px; color: #94a3b8; padding: 10px 0 0; border-top: 1px solid #f1f5f9; margin-top: 14px; }
+
+    /* ── divider ── */
+    .divider { border: none; border-top: 1px solid #e2e8f0; margin: 20px 0; }
+
+    @media (max-width: 600px) {
+      .summary-strip { grid-template-columns: 1fr 1fr; }
+      .article-grid  { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <a href="index.html" class="back">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">PU改修分析 / 2026-07-01</div>
+    <h1>医療ダイエット — PU現状分析と改修優先度</h1>
+    <p class="meta">6月W3・W4データをもとに整理。改修着手前の基準値記録。</p>
+  </div>
+
+  <!-- サマリーカード -->
+  <div class="summary-strip">
+    <div class="s-card alert">
+      <div class="s-label">PVFR（W4）</div>
+      <div class="s-val">0.51%</div>
+      <div class="s-sub">基準 0.80%　▲0.29pt</div>
+    </div>
+    <div class="s-card ok">
+      <div class="s-label">追加率（W4）</div>
+      <div class="s-val">14.7%</div>
+      <div class="s-sub">基準 11.0%　✅ クリア</div>
+    </div>
+    <div class="s-card alert">
+      <div class="s-label">友達（W4 PU）</div>
+      <div class="s-val">79人</div>
+      <div class="s-sub">月換算ペース 約316人</div>
+    </div>
+  </div>
+
+  <!-- ① ファネル構造 -->
+  <div class="section">
+    <div class="section-head">
+      <h2>ボトルネックの位置</h2>
+      <div class="sub">追加率はOK。問題はPU→クリックの転換率（文言）</div>
+    </div>
+
+    <div class="funnel-row">
+      <div class="funnel-step step-ok">
+        <span class="val">—</span>
+        <span class="lbl">LP PV</span>
+      </div>
+      <span class="funnel-arrow">→</span>
+      <div class="funnel-step step-ng">
+        <span class="val">3.6%</span>
+        <span class="lbl">PU CTR</span>
+      </div>
+      <span class="funnel-arrow">→</span>
+      <div class="funnel-step step-ok">
+        <span class="val">14.7%</span>
+        <span class="lbl">追加率</span>
+      </div>
+      <span class="funnel-arrow">→</span>
+      <div class="funnel-step step-ng">
+        <span class="val">0.51%</span>
+        <span class="lbl">PVFR</span>
+      </div>
+    </div>
+
+    <div class="insight insight-yellow">
+      <strong>読み方:</strong> LP → 友達追加の転換率（PVFR 0.51%）が基準の64%。ただし追加率（LP→友達）は14.7%と基準クリア済み。<br>
+      つまり<strong>「クリックした人はちゃんと追加している」</strong>のに、「PUを見てもクリックしない」人が多い状態。ボトルネックはPU文言。
+    </div>
+
+    <p class="note">※ PU CTRは5/14仕様変更後にWINUT（離脱防止PU）のimpが合算されるため見かけ上半減している。参考値として扱う。主指標はPVFR。</p>
+  </div>
+
+  <!-- ② ジャンル比較 -->
+  <div class="section">
+    <div class="section-head">
+      <h2>ジャンル別比較（6月W4）</h2>
+      <div class="sub">ダイエットは友達数最多だが、PVFR改善余地が最も大きいジャンル</div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ジャンル</th>
+            <th>友達（W4）</th>
+            <th>PVFR</th>
+            <th>追加率</th>
+            <th>判定</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>医療ダイエット</strong></td>
+            <td class="num">79人</td>
+            <td class="num down">0.51%</td>
+            <td class="num up">14.7%</td>
+            <td><span class="badge badge-yellow">PVFR改善余地大</span></td>
+          </tr>
+          <tr>
+            <td>オンラインピル</td>
+            <td class="num">22人</td>
+            <td class="num up">0.93%</td>
+            <td class="num up">22.0%</td>
+            <td><span class="badge badge-green">現状維持</span></td>
+          </tr>
+          <tr>
+            <td>包茎手術（PLUS）</td>
+            <td class="num">14人</td>
+            <td class="num down">0.41%</td>
+            <td class="num warn">9.5%</td>
+            <td><span class="badge badge-red">両方改善余地</span></td>
+          </tr>
+          <tr>
+            <td>ICL</td>
+            <td class="num">4人</td>
+            <td class="num down">0.25%</td>
+            <td class="num warn">7.7%</td>
+            <td><span class="badge badge-gray">立ち上げ中</span></td>
+          </tr>
+          <tr>
+            <td>ED</td>
+            <td class="num">1人</td>
+            <td class="num down">0.33%</td>
+            <td class="num warn">9.1%</td>
+            <td><span class="badge badge-red">W4激減・要確認</span></td>
+          </tr>
+          <tr>
+            <td>AGA</td>
+            <td class="num">2人</td>
+            <td class="num down">0.13%</td>
+            <td class="num down">3.0%</td>
+            <td><span class="badge badge-gray">データ少</span></td>
+          </tr>
+          <tr>
+            <td>いびき</td>
+            <td class="num">3人</td>
+            <td class="num down">0.16%</td>
+            <td class="num down">5.8%</td>
+            <td><span class="badge badge-gray">データ少</span></td>
+          </tr>
+          <tr>
+            <td>FAGA</td>
+            <td class="num">1人</td>
+            <td class="num down">0.10%</td>
+            <td class="num down">2.1%</td>
+            <td><span class="badge badge-gray">データ少</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">基準値: PVFR 0.80% / 追加率 11% / バナー（98人）は指標取得不可のため除外</p>
+  </div>
+
+  <!-- ③ ダイエット週次推移 -->
+  <div class="section">
+    <div class="section-head">
+      <h2>ダイエット週次推移（W3→W4）</h2>
+      <div class="sub">PVFR・追加率ともに改善傾向。ただし基準には遠い</div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>指標</th><th>6月W3（6/15〜21）</th><th>6月W4（6/22〜28）</th><th>前週比</th><th>基準値</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>友達（PU）</td>
+            <td class="num">74人</td>
+            <td class="num">79人</td>
+            <td class="num up">+5人</td>
+            <td class="num muted">—</td>
+          </tr>
+          <tr>
+            <td>PVFR</td>
+            <td class="num down">0.40%</td>
+            <td class="num down">0.51%</td>
+            <td class="num up">+0.11pt</td>
+            <td class="num muted">0.80%</td>
+          </tr>
+          <tr>
+            <td>PU CTR <span class="muted">※参考値</span></td>
+            <td class="num">5.5%</td>
+            <td class="num">3.6%</td>
+            <td class="num down">▲1.9pt</td>
+            <td class="num muted">13%</td>
+          </tr>
+          <tr>
+            <td>追加率</td>
+            <td class="num down">7.7%</td>
+            <td class="num up">14.7%</td>
+            <td class="num up">+7.0pt</td>
+            <td class="num muted">11%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight insight-blue">
+      追加率の大幅改善（+7.0pt）は前向きなシグナル。ただしPVFR改善（+0.11pt）は小幅にとどまっており、PU文言の改善で「クリック数そのもの」を増やす余地が残る。
+    </div>
+    <p class="note">PU CTRの▲1.9ptはpu_imp合算の影響で実態を反映しない可能性あり。PVFRを主指標として判断する。</p>
+  </div>
+
+  <!-- ④ 記事別状況 -->
+  <div class="section">
+    <div class="section-head">
+      <h2>記事別 PU稼働状況</h2>
+      <div class="sub">フェーズが違うほど対処が違う</div>
+    </div>
+
+    <div class="article-grid">
+
+      <div class="a-card danger">
+        <div class="a-name">BMI記事（こいずみ・小田・渋谷 等）</div>
+        <div class="a-kpi-row"><span class="a-kpi-label">PVFR</span><span class="a-kpi-val down">0.05%</span></div>
+        <div class="a-kpi-row"><span class="a-kpi-label">LP imp</span><span class="a-kpi-val">2,042/週（半減）</span></div>
+        <div class="a-kpi-row"><span class="a-kpi-label">PU稼働</span><span class="a-kpi-val warn">旧文言のまま</span></div>
+        <hr class="a-divider">
+        <div class="a-action">
+          <strong>原因:</strong> LP imp半減（SEO落ち）＋訴求ミスマッチ（「体型チェック」系がCTR 7〜11%と全記事不発）
+        </div>
+        <div class="a-action" style="margin-top:6px;">
+          <strong>対処:</strong> 「そのBMI、どの体型タイプ？」に訴求転換（設計書t54・6/22作成済み）→ <span class="badge badge-red" style="font-size:10px;">未実装</span>
+        </div>
+      </div>
+
+      <div class="a-card caution">
+        <div class="a-name">摂取カロリー記事（1日で食べていい量）</div>
+        <div class="a-kpi-row"><span class="a-kpi-label">PVFR</span><span class="a-kpi-val warn">0.58〜0.90%</span></div>
+        <div class="a-kpi-row"><span class="a-kpi-label">LP imp</span><span class="a-kpi-val">3,094/週（安定）</span></div>
+        <div class="a-kpi-row"><span class="a-kpi-label">PU稼働</span><span class="a-kpi-val up">2本稼働中</span></div>
+        <hr class="a-divider">
+        <div class="a-action">
+          <strong>稼働中:</strong>「1日で食べていい量」— PVFR 0.90%（安定）
+        </div>
+        <div class="a-action" style="margin-top:4px;">
+          <strong>今週初計測:</strong>「食べていいのは何？」— 6/30遷移先修正済み。今週データ待ち
+        </div>
+      </div>
+
+      <div class="a-card good">
+        <div class="a-name">痩せる薬・スルリムマンジャロ記事</div>
+        <div class="a-kpi-row"><span class="a-kpi-label">PVFR</span><span class="a-kpi-val up">1.37〜1.82%</span></div>
+        <div class="a-kpi-row"><span class="a-kpi-label">ユーザー特性</span><span class="a-kpi-val">治療検討済み（決断層）</span></div>
+        <div class="a-kpi-row"><span class="a-kpi-label">判定</span><span class="a-kpi-val up">好調</span></div>
+        <hr class="a-divider">
+        <div class="a-action">
+          <strong>方針:</strong> 触らない。現状を維持する。
+        </div>
+      </div>
+
+    </div>
+
+    <div class="insight insight-yellow" style="margin-top: 16px;">
+      <strong>記事フェーズ別の構造:</strong> 痩せる薬（決断層）→ PVFR 1.5%超 / 摂取カロリー（情報収集層）→ PVFR 0.6〜0.9% / BMI（現状把握層）→ PVFR 0.05%。フェーズが浅いほどPVFRは低く、改修インパクトも大きい。
+    </div>
+  </div>
+
+  <!-- ⑤ ネクストアクション -->
+  <div class="section">
+    <div class="section-head">
+      <h2>改修優先度・ネクストアクション</h2>
+      <div class="sub">インパクト × 実行難易度で整理</div>
+    </div>
+
+    <ul class="action-list">
+      <li>
+        <span class="pri-chip pri-high">高</span>
+        <div class="action-body">
+          <strong>t54 BMI PU実装「そのBMI、どの体型タイプ？」</strong>
+          <span>設計書・文言ともに確定済み（2026-06-22）。WINUTに登録するだけ。LP imp 2,000+/週が完全に死んでいる状態を解消。効果未知数だが現状の改善余地が最大。</span>
+        </div>
+      </li>
+      <li>
+        <span class="pri-chip pri-high">高</span>
+        <div class="action-body">
+          <strong>「食べていいのは何？」今週数値確認（7月W1終了時）</strong>
+          <span>6/30遷移先修正済みで今週から初計測。「1日で食べていい量」（PVFR 0.90%）との比較でA/B判定。効果ありなら追加記事に設置展開。</span>
+        </div>
+      </li>
+      <li>
+        <span class="pri-chip pri-mid">中</span>
+        <div class="action-body">
+          <strong>ダイエット他記事PUの診断型横展開</strong>
+          <span>GLP-1全般（「痩せない理由」「食欲を抑える薬」等）に同じ訴求転換アプローチを適用。BMI・摂取カロリーの効果データが出てから設計に入る。</span>
+        </div>
+      </li>
+      <li>
+        <span class="pri-chip pri-low">低</span>
+        <div class="action-body">
+          <strong>LP imp（SEO流入）の回復</strong>
+          <span>BMI記事のLP imp半減はSEO順位変動が主因。PU文言で改善できる範囲を超えている。記事量産・改修は中長期施策として別途計画。</span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="insight insight-blue" style="margin-top: 16px;">
+      <strong>今月インパクト試算（ダイエット単体）:</strong> t54実装で効果未知数（BMIユーザーの訴求転換次第）。摂取カロリー改善で+7〜10人/月。現実的な上限は月+10〜30人程度。目標1,350人（7月）へのGAP解消はコスメ・バナー等他チャネルとの合算で狙う構造。
+    </div>
+  </div>
+
+  <!-- 付記 -->
+  <div class="section">
+    <div class="section-head">
+      <h2>関連ドキュメント</h2>
+    </div>
+    <ul style="list-style: none; font-size: 13px; line-height: 2;">
+      <li>→ <a href="pu-kaizen-sindan-gata-2026-06-22.html" style="color:#1a4d9e;">ダイエット系PU 診断型訴求転換 設計書（2026-06-22）</a></li>
+      <li>→ <a href="weekly-analysis-2026-06-w4.html" style="color:#1a4d9e;">週次分析レポート 6月W4（2026-06-28）</a></li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
