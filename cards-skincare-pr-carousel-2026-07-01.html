@@ -442,8 +442,8 @@
         </div>
         <!-- 17時間タイムライン + QuSome技術 -->
         <div style="background:linear-gradient(180deg,#f0fafb,#e4f4f6);padding:8px 8px 10px;text-align:center;">
-          <svg width="196" height="130" viewBox="0 0 196 130">
-            <rect width="196" height="130" rx="8" fill="#f0fafb"/>
+          <svg width="196" height="56" viewBox="0 0 196 56">
+            <rect width="196" height="56" rx="8" fill="#f0fafb"/>
 
             <!-- タイムライン -->
             <text x="98" y="14" text-anchor="middle" font-size="8.5" font-weight="800" fill="#1a7a8a">保湿持続時間の比較</text>
@@ -454,37 +454,35 @@
             <rect x="10" y="40" width="82" height="11" rx="5" fill="#ccc" opacity="0.6"/>
             <text x="51" y="50" text-anchor="middle" font-size="7.5" fill="#666">一般化粧水　約8時間</text>
 
-            <!-- 区切り線 -->
-            <line x1="10" y1="60" x2="186" y2="60" stroke="#b8e0e8" stroke-width="0.8" stroke-dasharray="3,3"/>
-
-            <!-- QuSome 2段階浸透図 -->
-            <text x="98" y="74" text-anchor="middle" font-size="8" font-weight="800" fill="#1a7a8a">2種のQuSome® が同時に浸透</text>
-
-            <!-- 角層断面イメージ -->
-            <!-- 上層（角層上部） -->
-            <rect x="10" y="80" width="176" height="16" rx="3" fill="#cce8f0" stroke="#80c8d8" stroke-width="0.8"/>
-            <text x="70" y="91" text-anchor="middle" font-size="7" fill="#1a7a8a">角層 上部</text>
-            <!-- Charged QuSomeドット -->
-            <circle cx="110" cy="88" r="3.5" fill="#2aa0b8" opacity="0.8"/>
-            <circle cx="122" cy="88" r="3.5" fill="#2aa0b8" opacity="0.8"/>
-            <circle cx="134" cy="88" r="3.5" fill="#2aa0b8" opacity="0.8"/>
-            <circle cx="146" cy="88" r="3.5" fill="#2aa0b8" opacity="0.8"/>
-            <text x="158" y="86" text-anchor="start" font-size="5.5" fill="#1a7a8a">Charged</text>
-            <text x="158" y="93" text-anchor="start" font-size="5.5" fill="#1a7a8a">QuSome®</text>
-
-            <!-- 下層（角層深部） -->
-            <rect x="10" y="98" width="176" height="16" rx="3" fill="#a8d8e8" stroke="#60b0c8" stroke-width="0.8"/>
-            <text x="70" y="109" text-anchor="middle" font-size="7" fill="#0a5a6a">角層 深部</text>
-            <!-- QuSomeドット -->
-            <circle cx="110" cy="106" r="3.5" fill="#1a7a8a" opacity="0.8"/>
-            <circle cx="122" cy="106" r="3.5" fill="#1a7a8a" opacity="0.8"/>
-            <circle cx="134" cy="106" r="3.5" fill="#1a7a8a" opacity="0.8"/>
-            <text x="146" y="104" text-anchor="start" font-size="5.5" fill="#0a5a6a">QuSome®</text>
-            <text x="146" y="111" text-anchor="start" font-size="5.5" fill="#0a5a6a">浸透</text>
-
-            <!-- ラベル -->
-            <text x="98" y="126" text-anchor="middle" font-size="7.5" fill="#1a7a8a">乾燥・べたつきのダブル悩みを同時ケア</text>
           </svg>
+
+          <!-- 2種のQuSome説明（divで明示） -->
+          <div style="font-size:8px;font-weight:800;color:#1a7a8a;text-align:center;margin:6px 0 4px;">2種のQuSome® が同時に浸透</div>
+
+          <!-- Charged QuSome -->
+          <div style="background:#cce8f0;border:1px solid #80c8d8;border-radius:5px;padding:5px 8px;margin-bottom:4px;display:flex;align-items:center;gap:6px;">
+            <div style="display:flex;flex-direction:column;gap:1px;align-items:center;flex-shrink:0;">
+              <div style="width:7px;height:7px;border-radius:50%;background:#2aa0b8;opacity:0.9;"></div>
+              <div style="width:7px;height:7px;border-radius:50%;background:#2aa0b8;opacity:0.7;"></div>
+            </div>
+            <div>
+              <div style="font-size:8.5px;font-weight:900;color:#1a7a8a;">Charged QuSome®</div>
+              <div style="font-size:7.5px;font-weight:700;color:#0a5a6a;margin-top:1px;">角層上部 → うるおいを長時間持続</div>
+            </div>
+          </div>
+
+          <!-- QuSome -->
+          <div style="background:#a8d8e8;border:1px solid #60b0c8;border-radius:5px;padding:5px 8px;display:flex;align-items:center;gap:6px;">
+            <div style="display:flex;flex-direction:column;gap:1px;align-items:center;flex-shrink:0;">
+              <div style="width:7px;height:7px;border-radius:50%;background:#1a7a8a;opacity:0.9;"></div>
+              <div style="width:7px;height:7px;border-radius:50%;background:#1a7a8a;opacity:0.7;"></div>
+            </div>
+            <div>
+              <div style="font-size:8.5px;font-weight:900;color:#0a5a6a;">QuSome®</div>
+              <div style="font-size:7.5px;font-weight:700;color:#0a5a6a;margin-top:1px;">角層深部 → 保水＆バリア機能サポート</div>
+            </div>
+          </div>
+
         </div>
         <div class="card-body">
           <div class="body-text" style="text-align:center;font-weight:700;color:#0a5a6a;">肌の底上げで翌朝も透明感が続く</div>
