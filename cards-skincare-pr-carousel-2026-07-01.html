@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRカルーセル カード図 | スキンケア方法診断</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; background: #f0f4f8; color: #333; }
+
+  /* ── ヘッダー ── */
+  .page-header {
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 16px 24px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .page-header h1 { font-size: 15px; font-weight: 700; color: #333; }
+  .page-header p { font-size: 11px; color: #888; margin-top: 2px; }
+
+  /* ── タイプタブ ── */
+  .type-tabs {
+    display: flex; gap: 8px;
+    padding: 16px 24px 0;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    font-size: 13px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    background: #fff;
+    transition: all 0.2s;
+  }
+  .tab-btn.tab-a { border-color: #f4a460; color: #e07040; }
+  .tab-btn.tab-a.active { background: #e07040; color: #fff; }
+  .tab-btn.tab-b { border-color: #64b5f6; color: #1565c0; }
+  .tab-btn.tab-b.active { background: #4a90d9; color: #fff; }
+  .tab-btn.tab-c { border-color: #81c784; color: #2e7d32; }
+  .tab-btn.tab-c.active { background: #4caf7a; color: #fff; }
+  .tab-btn.tab-d { border-color: #ce93d8; color: #6a1b9a; }
+  .tab-btn.tab-d.active { background: #ab6cc6; color: #fff; }
+
+  /* ── カード列 ── */
+  .cards-section { display: none; padding: 20px 24px 40px; }
+  .cards-section.active { display: block; }
+
+  .cards-row {
+    display: grid;
+    grid-template-columns: repeat(4, 260px);
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  /* ── 1枚のカード ── */
+  .line-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    display: flex;
+    flex-direction: column;
+    min-height: 460px;
+  }
+
+  /* カードヘッダー */
+  .card-header {
+    padding: 14px 14px 12px;
+    color: #fff;
+    position: relative;
+  }
+  .card-num {
+    font-size: 9px; font-weight: 700; opacity: 0.85;
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;
+  }
+  .card-title {
+    font-size: 13px; font-weight: 800; line-height: 1.45;
+  }
+
+  /* 商品サムネ */
+  .product-thumb {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px; border-bottom: 1px solid #f0f0f0;
+  }
+  .product-thumb .brand { font-size: 11px; font-weight: 800; color: #111; }
+  .product-thumb .product-label { font-size: 10px; color: #666; line-height: 1.4; }
+  .product-thumb .img-ph {
+    width: 52px; height: 52px; border-radius: 8px;
+    background: #f4f4f4; display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+
+  /* カード本文 */
+  .card-body {
+    padding: 12px 14px; font-size: 12px; line-height: 1.8; color: #444; flex: 1;
+  }
+  .card-lead { font-weight: 700; color: #222; margin-bottom: 6px; font-size: 12.5px; }
+  .pt-item { margin-bottom: 4px; padding-left: 14px; position: relative; font-size: 11.5px; color: #444; line-height: 1.7; }
+  .pt-item::before { content: "✓"; position: absolute; left: 0; font-weight: 700; font-size: 11px; }
+
+  /* バッジ行 */
+  .badges-row { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 14px; border-top: 1px solid #f0f0f0; }
+  .badge {
+    font-size: 9.5px; font-weight: 700; padding: 3px 8px; border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* 価格エリア */
+  .price-area {
+    padding: 8px 14px; background: #fafafa; border-top: 1px solid #f0f0f0;
+    display: flex; align-items: flex-end; justify-content: space-between;
+  }
+  .price-label { font-size: 9px; color: #999; }
+  .price-main { display: flex; align-items: flex-end; gap: 3px; }
+  .price-tag { font-size: 9px; background: #e53935; color: #fff; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-right: 4px; }
+  .price-num { font-size: 22px; font-weight: 900; line-height: 1; }
+  .price-suffix { font-size: 10px; color: #888; }
+
+  /* CTAボタン */
+  .card-cta {
+    display: block; text-align: center; padding: 11px 14px;
+    font-size: 12px; font-weight: 700; color: #fff;
+    border-radius: 0 0 16px 16px;
+    cursor: default; letter-spacing: 0.3px; line-height: 1.5;
+  }
+
+  /* タイプ別カラー */
+  .type-a .card-header { background: linear-gradient(135deg, #f4a460, #e07040); }
+  .type-a .card-cta    { background: #e07040; }
+  .type-a .pt-item::before { color: #e07040; }
+  .type-a .badge.key { background: #fff3ee; border: 1px solid #f4a460; color: #c0502a; }
+  .type-a .price-num  { color: #e07040; }
+
+  .type-b .card-header { background: linear-gradient(135deg, #64b5f6, #4a90d9); }
+  .type-b .card-cta    { background: #4a90d9; }
+  .type-b .pt-item::before { color: #4a90d9; }
+  .type-b .badge.key { background: #edf4fc; border: 1px solid #90caf9; color: #1565c0; }
+  .type-b .price-num  { color: #4a90d9; }
+
+  .type-c .card-header { background: linear-gradient(135deg, #81c784, #4caf7a); }
+  .type-c .card-cta    { background: #4caf7a; }
+  .type-c .pt-item::before { color: #4caf7a; }
+  .type-c .badge.key { background: #f0fbf3; border: 1px solid #81c784; color: #2e7d32; }
+  .type-c .price-num  { color: #4caf7a; }
+
+  .type-d .card-header { background: linear-gradient(135deg, #ce93d8, #ab6cc6); }
+  .type-d .card-cta    { background: #ab6cc6; }
+  .type-d .pt-item::before { color: #ab6cc6; }
+  .type-d .badge.key { background: #f8f0fc; border: 1px solid #ce93d8; color: #6a1b9a; }
+  .type-d .price-num  { color: #ab6cc6; }
+
+  /* タイプラベル */
+  .type-label { font-size: 13px; font-weight: 700; color: #666; margin-bottom: 12px; }
+  .type-label span { padding: 3px 12px; border-radius: 12px; font-size: 12px; color: #fff; margin-right: 8px; }
+  .type-a-label span { background: #e07040; }
+  .type-b-label span { background: #4a90d9; }
+  .type-c-label span { background: #4caf7a; }
+  .type-d-label span { background: #ab6cc6; }
+
+  .trust-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+  .trust-badge {
+    font-size: 9px; font-weight: 700; padding: 3px 7px; border-radius: 4px;
+    background: #f3f3f3; color: #555; border: 1px solid #ddd;
+  }
+
+  .back-link { display: inline-block; margin: 20px 24px 0; font-size: 12px; color: #888; text-decoration: none; }
+  .back-link:hover { color: #555; }
+
+  @media (max-width: 700px) {
+    .cards-row { grid-template-columns: repeat(4, 220px); }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>スキンケア方法診断 — PRカルーセル カード図</h1>
+  <p>4タイプ × Card 1〜4 のテキスト確認用。タブでタイプを切り替え。</p>
+</div>
+
+<div class="type-tabs">
+  <button class="tab-btn tab-a active" onclick="switchTab('a')">タイプA｜皮脂コントロール</button>
+  <button class="tab-btn tab-b" onclick="switchTab('b')">タイプB｜保湿バリア修復</button>
+  <button class="tab-btn tab-c" onclick="switchTab('c')">タイプC｜低刺激・肌環境改善</button>
+  <button class="tab-btn tab-d" onclick="switchTab('d')">タイプD｜美白・エイジングケア</button>
+</div>
+
+<!-- ══ タイプA ══ -->
+<div class="cards-section active" id="section-a">
+  <div class="type-label type-a-label" style="padding-top:12px;">
+    <span>タイプA</span>皮脂コントロール型 ／ オルビス クリアフル ニキビ・毛穴対策スターターセット ¥980
+  </div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <div class="line-card type-a">
+      <div class="card-header">
+        <div class="card-num">Card 1 — 商材発表</div>
+        <div class="card-title">あなたにおすすめの<br>スキンケアはこちら</div>
+      </div>
+      <div class="product-thumb">
+        <div>
+          <div class="brand">ORBIS</div>
+          <div class="product-label">クリアフル<br>ニキビ・毛穴対策スターターセット</div>
+        </div>
+        <div class="img-ph">🧴</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:11px;color:#888;margin-bottom:6px;">毎月7,000人以上が使い始めている！</div>
+        <div class="trust-badges">
+          <span class="trust-badge">テカらない肌へ</span>
+          <span class="trust-badge">毛穴ケア</span>
+          <span class="trust-badge">14日間トライアル</span>
+        </div>
+      </div>
+      <div class="price-area">
+        <div class="price-label">初回トライアル</div>
+        <div class="price-main">
+          <span class="price-tag">初回</span>
+          <span class="price-num">980</span>
+          <span class="price-suffix">円</span>
+        </div>
+      </div>
+      <div class="card-cta">詳しく見る →</div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="line-card type-a">
+      <div class="card-header">
+        <div class="card-num">Card 2 — Point 1</div>
+        <div class="card-title">毛穴の詰まりと<br>皮脂テカりに<br>直接アプローチ</div>
+      </div>
+      <div class="card-body">
+        <div class="card-lead">ローション × モイスチャライザーのライン設計</div>
+        <div class="pt-item">さっぱり・リッチの2テクスチャーから肌に合う方を選べる</div>
+        <div class="pt-item">ニキビができにくい肌環境へ整える</div>
+        <div style="margin-top:10px;padding:8px 10px;background:#fff3ee;border-radius:8px;font-size:11px;color:#c0502a;font-weight:700;">テカり×毛穴の2大悩みを<br>同時ケアできる設計</div>
+      </div>
+      <div class="badges-row">
+        <span class="badge key">皮脂コントロール</span>
+        <span class="badge key">毛穴ケア</span>
+      </div>
+      <div class="card-cta">詳しく見る →</div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="line-card type-a">
+      <div class="card-header">
+        <div class="card-num">Card 3 — Point 2</div>
+        <div class="card-title">14日間試して<br>自分の肌で<br>確かめる</div>
+      </div>
+      <div class="card-body">
+        <div class="card-lead">毎月7,000人以上がスタート</div>
+        <div class="pt-item">ニキビ・毛穴の悩みを抱えた方が毎月7,000人以上スタート</div>
+        <div class="pt-item">年齢・性別問わず使えるシンプルな設計</div>
+        <div class="pt-item">まず試してから続けられる安心感</div>
+      </div>
+      <div class="badges-row">
+        <span class="badge key">14日間お試し</span>
+        <span class="badge key">年齢・性別不問</span>
+      </div>
+      <div class="card-cta">詳しく見る →</div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="line-card type-a">
+      <div class="card-header">
+        <div class="card-num">Card 4 — CV</div>
+        <div class="card-title">オルビス初めての方限定<br>スターターセット</div>
+      </div>
+      <div class="product-thumb">
+        <div>
+          <div class="brand">ORBIS</div>
+          <div class="product-label">ニキビ・毛穴対策ローション<br>＋ モイスチャライザー（各2包）</div>
+        </div>
+        <div class="img-ph">🧴</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:11.5px;color:#444;">14日間トライアルセット</div>
+        <div class="trust-badges" style="margin-top:8px;">
+          <span class="trust-badge">初めての方限定</span>
+          <span class="trust-badge">14日間分</span>
+        </div>
+      </div>
+      <div class="price-area">
+        <div class="price-label">初回特別価格</div>
+        <div class="price-main">
+          <span class="price-tag">初回</span>
+          <span class="price-num">980</span>
+          <span class="price-suffix">円</span>
+        </div>
+      </div>
+      <div class="card-cta">今すぐ試す →</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ タイプB ══ -->
+<div class="cards-section" id="section-b">
+  <div class="type-label type-b-label" style="padding-top:12px;">
+    <span>タイプB</span>保湿バリア修復型 ／ ビーグレン QuSomeローション 120mL ¥5,500
+  </div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <div class="line-card type-b">
+      <div class="card-header">
+        <div class="card-num">Card 1 — 商材発表</div>
+        <div class="card-title">あなたにおすすめの<br>スキンケアはこちら</div>
+      </div>
+      <div class="product-thumb">
+        <div>
+          <div class="brand">b.glen</div>
+          <div class="product-label">QuSomeローション<br>120mL</div>
+        </div>
+        <div class="img-ph">💧</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:11px;color:#888;margin-bottom:6px;">★5.0（9,834件のレビュー）</div>
+        <div class="trust-badges">
+          <span class="trust-badge">17時間保湿持続</span>
+          <span class="trust-badge">角層深部へ届ける</span>
+          <span class="trust-badge">365日返品・返金保証</span>
+        </div>
+      </div>
+      <div class="price-area">
+        <div class="price-label">通常価格</div>
+        <div class="price-main">
+          <span class="price-num">5,500</span>
+          <span class="price-suffix">円（税込）</span>
+        </div>
+      </div>
+      <div class="card-cta">詳しく見る →</div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="line-card type-b">
+      <div class="card-header">
+        <div class="card-num">Card 2 — Point 1</div>
+        <div class="card-title">「17時間保湿」が<br>続く<br>高機能化粧水</div>
+      </div>
+      <div class="card-body">
+        <div class="card-lead">角層内深部に水分と美容成分を届ける</div>
+        <div class="pt-item">朝つけたら夜まで乾燥しない「肌の底上げ効果」</div>
+        <div class="pt-item">乾燥・べたつきのダブル悩みを同時にケア</div>
+        <div style="margin-top:10px;padding:8px 10px;background:#edf4fc;border-radius:8px;font-size:11px;color:#1565c0;font-weight:700;">朝だけで一日中うるおいが続く</div>
+      </div>
+      <div class="badges-row">
+        <span class="badge key">17時間保湿</span>
+        <span class="badge key">角層深部</span>
+      </div>
+      <div class="card-cta">詳しく見る →</div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="line-card type-b">
+      <div class="card-header">
+        <div class="card-num">Card 3 — Point 2</div>
+        <div class="card-title">次のステップの<br>浸透も<br>サポート</div>
+      </div>
+      <div class="card-body">
+        <div class="card-lead">★5.0・9,834件が示す確かな効果</div>
+        <div class="pt-item">押し上がるようなハリを実感</div>
+        <div class="pt-item">9,834件の高評価レビュー</div>
+        <div class="pt-item">定期便primeでずっとお得に続けられる</div>
+      </div>
+      <div class="badges-row">
+        <span class="badge key">★5.0 9,834件</span>
+        <span class="badge key">定期便あり</span>
+      </div>
+      <div class="card-cta">詳しく見る →</div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="line-card type-b">
+      <div class="card-header">
+        <div class="card-num">Card 4 — CV</div>
+        <div class="card-title">365日返品・返金保証<br>で安心</div>
+      </div>
+      <div class="product-thumb">
+        <div>
+          <div class="brand">b.glen</div>
+          <div class="product-label">QuSomeローション<br>120mL</div>
+        </div>
+        <div class="img-ph">💧</div>
+      </div>
+      <div class="card-body">
+        <div class="trust-badges" style="margin-top:4px;">
+          <span class="trust-badge">365日返品・返金保証</span>
+          <span class="trust-badge">¥5,500以上送料無料</span>
+          <span class="trust-badge">★5.0（9,834件）</span>
+        </div>
+      </div>
+      <div class="price-area">
+        <div class="price-label">通常価格</div>
+        <div class="price-main">
+          <span class="price-num">5,500</span>
+          <span class="price-suffix">円（税込）</span>
+        </div>
+      </div>
+      <div class="card-cta">今すぐ購入する →</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ タイプC ══ -->
+<div class="cards-section" id="section-c">
+  <div class="type-label type-c-label" style="padding-top:12px;">
+    <span>タイプC</span>低刺激・肌環境改善型 ／ ファンケル 無添加アクネケア 薬用ニキビ化粧液＆乳液セット ¥1,750（初回）
+  </div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <div class="line-card type-c">
+      <div class="card-header">
+        <div class="card-num">Card 1 — 商材発表</div>
+        <div class="card-title">あなたにおすすめの<br>スキンケアはこちら</div>
+      </div>
+      <div class="product-thumb">
+        <div>
+          <div class="brand">FANCL</div>
+          <div class="product-label">無添加アクネケア<br>薬用ニキビ化粧液＆乳液セット</div>
+        </div>
+        <div class="img-ph">🌿</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:11px;color:#888;margin-bottom:6px;">アクネケアエッセンス「6 Best Cosmetics Awards」受賞</div>
+        <div class="trust-badges">
+          <span class="trust-badge">薬用（医薬部外品）</span>
+          <span class="trust-badge">無添加</span>
+          <span class="trust-badge">敏感肌OK</span>
+        </div>
+      </div>
+      <div class="price-area">
+        <div class="price-label">初回特別価格</div>
+        <div class="price-main">
+          <span class="price-tag">初回</span>
+          <span class="price-num">1,750</span>
+          <span class="price-suffix">円</span>
+        </div>
+      </div>
+      <div class="card-cta">詳しく見る →</div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="line-card type-c">
+      <div class="card-header">
+        <div class="card-num">Card 2 — Point 1</div>
+        <div class="card-title">「薬用」だから<br>ニキビに<br>直接効く</div>
+      </div>
+      <div class="card-body">
+        <div class="card-lead">5成分不使用の低刺激設計</div>
+        <div style="font-size:10.5px;color:#666;margin-bottom:8px;">防腐剤・合成香料・合成色素・石油系界面活性剤・紫外線吸収剤 不使用</div>
+        <div class="pt-item">肌に負担をかけずに、繰り返すニキビを根本からケア</div>
+        <div class="pt-item">「ニキビのその場しのぎケア」卒業へ</div>
+      </div>
+      <div class="badges-row">
+        <span class="badge key">医薬部外品</span>
+        <span class="badge key">無添加処方</span>
+      </div>
+      <div class="card-cta">詳しく見る →</div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="line-card type-c">
+      <div class="card-header">
+        <div class="card-num">Card 3 — Point 2</div>
+        <div class="card-title">バリア機能を整えながら<br>ニキビを<br>抑制</div>
+      </div>
+      <div class="card-body">
+        <div class="card-lead">炎症を鎮め、防御力を高める成分設計</div>
+        <div class="pt-item">セージエキス・グリチルリチン酸・トラネキサム酸配合</div>
+        <div class="pt-item">炎症を鎮め、肌の防御力を高める</div>
+        <div class="pt-item">繰り返すニキビが起きにくい肌環境へ</div>
+      </div>
+      <div class="badges-row">
+        <span class="badge key">バリア機能改善</span>
+        <span class="badge key">繰り返しニキビ対策</span>
+      </div>
+      <div class="card-cta">詳しく見る →</div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="line-card type-c">
+      <div class="card-header">
+        <div class="card-num">Card 4 — CV</div>
+        <div class="card-title">初めての方限定<br>特別価格</div>
+      </div>
+      <div class="product-thumb">
+        <div>
+          <div class="brand">FANCL</div>
+          <div class="product-label">無添加アクネケア<br>化粧液＆乳液セット（約1ヶ月分）</div>
+        </div>
+        <div class="img-ph">🌿</div>
+      </div>
+      <div class="card-body">
+        <div class="trust-badges" style="margin-top:4px;">
+          <span class="trust-badge">90日間返金保証</span>
+          <span class="trust-badge">最短2日以内お届け</span>
+          <span class="trust-badge">初めての方1セット限定</span>
+        </div>
+      </div>
+      <div class="price-area">
+        <div class="price-label">初回特別価格</div>
+        <div class="price-main">
+          <span class="price-tag">初回</span>
+          <span class="price-num">1,750</span>
+          <span class="price-suffix">円</span>
+        </div>
+      </div>
+      <div class="card-cta">今すぐ試す →</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ タイプD ══ -->
+<div class="cards-section" id="section-d">
+  <div class="type-label type-d-label" style="padding-top:12px;">
+    <span>タイプD</span>美白・エイジングケア型 ／ Sibody VCスターターセット ¥1,980（初回）
+  </div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <div class="line-card type-d">
+      <div class="card-header">
+        <div class="card-num">Card 1 — 商材発表</div>
+        <div class="card-title">あなたにおすすめの<br>スキンケアはこちら</div>
+      </div>
+      <div class="product-thumb">
+        <div>
+          <div class="brand">Sibody</div>
+          <div class="product-label">VCスターターセット</div>
+        </div>
+        <div class="img-ph">✨</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:11px;color:#888;margin-bottom:6px;">ドクター監修 ／ VC200配合</div>
+        <div class="trust-badges">
+          <span class="trust-badge">シミ・くすみケア</span>
+          <span class="trust-badge">ビタミンC集中投与</span>
+          <span class="trust-badge">4ステップフルセット</span>
+        </div>
+      </div>
+      <div class="price-area">
+        <div class="price-label">初回特別価格</div>
+        <div class="price-main">
+          <span class="price-tag">初回</span>
+          <span class="price-num">1,980</span>
+          <span class="price-suffix">円</span>
+        </div>
+      </div>
+      <div class="card-cta">詳しく見る →</div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="line-card type-d">
+      <div class="card-header">
+        <div class="card-num">Card 2 — Point 1</div>
+        <div class="card-title">高濃度VC（VC200）を<br>角層深部へ</div>
+      </div>
+      <div class="card-body">
+        <div class="card-lead">メラニン抑制 × ターンオーバー促進</div>
+        <div class="pt-item">使うたびに透明感が積み重なる</div>
+        <div class="pt-item">「作らない」+「ためない」+「守る」3ステップを1セットで完結</div>
+        <div style="margin-top:10px;padding:8px 10px;background:#f8f0fc;border-radius:8px;font-size:11px;color:#6a1b9a;font-weight:700;">シミの根本から攻める<br>集中ビタミンCアプローチ</div>
+      </div>
+      <div class="badges-row">
+        <span class="badge key">VC200配合</span>
+        <span class="badge key">メラニン抑制</span>
+      </div>
+      <div class="card-cta">詳しく見る →</div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="line-card type-d">
+      <div class="card-header">
+        <div class="card-num">Card 3 — Point 2</div>
+        <div class="card-title">ドクター監修の<br>4ステップ<br>全方位VC設計</div>
+      </div>
+      <div class="card-body">
+        <div class="card-lead">シミ・くすみの根本から攻める統一設計</div>
+        <div style="font-size:11.5px;line-height:2;color:#444;margin:8px 0;">
+          <div>① 薬用VC泡フォーマー</div>
+          <div>② VC化粧水</div>
+          <div>③ VC美容液</div>
+          <div>④ VC活力液</div>
+        </div>
+        <div class="pt-item">医学的根拠に基づいたスキンケアアプローチ</div>
+      </div>
+      <div class="badges-row">
+        <span class="badge key">ドクター監修</span>
+        <span class="badge key">4ステップ完結</span>
+      </div>
+      <div class="card-cta">詳しく見る →</div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="line-card type-d">
+      <div class="card-header">
+        <div class="card-num">Card 4 — CV</div>
+        <div class="card-title">初回限定<br>VCスターターセット</div>
+      </div>
+      <div class="product-thumb">
+        <div>
+          <div class="brand">Sibody</div>
+          <div class="product-label">薬用VC泡フォーマー＋VC化粧水<br>＋VC美容液＋VC活力液（4点）</div>
+        </div>
+        <div class="img-ph">✨</div>
+      </div>
+      <div class="card-body">
+        <div class="trust-badges" style="margin-top:4px;">
+          <span class="trust-badge">ドクター監修</span>
+          <span class="trust-badge">1世帯1商品限定</span>
+          <span class="trust-badge">ネコポス対応</span>
+        </div>
+      </div>
+      <div class="price-area">
+        <div class="price-label">初回特別価格</div>
+        <div class="price-main">
+          <span class="price-tag">初回</span>
+          <span class="price-num">1,980</span>
+          <span class="price-suffix">円</span>
+        </div>
+      </div>
+      <div class="card-cta">今すぐ試す →</div>
+    </div>
+
+  </div>
+</div>
+
+<a class="back-link" href="index.html">← トップへ</a>
+
+<script>
+  function switchTab(type) {
+    document.querySelectorAll('.cards-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('section-' + type).classList.add('active');
+    document.querySelector('.tab-btn.tab-' + type).classList.add('active');
+  }
+</script>
+</body>
+</html>
