@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>デザイン依頼書：スキンケア方法診断 PRカルーセル</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F7F9F8; --surface: #FFFFFF; --border: #DDE8E3;
+    --text: #1A2420; --muted: #5A6E68; --accent: #3A9E78; --accent-light: #EBF6F1;
+    --tag-a: #E07040; --tag-b: #4A90D9; --tag-c: #4CAF7A; --tag-d: #AB6CC6;
+    --tag-a-bg: #FEF3ED; --tag-b-bg: #EDF4FC; --tag-c-bg: #EBF6EF; --tag-d-bg: #F5EEF9;
+  }
+  body { font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.75; padding: 32px 16px 80px; }
+  .doc { max-width: 860px; margin: 0 auto; }
+  .doc-header { border-left: 4px solid var(--accent); padding: 0 0 0 20px; margin-bottom: 40px; }
+  .doc-header .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .doc-header h1 { font-size: 22px; font-weight: 700; line-height: 1.35; }
+  .doc-header .meta { margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .section { margin-bottom: 40px; }
+  .section-title { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  p { margin-bottom: 10px; }
+  .tbl-wrap { overflow-x: auto; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--surface); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+  th { background: var(--accent-light); color: var(--accent); font-weight: 700; font-size: 11px; letter-spacing: .05em; text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #FAFCFB; }
+  .type-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 24px; }
+  .type-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; font-weight: 700; font-size: 13px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .type-header.a { background: var(--tag-a-bg); color: var(--tag-a); border-color: #F5D0BD; }
+  .type-header.b { background: var(--tag-b-bg); color: var(--tag-b); border-color: #BDD8F5; }
+  .type-header.c { background: var(--tag-c-bg); color: var(--tag-c); border-color: #BDE8CC; }
+  .type-header.d { background: var(--tag-d-bg); color: var(--tag-d); border-color: #DCC4EC; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .type-header.a .dot { background: var(--tag-a); }
+  .type-header.b .dot { background: var(--tag-b); }
+  .type-header.c .dot { background: var(--tag-c); }
+  .type-header.d .dot { background: var(--tag-d); }
+  .type-meta { font-size: 11px; font-weight: 400; opacity: .8; margin-left: 4px; }
+  .link-chip { display: inline-block; font-size: 11px; background: rgba(0,0,0,.06); border-radius: 4px; padding: 2px 8px; margin-top: 4px; word-break: break-all; }
+  .count-badge { display: inline-block; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin-left: 6px; vertical-align: middle; }
+  .back-link { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; }
+  .back-link a { color: var(--accent); text-decoration: none; }
+  .back-link a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="doc-header">
+    <div class="eyebrow">Design Brief — PR Carousel</div>
+    <h1>デザイン依頼書：スキンケア方法診断<br>PRカルーセル</h1>
+    <div class="meta">作成日: 2026-07-01 ／ 4タイプ × 4枚 = 16枚 ／ 診断〜結果カル依頼書と対になる</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">概要</div>
+    <p>結果カルーセル（タイプ発表・教育）の直後に送るPRカルーセルです。タイプ教育済みの状態でタイプに合った商材を提案します。</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>タイプ</th><th>商材</th><th>価格</th><th>アフィリリンク</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>🟠 皮脂コントロール型（A）</td>
+            <td>オルビス クリアフル<br>ニキビ・毛穴対策スターターセット</td>
+            <td>¥980</td>
+            <td><span class="link-chip">https://pr.orbis.co.jp/cosmetics/clearful/100/...</span></td>
+          </tr>
+          <tr>
+            <td>🔵 保湿バリア修復型（B）</td>
+            <td>ビーグレン<br>QuSomeローション（120mL）</td>
+            <td>¥5,500</td>
+            <td><span class="link-chip">https://www.bglen.net/?argument=ZAusrSsa&dmai=...</span></td>
+          </tr>
+          <tr>
+            <td>🟢 低刺激・肌環境改善型（C）</td>
+            <td>ファンケル<br>無添加アクネケア 薬用ニキビ化粧液＆乳液セット</td>
+            <td>¥1,750（初回）</td>
+            <td><span class="link-chip">https://www.fancl.co.jp/pub/acgj2/...</span></td>
+          </tr>
+          <tr>
+            <td>🟣 美白・エイジングケア型（D）</td>
+            <td>Sibody<br>VCスターターセット</td>
+            <td>¥1,980（初回）</td>
+            <td><span class="link-chip">https://www.sibody.co.jp/promotion/vc_series...</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">各PRカルーセル詳細<span class="count-badge">16枚</span></div>
+
+    <div class="type-block">
+      <div class="type-header a">
+        <span class="dot"></span>
+        タイプA｜皮脂コントロール型
+        <span class="type-meta">— オルビス クリアフル ニキビ・毛穴対策スターターセット ¥980</span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:55px;">Card</th><th style="width:95px;">役割</th><th>テキスト</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>商材発表</td><td>あなたにおすすめのスキンケアはこちら / ニキビ・毛穴対策スターターセット / 毎月7,000人以上が使い始めている！ / バッジ: テカらない肌へ ／ 毛穴ケア ／ 14日間トライアル / ¥980</td></tr>
+            <tr><td>2</td><td>Point 1</td><td>Point 1：毛穴の詰まりと皮脂テカりに直接アプローチ / ローション × モイスチャライザーのライン設計 / さっぱり・リッチの2テクスチャーから肌に合う方を選べる / ニキビができにくい肌環境へ整える</td></tr>
+            <tr><td>3</td><td>Point 2</td><td>Point 2：14日間試して、自分の肌で確かめる / ニキビ・毛穴の悩みを抱えた方が毎月7,000人以上スタート / 年齢・性別問わず使えるシンプルな設計 / まず試してから続けられる安心感</td></tr>
+            <tr><td>4</td><td>CV</td><td>オルビス初めての方限定 スターターセット / ニキビ・毛穴対策ローション ＋ モイスチャライザー（各2包）/ 14日間トライアル / ¥980</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="type-block">
+      <div class="type-header b">
+        <span class="dot"></span>
+        タイプB｜保湿バリア修復型
+        <span class="type-meta">— ビーグレン QuSomeローション 120mL ¥5,500</span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:55px;">Card</th><th style="width:95px;">役割</th><th>テキスト</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>商材発表</td><td>あなたにおすすめのスキンケアはこちら / QuSomeローション / ★5.0（9,834件のレビュー）/ バッジ: 17時間保湿持続 ／ 角層深部へ届ける ／ 365日返品・返金保証 / ¥5,500（税込）</td></tr>
+            <tr><td>2</td><td>Point 1</td><td>Point 1：「17時間保湿」が続く高機能化粧水 / 角層内深部に水分と美容成分を届ける「肌の底上げ効果」/ 朝つけたら夜まで乾燥しない / 乾燥・べたつきのダブル悩みを同時にケア</td></tr>
+            <tr><td>3</td><td>Point 2</td><td>Point 2：次のステップの浸透もサポート / 押し上がるようなハリを実感 / ★5.0・9,834件のレビューが示す確かな効果 / 定期便primeでずっとお得に続けられる</td></tr>
+            <tr><td>4</td><td>CV</td><td>365日返品・返金保証で安心 / QuSomeローション 120mL / ¥5,500（税込）/ 信頼バッジ: 365日返品・返金保証 ／ ¥5,500以上送料無料 ／ ★5.0（9,834件）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="type-block">
+      <div class="type-header c">
+        <span class="dot"></span>
+        タイプC｜低刺激・肌環境改善型
+        <span class="type-meta">— ファンケル 無添加アクネケア 薬用ニキビ化粧液＆乳液セット ¥1,750（初回）</span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:55px;">Card</th><th style="width:95px;">役割</th><th>テキスト</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>商材発表</td><td>あなたにおすすめのスキンケアはこちら / 無添加アクネケア 薬用ニキビ化粧液＆乳液セット / アクネケアエッセンス「6 Best Cosmetics Awards」受賞 / バッジ: 薬用（医薬部外品）／ 無添加 ／ 敏感肌OK / ¥1,750（税込）初回</td></tr>
+            <tr><td>2</td><td>Point 1</td><td>Point 1：「薬用」だから、ニキビに直接効く / 防腐剤・合成香料・合成色素・石油系界面活性剤・紫外線吸収剤 不使用 / 肌に負担をかけずに、繰り返すニキビを根本からケア / 「ニキビのその場しのぎケア」卒業へ</td></tr>
+            <tr><td>3</td><td>Point 2</td><td>Point 2：バリア機能を整えながらニキビを抑制 / セージエキス・グリチルリチン酸・トラネキサム酸配合 / 炎症を鎮め、肌の防御力を高める成分設計 / 繰り返すニキビが起きにくい肌環境へ</td></tr>
+            <tr><td>4</td><td>CV</td><td>初めての方限定 特別価格 / 無添加アクネケア 化粧液＆乳液セット（約1ヶ月分）/ ¥1,750（税込）/ 信頼バッジ: 90日間返金保証 ／ 最短2日以内お届け ／ 初めての方限定1セット</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="type-block">
+      <div class="type-header d">
+        <span class="dot"></span>
+        タイプD｜美白・エイジングケア型
+        <span class="type-meta">— Sibody VCスターターセット ¥1,980（初回）</span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:55px;">Card</th><th style="width:95px;">役割</th><th>テキスト</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>商材発表</td><td>あなたにおすすめのスキンケアはこちら / VCスターターセット / ドクター監修 ／ VC200配合 / バッジ: シミ・くすみケア ／ ビタミンC集中投与 ／ 4ステップフルセット / ¥1,980（税込）初回</td></tr>
+            <tr><td>2</td><td>Point 1</td><td>Point 1：高濃度ビタミンC（VC200）を角層深部へ / メラニン抑制 × ターンオーバー促進のダブルアプローチ / 使うたびに透明感が積み重なる / 「作らない」+「ためない」+「守る」3ステップを1セットで完結</td></tr>
+            <tr><td>3</td><td>Point 2</td><td>Point 2：ドクター監修の4ステップ全方位VC設計 / 泡フォーマー → 化粧水 → 美容液 → 活力液 / シミ・くすみの根本から攻める統一設計 / 医学的根拠に基づいたスキンケアアプローチ</td></tr>
+            <tr><td>4</td><td>CV</td><td>初回限定 VCスターターセット / 薬用VC泡フォーマー ＋ VC化粧水 ＋ VC美容液 ＋ VC活力液（4点）/ ¥1,980（税込）/ 信頼バッジ: ドクター監修 ／ 1世帯1商品限定 ／ ネコポス・ゆうパケット対応</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="back-link">
+    <a href="index.html">← トップへ</a>
+  </div>
+
+</div>
+</body>
+</html>
