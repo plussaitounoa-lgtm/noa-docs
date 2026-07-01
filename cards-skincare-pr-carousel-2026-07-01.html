@@ -6,18 +6,35 @@
 <title>スキンケア診断 PRカル カード図 2026-07-01</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #ddd; color: #1d1d1f; font-size: 13px; }
-  .container { max-width: 1300px; margin: 0 auto; padding: 32px 24px; }
-  h1 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-  .meta { color: #888; font-size: 12px; margin-bottom: 8px; }
-  .nav-links { margin-bottom: 20px; font-size: 12px; }
-  .nav-links a { color: #4285f4; text-decoration: none; margin-right: 12px; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f0f4f8; color: #1d1d1f; font-size: 13px; }
+
+  /* ── ページヘッダー（sticky） */
+  .page-header { background: #fff; border-bottom: 1px solid #e0e0e0; padding: 14px 24px; position: sticky; top: 0; z-index: 100; }
+  .page-header h1 { font-size: 15px; font-weight: 700; color: #333; }
+  .page-header p { font-size: 11px; color: #888; margin-top: 2px; }
+
+  /* ── タイプタブ */
+  .type-tabs { display: flex; gap: 8px; padding: 14px 24px 0; overflow-x: auto; background: #f0f4f8; }
+  .tab-btn { padding: 8px 18px; border-radius: 20px; border: 2px solid transparent; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; background: #fff; transition: all 0.2s; }
+  .tab-btn.tab-a { border-color: #f4a460; color: #e07040; }
+  .tab-btn.tab-a.active { background: #e07040; color: #fff; }
+  .tab-btn.tab-b { border-color: #64b5f6; color: #1565c0; }
+  .tab-btn.tab-b.active { background: #4a90d9; color: #fff; }
+  .tab-btn.tab-c { border-color: #81c784; color: #2e7d32; }
+  .tab-btn.tab-c.active { background: #4caf7a; color: #fff; }
+  .tab-btn.tab-d { border-color: #ce93d8; color: #6a1b9a; }
+  .tab-btn.tab-d.active { background: #ab6cc6; color: #fff; }
+
+  /* ── タブコンテンツ */
+  .tab-section { display: none; padding: 20px 24px 40px; }
+  .tab-section.active { display: block; }
 
   /* タイプセクション */
-  .type-section { margin-bottom: 48px; }
   .type-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #ccc; }
   .type-label { font-size: 16px; font-weight: 700; }
   .type-sub { font-size: 11px; color: #888; }
+  .nav-links { margin-bottom: 0; font-size: 12px; padding: 10px 0 0; }
+  .nav-links a { color: #4285f4; text-decoration: none; margin-right: 12px; }
   .cards-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 16px; align-items: flex-start; }
 
   /* ─── カード本体 ─── */
@@ -81,23 +98,28 @@
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="nav-links">
-    <a href="index.html">← トップへ</a>
-    <a href="cards-skincare-diagnosis-2026-06-26.html">結果カル カード図</a>
-    <a href="brief-pr-carousel-skincare-diagnosis-2026-07-01.html">PRカル 依頼書</a>
-  </div>
-  <h1>スキンケア方法診断 PRカル カード図</h1>
-  <p class="meta">2026-07-01　／　4タイプ × 4枚 = 16枚</p>
 
-  <!-- ========================================
-       🟠 タイプA：皮脂コントロール型
-  ========================================= -->
-  <div class="type-section">
-    <div class="type-header">
-      <span class="type-label">🟠 タイプA｜皮脂コントロール型 PRカル</span>
-      <span class="type-sub">オルビス クリアフル ニキビ・毛穴対策スターターセット ¥980</span>
-    </div>
+<div class="page-header">
+  <h1>スキンケア方法診断 — PRカルーセル カード図</h1>
+  <p>4タイプ × Card 1〜4 のテキスト確認用。タブでタイプを切り替え。</p>
+</div>
+
+<div class="type-tabs">
+  <button class="tab-btn tab-a active" onclick="switchTab('a')">タイプA｜皮脂コントロール</button>
+  <button class="tab-btn tab-b" onclick="switchTab('b')">タイプB｜保湿バリア修復</button>
+  <button class="tab-btn tab-c" onclick="switchTab('c')">タイプC｜低刺激・肌環境改善</button>
+  <button class="tab-btn tab-d" onclick="switchTab('d')">タイプD｜美白・エイジングケア</button>
+</div>
+
+<!-- ========================================
+     🟠 タイプA：皮脂コントロール型
+========================================= -->
+<div class="tab-section active" id="section-a">
+<div class="container" style="max-width:1300px;margin:0 auto;padding:0 24px;">
+  <div class="type-header" style="margin-top:8px;">
+    <span class="type-label">🟠 タイプA｜皮脂コントロール型 PRカル</span>
+    <span class="type-sub">オルビス クリアフル ニキビ・毛穴対策スターターセット ¥980</span>
+  </div>
     <div class="cards-row">
 
       <!-- Card 1 -->
@@ -261,14 +283,18 @@
     </div>
   </div>
 
-  <!-- ========================================
-       🔵 タイプB：保湿バリア修復型
-  ========================================= -->
-  <div class="type-section">
-    <div class="type-header">
-      <span class="type-label">🔵 タイプB｜保湿バリア修復型 PRカル</span>
-      <span class="type-sub">ビーグレン QuSomeローション 120mL ¥5,500</span>
-    </div>
+</div><!-- /container -->
+</div><!-- /tab-section-a -->
+
+<!-- ========================================
+     🔵 タイプB：保湿バリア修復型
+========================================= -->
+<div class="tab-section" id="section-b">
+<div class="container" style="max-width:1300px;margin:0 auto;padding:0 24px;">
+  <div class="type-header" style="margin-top:8px;">
+    <span class="type-label">🔵 タイプB｜保湿バリア修復型 PRカル</span>
+    <span class="type-sub">ビーグレン QuSomeローション 120mL ¥5,500</span>
+  </div>
     <div class="cards-row">
 
       <!-- Card 1 -->
@@ -431,14 +457,18 @@
     </div>
   </div>
 
-  <!-- ========================================
-       🟢 タイプC：低刺激・肌環境改善型
-  ========================================= -->
-  <div class="type-section">
-    <div class="type-header">
-      <span class="type-label">🟢 タイプC｜低刺激・肌環境改善型 PRカル</span>
-      <span class="type-sub">ファンケル 無添加アクネケア 薬用ニキビ化粧液＆乳液セット ¥1,750（初回）</span>
-    </div>
+</div><!-- /container -->
+</div><!-- /tab-section-b -->
+
+<!-- ========================================
+     🟢 タイプC：低刺激・肌環境改善型
+========================================= -->
+<div class="tab-section" id="section-c">
+<div class="container" style="max-width:1300px;margin:0 auto;padding:0 24px;">
+  <div class="type-header" style="margin-top:8px;">
+    <span class="type-label">🟢 タイプC｜低刺激・肌環境改善型 PRカル</span>
+    <span class="type-sub">ファンケル 無添加アクネケア 薬用ニキビ化粧液＆乳液セット ¥1,750（初回）</span>
+  </div>
     <div class="cards-row">
 
       <!-- Card 1 -->
@@ -597,14 +627,18 @@
     </div>
   </div>
 
-  <!-- ========================================
-       🟣 タイプD：美白・エイジングケア型
-  ========================================= -->
-  <div class="type-section">
-    <div class="type-header">
-      <span class="type-label">🟣 タイプD｜美白・エイジングケア型 PRカル</span>
-      <span class="type-sub">Sibody VCスターターセット ¥1,980（初回）</span>
-    </div>
+</div><!-- /container -->
+</div><!-- /tab-section-c -->
+
+<!-- ========================================
+     🟣 タイプD：美白・エイジングケア型
+========================================= -->
+<div class="tab-section" id="section-d">
+<div class="container" style="max-width:1300px;margin:0 auto;padding:0 24px;">
+  <div class="type-header" style="margin-top:8px;">
+    <span class="type-label">🟣 タイプD｜美白・エイジングケア型 PRカル</span>
+    <span class="type-sub">Sibody VCスターターセット ¥1,980（初回）</span>
+  </div>
     <div class="cards-row">
 
       <!-- Card 1 -->
@@ -770,7 +804,21 @@
 
     </div>
   </div>
+  <div style="padding:20px 0 8px;font-size:12px;">
+    <a href="index.html" style="color:#4285f4;text-decoration:none;">← トップへ</a>
+    <a href="cards-skincare-diagnosis-2026-06-26.html" style="color:#4285f4;text-decoration:none;margin-left:14px;">結果カル カード図</a>
+    <a href="brief-pr-carousel-skincare-diagnosis-2026-07-01.html" style="color:#4285f4;text-decoration:none;margin-left:14px;">PRカル 依頼書</a>
+  </div>
+</div><!-- /container -->
+</div><!-- /tab-section-d -->
 
-</div>
+<script>
+  function switchTab(type) {
+    document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('section-' + type).classList.add('active');
+    document.querySelector('.tab-btn.tab-' + type).classList.add('active');
+  }
+</script>
 </body>
 </html>
