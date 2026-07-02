@@ -213,6 +213,9 @@
       <strong>PU文言・友だち追加画面の問題ではなく、LP PV（記事への流入）そのものが-22%落ちている</strong>ことが主犯。
       「こいずみ」「渋谷」の2サイトだけで減少分の78%を説明できる。
     </div>
+    <div class="insight insight-yellow" style="margin-top:10px;">
+      <strong>サチコ実データで検証した結果、単純な「順位下落」ではなかった。</strong>BMI・痩せる方法系クエリは順位維持のままクリックだけ激減＝Google AI Overviewによるゼロクリック化の疑い。渋谷の看板クエリ「ダイエット」は本物の順位悪化。渋谷の認知症系クエリは表示回数ごと消滅＝YMYL評価厳格化の疑い（詳細は④）。
+    </div>
     <p class="note">※6/30・7/1はデータ未着/極端に薄いため判断対象から除外。7月に入ってからの傾向は次回データが揃い次第再確認。</p>
   </div>
 
@@ -302,10 +305,55 @@
       こいずみは主力記事のほぼ全部が一律ダウン：<strong>摂取カロリー -45%／BMI -45%／痩せる薬 -29%／日本人1番痩せる -24%</strong>。
       特定記事の問題ではなく<strong>サイト全体のSEO流入問題</strong>。渋谷も同様の傾向（ダイエットパッチ -20%／本気で痩せたい -13%）で緩やかに下落中。
     </div>
-    <p class="note">記事が横並びで一律に落ちている＝個別のPU・LP問題ではなくサーチコンソール順位変動の可能性が高い。次のアクションで確認する。</p>
+    <p class="note">記事が横並びで一律に落ちている状態を受け、実際にサーチコンソールのデータで検証した（次セクション）。</p>
   </div>
 
-  <!-- ④ 記事別再確認（BMI・摂取カロリー） -->
+  <!-- ④ サチコ実データでの裏付け -->
+  <div class="section">
+    <div class="section-head">
+      <h2>サーチコンソール実データでの検証</h2>
+      <div class="sub">単純な「順位が落ちた」ではなく、3つの異なる現象が混在していた</div>
+    </div>
+
+    <div class="insight insight-blue">
+      両サイトの週次表示回数を見ると、こいずみは6月W1(92.2万)→W4(73.5万)で<strong>-20%</strong>、渋谷は5月W1(73.7万)→6月W4(63.0万)で<strong>-14%</strong>と、どちらも表示回数自体が右肩下がり。
+      ただし<strong>平均掲載順位はほぼ横ばい</strong>（こいずみ5.5〜5.9台、渋谷6.3〜6.6台で推移）。「順位崩壊」ではなく、クエリ単位で見ると原因は3種類に分かれる。
+    </div>
+
+    <div class="tbl-wrap" style="margin-top:16px;">
+      <table>
+        <thead>
+          <tr><th>現象</th><th>該当クエリ</th><th>症状</th><th>原因仮説</th><th>PU/LPで直せるか</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-yellow">ゼロクリック化</span></td>
+            <td>bmi／bmi 計算／痩せる方法</td>
+            <td>順位はほぼ変化なし〜改善なのにクリックだけ激減（例: 「bmi」クリック3,225→829、-74%）</td>
+            <td>Google AI Overview（AIO）が検索結果に直接答えを出し記事に来る前に完結。日本は2024年8月導入、2026年3月時点で全クエリの48%に表示・健康系クエリは60.7%でトリガー</td>
+            <td class="down">❌ 直せない</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-red">表示回数ゼロ消滅</span></td>
+            <td>認知症系クエリ（渋谷）</td>
+            <td>表示回数が完全にゼロへ（圏外落ち）</td>
+            <td>2026年1月にGoogleが精度懸念から健康系AIOを一部制限。同時期にYMYL（健康）コンテンツの評価基準が厳格化した疑い</td>
+            <td class="warn">△ E-E-A-T強化で回復余地あるかも</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-gray">純粋な順位悪化</span></td>
+            <td>「ダイエット」（渋谷の看板KW）</td>
+            <td>順位5.0→6.9に悪化・表示回数-72%・クリック-95%</td>
+            <td>競合コンテンツに純粋に負けた</td>
+            <td class="up">○ コンテンツ強化で戦える</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">GSCの「検索での見え方」レポートにAI Overview表示の有無を直接示す項目はないため状況証拠での判断。ただし順位維持・クリック激減という組み合わせはAIOのゼロクリック化の典型パターンと一致する。</p>
+  </div>
+
+  <!-- ⑤ 記事別再確認（BMI・摂取カロリー） -->
   <div class="section">
     <div class="section-head">
       <h2>個別記事の再確認</h2>
@@ -341,19 +389,33 @@
     </div>
   </div>
 
-  <!-- ⑤ ネクストアクション -->
+  <!-- ⑥ ネクストアクション -->
   <div class="section">
     <div class="section-head">
       <h2>ネクストアクション（確認待ち）</h2>
-      <div class="sub">CEOの判断ではなくNoaの確認・実行が必要な項目</div>
+      <div class="sub">サチコ検証で犯人が3種類に分解できたので、それぞれ対応が違う</div>
     </div>
 
     <ul class="action-list">
       <li>
         <span class="pri-chip pri-high">高</span>
         <div class="action-body">
-          <strong>こいずみ・渋谷のサーチコンソールで順位変動確認</strong>
-          <span>-92人/月インパクトの真因特定。記事が横並びで一律に落ちているため、個別施策より先に順位変動の有無を見るべき。</span>
+          <strong>t54（BMI新訴求）を最優先で進める</strong>
+          <span>bmi計算系クエリのAIOゼロクリック化はSEO側で直せない構造問題と確定。訴求を「BMI計算」意図から切り離す方向性が唯一の解。着手判断の保留は解除してよい。</span>
+        </div>
+      </li>
+      <li>
+        <span class="pri-chip pri-mid">中</span>
+        <div class="action-body">
+          <strong>渋谷「認知症」系コンテンツのE-E-A-T強化検討</strong>
+          <span>表示回数ゼロ消滅＝YMYL評価厳格化の疑い。監修者情報・著者情報・引用元の強化で回復余地があるか、対象記事を洗い出して評価する。</span>
+        </div>
+      </li>
+      <li>
+        <span class="pri-chip pri-mid">中</span>
+        <div class="action-body">
+          <strong>渋谷「ダイエット」（看板KW）の競合コンテンツ比較</strong>
+          <span>順位5.0→6.9の実質下落。ここだけは正攻法のSEO改修で戦える余地がある。上位表示している競合記事の構成を確認する。</span>
         </div>
       </li>
       <li>
@@ -363,17 +425,10 @@
           <span>8日間クリック0件が続くのは遷移先修正だけでは説明がつかない。実際にLINEで動作を目視確認する。</span>
         </div>
       </li>
-      <li>
-        <span class="pri-chip pri-mid">中</span>
-        <div class="action-body">
-          <strong>t54（BMI新訴求）着手判断</strong>
-          <span>今回の流入減とは独立の論点。BMI記事は変化なく壊滅継続のため、着手自体は保留のままでよいか確認。</span>
-        </div>
-      </li>
     </ul>
 
     <div class="insight insight-blue" style="margin-top: 16px;">
-      <strong>今回のポイント:</strong> 友だち減少の主因はPU改修で直る話ではない。流入（SEO）側の問題であるため、PU文言改修に工数を割く前にサーチコンソールでの事実確認が先。
+      <strong>今回のポイント:</strong> 友だち減少の主因はPU改修で直る話ではないが、内訳は一様ではない。AIOゼロクリック化（直せない）／YMYL評価厳格化（コンテンツ強化で対応）／純粋な競合負け（SEO改修で対応）の3つを混同せず、それぞれ別の打ち手で対応する。
     </div>
   </div>
 
