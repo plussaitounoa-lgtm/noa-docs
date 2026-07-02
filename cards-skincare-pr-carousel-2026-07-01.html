@@ -22,8 +22,8 @@
   .tab-btn.tab-b.active { background: #4a90d9; color: #fff; }
   .tab-btn.tab-c { border-color: #88d3ce; color: #1f7a72; }
   .tab-btn.tab-c.active { background: #5bbdb2; color: #fff; }
-  .tab-btn.tab-d { border-color: #ce93d8; color: #6a1b9a; }
-  .tab-btn.tab-d.active { background: #ab6cc6; color: #fff; }
+  .tab-btn.tab-d { border-color: #f5c060; color: #b06010; }
+  .tab-btn.tab-d.active { background: #f09820; color: #fff; }
 
   /* ── タブコンテンツ */
   .tab-section { display: none; padding: 20px 24px 40px; }
@@ -780,163 +780,169 @@
 
       <!-- Card 1 -->
       <div class="card">
-        <div style="background:linear-gradient(90deg,#ab6cc6,#ce93d8);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="background:linear-gradient(90deg,#f09820,#f5c060);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
           <span style="color:#fff;font-weight:800;font-size:13px;letter-spacing:0.04em;">Sibody</span>
           <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
         </div>
-        <div class="img-area" style="height:140px;background:#f8f0fc;">
-          <div class="img-icon" style="color:#ab6cc6;opacity:0.4;">✨</div>
-          <div class="img-label" style="color:#8050a0;">商品パッケージ写真</div>
+        <div class="img-area" style="height:100px;background:#fff8ee;">
+          <div class="img-icon" style="color:#f09820;opacity:0.4;">🍊</div>
+          <div class="img-label" style="color:#b06010;">商品パッケージ写真</div>
         </div>
-        <!-- バッジ -->
-        <div style="background:#f8f0fc;border-bottom:1px solid #e0c8f0;padding:6px 10px;display:flex;align-items:center;gap:8px;">
-          <div style="flex-shrink:0;">
-            <svg width="52" height="52" viewBox="0 0 52 52">
-              <defs><linearGradient id="da1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f9d060"/><stop offset="50%" stop-color="#e8a820"/><stop offset="100%" stop-color="#c8860a"/></linearGradient></defs>
-              <circle cx="26" cy="26" r="25" fill="url(#da1)" stroke="#c8860a" stroke-width="1.2"/>
-              <circle cx="26" cy="26" r="21" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
-              <text x="26" y="15" text-anchor="middle" font-size="10">👨‍⚕️</text>
-              <text x="26" y="25" text-anchor="middle" font-size="5.5" font-weight="800" fill="#1a1a1a">ドクター</text>
-              <rect x="6" y="28" width="40" height="10" rx="2" fill="#ab6cc6"/>
-              <text x="26" y="36" text-anchor="middle" font-size="6" font-weight="800" fill="#fff">監修済み</text>
-              <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">医学的根拠あり</text>
-            </svg>
+        <!-- バッジ2つ横並び -->
+        <div style="background:#fff8ee;border-bottom:1px solid #f0d890;padding:7px 10px;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="flex:0 0 auto;text-align:center;">
+              <svg width="58" height="58" viewBox="0 0 52 52">
+                <defs><linearGradient id="da1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f9d060"/><stop offset="100%" stop-color="#c8860a"/></linearGradient></defs>
+                <circle cx="26" cy="28" r="22" fill="url(#da1)" stroke="#c8860a" stroke-width="1.2"/>
+                <circle cx="26" cy="28" r="18" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
+                <text x="26" y="13" text-anchor="middle" font-size="12">👨‍⚕️</text>
+                <text x="26" y="25" text-anchor="middle" font-size="6" font-weight="800" fill="#1a1a1a">ドクター</text>
+                <rect x="7" y="27" width="38" height="11" rx="3" fill="#e8a820"/>
+                <text x="26" y="35.5" text-anchor="middle" font-size="6.5" font-weight="900" fill="#fff">監修済み</text>
+              </svg>
+              <div style="font-size:7px;color:#888;margin-top:1px;">医学的根拠あり</div>
+            </div>
+            <div style="flex:0 0 auto;text-align:center;">
+              <svg width="58" height="58" viewBox="0 0 52 52">
+                <defs><linearGradient id="da2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fde8a0"/><stop offset="100%" stop-color="#f09820"/></linearGradient></defs>
+                <circle cx="26" cy="28" r="22" fill="url(#da2)" stroke="#f09820" stroke-width="1.2"/>
+                <circle cx="26" cy="28" r="18" fill="#fff" stroke="#f5c060" stroke-width="0.8"/>
+                <text x="26" y="16" text-anchor="middle" font-size="9" font-weight="900" fill="#f09820">VC</text>
+                <text x="26" y="27" text-anchor="middle" font-size="11" font-weight="900" fill="#b06010">200</text>
+                <rect x="7" y="30" width="38" height="11" rx="3" fill="#f09820"/>
+                <text x="26" y="38.5" text-anchor="middle" font-size="6" font-weight="900" fill="#fff">高濃度VC配合</text>
+              </svg>
+              <div style="font-size:7px;color:#888;margin-top:1px;">角層深部へ届く</div>
+            </div>
           </div>
-          <div style="flex-shrink:0;">
-            <svg width="52" height="52" viewBox="0 0 52 52">
-              <defs><linearGradient id="da2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ddb0f0"/><stop offset="50%" stop-color="#ab6cc6"/><stop offset="100%" stop-color="#6a1b9a"/></linearGradient></defs>
-              <circle cx="26" cy="26" r="25" fill="url(#da2)" stroke="#6a1b9a" stroke-width="1.2"/>
-              <circle cx="26" cy="26" r="21" fill="#fff" stroke="#ab6cc6" stroke-width="0.8"/>
-              <text x="26" y="15" text-anchor="middle" font-size="10">💊</text>
-              <text x="26" y="25" text-anchor="middle" font-size="5.5" font-weight="800" fill="#1a1a1a">VC200配合</text>
-              <rect x="6" y="28" width="40" height="10" rx="2" fill="#6a1b9a"/>
-              <text x="26" y="36" text-anchor="middle" font-size="5.5" font-weight="800" fill="#fff">高濃度VC</text>
-              <text x="26" y="48" text-anchor="middle" font-size="4.5" fill="#888">角層深部へ</text>
-            </svg>
-          </div>
-          <div style="font-size:8.5px;font-weight:700;color:#6a1b9a;line-height:1.5;">ドクター<br>監修！</div>
         </div>
         <div class="product-section">
           <div class="product-eyebrow">あなたにおすすめのスキンケアはこちら</div>
           <div class="product-name">VCスターターセット<br>（4点フルセット）</div>
           <div class="product-badges">
-            <span class="product-badge" style="background:#f8f0fc;border:1px solid #ddb0f0;color:#6a1b9a;">シミ・くすみケア</span>
-            <span class="product-badge" style="background:#f8f0fc;border:1px solid #ddb0f0;color:#6a1b9a;">VC200集中投与</span>
-            <span class="product-badge" style="background:#f8f0fc;border:1px solid #ddb0f0;color:#6a1b9a;">4ステップ完結</span>
+            <span class="product-badge" style="background:#fff8ee;border:1px solid #f0d890;color:#b06010;">シミ・くすみケア</span>
+            <span class="product-badge" style="background:#fff8ee;border:1px solid #f0d890;color:#b06010;">VC・A・E配合</span>
+            <span class="product-badge" style="background:#fff8ee;border:1px solid #f0d890;color:#b06010;">4ステップ完結</span>
           </div>
         </div>
-        <div class="price-section" style="background:#f8f0fc;border-color:#e0c8f0;">
+        <div class="price-section" style="background:#fff8ee;border-color:#f0d890;">
           <div class="price-label-sm">初回限定特別価格</div>
           <div class="price-main-row">
             <span class="init-badge-sm" style="background:#c0392b;">初回限定</span>
-            <span class="price-num">1,980</span>
+            <span class="price-num" style="color:#b06010;">1,980</span>
             <span class="price-suffix">円（税込）</span>
           </div>
         </div>
-        <div class="cta-wrap"><button class="cta-btn no-price">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+        <div class="cta-wrap"><button class="cta-btn no-price" style="background:linear-gradient(180deg,#f5c060,#f09820);">詳しく見てみる <span class="cta-arrow">›</span></button></div>
       </div>
 
       <!-- Card 2 -->
       <div class="card">
-        <div style="background:linear-gradient(90deg,#ab6cc6,#ce93d8);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="background:linear-gradient(90deg,#f09820,#f5c060);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
           <span style="color:#fff;font-weight:800;font-size:13px;">Sibody</span>
           <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
         </div>
-        <div class="point-row" style="background:#f8f0fc;">
-          <div class="point-badge" style="background:linear-gradient(135deg,#ab6cc6,#ce93d8);">Point<span class="num">1</span></div>
-          <div class="point-headline">高濃度VC（VC200）を<br>角層深部へ届ける</div>
+        <div class="point-row" style="background:#fff8ee;">
+          <div class="point-badge" style="background:linear-gradient(135deg,#f09820,#f5c060);">Point<span class="num">1</span></div>
+          <div class="point-headline">高濃度VC200が<br>角層深部まで届く</div>
         </div>
         <!-- VC浸透図 -->
-        <div style="background:linear-gradient(180deg,#f8f0fc,#f0e4f8);padding:8px 8px 10px;text-align:center;">
-          <div style="background:linear-gradient(90deg,#ab6cc6,#ce93d8);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;">メラニン抑制 × ターンオーバー促進</div>
+        <div style="background:linear-gradient(180deg,#fff8ee,#fef0d8);padding:8px 8px 10px;text-align:center;">
+          <div style="background:linear-gradient(90deg,#f09820,#f5c060);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;">メラニン抑制 × ターンオーバー促進</div>
           <svg width="196" height="110" viewBox="0 0 196 110">
-            <rect width="196" height="110" rx="8" fill="#faf0fc"/>
-            <!-- VC200 大きな数字 -->
-            <text x="60" y="40" text-anchor="middle" font-size="28" font-weight="900" fill="#ab6cc6">VC</text>
-            <text x="60" y="60" text-anchor="middle" font-size="20" font-weight="900" fill="#6a1b9a">200</text>
+            <rect width="196" height="110" rx="8" fill="#fff8ee"/>
+            <text x="60" y="40" text-anchor="middle" font-size="28" font-weight="900" fill="#f09820">VC</text>
+            <text x="60" y="60" text-anchor="middle" font-size="20" font-weight="900" fill="#b06010">200</text>
             <text x="60" y="75" text-anchor="middle" font-size="8" fill="#888">高濃度ビタミンC</text>
-            <!-- 矢印 -->
-            <text x="100" y="55" text-anchor="middle" font-size="20" fill="#ab6cc6">→</text>
-            <!-- 右側効果 -->
-            <rect x="120" y="20" width="70" height="70" rx="8" fill="#fff" stroke="#ddb0f0" stroke-width="1"/>
-            <text x="155" y="38" text-anchor="middle" font-size="8" font-weight="700" fill="#ab6cc6">角層深部で</text>
-            <text x="155" y="50" text-anchor="middle" font-size="8" font-weight="700" fill="#6a1b9a">✓ メラニン抑制</text>
-            <text x="155" y="63" text-anchor="middle" font-size="8" font-weight="700" fill="#6a1b9a">✓ ターンオーバー</text>
-            <text x="155" y="75" text-anchor="middle" font-size="8" font-weight="700" fill="#6a1b9a">　 促進</text>
+            <text x="100" y="55" text-anchor="middle" font-size="20" fill="#f09820">→</text>
+            <rect x="120" y="20" width="70" height="70" rx="8" fill="#fff" stroke="#f0d890" stroke-width="1"/>
+            <text x="155" y="38" text-anchor="middle" font-size="8" font-weight="700" fill="#f09820">角層深部で</text>
+            <text x="155" y="50" text-anchor="middle" font-size="8" font-weight="700" fill="#b06010">✓ メラニン抑制</text>
+            <text x="155" y="63" text-anchor="middle" font-size="8" font-weight="700" fill="#b06010">✓ ターンオーバー</text>
+            <text x="155" y="75" text-anchor="middle" font-size="8" font-weight="700" fill="#b06010">　 促進</text>
             <text x="155" y="86" text-anchor="middle" font-size="7.5" fill="#888">→ 透明感アップ</text>
-            <!-- 下部テキスト -->
-            <text x="98" y="100" text-anchor="middle" font-size="8.5" font-weight="700" fill="#ab6cc6">使うたびに透明感が積み重なる</text>
+            <text x="98" y="100" text-anchor="middle" font-size="8.5" font-weight="700" fill="#f09820">使うたびに透明感が積み重なる</text>
           </svg>
         </div>
         <div class="card-body">
-          <div class="body-text" style="text-align:center;font-weight:700;color:#6a1b9a;">「作らない」+「ためない」+「守る」3ステップ</div>
+          <div class="body-text" style="text-align:center;font-weight:700;color:#b06010;">「作らない」+「ためない」+「守る」3ステップ</div>
         </div>
-        <div class="cta-wrap"><button class="cta-btn type-d">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+        <div class="cta-wrap"><button class="cta-btn type-d" style="background:linear-gradient(180deg,#f5c060,#f09820);">詳しく見てみる <span class="cta-arrow">›</span></button></div>
       </div>
 
       <!-- Card 3 -->
       <div class="card">
-        <div style="background:linear-gradient(90deg,#ab6cc6,#ce93d8);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="background:linear-gradient(90deg,#f09820,#f5c060);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
           <span style="color:#fff;font-weight:800;font-size:13px;">Sibody</span>
           <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
         </div>
-        <div class="point-row" style="background:#f8f0fc;">
-          <div class="point-badge" style="background:linear-gradient(135deg,#ab6cc6,#ce93d8);">Point<span class="num">2</span></div>
-          <div class="point-headline">ドクター監修の<br>4ステップ全方位VC設計</div>
+        <div class="point-row" style="background:#fff8ee;">
+          <div class="point-badge" style="background:linear-gradient(135deg,#f09820,#f5c060);">Point<span class="num">2</span></div>
+          <div class="point-headline">ドクター監修の<br>4ステップVC設計</div>
         </div>
         <!-- 4ステップ図 -->
-        <div style="background:linear-gradient(180deg,#f8f0fc,#f0e4f8);padding:8px 8px 10px;text-align:center;">
-          <div style="background:linear-gradient(90deg,#ab6cc6,#ce93d8);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;">VCで統一した4ステップ</div>
+        <div style="background:linear-gradient(180deg,#fff8ee,#fef0d8);padding:8px 8px 10px;text-align:center;">
+          <div style="background:linear-gradient(90deg,#f09820,#f5c060);color:#fff;font-size:11px;font-weight:900;padding:3px 0;border-radius:3px;margin-bottom:8px;">VCで統一した4ステップ</div>
           <div style="display:flex;flex-direction:column;gap:4px;">
-            <div style="background:#fff;border:1px solid #ddb0f0;border-radius:8px;padding:5px 10px;display:flex;align-items:center;gap:8px;">
-              <span style="background:#ab6cc6;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px;white-space:nowrap;">Step1</span>
+            <div style="background:#fff;border:1px solid #f0d890;border-radius:8px;padding:5px 10px;display:flex;align-items:center;gap:8px;">
+              <span style="background:#f09820;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px;white-space:nowrap;">Step1</span>
               <span style="font-size:10px;font-weight:700;color:#333;">薬用VC泡フォーマー</span>
             </div>
-            <div style="background:#fff;border:1px solid #ddb0f0;border-radius:8px;padding:5px 10px;display:flex;align-items:center;gap:8px;">
-              <span style="background:#ab6cc6;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px;white-space:nowrap;">Step2</span>
+            <div style="background:#fff;border:1px solid #f0d890;border-radius:8px;padding:5px 10px;display:flex;align-items:center;gap:8px;">
+              <span style="background:#f09820;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px;white-space:nowrap;">Step2</span>
               <span style="font-size:10px;font-weight:700;color:#333;">VC化粧水</span>
             </div>
-            <div style="background:#fff;border:1px solid #ddb0f0;border-radius:8px;padding:5px 10px;display:flex;align-items:center;gap:8px;">
-              <span style="background:#ab6cc6;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px;white-space:nowrap;">Step3</span>
+            <div style="background:#fff;border:1px solid #f0d890;border-radius:8px;padding:5px 10px;display:flex;align-items:center;gap:8px;">
+              <span style="background:#f09820;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px;white-space:nowrap;">Step3</span>
               <span style="font-size:10px;font-weight:700;color:#333;">VC美容液</span>
             </div>
-            <div style="background:#fff;border:1px solid #ddb0f0;border-radius:8px;padding:5px 10px;display:flex;align-items:center;gap:8px;">
-              <span style="background:#6a1b9a;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px;white-space:nowrap;">Step4</span>
-              <span style="font-size:10px;font-weight:700;color:#333;">VC活力液</span>
+            <div style="background:#fff;border:1px solid #f0d890;border-radius:8px;padding:5px 10px;display:flex;align-items:center;gap:8px;">
+              <span style="background:#b06010;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px;white-space:nowrap;">Step4</span>
+              <span style="font-size:10px;font-weight:700;color:#333;">VC美白クリーム</span>
             </div>
           </div>
         </div>
         <div class="card-body">
-          <div class="body-text" style="text-align:center;font-weight:700;color:#6a1b9a;">シミ・くすみの根本から攻める統一設計</div>
+          <div class="body-text" style="text-align:center;font-weight:700;color:#b06010;">シミ・くすみの根本から攻める統一設計</div>
         </div>
-        <div class="cta-wrap"><button class="cta-btn type-d">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+        <div class="cta-wrap"><button class="cta-btn type-d" style="background:linear-gradient(180deg,#f5c060,#f09820);">詳しく見てみる <span class="cta-arrow">›</span></button></div>
       </div>
 
       <!-- Card 4 -->
       <div class="card">
-        <div style="background:linear-gradient(90deg,#ab6cc6,#ce93d8);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="background:linear-gradient(90deg,#f09820,#f5c060);padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
           <span style="color:#fff;font-weight:800;font-size:13px;">Sibody</span>
           <span style="background:rgba(255,255,255,0.25);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;">PR</span>
         </div>
         <div class="card-body" style="padding-bottom:4px;">
-          <div class="body-headline">初回限定<br>VCスターターセット</div>
+          <div class="body-headline">公式サイトなら<br>今だけ特典3つ！</div>
+        </div>
+        <!-- 3つの特典 -->
+        <div style="margin:4px 10px 6px;background:#fffbe6;border:1.5px solid #f5c518;border-radius:6px;padding:6px 9px;">
+          <div style="font-size:8px;font-weight:800;color:#b06010;margin-bottom:4px;">⭐ 今だけの3つの特典</div>
+          <div style="font-size:8px;color:#333;line-height:1.8;">
+            🎫 次回使える <b>20%OFFクーポン</b><br>
+            📖 ニキビケアガイド付き<br>
+            🚚 <b>送料無料</b>
+          </div>
         </div>
         <div class="set-section">
-          <div class="set-item" style="--dot:#ab6cc6;">薬用VC泡フォーマー<span class="item-sub">洗顔ステップ</span></div>
-          <div class="set-item" style="--dot:#ab6cc6;">VC化粧水<span class="item-sub">うるおいを補給</span></div>
-          <div class="set-item" style="--dot:#ab6cc6;">VC美容液<span class="item-sub">集中美容成分</span></div>
-          <div class="set-item" style="--dot:#ab6cc6;">VC活力液<span class="item-sub">仕上げ・バリア強化</span></div>
+          <div class="set-item" style="--dot:#f09820;">薬用VC泡フォーマー<span class="item-sub">もこもこ泡・薬用処方</span></div>
+          <div class="set-item" style="--dot:#f09820;">VC化粧水<span class="item-sub">うるおいを補給</span></div>
+          <div class="set-item" style="--dot:#f09820;">VC美容液<span class="item-sub">集中美容成分</span></div>
+          <div class="set-item" style="--dot:#f09820;">VC美白クリーム<span class="item-sub">バイタルクリーム</span></div>
         </div>
-        <div class="price-section" style="background:#f8f0fc;border-color:#e0c8f0;">
+        <div class="price-section" style="background:#fff8ee;border-color:#f0d890;">
           <div class="price-label-sm">初回限定特別価格</div>
-          <div class="price-main-row"><span class="init-badge-sm" style="background:#c0392b;">初回限定</span><span class="price-num">1,980</span><span class="price-suffix">円（税込）</span></div>
+          <div class="price-main-row"><span class="init-badge-sm" style="background:#c0392b;">初回限定</span><span class="price-num" style="color:#b06010;">1,980</span><span class="price-suffix">円（税込）</span></div>
         </div>
         <div class="trust-row">
-          <div class="trust-badge" style="background:#f8f0fc;border-color:#ddb0f0;color:#6a1b9a;">👨‍⚕️<br>ドクター<br>監修</div>
-          <div class="trust-badge" style="background:#f8f0fc;border-color:#ddb0f0;color:#6a1b9a;">📦<br>ネコポス<br>対応</div>
-          <div class="trust-badge" style="background:#f8f0fc;border-color:#ddb0f0;color:#6a1b9a;">🎁<br>1世帯<br>1セット</div>
+          <div class="trust-badge" style="background:#fff8ee;border-color:#f0d890;color:#b06010;">👨‍⚕️<br>ドクター<br>監修</div>
+          <div class="trust-badge" style="background:#fff8ee;border-color:#f0d890;color:#b06010;">📦<br>ネコポス<br>対応</div>
+          <div class="trust-badge" style="background:#fff8ee;border-color:#f0d890;color:#b06010;">🎁<br>1世帯<br>1セット</div>
         </div>
-        <div class="cta-wrap"><button class="cta-btn type-d">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+        <div class="cta-wrap"><button class="cta-btn type-d" style="background:linear-gradient(180deg,#f5c060,#f09820);">詳しく見てみる <span class="cta-arrow">›</span></button></div>
       </div>
 
     </div>
