@@ -216,6 +216,9 @@
     <div class="insight insight-yellow" style="margin-top:10px;">
       <strong>サチコ実データで検証した結果、単純な「順位下落」ではなかった。</strong>BMI・痩せる方法系クエリは順位維持のままクリックだけ激減＝Google AI Overviewによるゼロクリック化の疑い。渋谷の看板クエリ「ダイエット」は本物の順位悪化。渋谷の認知症系クエリは表示回数ごと消滅＝YMYL評価厳格化の疑い（詳細は④）。
     </div>
+    <div class="insight insight-green" style="margin-top:10px;">
+      <strong>LINE側（PU表示率・CTR・友だち追加率）も確認済み。</strong>両サイトとも友だち追加率はむしろ改善しており問題なし。原因は完全にSEO側（詳細は⑤）。
+    </div>
     <p class="note">※6/30・7/1はデータ未着/極端に薄いため判断対象から除外。7月に入ってからの傾向は次回データが揃い次第再確認。</p>
   </div>
 
@@ -353,7 +356,56 @@
     <p class="note">GSCの「検索での見え方」レポートにAI Overview表示の有無を直接示す項目はないため状況証拠での判断。ただし順位維持・クリック激減という組み合わせはAIOのゼロクリック化の典型パターンと一致する。</p>
   </div>
 
-  <!-- ⑤ 記事別再確認（BMI・摂取カロリー） -->
+  <!-- ⑤ LINE側の健全性チェック -->
+  <div class="section">
+    <div class="section-head">
+      <h2>LINE側の健全性チェック</h2>
+      <div class="sub">SEO側の説明だけで済ませず、PU表示・クリック転換・友だち追加画面も同じ厳密さで確認</div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>指標</th><th>こいずみ（W1→W4）</th><th>渋谷（W1→W4）</th><th>判定</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PU表示率（pu_imp÷lp_imp）</td>
+            <td class="num">98.8%〜100.7%で横ばい</td>
+            <td class="num up">85.8%→103.9%（上昇）</td>
+            <td><span class="badge badge-green">問題なし</span></td>
+          </tr>
+          <tr>
+            <td>PU CTR <span class="muted">※参考値</span></td>
+            <td class="num down">6.12%→3.42%（-44%）</td>
+            <td class="num down">6.73%→3.20%（-52%）</td>
+            <td><span class="badge badge-gray">両サイト一律半減＝WINUT合算の見かけ変動</span></td>
+          </tr>
+          <tr>
+            <td>友だち追加率</td>
+            <td class="num up">9.69%→14.98%（+55%）</td>
+            <td class="num up">12.00%→15.28%（+27%）</td>
+            <td><span class="badge badge-green">両サイトで改善・基準11%超え</span></td>
+          </tr>
+          <tr>
+            <td>ブロック率</td>
+            <td class="num muted">データソースになし</td>
+            <td class="num muted">データソースになし</td>
+            <td><span class="badge badge-yellow">検証不可（計測課題）</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="insight insight-green">
+      <strong>LINE側は問題なし、むしろ改善傾向。</strong>PU表示率は横ばい〜上昇、友だち追加率は両サイトとも基準を上回るまで改善している。
+      PU CTRは両サイトとも半減しているが、bmi・スルリムマンジャロ・ダイエットパッチ等ほぼ全記事で一律に下がっており単一PUの不具合ではない。5/14仕様変更でWINUT impがpu_impに合算される影響（funnel-model.md）と整合するため参考値として扱い、主犯としない。
+      <strong>友だち減少がPU/友だち追加画面側の問題ではないことが、SEO側の犯人特定をさらに裏付ける結果になった。</strong>
+    </div>
+    <p class="note">「食べていいのは何？」PU（クリック0件継続）は既知の個別不具合として別途対応中。正常化しても週+7人程度の影響で、今回の-92人/月インパクトの主因ではない。ブロック率は現行の友だちCSV/スプシにグロス数しかなく検証不可のため、今後の計測課題として残る。</p>
+  </div>
+
+  <!-- ⑥ 記事別再確認（BMI・摂取カロリー） -->
   <div class="section">
     <div class="section-head">
       <h2>個別記事の再確認</h2>
@@ -389,7 +441,7 @@
     </div>
   </div>
 
-  <!-- ⑥ ネクストアクション -->
+  <!-- ⑦ ネクストアクション -->
   <div class="section">
     <div class="section-head">
       <h2>ネクストアクション（確認待ち）</h2>
