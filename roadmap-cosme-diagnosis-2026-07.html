@@ -278,6 +278,26 @@
     font-weight: 600;
   }
 
+  /* Flow legend */
+  .flow-legend {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .flow-step {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .flow-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .flow-arrow { color: var(--border); font-size: 14px; }
+
   /* Timeline */
   .timeline {
     display: flex;
@@ -304,6 +324,12 @@
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
   }
+  .tl-week {
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-top: 2px;
+  }
   .tl-center {
     flex: 0 0 2px;
     position: relative;
@@ -324,6 +350,11 @@
     background: var(--doing);
     box-shadow: 0 0 0 3px rgba(217,119,6,.15);
   }
+  .tl-dot.release {
+    background: var(--done);
+    width: 12px; height: 12px; top: 14px;
+    box-shadow: 0 0 0 3px rgba(22,163,74,.15);
+  }
   .tl-right {
     flex: 1;
     padding: 10px 0 18px 20px;
@@ -332,8 +363,23 @@
     font-size: 13px;
     font-weight: 600;
     color: var(--text);
-    margin-bottom: 3px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
   }
+  .tl-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .tl-tag-design  { background: #EDE9FE; color: #6D28D9; }
+  .tl-tag-build   { background: #FEF3C7; color: #D97706; }
+  .tl-tag-release { background: var(--done-bg); color: var(--done); }
+  .tl-tag-plan    { background: var(--planned-bg); color: var(--planned); }
   .tl-note {
     font-size: 11px;
     color: var(--muted);
@@ -484,7 +530,7 @@
           <div class="ri-meta">
             案件4つ（オルビス / ビーグレン / ファンケル / Sibody）<br>
             PRカルーセル・依頼書 完成 → デザイナー制作中<br>
-            <strong>デザイン納品予定: 7/14〜15</strong>
+            <strong>デザイン納品予定: 7/6 → 構築依頼 → リリース: 7月2週目</strong>
           </div>
           <div class="ri-cases">
             <span class="ri-case-tag">オルビス クリアフル</span>
@@ -506,7 +552,7 @@
             <span class="status-pill status-planned">📋 設計予定</span>
           </div>
           <div class="ri-meta">
-            案件6つ / 設計・PRカル作成 7/3〜13 → デザイン依頼 〜7/18目標
+            案件6つ / 設計・PRカル作成 7/3〜13 → デザイン納品 7/14〜15 → 構築依頼 → リリース: 7月4週目
           </div>
           <div class="ri-cases">
             <span class="ri-case-tag">ディセンシア</span>
@@ -556,55 +602,140 @@
   <!-- スケジュール -->
   <div class="section">
     <div class="section-title">スケジュール（7月〜）</div>
+
+    <div class="flow-legend">
+      <div class="flow-step"><div class="flow-dot" style="background:#6D28D9;"></div> デザイン納品</div>
+      <span class="flow-arrow">›</span>
+      <div class="flow-step"><div class="flow-dot" style="background:#D97706;"></div> 構築依頼（インターン）</div>
+      <span class="flow-arrow">›</span>
+      <div class="flow-step"><div class="flow-dot" style="background:#16A34A;"></div> リリース</div>
+    </div>
+
     <div class="timeline">
 
       <div class="tl-item">
-        <div class="tl-left"><span class="tl-date">7/3〜13</span></div>
+        <div class="tl-left">
+          <span class="tl-date">7/3〜6</span>
+          <span class="tl-week">7月1週目</span>
+        </div>
         <div class="tl-center"><div class="tl-dot current"></div></div>
         <div class="tl-right">
-          <div class="tl-work">③化粧水診断 設計・PRカルーセル作成</div>
+          <div class="tl-work">
+            ③化粧水診断 設計・PRカルーセル作成
+            <span class="tl-tag tl-tag-plan">並行作業</span>
+          </div>
           <div class="tl-note">②のデザイン納品待ち中に並行して進める</div>
         </div>
       </div>
 
       <div class="tl-item">
-        <div class="tl-left"><span class="tl-date">7/14〜15</span></div>
-        <div class="tl-center"><div class="tl-dot"></div></div>
+        <div class="tl-left">
+          <span class="tl-date">7/6</span>
+          <span class="tl-week">7月1週目</span>
+        </div>
+        <div class="tl-center"><div class="tl-dot" style="background:#6D28D9;border-color:var(--bg);"></div></div>
         <div class="tl-right">
-          <div class="tl-work">②スキンケア診断 デザイン納品・確認・実装</div>
-          <div class="tl-note">デザイナー納品 → 確認 → LINE実装</div>
+          <div class="tl-work">
+            ②スキンケア診断 デザイン納品
+            <span class="tl-tag tl-tag-design">納品</span>
+          </div>
+          <div class="tl-note">納品確認後、インターンに構築依頼</div>
         </div>
       </div>
 
       <div class="tl-item">
-        <div class="tl-left"><span class="tl-date">〜7/18</span></div>
-        <div class="tl-center"><div class="tl-dot"></div></div>
+        <div class="tl-left">
+          <span class="tl-date">7月2週目</span>
+          <span class="tl-week">7/7〜13</span>
+        </div>
+        <div class="tl-center"><div class="tl-dot release"></div></div>
         <div class="tl-right">
-          <div class="tl-work">③化粧水診断 デザイン依頼</div>
-          <div class="tl-note">PRカル完成 → 依頼書提出</div>
+          <div class="tl-work">
+            ② スキンケア診断 リリース
+            <span class="tl-tag tl-tag-release">🚀 リリース</span>
+          </div>
+          <div class="tl-note">インターン構築完了 → LINE公開</div>
         </div>
       </div>
 
       <div class="tl-item">
-        <div class="tl-left"><span class="tl-date">7/18〜25</span></div>
+        <div class="tl-left">
+          <span class="tl-date">7/7〜13</span>
+          <span class="tl-week">7月2週目</span>
+        </div>
+        <div class="tl-center"><div class="tl-dot current"></div></div>
+        <div class="tl-right">
+          <div class="tl-work">
+            ③化粧水診断 設計・PRカルーセル作成（続き）
+            <span class="tl-tag tl-tag-plan">進行中</span>
+          </div>
+          <div class="tl-note">依頼書完成まで仕上げる</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left">
+          <span class="tl-date">7/14〜15</span>
+          <span class="tl-week">7月3週目</span>
+        </div>
+        <div class="tl-center"><div class="tl-dot" style="background:#6D28D9;border-color:var(--bg);"></div></div>
+        <div class="tl-right">
+          <div class="tl-work">
+            ③化粧水診断 デザイン納品
+            <span class="tl-tag tl-tag-design">納品</span>
+          </div>
+          <div class="tl-note">納品確認後、インターンに構築依頼</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left">
+          <span class="tl-date">7月4週目</span>
+          <span class="tl-week">7/21〜27</span>
+        </div>
+        <div class="tl-center"><div class="tl-dot release"></div></div>
+        <div class="tl-right">
+          <div class="tl-work">
+            ③ 化粧水診断 リリース
+            <span class="tl-tag tl-tag-release">🚀 リリース</span>
+          </div>
+          <div class="tl-note">インターン構築完了 → LINE公開</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left">
+          <span class="tl-date">7/18〜25</span>
+          <span class="tl-week">7月3〜4週目</span>
+        </div>
         <div class="tl-center"><div class="tl-dot"></div></div>
         <div class="tl-right">
-          <div class="tl-work">④肌タイプ診断 設計・PRカルーセル作成</div>
+          <div class="tl-work">
+            ④肌タイプ診断 設計・PRカルーセル作成
+            <span class="tl-tag tl-tag-plan">予定</span>
+          </div>
           <div class="tl-note">全ジャンル横断ハブ診断として設計</div>
         </div>
       </div>
 
       <div class="tl-item">
-        <div class="tl-left"><span class="tl-date">7月末〜</span></div>
+        <div class="tl-left">
+          <span class="tl-date">7月末〜</span>
+        </div>
         <div class="tl-center"><div class="tl-dot"></div></div>
         <div class="tl-right">
-          <div class="tl-work">④肌タイプ診断 デザイン依頼</div>
+          <div class="tl-work">
+            ④肌タイプ診断 デザイン依頼 → 構築 → リリース
+            <span class="tl-tag tl-tag-plan">予定</span>
+          </div>
           <div class="tl-note"></div>
         </div>
       </div>
 
       <div class="tl-item">
-        <div class="tl-left"><span class="tl-date">8月以降</span></div>
+        <div class="tl-left">
+          <span class="tl-date">8月以降</span>
+        </div>
         <div class="tl-center"><div class="tl-dot"></div></div>
         <div class="tl-right">
           <div class="tl-work">⑤ファンデーション診断</div>
