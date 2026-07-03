@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>化粧水診断 リサーチ・データ分析 2026-07-03</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f5f5f7; color: #1d1d1f; font-size: 14px; line-height: 1.7; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 20px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
+  h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #444; }
+  p { margin-bottom: 10px; }
+  .card { background: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #4a4a6a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:hover td { background: #fafafa; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin: 2px; }
+  .tag-cleansing { background: #e8f0fe; color: #1967d2; }
+  .tag-skincare  { background: #fce8e6; color: #c5221f; }
+  .tag-lotion    { background: #e6f4ea; color: #1e8e3e; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-green  { background: #e6f4ea; color: #1e8e3e; }
+  .badge-yellow { background: #fff8e1; color: #e37400; }
+  .badge-red    { background: #fce8e6; color: #c5221f; }
+  .badge-gray   { background: #f0f0f0; color: #666; }
+  .position-note { background: #eef1ff; border-left: 3px solid #4a4a6a; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 24px; font-size: 13px; color: #333; }
+  .highlight { background: #fffde7; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; }
+  .pending { background: #fce8e6; border-left: 3px solid #ea4335; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; }
+  .voice { background: #f7f7fb; border-left: 3px solid #8a8ab0; padding: 10px 16px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; font-style: italic; color: #444; }
+  .voice .src { display: block; margin-top: 4px; font-style: normal; font-size: 11px; color: #999; }
+  .section-note { font-size: 12px; color: #888; margin-top: 6px; }
+  .stat-box { text-align: center; padding: 16px; }
+  .stat-num { font-size: 28px; font-weight: 700; color: #4a4a6a; }
+  .stat-label { font-size: 11px; color: #888; margin-top: 2px; }
+  .arrow { color: #888; margin: 0 8px; }
+  .ruler { display: flex; align-items: center; gap: 4px; font-size: 13px; flex-wrap: wrap; margin: 10px 0; }
+  .ruler-step { background: #fff; border: 1px solid #ddd; padding: 6px 12px; border-radius: 6px; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>化粧水診断（コスメ診断ロードマップ③） リサーチ・データ分析</h1>
+  <div class="meta">2026-07-03 作成 ｜ 担当: Noa ｜ ステータス: 分析パート先行まとめ（設計はCEOレビュー待ち）</div>
+
+  <div class="position-note">
+    <strong>このdocsの位置づけ：</strong> 診断フロー・結果カード・PRカルーセル等の「設計」内容は別docs（<code>flow-lotion-diagnosis-2026-07-03.html</code> ほか）にまとまっているが、Noaのフィードバックで大幅修正が入る見込み。
+    一方で本docsの「ターゲットリサーチ」「データ分析」部分は修正の影響を受けない安定内容のため、先行してまとめたもの。
+  </div>
+
+  <!-- ① ターゲットの核心インサイト -->
+  <h2>① ターゲットの核心インサイト</h2>
+
+  <div class="card">
+    <h3>検索意図サマリー</h3>
+    <div class="highlight">
+      「化粧水」検索者の本音は、肌質の迷いではなく<strong>「投資判断の迷い」</strong>——<br>
+      「今の自分は、何にいくら使うべきか」が決まらないまま、なんとなく選び続けている状態。
+    </div>
+    <p class="section-note">出典: <code>data/research/articles/化粧水.md</code>（親ジャンル<code>genres/cosme-skincare.md</code>の上に積んだ差分リサーチ）</p>
+  </div>
+
+  <div class="card">
+    <h3>②スキンケア診断との違い</h3>
+    <table>
+      <thead><tr><th>診断</th><th>終わらせる対象</th><th>軸</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag tag-skincare">②スキンケア方法診断</span></td><td>肌質がわからない、という混乱</td><td>肌質を確定させて安心させる</td></tr>
+        <tr><td><span class="tag tag-lotion">③化粧水診断</span></td><td>値段で迷い続けている状態</td><td>悩みの方向性 × 今の本気度（投資強度）で1本を確定させる</td></tr>
+      </tbody>
+    </table>
+    <p class="section-note">どちらも「試行錯誤を終わらせる」点は共通するが、終わらせる対象（肌質の迷い／お金の迷い）が違う。だから同じユーザーが両方に反応しうる＝カニバりではなく別ニーズへの応答になる。</p>
+  </div>
+
+  <div class="card">
+    <h3>固有の迷い（3種）</h3>
+    <table>
+      <thead><tr><th>迷いの種類</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td><strong>価格帯の迷い</strong></td><td>プチプラ vs デパコス、コスパ判断がつかない</td></tr>
+        <tr><td><strong>効果懐疑論</strong></td><td>「化粧水は意味ない」論争を目にして半信半疑</td></tr>
+        <tr><td><strong>エイジングケアの着手タイミング迷い</strong></td><td>「何歳から」「どのくらい本気で」の基準がない</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>リアルボイス</h3>
+    <div class="voice">
+      「導入化粧水や導入美容液って必要ですか？普段の化粧水だけでも問題ないのでしょうか」「浸透力が上がるなら試してみるのもありなのかな…と思いまして」
+      <span class="src">Yahoo知恵袋 q13287937693 — 現状に不満はないが上乗せ商材への迷い</span>
+    </div>
+    <div class="voice">
+      「高いのを使っても吹出物できたりピリピリしたりで合わない肌質。結局、極潤の化粧水とイハダの乳液で落ち着いてます」
+      <span class="src">ガールズちゃんねる 2336248 — 価格と効果が比例しない体験</span>
+    </div>
+    <div class="voice">
+      「5年くらい彷徨ってリポソームのみにしたらすごく調子がいいです。マイナスしていくのって勇気いるけど」
+      <span class="src">ガールズちゃんねる 2336248 — 足し算ではなく引き算に辿り着いた例</span>
+    </div>
+    <div class="voice">
+      「この歳になるとやはり良いものを投入せねば無理らしく高級ラインをちょこちょこジプシーしてます」
+      <span class="src">ガールズちゃんねる 2336248 — 加齢に伴う「投資額を上げるべきか」の迷い</span>
+    </div>
+    <div class="voice">
+      「25歳から肌質が変わらずスキンケアジプシーでしたが、最近やっとレギュラーメンバーが決まってきました」
+      <span class="src">ガールズちゃんねる 2336248 — 長期試行錯誤の末の定着願望</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>今のものさし → 新しいものさし</h3>
+    <div class="ruler">
+      <div class="ruler-step">なんとなく良さそうなものを選ぶ</div><span class="arrow">→</span>
+      <div class="ruler-step">高い方が効きそう、でも合わなかったことがある</div><span class="arrow">→</span>
+      <div class="ruler-step">この歳ならちゃんとしたもの（＝高いもの）に変えるべき？</div><span class="arrow">→</span>
+      <div class="ruler-step">結局いくらのものを選べばいいか分からないまま買う</div>
+    </div>
+    <div class="highlight">
+      根本ペインは「肌質がわからない」ではなく、<strong>価格と効果が比例しない経験をしていて、今の自分に必要な投資レベルの基準がないこと</strong>。<br>
+      新しいものさし：「化粧水選びの失敗は値段の高い/安いで起きるのではなく、“悩みの方向性”と“今の自分に必要な本気度”がズレていると起きる」
+    </div>
+    <p class="section-note">出典: <code>data/output/briefs/診断-化粧水診断-2026-07-03.md</code> 1章「ものさしづくり」</p>
+  </div>
+
+  <!-- ② データ分析 -->
+  <h2>② データ分析（CIO実データ）</h2>
+
+  <div class="grid3">
+    <div class="card stat-box">
+      <div class="stat-num">21</div>
+      <div class="stat-label">化粧水関連 実ページ数</div>
+    </div>
+    <div class="card stat-box">
+      <div class="stat-num">3,589</div>
+      <div class="stat-label">月間CL合計（サチコ実データ）</div>
+    </div>
+    <div class="card stat-box">
+      <div class="stat-num">4,307</div>
+      <div class="stat-label">PV換算/月（CL×1.2）</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p style="font-size:12px; color:#888; margin-bottom:12px;">データソース: Google Sheets「未設置記事検知レポート」コスメタブ ｜ サチコ実データ・2026/06/04更新・3ヶ月平均</p>
+    <h3>上位記事の内訳</h3>
+    <table>
+      <thead><tr><th>記事スラグ</th><th>内容</th><th class="num">月間CL</th></tr></thead>
+      <tbody>
+        <tr><td>lotion-cleansing</td><td>ふき取り化粧水</td><td class="num">480</td></tr>
+        <tr><td>lotion-sensitive</td><td>敏感肌向け化粧水</td><td class="num">398</td></tr>
+        <tr><td>lotion-convulsive</td><td>つっぱり対策</td><td class="num">350</td></tr>
+        <tr><td>その他 lotion-* 18記事</td><td>—</td><td class="num">2,361</td></tr>
+        <tr style="font-weight:700; background:#f9f9f9;"><td colspan="2">合計（21記事）</td><td class="num">3,589</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>②スキンケア診断との重複関係</h3>
+    <div class="highlight">
+      <strong>②スキンケア方法診断の対象23記事とは完全非重複。</strong><br>
+      <code>lotion-*</code>（化粧水）と<code>skincare-*</code>（スキンケア方法）でジャンルタグが完全分離しているため、③を設置しても②の友だち追加数をカニバらない＝純増として見込める。
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>期待効果試算</h3>
+    <table>
+      <thead><tr><th>指標</th><th>値</th><th>友だち追加数</th></tr></thead>
+      <tbody>
+        <tr><td>PVFR</td><td>0.70%（②と同水準・保守的）</td><td class="num"><strong>+30人/月</strong>（4,307 × 0.70%）</td></tr>
+        <tr><td>上振れシナリオ</td><td>1.0%</td><td class="num"><strong>+43人/月</strong>（4,307 × 1.0%）</td></tr>
+      </tbody>
+    </table>
+    <p class="section-note">上振れ根拠: ②と対象記事が完全非重複のため、「価格の迷い」という③固有ペインが手つかずの層に届く。②のスキンケア系より検索意図が投資判断に絞られている分、PVFRが②以上になる可能性あり。</p>
+  </div>
+
+  <div class="card">
+    <h3>データの限界（正直な注記）</h3>
+    <div class="pending">
+      <ul>
+        <li>サチコの表示回数（imp）は検索結果表示回数であり、LP実PVそのものではないため参考値扱い</li>
+        <li>lotion-*記事の大半でH1（記事タイトル）が未確認。スラグ名（例: lotion-convulsive）とKW・検索意図が一致しないケースがあるため、設置前に実記事でH1確認が必須</li>
+        <li>化粧水専用KWのリアルボイスリサーチは<code>articles/化粧水.md</code>のみで、②の親ジャンル（<code>cosme-skincare.md</code>）の知見を土台に流用している状態。個別記事の検索意図とのズレがないか設置時に再確認する</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top:40px; font-size:11px; color:#bbb; text-align:center;">
+    generated: 2026-07-03 ｜ noa-docs
+  </div>
+
+</div>
+</body>
+</html>
