@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>化粧水診断 フロー図 2026-07-03</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f0f2f0; color: #1d1d1f; font-size: 13px; padding: 40px 24px 60px; }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 32px; }
+
+  /* ─── ものさし転換 ─── */
+  .ruler-wrap { max-width: 720px; margin: 0 auto 32px; }
+  .ruler-box { border-radius: 12px; padding: 14px 18px; font-size: 12px; line-height: 1.9; }
+  .ruler-before { background: #f5f5f5; border: 1px solid #ddd; color: #777; }
+  .ruler-before .ruler-tag { color: #999; }
+  .ruler-after { background: #e8f5f0; border: 1px solid #4a6a5a; color: #2d4a3e; }
+  .ruler-after .ruler-tag { color: #4a6a5a; }
+  .ruler-tag { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; display: block; }
+  .ruler-arrow { text-align: center; color: #4a6a5a; font-size: 20px; margin: 6px 0; font-weight: 700; }
+
+  /* ─── ノード共通 ─── */
+  .node {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 20px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.07);
+    text-align: center;
+    margin: 0 auto;
+  }
+  .node-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: #aaa; margin-bottom: 4px;
+  }
+  .node-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .node-choices { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 6px; }
+  .choice { font-size: 11px; background: #f5f5f7; border-radius: 5px; padding: 3px 10px; }
+
+  /* ─── スタートノード ─── */
+  .node-start { background: #4a6a5a; color: #fff; max-width: 460px; }
+  .node-start .node-label { color: #a5c5b5; }
+  .node-start .node-title { color: #fff; font-size: 15px; }
+  .node-start .node-sub { color: #c5ddd5; font-size: 11px; margin-top: 4px; }
+  .node-start .node-copy { color: #dfeee8; font-size: 11px; margin-top: 8px; line-height: 1.7; }
+
+  /* ─── Q ノード ─── */
+  .node-q { max-width: 560px; }
+  .node-q1 { border-left: 4px solid #bdbdbd; }
+  .node-q2 { border-left: 4px solid #4a6a5a; border: 2px solid #4a6a5a; }
+
+  /* ─── 矢印 ─── */
+  .arr { text-align: center; color: #ccc; font-size: 22px; line-height: 1; margin: 4px 0; }
+
+  /* ─── 橋渡しメッセージ（共通） ─── */
+  .bridge-box {
+    background: #e8f5e9; border: 1px solid #81c784; border-radius: 8px;
+    padding: 10px 16px; font-size: 11px; color: #2e7d32; text-align: center; margin: 8px auto;
+    max-width: 480px; line-height: 1.8;
+  }
+
+  /* ─── Q2 3分岐 ─── */
+  .split-header { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; max-width: 900px; margin: 8px auto 0; text-align: center; }
+  .split-arr { font-size: 20px; }
+  .split-label { font-size: 11px; font-weight: 700; background: #fff; border-radius: 6px; padding: 4px 8px; margin-top: 2px; }
+
+  /* ─── タイプ列 ─── */
+  .type-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; max-width: 900px; margin: 0 auto; align-items: start; }
+  .type-col { display: flex; flex-direction: column; gap: 8px; }
+  .type-head { border-radius: 10px; padding: 10px 10px; text-align: center; }
+  .type-head .cond { font-size: 10px; font-weight: 700; margin-bottom: 3px; }
+  .type-head .name { font-size: 12.5px; font-weight: 700; line-height: 1.4; }
+
+  .type-a-head { background: #e3f2f8; border: 2px solid #7ec8e0; }
+  .type-a-head .cond { color: #1a6a85; }
+  .type-b-head { background: #f7f0e0; border: 2px solid #e0c068; }
+  .type-b-head .cond { color: #8a5f1f; }
+  .type-c-head { background: #ede7f6; border: 2px solid #b39ddb; }
+  .type-c-head .cond { color: #4a2f7a; }
+
+  /* Q3ノード（タイプ別） */
+  .q3-node { background: #fff; border-radius: 10px; padding: 10px; font-size: 10.5px; line-height: 1.7; }
+  .type-a-border { border: 1.5px solid #7ec8e0; }
+  .type-b-border { border: 1.5px solid #e0c068; }
+  .type-c-border { border: 1.5px solid #b39ddb; }
+  .q3-label { font-size: 9.5px; font-weight: 700; color: #999; margin-bottom: 4px; }
+  .q3-choice { padding: 3px 0; border-bottom: 1px dotted #eee; }
+  .q3-choice:last-child { border-bottom: none; }
+  .q3-choice b { color: #333; }
+
+  /* 結果CVノード */
+  .cv-node { border-radius: 8px; padding: 8px 10px; text-align: center; color: #fff; font-size: 10.5px; line-height: 1.5; }
+  .cv-node .cv-name { font-weight: 700; }
+  .cv-node .cv-price { font-size: 10px; opacity: .85; margin-top: 2px; }
+  .cv-a { background: #3a94b8; }
+  .cv-b { background: #b8863a; }
+  .cv-c { background: #7e57c2; }
+
+  .cv-note { font-size: 9.5px; color: #888; text-align: center; margin-top: 2px; line-height: 1.5; }
+
+  /* 凡例 */
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 24px 0 16px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #666; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .section-divider { text-align: center; font-size: 10px; color: #aaa; letter-spacing: .1em; font-weight: 700; margin: 10px 0; }
+
+  .back-link { margin-top: 48px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>化粧水診断 フロー図</h1>
+  <div class="meta">2026-07-03 ｜ 全3問 ｜ Q2で3タイプ分岐 → Q3（タイプ別・最終設問）で商材確定 ｜ 6商材（¥1,170〜¥5,000）</div>
+
+  <!-- ── 凡例 ── -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#bdbdbd;"></div>感情入口（結果に紐づかない）</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#4a6a5a;"></div>振り分け主軸（分岐点）</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#81c784;"></div>橋渡しメッセージ（共通）</div>
+  </div>
+
+  <!-- ── ものさし転換 ── -->
+  <div class="section-divider">── ものさし転換（診断が提供する視点） ──</div>
+  <div class="ruler-wrap">
+    <div class="ruler-box ruler-before">
+      <span class="ruler-tag">今のものさし</span>
+      「化粧水は、なんとなく良さそうなものを選ぶ」→「高い方が効きそう。でも高いのを買って合わなかったことがある」→「結局、いくらのものを選べばいいのか分からないまま買っている」
+    </div>
+    <div class="ruler-arrow">↓ 診断が転換する ↓</div>
+    <div class="ruler-box ruler-after">
+      <span class="ruler-tag">新しいものさし</span>
+      「化粧水選びの失敗は、値段の高い/安いで起きるんじゃない。“悩みの方向性”と“今の自分に必要な本気度”がズレていると起きる」→「この2つが決まれば、選ぶべき1本は自動的に決まる」
+    </div>
+  </div>
+
+  <!-- ── START ── -->
+  <div class="node node-start">
+    <div class="node-label">START</div>
+    <div class="node-title">あなたにぴったりの化粧水診断</div>
+    <div class="node-sub">3問でわかる無料診断｜匿名・無料</div>
+    <div class="node-copy">高いのに合わなかったのは、選び方が違っただけかもしれません。</div>
+  </div>
+
+  <!-- ── Q1 ── -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q1">
+    <div class="node-label">Q1 ── 感情入口（結果に紐づかない・非分岐）</div>
+    <div class="node-title">今の化粧水選び、正直どう感じていますか？</div>
+    <div class="node-choices">
+      <div class="choice">A: 何となく選んでいて、これでいいのか分からない</div>
+      <div class="choice">B: 高いものを試したけど、効果を感じなかった／合わなかった</div>
+      <div class="choice">C: そろそろ本気で、ちゃんとしたものに変えたい</div>
+    </div>
+  </div>
+
+  <!-- ── 橋渡しメッセージ（共通） ── -->
+  <div class="arr">↓</div>
+  <div class="bridge-box">
+    実は、化粧水選びに"正解がない"ように感じるのは、「悩みの方向性」と「今の本気度」の組み合わせで選べていないから。<br>次の質問で、あなたの正解を見つけましょう✨
+  </div>
+
+  <!-- ── Q2（分岐点） ── -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q2">
+    <div class="node-label" style="color:#4a6a5a;">Q2 ── 悩みの方向性・分岐の主軸</div>
+    <div class="node-title">一番気になる肌悩みは？</div>
+    <div class="node-choices">
+      <div class="choice" style="background:#e3f2f8;color:#1a6a85;font-weight:700;">A: 乾燥・つっぱり感、うるおい不足</div>
+      <div class="choice" style="background:#f7f0e0;color:#8a5f1f;font-weight:700;">B: ハリ低下・たるみ・年齢による変化</div>
+      <div class="choice" style="background:#ede7f6;color:#4a2f7a;font-weight:700;">C: シミ・くすみ・透明感のなさ</div>
+    </div>
+  </div>
+
+  <!-- ── 3分岐矢印 ── -->
+  <div class="split-header">
+    <div class="split-arr" style="color:#3a94b8;">↓</div>
+    <div class="split-arr" style="color:#b8863a;">↓</div>
+    <div class="split-arr" style="color:#7e57c2;">↓</div>
+  </div>
+
+  <!-- ── タイプ見出し ── -->
+  <div class="type-cols" style="margin-top:2px;">
+    <div class="type-head type-a-head">
+      <div class="cond">タイプA</div>
+      <div class="name">うるおいチャージ型</div>
+    </div>
+    <div class="type-head type-b-head">
+      <div class="cond">タイプB</div>
+      <div class="name">ハリ・エイジングケア型</div>
+    </div>
+    <div class="type-head type-c-head">
+      <div class="cond">タイプC</div>
+      <div class="name">美白・透明感型</div>
+    </div>
+  </div>
+
+  <!-- ── Q3（タイプ別・最終設問） ── -->
+  <div class="section-divider">── Q3（分岐後・最終設問）タイプ別の本気度質問 ──</div>
+  <div class="type-cols">
+
+    <!-- タイプA Q3 -->
+    <div class="type-col">
+      <div class="q3-node type-a-border">
+        <div class="q3-label">Q3 ｜ 本気度</div>
+        <div class="q3-choice"><b>A</b>: まずは気軽に試したい・プチプラで十分</div>
+        <div class="q3-choice"><b>B</b>: 前に高めの化粧水でピリピリ・合わなかった経験</div>
+      </div>
+      <div class="arr" style="margin:0;">↓</div>
+      <div class="cv-node cv-a">
+        <div class="cv-name">A → エトヴォス モイスチャーライン</div>
+        <div class="cv-price">¥1,170</div>
+      </div>
+      <div class="cv-node cv-a">
+        <div class="cv-name">B → ディセンシア</div>
+        <div class="cv-price">¥4,010</div>
+      </div>
+    </div>
+
+    <!-- タイプB Q3 -->
+    <div class="type-col">
+      <div class="q3-node type-b-border">
+        <div class="q3-label">Q3 ｜ 本気度</div>
+        <div class="q3-choice"><b>A</b>: 最近気になり始め・今のケアにプラスしたい</div>
+        <div class="q3-choice"><b>B</b>: そろそろ専用のケアに切り替えたい</div>
+        <div class="q3-choice"><b>C</b>: たるみなど本格的、本腰入れて変えたい</div>
+      </div>
+      <div class="arr" style="margin:0;">↓</div>
+      <div class="cv-node cv-b">
+        <div class="cv-name">A → ナールスピュア</div>
+        <div class="cv-price">¥2,306</div>
+      </div>
+      <div class="cv-node cv-b">
+        <div class="cv-name">B → アテニア ドレスノスノー</div>
+        <div class="cv-price">¥4,500</div>
+      </div>
+      <div class="cv-node cv-b">
+        <div class="cv-name">C → アテニア アドレスリフト</div>
+        <div class="cv-price">¥5,000</div>
+      </div>
+    </div>
+
+    <!-- タイプC Q3 -->
+    <div class="type-col">
+      <div class="q3-node type-c-border">
+        <div class="q3-label">Q3 ｜ 切実度（商材分岐なし・トーンのみ変化）</div>
+        <div class="q3-choice"><b>A</b>: 最近気になり始めた</div>
+        <div class="q3-choice"><b>B</b>: ずっと気になっていて、いろいろ試した</div>
+      </div>
+      <div class="arr" style="margin:0;">↓</div>
+      <div class="cv-node cv-c">
+        <div class="cv-name">A・B共通 → エトヴォス 美白美容液</div>
+        <div class="cv-price">¥1,170</div>
+      </div>
+      <div class="cv-note">A＝Card2「早めの対策」トーン<br>B＝Card2「試行錯誤を終わらせる」トーン</div>
+    </div>
+
+  </div>
+
+  <!-- ── 振り分けロジック表 ── -->
+  <div class="section-divider" style="margin-top:24px;">── 振り分けロジック（確定・全体表） ──</div>
+  <div style="max-width:640px;margin:0 auto;background:#fff;border-radius:10px;padding:14px 18px;box-shadow:0 1px 6px rgba(0,0,0,.07);font-size:11px;line-height:2.1;">
+    <table style="width:100%;border-collapse:collapse;">
+      <tr style="color:#888;font-size:10px;text-align:left;"><th style="padding-bottom:4px;">Q2（悩みの方向性）</th><th>Q3（本気度）</th><th>結果商材</th></tr>
+      <tr style="border-top:1px solid #eee;"><td style="color:#1a6a85;font-weight:700;">A：うるおい</td><td>A：気軽に試したい</td><td>エトヴォス モイスチャーライン ¥1,170</td></tr>
+      <tr style="border-top:1px solid #eee;"><td style="color:#1a6a85;font-weight:700;">A：うるおい</td><td>B：合わなかった経験あり</td><td>ディセンシア ¥4,010</td></tr>
+      <tr style="border-top:1px solid #eee;"><td style="color:#8a5f1f;font-weight:700;">B：ハリ</td><td>A：気になり始め・プラスしたい</td><td>ナールスピュア ¥2,306</td></tr>
+      <tr style="border-top:1px solid #eee;"><td style="color:#8a5f1f;font-weight:700;">B：ハリ</td><td>B：専用ケアに切り替えたい</td><td>アテニア ドレスノスノー ¥4,500</td></tr>
+      <tr style="border-top:1px solid #eee;"><td style="color:#8a5f1f;font-weight:700;">B：ハリ</td><td>C：本腰入れたい</td><td>アテニア アドレスリフト ¥5,000</td></tr>
+      <tr style="border-top:1px solid #eee;"><td style="color:#4a2f7a;font-weight:700;">C：美白</td><td>A or B</td><td>エトヴォス 美白美容液 ¥1,170（トーン違い）</td></tr>
+    </table>
+  </div>
+
+  <!-- ── 結果カード〜PRカルへの導線 ── -->
+  <div class="arr" style="margin-top:16px;">↓</div>
+  <div class="node" style="max-width:560px;background:#fafafa;border:1px dashed #ccc;">
+    <div class="node-label">結果カード（3タイプ×4枚）→ PRカルーセル（6商材×4枚共通テンプレ）→ CTA</div>
+    <div style="font-size:11px;color:#666;margin-top:4px;">詳細は cards-lotion-diagnosis-2026-07-03.html / cards-lotion-pr-carousel-2026-07-03.html を参照</div>
+  </div>
+
+  <div class="back-link"><a href="index.html">← トップへ</a></div>
+
+</div>
+</body>
+</html>

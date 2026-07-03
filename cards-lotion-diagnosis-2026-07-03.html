@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>結果カード図 | 化粧水診断</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; background: #f0f4f8; color: #333; }
+
+  /* ── ヘッダー ── */
+  .page-header {
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 16px 24px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .page-header h1 { font-size: 15px; font-weight: 700; color: #333; }
+  .page-header p { font-size: 11px; color: #888; margin-top: 2px; }
+
+  /* ── タイプタブ ── */
+  .type-tabs {
+    display: flex; gap: 8px;
+    padding: 16px 24px 0;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    font-size: 13px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    background: #fff;
+    transition: all 0.2s;
+  }
+  .tab-btn.tab-a { border-color: #7ec8e0; color: #1a6a85; }
+  .tab-btn.tab-a.active { background: #3a94b8; color: #fff; }
+  .tab-btn.tab-b { border-color: #e0c068; color: #8a5f1f; }
+  .tab-btn.tab-b.active { background: #b8863a; color: #fff; }
+  .tab-btn.tab-c { border-color: #b39ddb; color: #4a2f7a; }
+  .tab-btn.tab-c.active { background: #7e57c2; color: #fff; }
+
+  /* ── カード列 ── */
+  .cards-section { display: none; padding: 20px 24px 40px; }
+  .cards-section.active { display: block; }
+
+  .pattern-block { margin-bottom: 28px; }
+  .pattern-title {
+    font-size: 12.5px; font-weight: 700; color: #555;
+    margin-bottom: 10px; padding: 6px 12px;
+    background: #fff; border-radius: 8px; display: inline-block;
+    border: 1px solid #e0e0e0;
+  }
+  .pattern-title span.tag { padding: 2px 8px; border-radius: 10px; color: #fff; font-size: 10.5px; margin-right: 6px; }
+
+  .cards-row {
+    display: grid;
+    grid-template-columns: repeat(4, 280px);
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  /* ── 1枚のカード（LINEカルーセルイメージ） ── */
+  .line-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    display: flex;
+    flex-direction: column;
+    min-height: 380px;
+  }
+
+  /* カードヘッダー（カラー帯） */
+  .card-header {
+    padding: 18px 16px 14px;
+    color: #fff;
+    position: relative;
+  }
+  .card-num {
+    font-size: 10px;
+    font-weight: 700;
+    opacity: 0.85;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.4;
+  }
+  .card-tags {
+    margin-top: 8px;
+    font-size: 10px;
+    opacity: 0.85;
+    line-height: 1.8;
+  }
+
+  /* カード本文 */
+  .card-body {
+    padding: 14px 16px;
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: #444;
+    flex: 1;
+  }
+  .card-lead {
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .card-divider { text-align: center; color: #ccc; font-size: 10px; letter-spacing: .2em; margin: 8px 0; }
+
+  /* CTAボタン */
+  .card-cta {
+    display: block;
+    text-align: center;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 0 0 16px 16px;
+    cursor: default;
+    letter-spacing: 0.5px;
+  }
+
+  /* タイプ別カラー */
+  .type-a .card-header { background: linear-gradient(135deg, #7ec8e0, #3a94b8); }
+  .type-a .card-cta    { background: #3a94b8; }
+
+  .type-b .card-header { background: linear-gradient(135deg, #e0c068, #b8863a); }
+  .type-b .card-cta    { background: #b8863a; }
+
+  .type-c .card-header { background: linear-gradient(135deg, #b39ddb, #7e57c2); }
+  .type-c .card-cta    { background: #7e57c2; }
+
+  /* ── セクションラベル ── */
+  .type-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #666;
+    margin-bottom: 16px;
+  }
+  .type-label span {
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #fff;
+    margin-right: 8px;
+  }
+  .type-a-label span { background: #3a94b8; }
+  .type-b-label span { background: #b8863a; }
+  .type-c-label span { background: #7e57c2; }
+
+  .note-box {
+    max-width: 900px; margin: 0 0 20px; padding: 10px 14px;
+    background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px;
+    font-size: 11.5px; color: #7a5c00; line-height: 1.7;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin: 20px 24px 0;
+    font-size: 12px;
+    color: #888;
+    text-decoration: none;
+  }
+  .back-link:hover { color: #555; }
+
+  @media (max-width: 700px) {
+    .cards-row { grid-template-columns: repeat(4, 240px); }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>化粧水診断 — 結果カード図</h1>
+  <p>3タイプ × Card 1〜4 のテキスト確認用。Card1/4は投資強度でテキスト差し替え（画像テンプレは共通）。タブでタイプを切り替え。</p>
+</div>
+
+<div class="type-tabs">
+  <button class="tab-btn tab-a active" onclick="switchTab('a')">タイプA｜うるおいチャージ型</button>
+  <button class="tab-btn tab-b" onclick="switchTab('b')">タイプB｜ハリ・エイジングケア型</button>
+  <button class="tab-btn tab-c" onclick="switchTab('c')">タイプC｜美白・透明感型</button>
+</div>
+
+<!-- ══ タイプA ══ -->
+<div class="cards-section active" id="section-a">
+  <div class="type-label type-a-label" style="padding-top:12px;">
+    <span>タイプA</span>うるおいチャージ型 ／ Card1・4は本気度で2パターン、Card2・3は共通
+  </div>
+
+  <!-- パターン1 -->
+  <div class="pattern-block">
+    <div class="pattern-title"><span class="tag" style="background:#3a94b8;">パターン1</span>気軽に試したい方 → エトヴォス モイスチャーライン ¥1,170</div>
+    <div class="cards-row">
+
+      <!-- Card 1 -->
+      <div class="line-card type-a">
+        <div class="card-header">
+          <div class="card-num">Card 1 — 商品発表</div>
+          <div class="card-title">あなたにぴったりの化粧水は…<br>エトヴォス<br>モイスチャーライン</div>
+          <div class="card-tags">¥1,170</div>
+        </div>
+        <div class="card-body">
+          <div style="font-size:12px;line-height:2.2;color:#444;">
+            <div>バッジ：うるおいキープ</div>
+            <div>バッジ：低刺激設計</div>
+            <div>バッジ：乾燥ケア処方</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="line-card type-a">
+        <div class="card-header">
+          <div class="card-num">Card 2 — 根本示唆（共通）</div>
+          <div class="card-title">高いのに合わなかったのは、<br>値段の問題じゃない。</div>
+        </div>
+        <div class="card-body">
+          化粧水が合わないと感じるのは、成分の濃さや価格じゃなく「自分の肌に合う処方かどうか」で決まる。
+          <div class="card-divider">────────</div>
+          乾燥・つっぱりは、うるおいを足す前に肌に負担をかけない処方を選べているかがカギ。
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="line-card type-a">
+        <div class="card-header">
+          <div class="card-num">Card 3 — 体験イメージ（共通）</div>
+          <div class="card-title">つけた瞬間、<br>じんわり入っていく。</div>
+        </div>
+        <div class="card-body">
+          ピリピリしない。つっぱらない。
+          <div class="card-divider">────────</div>
+          「これでよかったんだ」と<br>やっと思える感覚。
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="line-card type-a">
+        <div class="card-header">
+          <div class="card-num">Card 4 — 未来＋CTA</div>
+          <div class="card-title">毎日ちょうどいいうるおいが、<br>当たり前になる。</div>
+        </div>
+        <div class="card-body">
+          「合う1本に出会ってから、化粧水選びで悩まなくなった」
+          <div class="card-divider">────────</div>
+          乾燥知らずの肌へ、まずはここから。
+        </div>
+        <div class="card-cta">あなたに合う化粧水を見る →</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- パターン2 -->
+  <div class="pattern-block">
+    <div class="pattern-title"><span class="tag" style="background:#3a94b8;">パターン2</span>高いのが合わなかった経験がある方 → ディセンシア ¥4,010</div>
+    <div class="cards-row">
+
+      <!-- Card 1 -->
+      <div class="line-card type-a">
+        <div class="card-header">
+          <div class="card-num">Card 1 — 商品発表</div>
+          <div class="card-title">あなたにぴったりの化粧水は…<br>ディセンシア<br>（敏感肌×乾燥ケア）</div>
+          <div class="card-tags">¥4,010</div>
+        </div>
+        <div class="card-body">
+          <div style="font-size:12px;line-height:2.2;color:#444;">
+            <div>バッジ：うるおいキープ</div>
+            <div>バッジ：低刺激設計</div>
+            <div>バッジ：乾燥ケア処方</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="line-card type-a">
+        <div class="card-header">
+          <div class="card-num">Card 2 — 根本示唆（共通）</div>
+          <div class="card-title">高いのに合わなかったのは、<br>値段の問題じゃない。</div>
+        </div>
+        <div class="card-body">
+          化粧水が合わないと感じるのは、成分の濃さや価格じゃなく「自分の肌に合う処方かどうか」で決まる。
+          <div class="card-divider">────────</div>
+          乾燥・つっぱりは、うるおいを足す前に肌に負担をかけない処方を選べているかがカギ。
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="line-card type-a">
+        <div class="card-header">
+          <div class="card-num">Card 3 — 体験イメージ（共通）</div>
+          <div class="card-title">つけた瞬間、<br>じんわり入っていく。</div>
+        </div>
+        <div class="card-body">
+          ピリピリしない。つっぱらない。
+          <div class="card-divider">────────</div>
+          「これでよかったんだ」と<br>やっと思える感覚。
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="line-card type-a">
+        <div class="card-header">
+          <div class="card-num">Card 4 — 未来＋CTA</div>
+          <div class="card-title">毎日ちょうどいいうるおいが、<br>当たり前になる。</div>
+        </div>
+        <div class="card-body">
+          「合う1本に出会ってから、化粧水選びで悩まなくなった」
+          <div class="card-divider">────────</div>
+          肌に負担なく、うるおいが続く肌へ。
+        </div>
+        <div class="card-cta">あなたに合う化粧水を見る →</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ タイプB ══ -->
+<div class="cards-section" id="section-b">
+  <div class="type-label type-b-label" style="padding-top:12px;">
+    <span>タイプB</span>ハリ・エイジングケア型 ／ Card1・4は本気度で3パターン、Card2・3は共通
+  </div>
+
+  <!-- パターン1 -->
+  <div class="pattern-block">
+    <div class="pattern-title"><span class="tag" style="background:#b8863a;">パターン1</span>気になり始めた方 → ナールスピュア ¥2,306</div>
+    <div class="cards-row">
+
+      <!-- Card 1 -->
+      <div class="line-card type-b">
+        <div class="card-header">
+          <div class="card-num">Card 1 — 商品発表</div>
+          <div class="card-title">あなたにぴったりの化粧水は…<br>ナールスピュア<br>（美容液プラス）</div>
+          <div class="card-tags">¥2,306</div>
+        </div>
+        <div class="card-body">
+          <div style="font-size:12px;line-height:2.2;color:#444;">
+            <div>バッジ：ハリ実感</div>
+            <div>バッジ：年齢サインにアプローチ</div>
+            <div>バッジ：うるおい弾力</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="line-card type-b">
+        <div class="card-header">
+          <div class="card-num">Card 2 — 根本示唆（共通）</div>
+          <div class="card-title">ハリの低下は、<br>歳のせいだけじゃない。</div>
+        </div>
+        <div class="card-body">
+          肌のハリを支える力は、年齢とともに少しずつ低下していく。「高いものに変えなきゃ」と焦る前に大事なのは、今の変化の"程度"に合わせたケアを選ぶこと。
+          <div class="card-divider">────────</div>
+          気になり始めなら軽く、本格的ならしっかり。レベルが違えば、選ぶべきケアも変わる。
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="line-card type-b">
+        <div class="card-header">
+          <div class="card-num">Card 3 — 体験イメージ（共通）</div>
+          <div class="card-title">鏡を見たとき、<br>肌が上向いてる感覚。</div>
+        </div>
+        <div class="card-body">
+          触れたときの弾力、肌がふっくらしている感じ。
+          <div class="card-divider">────────</div>
+          「変わってきてる」と<br>自分で気づける瞬間。
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="line-card type-b">
+        <div class="card-header">
+          <div class="card-num">Card 4 — 未来＋CTA</div>
+          <div class="card-title">ハリのある肌が、<br>当たり前になる。</div>
+        </div>
+        <div class="card-body">
+          「専用ケアに変えてから、肌の上向き感が続いてる」
+          <div class="card-divider">────────</div>
+          今始めれば、変化に早く気づける。
+        </div>
+        <div class="card-cta">あなたに合う化粧水を見る →</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- パターン2 -->
+  <div class="pattern-block">
+    <div class="pattern-title"><span class="tag" style="background:#b8863a;">パターン2</span>専用ケアに切り替えたい方 → アテニア ドレスノスノー ¥4,500</div>
+    <div class="cards-row">
+
+      <!-- Card 1 -->
+      <div class="line-card type-b">
+        <div class="card-header">
+          <div class="card-num">Card 1 — 商品発表</div>
+          <div class="card-title">あなたにぴったりの化粧水は…<br>アテニア<br>ドレスノスノー（初期エイジング）</div>
+          <div class="card-tags">¥4,500</div>
+        </div>
+        <div class="card-body">
+          <div style="font-size:12px;line-height:2.2;color:#444;">
+            <div>バッジ：ハリ実感</div>
+            <div>バッジ：年齢サインにアプローチ</div>
+            <div>バッジ：うるおい弾力</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="line-card type-b">
+        <div class="card-header">
+          <div class="card-num">Card 2 — 根本示唆（共通）</div>
+          <div class="card-title">ハリの低下は、<br>歳のせいだけじゃない。</div>
+        </div>
+        <div class="card-body">
+          肌のハリを支える力は、年齢とともに少しずつ低下していく。「高いものに変えなきゃ」と焦る前に大事なのは、今の変化の"程度"に合わせたケアを選ぶこと。
+          <div class="card-divider">────────</div>
+          気になり始めなら軽く、本格的ならしっかり。レベルが違えば、選ぶべきケアも変わる。
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="line-card type-b">
+        <div class="card-header">
+          <div class="card-num">Card 3 — 体験イメージ（共通）</div>
+          <div class="card-title">鏡を見たとき、<br>肌が上向いてる感覚。</div>
+        </div>
+        <div class="card-body">
+          触れたときの弾力、肌がふっくらしている感じ。
+          <div class="card-divider">────────</div>
+          「変わってきてる」と<br>自分で気づける瞬間。
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="line-card type-b">
+        <div class="card-header">
+          <div class="card-num">Card 4 — 未来＋CTA</div>
+          <div class="card-title">ハリのある肌が、<br>当たり前になる。</div>
+        </div>
+        <div class="card-body">
+          「専用ケアに変えてから、肌の上向き感が続いてる」
+          <div class="card-divider">────────</div>
+          年齢サインに、正面から向き合う。
+        </div>
+        <div class="card-cta">あなたに合う化粧水を見る →</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- パターン3 -->
+  <div class="pattern-block">
+    <div class="pattern-title"><span class="tag" style="background:#b8863a;">パターン3</span>本腰入れたい方 → アテニア アドレスリフト ¥5,000</div>
+    <div class="cards-row">
+
+      <!-- Card 1 -->
+      <div class="line-card type-b">
+        <div class="card-header">
+          <div class="card-num">Card 1 — 商品発表</div>
+          <div class="card-title">あなたにぴったりの化粧水は…<br>アテニア<br>アドレスリフト（本格リフト）</div>
+          <div class="card-tags">¥5,000</div>
+        </div>
+        <div class="card-body">
+          <div style="font-size:12px;line-height:2.2;color:#444;">
+            <div>バッジ：ハリ実感</div>
+            <div>バッジ：年齢サインにアプローチ</div>
+            <div>バッジ：うるおい弾力</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="line-card type-b">
+        <div class="card-header">
+          <div class="card-num">Card 2 — 根本示唆（共通）</div>
+          <div class="card-title">ハリの低下は、<br>歳のせいだけじゃない。</div>
+        </div>
+        <div class="card-body">
+          肌のハリを支える力は、年齢とともに少しずつ低下していく。「高いものに変えなきゃ」と焦る前に大事なのは、今の変化の"程度"に合わせたケアを選ぶこと。
+          <div class="card-divider">────────</div>
+          気になり始めなら軽く、本格的ならしっかり。レベルが違えば、選ぶべきケアも変わる。
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="line-card type-b">
+        <div class="card-header">
+          <div class="card-num">Card 3 — 体験イメージ（共通）</div>
+          <div class="card-title">鏡を見たとき、<br>肌が上向いてる感覚。</div>
+        </div>
+        <div class="card-body">
+          触れたときの弾力、肌がふっくらしている感じ。
+          <div class="card-divider">────────</div>
+          「変わってきてる」と<br>自分で気づける瞬間。
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="line-card type-b">
+        <div class="card-header">
+          <div class="card-num">Card 4 — 未来＋CTA</div>
+          <div class="card-title">ハリのある肌が、<br>当たり前になる。</div>
+        </div>
+        <div class="card-body">
+          「専用ケアに変えてから、肌の上向き感が続いてる」
+          <div class="card-divider">────────</div>
+          たるみを本気で戻す、本格ケアへ。
+        </div>
+        <div class="card-cta">あなたに合う化粧水を見る →</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ タイプC ══ -->
+<div class="cards-section" id="section-c">
+  <div class="type-label type-c-label" style="padding-top:12px;">
+    <span>タイプC</span>美白・透明感型 ／ Card1・3・4は共通（単一商材）、Card2のみ切実度でトーン2パターン
+  </div>
+
+  <div class="note-box">提携1商材のみのため投資強度による商品分岐はなし。切実度（最近気になり始めた／ずっと気になっている）でCard2の温度感だけを変える。</div>
+
+  <!-- パターン1 -->
+  <div class="pattern-block">
+    <div class="pattern-title"><span class="tag" style="background:#7e57c2;">パターン1</span>最近気になり始めた方 → エトヴォス 美白美容液 ¥1,170（Card2「早めの対策」トーン）</div>
+    <div class="cards-row">
+
+      <!-- Card 1 -->
+      <div class="line-card type-c">
+        <div class="card-header">
+          <div class="card-num">Card 1 — 商品発表（共通）</div>
+          <div class="card-title">あなたにぴったりの化粧水は…<br>エトヴォス<br>美白美容液</div>
+          <div class="card-tags">¥1,170</div>
+        </div>
+        <div class="card-body">
+          <div style="font-size:12px;line-height:2.2;color:#444;">
+            <div>バッジ：メラニンにアプローチ</div>
+            <div>バッジ：くすみケア</div>
+            <div>バッジ：透明感アップ</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="line-card type-c">
+        <div class="card-header">
+          <div class="card-num">Card 2 — 根本示唆（早めの対策トーン）</div>
+          <div class="card-title">シミ・くすみは、<br>気づいた今が一番のケアどき。</div>
+        </div>
+        <div class="card-body">
+          シミは紫外線で作られたメラニンの蓄積、くすみはターンオーバーの乱れで透明感が失われた状態。
+          <div class="card-divider">────────</div>
+          早いうちに正しい成分で対策すれば、蓄積を防げる。
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="line-card type-c">
+        <div class="card-header">
+          <div class="card-num">Card 3 — 体験イメージ（共通）</div>
+          <div class="card-title">鏡を見る時間が、<br>ちょっと楽しくなる。</div>
+        </div>
+        <div class="card-body">
+          くすみが晴れていく感覚。
+          <div class="card-divider">────────</div>
+          「今日、肌きれいだね」<br>そう言われる日が近づく。
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="line-card type-c">
+        <div class="card-header">
+          <div class="card-num">Card 4 — 未来＋CTA（共通）</div>
+          <div class="card-title">明るい素肌が、<br>当たり前になる。</div>
+        </div>
+        <div class="card-body">
+          「正しい成分に変えてから、くすみが気にならなくなった」
+          <div class="card-divider">────────</div>
+          透明感あふれる肌へ。まずはここから始める。
+        </div>
+        <div class="card-cta">あなたに合う化粧水を見る →</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- パターン2 -->
+  <div class="pattern-block">
+    <div class="pattern-title"><span class="tag" style="background:#7e57c2;">パターン2</span>ずっと気になっていて、いろいろ試した方 → エトヴォス 美白美容液 ¥1,170（Card2「試行錯誤を終わらせる」トーン）</div>
+    <div class="cards-row">
+
+      <!-- Card 1 -->
+      <div class="line-card type-c">
+        <div class="card-header">
+          <div class="card-num">Card 1 — 商品発表（共通）</div>
+          <div class="card-title">あなたにぴったりの化粧水は…<br>エトヴォス<br>美白美容液</div>
+          <div class="card-tags">¥1,170</div>
+        </div>
+        <div class="card-body">
+          <div style="font-size:12px;line-height:2.2;color:#444;">
+            <div>バッジ：メラニンにアプローチ</div>
+            <div>バッジ：くすみケア</div>
+            <div>バッジ：透明感アップ</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="line-card type-c">
+        <div class="card-header">
+          <div class="card-num">Card 2 — 根本示唆（試行錯誤を終わらせるトーン）</div>
+          <div class="card-title">「試したのに効果なし」は、<br>成分が合っていなかっただけ。</div>
+        </div>
+        <div class="card-body">
+          シミ・くすみのケアは、いきなり高額な美容液に飛びつく前に、まず正しい美白有効成分で土台を作ることが先決。
+          <div class="card-divider">────────</div>
+          遠回りしてきた分、今度は正しいアプローチで戦う番。
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="line-card type-c">
+        <div class="card-header">
+          <div class="card-num">Card 3 — 体験イメージ（共通）</div>
+          <div class="card-title">鏡を見る時間が、<br>ちょっと楽しくなる。</div>
+        </div>
+        <div class="card-body">
+          くすみが晴れていく感覚。
+          <div class="card-divider">────────</div>
+          「今日、肌きれいだね」<br>そう言われる日が近づく。
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="line-card type-c">
+        <div class="card-header">
+          <div class="card-num">Card 4 — 未来＋CTA（共通）</div>
+          <div class="card-title">明るい素肌が、<br>当たり前になる。</div>
+        </div>
+        <div class="card-body">
+          「正しい成分に変えてから、くすみが気にならなくなった」
+          <div class="card-divider">────────</div>
+          透明感あふれる肌へ。まずはここから始める。
+        </div>
+        <div class="card-cta">あなたに合う化粧水を見る →</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<a class="back-link" href="index.html">← トップへ</a>
+
+<script>
+function switchTab(type) {
+  // セクション切り替え
+  document.querySelectorAll('.cards-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-' + type).classList.add('active');
+  // タブ切り替え
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.tab-' + type).classList.add('active');
+}
+</script>
+
+</body>
+</html>

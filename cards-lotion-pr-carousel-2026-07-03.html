@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>化粧水診断 PRカル カード図 2026-07-03</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f0f4f8; color: #1d1d1f; font-size: 13px; }
+
+  /* ── ページヘッダー（sticky） */
+  .page-header { background: #fff; border-bottom: 1px solid #e0e0e0; padding: 14px 24px; position: sticky; top: 0; z-index: 100; }
+  .page-header h1 { font-size: 15px; font-weight: 700; color: #333; }
+  .page-header p { font-size: 11px; color: #888; margin-top: 2px; }
+
+  /* ── タイプタブ */
+  .type-tabs { display: flex; gap: 8px; padding: 14px 24px 0; overflow-x: auto; background: #f0f4f8; flex-wrap: wrap; }
+  .tab-btn { padding: 8px 16px; border-radius: 20px; border: 2px solid transparent; font-size: 12.5px; font-weight: 700; cursor: pointer; white-space: nowrap; background: #fff; transition: all 0.2s; margin-bottom: 8px; }
+  .tab-btn.tab-a { border-color: #7ec8e0; color: #1a6a85; }
+  .tab-btn.tab-a.active { background: #3a94b8; color: #fff; }
+  .tab-btn.tab-b { border-color: #e0c068; color: #8a5f1f; }
+  .tab-btn.tab-b.active { background: #b8863a; color: #fff; }
+  .tab-btn.tab-c { border-color: #b39ddb; color: #4a2f7a; }
+  .tab-btn.tab-c.active { background: #7e57c2; color: #fff; }
+
+  /* ── タブコンテンツ */
+  .tab-section { display: none; padding: 20px 24px 40px; }
+  .tab-section.active { display: block; }
+
+  /* タイプセクション */
+  .type-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #ccc; flex-wrap: wrap; }
+  .type-label { font-size: 16px; font-weight: 700; }
+  .type-sub { font-size: 11px; color: #888; }
+  .cards-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 16px; align-items: flex-start; }
+
+  .note-box { max-width: 900px; margin: 0 0 16px; padding: 9px 13px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px; font-size: 11px; color: #7a5c00; line-height: 1.7; }
+
+  /* ─── カード本体 ─── */
+  .card { width: 220px; min-width: 220px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.18); display: flex; flex-direction: column; font-size: 12px; }
+
+  /* ブランド帯 */
+  .brand-bar { padding: 6px 10px; display: flex; align-items: center; justify-content: space-between; }
+  .brand-bar span.brand-name { color: #fff; font-weight: 800; font-size: 12px; letter-spacing: 0.02em; }
+  .brand-bar span.pr-tag { background: rgba(255,255,255,0.25); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+
+  /* 画像プレースホルダー */
+  .img-area { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 5px; height: 120px; }
+  .img-area .img-icon { font-size: 30px; opacity: 0.45; }
+  .img-area .img-label { font-size: 9px; font-weight: 700; }
+
+  /* キャッチコピー */
+  .catch-section { padding: 10px 11px 4px; text-align: center; }
+  .catch-copy { font-size: 12.5px; font-weight: 800; color: #1a1a1a; line-height: 1.5; }
+
+  /* 商品名エリア */
+  .product-section { padding: 6px 11px 4px; text-align: center; }
+  .product-name { font-size: 12px; font-weight: 800; color: #1a1a1a; line-height: 1.4; margin-bottom: 5px; }
+  .product-eyebrow { font-size: 9px; color: #888; margin-bottom: 3px; }
+
+  /* 価格エリア */
+  .price-section { padding: 7px 11px; border-top: 1px solid; border-bottom: 1px solid; text-align: center; }
+  .price-label-sm { font-size: 9px; color: #888; margin-bottom: 1px; }
+  .price-num { font-size: 24px; font-weight: 900; line-height: 1; }
+  .price-suffix { font-size: 10px; color: #888; }
+
+  /* ポイントバッジ行（Card2用） */
+  .point-row { padding: 7px 10px; }
+  .point-badge-label { font-size: 9.5px; font-weight: 800; letter-spacing: 0.04em; margin-bottom: 6px; }
+
+  /* 成分リスト */
+  .ing-list { padding: 6px 10px 8px; }
+  .ing-item { display: flex; align-items: flex-start; gap: 6px; padding: 6px 7px; background: #fff; border-radius: 6px; margin-bottom: 5px; border: 1px solid #eee; }
+  .ing-item:last-child { margin-bottom: 0; }
+  .ing-check { flex-shrink: 0; font-weight: 900; font-size: 12px; }
+  .ing-name { font-size: 10.5px; font-weight: 700; color: #222; }
+  .ing-desc { font-size: 9.5px; color: #666; margin-top: 1px; line-height: 1.5; }
+
+  /* 価格納得づけ（Card3） */
+  .justify-box { margin: 10px 10px; border-radius: 10px; padding: 14px 12px; text-align: center; }
+  .justify-label { font-size: 9.5px; font-weight: 700; opacity: 0.85; margin-bottom: 6px; }
+  .justify-text { font-size: 12px; font-weight: 700; line-height: 1.7; }
+
+  /* 口コミ（Card4） */
+  .quote-box { margin: 10px 11px 6px; padding: 10px 12px; background: #fafafa; border-radius: 8px; border: 1px solid #eee; font-size: 11.5px; color: #555; font-style: italic; line-height: 1.7; }
+  .quote-box::before { content: '"'; }
+  .quote-box::after { content: '"'; }
+
+  /* CTAボタン */
+  .cta-wrap { padding: 8px 10px 12px; margin-top: auto; }
+  .cta-btn { display: block; width: 100%; border: none; border-radius: 50px; padding: 10px 8px; font-size: 11.5px; font-weight: 800; color: #fff; text-align: center; cursor: pointer; line-height: 1.35; box-shadow: 0 3px 6px rgba(0,0,0,0.2); position: relative; background: linear-gradient(180deg, #5cb85c 0%, #3d8b3d 100%); }
+  .cta-arrow { margin-left: 4px; }
+
+  .card-num-tag { font-size: 9px; font-weight: 700; color: #999; text-align: center; padding: 4px 0 0; }
+
+  .back-link { display: inline-block; margin: 4px 24px 20px; font-size: 12px; color: #888; text-decoration: none; }
+  .back-link:hover { color: #555; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>化粧水診断 — PRカルーセル カード図</h1>
+  <p>6商材 × Card 1〜4（共通テンプレート）テキスト確認用。タブで商材を切り替え。</p>
+</div>
+
+<div class="type-tabs">
+  <button class="tab-btn tab-a active" onclick="switchTab('a1')">Aうるおい①｜エトヴォス モイスチャーライン</button>
+  <button class="tab-btn tab-a" onclick="switchTab('a2')">Aうるおい②｜ディセンシア</button>
+  <button class="tab-btn tab-b" onclick="switchTab('b1')">Bハリ①｜ナールスピュア</button>
+  <button class="tab-btn tab-b" onclick="switchTab('b2')">Bハリ②｜ドレスノスノー</button>
+  <button class="tab-btn tab-b" onclick="switchTab('b3')">Bハリ③｜アドレスリフト</button>
+  <button class="tab-btn tab-c" onclick="switchTab('c1')">C美白｜エトヴォス美白美容液</button>
+</div>
+
+<!-- ========================================
+     🔵 A-1：エトヴォス モイスチャーライン
+========================================= -->
+<div class="tab-section active" id="section-a1">
+  <div class="type-header">
+    <span class="type-label" style="color:#1a6a85;">🔵 タイプA-①｜エトヴォス モイスチャーライン PRカル</span>
+    <span class="type-sub">¥1,170｜気軽に試したい方向け</span>
+  </div>
+  <div class="note-box">成分名は設計書時点の想定訴求例。実際の成分表示・アフィリリンクは設置前に公式サイトで要確認（残タスク参照）。</div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#3a94b8,#7ec8e0);"><span class="brand-name">ETVOS</span><span class="pr-tag">PR</span></div>
+      <div class="img-area" style="background:#e3f2f8;">
+        <div class="img-icon" style="color:#1a6a85;">🧴</div>
+        <div class="img-label" style="color:#3a7d95;">商品パッケージ写真</div>
+      </div>
+      <div class="catch-section">
+        <div class="catch-copy">乾燥・つっぱりに、<br>まず正しい保湿から</div>
+      </div>
+      <div class="product-section">
+        <div class="product-name">モイスチャーライン</div>
+      </div>
+      <div class="price-section" style="background:#e3f2f8;border-color:#bcdff2;">
+        <div class="price-label-sm">価格</div>
+        <div class="price-num" style="color:#1a6a85;">1,170<span class="price-suffix">円（税込）</span></div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#3a94b8,#7ec8e0);"><span class="brand-name">ETVOS</span><span class="pr-tag">PR</span></div>
+      <div class="point-row" style="background:#e3f2f8;">
+        <div class="point-badge-label" style="color:#1a6a85;">主要成分3つ</div>
+      </div>
+      <div class="ing-list">
+        <div class="ing-item"><span class="ing-check" style="color:#3a94b8;">✓</span><div><div class="ing-name">ヒト型セラミド</div><div class="ing-desc">乾燥から肌を守るバリアを補う</div></div></div>
+        <div class="ing-item"><span class="ing-check" style="color:#3a94b8;">✓</span><div><div class="ing-name">保湿ヒアルロン酸</div><div class="ing-desc">角層にうるおいを届ける</div></div></div>
+        <div class="ing-item"><span class="ing-check" style="color:#3a94b8;">✓</span><div><div class="ing-name">オイルフリー処方</div><div class="ing-desc">ニキビが気になる肌にも使いやすい</div></div></div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#3a94b8,#7ec8e0);"><span class="brand-name">ETVOS</span><span class="pr-tag">PR</span></div>
+      <div class="card-num-tag">価格の納得づけ</div>
+      <div class="justify-box" style="background:linear-gradient(135deg,#7ec8e0,#3a94b8);color:#fff;">
+        <div class="justify-label">なぜこの価格があなたに合っているか</div>
+        <div class="justify-text">気軽に試せる価格だからこそ、<br>まず自分に合うか確かめられる</div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#3a94b8,#7ec8e0);"><span class="brand-name">ETVOS</span><span class="pr-tag">PR</span></div>
+      <div class="card-num-tag">口コミ風の声</div>
+      <div class="quote-box">オイルフリーなのにしっとり。肌に負担を感じない</div>
+      <div class="cta-wrap"><button class="cta-btn">購入する <span class="cta-arrow">›</span></button></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================================
+     🔵 A-2：ディセンシア
+========================================= -->
+<div class="tab-section" id="section-a2">
+  <div class="type-header">
+    <span class="type-label" style="color:#1a6a85;">🔵 タイプA-②｜ディセンシア PRカル</span>
+    <span class="type-sub">¥4,010｜高いのが合わなかった経験がある方向け（敏感肌×乾燥ケア）</span>
+  </div>
+  <div class="note-box">成分名は設計書時点の想定訴求例。実際の成分表示・アフィリリンクは設置前に公式サイトで要確認（残タスク参照）。</div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#2f7a99,#5ba9c4);"><span class="brand-name">decencia</span><span class="pr-tag">PR</span></div>
+      <div class="img-area" style="background:#dcebf2;">
+        <div class="img-icon" style="color:#1a6a85;">🧴</div>
+        <div class="img-label" style="color:#3a7d95;">商品パッケージ写真</div>
+      </div>
+      <div class="catch-section">
+        <div class="catch-copy">肌に負担をかけない、<br>乾燥ケアの選択</div>
+      </div>
+      <div class="product-section">
+        <div class="product-name">ディセンシア（敏感肌×乾燥ケア）</div>
+      </div>
+      <div class="price-section" style="background:#dcebf2;border-color:#a8cfe0;">
+        <div class="price-label-sm">価格</div>
+        <div class="price-num" style="color:#1a6a85;">4,010<span class="price-suffix">円（税込）</span></div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#2f7a99,#5ba9c4);"><span class="brand-name">decencia</span><span class="pr-tag">PR</span></div>
+      <div class="point-row" style="background:#dcebf2;">
+        <div class="point-badge-label" style="color:#1a6a85;">主要成分3つ</div>
+      </div>
+      <div class="ing-list">
+        <div class="ing-item"><span class="ing-check" style="color:#2f7a99;">✓</span><div><div class="ing-name">独自バリアサポート技術</div><div class="ing-desc">肌本来のバリア機能をサポートする</div></div></div>
+        <div class="ing-item"><span class="ing-check" style="color:#2f7a99;">✓</span><div><div class="ing-name">セラミド配合保湿成分</div><div class="ing-desc">乾燥・刺激から肌を守る</div></div></div>
+        <div class="ing-item"><span class="ing-check" style="color:#2f7a99;">✓</span><div><div class="ing-name">低刺激処方</div><div class="ing-desc">合わなかった経験がある肌にも使いやすい</div></div></div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#2f7a99,#5ba9c4);"><span class="brand-name">decencia</span><span class="pr-tag">PR</span></div>
+      <div class="card-num-tag">価格の納得づけ</div>
+      <div class="justify-box" style="background:linear-gradient(135deg,#5ba9c4,#2f7a99);color:#fff;">
+        <div class="justify-label">なぜこの価格があなたに合っているか</div>
+        <div class="justify-text">合わない処方を繰り返すコストの方が高い。<br>最初から自分の肌に合う処方を選ぶ方が結果的に近道</div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#2f7a99,#5ba9c4);"><span class="brand-name">decencia</span><span class="pr-tag">PR</span></div>
+      <div class="card-num-tag">口コミ風の声</div>
+      <div class="quote-box">今までピリピリしていたのが嘘みたい。ちゃんと自分の肌に合う処方ってあるんだ</div>
+      <div class="cta-wrap"><button class="cta-btn">購入する <span class="cta-arrow">›</span></button></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================================
+     🟡 B-1：ナールスピュア
+========================================= -->
+<div class="tab-section" id="section-b1">
+  <div class="type-header">
+    <span class="type-label" style="color:#8a5f1f;">🟡 タイプB-①｜ナールスピュア PRカル</span>
+    <span class="type-sub">¥2,306｜気になり始めた・今のケアにプラスしたい方向け（美容液プラス）</span>
+  </div>
+  <div class="note-box">成分名は設計書時点の想定訴求例。実際の成分表示・アフィリリンクは設置前に公式サイトで要確認（残タスク参照）。</div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#b8863a,#e0c068);"><span class="brand-name">Nahrs</span><span class="pr-tag">PR</span></div>
+      <div class="img-area" style="background:#f7f0e0;">
+        <div class="img-icon" style="color:#8a5f1f;">🧴</div>
+        <div class="img-label" style="color:#8a6a30;">商品パッケージ写真</div>
+      </div>
+      <div class="catch-section">
+        <div class="catch-copy">気づいた今が、<br>ケアの始めどき</div>
+      </div>
+      <div class="product-section">
+        <div class="product-name">ナールスピュア</div>
+      </div>
+      <div class="price-section" style="background:#f7f0e0;border-color:#ecdcae;">
+        <div class="price-label-sm">価格</div>
+        <div class="price-num" style="color:#8a5f1f;">2,306<span class="price-suffix">円（税込）</span></div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#b8863a,#e0c068);"><span class="brand-name">Nahrs</span><span class="pr-tag">PR</span></div>
+      <div class="point-row" style="background:#f7f0e0;">
+        <div class="point-badge-label" style="color:#8a5f1f;">主要成分3つ</div>
+      </div>
+      <div class="ing-list">
+        <div class="ing-item"><span class="ing-check" style="color:#b8863a;">✓</span><div><div class="ing-name">プロテオグリカン</div><div class="ing-desc">肌にハリと弾力を与える</div></div></div>
+        <div class="ing-item"><span class="ing-check" style="color:#b8863a;">✓</span><div><div class="ing-name">ナールスゲン</div><div class="ing-desc">コラーゲン生成をサポートする</div></div></div>
+        <div class="ing-item"><span class="ing-check" style="color:#b8863a;">✓</span><div><div class="ing-name">ヒアルロン酸</div><div class="ing-desc">うるおいを届けキープする</div></div></div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#b8863a,#e0c068);"><span class="brand-name">Nahrs</span><span class="pr-tag">PR</span></div>
+      <div class="card-num-tag">価格の納得づけ</div>
+      <div class="justify-box" style="background:linear-gradient(135deg,#e0c068,#b8863a);color:#fff;">
+        <div class="justify-label">なぜこの価格があなたに合っているか</div>
+        <div class="justify-text">気づいた今が一番コスパがいいタイミング。<br>悪化してからの高額ケアより、今の軽いケアの方が効率がいい</div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#b8863a,#e0c068);"><span class="brand-name">Nahrs</span><span class="pr-tag">PR</span></div>
+      <div class="card-num-tag">口コミ風の声</div>
+      <div class="quote-box">1本足しただけなのに、肌の元気さが違う</div>
+      <div class="cta-wrap"><button class="cta-btn">購入する <span class="cta-arrow">›</span></button></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================================
+     🟡 B-2：アテニア ドレスノスノー
+========================================= -->
+<div class="tab-section" id="section-b2">
+  <div class="type-header">
+    <span class="type-label" style="color:#8a5f1f;">🟡 タイプB-②｜アテニア ドレスノスノー PRカル</span>
+    <span class="type-sub">¥4,500｜専用のケアに切り替えたい方向け（初期エイジング）</span>
+  </div>
+  <div class="note-box">成分名は設計書時点の想定訴求例。実際の成分表示・アフィリリンクは設置前に公式サイトで要確認（残タスク参照）。</div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#a3742c,#c9a25a);"><span class="brand-name">Attenir</span><span class="pr-tag">PR</span></div>
+      <div class="img-area" style="background:#f1e6d0;">
+        <div class="img-icon" style="color:#8a5f1f;">🧴</div>
+        <div class="img-label" style="color:#8a6a30;">商品パッケージ写真</div>
+      </div>
+      <div class="catch-section">
+        <div class="catch-copy">サインが増える前に、<br>専用ラインへ</div>
+      </div>
+      <div class="product-section">
+        <div class="product-name">ドレスノスノー（初期エイジング）</div>
+      </div>
+      <div class="price-section" style="background:#f1e6d0;border-color:#e2cd9e;">
+        <div class="price-label-sm">価格</div>
+        <div class="price-num" style="color:#8a5f1f;">4,500<span class="price-suffix">円（税込）</span></div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#a3742c,#c9a25a);"><span class="brand-name">Attenir</span><span class="pr-tag">PR</span></div>
+      <div class="point-row" style="background:#f1e6d0;">
+        <div class="point-badge-label" style="color:#8a5f1f;">主要成分3つ</div>
+      </div>
+      <div class="ing-list">
+        <div class="ing-item"><span class="ing-check" style="color:#a3742c;">✓</span><div><div class="ing-name">保湿ヒアルロン酸（複合）</div><div class="ing-desc">うるおいを角層まで届ける</div></div></div>
+        <div class="ing-item"><span class="ing-check" style="color:#a3742c;">✓</span><div><div class="ing-name">独自エイジングケア成分</div><div class="ing-desc">ハリ低下が気になる肌にアプローチする</div></div></div>
+        <div class="ing-item"><span class="ing-check" style="color:#a3742c;">✓</span><div><div class="ing-name">整肌成分</div><div class="ing-desc">キメを整えなめらかな肌へ導く</div></div></div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#a3742c,#c9a25a);"><span class="brand-name">Attenir</span><span class="pr-tag">PR</span></div>
+      <div class="card-num-tag">価格の納得づけ</div>
+      <div class="justify-box" style="background:linear-gradient(135deg,#c9a25a,#a3742c);color:#fff;">
+        <div class="justify-label">なぜこの価格があなたに合っているか</div>
+        <div class="justify-text">専用ラインに変える価値があるのは、<br>今のうちにサインの進行を抑えられるから</div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#a3742c,#c9a25a);"><span class="brand-name">Attenir</span><span class="pr-tag">PR</span></div>
+      <div class="card-num-tag">口コミ風の声</div>
+      <div class="quote-box">専用ラインに変えてから、肌の上向き感が続いてる</div>
+      <div class="cta-wrap"><button class="cta-btn">購入する <span class="cta-arrow">›</span></button></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================================
+     🟡 B-3：アテニア アドレスリフト
+========================================= -->
+<div class="tab-section" id="section-b3">
+  <div class="type-header">
+    <span class="type-label" style="color:#8a5f1f;">🟡 タイプB-③｜アテニア アドレスリフト PRカル</span>
+    <span class="type-sub">¥5,000｜本格的に感じていて本腰入れたい方向け（本格リフト）</span>
+  </div>
+  <div class="note-box">成分名は設計書時点の想定訴求例。実際の成分表示・アフィリリンクは設置前に公式サイトで要確認（残タスク参照）。</div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#8a5f1f,#b8863a);"><span class="brand-name">Attenir</span><span class="pr-tag">PR</span></div>
+      <div class="img-area" style="background:#ecdcae;">
+        <div class="img-icon" style="color:#6f4c18;">🧴</div>
+        <div class="img-label" style="color:#7a5a20;">商品パッケージ写真</div>
+      </div>
+      <div class="catch-section">
+        <div class="catch-copy">たるみを本気で戻す、<br>本格ケアへ</div>
+      </div>
+      <div class="product-section">
+        <div class="product-name">アドレスリフト（本格リフト）</div>
+      </div>
+      <div class="price-section" style="background:#ecdcae;border-color:#d9c087;">
+        <div class="price-label-sm">価格</div>
+        <div class="price-num" style="color:#6f4c18;">5,000<span class="price-suffix">円（税込）</span></div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#8a5f1f,#b8863a);"><span class="brand-name">Attenir</span><span class="pr-tag">PR</span></div>
+      <div class="point-row" style="background:#ecdcae;">
+        <div class="point-badge-label" style="color:#6f4c18;">主要成分3つ</div>
+      </div>
+      <div class="ing-list">
+        <div class="ing-item"><span class="ing-check" style="color:#8a5f1f;">✓</span><div><div class="ing-name">高濃度保湿・整肌複合成分</div><div class="ing-desc">たるみが気になる肌に本格アプローチする</div></div></div>
+        <div class="ing-item"><span class="ing-check" style="color:#8a5f1f;">✓</span><div><div class="ing-name">ハリ実感成分</div><div class="ing-desc">肌を引き締めるようなハリ感を与える</div></div></div>
+        <div class="ing-item"><span class="ing-check" style="color:#8a5f1f;">✓</span><div><div class="ing-name">うるおい持続成分</div><div class="ing-desc">一日中乾燥を感じにくい肌へ導く</div></div></div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#8a5f1f,#b8863a);"><span class="brand-name">Attenir</span><span class="pr-tag">PR</span></div>
+      <div class="card-num-tag">価格の納得づけ</div>
+      <div class="justify-box" style="background:linear-gradient(135deg,#b8863a,#8a5f1f);color:#fff;">
+        <div class="justify-label">なぜこの価格があなたに合っているか</div>
+        <div class="justify-text">本格的に戻したい変化には、本格的な処方が必要。<br>中途半端なケアを続けるより結果が早い</div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#8a5f1f,#b8863a);"><span class="brand-name">Attenir</span><span class="pr-tag">PR</span></div>
+      <div class="card-num-tag">口コミ風の声</div>
+      <div class="quote-box">本気でケアするならこれくらいが必要だったんだと納得</div>
+      <div class="cta-wrap"><button class="cta-btn">購入する <span class="cta-arrow">›</span></button></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================================
+     🟣 C-1：エトヴォス 美白美容液
+========================================= -->
+<div class="tab-section" id="section-c1">
+  <div class="type-header">
+    <span class="type-label" style="color:#4a2f7a;">🟣 タイプC｜エトヴォス 美白美容液 PRカル</span>
+    <span class="type-sub">¥1,170｜投資強度に関わらず単一商材（切実度でCard2根本示唆のトーンのみ変化）</span>
+  </div>
+  <div class="note-box">成分名は設計書時点の想定訴求例。実際の成分表示・アフィリリンクは設置前に公式サイトで要確認（残タスク参照）。疲弊層に¥1,170が「安すぎ」に見えるリスクを設計書で指摘済み。Card3の価格納得づけで解消を狙う。</div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#7e57c2,#b39ddb);"><span class="brand-name">ETVOS</span><span class="pr-tag">PR</span></div>
+      <div class="img-area" style="background:#ede7f6;">
+        <div class="img-icon" style="color:#4a2f7a;">🧴</div>
+        <div class="img-label" style="color:#5c3f96;">商品パッケージ写真</div>
+      </div>
+      <div class="catch-section">
+        <div class="catch-copy">試したのに効果なしは、<br>正しい成分で戦えていなかっただけ</div>
+      </div>
+      <div class="product-section">
+        <div class="product-name">美白美容液</div>
+      </div>
+      <div class="price-section" style="background:#ede7f6;border-color:#d3c4ec;">
+        <div class="price-label-sm">価格</div>
+        <div class="price-num" style="color:#4a2f7a;">1,170<span class="price-suffix">円（税込）</span></div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#7e57c2,#b39ddb);"><span class="brand-name">ETVOS</span><span class="pr-tag">PR</span></div>
+      <div class="point-row" style="background:#ede7f6;">
+        <div class="point-badge-label" style="color:#4a2f7a;">主要成分3つ</div>
+      </div>
+      <div class="ing-list">
+        <div class="ing-item"><span class="ing-check" style="color:#7e57c2;">✓</span><div><div class="ing-name">美白有効成分（ビタミンC誘導体等・医薬部外品）</div><div class="ing-desc">メラニンの生成を抑え、シミ・そばかすを防ぐ</div></div></div>
+        <div class="ing-item"><span class="ing-check" style="color:#7e57c2;">✓</span><div><div class="ing-name">ターンオーバーサポート成分</div><div class="ing-desc">くすみの原因にアプローチする</div></div></div>
+        <div class="ing-item"><span class="ing-check" style="color:#7e57c2;">✓</span><div><div class="ing-name">保湿成分</div><div class="ing-desc">有効成分が働きやすい肌環境を整える</div></div></div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#7e57c2,#b39ddb);"><span class="brand-name">ETVOS</span><span class="pr-tag">PR</span></div>
+      <div class="card-num-tag">価格の納得づけ</div>
+      <div class="justify-box" style="background:linear-gradient(135deg,#b39ddb,#7e57c2);color:#fff;">
+        <div class="justify-label">なぜこの価格があなたに合っているか</div>
+        <div class="justify-text">高額美容液に飛びつく前に、<br>この価格でまず土台を作るのが正しい順番</div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#7e57c2,#b39ddb);"><span class="brand-name">ETVOS</span><span class="pr-tag">PR</span></div>
+      <div class="card-num-tag">口コミ風の声</div>
+      <div class="quote-box">高いのを試して効果がなかったのに、これに変えたらくすみが晴れてきた</div>
+      <div class="cta-wrap"><button class="cta-btn">購入する <span class="cta-arrow">›</span></button></div>
+    </div>
+
+  </div>
+</div>
+
+<a class="back-link" href="index.html">← トップへ</a>
+
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+}
+</script>
+
+</body>
+</html>
