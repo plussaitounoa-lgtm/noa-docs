@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コスメ診断 ロードマップ 2026</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F7F9F8;
+    --surface: #FFFFFF;
+    --border: #DDE8E3;
+    --text: #1A2420;
+    --muted: #5A6E68;
+    --accent: #3A9E78;
+    --accent-light: #EBF6F1;
+    --done: #16A34A;
+    --done-bg: #DCFCE7;
+    --doing: #D97706;
+    --doing-bg: #FEF3C7;
+    --planned: #64748B;
+    --planned-bg: #F1F5F9;
+    --waiting: #9CA3AF;
+    --waiting-bg: #F9FAFB;
+  }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.75;
+    padding: 40px 16px 100px;
+  }
+  .doc { max-width: 860px; margin: 0 auto; }
+
+  /* Header */
+  .doc-header {
+    border-left: 4px solid var(--accent);
+    padding: 2px 0 2px 20px;
+    margin-bottom: 48px;
+  }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .doc-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-wrap: balance;
+  }
+  .doc-header .meta {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* Section */
+  .section { margin-bottom: 48px; }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+
+  /* Design philosophy diagram */
+  .philosophy-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+  }
+  .philosophy-lead {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.7;
+  }
+  .diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .diag-row {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .diag-types {
+    flex: 0 0 160px;
+    background: var(--accent-light);
+    border: 1px solid #B6DECE;
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .diag-types .label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .diag-type-item {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text);
+    padding: 3px 0;
+    border-bottom: 1px dashed #C8E8DC;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .diag-type-item:last-child { border-bottom: none; }
+  .diag-type-item::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .diag-arrow-col {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    padding: 0 4px;
+  }
+  .diag-arrow {
+    font-size: 18px;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .diag-arrow-label {
+    font-size: 8px;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: .05em;
+    white-space: nowrap;
+  }
+  .diag-cases {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .diag-genre {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .genre-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    min-width: 70px;
+  }
+  .case-chip {
+    font-size: 10px;
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .case-chip.add {
+    background: #F1F5F9;
+    color: var(--muted);
+    border: 1px dashed var(--border);
+  }
+
+  /* Roadmap list */
+  .roadmap-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .roadmap-item {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    position: relative;
+  }
+  .roadmap-item:not(:last-child) .ri-line { display: block; }
+  .ri-left {
+    flex: 0 0 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  .ri-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .ri-line {
+    flex: 1;
+    width: 2px;
+    background: var(--border);
+    margin: 4px 0;
+    display: none;
+  }
+  .ri-body {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    margin-left: 12px;
+  }
+  .ri-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .ri-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .status-pill {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .status-done   { background: var(--done-bg);    color: var(--done); }
+  .status-doing  { background: var(--doing-bg);   color: var(--doing); }
+  .status-planned{ background: var(--planned-bg); color: var(--planned); }
+  .status-waiting{ background: var(--waiting-bg); color: var(--waiting); border: 1px solid #E5E7EB; }
+  .ri-meta {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .ri-cases {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 8px;
+  }
+  .ri-case-tag {
+    font-size: 11px;
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  /* Timeline */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .tl-item {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+  }
+  .tl-left {
+    flex: 0 0 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: 20px;
+    padding-top: 14px;
+  }
+  .tl-date {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .tl-center {
+    flex: 0 0 2px;
+    position: relative;
+    background: var(--border);
+  }
+  .tl-dot {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+  .tl-dot.current {
+    background: var(--doing);
+    box-shadow: 0 0 0 3px rgba(217,119,6,.15);
+  }
+  .tl-right {
+    flex: 1;
+    padding: 10px 0 18px 20px;
+  }
+  .tl-work {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .tl-note {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* Case table */
+  .tbl-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: var(--surface);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    font-variant-numeric: tabular-nums;
+  }
+  th {
+    background: var(--accent-light);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: .05em;
+    text-align: left;
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+    line-height: 1.5;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #FAFCFB; }
+  .price { font-variant-numeric: tabular-nums; font-weight: 600; }
+  .asp-chip {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 3px;
+    background: var(--planned-bg);
+    color: var(--planned);
+  }
+
+  /* Back link */
+  .back-link {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .back-link a { color: var(--accent); text-decoration: none; }
+  .back-link a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="doc-header">
+    <div class="eyebrow">Cosme Diagnosis — Roadmap</div>
+    <h1>コスメ診断 ロードマップ</h1>
+    <div class="meta">作成: 2026-07-03 ／ 対象: LINEコスメ診断シリーズ（全5診断）</div>
+  </div>
+
+  <!-- 設計思想 -->
+  <div class="section">
+    <div class="section-title">設計思想</div>
+    <div class="philosophy-wrap">
+      <p class="philosophy-lead">
+        診断タイプ（肌悩みの分類軸）を先に設計し、案件は後付けで各タイプに紐づける構造。<br>
+        案件が増えるたびに適切なタイプへ追加できるため、診断コンテンツ自体は商品に依存しない。
+      </p>
+      <div class="diagram">
+        <div class="diag-row">
+          <div class="diag-types">
+            <div class="label">診断タイプ（肌悩み軸）</div>
+            <div class="diag-type-item">乾燥・バリア不足</div>
+            <div class="diag-type-item">皮脂・毛穴</div>
+            <div class="diag-type-item">エイジング・くすみ</div>
+            <div class="diag-type-item">敏感・肌荒れ</div>
+          </div>
+          <div class="diag-arrow-col">
+            <div class="diag-arrow">→</div>
+            <div class="diag-arrow-label">紐づけ</div>
+          </div>
+          <div class="diag-cases">
+            <div class="diag-genre">
+              <span class="genre-label">クレンジング</span>
+              <span class="case-chip">ファシオ</span>
+              <span class="case-chip">ビオレ</span>
+              <span class="case-chip">他2案件</span>
+              <span class="case-chip add">+ 追加可能</span>
+            </div>
+            <div class="diag-genre">
+              <span class="genre-label">スキンケア</span>
+              <span class="case-chip">オルビス</span>
+              <span class="case-chip">ビーグレン</span>
+              <span class="case-chip">他2案件</span>
+              <span class="case-chip add">+ 追加可能</span>
+            </div>
+            <div class="diag-genre">
+              <span class="genre-label">化粧水</span>
+              <span class="case-chip">ディセンシア</span>
+              <span class="case-chip">アテニア</span>
+              <span class="case-chip">他4案件</span>
+              <span class="case-chip add">+ 追加可能</span>
+            </div>
+            <div class="diag-genre">
+              <span class="genre-label">ファンデ等</span>
+              <span class="case-chip add">提携後に追加</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 診断ロードマップ -->
+  <div class="section">
+    <div class="section-title">診断ロードマップ</div>
+    <div class="roadmap-list">
+
+      <div class="roadmap-item">
+        <div class="ri-left">
+          <div class="ri-num status-done">①</div>
+          <div class="ri-line"></div>
+        </div>
+        <div class="ri-body">
+          <div class="ri-top">
+            <span class="ri-title">クレンジング診断</span>
+            <span class="status-pill status-done">✅ 完了</span>
+          </div>
+          <div class="ri-meta">案件4つ / PRカルーセル・依頼書 完成済み</div>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="ri-left">
+          <div class="ri-num status-doing">②</div>
+          <div class="ri-line"></div>
+        </div>
+        <div class="ri-body">
+          <div class="ri-top">
+            <span class="ri-title">スキンケア診断</span>
+            <span class="status-pill status-doing">🔧 デザイン依頼中</span>
+          </div>
+          <div class="ri-meta">
+            案件4つ（オルビス / ビーグレン / ファンケル / Sibody）<br>
+            PRカルーセル・依頼書 完成 → デザイナー制作中<br>
+            <strong>デザイン納品予定: 7/14〜15</strong>
+          </div>
+          <div class="ri-cases">
+            <span class="ri-case-tag">オルビス クリアフル</span>
+            <span class="ri-case-tag">ビーグレン QuSomeローション</span>
+            <span class="ri-case-tag">ファンケル アクネケア</span>
+            <span class="ri-case-tag">Sibody VCスターターセット</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="ri-left">
+          <div class="ri-num status-planned">③</div>
+          <div class="ri-line"></div>
+        </div>
+        <div class="ri-body">
+          <div class="ri-top">
+            <span class="ri-title">化粧水診断</span>
+            <span class="status-pill status-planned">📋 設計予定</span>
+          </div>
+          <div class="ri-meta">
+            案件6つ / 設計・PRカル作成 7/3〜13 → デザイン依頼 〜7/18目標
+          </div>
+          <div class="ri-cases">
+            <span class="ri-case-tag">ディセンシア</span>
+            <span class="ri-case-tag">アテニア ドレスノスノー</span>
+            <span class="ri-case-tag">アテニア アドレスリフト</span>
+            <span class="ri-case-tag">エトヴォス モイスチャーライン</span>
+            <span class="ri-case-tag">エトヴォス 美白美容液</span>
+            <span class="ri-case-tag">ナールスピュア</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="ri-left">
+          <div class="ri-num status-planned">④</div>
+          <div class="ri-line"></div>
+        </div>
+        <div class="ri-body">
+          <div class="ri-top">
+            <span class="ri-title">肌タイプ診断</span>
+            <span class="status-pill status-planned">📋 設計予定</span>
+          </div>
+          <div class="ri-meta">
+            スキンケア商品総合紹介 / ③完了後に設計着手（7/18〜）<br>
+            全ジャンルの案件を横断する「ハブ診断」として設計
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="ri-left">
+          <div class="ri-num status-waiting">⑤</div>
+          <div class="ri-line"></div>
+        </div>
+        <div class="ri-body">
+          <div class="ri-top">
+            <span class="ri-title">ファンデーション診断</span>
+            <span class="status-pill status-waiting">⏳ 提携確認後</span>
+          </div>
+          <div class="ri-meta">案件提携確認後に設計着手 / 時期未定</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- スケジュール -->
+  <div class="section">
+    <div class="section-title">スケジュール（7月〜）</div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-date">7/3〜13</span></div>
+        <div class="tl-center"><div class="tl-dot current"></div></div>
+        <div class="tl-right">
+          <div class="tl-work">③化粧水診断 設計・PRカルーセル作成</div>
+          <div class="tl-note">②のデザイン納品待ち中に並行して進める</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-date">7/14〜15</span></div>
+        <div class="tl-center"><div class="tl-dot"></div></div>
+        <div class="tl-right">
+          <div class="tl-work">②スキンケア診断 デザイン納品・確認・実装</div>
+          <div class="tl-note">デザイナー納品 → 確認 → LINE実装</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-date">〜7/18</span></div>
+        <div class="tl-center"><div class="tl-dot"></div></div>
+        <div class="tl-right">
+          <div class="tl-work">③化粧水診断 デザイン依頼</div>
+          <div class="tl-note">PRカル完成 → 依頼書提出</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-date">7/18〜25</span></div>
+        <div class="tl-center"><div class="tl-dot"></div></div>
+        <div class="tl-right">
+          <div class="tl-work">④肌タイプ診断 設計・PRカルーセル作成</div>
+          <div class="tl-note">全ジャンル横断ハブ診断として設計</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-date">7月末〜</span></div>
+        <div class="tl-center"><div class="tl-dot"></div></div>
+        <div class="tl-right">
+          <div class="tl-work">④肌タイプ診断 デザイン依頼</div>
+          <div class="tl-note"></div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-date">8月以降</span></div>
+        <div class="tl-center"><div class="tl-dot"></div></div>
+        <div class="tl-right">
+          <div class="tl-work">⑤ファンデーション診断</div>
+          <div class="tl-note">案件提携確認後に着手</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ③化粧水診断 案件一覧 -->
+  <div class="section">
+    <div class="section-title">③ 化粧水診断 — 案件一覧</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>案件</th>
+            <th>単価（税抜）</th>
+            <th>ASP</th>
+            <th>ステータス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>ディセンシア</td>
+            <td class="price">¥4,010</td>
+            <td><span class="asp-chip">A8</span></td>
+            <td><span class="status-pill status-done">提携済</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>アテニア ドレスノスノー</td>
+            <td class="price">¥4,500</td>
+            <td><span class="asp-chip">A8</span></td>
+            <td><span class="status-pill status-done">提携済</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>アテニア アドレスリフト</td>
+            <td class="price">¥5,000</td>
+            <td><span class="asp-chip">A8</span></td>
+            <td><span class="status-pill status-done">提携済</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>エトヴォス（モイスチャーライン）</td>
+            <td class="price">¥1,170</td>
+            <td><span class="asp-chip">A8</span></td>
+            <td><span class="status-pill status-done">提携済</span></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>エトヴォス（美白美容液）</td>
+            <td class="price">¥1,170</td>
+            <td><span class="asp-chip">A8</span></td>
+            <td><span class="status-pill status-done">提携済</span></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>ナールスピュア</td>
+            <td class="price">¥2,306</td>
+            <td><span class="asp-chip">felmat</span></td>
+            <td><span class="status-pill status-done">提携済</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="back-link">
+    <a href="index.html">← トップへ</a>
+  </div>
+
+</div>
+</body>
+</html>
