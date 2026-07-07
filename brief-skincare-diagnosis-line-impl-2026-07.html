@@ -118,9 +118,9 @@
     <div class="tbl-wrap">
       <table>
         <tr><td style="font-weight:700;width:160px;">診断名</td><td>あなたにぴったりのスキンケア方法診断</td></tr>
-        <tr><td style="font-weight:700;">質問数</td><td>4問（Q1〜Q4）</td></tr>
+        <tr><td style="font-weight:700;">質問数</td><td>5問（Q1〜Q5）</td></tr>
         <tr><td style="font-weight:700;">振り分け結果</td><td>4タイプ</td></tr>
-        <tr><td style="font-weight:700;">振り分けロジック</td><td>Q3 × Q4 の組み合わせで判定（Q1・Q2はメッセージのパーソナライズに使用）</td></tr>
+        <tr><td style="font-weight:700;">振り分けロジック</td><td>Q3 × Q5 の組み合わせで判定（Q1・Q2はパーソナライズ用、Q4は環境補助軸・振り分けには使用しない）</td></tr>
         <tr><td style="font-weight:700;">メタリフ</td><td>別途Noaから受け取り（構築前に確認）</td></tr>
         <tr><td style="font-weight:700;">PRカルーセル</td><td>結果メッセージの直後に送信（各タイプ4枚）</td></tr>
       </table>
@@ -163,20 +163,26 @@
       </div>
       <div class="flow-arrow">↓</div>
 
+      <div class="flow-q" style="background:#F3F4F6;border-color:var(--border);">
+        <div class="flow-q-label" style="color:var(--text-muted);">Q4 — 環境補助軸（振り分けには使用しない）</div>
+        <div class="flow-q-text" style="color:var(--text-muted);">普段の生活で、肌に影響していそうなものは？</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+
       <div class="flow-q">
-        <div class="flow-q-label">Q4</div>
+        <div class="flow-q-label">Q5</div>
         <div class="flow-q-text">一番気になる悩み（A〜D）</div>
       </div>
       <div class="flow-arrow">↓</div>
 
-      <div class="flow-judge">Q3 × Q4 の組み合わせで振り分け</div>
+      <div class="flow-judge">Q3 × Q5 の組み合わせで振り分け</div>
       <div class="flow-arrow">↓</div>
 
       <div class="flow-types">
-        <div class="flow-type" style="background:var(--t1-bg);color:var(--t1);">皮脂コントロール型<br><span style="font-weight:400;font-size:11px;">Q3-C × Q4-A</span></div>
-        <div class="flow-type" style="background:var(--t2-bg);color:var(--t2);">保湿バリア修復型<br><span style="font-weight:400;font-size:11px;">Q3-B × Q4-B</span></div>
-        <div class="flow-type" style="background:var(--t3-bg);color:var(--t3);">低刺激・肌環境改善型<br><span style="font-weight:400;font-size:11px;">Q3-A/B × Q4-C</span></div>
-        <div class="flow-type" style="background:var(--t4-bg);color:var(--t4);">美白・エイジングケア型<br><span style="font-weight:400;font-size:11px;">Q3-A/D × Q4-D</span></div>
+        <div class="flow-type" style="background:var(--t1-bg);color:var(--t1);">皮脂コントロール型<br><span style="font-weight:400;font-size:11px;">Q3-C × Q5-A</span></div>
+        <div class="flow-type" style="background:var(--t2-bg);color:var(--t2);">保湿バリア修復型<br><span style="font-weight:400;font-size:11px;">Q3-B × Q5-B</span></div>
+        <div class="flow-type" style="background:var(--t3-bg);color:var(--t3);">低刺激・肌環境改善型<br><span style="font-weight:400;font-size:11px;">Q3-A/B × Q5-C</span></div>
+        <div class="flow-type" style="background:var(--t4-bg);color:var(--t4);">美白・エイジングケア型<br><span style="font-weight:400;font-size:11px;">Q3-A/D × Q5-D</span></div>
       </div>
 
     </div>
@@ -222,8 +228,20 @@
       </div>
     </div>
 
+    <div class="q-card" style="border-color:var(--border);background:#F9FAFB;">
+      <div class="q-card-label" style="color:var(--text-muted);">Q4 — 環境補助軸（振り分けには使用しない）</div>
+      <div class="q-card-text">普段の生活で、肌に影響していそうなものは？</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge" style="background:#F3F4F6;color:var(--text-muted);">A</span><span class="opt-text">エアコン・空気の乾燥</span></div>
+        <div class="q-opt"><span class="opt-badge" style="background:#F3F4F6;color:var(--text-muted);">B</span><span class="opt-text">紫外線・大気汚染</span></div>
+        <div class="q-opt"><span class="opt-badge" style="background:#F3F4F6;color:var(--text-muted);">C</span><span class="opt-text">ストレス・睡眠不足</span></div>
+        <div class="q-opt"><span class="opt-badge" style="background:#F3F4F6;color:var(--text-muted);">D</span><span class="opt-text">特に思い当たらない</span></div>
+      </div>
+      <div class="q-note" style="border-color:#9CA3AF;background:#F3F4F6;color:var(--text-muted);">※ この回答は振り分けに使用しません。データ収集のみ。</div>
+    </div>
+
     <div class="q-card">
-      <div class="q-card-label">Q4 — 悩み（振り分けに使用）</div>
+      <div class="q-card-label">Q5 — 悩み（振り分けに使用）</div>
       <div class="q-card-text">今、一番気になる肌の悩みは何ですか？</div>
       <div class="q-options">
         <div class="q-opt"><span class="opt-badge">A</span><span class="opt-text">毛穴・皮脂テカり</span></div>
@@ -236,13 +254,13 @@
 
   <!-- 振り分けロジック -->
   <div class="section">
-    <div class="section-title">振り分けロジック（Q3 × Q4）</div>
+    <div class="section-title">振り分けロジック（Q3 × Q5）</div>
     <div class="tbl-wrap">
       <table>
         <thead>
           <tr>
             <th>Q3（洗顔後の肌状態）</th>
-            <th>Q4（気になる悩み）</th>
+            <th>Q5（気になる悩み）</th>
             <th>振り分けタイプ</th>
             <th>提案商品</th>
           </tr>
