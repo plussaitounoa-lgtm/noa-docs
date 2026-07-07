@@ -120,7 +120,7 @@
         <tr><td style="font-weight:700;width:160px;">診断名</td><td>あなたにぴったりのスキンケア方法診断</td></tr>
         <tr><td style="font-weight:700;">質問数</td><td>5問（Q1〜Q5）</td></tr>
         <tr><td style="font-weight:700;">振り分け結果</td><td>4タイプ</td></tr>
-        <tr><td style="font-weight:700;">振り分けロジック</td><td>Q3 × Q5 の組み合わせで判定（Q1・Q2はパーソナライズ用、Q4は環境補助軸・振り分けには使用しない）</td></tr>
+        <tr><td style="font-weight:700;">振り分けロジック</td><td>Q5の回答で判定（Q3はメッセージのパーソナライズに使用）</td></tr>
         <tr><td style="font-weight:700;">メタリフ</td><td>別途Noaから受け取り（構築前に確認）</td></tr>
         <tr><td style="font-weight:700;">PRカルーセル</td><td>結果メッセージの直後に送信（各タイプ4枚）</td></tr>
       </table>
@@ -175,14 +175,14 @@
       </div>
       <div class="flow-arrow">↓</div>
 
-      <div class="flow-judge">Q3 × Q5 の組み合わせで振り分け</div>
+      <div class="flow-judge">Q5の回答で振り分け（Q3はパーソナライズ用）</div>
       <div class="flow-arrow">↓</div>
 
       <div class="flow-types">
-        <div class="flow-type" style="background:var(--t1-bg);color:var(--t1);">皮脂コントロール型<br><span style="font-weight:400;font-size:11px;">Q3-C × Q5-A</span></div>
-        <div class="flow-type" style="background:var(--t2-bg);color:var(--t2);">保湿バリア修復型<br><span style="font-weight:400;font-size:11px;">Q3-B × Q5-B</span></div>
-        <div class="flow-type" style="background:var(--t3-bg);color:var(--t3);">低刺激・肌環境改善型<br><span style="font-weight:400;font-size:11px;">Q3-A/B × Q5-C</span></div>
-        <div class="flow-type" style="background:var(--t4-bg);color:var(--t4);">美白・エイジングケア型<br><span style="font-weight:400;font-size:11px;">Q3-A/D × Q5-D</span></div>
+        <div class="flow-type" style="background:var(--t1-bg);color:var(--t1);">皮脂コントロール型<br><span style="font-weight:400;font-size:11px;">Q5-A</span></div>
+        <div class="flow-type" style="background:var(--t2-bg);color:var(--t2);">保湿バリア修復型<br><span style="font-weight:400;font-size:11px;">Q5-B</span></div>
+        <div class="flow-type" style="background:var(--t3-bg);color:var(--t3);">低刺激・肌環境改善型<br><span style="font-weight:400;font-size:11px;">Q5-C</span></div>
+        <div class="flow-type" style="background:var(--t4-bg);color:var(--t4);">美白・エイジングケア型<br><span style="font-weight:400;font-size:11px;">Q5-D</span></div>
       </div>
 
     </div>
@@ -254,66 +254,40 @@
 
   <!-- 振り分けロジック -->
   <div class="section">
-    <div class="section-title">振り分けロジック（Q3 × Q5）</div>
+    <div class="section-title">振り分けロジック（Q5で判定）</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Q5の回答だけで振り分けします。Q3はメッセージのパーソナライズ用として保持してください。</p>
     <div class="tbl-wrap">
       <table>
         <thead>
           <tr>
-            <th>Q3（洗顔後の肌状態）</th>
-            <th>Q5（気になる悩み）</th>
+            <th>Q5の回答</th>
             <th>振り分けタイプ</th>
             <th>提案商品</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>C — 全体がテカる</td>
-
             <td>A — 毛穴・皮脂テカり</td>
             <td><span class="pill p1">皮脂コントロール型</span></td>
             <td>オルビス クリアフル</td>
           </tr>
           <tr>
-            <td>B — 混合肌</td>
-            <td>B — 乾燥なのにべたつく</td>
+            <td>B — 乾燥しているのにべたつく</td>
             <td><span class="pill p2">保湿バリア修復型</span></td>
             <td>ビーグレン</td>
           </tr>
           <tr>
-            <td>A — 全体つっぱる</td>
-            <td>C — ニキビ・肌荒れ</td>
+            <td>C — 繰り返すニキビ・肌荒れ</td>
             <td><span class="pill p3">低刺激・肌環境改善型</span></td>
             <td>ファンケル アクネケア</td>
           </tr>
           <tr>
-            <td>B — 混合肌</td>
-            <td>C — ニキビ・肌荒れ</td>
-            <td><span class="pill p3">低刺激・肌環境改善型</span></td>
-            <td>ファンケル アクネケア</td>
-          </tr>
-          <tr>
-            <td>A — 全体つっぱる</td>
             <td>D — シミ・くすみ</td>
             <td><span class="pill p4">美白・エイジングケア型</span></td>
             <td>VCスターターセット（Sibody）</td>
-          </tr>
-          <tr>
-            <td>D — 変化なし・わからない</td>
-            <td>D — シミ・くすみ</td>
-            <td><span class="pill p4">美白・エイジングケア型</span></td>
-            <td>VCスターターセット（Sibody）</td>
-          </tr>
-          <tr>
-            <td colspan="2" style="color:var(--text-muted);font-size:12px;">上記以外の組み合わせ（C×B、C×C、B×D など）</td>
-            <td><span class="pill ptbd">要確認</span></td>
-            <td style="color:var(--text-muted);font-size:12px;">構築前にNoaへ確認</td>
           </tr>
         </tbody>
       </table>
-    </div>
-    <div class="notice">
-      <strong>⚠️ 未定義の組み合わせについて</strong><br>
-      上表に含まれないQ3×Q4の組み合わせが発生した場合の振り分け先は現時点で未確定です。構築着手前にNoaへ確認してください。
     </div>
   </div>
 
