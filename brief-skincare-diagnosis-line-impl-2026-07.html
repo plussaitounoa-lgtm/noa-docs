@@ -338,7 +338,7 @@
     </div>
 
     <div style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">記事別 設置内容</div>
-    <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">※ タグ欄はPU構築時に入力するスラグです。文字制限で入らない場合はKeitoさん側で適宜調整してください。</p>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">※ タグ欄はPU構築時に入力するスラグです。文字制限で入らない場合はKeito側で適宜調整してください。</p>
     <div class="tbl-wrap">
       <table>
         <thead>
@@ -419,16 +419,24 @@
             <td>振り分けロジック表に記載済み（4商品分）。構築前に必ず確認すること</td>
           </tr>
           <tr>
-            <td style="font-weight:700;">Q1・Q2の扱い</td>
-            <td>振り分けには使わない。結果メッセージの文言パーソナライズ用として回答を保持しておく</td>
+            <td style="font-weight:700;">Q1の扱い</td>
+            <td>振り分けには使わない。年代によって結果メッセージの文言をパーソナライズするために保持</td>
           </tr>
           <tr>
-            <td style="font-weight:700;">中間メッセージ</td>
-            <td>Q2-A または Q2-C 回答時のみ挿入。Q2-B はスキップ</td>
+            <td style="font-weight:700;">Q2の扱い</td>
+            <td>A または C → Q3の前に中間メッセージを挿入。B → スキップしてQ3へ直行。回答はパーソナライズ用に保持</td>
           </tr>
           <tr>
-            <td style="font-weight:700;">未定義の組み合わせ</td>
-            <td>振り分け表に載っていないQ3×Q4の組み合わせが発生した場合はNoaへ確認。勝手に振り分けない</td>
+            <td style="font-weight:700;">Q3の扱い</td>
+            <td>振り分けには使わない。洗顔後の肌状態を結果メッセージのパーソナライズ用に保持</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">Q4の扱い</td>
+            <td>振り分けにも結果パーソナライズにも使わない。データ収集のみ（環境補助軸）</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">振り分けの原則</td>
+            <td>Q5の回答（A〜D）だけで4タイプに振り分ける。Q5は4択で必ずどれかに入るため未定義の組み合わせは発生しない</td>
           </tr>
           <tr>
             <td style="font-weight:700;">PRカルーセル送信タイミング</td>
