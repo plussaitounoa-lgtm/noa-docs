@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>コスメ領域 現状分析＋7月SIM — 2026-07-09</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta name="description" content="コスメ領域の現状数値（GSC最新データ・ダッシュボード実績）と7月のざっくりSIM。クレンジング診断単体のファネル切り出しとデータ制約の整理。1on1準備向け。">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+      background: #f0f4f8;
+      color: #1e293b;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .wrap { max-width: 920px; margin: 0 auto; padding: 40px 20px 88px; }
+
+    .back { display: inline-block; font-size: 12px; color: #64748b; text-decoration: none; margin-bottom: 28px; }
+    .back:hover { color: #1a4d9e; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #64748b; margin-bottom: 6px; }
+    .page-header h1 { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 6px; text-wrap: balance; }
+    .page-header .meta { font-size: 12px; color: #94a3b8; }
+
+    .summary-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+    .s-card { background: #fff; border-radius: 12px; padding: 16px 18px; border: 1.5px solid #e2e8f0; }
+    .s-card.alert { border-color: #fca5a5; background: #fff8f8; }
+    .s-card.ok    { border-color: #86efac; background: #f7fdf9; }
+    .s-card.warn  { border-color: #fde68a; background: #fffdf0; }
+    .s-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #94a3b8; margin-bottom: 4px; }
+    .s-val { font-size: 26px; font-weight: 800; color: #0f172a; font-variant-numeric: tabular-nums; line-height: 1.1; margin-bottom: 2px; }
+    .s-sub { font-size: 12px; color: #64748b; }
+    .s-card.alert .s-val { color: #dc2626; }
+    .s-card.ok    .s-val { color: #16a34a; }
+    .s-card.warn  .s-val { color: #b45309; }
+
+    .section { background: #fff; border-radius: 14px; padding: 26px 28px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+    .section-head { margin-bottom: 18px; }
+    .section-head h2 { font-size: 15px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .section-head .sub { font-size: 12px; color: #64748b; }
+
+    .tbl-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; font-size: 11px; letter-spacing: 0.06em; padding: 9px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; white-space: nowrap; }
+    td { padding: 9px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f8fafc; }
+    td.num { text-align: right; }
+
+    .badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+    .badge-red    { background: #fee2e2; color: #dc2626; }
+    .badge-green  { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #b45309; }
+    .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray   { background: #f1f5f9; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 14px; line-height: 1.6; }
+    .insight-red    { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green  { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue   { background: #eff6ff; border-left: 3px solid #3b82f6; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: grid; grid-template-columns: auto 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px solid #f1f5f9; align-items: start; }
+    .action-list li:last-child { border-bottom: none; }
+    .pri-chip { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; margin-top: 2px; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #b45309; }
+    .pri-low  { background: #f1f5f9; color: #64748b; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span   { font-size: 13px; color: #475569; }
+
+    .note { font-size: 11px; color: #94a3b8; padding: 10px 0 0; border-top: 1px solid #f1f5f9; margin-top: 14px; }
+    .divider { border: none; border-top: 1px solid #e2e8f0; margin: 20px 0; }
+
+    @media (max-width: 600px) {
+      .summary-strip { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <a href="index.html" class="back">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">コスメ数値分析 / 2026-07-09</div>
+    <h1>コスメ領域 — 現状分析と7月SIM</h1>
+    <p class="meta">1on1（Ren）準備向け。診断別クリック天井ベースの7月見通し2パターン＋クレンジング診断単体のファネル切り出し。</p>
+  </div>
+
+  <div class="summary-strip">
+    <div class="s-card alert">
+      <div class="s-label">クレンジング診断 PVFR</div>
+      <div class="s-val">0.28%</div>
+      <div class="s-sub">基準0.80%の約1/3（7/1〜7/8実績）</div>
+    </div>
+    <div class="s-card warn">
+      <div class="s-label">7月友だち見込み</div>
+      <div class="s-val">22〜88人</div>
+      <div class="s-sub">実測レート継続 vs 基準値到達</div>
+    </div>
+    <div class="s-card warn">
+      <div class="s-label">FCVR（参考値）</div>
+      <div class="s-val">16.7%</div>
+      <div class="s-sub">CV1件／友だち6人・n=1で要注意</div>
+    </div>
+  </div>
+
+  <!-- 結論 -->
+  <div class="section">
+    <div class="section-head">
+      <h2>結論</h2>
+      <div class="sub">天井を増やすより、今ある17記事の効率を直す方が効く</div>
+    </div>
+    <div class="insight insight-blue">
+      <strong>診断別の月間クリック天井（GSC実測）をベースにすると、7月のコスメ友だち見込みは「実測ペース継続で22人」〜「PU文言・LP改善で基準値まで到達すれば88人」の範囲。</strong>
+      新記事投入で天井を増やす前に、今稼働している17記事（クレンジング9＋スキンケア7＋その他1）のCTR9.5%→13%・追加率7.2%→11%を基準まで持っていく方が、友だち数を数倍にできる。
+    </div>
+    <div class="insight insight-yellow" style="margin-top:10px;">
+      現状はコスメ基盤構築フェーズ（診断の設計・作成・リリースを並行）のため、稼働記事はコスメ全記事の一部にとどまる。クレンジング診断は6/24〜稼働、スキンケア診断は本日7/9リリース。化粧水診断はまだ設置記事未確定。
+    </div>
+  </div>
+
+  <!-- 診断別天井 -->
+  <div class="section">
+    <div class="section-head">
+      <h2>診断別 月間クリック天井</h2>
+      <div class="sub">サチコ実測（直近3ヶ月・2026-07-09時点）。PU設置台帳スプシのS〜V列に反映済み</div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>診断</th><th>記事数</th><th class="num">月間クリック天井</th><th>稼働状況</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>クレンジング選び診断</td><td>9（設置済み）</td><td class="num">6,476</td><td>6/24〜稼働（7月フル）</td></tr>
+          <tr><td>スキンケア診断</td><td>7（設置済み）</td><td class="num">6,157</td><td>本日7/9〜（残り23日）</td></tr>
+          <tr><td>化粧水診断</td><td>0（候補21記事）</td><td class="num">3,639<span class="badge badge-gray" style="margin-left:6px;">潜在</span></td><td>設置記事未確定</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">6/4時点のPU設置台帳推計（クレンジング7,097・スキンケア4,933）から、7/9時点のGSC実測ベースに更新。スキンケアは推計より実績の方が高く出ている。化粧水は候補21記事のうち上位10記事だけで月間クリック約3,150（全体の76%）を占める。</div>
+  </div>
+
+  <!-- 7月SIM -->
+  <div class="section">
+    <div class="section-head">
+      <h2>7月SIM（2パターン）</h2>
+      <div class="sub">クレンジング（フル月）＋スキンケア（7/9〜23日プロレート）＝月間クリック天井 約11,045。化粧水は設置記事未確定のため含めていない</div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>パターン</th><th>使うPVFR</th><th class="num">7月友だち予測</th><th>根拠</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>実測レート継続</td><td>0.2%</td><td class="num"><strong>約22人</strong></td><td>何も改善しなかった場合の下限</td></tr>
+          <tr><td>基準値到達</td><td>0.8%（funnel-model.md基準）</td><td class="num"><strong>約88人</strong></td><td>PU文言・LP改善で基準まで持っていけた場合の上限</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight insight-blue">このギャップ（22人→88人、約4倍）が今のコスメの本質。母数（天井）は同じでも、効率改善だけで友だち数を大きく増やせる。</div>
+  </div>
+
+  <!-- クレンジング単体ファネル -->
+  <div class="section">
+    <div class="section-head">
+      <h2>クレンジング診断 単体のファネル切り出し</h2>
+      <div class="sub">7/1〜7/8実績（タグ名ベースでスキンケアと分離）</div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>指標</th><th class="num">値</th><th>基準比</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LP imp</td><td class="num">2,172</td><td>—</td></tr>
+          <tr><td>PU imp（表示率31.9%）</td><td class="num">693</td><td>—</td></tr>
+          <tr><td>PU Click</td><td class="num">61</td><td>—</td></tr>
+          <tr><td>友だち追加</td><td class="num">6人</td><td>—</td></tr>
+          <tr><td>PVFR</td><td class="num">0.276%</td><td><span class="badge badge-red">基準0.80%の約1/3</span></td></tr>
+          <tr><td>IMPFR</td><td class="num">0.866%</td><td><span class="badge badge-red">基準1.40%の約6割</span></td></tr>
+          <tr><td>CTR</td><td class="num">8.8%</td><td><span class="badge badge-red">基準13%</span></td></tr>
+          <tr><td>追加率</td><td class="num">9.8%</td><td><span class="badge badge-yellow">基準11%に近い</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight insight-yellow">PU表示率が31.9%止まり。CTR・追加率は基準に近づいているのに対し、入り口（記事PV→PU表示）がボトルネックになっている可能性がある。</div>
+  </div>
+
+  <!-- FCVR参考値 -->
+  <div class="section">
+    <div class="section-head">
+      <h2>FCVR（参考値・要注意）</h2>
+      <div class="sub">CV1件・友だち6人 → 単純計算で16.7%</div>
+    </div>
+    <div class="insight insight-red">
+      <strong>コスメのCVはダッシュボードのCVトラッキングパイプラインに未接続</strong>（genre="seo_cosme"がCVリストに一件も出現しない）。この16.7%はNoaの口頭報告（CV1件）のみが根拠で、n=1のため参考値にとどめる。実測ペースが悪くないことを示唆する程度の情報。
+    </div>
+  </div>
+
+  <!-- データ制約・確認事項 -->
+  <div class="section">
+    <div class="section-head">
+      <h2>データ制約・確認事項</h2>
+    </div>
+    <ul class="action-list">
+      <li>
+        <span class="pri-chip pri-high">高</span>
+        <div class="action-body">
+          <strong>コスメCVがCVトラッキングパイプライン未接続</strong>
+          <span>genre="seo_cosme"がCVリストのgenre列に一度も出現しない。FCVR等の正式な指標化にはCTOへの連携依頼が必要</span>
+        </div>
+      </li>
+      <li>
+        <span class="pri-chip pri-mid">中</span>
+        <div class="action-body">
+          <strong>化粧水診断の設置記事が未確定</strong>
+          <span>候補21記事（月間クリック合計4,129〜3,639）。上位10記事なら月間クリック約3,150でクレンジング・スキンケアと同規模の診断が組める</span>
+        </div>
+      </li>
+      <li>
+        <span class="pri-chip pri-low">低</span>
+        <div class="action-body">
+          <strong>ダッシュボード全体「5人」とタグ別集計「6人」で1人差</strong>
+          <span>集計境界の違いによる誤差と推測。実害は小さいが原因未確認</span>
+        </div>
+      </li>
+    </ul>
+    <div class="note">PU設置台帳スプシ（「コスメ_マスタ」タブ）のS〜V列に、直近3ヶ月GSC実測の月間クリック推計・3ヶ月クリック・CTR・平均順位を反映済み（2026-07-09更新）。新規記事2本（foundation-cover／skincare-winter）も追加済み。</div>
+  </div>
+
+  <!-- 次のアクション -->
+  <div class="section">
+    <div class="section-head">
+      <h2>次のアクション</h2>
+    </div>
+    <ul class="action-list">
+      <li>
+        <span class="pri-chip pri-high">高</span>
+        <div class="action-body">
+          <strong>化粧水の設置記事を確定し、3本目のSIMラインを追加</strong>
+          <span>稼働開始日が決まればプロレート計算でSIMに組み込める</span>
+        </div>
+      </li>
+      <li>
+        <span class="pri-chip pri-mid">中</span>
+        <div class="action-body">
+          <strong>クレンジング診断のPU表示率（31.9%）の要因調査</strong>
+          <span>設置漏れか表示トリガー条件の問題かを切り分ける</span>
+        </div>
+      </li>
+      <li>
+        <span class="pri-chip pri-mid">中</span>
+        <div class="action-body">
+          <strong>コスメCVのパイプライン連携</strong>
+          <span>CTOに相談し、genre="seo_cosme"がCVリストに乗るようにする</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
