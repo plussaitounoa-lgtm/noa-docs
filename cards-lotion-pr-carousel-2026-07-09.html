@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>化粧水診断 v2 PRカル カード図 2026-07-09</title>
+<title>化粧水診断 v3 PRカル カード図 2026-07-09</title>
   <link rel="icon" type="image/png" href="favicon.png">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,6 +23,8 @@
   .tab-btn.tab-b.active { background: #b8863a; color: #fff; }
   .tab-btn.tab-c { border-color: #b39ddb; color: #4a2f7a; }
   .tab-btn.tab-c.active { background: #7e57c2; color: #fff; }
+  .tab-btn.tab-d { border-color: #d4a373; color: #8a4a24; }
+  .tab-btn.tab-d.active { background: #b45b1f; color: #fff; }
 
   .tab-section { display: none; padding: 20px 24px 40px; }
   .tab-section.active { display: block; }
@@ -88,12 +90,12 @@
 <body>
 
 <div class="page-header">
-  <h1>化粧水診断 v2 — PRカルーセル カード図（並列紹介・価格訴求追加）</h1>
-  <p>6商材 × Card 1〜4（共通テンプレート）テキスト確認用。タブで商材を切り替え。</p>
+  <h1>化粧水診断 v3 — PRカルーセル カード図（並列紹介・7商材に拡張）</h1>
+  <p>7商材 × Card 1〜4（共通テンプレート）テキスト確認用。タブで商材を切り替え。</p>
 </div>
 
 <div class="revision-note">
-  <b>07-03版からの変更点：</b> 「あなたに合うのはこれ」という言い切りトーンを排除し、タイプ内の複数商材を対等に見せる構成に変更。Card1に「1日◯円」＋トライアル価格を明記（肌ラボ・美的・ONEcosme3社共通の価格訴求パターンを採用）。アテニア アドレスリフトはONEcosme実データ（1日40円・14日間トライアル¥1,527）を採用、他5商材は想定値（設置前に公式サイトで確認要）。
+  <b>v2→v3の変更点：</b> タイプD（毛穴ケア型）の新規追加に伴い、<b>オルビス クリアフル（¥6,500）</b>を7商材目として追加。②スキンケア方法診断（皮脂コントロール型）と同一商材のため、Card1〜4は②のコピーを一切再利用せず「化粧水で毛穴を引き締める」軸で新規作成した（既存6商材の内容はv2から変更なし）。
 </div>
 
 <div class="type-tabs">
@@ -103,6 +105,7 @@
   <button class="tab-btn tab-b" onclick="switchTab('b2')">Bハリ②｜ドレスノスノー</button>
   <button class="tab-btn tab-b" onclick="switchTab('b3')">Bハリ③｜アドレスリフト</button>
   <button class="tab-btn tab-c" onclick="switchTab('c1')">C美白｜エトヴォス美白美容液</button>
+  <button class="tab-btn tab-d" onclick="switchTab('d1')">D毛穴（新規）｜オルビス クリアフル</button>
 </div>
 
 <!-- ========================================
@@ -512,6 +515,74 @@
       <div class="brand-bar" style="background:linear-gradient(90deg,#7e57c2,#b39ddb);"><span class="brand-name">ETVOS</span><span class="pr-tag">PR</span></div>
       <div class="card-num-tag">口コミ風の声</div>
       <div class="quote-box">高いのを試して効果がなかったのに、これに変えたらくすみが晴れてきた</div>
+      <div class="cta-wrap"><button class="cta-btn">購入する <span class="cta-arrow">›</span></button></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========================================
+     🟤 D-1：オルビス クリアフル（新規）
+========================================= -->
+<div class="tab-section" id="section-d1">
+  <div class="type-header">
+    <span class="type-label" style="color:#8a4a24;">🟤 タイプD（新規）｜オルビス クリアフル PRカル</span>
+    <span class="type-sub">¥6,500｜タイプD唯一の商材（並列表示なし）</span>
+  </div>
+  <div class="note-box"><b>商材重複リスク対応：</b>この商材は②スキンケア方法診断「皮脂コントロール型」でも使用中。②は「テカり・皮脂コントロール」軸（洗っても崩れる→皮脂分泌そのものを整える）で訴求しているため、③（本診断）は<b>「化粧水で毛穴を引き締める」軸</b>に統一し、Card1〜4とも②の文言を一切再利用せず新規で書いた。成分名・1日あたり価格は設計書時点の想定訴求例。実際の成分表示・アフィリリンク・容量は設置前に公式サイトで要確認（残タスク参照）。</div>
+  <div class="cards-row">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#b45b1f,#d4a373);"><span class="brand-name">ORBIS</span><span class="pr-tag">PR</span></div>
+      <div class="img-area" style="background:#f3e5dc;">
+        <div class="img-icon" style="color:#8a4a24;">🧴</div>
+        <div class="img-label" style="color:#8a5a30;">商品パッケージ写真</div>
+      </div>
+      <div class="catch-section">
+        <div class="catch-copy">毛穴が目立つのは、<br>引き締めが足りないだけ</div>
+      </div>
+      <div class="product-section">
+        <div class="product-name">クリアフル</div>
+      </div>
+      <div class="price-section" style="background:#f3e5dc;border-color:#e2c7a8;">
+        <div class="price-label-sm">価格</div>
+        <div class="price-num" style="color:#8a4a24;">6,500<span class="price-suffix">円（税込）</span></div>
+        <div class="price-day-rate" style="background:#8a4a24;color:#fff;">1日あたり約217円※想定</div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#b45b1f,#d4a373);"><span class="brand-name">ORBIS</span><span class="pr-tag">PR</span></div>
+      <div class="point-row" style="background:#f3e5dc;">
+        <div class="point-badge-label" style="color:#8a4a24;">主要成分3つ</div>
+      </div>
+      <div class="ing-list">
+        <div class="ing-item"><span class="ing-check" style="color:#b45b1f;">✓</span><div><div class="ing-name">収れん成分</div><div class="ing-desc">肌のキメを整え、毛穴を引き締める</div></div></div>
+        <div class="ing-item"><span class="ing-check" style="color:#b45b1f;">✓</span><div><div class="ing-name">皮脂バランスを整える成分</div><div class="ing-desc">過剰な皮脂の分泌を穏やかに整える</div></div></div>
+        <div class="ing-item"><span class="ing-check" style="color:#b45b1f;">✓</span><div><div class="ing-name">保湿保護成分</div><div class="ing-desc">引き締めながらも乾燥させない</div></div></div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#b45b1f,#d4a373);"><span class="brand-name">ORBIS</span><span class="pr-tag">PR</span></div>
+      <div class="card-num-tag">価格の納得づけ</div>
+      <div class="justify-box" style="background:linear-gradient(135deg,#d4a373,#b45b1f);color:#fff;">
+        <div class="justify-label">この価格が合理的な理由</div>
+        <div class="justify-text">テカり止めのスプレーを重ねるより、<br>化粧水で毛穴そのものを引き締める方が近道</div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <div class="brand-bar" style="background:linear-gradient(90deg,#b45b1f,#d4a373);"><span class="brand-name">ORBIS</span><span class="pr-tag">PR</span></div>
+      <div class="card-num-tag">口コミ風の声</div>
+      <div class="quote-box">化粧水を変えただけなのに、毛穴の開きが前より気にならなくなった</div>
       <div class="cta-wrap"><button class="cta-btn">購入する <span class="cta-arrow">›</span></button></div>
     </div>
 

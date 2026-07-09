@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>結果カード図 v2 | 化粧水診断</title>
+<title>結果カード図 v3 | 化粧水診断</title>
   <link rel="icon" type="image/png" href="favicon.png">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -17,14 +17,16 @@
   .revision-note { margin: 14px 24px 0; padding: 10px 14px; background: #eef1ff; border-left: 3px solid #4a4a6a; border-radius: 0 6px 6px 0; font-size: 11.5px; color: #333; line-height: 1.7; }
 
   /* ── タイプタブ ── */
-  .type-tabs { display: flex; gap: 8px; padding: 16px 24px 0; overflow-x: auto; }
-  .tab-btn { padding: 8px 20px; border-radius: 20px; border: 2px solid transparent; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; background: #fff; transition: all 0.2s; }
+  .type-tabs { display: flex; gap: 8px; padding: 16px 24px 0; overflow-x: auto; flex-wrap: wrap; }
+  .tab-btn { padding: 8px 20px; border-radius: 20px; border: 2px solid transparent; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; background: #fff; transition: all 0.2s; margin-bottom: 8px; }
   .tab-btn.tab-a { border-color: #7ec8e0; color: #1a6a85; }
   .tab-btn.tab-a.active { background: #3a94b8; color: #fff; }
   .tab-btn.tab-b { border-color: #e0c068; color: #8a5f1f; }
   .tab-btn.tab-b.active { background: #b8863a; color: #fff; }
   .tab-btn.tab-c { border-color: #b39ddb; color: #4a2f7a; }
   .tab-btn.tab-c.active { background: #7e57c2; color: #fff; }
+  .tab-btn.tab-d { border-color: #d4a373; color: #8a4a24; }
+  .tab-btn.tab-d.active { background: #b45b1f; color: #fff; }
 
   /* ── カード列 ── */
   .cards-section { display: none; padding: 20px 24px 40px; }
@@ -64,17 +66,21 @@
   .type-b .card-cta    { background: #b8863a; }
   .type-c .card-header { background: linear-gradient(135deg, #b39ddb, #7e57c2); }
   .type-c .card-cta    { background: #7e57c2; }
+  .type-d .card-header { background: linear-gradient(135deg, #d4a373, #b45b1f); }
+  .type-d .card-cta    { background: #b45b1f; }
 
   .product-card .card-header { color: #1a1a1a; background: #f5f5f7 !important; }
   .type-a .product-card .card-header { background: #e3f2f8 !important; }
   .type-b .product-card .card-header { background: #f7f0e0 !important; }
   .type-c .product-card .card-header { background: #ede7f6 !important; }
+  .type-d .product-card .card-header { background: #f3e5dc !important; }
 
   .type-label { font-size: 13px; font-weight: 700; color: #666; margin-bottom: 16px; }
   .type-label span { padding: 3px 12px; border-radius: 12px; font-size: 12px; color: #fff; margin-right: 8px; }
   .type-a-label span { background: #3a94b8; }
   .type-b-label span { background: #b8863a; }
   .type-c-label span { background: #7e57c2; }
+  .type-d-label span { background: #b45b1f; }
 
   .note-box { max-width: 900px; margin: 0 0 20px; padding: 10px 14px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px; font-size: 11.5px; color: #7a5c00; line-height: 1.7; }
   .ec-note { max-width: 900px; margin: 0 0 20px; padding: 10px 14px; background: #e8f5e9; border: 1px solid #81c784; border-radius: 8px; font-size: 11.5px; color: #2e7d32; line-height: 1.7; }
@@ -90,30 +96,29 @@
 <body>
 
 <div class="page-header">
-  <h1>化粧水診断 v2 — 結果カード図（タイプ判定＋商材並列表示）</h1>
-  <p>Card1（タイプ発表）→ Card2（根拠・回答エコー・トーン）→ Card3以降（商材ミニカード・全部並列）。タブでタイプ切り替え、パターンで軽度/重度トーン切り替え。</p>
+  <h1>化粧水診断 v3 — 結果カード図（タイプ判定＋商材並列表示・4タイプ）</h1>
+  <p>Card1（タイプ発表）→ Card2（根拠・Q2/Q3想定シナリオ・Q5回答エコー）→ Card3以降（商材ミニカード・全部並列）。タブでタイプ切り替え。v2にあった軽度/重度のトーン分岐は撤廃し、1タイプ=1パターンに簡素化。</p>
 </div>
 
 <div class="revision-note">
-  <b>07-03版からの変更点：</b> 旧版は本気度で商材を1本に確定（Card1/4を投資強度でテキスト差替）。新版はタイプ判定のみで完結し、タイプ内商材は全部並列表示。Card2でQ2（症状シーン）・Q4（生活習慣・YES項目）・Q5（軽度/重度）の回答を反映した根拠説明＋回答エコーを行う。「あなたに合うのはこれ」の言い切りはせず「気になったものをチェック」の温度感で統一。
+  <b>v2→v3の変更点：</b> ①「毛穴ケア型（タイプD）」を新規追加（商材：オルビス クリアフル ¥6,500）。② v2の「症状の程度（軽度/重度）」というトーン分岐を完全撤廃。1タイプ=1パターンの結果カードに簡素化した。③ Card2の根拠説明は、新設問Q2（肌の状態）・Q3（洗顔後の実感）の想定シナリオ＋Q5（生活習慣・複数選択）の回答エコーを反映する構成に統一。「あなたに合うのはこれ」の言い切りはせず「気になったものをチェック」の温度感で統一（変更なし）。
 </div>
 
 <div class="type-tabs">
   <button class="tab-btn tab-a active" onclick="switchTab('a')">タイプA｜うるおいチャージ型</button>
   <button class="tab-btn tab-b" onclick="switchTab('b')">タイプB｜ハリ・エイジングケア型</button>
   <button class="tab-btn tab-c" onclick="switchTab('c')">タイプC｜美白・透明感型</button>
+  <button class="tab-btn tab-d" onclick="switchTab('d')">タイプD｜毛穴ケア型（新規）</button>
 </div>
 
 <!-- ══ タイプA ══ -->
 <div class="cards-section active" id="section-a">
   <div class="type-label type-a-label" style="padding-top:12px;">
-    <span>タイプA</span>うるおいチャージ型 ／ Q5（軽度/重度）でCard2のトーンのみ変化。商材2つは常に両方表示
+    <span>タイプA</span>うるおいチャージ型 ／ 商材2つは常に両方表示
   </div>
   <div class="ec-note">「あなたに合うのはこの1本」ではなく「気になったものをチェックしてみてください」の温度感。商材の提示順は価格昇順。</div>
 
-  <!-- 軽度 -->
   <div class="pattern-block">
-    <div class="pattern-title"><span class="tag" style="background:#3a94b8;">Q5＝軽度</span>時々つっぱりを感じる程度</div>
     <div class="cards-row">
 
       <!-- Card 1 -->
@@ -134,82 +139,15 @@
       <!-- Card 2 -->
       <div class="line-card type-a">
         <div class="card-header">
-          <div class="card-num">Card 2 — 根拠説明（軽度トーン）</div>
+          <div class="card-num">Card 2 — 根拠説明</div>
           <div class="card-title">洗顔後につっぱりを感じる<br>あなたは、うるおいチャージ型。</div>
         </div>
         <div class="card-body">
-          つっぱりはまだ軽度。今のうちに正しい保湿を入れておけば、それだけで十分ラクになる。
+          乾燥は「うるおいが足りていない」サイン。今のうちに正しい保湿を選べば、それだけで変わる。
           <div class="echo-list">
             <span class="echo-label">こんな経験、ありませんか？</span>
             <span class="echo-item">☑ 高い化粧水を試したけど合わなかった</span>
             <span class="echo-item">☑ いろいろ試したけどしっくりくるものに出会えていない</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 3: 商材1 -->
-      <div class="line-card type-a product-card">
-        <div class="card-header">
-          <div class="card-num">Card 3 — 商材1</div>
-          <div class="card-title">エトヴォス<br>モイスチャーライン</div>
-        </div>
-        <div class="card-body">
-          低刺激設計で乾燥・つっぱりにアプローチ
-          <div class="card-divider">────────</div>
-          <div class="price-line">¥1,170 <span class="price-sub">（トライアル想定14日分／1日あたり約84円※想定）</span></div>
-        </div>
-        <div class="card-cta">気になったらチェック →</div>
-      </div>
-
-      <!-- Card 4: 商材2 -->
-      <div class="line-card type-a product-card">
-        <div class="card-header">
-          <div class="card-num">Card 4 — 商材2</div>
-          <div class="card-title">ディセンシア<br>（敏感肌×乾燥ケア）</div>
-        </div>
-        <div class="card-body">
-          高いのに合わなかった経験がある方向け。肌に負担をかけずにうるおいを届ける処方
-          <div class="card-divider">────────</div>
-          <div class="price-line">¥4,010 <span class="price-sub">（1日あたり約134円※想定）</span></div>
-        </div>
-        <div class="card-cta">気になったらチェック →</div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- 重度 -->
-  <div class="pattern-block">
-    <div class="pattern-title"><span class="tag" style="background:#3a94b8;">Q5＝重度</span>常につっぱって辛い</div>
-    <div class="cards-row">
-
-      <!-- Card 1 -->
-      <div class="line-card type-a">
-        <div class="card-header">
-          <div class="card-num">Card 1 — タイプ発表（共通）</div>
-          <div class="card-title">あなたは<br>「うるおいチャージ型」</div>
-        </div>
-        <div class="card-body">
-          <div style="font-size:12px;line-height:2.2;color:#444;">
-            <div>バッジ：乾燥・水分不足タイプ</div>
-            <div>バッジ：うるおいキープ</div>
-            <div>バッジ：低刺激設計を探すべき</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="line-card type-a">
-        <div class="card-header">
-          <div class="card-num">Card 2 — 根拠説明（重度トーン）</div>
-          <div class="card-title">洗顔後に常につっぱって辛い<br>あなたは、うるおいチャージ型。</div>
-        </div>
-        <div class="card-body">
-          これは肌のバリアがかなり乾いているサイン。うるおいを足す前に、負担をかけない処方を選ぶことが先。
-          <div class="echo-list">
-            <span class="echo-label">こんな経験、ありませんか？</span>
-            <span class="echo-item">☑ 高い化粧水を試したけど合わなかった</span>
-            <span class="echo-item">☑ 何年も同じものを使い続けている</span>
           </div>
         </div>
       </div>
@@ -250,13 +188,11 @@
 <!-- ══ タイプB ══ -->
 <div class="cards-section" id="section-b">
   <div class="type-label type-b-label" style="padding-top:12px;">
-    <span>タイプB</span>ハリ・エイジングケア型 ／ Q5（軽度/重度）でCard2のトーンのみ変化。商材3つは常に全部表示
+    <span>タイプB</span>ハリ・エイジングケア型 ／ 商材3つは常に全部表示
   </div>
   <div class="ec-note">07-03版の最大の課題（本気度3択の境界が曖昧）は、並列表示への変更で構造的に解消。ユーザー自身が3商材を見て選べる。</div>
 
-  <!-- 軽度 -->
   <div class="pattern-block">
-    <div class="pattern-title"><span class="tag" style="background:#b8863a;">Q5＝軽度</span>最近ちょっと気になり始めた</div>
     <div class="cards-row">
 
       <!-- Card 1 -->
@@ -276,95 +212,15 @@
       <!-- Card 2 -->
       <div class="line-card type-b">
         <div class="card-header">
-          <div class="card-num">Card 2 — 根拠説明（軽度トーン）</div>
-          <div class="card-title">ハリのなさ・たるみを感じる<br>あなたは、ハリ・エイジングケア型。</div>
+          <div class="card-num">Card 2 — 根拠説明</div>
+          <div class="card-title">肌がゆるんでハリがない感じがする<br>あなたは、ハリ・エイジングケア型。</div>
         </div>
         <div class="card-body">
-          気になり始めたばかりなら、軽いケアで十分間に合う。焦って高いものに飛びつく前に、今のケアに1本足すだけでいい。
+          ハリが落ちるのは年齢のせいだけじゃない。合うケアに変えるだけで、印象は戻せる。
           <div class="echo-list">
             <span class="echo-label">こんな経験、ありませんか？</span>
             <span class="echo-item">☑ 導入美容液など追加すべきか迷っている</span>
             <span class="echo-item">☑ 年齢のせいだと思って特に対策していない</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 3: 商材1 -->
-      <div class="line-card type-b product-card">
-        <div class="card-header">
-          <div class="card-num">Card 3 — 商材1</div>
-          <div class="card-title">ナールスピュア<br>（美容液プラス）</div>
-        </div>
-        <div class="card-body">
-          気づいた今が始めどき。今のケアに1本足すだけでいい
-          <div class="card-divider">────────</div>
-          <div class="price-line">¥2,306 <span class="price-sub">（1日あたり約77円※想定）</span></div>
-        </div>
-        <div class="card-cta">気になったらチェック →</div>
-      </div>
-
-      <!-- Card 4: 商材2 -->
-      <div class="line-card type-b product-card">
-        <div class="card-header">
-          <div class="card-num">Card 4 — 商材2</div>
-          <div class="card-title">アテニア<br>ドレスノスノー</div>
-        </div>
-        <div class="card-body">
-          専用ラインに切り替えるなら、サインが増える前に
-          <div class="card-divider">────────</div>
-          <div class="price-line">¥4,500 <span class="price-sub">（1日あたり約150円※想定）</span></div>
-        </div>
-        <div class="card-cta">気になったらチェック →</div>
-      </div>
-
-      <!-- Card 5: 商材3 -->
-      <div class="line-card type-b product-card">
-        <div class="card-header">
-          <div class="card-num">Card 5 — 商材3</div>
-          <div class="card-title">アテニア<br>アドレスリフト</div>
-        </div>
-        <div class="card-body">
-          本格的にハリを戻したいなら、本格ケアへ
-          <div class="card-divider">────────</div>
-          <div class="price-line">通常¥5,000 <span class="price-sub">／14日間トライアル¥1,527（1日あたり約40円・実データ）</span></div>
-        </div>
-        <div class="card-cta">気になったらチェック →</div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- 重度 -->
-  <div class="pattern-block">
-    <div class="pattern-title"><span class="tag" style="background:#b8863a;">Q5＝重度</span>たるみをはっきり感じる</div>
-    <div class="cards-row">
-
-      <!-- Card 1 -->
-      <div class="line-card type-b">
-        <div class="card-header">
-          <div class="card-num">Card 1 — タイプ発表（共通）</div>
-          <div class="card-title">あなたは<br>「ハリ・エイジングケア型」</div>
-        </div>
-        <div class="card-body">
-          <div style="font-size:12px;line-height:2.2;color:#444;">
-            <div>バッジ：ハリ低下・たるみタイプ</div>
-            <div>バッジ：年齢サインにアプローチを探すべき</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="line-card type-b">
-        <div class="card-header">
-          <div class="card-num">Card 2 — 根拠説明（重度トーン）</div>
-          <div class="card-title">たるみをはっきり感じる<br>あなたは、ハリ・エイジングケア型。</div>
-        </div>
-        <div class="card-body">
-          ここまで感じているなら、専用ケアに切り替えるタイミング。「歳のせい」と諦める前に、今のレベルに合うケアを選べばいい。
-          <div class="echo-list">
-            <span class="echo-label">こんな経験、ありませんか？</span>
-            <span class="echo-item">☑ 何年も同じものを使い続けている</span>
-            <span class="echo-item">☑ いろいろ試したけどしっくりくるものに出会えていない</span>
           </div>
         </div>
       </div>
@@ -419,13 +275,11 @@
 <!-- ══ タイプC ══ -->
 <div class="cards-section" id="section-c">
   <div class="type-label type-c-label" style="padding-top:12px;">
-    <span>タイプC</span>美白・透明感型 ／ Q5（軽度/重度）でCard2のトーンのみ変化。商材1つのみ（並列表示にならない構成上の制約）
+    <span>タイプC</span>美白・透明感型 ／ 商材1つのみ（並列表示にならない構成上の制約）
   </div>
-  <div class="note-box">提携1商材のみのため「並列で選ばせる」体験にはならず、実質単一提示。疲弊層に¥1,170が「安すぎ」に見えるリスクは07-03版から継続。実装後CTR/CVRを個別モニタリング。</div>
+  <div class="note-box">提携1商材のみのため「並列で選ばせる」体験にはならず、実質単一提示。疲弊層に¥1,170が「安すぎ」に見えるリスクは継続の残存課題。実装後CTR/CVRを個別モニタリング。</div>
 
-  <!-- 軽度 -->
   <div class="pattern-block">
-    <div class="pattern-title"><span class="tag" style="background:#7e57c2;">Q5＝軽度</span>最近気になり始めた</div>
     <div class="cards-row">
 
       <!-- Card 1 -->
@@ -445,14 +299,15 @@
       <!-- Card 2 -->
       <div class="line-card type-c">
         <div class="card-header">
-          <div class="card-num">Card 2 — 根拠説明（軽度トーン）</div>
-          <div class="card-title">くすみ・ムラを感じる<br>あなたは、美白・透明感型。</div>
+          <div class="card-num">Card 2 — 根拠説明</div>
+          <div class="card-title">顔全体がくすんで見える気がする<br>あなたは、美白・透明感型。</div>
         </div>
         <div class="card-body">
-          気になり始めた今が、一番対策しやすいタイミング。シミが定着する前に、正しい成分で早めに手を打てる。
+          くすみは「試したのに効果なし」で片付けるものじゃない。合う成分にまだ出会えていなかっただけ。
           <div class="echo-list">
             <span class="echo-label">こんな経験、ありませんか？</span>
-            <span class="echo-item">☑ 導入美容液など追加すべきか迷っている</span>
+            <span class="echo-item">☑ 高い化粧水を試したけど合わなかった</span>
+            <span class="echo-item">☑ いろいろ試したけどしっくりくるものに出会えていない</span>
           </div>
         </div>
       </div>
@@ -474,51 +329,60 @@
     </div>
   </div>
 
-  <!-- 重度 -->
+</div>
+
+<!-- ══ タイプD（新規） ══ -->
+<div class="cards-section" id="section-d">
+  <div class="type-label type-d-label" style="padding-top:12px;">
+    <span>タイプD（新規）</span>毛穴ケア型 ／ 商材1つのみ（並列表示にならない構成上の制約）
+  </div>
+  <div class="note-box">
+    <b>商材重複リスク（品質ゲートで明示対応済み）:</b> オルビス クリアフルは②スキンケア方法診断「皮脂コントロール型」でも使用中の商材。②は「テカり・皮脂コントロール」軸、③（本診断）は<b>「化粧水で毛穴を引き締める」軸</b>で訴求を完全に分離し、Card2・Card3とも②のコピーを一切再利用していない。実装後、②と③のCTR/CVRを比較モニタリングする。
+  </div>
+
   <div class="pattern-block">
-    <div class="pattern-title"><span class="tag" style="background:#7e57c2;">Q5＝重度</span>何年も気になっていて、いろいろ試した</div>
     <div class="cards-row">
 
       <!-- Card 1 -->
-      <div class="line-card type-c">
+      <div class="line-card type-d">
         <div class="card-header">
-          <div class="card-num">Card 1 — タイプ発表（共通）</div>
-          <div class="card-title">あなたは<br>「美白・透明感型」</div>
+          <div class="card-num">Card 1 — タイプ発表</div>
+          <div class="card-title">あなたは<br>「毛穴ケア型」</div>
         </div>
         <div class="card-body">
           <div style="font-size:12px;line-height:2.2;color:#444;">
-            <div>バッジ：シミ・くすみタイプ</div>
-            <div>バッジ：メラニン・くすみケアを探すべき</div>
+            <div>バッジ：毛穴・皮脂タイプ</div>
+            <div>バッジ：毛穴を引き締めるケアを探すべき</div>
           </div>
         </div>
       </div>
 
       <!-- Card 2 -->
-      <div class="line-card type-c">
+      <div class="line-card type-d">
         <div class="card-header">
-          <div class="card-num">Card 2 — 根拠説明（重度トーン）</div>
-          <div class="card-title">何年も気になっている<br>あなたは、美白・透明感型。</div>
+          <div class="card-num">Card 2 — 根拠説明</div>
+          <div class="card-title">毛穴が目立つ・皮脂がにじんでくる<br>あなたは、毛穴ケア型。</div>
         </div>
         <div class="card-body">
-          「試したのに効果なし」は、これまで合う成分に出会えていなかっただけ。まず正しい成分で土台を作ることが先決。
+          毛穴が開くのは、洗浄力の強さだけの問題じゃない。化粧水で肌を引き締めるケアを足すことで変わる。
           <div class="echo-list">
             <span class="echo-label">こんな経験、ありませんか？</span>
-            <span class="echo-item">☑ 高い化粧水を試したけど合わなかった</span>
+            <span class="echo-item">☑ メイクや皮脂汚れが毛穴に溜まりやすいと感じる（D限定）</span>
             <span class="echo-item">☑ いろいろ試したけどしっくりくるものに出会えていない</span>
           </div>
         </div>
       </div>
 
       <!-- Card 3: 商材1 -->
-      <div class="line-card type-c product-card">
+      <div class="line-card type-d product-card">
         <div class="card-header">
           <div class="card-num">Card 3 — 商材</div>
-          <div class="card-title">エトヴォス<br>美白美容液</div>
+          <div class="card-title">オルビス<br>クリアフル</div>
         </div>
         <div class="card-body">
-          まずこの1本から。正しい成分で土台を作る
+          化粧水で毛穴を引き締める、収れんケア
           <div class="card-divider">────────</div>
-          <div class="price-line">¥1,170 <span class="price-sub">（トライアル想定14日分／1日あたり約84円※想定）</span></div>
+          <div class="price-line">¥6,500 <span class="price-sub">（1日あたり約217円※想定）</span></div>
         </div>
         <div class="card-cta">気になったらチェック →</div>
       </div>
