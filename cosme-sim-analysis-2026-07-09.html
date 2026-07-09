@@ -78,8 +78,19 @@
     .note { font-size: 11px; color: #94a3b8; padding: 10px 0 0; border-top: 1px solid #f1f5f9; margin-top: 14px; }
     .divider { border: none; border-top: 1px solid #e2e8f0; margin: 20px 0; }
 
+    .toc { background: #fff; border-radius: 14px; padding: 14px 20px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+    .toc-title { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px; }
+    .toc ol { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 20px; counter-reset: toc; }
+    .toc li { counter-increment: toc; font-size: 12.5px; }
+    .toc li::before { content: counter(toc) ". "; color: #94a3b8; font-weight: 700; }
+    .toc a { color: #1a4d9e; text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+
+    .section-head h2 .num { color: #94a3b8; font-weight: 700; margin-right: 4px; }
+
     @media (max-width: 600px) {
       .summary-strip { grid-template-columns: 1fr; }
+      .toc ol { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -112,14 +123,30 @@
     </div>
   </div>
 
+  <!-- 目次 -->
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <ol>
+      <li><a href="#conclusion">結論</a></li>
+      <li><a href="#summary8">1on1準備サマリー（8項目）</a></li>
+      <li><a href="#kpi-focus">7月の主指標をどこに置くか</a></li>
+      <li><a href="#ceiling">診断別 月間クリック天井</a></li>
+      <li><a href="#sim">7月SIM（2パターン）</a></li>
+      <li><a href="#cleansing">クレンジング診断 単体のファネル</a></li>
+      <li><a href="#fcvr">FCVR・想定CV数</a></li>
+      <li><a href="#constraints">データ制約・確認事項</a></li>
+      <li><a href="#next">次のアクション</a></li>
+    </ol>
+  </div>
+
   <!-- 結論 -->
-  <div class="section">
+  <div class="section" id="conclusion">
     <div class="section-head">
-      <h2>結論</h2>
+      <h2><span class="num">1.</span>結論</h2>
       <div class="sub">天井を増やすより、今ある17記事の効率を直す方が効く</div>
     </div>
     <div class="insight insight-blue">
-      <strong>診断別の月間クリック天井（GSC実測）をベースにすると、7月のコスメ友だち見込みは「実測ペース継続で22人」〜「PU文言・LP改善で基準値まで到達すれば88人」の範囲。</strong>
+      <strong>診断別の月間クリック天井（GSC実測）をベースにすると、7月のコスメ友だち見込みは「実測ペース継続で24人」〜「PU文言・LP改善で基準値まで到達すれば98人」の範囲。</strong>
       新記事投入で天井を増やす前に、今稼働している17記事（クレンジング9＋スキンケア7＋その他1）のCTR9.5%→13%・追加率7.2%→11%を基準まで持っていく方が、友だち数を数倍にできる。
     </div>
     <div class="insight insight-yellow" style="margin-top:10px;">
@@ -128,10 +155,10 @@
   </div>
 
   <!-- 1on1準備サマリー -->
-  <div class="section">
+  <div class="section" id="summary8">
     <div class="section-head">
-      <h2>1on1準備サマリー（8項目）</h2>
-      <div class="sub">7月のコスメ領域について、この8項目を整理した</div>
+      <h2><span class="num">2.</span>1on1準備サマリー（8項目）</h2>
+      <div class="sub">7月のコスメ領域について、この8項目を整理した。詳細は3〜7の各項目を参照</div>
     </div>
     <div class="tbl-wrap">
       <table>
@@ -153,9 +180,9 @@
   </div>
 
   <!-- 主指標の考え方 -->
-  <div class="section">
+  <div class="section" id="kpi-focus">
     <div class="section-head">
-      <h2>7月の主指標をどこに置くか</h2>
+      <h2><span class="num">3.</span>7月の主指標をどこに置くか</h2>
       <div class="sub">「友だち数最大化／CVR改善／売上着地」のどこを主指標にするかの整理</div>
     </div>
     <div class="insight insight-blue">
@@ -183,14 +210,15 @@
       </table>
     </div>
     <div class="insight insight-yellow" style="margin-top:14px;">
-      工藤さんの「FCVRが2倍あるから友だち数半分でも成立する」という理屈は、<strong>すでにFCVRが分かっているジャンル</strong>に対しての話。コスメはまだそこに到達していない。友だち数で母数を作ってFCVRを確立してから、初めて「効率route（CVR）」と「量route（友だち数）」の選択が意味を持つ。「友だち数最大化かCVR改善か」の二択ではなく、「今は友だち数、次のフェーズでCVR」という時系列の話として1on1に出す。
+      工藤さんの「FCVRが2倍あるから友だち数半分でも成立する」は、<strong>すでにFCVRが分かっているジャンル</strong>の話。コスメはまだ到達していない。<br>
+      → 「友だち数最大化かCVR改善か」の二択ではなく、<strong>「今は友だち数、次のフェーズでCVR」という時系列の話</strong>として1on1に出す。
     </div>
   </div>
 
   <!-- 診断別天井 -->
-  <div class="section">
+  <div class="section" id="ceiling">
     <div class="section-head">
-      <h2>診断別 月間クリック天井</h2>
+      <h2><span class="num">4.</span>診断別 月間クリック天井</h2>
       <div class="sub">サチコ実測（直近3ヶ月・2026-07-09時点）。PU設置台帳スプシのS〜V列に反映済み</div>
     </div>
     <div class="tbl-wrap">
@@ -209,9 +237,9 @@
   </div>
 
   <!-- 7月SIM -->
-  <div class="section">
+  <div class="section" id="sim">
     <div class="section-head">
-      <h2>7月SIM（2パターン・化粧水含む）</h2>
+      <h2><span class="num">5.</span>7月SIM（2パターン・化粧水含む）</h2>
       <div class="sub">クレンジング（フル月）＋スキンケア（7/9〜23日）＋化粧水（7/22〜10日）＝月間クリック天井 約12,219</div>
     </div>
     <div class="tbl-wrap">
@@ -229,9 +257,9 @@
   </div>
 
   <!-- クレンジング単体ファネル -->
-  <div class="section">
+  <div class="section" id="cleansing">
     <div class="section-head">
-      <h2>クレンジング診断 単体のファネル切り出し</h2>
+      <h2><span class="num">6.</span>クレンジング診断 単体のファネル切り出し</h2>
       <div class="sub">7/1〜7/8実績（タグ名ベースでスキンケアと分離）</div>
     </div>
     <div class="tbl-wrap">
@@ -255,9 +283,9 @@
   </div>
 
   <!-- FCVR・CV -->
-  <div class="section">
+  <div class="section" id="fcvr">
     <div class="section-head">
-      <h2>FCVR・想定CV数（複数パターン→仮置き）</h2>
+      <h2><span class="num">7.</span>FCVR・想定CV数（複数パターン→仮置き）</h2>
       <div class="sub">CV1件・友だち6人 → 単純計算で16.7%。ただしn=1のため複数パターンで幅を持たせる</div>
     </div>
     <div class="tbl-wrap">
@@ -281,9 +309,9 @@
   </div>
 
   <!-- データ制約・確認事項 -->
-  <div class="section">
+  <div class="section" id="constraints">
     <div class="section-head">
-      <h2>データ制約・確認事項</h2>
+      <h2><span class="num">8.</span>データ制約・確認事項</h2>
     </div>
     <ul class="action-list">
       <li>
@@ -312,9 +340,9 @@
   </div>
 
   <!-- 次のアクション -->
-  <div class="section">
+  <div class="section" id="next">
     <div class="section-head">
-      <h2>次のアクション</h2>
+      <h2><span class="num">9.</span>次のアクション</h2>
     </div>
     <ul class="action-list">
       <li>
