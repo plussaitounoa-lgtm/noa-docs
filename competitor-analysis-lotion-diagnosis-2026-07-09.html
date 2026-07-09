@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>化粧水診断 競合3社分析 2026-07-09</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f5f5f7; color: #1d1d1f; font-size: 14px; line-height: 1.7; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 20px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
+  h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #444; }
+  p { margin-bottom: 10px; }
+  .card { background: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #4a4a6a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:hover td { background: #fafafa; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin: 2px; }
+  .tag-shirolab  { background: #e8f0fe; color: #1967d2; }
+  .tag-biteki    { background: #fce8e6; color: #c5221f; }
+  .tag-onecosme  { background: #e6f4ea; color: #1e8e3e; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-green  { background: #e6f4ea; color: #1e8e3e; }
+  .badge-yellow { background: #fff8e1; color: #e37400; }
+  .badge-red    { background: #fce8e6; color: #c5221f; }
+  .badge-gray   { background: #f0f0f0; color: #666; }
+  .position-note { background: #eef1ff; border-left: 3px solid #4a4a6a; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 24px; font-size: 13px; color: #333; }
+  .highlight { background: #fffde7; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; }
+  .pending { background: #fce8e6; border-left: 3px solid #ea4335; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; }
+  .adopt { background: #e6f4ea; border-left: 3px solid #1e8e3e; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .skip { background: #f0f0f0; border-left: 3px solid #999; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; color: #666; }
+  .voice { background: #f7f7fb; border-left: 3px solid #8a8ab0; padding: 10px 16px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; font-style: italic; color: #444; }
+  .voice .src { display: block; margin-top: 4px; font-style: normal; font-size: 11px; color: #999; }
+  .section-note { font-size: 12px; color: #888; margin-top: 6px; }
+  .stat-box { text-align: center; padding: 16px; }
+  .stat-num { font-size: 28px; font-weight: 700; color: #4a4a6a; }
+  .stat-label { font-size: 11px; color: #888; margin-top: 2px; }
+  .arrow { color: #888; margin: 0 8px; }
+  .ruler { display: flex; align-items: center; gap: 4px; font-size: 13px; flex-wrap: wrap; margin: 10px 0; }
+  .ruler-step { background: #fff; border: 1px solid #ddd; padding: 6px 12px; border-radius: 6px; }
+  .flow { display: flex; align-items: center; gap: 4px; font-size: 12px; flex-wrap: wrap; margin: 10px 0; }
+  .flow-step { background: #fff; border: 1px solid #ddd; padding: 6px 10px; border-radius: 6px; }
+  .diag-img { max-width: 100%; border-radius: 8px; border: 1px solid #e0e0e0; margin: 10px 0; }
+  .data-note { font-size: 11px; color: #1e8e3e; font-weight: 700; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  .back-link { display: inline-block; margin-top: 8px; font-size: 12px; color: #4a4a6a; text-decoration: none; }
+  .back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>化粧水診断（コスメ診断ロードマップ③） 競合3社分析</h1>
+  <div class="meta">2026-07-09 作成 ｜ 担当: Noa ｜ ステータス: 設計改修インプット確定</div>
+
+  <div class="position-note">
+    <strong>このdocsの位置づけ：</strong> 化粧水診断の設計改修（2026-07-09〜）にあたり、競合3社（肌ラボ・美的.com・ONEcosme）の診断ロジック・結果画面パターンを調査。
+    設計への反映方針は末尾の「統合推奨」を参照。ターゲットリサーチ・データ分析は別docs
+    <a href="analysis-lotion-diagnosis-2026-07-03.html">「化粧水診断 リサーチ・データ分析」</a>参照。
+  </div>
+
+  <!-- ① 3社比較表 -->
+  <h2>① 3社比較サマリー</h2>
+
+  <div class="card">
+    <table>
+      <thead><tr><th></th><th><span class="tag tag-shirolab">肌ラボ</span></th><th><span class="tag tag-biteki">美的</span></th><th><span class="tag tag-onecosme">ONEcosme</span></th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>質問形式</strong></td>
+          <td>選択式6問（症状＋使用感スライダー＋デモグラ）</td>
+          <td>YES/NOチャート10問以上（生活習慣ベース）</td>
+          <td>YES/NOチャート5問（症状ベース）</td>
+        </tr>
+        <tr>
+          <td><strong>結果の見せ方</strong></td>
+          <td>症状の言い換え文＋ベネフィット3点＋全商品ポジショニングマップ</td>
+          <td>タイプ名＋回答エコーチェックリスト＋専門家コメント＋おすすめ3選</td>
+          <td>悩みイラスト→矢印→タイプ名（1枚に集約）＋統計データ＋年代別比較表</td>
+        </tr>
+        <tr>
+          <td><strong>価格訴求</strong></td>
+          <td>なし</td>
+          <td>なし</td>
+          <td>「1日◯円」＋トライアル価格</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ② 肌ラボ -->
+  <h2>② 肌ラボ（<span class="tag tag-shirolab">jp.rohto.com/hadalabo/shindan/question/</span>）</h2>
+
+  <div class="card">
+    <h3>診断フロー</h3>
+    <div class="flow">
+      <div class="flow-step">Q1 朝の肌状態（4択）</div><span class="arrow">→</span>
+      <div class="flow-step">Q2 洗顔後感覚（4択）</div><span class="arrow">→</span>
+      <div class="flow-step">Q3 一番の悩み（乾燥/美白/エイジング/肌荒れ/敏感の5択）</div><span class="arrow">→</span>
+      <div class="flow-step">Q4 使用感の好み（とろみあり⇄なし・スライダー）</div><span class="arrow">→</span>
+      <div class="flow-step">Q5 仕上がりの好み（もちっと⇄さらっと・スライダー）</div><span class="arrow">→</span>
+      <div class="flow-step">Q6 デモグラ（性別・年齢）</div>
+    </div>
+    <p class="section-note">UI特徴: カード1枚1問、進行表示「Q1/6」、ピル型ボタン（枠線のみ）</p>
+  </div>
+
+  <div class="card">
+    <h3>結果画面</h3>
+    <ul>
+      <li><strong>結果①</strong>: 単一レコメンド商品。症状を言い換えた「あなたに」文＋ベネフィット3点＋商品画像＋CTA2種（商品情報／購入）</li>
+      <li><strong>結果②</strong>: 全商品ラインを「とろみ有無×仕上がり」の2軸マップに配置し、タップで詳細へ。「もう一度診断する」ボタンあり</li>
+    </ul>
+  </div>
+
+  <!-- ③ 美的 -->
+  <h2>③ 美的.com（<span class="tag tag-biteki">biteki.com/1559093/</span>）</h2>
+
+  <div class="card">
+    <h3>診断フロー</h3>
+    <p>複数ページに渡るYES/NOチャート形式、最低10問以上（ページ間でループもあり本格的なフローチャート）</p>
+    <div class="highlight">
+      設問内容が症状の直接自己申告ではなく<strong>生活習慣ベース</strong>。<br>
+      例：「睡眠不足になりがち」「今でもマスク着用時間が長い」「オイルを塗っても潤い不足と感じる」「ケーキなど甘い食べ物が好き」「スマホを長時間見る」「夕方になるとファンデーションがシワにたまる」「フェースラインのゆるみやたるみが気になる」等のYES/NO
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>結果画面</h3>
+    <ul>
+      <li>タイプ名発表（例:「エイジングケア系」化粧水）＋「もう一度診断する」ボタン</li>
+      <li><strong>YESと答えた項目をそのままチェックリストで見せ返す</strong>（マスクの跡がつく✓／甘い物好き✓／スマホ長時間✓／夕方シワ✓／フェースラインたるみ✓）</li>
+      <li>化粧水選びのポイント（named専門家「浅利さん」のコメント付き）</li>
+      <li>おすすめ化粧水3選（ランキング形式、商品ごとに悩み文脈タグ「シワ、たるみが気になるなら…」付き）</li>
+    </ul>
+  </div>
+
+  <!-- ④ ONEcosme -->
+  <h2>④ ONEcosme（<span class="tag tag-onecosme">onecosme.jp/column/18984</span>）</h2>
+
+  <div class="card">
+    <h3>診断フロー（画像埋め込みのフローチャート）</h3>
+    <div class="flow">
+      <div class="flow-step">Q1 肌に触れるとしっとりする</div><span class="arrow">→</span>
+      <div class="flow-step">Q2 洗顔後につっぱる</div><span class="arrow">→</span>
+      <div class="flow-step">Q3 毛穴の開きが気になる</div><span class="arrow">→</span>
+      <div class="flow-step">Q4 目もと口元が部分的にカサつく／肌の疲れが取れにくい／ニキビ・吹き出物ができやすい</div><span class="arrow">→</span>
+      <div class="flow-step">Q5 肌のハリが気になる／化粧崩れが気になる／シミ・くすみが気になる</div>
+    </div>
+    <p>YES/NO5問で5タイプに分岐:</p>
+    <table>
+      <thead><tr><th>タイプ</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td>A</td><td>シワ・たるみ年齢肌</td></tr>
+        <tr><td>B</td><td>トーン・シミくすみ肌</td></tr>
+        <tr><td>C</td><td>うるおい不足乾燥肌</td></tr>
+        <tr><td>D</td><td>毛穴目立つオイリー肌</td></tr>
+        <tr><td>E</td><td>ニキビ気になるオイリー肌</td></tr>
+      </tbody>
+    </table>
+    <img class="diag-img" src="assets/onecosme-diagnosis-chart-2026-07-09.jpg" alt="ONEcosme 化粧水診断フローチャート">
+    <p class="section-note">画像出典: onecosme.jp/column/18984 診断フローチャート</p>
+  </div>
+
+  <div class="card">
+    <h3>結果画面</h3>
+    <p>悩みイラスト（困り顔＋吹き出し「シワやほうれい線、たるみが気になる…」）→矢印→タイプ名（大きく）→「高保湿成分を配合した化粧水がおすすめ！」の成分訴求ボックス、を1枚に集約したビジュアル</p>
+
+    <h3>統計データによる社会的証明</h3>
+    <div class="highlight">
+      「POLAの調査では『老化を感じている・やや老化を感じている』女性は80%」<br>
+      「20代で24%、30代で36%、40代・50代では約半数以上が『すでにエイジングケアを行っている』」
+    </div>
+
+    <h3>年代別比較表（20-30代／30-40代／40-50代の3商品を横並び）</h3>
+    <p class="section-note">商品名・ブランド名・ハリ弾力評価(S/A/A+)・コスパ「1日◯円」・こんな人におすすめ・キャンペーン情報（トライアル価格）の6項目で構成</p>
+    <div class="highlight">
+      <span class="data-note">★ 一次データ</span><br>
+      タイプA（年齢肌タイプ）の40-50代向け枠に、うちの提携商材<strong>「アテニア ドレスリフトローション」</strong>が実際に掲載されていた。<br>
+      ハリ弾力S・コスパS「1日40円」・14日間トライアルセット1,527円(税込)という実際の市場データ。これはそのままうちのPRカルーセルの価格訴求に転用できる貴重な一次データ。
+    </div>
+  </div>
+
+  <!-- ⑤ 統合推奨 -->
+  <h2>⑤ 統合推奨（設計への反映方針）</h2>
+
+  <div class="card">
+    <h3>取り込む（優先度高）</h3>
+    <div class="adopt">
+      <strong>1. 価格を「1日◯円」＋トライアル価格で訴求</strong>（3社共通パターン）<br>
+      ONEcosmeのアテニア ドレスリフトの実データ「1日40円・14日トライアル1,527円」はそのまま使える → PRカルーセルCard3の改修対象
+    </div>
+    <div class="adopt">
+      <strong>2. 結果カードに「あなたの回答エコー」を追加</strong>（美的パターン）<br>
+      Q1/Q2の回答内容を結果カードで一言見せ返す。設問構造は変えず文言追加のみで実装コスト低
+    </div>
+    <div class="adopt">
+      <strong>3. Card2の根本示唆に統計データを1つ添える</strong>（ONEcosme・美的共通の社会的証明パターン）<br>
+      悩み別の一般統計を要調査
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>今回は見送り</h3>
+    <div class="skip">
+      <strong>4. テクスチャー好みのスライダー質問</strong>（肌ラボ）<br>
+      設問数が増えてLINE離脱リスクが上がるため
+    </div>
+    <div class="skip">
+      <strong>5. 全商品ポジショニングマップ</strong>（肌ラボ）<br>
+      LINEのチャット形式に不向き。既存の「他タイプも見る」リンク案で代替
+    </div>
+  </div>
+
+  <a class="back-link" href="analysis-lotion-diagnosis-2026-07-03.html">← 化粧水診断 リサーチ・データ分析に戻る</a>
+
+  <div style="margin-top:40px; font-size:11px; color:#bbb; text-align:center;">
+    generated: 2026-07-09 ｜ noa-docs
+  </div>
+
+</div>
+</body>
+</html>
