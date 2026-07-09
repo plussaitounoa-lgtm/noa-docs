@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>結果カード図 v3 | 化粧水診断</title>
+<title>結果カード図 v4 | 化粧水診断</title>
   <link rel="icon" type="image/png" href="favicon.png">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -96,12 +96,12 @@
 <body>
 
 <div class="page-header">
-  <h1>化粧水診断 v3 — 結果カード図（タイプ判定＋商材並列表示・4タイプ）</h1>
-  <p>Card1（タイプ発表）→ Card2（根拠・Q2/Q3想定シナリオ・Q5回答エコー）→ Card3以降（商材ミニカード・全部並列）。タブでタイプ切り替え。v2にあった軽度/重度のトーン分岐は撤廃し、1タイプ=1パターンに簡素化。</p>
+  <h1>化粧水診断 v4 — 結果カード図（タイプ判定＋商材並列表示・4タイプ）</h1>
+  <p>Card1（タイプ発表）→ Card2（根拠・Q2/Q3/Q4の想定シナリオ・タイプ固定文言）→ Card3以降（商材ミニカード・全部並列）。タブでタイプ切り替え。v2にあった軽度/重度のトーン分岐は撤廃し、1タイプ=1パターンに簡素化。</p>
 </div>
 
 <div class="revision-note">
-  <b>v2→v3の変更点：</b> ①「毛穴ケア型（タイプD）」を新規追加（商材：オルビス クリアフル ¥6,500）。② v2の「症状の程度（軽度/重度）」というトーン分岐を完全撤廃。1タイプ=1パターンの結果カードに簡素化した。③ Card2の根拠説明は、新設問Q2（肌の状態）・Q3（洗顔後の実感）の想定シナリオ＋Q5（生活習慣・複数選択）の回答エコーを反映する構成に統一。「あなたに合うのはこれ」の言い切りはせず「気になったものをチェック」の温度感で統一（変更なし）。
+  <b>v3→v4の変更点：</b> ① Q4「季節の変わり目に、肌の状態は変わりますか？」を新規追加（タイプ分岐には使わず根拠づけ用）。② 旧Q5「生活習慣・複数選択・回答エコー」を完全削除。**Card2の「こんな経験、ありませんか？」チェックリスト表示はなくなり**、Card2の根拠説明はQ2（肌の状態）・Q3（洗顔後の実感）・Q4（季節の変わり目）を反映したタイプ固定の想定シナリオ文言に統一。特にタイプAはディセンシアのコピーに「季節の変わり目に肌が揺らぎやすいなら」を追加。「あなたに合うのはこれ」の言い切りはせず「気になったものをチェック」の温度感で統一（変更なし）。
 </div>
 
 <div class="type-tabs">
@@ -143,12 +143,7 @@
           <div class="card-title">洗顔後につっぱりを感じる<br>あなたは、うるおいチャージ型。</div>
         </div>
         <div class="card-body">
-          乾燥は「うるおいが足りていない」サイン。今のうちに正しい保湿を選べば、それだけで変わる。
-          <div class="echo-list">
-            <span class="echo-label">こんな経験、ありませんか？</span>
-            <span class="echo-item">☑ 高い化粧水を試したけど合わなかった</span>
-            <span class="echo-item">☑ いろいろ試したけどしっくりくるものに出会えていない</span>
-          </div>
+          乾燥は「うるおいが足りていない」サイン。季節の変わり目に肌の状態が変わりやすい人ほど、今のうちに正しい保湿を選べば、それだけで変わる。
         </div>
       </div>
 
@@ -173,7 +168,7 @@
           <div class="card-title">ディセンシア<br>（敏感肌×乾燥ケア）</div>
         </div>
         <div class="card-body">
-          高いのに合わなかった経験がある方向け。肌に負担をかけずにうるおいを届ける処方
+          季節の変わり目に肌が揺らぎやすいなら、肌にやさしい処方も見ておきたい。高いのに合わなかった経験がある方向け
           <div class="card-divider">────────</div>
           <div class="price-line">¥4,010 <span class="price-sub">（1日あたり約134円※想定）</span></div>
         </div>
@@ -216,12 +211,7 @@
           <div class="card-title">肌がゆるんでハリがない感じがする<br>あなたは、ハリ・エイジングケア型。</div>
         </div>
         <div class="card-body">
-          ハリが落ちるのは年齢のせいだけじゃない。合うケアに変えるだけで、印象は戻せる。
-          <div class="echo-list">
-            <span class="echo-label">こんな経験、ありませんか？</span>
-            <span class="echo-item">☑ 導入美容液など追加すべきか迷っている</span>
-            <span class="echo-item">☑ 年齢のせいだと思って特に対策していない</span>
-          </div>
+          ハリが落ちるのは年齢のせいだけじゃない。季節による肌調子の変化を受けやすい人ほど、合うケアに変えるだけで、印象は戻せる。
         </div>
       </div>
 
@@ -304,11 +294,6 @@
         </div>
         <div class="card-body">
           くすみは「試したのに効果なし」で片付けるものじゃない。合う成分にまだ出会えていなかっただけ。
-          <div class="echo-list">
-            <span class="echo-label">こんな経験、ありませんか？</span>
-            <span class="echo-item">☑ 高い化粧水を試したけど合わなかった</span>
-            <span class="echo-item">☑ いろいろ試したけどしっくりくるものに出会えていない</span>
-          </div>
         </div>
       </div>
 
@@ -365,11 +350,6 @@
         </div>
         <div class="card-body">
           毛穴が開くのは、洗浄力の強さだけの問題じゃない。化粧水で肌を引き締めるケアを足すことで変わる。
-          <div class="echo-list">
-            <span class="echo-label">こんな経験、ありませんか？</span>
-            <span class="echo-item">☑ メイクや皮脂汚れが毛穴に溜まりやすいと感じる（D限定）</span>
-            <span class="echo-item">☑ いろいろ試したけどしっくりくるものに出会えていない</span>
-          </div>
         </div>
       </div>
 

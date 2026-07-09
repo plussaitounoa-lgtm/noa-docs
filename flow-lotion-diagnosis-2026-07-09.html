@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>化粧水診断 v3 フロー図 2026-07-09</title>
+<title>化粧水診断 v4 フロー図 2026-07-09</title>
   <link rel="icon" type="image/png" href="favicon.png">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -126,18 +126,17 @@
 <body>
 <div class="container">
 
-  <h1>化粧水診断 v3 フロー図</h1>
-  <div class="meta">2026-07-09（v3・本日2回目の改訂） ｜ 全5問 ｜ Q4で4タイプ分岐（タイプ判定のみ） → 結果で商材を全部並列表示 ｜ 7商材（¥1,170〜¥6,500）</div>
+  <h1>化粧水診断 v4 フロー図</h1>
+  <div class="meta">2026-07-09（v4・本日3回目の改訂） ｜ 全5問 ｜ Q5で4タイプ分岐（タイプ判定のみ・最終設問） → 結果で商材を全部並列表示 ｜ 7商材（¥1,170〜¥6,500）</div>
 
   <div class="revision-note">
-    <b>v2→v3の変更点：</b> ① タイプを3→4タイプに拡張。「毛穴の目立ち・皮脂の多さ」を悩みの中心に置く層の受け皿がなかったため「毛穴ケア型」を新規追加（商材：オルビス クリアフル ¥6,500）。② v2にあった「症状の程度（軽度/重度）」という自己評価スケール質問（旧Q5）をNoaの判定で完全撤廃。診断が確定するのはタイプ判定（A/B/C/D）のみとし、トーン分岐も廃止。③ 設問を肌ラボの実際の設問形式（Q2：肌の状態そのもの／Q3：洗顔後しばらくしてからの実感）を参考に再構成。
+    <b>v3→v4の変更点：</b> ① Q4「季節の変わり目に、肌の状態は変わりますか？」（変わる／変わらない）を新規追加。タイプ分岐には使わず、根拠づけ・エコーバック用（特にタイプAのディセンシア訴求に効く）。② 旧Q5「生活習慣・原因（複数選択・回答エコー用）」を完全削除。これにより<b>タイプ確定の分岐点（旧Q4）が文字通りの最終設問（Q5）になり</b>、v3にあった「分岐後にもう1問挟む」NG-2回避トリックが不要になった。設問総数は5問のまま変わらず（入れ替えのみ）。
   </div>
 
   <!-- ── 凡例 ── -->
   <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#bdbdbd;"></div>共通設問（結果に紐づかない・ヒントのみ）</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#4a6a5a;"></div>タイプ確定（分岐点）</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#e37400;"></div>複数選択（回答エコー用・タイプ別最終設問）</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#bdbdbd;"></div>共通設問（結果に紐づかない・ヒント／根拠づけのみ）</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#4a6a5a;"></div>タイプ確定（分岐点＝最終設問）</div>
   </div>
 
   <!-- ── ものさし転換 ── -->
@@ -203,10 +202,22 @@
   </div>
   <div class="bridge-box">Q2と対になる「その時々の実感」。分岐には使わず、結果カードCard2で「洗顔後に◯◯を感じるあなたは」の想定シナリオ文言のベースに使用</div>
 
-  <!-- ── Q4（分岐点） ── -->
+  <!-- ── Q4（新規・季節の変わり目） ── -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q1">
+    <div class="node-label">Q4 ── 共通・非分岐（新規）</div>
+    <div class="node-title">季節の変わり目に、肌の状態は変わりますか？</div>
+    <div class="node-choices">
+      <div class="choice">変わる</div>
+      <div class="choice">変わらない</div>
+    </div>
+  </div>
+  <div class="bridge-box">分岐には使わない。根拠づけ・エコーバック用。特にタイプA（ディセンシア＝敏感肌向け）で「揺らぎやすい肌なら」の一言に使う。他タイプでも一般的な根拠づけ文言として使用可</div>
+
+  <!-- ── Q5（分岐点） ── -->
   <div class="arr">↓</div>
   <div class="node node-q node-q4">
-    <div class="node-label" style="color:#4a6a5a;">Q4 ── タイプ確定・分岐点（3択→4択に変更）</div>
+    <div class="node-label" style="color:#4a6a5a;">Q5 ── タイプ確定・分岐点＝最終設問</div>
     <div class="node-title">一番気になる肌悩みは？</div>
     <div class="node-choices">
       <div class="choice" style="background:#e3f2f8;color:#1a6a85;font-weight:700;">乾燥・つっぱり感、うるおい不足</div>
@@ -244,56 +255,32 @@
     </div>
   </div>
 
-  <!-- ── Q5（タイプ別ルーティング後の最終設問・生活習慣） ── -->
-  <div class="section-divider" style="margin-top:12px;">── Q5（タイプ別ブランチの最終設問）生活習慣・複数選択＝回答エコー用（v2の「軽度/重度」トーン分岐は撤廃） ──</div>
+  <!-- ── Q5の回答で直接、結果へ（旧Q5の生活習慣・複数選択は削除） ── -->
+  <div class="section-divider" style="margin-top:12px;">── Q5の回答のみで結果が直接確定（旧Q5「生活習慣・複数選択・回答エコー」は削除済み） ──</div>
   <div class="type-cols">
 
-    <!-- タイプA Q5 -->
+    <!-- タイプA -->
     <div class="type-col">
-      <div class="q5-node type-a-border">
-        <div class="q5-label">Q5 ｜ 普段の化粧水選びで当てはまるものは？（複数選択）</div>
-        <div class="q5-choice">高い化粧水を試したけど合わなかった</div>
-        <div class="q5-choice">何年も同じものを使い続けている</div>
-        <div class="q5-choice">年齢のせいだと思って対策していない</div>
-        <div class="q5-choice">導入美容液など迷っている</div>
-        <div class="q5-choice">しっくりくるものに出会えていない</div>
-      </div>
       <div class="arr" style="margin:0;">↓</div>
       <div class="result-node result-a">
         <div class="result-title">結果：タイプA発表＋根拠＋商材2つ並列</div>
         <div class="result-items">モイスチャーライン ¥1,170<br>ディセンシア ¥4,010</div>
       </div>
-      <div class="cv-note">Q5の回答＝結果Card2のチェックリスト表示のみ変化。商材2つは常に両方表示</div>
+      <div class="cv-note">Card2の根拠説明はQ2・Q3・Q4のタイプ固定想定文言。ディセンシアにQ4「季節の変わり目」への言及を添える</div>
     </div>
 
-    <!-- タイプB Q5 -->
+    <!-- タイプB -->
     <div class="type-col">
-      <div class="q5-node type-b-border">
-        <div class="q5-label">Q5 ｜ 普段の化粧水選びで当てはまるものは？（複数選択）</div>
-        <div class="q5-choice">高い化粧水を試したけど合わなかった</div>
-        <div class="q5-choice">何年も同じものを使い続けている</div>
-        <div class="q5-choice">年齢のせいだと思って対策していない</div>
-        <div class="q5-choice">導入美容液など迷っている</div>
-        <div class="q5-choice">しっくりくるものに出会えていない</div>
-      </div>
       <div class="arr" style="margin:0;">↓</div>
       <div class="result-node result-b">
         <div class="result-title">結果：タイプB発表＋根拠＋商材3つ並列</div>
         <div class="result-items">ナールスピュア ¥2,306<br>ドレスノスノー ¥4,500<br>アドレスリフト ¥5,000</div>
       </div>
-      <div class="cv-note">Q5の回答＝結果Card2のチェックリスト表示のみ変化。商材3つは常に全部表示</div>
+      <div class="cv-note">Card2の根拠説明はQ2・Q3・Q4のタイプ固定想定文言。商材3つは常に全部表示</div>
     </div>
 
-    <!-- タイプC Q5 -->
+    <!-- タイプC -->
     <div class="type-col">
-      <div class="q5-node type-c-border">
-        <div class="q5-label">Q5 ｜ 普段の化粧水選びで当てはまるものは？（複数選択）</div>
-        <div class="q5-choice">高い化粧水を試したけど合わなかった</div>
-        <div class="q5-choice">何年も同じものを使い続けている</div>
-        <div class="q5-choice">年齢のせいだと思って対策していない</div>
-        <div class="q5-choice">導入美容液など迷っている</div>
-        <div class="q5-choice">しっくりくるものに出会えていない</div>
-      </div>
       <div class="arr" style="margin:0;">↓</div>
       <div class="result-node result-c">
         <div class="result-title">結果：タイプC発表＋根拠＋商材1つ</div>
@@ -302,20 +289,11 @@
       <div class="cv-note">商材1つのみのため並列表示ではなく単一提示（構成上の制約）</div>
     </div>
 
-    <!-- タイプD Q5（新規・限定選択肢+1） -->
+    <!-- タイプD -->
     <div class="type-col">
-      <div class="q5-node type-d-border">
-        <div class="q5-label">Q5 ｜ 普段の化粧水選びで当てはまるものは？（複数選択）</div>
-        <div class="q5-choice">高い化粧水を試したけど合わなかった</div>
-        <div class="q5-choice">何年も同じものを使い続けている</div>
-        <div class="q5-choice">年齢のせいだと思って対策していない</div>
-        <div class="q5-choice">導入美容液など迷っている</div>
-        <div class="q5-choice">しっくりくるものに出会えていない</div>
-        <div class="q5-choice q5-extra">＋メイクや皮脂汚れが毛穴に溜まりやすい（D限定・新規）</div>
-      </div>
       <div class="arr" style="margin:0;">↓</div>
       <div class="result-node result-d">
-        <div class="result-title">結果：タイプD発表＋根拠＋商材1つ（新規）</div>
+        <div class="result-title">結果：タイプD発表＋根拠＋商材1つ</div>
         <div class="result-items">オルビス クリアフル ¥6,500</div>
       </div>
       <div class="cv-note">商材1つのみのため単一提示。②スキンケア診断と同一商材（訴求軸を分離済み・11章参照）</div>
@@ -324,9 +302,9 @@
   </div>
 
   <!-- ── システム制約対応メモ ── -->
-  <div class="section-divider" style="margin-top:24px;">── NG-2「最終設問のみが結果に紐づく」への対応（v3で再確認） ──</div>
+  <div class="section-divider" style="margin-top:24px;">── NG-2「最終設問のみが結果に紐づく」への対応（v4でシンプル化） ──</div>
   <div style="max-width:720px;margin:0 auto;background:#fff;border-radius:10px;padding:14px 18px;box-shadow:0 1px 6px rgba(0,0,0,.07);font-size:11.5px;line-height:1.9;color:#444;">
-    Q1・Q2・Q3は全タイプ共通（ルーティングに使わない・ヒントのみ）。<b>Q4でタイプ別のブランチにルーティング</b>し、<b>Q5（タイプ別ブランチの最終設問・生活習慣の複数選択）の回答のみ</b>が結果画面のチェックリスト表示を決める。結果テンプレート自体（どのタイプ発表・どの商材群か）はQ4時点のルーティングで確定済みであり、複数設問を統合した動的生成ではない。v2にあった「軽度/重度」のトーン分岐は撤廃したため、Q5はどのタイプでも共通の5択＋タイプD限定の1択という、より単純な構造になった。
+    Q1・Q2・Q3・Q4は全タイプ共通（ルーティングに使わない・ヒント／根拠づけのみ）。<b>Q5（一番気になる悩みは？）の回答のみ</b>でタイプが確定し、結果が直接表示される。**旧Q5（生活習慣・複数選択）を削除したことで、Q5が文字通りの最終設問＝分岐点になり**、v3にあった「分岐後にもう1問挟んで結果テンプレートを確定させる」回避トリックが不要になった。最もシンプルな形でNG-2に準拠している。
   </div>
 
   <!-- ── 結果カード〜PRカルへの導線 ── -->
