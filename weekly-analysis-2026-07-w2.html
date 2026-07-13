@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>週次分析 7月W2 — 2026-07-06〜07-12</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 900px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-card.warn-card { border-color: #fde68a; background: #fffbeb; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-highest { background: #fee2e2; color: #991b1b; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .pill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+    .pill-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px; }
+    .pill-card.bad { border-color: #fca5a5; background: #fff1f2; }
+    .pill-card.mixed { border-color: #fde68a; background: #fffbeb; }
+    .pill-card.good { border-color: #86efac; background: #f0fdf4; }
+    .pill-title { font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 8px; }
+    .pill-metric { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 3px; }
+    .pill-metric .label { color: #64748b; }
+    .pill-metric .val { font-weight: 700; color: #0f172a; }
+    .pill-metric .val.bad { color: #dc2626; }
+    .pill-metric .val.good { color: #16a34a; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">週次分析 — 7月W2</div>
+    <h1>2026-07-06〜07-12 週次分析レポート</h1>
+    <p class="desc">作成: 2026-07-13 ／ 前週: 7月W1（6/29〜7/5）</p>
+  </div>
+
+  <!-- ① 7月GOAL進捗 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">1</div>
+      <div>
+        <div class="section-title">7月 GOAL進捗</div>
+        <div class="section-sub">目標1,200人 に対する当月累計（12日時点）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card alert">
+          <div class="kpi-label">7月累計</div>
+          <div class="kpi-value">323人</div>
+          <div class="kpi-sub">12日経過（達成率26.9%）</div>
+        </div>
+        <div class="kpi-card warn-card">
+          <div class="kpi-label">日均</div>
+          <div class="kpi-value">26.9人</div>
+          <div class="kpi-sub">必要日均 38.7人</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">月末予測</div>
+          <div class="kpi-value">834人</div>
+          <div class="kpi-sub">残19日（目標比 69.5%）</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">GOALギャップ</div>
+          <div class="kpi-value">▲877人</div>
+          <div class="kpi-sub">月末予測ベースで▲366人</div>
+        </div>
+      </div>
+      <div class="insight insight-red">
+        <strong>月末予測834人 = 目標1,200人の69.5%で着地見込み。</strong>
+        現ペースでは届かないが、医療ダイエット(GLP-1)の回復基調（後述）を維持できれば上振れの可能性あり。
+      </div>
+    </div>
+  </div>
+
+  <!-- ② W2全体ファネル -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">2</div>
+      <div>
+        <div class="section-title">7月W2 週次パフォーマンス</div>
+        <div class="section-sub">7/6〜7/12 vs 6/29〜7/5（W1）比較</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>指標</th>
+            <th>W2（7/6〜7/12）</th>
+            <th>W1（6/29〜7/5）</th>
+            <th>前週比</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>友達合計</strong></td>
+            <td><strong>186人</strong>（PU122 + バナー64）</td>
+            <td>179人（PU99 + バナー80）</td>
+            <td class="up">+7人（+3.9%）</td>
+          </tr>
+          <tr>
+            <td>LP imp</td>
+            <td>32,669</td>
+            <td>28,286</td>
+            <td class="up">+15.5%（+4,383）</td>
+          </tr>
+          <tr>
+            <td>PU imp</td>
+            <td>13,602</td>
+            <td>14,457</td>
+            <td class="down">▲5.9%（▲855）</td>
+          </tr>
+          <tr>
+            <td>PU click</td>
+            <td>779</td>
+            <td>1,286</td>
+            <td class="down">▲39.4%</td>
+          </tr>
+          <tr>
+            <td>CTR</td>
+            <td>5.73%</td>
+            <td>8.90%</td>
+            <td class="down">▲3.17pt</td>
+          </tr>
+          <tr>
+            <td>友達追加率（PU）</td>
+            <td>15.66%</td>
+            <td>7.70%</td>
+            <td class="up">+7.96pt</td>
+          </tr>
+          <tr>
+            <td>PVFR（全体）</td>
+            <td class="warn">0.57%</td>
+            <td class="warn">0.63%</td>
+            <td>▲0.06pt ほぼ横ばい</td>
+          </tr>
+          <tr>
+            <td>日均</td>
+            <td>26.6人</td>
+            <td>25.6人</td>
+            <td class="up">+1.0人</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-yellow">
+        <strong>友達+7人（+3.9%）で微増、LP impも+15.5%と伸長。</strong>
+        主指標PVFRは0.63%→0.57%とほぼ横ばいで安定。医療ダイエット(GLP-1)の回復（後述）が牽引した週。
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ ジャンル別 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">3</div>
+      <div>
+        <div class="section-title">ジャンル別 W2 vs W1</div>
+        <div class="section-sub">友達増減の内訳</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>ジャンル</th>
+            <th>W2 友達</th>
+            <th>W1 友達</th>
+            <th>差</th>
+            <th>PVFR</th>
+            <th>CTR</th>
+            <th>追加率</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>医療ダイエット(GLP-1)</strong></td>
+            <td><strong>76人</strong></td>
+            <td>57人</td>
+            <td class="up">+19人</td>
+            <td class="warn">0.51%</td>
+            <td>6.27%</td>
+            <td class="up">20.32%</td>
+          </tr>
+          <tr>
+            <td>コスメ</td>
+            <td>9人</td>
+            <td>3人</td>
+            <td class="up">+6人</td>
+            <td>0.24%</td>
+            <td>7.87%</td>
+            <td>8.91%</td>
+          </tr>
+          <tr>
+            <td>オンラインピル</td>
+            <td>15人</td>
+            <td>17人</td>
+            <td class="down">▲2人</td>
+            <td>0.55%</td>
+            <td>5.44%</td>
+            <td class="up">24.59%</td>
+          </tr>
+          <tr>
+            <td>ED</td>
+            <td>3人</td>
+            <td>1人</td>
+            <td class="up">+2人</td>
+            <td>0.55%</td>
+            <td>5.33%</td>
+            <td class="up">25.00%</td>
+          </tr>
+          <tr>
+            <td>包茎手術(PLUS)</td>
+            <td>9人</td>
+            <td>12人</td>
+            <td class="down">▲3人</td>
+            <td>0.21%</td>
+            <td>4.96%</td>
+            <td>8.57%</td>
+          </tr>
+          <tr>
+            <td>ICL</td>
+            <td>3人</td>
+            <td>6人</td>
+            <td class="down">▲3人</td>
+            <td>0.34%</td>
+            <td>2.05%</td>
+            <td>42.86%</td>
+          </tr>
+          <tr>
+            <td>AGA</td>
+            <td>3人</td>
+            <td>0人</td>
+            <td class="up">+3人</td>
+            <td>0.22%</td>
+            <td>6.00%</td>
+            <td>8.57%</td>
+          </tr>
+          <tr>
+            <td>FAGA</td>
+            <td>3人</td>
+            <td>2人</td>
+            <td class="up">+1人</td>
+            <td>0.31%</td>
+            <td>5.63%</td>
+            <td>10.71%</td>
+          </tr>
+          <tr>
+            <td>いびき</td>
+            <td>1人</td>
+            <td>1人</td>
+            <td>±0人</td>
+            <td>0.06%</td>
+            <td>3.76%</td>
+            <td>3.45%</td>
+          </tr>
+          <tr>
+            <td><strong>バナー計</strong></td>
+            <td><strong>64人</strong></td>
+            <td>80人</td>
+            <td class="down">▲16人</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-green">
+        <strong>医療ダイエット(GLP-1)が57→76人（+19人）と大幅回復し全体を牽引。コスメも3→9人（+6人）と伸長。</strong>
+        包茎・ピル・ICLは各▲2〜3人の小幅減だが母数が小さくノイズの範囲。今週、特筆すべき悪化ジャンルはなし。
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 施策振り返り -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">4</div>
+      <div>
+        <div class="section-title">W2 施策振り返り</div>
+        <div class="section-sub">W2期間中（7/6〜7/12）の施策効果</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>施策</th>
+            <th>結果</th>
+            <th>判定</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>「食べていいのは何㎉？」「1日で食べていい量」PU 継続稼働</td>
+            <td>友達7→15人（1日で食べていい量）。LP流入回復（1,349→1,573）が主要因</td>
+            <td><span class="badge badge-green">○ 良好</span></td>
+          </tr>
+          <tr>
+            <td>カレーナ コスメ診断（クレンジング+スキンケア）LINE導線（累積6/24〜7/12）</td>
+            <td>累積友達12人、CTRは記事により思春期スキン2.04%（新規・低）〜肌引き締め15.79%（高）とばらつき</td>
+            <td><span class="badge badge-yellow">△ 初動確認中</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-green">
+        <strong>GLP-1全体でLP流入が広範に回復（痩せる薬・スルリムマンジャロ等も含む）。</strong>
+        特定PUの改修によるものではなく、記事流入側の回復が主因。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ ジャンル別指標詳細 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">5</div>
+      <div>
+        <div class="section-title">注目ジャンル — PVFR・追加率詳細</div>
+        <div class="section-sub">W2で動きが大きかったジャンルのハイライト</div>
+      </div>
+    </div>
+    <div class="body">
+
+      <!-- 医療ダイエット -->
+      <p style="font-size:13px; font-weight:700; color:#475569; margin-bottom:8px;">■ 医療ダイエット(GLP-1) — W2大幅回復</p>
+      <div class="verdict verdict-green">○ 友達57→76人（+19人）。LP流入が広範に回復。</div>
+      <table>
+        <thead>
+          <tr><th>週</th><th>友達</th><th>LP imp</th><th>PVFR</th><th>追加率</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>W2（7/6〜7/12）</td>
+            <td class="up"><strong>76人</strong></td>
+            <td>—</td>
+            <td class="warn">0.51%</td>
+            <td class="up">20.32%</td>
+          </tr>
+          <tr>
+            <td>W1（6/29〜7/5）</td>
+            <td>57人</td>
+            <td>—</td>
+            <td>—</td>
+            <td>14.66%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-green">
+        摂取カロリー系PU（「食べていいのは何㎉？」「1日で食べていい量」）が安定稼働する中、「痩せる薬」「スルリムマンジャロ」等の主要記事でLP流入自体が回復。特定施策によるものではなく記事側の自然回復。PVFR 0.51%は基準0.80%にはまだ届かない。
+      </div>
+
+      <hr>
+
+      <!-- コスメ -->
+      <p style="font-size:13px; font-weight:700; color:#475569; margin:16px 0 8px;">■ コスメ（カレーナ） — 継続伸長</p>
+      <div class="verdict verdict-green">○ 友達3→9人（+6人）。脂性肌おすすめ・毛穴悩みが牽引。</div>
+      <div class="pill-grid">
+        <div class="pill-card good">
+          <div class="pill-title">◎ 脂性肌おすすめ（新規タグ）</div>
+          <div class="pill-metric"><span class="label">imp</span><span class="val">306</span></div>
+          <div class="pill-metric"><span class="label">CTR</span><span class="val good">9.80%</span></div>
+          <div class="pill-metric"><span class="label">友達</span><span class="val good">4人</span></div>
+        </div>
+        <div class="pill-card good">
+          <div class="pill-title">◎ 毛穴悩み</div>
+          <div class="pill-metric"><span class="label">imp</span><span class="val">57</span></div>
+          <div class="pill-metric"><span class="label">CTR</span><span class="val good">10.53%</span></div>
+          <div class="pill-metric"><span class="label">友達</span><span class="val good">2人</span></div>
+        </div>
+      </div>
+      <div class="insight insight-yellow">
+        スキンケア診断の新規タグ（思春期スキン・混合肌スキン・インナースキン等）も計測開始。imp少でこれから様子見。クレミルクはCTR0%が継続、意図ミスマッチとして導線見直し候補。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ ネクストアクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">6</div>
+      <div>
+        <div class="section-title">7月W3 ネクストアクション</div>
+        <div class="section-sub">優先度順</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-highest">最優先</span>
+          <div class="action-body">
+            <strong>サプリ案件を通常リンクで先行リリース</strong>
+            <span>啓音さんへ構築依頼。別LPの回答は水曜まで待って再度リマインド。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">高</span>
+          <div class="action-body">
+            <strong>化粧水診断デザイン完成→構築依頼、肌タイプ診断の制作着手</strong>
+            <span>肌タイプ診断はクレンジング/スキンケア/化粧水を統合した総合診断として設計。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中</span>
+          <div class="action-body">
+            <strong>包茎・ピル・ICLの小幅減（各▲2〜3人）の要因確認</strong>
+            <span>母数が小さくノイズの可能性が高いが、来週も同傾向が続くか観察する。</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ⑦ 7月方針 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">7</div>
+      <div>
+        <div class="section-title">7月方針</div>
+        <div class="section-sub">バーティカル注力への移行期間フェーズ</div>
+      </div>
+    </div>
+    <div class="body">
+      <p>コスメジャンルの基盤を整える。PU/バナー改修は週次分析をもとに随時進める。</p>
+      <p style="font-size:13px; color:#64748b; margin-top:4px;">※8月以降：バーティカル側注力。LINEは2割稼働で改修進め、数値維持継続。</p>
+    </div>
+  </div>
+
+  <!-- ⑧ 総括 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">8</div>
+      <div>
+        <div class="section-title">週次総括</div>
+        <div class="section-sub">W2の因果関係まとめ</div>
+      </div>
+    </div>
+    <div class="body">
+      <p><strong>今週の一言:</strong> 友達+7人（+3.9%）で微増、医療ダイエット(GLP-1)が57→76人と大幅回復し全体を牽引。月次累計323人（7/1〜7/12）、目標1,200人に対し月末予測834人・達成率69.5%。</p>
+      <hr>
+      <p><strong>なぜ友達が増えたか:</strong></p>
+      <p>友達186人（前週+7人/+3.9%）。LP imp+15.5%（28,286→32,669）と伸長。医療ダイエット(GLP-1)が57→76人（+19人）と大幅回復、コスメも3→9人（+6人）と伸長。GLP-1の回復は摂取カロリー・痩せる薬系PUの安定稼働の下、「痩せる薬」「スルリムマンジャロ」等の主要記事でLP流入自体が広範に回復したことが主因で、特定施策によるものではない。包茎・ピル・ICLは各▲2〜3人の小幅減だが母数が小さくノイズの範囲。</p>
+      <hr>
+      <p><strong>月次着地の現実:</strong></p>
+      <p>7月累計323人（目標1,200人 / 達成率26.9%（12日経過）/ 月末予測834人・達成率69.5%）。現ペースでは目標に届かないが、GLP-1の回復基調を維持できれば上振れの可能性あり。</p>
+      <hr>
+      <p><strong>今週の施策サマリー:</strong></p>
+      <p>摂取カロリー系PU（「食べていいのは何㎉？」「1日で食べていい量」）継続稼働、友達7→15人。カレーナ コスメ診断は累積友達12人でCTRは記事によりばらつき（思春期スキン2.04%〜肌引き締め15.79%）、新規スキンケア診断タグも計測開始。次週は化粧水診断・肌タイプ診断の制作、サプリ案件の先行リリースを進める。</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
