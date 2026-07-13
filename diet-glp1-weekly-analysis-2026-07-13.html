@@ -259,27 +259,10 @@
   <div class="section">
     <div class="section-head">
       <h2>pu_imp計測の仕様変更（7/1〜）</h2>
-      <div class="sub">CTR等の指標解釈に関わるため記録。友達数・PVFRへの実害は確認されていない</div>
-    </div>
-    <div class="tbl-wrap">
-      <table>
-        <thead>
-          <tr><th>日付</th><th>LP imp</th><th>PU imp</th><th>比率</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>6/29</td><td class="num">4,049</td><td class="num">3,748</td><td class="num">92.6%</td></tr>
-          <tr><td>6/30</td><td class="num">1,466</td><td class="num">1,345</td><td class="num">91.7%</td></tr>
-          <tr><td><strong>7/1</strong></td><td class="num">4,396</td><td class="num">1,832</td><td class="num down"><strong>41.7%</strong></td></tr>
-          <tr><td>7/2</td><td class="num">4,476</td><td class="num">1,846</td><td class="num down">41.2%</td></tr>
-        </tbody>
-      </table>
     </div>
     <div class="insight insight-blue">
-      <strong>7/1 00:00を境に、全ジャンル・全PUタグで一斉にPU imp/LP imp比が95〜115%→40〜50%に半減。</strong>
-      6/24時点で既に存在していた既存タグのみに絞っても同日・同じ落ち方をしており、新規タグ追加による希釈ではない。単一タグ（「1日で食べていい量」）でもlp_impが横ばいのままpu_impだけ半減しており、実際の表示回数が減ったのではなく計測側の変化とみられる。<br><br>
-      <strong>有力仮説（Noa）:</strong> 5/14仕様変更（通常PU＋WINUT〈離脱防止PU〉のimpが合算されていた）が、7/1にWINUT側で解除・修正され単体計上に戻った可能性。変化幅（ほぼ半減）とも整合する。Ren/WINUT側への正式な裏取りは未実施。
+      7/1からPU imp（表示回数）の計測基準が変わった可能性が高く、全ジャンルで比率がほぼ半減。5/14仕様変更（WINUT分の合算）が解除された可能性が有力（Noa仮説）。<strong>CTRは7/1前後で単純比較しない。</strong>友達数・PVFRへの実害はなし。詳細はt136。
     </div>
-    <p class="note">knowledge/funnel-model.mdに反映済み。7/1以降はpu_imp≈lp_impの1倍程度が正常値。CTRを7/1前後で直接比較しない。line-team t136で継続observation中（watching）。</p>
   </div>
 
   <!-- ④ ネクストアクション -->
