@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>医療ダイエット(GLP-1) 週次詳細分析 — 2026-07-13</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta name="description" content="医療ダイエット（GLP-1）ジャンルの7月W2週次詳細ドリルダウン。記事別・サイト別要因分析とpu_imp仕様変更の記録。">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+      background: #f0f4f8;
+      color: #1e293b;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .wrap { max-width: 920px; margin: 0 auto; padding: 40px 20px 88px; }
+
+    .back { display: inline-block; font-size: 12px; color: #64748b; text-decoration: none; margin-bottom: 28px; }
+    .back:hover { color: #1a4d9e; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #64748b; margin-bottom: 6px; }
+    .page-header h1 { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 6px; text-wrap: balance; }
+    .page-header .meta { font-size: 12px; color: #94a3b8; }
+
+    .summary-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+    .s-card { background: #fff; border-radius: 12px; padding: 16px 18px; border: 1.5px solid #e2e8f0; }
+    .s-card.alert { border-color: #fca5a5; background: #fff8f8; }
+    .s-card.ok    { border-color: #86efac; background: #f7fdf9; }
+    .s-card.warn-c { border-color: #fde68a; background: #fffdf0; }
+    .s-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #94a3b8; margin-bottom: 4px; }
+    .s-val { font-size: 26px; font-weight: 800; color: #0f172a; font-variant-numeric: tabular-nums; line-height: 1.1; margin-bottom: 2px; }
+    .s-sub { font-size: 12px; color: #64748b; }
+    .s-card.alert .s-val { color: #dc2626; }
+    .s-card.ok    .s-val { color: #16a34a; }
+    .s-card.warn-c .s-val { color: #b45309; }
+
+    .section { background: #fff; border-radius: 14px; padding: 26px 28px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+    .section-head { margin-bottom: 18px; }
+    .section-head h2 { font-size: 15px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .section-head .sub { font-size: 12px; color: #64748b; }
+
+    .tbl-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; font-size: 11px; letter-spacing: 0.06em; padding: 9px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; white-space: nowrap; }
+    td { padding: 9px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f8fafc; }
+    td.num { text-align: right; }
+
+    .up   { color: #16a34a; font-weight: 700; }
+    .down { color: #dc2626; font-weight: 700; }
+    .warn { color: #b45309; font-weight: 700; }
+    .muted { color: #94a3b8; }
+
+    .badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+    .badge-red    { background: #fee2e2; color: #dc2626; }
+    .badge-green  { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #b45309; }
+    .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray   { background: #f1f5f9; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 14px; line-height: 1.6; }
+    .insight-red    { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green  { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue   { background: #eff6ff; border-left: 3px solid #3b82f6; }
+
+    .article-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 4px; }
+    .a-card { border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 16px 18px; }
+    .a-card.danger  { border-color: #fca5a5; background: #fff8f8; }
+    .a-card.caution { border-color: #fde68a; background: #fffdf0; }
+    .a-card.good    { border-color: #86efac; background: #f7fdf9; }
+    .a-name { font-size: 13px; font-weight: 800; color: #0f172a; margin-bottom: 8px; }
+    .a-kpi-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+    .a-kpi-label { font-size: 11px; color: #64748b; }
+    .a-kpi-val { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .a-divider { border: none; border-top: 1px solid #f1f5f9; margin: 10px 0; }
+    .a-action { font-size: 12px; color: #475569; margin-top: 6px; }
+    .a-action strong { color: #0f172a; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: grid; grid-template-columns: auto 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px solid #f1f5f9; align-items: start; }
+    .action-list li:last-child { border-bottom: none; }
+    .pri-chip { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; margin-top: 2px; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #b45309; }
+    .pri-low  { background: #f1f5f9; color: #64748b; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span   { font-size: 13px; color: #475569; }
+
+    .note { font-size: 11px; color: #94a3b8; padding: 10px 0 0; border-top: 1px solid #f1f5f9; margin-top: 14px; }
+    .divider { border: none; border-top: 1px solid #e2e8f0; margin: 20px 0; }
+
+    @media (max-width: 600px) {
+      .summary-strip { grid-template-columns: 1fr 1fr; }
+      .article-grid  { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <a href="index.html" class="back">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">週次詳細分析 / 2026-07-13</div>
+    <h1>医療ダイエット(GLP-1) — 7月W2 詳細ドリルダウン</h1>
+    <p class="meta">全体友達の最大シェア（41%）を占める最重要ジャンル。7月W1→W2の記事・サイトレベル要因分析。</p>
+  </div>
+
+  <!-- サマリーカード -->
+  <div class="summary-strip">
+    <div class="s-card ok">
+      <div class="s-label">友達（W2）</div>
+      <div class="s-val">76人</div>
+      <div class="s-sub">前週57人　+19人（大幅回復）</div>
+    </div>
+    <div class="s-card warn-c">
+      <div class="s-label">PVFR（W2）</div>
+      <div class="s-val">0.51%</div>
+      <div class="s-sub">基準0.80%　前週0.42%から回復</div>
+    </div>
+    <div class="s-card alert">
+      <div class="s-label">PU imp/LP imp比</div>
+      <div class="s-val">40.0%</div>
+      <div class="s-sub">6月は95%前後　7/1から半減（下記参照）</div>
+    </div>
+  </div>
+
+  <!-- ① 4週間トレンド -->
+  <div class="section">
+    <div class="section-head">
+      <h2>4週間トレンド</h2>
+      <div class="sub">友達は7月W1で急落→W2で反発。ただしPU imp/LP imp比は7月に入ってから別の変化が継続中</div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>週</th><th>LP imp</th><th>PU imp</th><th>友達</th><th>PVFR</th><th>PU imp/LP imp比</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>6月W3（6/15〜21）</td>
+            <td class="num">16,978</td>
+            <td class="num">15,908</td>
+            <td class="num">88人</td>
+            <td class="num">0.52%</td>
+            <td class="num">93.7%</td>
+          </tr>
+          <tr>
+            <td>6月W4（6/22〜28）</td>
+            <td class="num">15,520</td>
+            <td class="num">14,859</td>
+            <td class="num">79人</td>
+            <td class="num">0.51%</td>
+            <td class="num">95.7%</td>
+          </tr>
+          <tr>
+            <td>7月W1（6/29〜7/5）</td>
+            <td class="num">13,653</td>
+            <td class="num">6,806</td>
+            <td class="num down">57人</td>
+            <td class="num down">0.42%</td>
+            <td class="num down">49.9%</td>
+          </tr>
+          <tr>
+            <td><strong>7月W2（7/6〜7/12）</strong></td>
+            <td class="num"><strong>14,919</strong></td>
+            <td class="num">5,966</td>
+            <td class="num up"><strong>76人</strong></td>
+            <td class="num up"><strong>0.51%</strong></td>
+            <td class="num down">40.0%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight insight-green">
+      友達数の動きはほぼPVFRの回復（0.42%→0.51%）で説明できる。LP imp自体の回復は+9%と小幅。PU imp/LP imp比の低下は友達数の動きとは連動しておらず、別要因（下記③）。
+    </div>
+  </div>
+
+  <!-- ② 記事・サイト別要因 -->
+  <div class="section">
+    <div class="section-head">
+      <h2>友達+19人の内訳 — 記事別・サイト別</h2>
+      <div class="sub">「広範な回復」の実態は3記事＋こいずみサイトへの集中</div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>記事</th><th>LP imp W1→W2</th><th>友達 W1→W2</th><th>フェーズ</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>痩せる薬</strong></td>
+            <td class="num">606 → 885（+46%）</td>
+            <td class="num up">7 → 15（+8）</td>
+            <td><span class="badge badge-green">決断層</span></td>
+          </tr>
+          <tr>
+            <td><strong>1日_摂取カロリー</strong></td>
+            <td class="num">1,349 → 1,573（+17%）</td>
+            <td class="num up">7 → 15（+8）</td>
+            <td><span class="badge badge-blue">情報収集層</span></td>
+          </tr>
+          <tr>
+            <td><strong>スルリムマンジャロ</strong></td>
+            <td class="num">1,312 → 1,402（+7%）</td>
+            <td class="num up">3 → 7（+4）</td>
+            <td><span class="badge badge-green">決断層</span></td>
+          </tr>
+          <tr>
+            <td>本気で痩せたい</td>
+            <td class="num">1,089 → 1,153（+6%）</td>
+            <td class="num down">12 → 3（▲9）</td>
+            <td><span class="badge badge-gray">漠然願望層</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tbl-wrap" style="margin-top:16px;">
+      <table>
+        <thead>
+          <tr><th>サイト</th><th>LP imp W1→W2</th><th>友達 W1→W2</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>こいずみ</strong></td>
+            <td class="num">9,014 → 9,954（+10%）</td>
+            <td class="num up">39 → 59（+20）</td>
+          </tr>
+          <tr>
+            <td>渋谷</td>
+            <td class="num">3,111 → 3,392（+9%）</td>
+            <td class="num down">16 → 9（▲7）</td>
+          </tr>
+          <tr>
+            <td>その他（天白・小田等）</td>
+            <td class="num">—</td>
+            <td class="num">合計 ±0前後</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight insight-yellow">
+      <strong>+19人の中身は「痩せる薬」「1日_摂取カロリー」「スルリムマンジャロ」の3記事（合計+20人）がほぼ全て。</strong>
+      特に「痩せる薬」「スルリムマンジャロ」は決断層（既に治療検討済み）向けで、もともとPVFR最高水準（1.37〜1.82%）のフェーズ。この層の流入回復が主因とみられる。<br><br>
+      <strong>こいずみが+20人でほぼ全増分を牽引。渋谷はLP imp+9%なのに友達▲7人と転換率が悪化しており、渋谷固有の要因（PU・LP側）は未確認。</strong><br><br>
+      「本気で痩せたい」（漠然願望層）の▲9人は唯一の大幅減。フェーズが浅い記事の弱さは以前からの傾向と一致。
+    </div>
+  </div>
+
+  <!-- ③ pu_imp仕様変更 -->
+  <div class="section">
+    <div class="section-head">
+      <h2>pu_imp計測の仕様変更（7/1〜）</h2>
+      <div class="sub">CTR等の指標解釈に関わるため記録。友達数・PVFRへの実害は確認されていない</div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>日付</th><th>LP imp</th><th>PU imp</th><th>比率</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>6/29</td><td class="num">4,049</td><td class="num">3,748</td><td class="num">92.6%</td></tr>
+          <tr><td>6/30</td><td class="num">1,466</td><td class="num">1,345</td><td class="num">91.7%</td></tr>
+          <tr><td><strong>7/1</strong></td><td class="num">4,396</td><td class="num">1,832</td><td class="num down"><strong>41.7%</strong></td></tr>
+          <tr><td>7/2</td><td class="num">4,476</td><td class="num">1,846</td><td class="num down">41.2%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight insight-blue">
+      <strong>7/1 00:00を境に、全ジャンル・全PUタグで一斉にPU imp/LP imp比が95〜115%→40〜50%に半減。</strong>
+      6/24時点で既に存在していた既存タグのみに絞っても同日・同じ落ち方をしており、新規タグ追加による希釈ではない。単一タグ（「1日で食べていい量」）でもlp_impが横ばいのままpu_impだけ半減しており、実際の表示回数が減ったのではなく計測側の変化とみられる。<br><br>
+      <strong>有力仮説（Noa）:</strong> 5/14仕様変更（通常PU＋WINUT〈離脱防止PU〉のimpが合算されていた）が、7/1にWINUT側で解除・修正され単体計上に戻った可能性。変化幅（ほぼ半減）とも整合する。Ren/WINUT側への正式な裏取りは未実施。
+    </div>
+    <p class="note">knowledge/funnel-model.mdに反映済み。7/1以降はpu_imp≈lp_impの1倍程度が正常値。CTRを7/1前後で直接比較しない。line-team t136で継続observation中（watching）。</p>
+  </div>
+
+  <!-- ④ ネクストアクション -->
+  <div class="section">
+    <div class="section-head">
+      <h2>ネクストアクション</h2>
+    </div>
+    <ul class="action-list">
+      <li>
+        <span class="pri-chip pri-high">高</span>
+        <div class="action-body">
+          <strong>「痩せる薬」「1日_摂取カロリー」「スルリムマンジャロ」の伸びが定着するか継続観察</strong>
+          <span>今週の反発が一時的か持続的かを来週の数値で判定する。</span>
+        </div>
+      </li>
+      <li>
+        <span class="pri-chip pri-mid">中</span>
+        <div class="action-body">
+          <strong>渋谷サイトの転換率悪化を確認</strong>
+          <span>LP imp+9%なのに友達▲7人。渋谷固有のPU文言・LP・友達追加画面に問題がないか確認する。</span>
+        </div>
+      </li>
+      <li>
+        <span class="pri-chip pri-low">低</span>
+        <div class="action-body">
+          <strong>pu_imp仕様変更の正式裏取り（Ren/WINUT側）</strong>
+          <span>業務判断は保留にしないが、CTR解釈の前提が変わったことは共有しておく。</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 付記 -->
+  <div class="section">
+    <div class="section-head">
+      <h2>関連ドキュメント</h2>
+    </div>
+    <ul style="list-style: none; font-size: 13px; line-height: 2;">
+      <li>→ <a href="weekly-analysis-2026-07-w2.html" style="color:#1a4d9e;">週次分析レポート 7月W2（2026-07-13）</a></li>
+      <li>→ <a href="diet-pu-analysis-2026-07-01.html" style="color:#1a4d9e;">ダイエットPU現状分析（2026-07-01）</a></li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
