@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>デザイン依頼書：化粧水診断</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F7F9F8; --surface: #FFFFFF; --border: #DDE8E3;
+    --text: #1A2420; --muted: #5A6E68; --accent: #3A9E78; --accent-light: #EBF6F1;
+    --tag-a: #3A94B8; --tag-b: #B8863A; --tag-c: #7E57C2; --tag-d: #B45B1F;
+    --tag-a-bg: #EAF4F8; --tag-b-bg: #FBF2E4; --tag-c-bg: #F3EDFA; --tag-d-bg: #FBEEE6;
+  }
+  body { font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.75; padding: 32px 16px 80px; }
+  .doc { max-width: 860px; margin: 0 auto; }
+  .doc-header { border-left: 4px solid var(--accent); padding: 0 0 0 20px; margin-bottom: 40px; }
+  .doc-header .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .doc-header h1 { font-size: 22px; font-weight: 700; line-height: 1.35; }
+  .doc-header .meta { margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .section { margin-bottom: 40px; }
+  .section-title { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  p { margin-bottom: 10px; }
+  .tbl-wrap { overflow-x: auto; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--surface); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+  th { background: var(--accent-light); color: var(--accent); font-weight: 700; font-size: 11px; letter-spacing: .05em; text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #FAFCFB; }
+  .type-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 24px; }
+  .type-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; font-weight: 700; font-size: 13px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .type-header.a { background: var(--tag-a-bg); color: var(--tag-a); border-color: #BFE0EE; }
+  .type-header.b { background: var(--tag-b-bg); color: var(--tag-b); border-color: #F0DBB0; }
+  .type-header.c { background: var(--tag-c-bg); color: var(--tag-c); border-color: #DBCBEF; }
+  .type-header.d { background: var(--tag-d-bg); color: var(--tag-d); border-color: #F2CBB0; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .type-header.a .dot { background: var(--tag-a); }
+  .type-header.b .dot { background: var(--tag-b); }
+  .type-header.c .dot { background: var(--tag-c); }
+  .type-header.d .dot { background: var(--tag-d); }
+  .type-meta { font-size: 11px; font-weight: 400; opacity: .8; margin-left: 4px; }
+  .link-chip { display: inline-block; font-size: 12px; background: rgba(0,0,0,.06); border-radius: 4px; padding: 3px 10px; margin: 4px 6px 4px 0; word-break: break-all; }
+  .link-chip a { color: var(--text); text-decoration: none; }
+  .link-chip a:hover { text-decoration: underline; }
+  .count-badge { display: inline-block; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin-left: 6px; vertical-align: middle; }
+  .code-block { background: #1A2420; color: #EBF6F1; font-family: "SF Mono", Consolas, monospace; font-size: 12px; line-height: 1.8; border-radius: 8px; padding: 18px 20px; overflow-x: auto; white-space: pre; margin-bottom: 16px; }
+  .swatch-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; }
+  .swatch { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; border: 1px solid rgba(0,0,0,.1); }
+  .note-box { background: var(--accent-light); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-size: 12.5px; color: var(--muted); margin-bottom: 16px; }
+  .back-link { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; }
+  .back-link a { color: var(--accent); text-decoration: none; }
+  .back-link a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="doc-header">
+    <div class="eyebrow">Design Brief — Diagnosis Flow</div>
+    <h1>デザイン依頼書：化粧水診断</h1>
+    <div class="meta">作成日: 2026-07-13 ／ 診断フロー（PU・表紙・Q1〜Q5）＋ 結果カルーセル（4タイプ×4枚） ／ PRカルーセルは別途共有</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">必要な画像一覧<span class="count-badge">25枚</span></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>カテゴリ</th><th>枚数</th><th>備考</th></tr></thead>
+        <tbody>
+          <tr><td>PUバナー</td><td>3枚</td><td>コピー3種（ABテスト用）</td></tr>
+          <tr><td>診断表紙（タイトル画面）</td><td>1枚</td><td>「あなたの化粧水タイプ診断」</td></tr>
+          <tr><td>設問パネル</td><td>5枚</td><td>Q1〜Q5 各1枚</td></tr>
+          <tr><td>結果カルーセル</td><td><strong>16枚</strong></td><td>4枚 × 4タイプ（うるおいチャージ型・ハリ・エイジングケア型・美白・透明感型・毛穴ケア型）</td></tr>
+          <tr><td>PRカルーセル</td><td>—</td><td><strong>別途依頼書あり</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">全体フロー</div>
+    <div class="code-block">[PU] バナー（化粧水記事に設置 / コピー3種ABテスト）
+  ↓
+[友だち追加]
+  ↓
+[ウェルカム ＋ 診断スタートカード]
+  ↓
+[Q1] あなたの年代を教えてください
+[Q2] 普段の肌の状態は？
+[Q3] 洗顔後しばらくすると、肌はどんな感じ？
+[Q4] 季節の変わり目に、肌の状態は変わりますか？
+[Q5] 一番気になる肌悩みは？  ← 4タイプに直結（最終設問＝分岐点）
+  ↓
+  ├─ A：乾燥・つっぱり感、うるおい不足        → うるおいチャージ型      結果カル（4枚）
+  ├─ B：ハリ低下・たるみ・年齢による変化       → ハリ・エイジングケア型  結果カル（4枚）
+  ├─ C：シミ・くすみ・透明感のなさ            → 美白・透明感型         結果カル（4枚）
+  └─ D：毛穴の目立ち・皮脂の多さ              → 毛穴ケア型             結果カル（4枚）
+  ↓
+[PRカルーセル] ← 別途依頼書で共有
+  ↓
+[CV]</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">★フロー図・カード図</div>
+    <p>設計・文言・トンマナすべてまとまっているので、こちらご確認いただけると幸いです🙇‍♀️</p>
+    <p><strong>ワークフロー設計図:</strong><br><span class="link-chip"><a href="https://plussaitounoa-lgtm.github.io/noa-docs/flow-lotion-diagnosis-2026-07-09.html" target="_blank">flow-lotion-diagnosis-2026-07-09.html</a></span></p>
+    <p><strong>結果カルーセル カード図（4タイプ）:</strong><br><span class="link-chip"><a href="https://plussaitounoa-lgtm.github.io/noa-docs/cards-lotion-diagnosis-2026-07-09.html" target="_blank">cards-lotion-diagnosis-2026-07-09.html</a></span></p>
+    <p>見辛いなどあればテキストベースで出すのでお申し付けください🙏</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">① PUバナー（3枚）</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:110px;">ヘッドライン</th><th colspan="1">あなたの化粧水タイプ診断</th></tr></thead>
+        <tbody>
+          <tr><td>案A</td><td>何を選べばいいか分からないのは、悩みの方向性が定まってないだけ。</td></tr>
+          <tr><td>案B</td><td>その化粧水、悩みの方向性は合ってる？5問でタイプがわかる。</td></tr>
+          <tr><td>案C</td><td>私にぴったりの化粧水タイプが知りたい！</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>/カンタン5問診断<br>ボタン: 「はい」 / 「いいえ」</p>
+    <div class="note-box">使い分けの目安: 「化粧水 効果ない／合わない」系記事は案A。「化粧水 選び方／おすすめ」系記事は案B。「毛穴 化粧水」「毛穴 引き締め」系記事にも同じ文言がそのまま使えます（タイプD＝毛穴ケア型が受け皿のため、記事別の追加コピーは不要）。</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">② 診断表紙（1枚）</div>
+    <div class="tbl-wrap">
+      <table>
+        <tbody>
+          <tr><td style="width:80px;"><strong>タイトル</strong></td><td>あなたの化粧水タイプ診断</td></tr>
+          <tr><td><strong>サブ</strong></td><td>あなたに合う化粧水の悩みの方向性がわかる</td></tr>
+          <tr><td><strong>本文</strong></td><td>化粧水選びで迷子になるのは、悩みの方向性が定まっていないから。5問でわかる無料診断。</td></tr>
+          <tr><td><strong>バッジ</strong></td><td>匿名・無料</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">③ 設問パネル（5枚）</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:40px;">#</th><th style="width:220px;">質問</th><th>選択肢</th></tr></thead>
+        <tbody>
+          <tr><td>Q1</td><td>あなたの<strong>年代</strong>を教えてください</td><td>20代 / 30代 / 40代 / 50代以上</td></tr>
+          <tr><td>Q2</td><td>普段の<strong>肌の状態</strong>は？</td><td>カサつく＋乾燥しがち / ベタつく / ベタつく＋カサつきも / あまり気にならない</td></tr>
+          <tr><td>Q3</td><td>洗顔後しばらくすると、肌はどんな感じ？</td><td>つっぱりを感じる / 肌がゆるんでハリがない感じがする / 顔全体がくすんで見える気がする / 毛穴が目立つ・皮脂がにじんでくる感じがする</td></tr>
+          <tr><td>Q4</td><td>季節の変わり目に、肌の状態は変わりますか？</td><td>肌荒れしがち / ゆらぎやすい / 変わらない</td></tr>
+          <tr><td>Q5</td><td>一番気になる<strong>肌悩み</strong>は？（最終設問・タイプ確定）</td><td>乾燥・つっぱり感、うるおい不足 →タイプA / ハリ低下・たるみ・年齢による変化 →タイプB / シミ・くすみ・透明感のなさ →タイプC / 毛穴の目立ち・皮脂の多さ →タイプD</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note-box">Q1〜Q4は非分岐（結果に紐づかない）。Q5（一番気になる悩み）が診断の最終設問であり、かつタイプを確定する分岐点そのものです。</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">④ 結果カルーセル<span class="count-badge">16枚</span></div>
+
+    <div class="type-block">
+      <div class="type-header a">
+        <span class="dot"></span>
+        タイプA｜うるおいチャージ型
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:55px;">Card</th><th style="width:150px;">役割</th><th>テキスト</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>タイプ発表＋チェックリスト</td><td>あなたは「うるおいチャージ型」 / ☑ 洗顔後すぐにつっぱりを感じる / ☑ 化粧水をつけてもすぐ乾いた感じに戻る / ☑ 季節の変わり目に、人より肌が荒れやすい / ☑ 夜になると肌がかさついてゴワつく</td></tr>
+            <tr><td>2</td><td>根本示唆＋矢印図式</td><td>保湿してるのに、肌が乾いていく。 / うるおいが逃げていく、本当の理由。 / 【矢印図】肌のバリア機能が乱れている → 角層の水分保持力が低下する → 与えたうるおいもすぐ蒸発する → 乾燥が進む / うるおいを内側までチャージすることが必要！</td></tr>
+            <tr><td>3</td><td>解決策＋成分リスト</td><td>うるおいの土台づくりがカギ / ✓ ヒアルロン酸 → 水分を抱え込んで肌に届ける / ✓ セラミド → うるおいを外に逃がさないバリアを作る / ✓ グリセリン → 角層にうるおいを引き込んで乾燥を防ぐ / うるおいを与えて、閉じ込めるアプローチ。</td></tr>
+            <tr><td>4</td><td>未来＋メリット列挙＋CTA</td><td>うるおいのバリアが整うだけで、肌が変わる。 / 肌のバリア機能が整うと… / ✓ じゅわっとうるおいが入って、つっぱらなくなる / ✓ 季節の変わり目でも肌が揺らぎにくくなる / ✓ もちっとした肌感が続く / うるおいに満ちた、乾燥知らずの肌へ。 / ボタン「あなたに合う化粧水を見る →」</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="type-block">
+      <div class="type-header b">
+        <span class="dot"></span>
+        タイプB｜ハリ・エイジングケア型
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:55px;">Card</th><th style="width:150px;">役割</th><th>テキスト</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>タイプ発表＋チェックリスト</td><td>あなたは「ハリ・エイジングケア型」 / ☑ 肌がゆるんでハリがない感じがする / ☑ 頬や輪郭のもたつきが気になる / ☑ 季節の変わり目に、肌の調子が急に落ちる / ☑ 若い頃と同じケアなのに、ハリの戻りが遅くなった</td></tr>
+            <tr><td>2</td><td>根本示唆＋矢印図式</td><td>そのハリ低下、年齢だけじゃないかも。 / ハリが戻らない、本当の理由。 / 【矢印図】年齢とともに真皮でのコラーゲン・エラスチンの生成力が低下する → 肌を支える土台が弱くなる → ハリが戻らず、ゆるみが定着する / 肌の内側から弾力を立て直すことが必要！</td></tr>
+            <tr><td>3</td><td>解決策＋成分リスト</td><td>ハリを立て直す成分選びがカギ / ✓ レチノール → ハリを生み出す力を立て直す / ✓ ペプチド → コラーゲンの生成を促す / ✓ ビタミンC誘導体 → 肌のキメとハリの土台を整える / 肌の内側から立て直すアプローチ。</td></tr>
+            <tr><td>4</td><td>未来＋メリット列挙＋CTA</td><td>肌の土台が整うだけで、肌が変わる。 / 肌の土台が立て直されると… / ✓ 指で押すとふっと押し返す、ハリの違いを感じる / ✓ 老けた印象を言われなくなる / ✓ 季節の変わり目でも肌が乱れにくくなる / 老けを感じさせない、ハリのある肌へ。 / ボタン「あなたに合う化粧水を見る →」</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="type-block">
+      <div class="type-header c">
+        <span class="dot"></span>
+        タイプC｜美白・透明感型
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:55px;">Card</th><th style="width:150px;">役割</th><th>テキスト</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>タイプ発表＋チェックリスト</td><td>あなたは「美白・透明感型」 / ☑ 顔全体がなんとなくくすんで見える / ☑ シミが少しずつ増えてきた気がする / ☑ スキンケアを続けても透明感が出ない / ☑ 何を試しても効果を感じられなかった</td></tr>
+            <tr><td>2</td><td>根本示唆＋矢印図式</td><td>そのくすみ、「効果なし」で終わらせないで。 / くすみが取れない、本当の理由。 / 【矢印図】紫外線・刺激でメラニンが過剰に作られる → 排出されずに肌に蓄積する → くすみ・シミとして残る / メラニンを抑えて、外に出すことが必要！</td></tr>
+            <tr><td>3</td><td>解決策＋成分リスト</td><td>メラニンを抑えて排出することがカギ / ✓ ビタミンC誘導体 → メラニンの生成を抑え、透明感を引き出す / ✓ トラネキサム酸 → メラノサイトの過剰な反応を抑える / ✓ アルブチン → メラニンの生成そのものを抑制する / メラニンにアプローチして、明るさを引き出す。</td></tr>
+            <tr><td>4</td><td>未来＋メリット列挙＋CTA</td><td>メラニンの生成を抑えるだけで、肌が変わる。 / メラニンの生成が抑えられると… / ✓ くすみが薄れて、光の反射が変わる / ✓ 「肌きれいになった?」と言われる日が来る / ✓ 試行錯誤を繰り返さなくなる / 澄んだ透明感がある肌へ。 / ボタン「あなたに合う化粧水を見る →」</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="type-block">
+      <div class="type-header d">
+        <span class="dot"></span>
+        タイプD｜毛穴ケア型
+        <span class="type-meta">— 新規タイプ</span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:55px;">Card</th><th style="width:150px;">役割</th><th>テキスト</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>タイプ発表＋チェックリスト</td><td>あなたは「毛穴ケア型」 / ☑ 毛穴の開き・目立ちが気になる / ☑ 皮脂が多くテカりやすい / ☑ 洗顔後すぐにまた皮脂が出てくる / ☑ 洗浄力を上げても毛穴が改善しない</td></tr>
+            <tr><td>2</td><td>根本示唆＋矢印図式</td><td>その毛穴、洗浄力のせいじゃないかも。 / 毛穴が目立つ、本当の理由。 / 【矢印図】肌が乾燥やストレスを感知すると皮脂腺が過剰に反応する → 皮脂が過剰に分泌される → 毛穴が開いて目立ちやすくなる / 引き締めながら整えることが必要！</td></tr>
+            <tr><td>3</td><td>解決策＋成分リスト</td><td>引き締め成分がカギ / ✓ サリチル酸（BHA） → 毛穴の詰まりを溶かして落とす / ✓ 収れん成分 → 毛穴をキュッと引き締める / ✓ クレイ成分 → 余分な皮脂を吸着してキメを整える / 引き締めながら整えるアプローチ。</td></tr>
+            <tr><td>4</td><td>未来＋メリット列挙＋CTA</td><td>皮脂のリズムが整うだけで、肌が変わる。 / 皮脂のリズムが整うと… / ✓ 鏡を見ても毛穴が気にならなくなる / ✓ キメが整って、つるんとした質感になる / ✓ 皮脂によるメイク崩れが減る / 皮脂に振り回されない、引き締まった肌へ。 / ボタン「あなたに合う化粧水を見る →」</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="note-box">結果カード（4枚×4タイプ）には商材名・価格は一切出しません。Card4のCTA「あなたに合う化粧水を見る→」タップ後、別途共有するPRカルーセルで初めて商材（タイプ内の該当商材を並列）が登場します。</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">トンマナ</div>
+    <p>全体: カレーナ統一トンマナ（②スキンケア方法診断・クレンジング診断と同じ）</p>
+    <div class="swatch-row"><span class="swatch" style="background:#3A9E78;"></span>メインカラー: ティールグリーン系（見出し・テキストアクセント）</div>
+    <div class="swatch-row"><span class="swatch" style="background:#3A94B8;"></span>🔵 うるおいチャージ型（A）: ライトブルー系（#3a94b8）</div>
+    <div class="swatch-row"><span class="swatch" style="background:#B8863A;"></span>🟡 ハリ・エイジングケア型（B）: ゴールドベージュ系（#b8863a）</div>
+    <div class="swatch-row"><span class="swatch" style="background:#7E57C2;"></span>🟣 美白・透明感型（C）: ラベンダー系（#7e57c2）</div>
+    <div class="swatch-row"><span class="swatch" style="background:#B45B1F;"></span>🟠 毛穴ケア型（D）: テラコッタ系（#b45b1f）</div>
+    <p style="margin-top:12px;">背景: 白 ＋ ライトミント / ライトピーチのペア使い<br>全体感: クリーン × やわらかい × ナチュラル</p>
+  </div>
+
+  <div class="back-link">
+    <a href="index.html">← トップへ</a>
+  </div>
+
+</div>
+</body>
+</html>
