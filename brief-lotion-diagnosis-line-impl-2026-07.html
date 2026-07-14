@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LINE実装設計書：化粧水診断</title>
+<style>
+  :root {
+    --accent: #0F766E;
+    --accent-light: #CCFBF1;
+    --bg: #FAFAFA;
+    --surface: #FFFFFF;
+    --border: #E5E7EB;
+    --text: #111827;
+    --text-muted: #6B7280;
+    --warn: #D97706;
+    --warn-bg: #FEF3C7;
+    --t1: #3A94B8; --t1-bg: #E3F2F8;
+    --t2: #B8863A; --t2-bg: #F7F0E0;
+    --t3: #7E57C2; --t3-bg: #EDE7F6;
+    --t4: #B45B1F; --t4-bg: #F3E5DC;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111827; --surface: #1F2937; --border: #374151;
+      --text: #F9FAFB; --text-muted: #9CA3AF;
+    }
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: "Hiragino Sans", "Yu Gothic UI", system-ui, sans-serif; font-size: 14px; line-height: 1.7; }
+  .doc { max-width: 820px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  /* header */
+  .doc-header { margin-bottom: 48px; }
+  .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  h1 { font-size: 26px; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; }
+  .meta { font-size: 12px; color: var(--text-muted); margin-top: 10px; }
+  .badge { display: inline-block; background: var(--t3-bg); color: var(--t3); font-size: 12px; font-weight: 700; padding: 3px 12px; border-radius: 4px; margin-top: 10px; }
+
+  /* sections */
+  .section { margin-bottom: 48px; }
+  .section-title { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); padding-bottom: 8px; border-bottom: 2px solid var(--accent-light); margin-bottom: 20px; }
+
+  /* flow diagram */
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .flow-q { background: var(--accent-light); border: 1.5px solid var(--accent); border-radius: 8px; padding: 12px 24px; text-align: center; width: 100%; max-width: 360px; }
+  .flow-q-label { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: .06em; text-transform: uppercase; }
+  .flow-q-text { font-size: 13px; font-weight: 700; color: var(--text); margin-top: 2px; }
+  .flow-arrow { color: var(--border); font-size: 20px; line-height: 1; padding: 4px 0; }
+  .flow-types { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; max-width: 640px; margin-top: 4px; }
+  .flow-type { border-radius: 6px; padding: 10px 8px; font-size: 11.5px; font-weight: 700; text-align: center; }
+  .flow-judge { background: #F3F4F6; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 24px; font-size: 12px; color: var(--text-muted); font-weight: 700; letter-spacing: .04em; text-align: center; }
+
+  /* Q cards */
+  .q-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; }
+  .q-card-label { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .q-card-text { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+  .q-options { display: flex; flex-direction: column; gap: 8px; }
+  .q-opt { display: flex; gap: 10px; align-items: flex-start; }
+  .opt-badge { background: var(--accent-light); color: var(--accent); font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .opt-text { font-size: 13px; }
+  .q-note { margin-top: 14px; padding: 12px 14px; background: var(--warn-bg); border-left: 3px solid var(--warn); border-radius: 0 6px 6px 0; font-size: 12px; line-height: 1.8; }
+  .q-note strong { color: var(--warn); }
+
+  /* tables */
+  .tbl-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--bg); font-weight: 700; padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border); color: var(--text-muted); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+
+  /* type pills */
+  .pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 4px; white-space: nowrap; }
+  .p1 { background: var(--t1-bg); color: var(--t1); }
+  .p2 { background: var(--t2-bg); color: var(--t2); }
+  .p3 { background: var(--t3-bg); color: var(--t3); }
+  .p4 { background: var(--t4-bg); color: var(--t4); }
+  .ptbd { background: #F3F4F6; color: var(--text-muted); }
+
+  /* notice */
+  .notice { background: var(--warn-bg); border: 1px solid #FDE68A; border-radius: 8px; padding: 14px 18px; font-size: 13px; margin-top: 16px; line-height: 1.8; }
+  .notice strong { color: var(--warn); }
+  .pending { background: #F3F4F6; border: 1px dashed var(--text-muted); border-radius: 8px; padding: 14px 18px; font-size: 13px; color: var(--text-muted); line-height: 1.8; }
+
+  .back-link { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; }
+  .back-link a { color: var(--accent); text-decoration: none; }
+  .back-link a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="doc-header">
+    <div class="eyebrow">Lotion Diagnosis — LINE Implementation Brief</div>
+    <h1>化粧水診断<br>LINE実装設計書</h1>
+    <div class="meta">作成: 2026-07-14 ／ 対象: LINEシナリオ構築担当</div>
+    <div class="badge">連携用</div>
+  </div>
+
+  <!-- 概要 -->
+  <div class="section">
+    <div class="section-title">概要</div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><td style="font-weight:700;width:160px;">診断名</td><td>あなたの化粧水タイプ診断</td></tr>
+        <tr><td style="font-weight:700;">質問数</td><td>5問（Q1〜Q5）</td></tr>
+        <tr><td style="font-weight:700;">振り分け結果</td><td>4タイプ</td></tr>
+        <tr><td style="font-weight:700;">振り分けロジック</td><td>Q5（一番気になる肌悩み）の回答のみで判定。Q1〜Q4は分岐に使わず、結果メッセージの根拠づけ・パーソナライズ用</td></tr>
+        <tr><td style="font-weight:700;">メタリフ</td><td>別途Noaから受け取り（構築前に確認）</td></tr>
+        <tr><td style="font-weight:700;">結果カード</td><td>全タイプ4枚固定・商材名は出さない（<a href="cards-lotion-diagnosis-2026-07-09.html" target="_blank">cards-lotion-diagnosis-2026-07-09.html</a>）</td></tr>
+        <tr><td style="font-weight:700;">PRカルーセル</td><td>結果メッセージの直後に送信・タイプ内商材を並列表示（<a href="cards-lotion-pr-carousel-2026-07-09.html" target="_blank">cards-lotion-pr-carousel-2026-07-09.html</a>）</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- フロー図 -->
+  <div class="section">
+    <div class="section-title">診断フロー図</div>
+    <div class="flow">
+
+      <div class="flow-q">
+        <div class="flow-q-label">Q1</div>
+        <div class="flow-q-text">年代（20代 / 30代 / 40代 / 50代以上）</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:-4px;margin-bottom:4px;">分岐に使わない。結果メッセージのパーソナライズ用に保持</div>
+
+      <div class="flow-q">
+        <div class="flow-q-label">Q2</div>
+        <div class="flow-q-text">普段の肌の状態（カサつく＋乾燥 / ベタつく / 両方 / 気にならない）</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:-4px;margin-bottom:4px;">分岐に使わない。結果カードCard2の想定シナリオ文言のベースに使用</div>
+
+      <div class="flow-q">
+        <div class="flow-q-label">Q3</div>
+        <div class="flow-q-text">洗顔後しばらくすると、肌はどんな感じ？（A〜D）</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:-4px;margin-bottom:4px;">分岐に使わない。「洗顔後に◯◯を感じるあなたは」の想定シナリオ文言のベースに使用</div>
+
+      <div class="flow-q">
+        <div class="flow-q-label">Q4</div>
+        <div class="flow-q-text">季節の変わり目に、肌の状態は変わりますか？（肌荒れしがち / ゆらぎやすい / 変わらない）</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:-4px;margin-bottom:4px;">分岐に使わない。根拠づけ・エコーバック用（特にタイプAのディセンシア訴求に活用）</div>
+
+      <div class="flow-q" style="background:#F3F4F6;border-color:var(--text-muted);">
+        <div class="flow-q-label" style="color:var(--text-muted);">Q5 — 分岐点＝最終設問</div>
+        <div class="flow-q-text">一番気になる肌悩みは？（A〜D）</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+
+      <div class="flow-judge">Q5の回答のみで振り分け（Q1〜Q4は根拠づけ用）</div>
+      <div class="flow-arrow">↓</div>
+
+      <div class="flow-types">
+        <div class="flow-type" style="background:var(--t1-bg);color:var(--t1);">うるおいチャージ型<br><span style="font-weight:400;font-size:11px;">Q5-A</span></div>
+        <div class="flow-type" style="background:var(--t2-bg);color:var(--t2);">ハリ・エイジングケア型<br><span style="font-weight:400;font-size:11px;">Q5-B</span></div>
+        <div class="flow-type" style="background:var(--t3-bg);color:var(--t3);">美白・透明感型<br><span style="font-weight:400;font-size:11px;">Q5-C</span></div>
+        <div class="flow-type" style="background:var(--t4-bg);color:var(--t4);">毛穴ケア型<br><span style="font-weight:400;font-size:11px;">Q5-D</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 質問詳細 -->
+  <div class="section">
+    <div class="section-title">質問詳細</div>
+
+    <div class="q-card">
+      <div class="q-card-label">Q1 — 年代（パーソナライズ用・分岐に使わない）</div>
+      <div class="q-card-text">あなたの年代を教えてください</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">A</span><span class="opt-text">20代</span></div>
+        <div class="q-opt"><span class="opt-badge">B</span><span class="opt-text">30代</span></div>
+        <div class="q-opt"><span class="opt-badge">C</span><span class="opt-text">40代</span></div>
+        <div class="q-opt"><span class="opt-badge">D</span><span class="opt-text">50代以上</span></div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-card-label">Q2 — 普段の肌状態（根拠づけ用・分岐に使わない）</div>
+      <div class="q-card-text">普段の肌の状態は？</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">A</span><span class="opt-text">カサつく＋乾燥しがち</span></div>
+        <div class="q-opt"><span class="opt-badge">B</span><span class="opt-text">ベタつく</span></div>
+        <div class="q-opt"><span class="opt-badge">C</span><span class="opt-text">ベタつく＋カサつきも</span></div>
+        <div class="q-opt"><span class="opt-badge">D</span><span class="opt-text">あまり気にならない</span></div>
+      </div>
+      <div class="q-note">この回答は分岐に使わず、結果カードCard2の想定シナリオ文言のベースとして保持すること。</div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-card-label">Q3 — 洗顔後の実感（根拠づけ用・分岐に使わない）</div>
+      <div class="q-card-text">洗顔後しばらくすると、肌はどんな感じ？</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">A</span><span class="opt-text">つっぱりを感じる</span></div>
+        <div class="q-opt"><span class="opt-badge">B</span><span class="opt-text">肌がゆるんでハリがない感じがする</span></div>
+        <div class="q-opt"><span class="opt-badge">C</span><span class="opt-text">顔全体がくすんで見える気がする</span></div>
+        <div class="q-opt"><span class="opt-badge">D</span><span class="opt-text">毛穴が目立つ・皮脂がにじんでくる感じがする</span></div>
+      </div>
+      <div class="q-note">Q2と対になる「その時々の実感」。分岐には使わず、結果カードCard2の想定シナリオ文言のベースに使用。</div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-card-label">Q4 — 季節変動（根拠づけ用・分岐に使わない）</div>
+      <div class="q-card-text">季節の変わり目に、肌の状態は変わりますか？</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">A</span><span class="opt-text">肌荒れしがち</span></div>
+        <div class="q-opt"><span class="opt-badge">B</span><span class="opt-text">ゆらぎやすい</span></div>
+        <div class="q-opt"><span class="opt-badge">C</span><span class="opt-text">変わらない</span></div>
+      </div>
+      <div class="q-note">分岐には使わない。根拠づけ・エコーバック用。特に<strong>タイプA（ディセンシア）</strong>で「季節の変わり目に肌が揺らぎやすいなら」の一言に活用する。</div>
+    </div>
+
+    <div class="q-card" style="border-color:var(--accent);background:var(--accent-light);">
+      <div class="q-card-label">Q5 — 一番気になる肌悩み（分岐点＝最終設問）</div>
+      <div class="q-card-text">一番気になる肌悩みは？</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">A</span><span class="opt-text">乾燥・つっぱり感、うるおい不足</span></div>
+        <div class="q-opt"><span class="opt-badge">B</span><span class="opt-text">ハリ低下・たるみ・年齢による変化</span></div>
+        <div class="q-opt"><span class="opt-badge">C</span><span class="opt-text">シミ・くすみ・透明感のなさ</span></div>
+        <div class="q-opt"><span class="opt-badge">D</span><span class="opt-text">毛穴の目立ち・皮脂の多さ</span></div>
+      </div>
+      <div class="q-note"><strong>⚠️ この回答のみでタイプが確定し、結果が直接表示される。</strong>Q1〜Q4は全タイプ共通の根拠づけ用のため、ここで初めて分岐する。</div>
+    </div>
+  </div>
+
+  <!-- 振り分けロジック -->
+  <div class="section">
+    <div class="section-title">振り分けロジック（Q5で判定）</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Q5の回答だけで振り分けします。Q1〜Q4は結果メッセージのパーソナライズ・根拠づけ用として保持してください。</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Q5の回答</th>
+            <th>振り分けタイプ</th>
+            <th>提案商品（並列表示）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A — 乾燥・つっぱり感、うるおい不足</td>
+            <td><span class="pill p1">うるおいチャージ型</span></td>
+            <td>プリマモイスト ¥1,200／ディセンシア ¥1,480／オルビスユー ¥980</td>
+          </tr>
+          <tr>
+            <td>B — ハリ低下・たるみ・年齢による変化</td>
+            <td><span class="pill p2">ハリ・エイジングケア型</span></td>
+            <td>ナールスピュア ¥3,618／ドレスリフト ¥1,200</td>
+          </tr>
+          <tr>
+            <td>C — シミ・くすみ・透明感のなさ</td>
+            <td><span class="pill p3">美白・透明感型</span></td>
+            <td>ドレススノー ¥1,580</td>
+          </tr>
+          <tr>
+            <td>D — 毛穴の目立ち・皮脂の多さ</td>
+            <td><span class="pill p4">毛穴ケア型</span></td>
+            <td>オルビス クリアフル ¥980</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="notice"><strong>⚠️ 商材重複について：</strong>オルビス クリアフルは②スキンケア方法診断「皮脂コントロール型」でも使用中。②は「テカり・皮脂コントロール」軸、③（本診断）は「化粧水で毛穴を引き締める」軸で訴求を完全分離済み（PRカルーセルのコピーも②と非流用）。実装後、②と③のCTR/CVRを比較モニタリングすること。</div>
+  </div>
+
+  <!-- メタリフ一覧 -->
+  <div class="section">
+    <div class="section-title">メタリフ一覧</div>
+    <div class="pending">受け取り次第、下表に追記します（構築前に必ず確認すること）。</div>
+    <div class="tbl-wrap" style="margin-top:16px;">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:200px;">商品</th>
+            <th>URL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="font-weight:700;">プリマモイスト</td><td style="color:var(--text-muted);">受け取り待ち</td></tr>
+          <tr><td style="font-weight:700;">ディセンシア</td><td style="color:var(--text-muted);">受け取り待ち</td></tr>
+          <tr><td style="font-weight:700;">オルビスユー</td><td style="color:var(--text-muted);">受け取り待ち</td></tr>
+          <tr><td style="font-weight:700;">ナールスピュア</td><td style="color:var(--text-muted);">受け取り待ち</td></tr>
+          <tr><td style="font-weight:700;">ドレスリフト</td><td style="color:var(--text-muted);">受け取り待ち</td></tr>
+          <tr><td style="font-weight:700;">ドレススノー</td><td style="color:var(--text-muted);">受け取り待ち</td></tr>
+          <tr><td style="font-weight:700;">オルビス クリアフル</td><td style="color:var(--text-muted);">受け取り待ち</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- タイプ別結果カード・PRカルーセル -->
+  <div class="section">
+    <div class="section-title">タイプ別 結果カード・PRカルーセル（制作済み）</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;">結果カード（タイプ発表）→ PRカルーセル（商品提案）の順で送信します。どちらも制作済みです。</p>
+
+    <div style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">① 結果カード（タイプ発表）</div>
+    <a href="cards-lotion-diagnosis-2026-07-09.html" target="_blank" style="display:inline-block;background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:700;padding:8px 18px;border-radius:6px;text-decoration:none;margin-bottom:12px;">別タブで開く →</a>
+    <iframe
+      src="cards-lotion-diagnosis-2026-07-09.html"
+      style="width:100%;height:640px;border:1px solid var(--border);border-radius:8px;display:block;margin-bottom:32px;"
+      loading="lazy"
+    ></iframe>
+
+    <div style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">② PRカルーセル（商品提案）</div>
+    <a href="cards-lotion-pr-carousel-2026-07-09.html" target="_blank" style="display:inline-block;background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:700;padding:8px 18px;border-radius:6px;text-decoration:none;margin-bottom:12px;">別タブで開く →</a>
+    <iframe
+      src="cards-lotion-pr-carousel-2026-07-09.html"
+      style="width:100%;height:640px;border:1px solid var(--border);border-radius:8px;display:block;"
+      loading="lazy"
+    ></iframe>
+  </div>
+
+  <!-- PU設置先一覧 -->
+  <div class="section">
+    <div class="section-title">PU設置先一覧</div>
+    <div class="pending">記事一覧を受け取り次第、下表に追記します。</div>
+  </div>
+
+  <!-- 実装メモ -->
+  <div class="section">
+    <div class="section-title">実装メモ</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:180px;">項目</th><th>内容</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:700;">メタリフ</td>
+            <td>振り分けロジック表に記載の7商品分。受け取り次第、メタリフ一覧に追記。構築前に必ず確認すること</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">Q1〜Q4の扱い</td>
+            <td>いずれも振り分けには使わない。Q5の回答のみでタイプが確定する（NG-2「最終設問のみが結果に紐づく」に準拠したシンプルな設計）。Q1は年代、Q2・Q3は結果カードCard2の想定シナリオ文言のベース、Q4は根拠づけ・エコーバック用（特にタイプAのディセンシア訴求）として保持</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">結果カード</td>
+            <td>商材名・価格は結果カードに一切出さない（成分名の一般名はOK）。CTA「あなたに合う化粧水を見る→」タップ後のPRカルーセルで初めて商材が並列登場する</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">タイプA・Bの商材数</td>
+            <td>タイプAは3商材、タイプBは2商材が並列表示される。タイプC・Dは1商材のみのため単一提示（結果カードの枚数は全タイプ4枚固定で変わらない）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="back-link">
+    <a href="index.html">← トップへ</a>
+  </div>
+
+</div>
+</body>
+</html>
