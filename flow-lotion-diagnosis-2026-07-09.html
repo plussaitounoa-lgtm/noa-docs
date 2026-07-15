@@ -127,7 +127,7 @@
 <div class="container">
 
   <h1>化粧水診断 v4 フロー図</h1>
-  <div class="meta">2026-07-09（v4・本日3回目の改訂／2026-07-13商材更新反映） ｜ 全5問 ｜ Q5で4タイプ分岐（タイプ判定のみ・最終設問） → 結果で商材を全部並列表示 ｜ 7商材（¥980〜¥3,618）</div>
+  <div class="meta">2026-07-09（v4・本日3回目の改訂／2026-07-13商材更新／2026-07-14セレクトカル追加）反映 ｜ 全5問 ｜ Q5で4タイプ分岐（タイプ判定のみ・最終設問） → セレクトカル（タイプA・Bのみ） → 結果で商材を全部並列表示 ｜ 7商材（¥980〜¥3,618）</div>
 
   <div class="revision-note">
     <b>v3→v4の変更点：</b> ① Q4「季節の変わり目に、肌の状態は変わりますか？」（肌荒れしがち／ゆらぎやすい／変わらない）を新規追加。タイプ分岐には使わず、根拠づけ・エコーバック用（特にタイプAのディセンシア訴求に効く）。② 旧Q5「生活習慣・原因（複数選択・回答エコー用）」を完全削除。これにより<b>タイプ確定の分岐点（旧Q4）が文字通りの最終設問（Q5）になり</b>、v3にあった「分岐後にもう1問挟む」NG-2回避トリックが不要になった。設問総数は5問のまま変わらず（入れ替えのみ）。
@@ -308,11 +308,12 @@
     Q1・Q2・Q3・Q4は全タイプ共通（ルーティングに使わない・ヒント／根拠づけのみ）。<b>Q5（一番気になる悩みは？）の回答のみ</b>でタイプが確定し、結果が直接表示される。**旧Q5（生活習慣・複数選択）を削除したことで、Q5が文字通りの最終設問＝分岐点になり**、v3にあった「分岐後にもう1問挟んで結果テンプレートを確定させる」回避トリックが不要になった。最もシンプルな形でNG-2に準拠している。
   </div>
 
-  <!-- ── 結果カード〜PRカルへの導線 ── -->
+  <!-- ── 結果カード〜セレクトカル〜PRカルへの導線 ── -->
   <div class="arr" style="margin-top:16px;">↓</div>
   <div class="node" style="max-width:640px;background:#fafafa;border:1px dashed #ccc;">
-    <div class="node-label">結果カード（4タイプ×3〜5枚・商材は並列表示）→ PRカルーセル（7商材×4枚・並列トーン）→ CTA</div>
-    <div style="font-size:11px;color:#666;margin-top:4px;">詳細は cards-lotion-diagnosis-2026-07-09.html / cards-lotion-pr-carousel-2026-07-09.html を参照</div>
+    <div class="node-label">結果カード（4タイプ×4枚・商材名は出さない）→ セレクトカル（タイプA・Bのみ・NEW）→ PRカルーセル（7商材×4枚）→ CTA</div>
+    <div style="font-size:11px;color:#666;margin-top:4px;">セレクトカル：タイプA・B（商材2〜3つ）は「あなたにおすすめの化粧水はこれ！」＋PRカルCard1のミニカードを並列表示して選ばせる（新規・未作成）。タイプC・D（商材1つ）はスキップし結果カードから直接PRカルへ。</div>
+    <div style="font-size:11px;color:#666;margin-top:4px;">詳細は cards-lotion-diagnosis-2026-07-09.html / cards-lotion-pr-carousel-2026-07-09.html / brief-lotion-diagnosis-2026-07-13.html を参照</div>
   </div>
 
   <div class="back-link"><a href="index.html">← トップへ</a></div>
