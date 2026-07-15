@@ -120,6 +120,12 @@
   .select-b { border-color: #b8863a; background: #fbf2e4; color: #8a5f1f; }
   .select-skip { border-radius: 8px; padding: 8px 6px; text-align: center; font-size: 9px; line-height: 1.6; border: 1.5px dashed #ccc; background: #f7f7f7; color: #999; }
 
+  /* PRカルーセル（最終ステップ） */
+  .pr-node { border-radius: 8px; padding: 8px 6px; text-align: center; color: #fff; font-size: 9px; line-height: 1.6; }
+  .pr-node .pr-tag2 { font-size: 8.5px; font-weight: 800; letter-spacing: .04em; display: block; margin-bottom: 3px; opacity: .85; }
+  .pr-node .pr-items { font-size: 9px; }
+  .step-label { font-size: 8px; font-weight: 700; color: #aaa; text-align: center; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 2px; }
+
   /* 凡例 */
   .legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 24px 0 16px; }
   .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #666; }
@@ -270,49 +276,81 @@
     <!-- タイプA -->
     <div class="type-col">
       <div class="arr" style="margin:0;">↓</div>
+      <div class="step-label">① 結果カード</div>
       <div class="result-node result-a">
-        <div class="result-title">結果：タイプA発表＋根拠＋商材3つ並列</div>
-        <div class="result-items">プリマモイスト ¥1,200<br>ディセンシア ¥1,480<br>オルビスユー ¥980</div>
+        <div class="result-title">タイプA発表＋根拠（4枚）</div>
+        <div class="result-items">商材名・価格は出さない</div>
       </div>
-      <div class="cv-note">Card2の根拠説明はQ2・Q3・Q4のタイプ固定想定文言。ディセンシアにQ4「季節の変わり目」への言及を添える。商材3つは常に全部表示（2026-07-13更新：エトヴォス2商材のアフィリ終了に伴い切替）</div>
+      <div class="cv-note">Card2の根拠説明はQ2・Q3・Q4のタイプ固定想定文言。ディセンシアにQ4「季節の変わり目」への言及を添える</div>
       <div class="arr" style="margin:0;">↓</div>
-      <div class="select-node select-a"><span class="select-tag">セレクトカル（NEW）</span>「あなたにおすすめの化粧水はこれ！」<br>3枚のミニカードを並列表示</div>
+      <div class="step-label">② セレクトカル（NEW）</div>
+      <div class="select-node select-a"><span class="select-tag">「あなたにおすすめの化粧水はこれ！」</span>3商材のミニカードを並列表示</div>
+      <div class="arr" style="margin:0;">↓</div>
+      <div class="step-label">③ PRカルーセル</div>
+      <div class="pr-node result-a">
+        <span class="pr-tag2">選んだ商材の詳細4枚</span>
+        <div class="pr-items">プリマモイスト ¥1,200<br>ディセンシア ¥1,480<br>オルビスユー ¥980</div>
+      </div>
     </div>
 
     <!-- タイプB -->
     <div class="type-col">
       <div class="arr" style="margin:0;">↓</div>
+      <div class="step-label">① 結果カード</div>
       <div class="result-node result-b">
-        <div class="result-title">結果：タイプB発表＋根拠＋商材2つ並列</div>
-        <div class="result-items">ナールスピュア ¥3,618<br>ドレスリフト ¥1,200</div>
+        <div class="result-title">タイプB発表＋根拠（4枚）</div>
+        <div class="result-items">商材名・価格は出さない</div>
       </div>
-      <div class="cv-note">Card2の根拠説明はQ2・Q3・Q4のタイプ固定想定文言。商材2つは常に全部表示（旧ドレスノスノーは2026-07-13にタイプCへ移動）</div>
+      <div class="cv-note">Card2の根拠説明はQ2・Q3・Q4のタイプ固定想定文言（旧ドレスノスノーは2026-07-13にタイプCへ移動）</div>
       <div class="arr" style="margin:0;">↓</div>
-      <div class="select-node select-b"><span class="select-tag">セレクトカル（NEW）</span>「あなたにおすすめの化粧水はこれ！」<br>2枚のミニカードを並列表示</div>
+      <div class="step-label">② セレクトカル（NEW）</div>
+      <div class="select-node select-b"><span class="select-tag">「あなたにおすすめの化粧水はこれ！」</span>2商材のミニカードを並列表示</div>
+      <div class="arr" style="margin:0;">↓</div>
+      <div class="step-label">③ PRカルーセル</div>
+      <div class="pr-node result-b">
+        <span class="pr-tag2">選んだ商材の詳細4枚</span>
+        <div class="pr-items">ナールスピュア ¥3,618<br>ドレスリフト ¥1,200</div>
+      </div>
     </div>
 
     <!-- タイプC -->
     <div class="type-col">
       <div class="arr" style="margin:0;">↓</div>
+      <div class="step-label">① 結果カード</div>
       <div class="result-node result-c">
-        <div class="result-title">結果：タイプC発表＋根拠＋商材1つ</div>
-        <div class="result-items">ドレススノー ¥1,580</div>
+        <div class="result-title">タイプC発表＋根拠（4枚）</div>
+        <div class="result-items">商材名・価格は出さない</div>
       </div>
       <div class="cv-note">商材1つのみのため並列表示ではなく単一提示（構成上の制約）。2026-07-13：エトヴォス美白美容液のアフィリ終了に伴いアテニア ドレススノーに切替（B→C移動）</div>
       <div class="arr" style="margin:0;">↓</div>
+      <div class="step-label">② セレクトカル</div>
       <div class="select-skip">選ぶものがないためスキップ<br>（商材1つのみ）</div>
+      <div class="arr" style="margin:0;">↓</div>
+      <div class="step-label">③ PRカルーセル</div>
+      <div class="pr-node result-c">
+        <span class="pr-tag2">単一商材の詳細4枚</span>
+        <div class="pr-items">ドレススノー ¥1,580</div>
+      </div>
     </div>
 
     <!-- タイプD -->
     <div class="type-col">
       <div class="arr" style="margin:0;">↓</div>
+      <div class="step-label">① 結果カード</div>
       <div class="result-node result-d">
-        <div class="result-title">結果：タイプD発表＋根拠＋商材1つ</div>
-        <div class="result-items">オルビス クリアフル ¥980</div>
+        <div class="result-title">タイプD発表＋根拠（4枚）</div>
+        <div class="result-items">商材名・価格は出さない</div>
       </div>
       <div class="cv-note">商材1つのみのため単一提示。②スキンケア診断と同一商材（訴求軸を分離済み・11章参照）</div>
       <div class="arr" style="margin:0;">↓</div>
+      <div class="step-label">② セレクトカル</div>
       <div class="select-skip">選ぶものがないためスキップ<br>（商材1つのみ）</div>
+      <div class="arr" style="margin:0;">↓</div>
+      <div class="step-label">③ PRカルーセル</div>
+      <div class="pr-node result-d">
+        <span class="pr-tag2">単一商材の詳細4枚</span>
+        <div class="pr-items">オルビス クリアフル ¥980</div>
+      </div>
     </div>
 
   </div>
@@ -323,12 +361,11 @@
     Q1・Q2・Q3・Q4は全タイプ共通（ルーティングに使わない・ヒント／根拠づけのみ）。<b>Q5（一番気になる悩みは？）の回答のみ</b>でタイプが確定し、結果が直接表示される。**旧Q5（生活習慣・複数選択）を削除したことで、Q5が文字通りの最終設問＝分岐点になり**、v3にあった「分岐後にもう1問挟んで結果テンプレートを確定させる」回避トリックが不要になった。最もシンプルな形でNG-2に準拠している。
   </div>
 
-  <!-- ── 結果カード〜セレクトカル〜PRカルへの導線 ── -->
+  <!-- ── 参考ドキュメント ── -->
   <div class="arr" style="margin-top:16px;">↓</div>
   <div class="node" style="max-width:640px;background:#fafafa;border:1px dashed #ccc;">
-    <div class="node-label">結果カード（4タイプ×4枚・商材名は出さない）→ セレクトカル（タイプA・Bのみ・NEW）→ PRカルーセル（7商材×4枚）→ CTA</div>
-    <div style="font-size:11px;color:#666;margin-top:4px;">セレクトカル：タイプA・B（商材2〜3つ）は「あなたにおすすめの化粧水はこれ！」＋PRカルCard1のミニカードを並列表示して選ばせる（新規・未作成）。タイプC・D（商材1つ）はスキップし結果カードから直接PRカルへ。</div>
-    <div style="font-size:11px;color:#666;margin-top:4px;">詳細は cards-lotion-diagnosis-2026-07-09.html / cards-lotion-pr-carousel-2026-07-09.html / brief-lotion-diagnosis-2026-07-13.html を参照</div>
+    <div class="node-label">CTA（LINEを閉じる／記事に戻る）</div>
+    <div style="font-size:11px;color:#666;margin-top:4px;">各ステップの詳細は cards-lotion-diagnosis-2026-07-09.html（結果カード）／ cards-lotion-pr-carousel-2026-07-09.html（PRカルーセル）／ brief-lotion-diagnosis-2026-07-13.html（セレクトカル含む依頼書）を参照</div>
   </div>
 
   <div class="back-link"><a href="index.html">← トップへ</a></div>
