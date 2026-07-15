@@ -113,6 +113,13 @@
 
   .cv-note { font-size: 9.5px; color: #888; text-align: center; margin-top: 2px; line-height: 1.5; }
 
+  /* セレクトカル（NEW・タイプA・Bのみ） */
+  .select-node { border-radius: 8px; padding: 8px 6px; text-align: center; font-size: 9px; line-height: 1.6; border: 1.5px dashed; }
+  .select-node .select-tag { font-size: 8.5px; font-weight: 800; letter-spacing: .04em; display: block; margin-bottom: 3px; }
+  .select-a { border-color: #3a94b8; background: #eaf4f8; color: #1a6a85; }
+  .select-b { border-color: #b8863a; background: #fbf2e4; color: #8a5f1f; }
+  .select-skip { border-radius: 8px; padding: 8px 6px; text-align: center; font-size: 9px; line-height: 1.6; border: 1.5px dashed #ccc; background: #f7f7f7; color: #999; }
+
   /* 凡例 */
   .legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 24px 0 16px; }
   .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #666; }
@@ -268,6 +275,8 @@
         <div class="result-items">プリマモイスト ¥1,200<br>ディセンシア ¥1,480<br>オルビスユー ¥980</div>
       </div>
       <div class="cv-note">Card2の根拠説明はQ2・Q3・Q4のタイプ固定想定文言。ディセンシアにQ4「季節の変わり目」への言及を添える。商材3つは常に全部表示（2026-07-13更新：エトヴォス2商材のアフィリ終了に伴い切替）</div>
+      <div class="arr" style="margin:0;">↓</div>
+      <div class="select-node select-a"><span class="select-tag">セレクトカル（NEW）</span>「あなたにおすすめの化粧水はこれ！」<br>3枚のミニカードを並列表示</div>
     </div>
 
     <!-- タイプB -->
@@ -278,6 +287,8 @@
         <div class="result-items">ナールスピュア ¥3,618<br>ドレスリフト ¥1,200</div>
       </div>
       <div class="cv-note">Card2の根拠説明はQ2・Q3・Q4のタイプ固定想定文言。商材2つは常に全部表示（旧ドレスノスノーは2026-07-13にタイプCへ移動）</div>
+      <div class="arr" style="margin:0;">↓</div>
+      <div class="select-node select-b"><span class="select-tag">セレクトカル（NEW）</span>「あなたにおすすめの化粧水はこれ！」<br>2枚のミニカードを並列表示</div>
     </div>
 
     <!-- タイプC -->
@@ -288,6 +299,8 @@
         <div class="result-items">ドレススノー ¥1,580</div>
       </div>
       <div class="cv-note">商材1つのみのため並列表示ではなく単一提示（構成上の制約）。2026-07-13：エトヴォス美白美容液のアフィリ終了に伴いアテニア ドレススノーに切替（B→C移動）</div>
+      <div class="arr" style="margin:0;">↓</div>
+      <div class="select-skip">選ぶものがないためスキップ<br>（商材1つのみ）</div>
     </div>
 
     <!-- タイプD -->
@@ -298,6 +311,8 @@
         <div class="result-items">オルビス クリアフル ¥980</div>
       </div>
       <div class="cv-note">商材1つのみのため単一提示。②スキンケア診断と同一商材（訴求軸を分離済み・11章参照）</div>
+      <div class="arr" style="margin:0;">↓</div>
+      <div class="select-skip">選ぶものがないためスキップ<br>（商材1つのみ）</div>
     </div>
 
   </div>
