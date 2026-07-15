@@ -77,6 +77,27 @@
   .quote-box::before { content: '"'; }
   .quote-box::after { content: '"'; }
 
+  /* D-1クリアフル：②スキンケア診断PRカルーセルからそのまま移植（Noa指示・2026-07-14） */
+  .point-badge { color: #fff; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 4px; white-space: nowrap; line-height: 1.3; text-align: center; }
+  .point-badge .num { font-size: 16px; display: block; line-height: 1; }
+  .point-headline { font-size: 12px; font-weight: 800; color: #222; line-height: 1.35; flex: 1; }
+  .product-eyebrow { font-size: 9px; color: #888; margin-bottom: 3px; }
+  .product-badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 3px; margin-bottom: 6px; }
+  .product-badge { font-size: 8.5px; padding: 2px 6px; border-radius: 3px; font-weight: 600; }
+  .card-body { padding: 10px 11px 8px; flex: 1; }
+  .body-headline { font-size: 13px; font-weight: 800; color: #1a1a1a; margin-bottom: 6px; line-height: 1.45; }
+  .body-text { font-size: 10.5px; color: #555; line-height: 1.75; }
+  .set-section { padding: 7px 11px; }
+  .set-item { font-size: 10px; color: #333; padding: 3px 0 3px 12px; position: relative; border-bottom: 1px dotted #eee; line-height: 1.45; }
+  .set-item:last-child { border-bottom: none; }
+  .set-item::before { content: "●"; position: absolute; left: 0; font-size: 7px; top: 5px; }
+  .set-item .item-sub { font-size: 9px; color: #888; display: block; }
+  .price-main-row { display: flex; align-items: flex-end; gap: 5px; }
+  .init-badge-sm { color: #fff; font-size: 8px; font-weight: 800; padding: 1px 6px; border-radius: 3px; white-space: nowrap; align-self: center; }
+  .trust-row { display: flex; gap: 4px; padding: 6px 11px; }
+  .trust-badge { flex: 1; border-radius: 5px; padding: 4px 2px; font-size: 8.5px; font-weight: 700; text-align: center; line-height: 1.4; border: 1px solid; }
+  .price-cross { font-size: 11px; color: #999; text-decoration: line-through; }
+
   .cta-wrap { padding: 8px 10px 12px; margin-top: auto; }
   .cta-btn { display: block; width: 100%; border: none; border-radius: 50px; padding: 10px 8px; font-size: 11.5px; font-weight: 800; color: #fff; text-align: center; cursor: pointer; line-height: 1.35; box-shadow: 0 3px 6px rgba(0,0,0,0.2); position: relative; background: linear-gradient(180deg, #5cb85c 0%, #3d8b3d 100%); }
   .cta-arrow { margin-left: 4px; }
@@ -845,88 +866,194 @@
     <span class="type-label" style="color:#1a63b8;">🟤 タイプD（新規）｜オルビス クリアフル PRカル</span>
     <span class="type-sub">¥980（14日間トライアル・通常¥1,320）｜タイプD唯一の商材（並列表示なし）</span>
   </div>
-  <div class="ec-note">商材重複リスク対応：この商材は②スキンケア方法診断「皮脂コントロール型」でも使用中。②は「テカり・皮脂コントロール」軸（洗っても崩れる→皮脂分泌そのものを整える）で訴求しているため、③（本診断）は<b>「毛穴詰まり・毛穴の目立ちを引き締める」軸</b>に統一し、Card1〜4とも②の文言を一切再利用せず新規で書いた。<b>価格・セット内容・成分は公式LP確認済み</b>（「ニキビ・毛穴対策スターターセット」初回限定¥980・税込・通常¥1,320／ウォッシュ20g・ローション40mL・モイスチャー14gの14日間分）。</div>
+  <div class="ec-note">この商材は②スキンケア方法診断「皮脂コントロール型」でも使用中。既に②で作り込み・検証済みのPRカルーセル（<a href="cards-skincare-pr-carousel-2026-07-01.html" target="_blank">cards-skincare-pr-carousel-2026-07-01.html</a>）と<b>同一内容をそのまま流用</b>（Noa指示・2026-07-14）。Card1〜4とも②のCard1〜4と同一。</div>
   <div class="note-box">成分名は公式LP記載の実訴求（グリチルリチン酸ジカリウム／5種和漢植物エキス／ナノVCショットカプセル等）に更新済み。アフィリリンクは設置前に要確認（残タスク参照）。</div>
   <div class="cards-row">
 
     <!-- Card 1 -->
     <div class="card">
-      <div class="brand-bar" style="background:linear-gradient(90deg,#1a63b8,#5b9bd8);"><span class="brand-name">ORBIS</span><span class="pr-tag">PR</span></div>
-      <div style="display:flex;justify-content:center;padding:6px 8px 0;">
-        <span style="font-size:8px;font-weight:800;padding:3px 9px;border-radius:10px;background:#f7e9c9;border:1px solid #d9b95a;color:#8a6a1f;">累計販売 6,000万個以上</span>
+      <div class="brand-bar" style="background:linear-gradient(90deg,#005bac,#1976d2);"><span class="brand-name">ORBIS</span><span class="pr-tag">PR</span></div>
+      <div class="img-area" style="height:140px;background:#e8f2ff;">
+        <div class="img-icon" style="color:#005bac;opacity:0.35;">🧴</div>
+        <div class="img-label" style="color:#4070a0;">商品パッケージ写真</div>
       </div>
-      <div style="display:flex;justify-content:center;gap:8px;padding:8px 8px 0;">
-        <div style="width:54px;height:54px;border-radius:50%;border:2px solid #1a63b8;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
-          <div style="font-size:6.5px;color:#1a63b8;font-weight:700;">愛用者</div>
-          <div style="font-size:13px;font-weight:800;color:#1a63b8;line-height:1.1;">509<span style="font-size:6.5px;">万人</span></div>
+      <!-- 実績バッジ（LPより） -->
+      <div style="background:#f0f8ff;border-bottom:1px solid #c8ddf8;padding:6px 8px;display:flex;align-items:center;justify-content:space-between;gap:4px;">
+        <!-- バッジ1: 累計販売 -->
+        <div style="flex:1;text-align:center;">
+          <svg width="60" height="60" viewBox="0 0 60 60">
+            <defs><linearGradient id="dog1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f9d060"/><stop offset="50%" stop-color="#e8a820"/><stop offset="100%" stop-color="#c8860a"/></linearGradient></defs>
+            <path d="M8,30 Q6,22 10,16 Q13,20 12,28 Z" fill="#c8860a" opacity="0.7"/>
+            <path d="M10,34 Q7,26 11,20 Q14,24 13,32 Z" fill="#e8a820" opacity="0.6"/>
+            <path d="M52,30 Q54,22 50,16 Q47,20 48,28 Z" fill="#c8860a" opacity="0.7"/>
+            <path d="M50,34 Q53,26 49,20 Q46,24 47,32 Z" fill="#e8a820" opacity="0.6"/>
+            <circle cx="30" cy="32" r="24" fill="url(#dog1)" stroke="#c8860a" stroke-width="1"/>
+            <circle cx="30" cy="32" r="20" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
+            <text x="30" y="24" text-anchor="middle" font-size="5" fill="#888">累計販売</text>
+            <text x="30" y="33" text-anchor="middle" font-size="8.5" font-weight="900" fill="#1a1a1a">6,000万</text>
+            <text x="30" y="41" text-anchor="middle" font-size="5.5" font-weight="700" fill="#005bac">個以上</text>
+          </svg>
         </div>
-        <div style="width:54px;height:54px;border-radius:50%;border:2px solid #1a63b8;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
-          <div style="font-size:6.5px;color:#1a63b8;font-weight:700;">使用感満足度</div>
-          <div style="font-size:13px;font-weight:800;color:#1a63b8;line-height:1.1;">93%</div>
+        <!-- バッジ2: 愛用者 -->
+        <div style="flex:1;text-align:center;">
+          <svg width="60" height="60" viewBox="0 0 60 60">
+            <defs><linearGradient id="dog2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f9d060"/><stop offset="50%" stop-color="#e8a820"/><stop offset="100%" stop-color="#c8860a"/></linearGradient></defs>
+            <path d="M8,30 Q6,22 10,16 Q13,20 12,28 Z" fill="#c8860a" opacity="0.7"/>
+            <path d="M10,34 Q7,26 11,20 Q14,24 13,32 Z" fill="#e8a820" opacity="0.6"/>
+            <path d="M52,30 Q54,22 50,16 Q47,20 48,28 Z" fill="#c8860a" opacity="0.7"/>
+            <path d="M50,34 Q53,26 49,20 Q46,24 47,32 Z" fill="#e8a820" opacity="0.6"/>
+            <circle cx="30" cy="32" r="24" fill="url(#dog2)" stroke="#c8860a" stroke-width="1"/>
+            <circle cx="30" cy="32" r="20" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
+            <text x="30" y="24" text-anchor="middle" font-size="5" fill="#888">愛用者</text>
+            <text x="30" y="33" text-anchor="middle" font-size="8.5" font-weight="900" fill="#1a1a1a">509万人</text>
+            <text x="30" y="41" text-anchor="middle" font-size="5" fill="#666">（累計）</text>
+          </svg>
         </div>
-      </div>
-      <div class="img-area" style="background:#e8f0f6;height:80px;">
-        <div class="img-icon" style="color:#1a63b8;">🧴</div>
-        <div class="img-label" style="color:#1a63b8;">商品パッケージ写真</div>
-      </div>
-      <div class="catch-section">
-        <div class="catch-copy">ニキビも、毛穴詰まりも。<br>もう、悩まない。</div>
+        <!-- バッジ3: 満足度 -->
+        <div style="flex:1;text-align:center;">
+          <svg width="60" height="60" viewBox="0 0 60 60">
+            <defs><linearGradient id="dog3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f9d060"/><stop offset="50%" stop-color="#e8a820"/><stop offset="100%" stop-color="#c8860a"/></linearGradient></defs>
+            <path d="M8,30 Q6,22 10,16 Q13,20 12,28 Z" fill="#c8860a" opacity="0.7"/>
+            <path d="M10,34 Q7,26 11,20 Q14,24 13,32 Z" fill="#e8a820" opacity="0.6"/>
+            <path d="M52,30 Q54,22 50,16 Q47,20 48,28 Z" fill="#c8860a" opacity="0.7"/>
+            <path d="M50,34 Q53,26 49,20 Q46,24 47,32 Z" fill="#e8a820" opacity="0.6"/>
+            <circle cx="30" cy="32" r="24" fill="url(#dog3)" stroke="#c8860a" stroke-width="1"/>
+            <circle cx="30" cy="32" r="20" fill="#fff" stroke="#e8a820" stroke-width="0.8"/>
+            <text x="30" y="23" text-anchor="middle" font-size="4.5" fill="#888">使用感</text>
+            <text x="30" y="29" text-anchor="middle" font-size="4.5" fill="#888">満足度</text>
+            <text x="30" y="38" text-anchor="middle" font-size="10" font-weight="900" fill="#1a1a1a">93%</text>
+          </svg>
+        </div>
       </div>
       <div class="product-section">
-        <div class="product-name">クリアフル 14日間トライアルセット</div>
+        <div class="product-eyebrow">あなたにおすすめの化粧水はこちら</div>
+        <div class="product-name">クリアフル<br>ニキビ・毛穴対策スターターセット</div>
+        <div class="product-badges">
+          <span class="product-badge" style="background:#e8f2ff;border:1px solid #90bef0;color:#005bac;">テカらない肌へ</span>
+          <span class="product-badge" style="background:#e8f2ff;border:1px solid #90bef0;color:#005bac;">毛穴ケア</span>
+          <span class="product-badge" style="background:#e8f2ff;border:1px solid #90bef0;color:#005bac;">14日間トライアル</span>
+        </div>
       </div>
-      <div class="price-section" style="background:#e8f0f6;border-color:#c3d6e6;">
-        <div class="price-label-sm">初回限定トライアル価格</div>
-        <div class="price-num" style="color:#1a63b8;">980<span class="price-suffix">円（税込・通常¥1,320）</span></div>
+      <div class="price-section" style="background:#f0f8ff;border-color:#c8ddf8;">
+        <div class="price-label-sm">初回限定特別価格</div>
+        <div class="price-main-row">
+          <span class="init-badge-sm" style="background:#c0392b;">初回限定</span>
+          <span class="price-num">980</span>
+          <span class="price-suffix">円（税込）</span>
+        </div>
       </div>
-      <div class="cta-wrap"><button class="cta-btn" style="background:linear-gradient(180deg,#5b9bd8,#1a63b8);"><span style="display:block;font-size:9px;font-weight:700;opacity:0.9;margin-bottom:2px;">＼初回限定 980円／</span>お得に試してみる <span class="cta-arrow">›</span></button></div>
+      <div class="cta-wrap"><button class="cta-btn" style="background:linear-gradient(180deg,#44bb3a,#2e9630);">詳しく見てみる <span class="cta-arrow">›</span></button></div>
     </div>
 
     <!-- Card 2 -->
     <div class="card">
-      <div class="brand-bar" style="background:linear-gradient(90deg,#1a63b8,#5b9bd8);"><span class="brand-name">ORBIS</span><span class="pr-tag">PR</span></div>
-      <div style="padding:14px 10px 6px;text-align:center;">
-        <div style="font-size:13px;font-weight:800;color:#1a63b8;line-height:1.4;">毛穴の目立ちにアプローチ<br>する成分を配合</div>
+      <div class="brand-bar" style="background:linear-gradient(90deg,#005bac,#1976d2);"><span class="brand-name">ORBIS</span><span class="pr-tag">PR</span></div>
+      <div class="point-row" style="background:#e8f2ff;">
+        <div class="point-badge" style="background:linear-gradient(135deg,#005bac,#1976d2);">Point<span class="num">1</span></div>
+        <div class="point-headline">ニキビ・毛穴の2つの原因に<br>Wアプローチ</div>
       </div>
-      <div class="ing-list">
-        <div class="ing-item"><span class="ing-check" style="color:#1a63b8;">①</span><div><div class="ing-name">グリチルリチン酸ジカリウム（有効成分）</div><div class="ing-desc">炎症を抑え、ニキビ・毛穴詰まりの原因にアプローチ（医薬部外品）</div></div></div>
-        <div class="ing-item"><span class="ing-check" style="color:#1a63b8;">②</span><div><div class="ing-name">5種和漢植物エキス（ハトムギ・紫根等）</div><div class="ing-desc">肌あれを防ぎ、キメを整えて毛穴の目立ちを引き締める</div></div></div>
+      <!-- Wアプローチ図 -->
+      <div style="background:linear-gradient(180deg,#f0f8ff,#e8f2ff);padding:8px 8px 10px;text-align:center;">
+        <svg width="196" height="168" viewBox="0 0 196 168">
+          <rect width="196" height="168" rx="8" fill="#eef5fc"/>
+          <circle cx="74" cy="62" r="48" fill="#1565c0" opacity="0.88"/>
+          <circle cx="122" cy="62" r="48" fill="#42a5f5" opacity="0.72"/>
+          <text x="54" y="49" text-anchor="middle" font-size="8.5" font-weight="900" fill="#fff">01</text>
+          <text x="54" y="62" text-anchor="middle" font-size="7.5" font-weight="700" fill="#fff">バリア機能</text>
+          <text x="54" y="73" text-anchor="middle" font-size="7.5" font-weight="700" fill="#fff">の低下・乾燥</text>
+          <text x="142" y="54" text-anchor="middle" font-size="8.5" font-weight="900" fill="#fff">02</text>
+          <text x="142" y="67" text-anchor="middle" font-size="7.5" font-weight="700" fill="#fff">毛穴悩み</text>
+          <text x="98" y="69" text-anchor="middle" font-size="17" font-weight="900" fill="#fff" opacity="0.95">W</text>
+          <polygon points="98,114 92,104 104,104" fill="#1565c0" opacity="0.6"/>
+          <rect x="6" y="118" width="184" height="20" rx="5" fill="#1565c0" opacity="0.12" stroke="#90bef0" stroke-width="1"/>
+          <text x="98" y="126" text-anchor="middle" font-size="7" font-weight="700" fill="#003a7a">① 5種の和漢植物由来成分＋コラーゲン</text>
+          <text x="98" y="135" text-anchor="middle" font-size="6.5" fill="#1565c0">バリア機能を整え、肌荒れを防ぐ</text>
+          <rect x="6" y="142" width="184" height="20" rx="5" fill="#42a5f5" opacity="0.12" stroke="#90bef0" stroke-width="1"/>
+          <text x="98" y="150" text-anchor="middle" font-size="7" font-weight="700" fill="#003a7a">② ナノVCショットカプセル</text>
+          <text x="98" y="159" text-anchor="middle" font-size="6.5" fill="#1565c0">1nmカプセルが毛穴の奥まで浸透</text>
+        </svg>
       </div>
-      <div class="cta-wrap"><button class="cta-btn" style="background:linear-gradient(180deg,#5b9bd8,#1a63b8);"><span style="display:block;font-size:9px;font-weight:700;opacity:0.9;margin-bottom:2px;">＼初回限定 980円／</span>お得に試してみる <span class="cta-arrow">›</span></button></div>
+      <div class="card-body">
+        <div class="body-text" style="text-align:center;font-weight:700;color:#004a8a;">ニキビの2つの根本原因に同時アプローチ</div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn" style="background:linear-gradient(180deg,#44bb3a,#2e9630);">詳しく見てみる <span class="cta-arrow">›</span></button></div>
     </div>
 
     <!-- Card 3 -->
     <div class="card">
-      <div class="brand-bar" style="background:linear-gradient(90deg,#1a63b8,#5b9bd8);"><span class="brand-name">ORBIS</span><span class="pr-tag">PR</span></div>
-      <div style="padding:14px 10px 6px;text-align:center;">
-        <div style="font-size:13px;font-weight:800;color:#1a63b8;line-height:1.4;">ナノVCショットカプセルが<br>毛穴の奥まで浸透</div>
+      <div class="brand-bar" style="background:linear-gradient(90deg,#005bac,#1976d2);"><span class="brand-name">ORBIS</span><span class="pr-tag">PR</span></div>
+      <div class="point-row" style="background:#e8f2ff;">
+        <div class="point-badge" style="background:linear-gradient(135deg,#005bac,#1976d2);">Point<span class="num">2</span></div>
+        <div class="point-headline">洗う・整える・守る<br>3ステップで完結</div>
       </div>
-      <div style="padding:0 12px 8px;text-align:center;">
-        <div style="font-size:9.5px;color:#1a63b8;line-height:1.7;">ビタミンC誘導体を微細カプセル化し、角層まで届けて皮脂・毛穴の目立ちにアプローチ。</div>
+      <div style="background:linear-gradient(180deg,#f0f8ff,#e8f2ff);padding:8px 8px 10px;">
+        <div style="background:#fff;border-radius:6px;border:1px solid #c8ddf8;padding:6px 8px;margin-bottom:5px;display:flex;align-items:flex-start;gap:7px;">
+          <div style="flex-shrink:0;background:linear-gradient(135deg,#005bac,#1976d2);color:#fff;font-size:7px;font-weight:900;line-height:1.2;padding:3px 4px;border-radius:4px;text-align:center;min-width:28px;">STEP<br><span style="font-size:12px;line-height:1;">1</span></div>
+          <div style="flex:1;">
+            <div style="font-size:8px;color:#888;font-weight:600;margin-bottom:1px;">洗顔料｜クリアフルウォッシュ</div>
+            <div style="font-size:9px;font-weight:800;color:#003a7a;line-height:1.35;">濃密泡で角栓をやさしく溶かす</div>
+            <div style="font-size:7.5px;color:#555;margin-top:2px;line-height:1.4;">アミノ酸系洗浄成分で<br>肌を守りながら毛穴ケア</div>
+          </div>
+        </div>
+        <div style="text-align:center;line-height:1;margin:2px 0;color:#90bef0;font-size:11px;">▼</div>
+        <div style="background:#fff;border-radius:6px;border:1px solid #c8ddf8;padding:6px 8px;margin-bottom:5px;display:flex;align-items:flex-start;gap:7px;">
+          <div style="flex-shrink:0;background:linear-gradient(135deg,#005bac,#1976d2);color:#fff;font-size:7px;font-weight:900;line-height:1.2;padding:3px 4px;border-radius:4px;text-align:center;min-width:28px;">STEP<br><span style="font-size:12px;line-height:1;">2</span></div>
+          <div style="flex:1;">
+            <div style="font-size:8px;color:#888;font-weight:600;margin-bottom:1px;">化粧水｜クリアフルローション</div>
+            <div style="font-size:9px;font-weight:800;color:#003a7a;line-height:1.35;">毛穴まで届く高浸透化粧水</div>
+            <div style="font-size:7.5px;color:#555;margin-top:2px;line-height:1.4;">さっぱり・しっとり<br>2テクスチャーから選べる</div>
+          </div>
+        </div>
+        <div style="text-align:center;line-height:1;margin:2px 0;color:#90bef0;font-size:11px;">▼</div>
+        <div style="background:#fff;border-radius:6px;border:1px solid #c8ddf8;padding:6px 8px;display:flex;align-items:flex-start;gap:7px;">
+          <div style="flex-shrink:0;background:linear-gradient(135deg,#005bac,#1976d2);color:#fff;font-size:7px;font-weight:900;line-height:1.2;padding:3px 4px;border-radius:4px;text-align:center;min-width:28px;">STEP<br><span style="font-size:12px;line-height:1;">3</span></div>
+          <div style="flex:1;">
+            <div style="font-size:8px;color:#888;font-weight:600;margin-bottom:1px;">保湿液｜クリアフルモイスチャー</div>
+            <div style="font-size:9px;font-weight:800;color:#003a7a;line-height:1.35;">バリア膜でうるおいをキープ</div>
+            <div style="font-size:7.5px;color:#555;margin-top:2px;line-height:1.4;">スムースストレッチ処方で<br>毛穴の凹凸を目立たなく</div>
+          </div>
+        </div>
       </div>
-      <div style="text-align:center;font-size:12px;font-weight:800;color:#1a63b8;padding:6px 10px;">まずは14日間、しっかり試せる</div>
-      <div class="cta-wrap"><button class="cta-btn" style="background:linear-gradient(180deg,#5b9bd8,#1a63b8);"><span style="display:block;font-size:9px;font-weight:700;opacity:0.9;margin-bottom:2px;">＼初回限定 980円／</span>お得に試してみる <span class="cta-arrow">›</span></button></div>
+      <div style="margin:8px 10px 4px;">
+        <div style="background:linear-gradient(135deg,#005bac,#1976d2);border-radius:8px;padding:8px 10px;text-align:center;">
+          <div style="color:rgba(255,255,255,0.75);font-size:8px;font-weight:600;letter-spacing:0.08em;margin-bottom:2px;">このセット1つで</div>
+          <div style="color:#fff;font-size:12px;font-weight:900;line-height:1.4;letter-spacing:0.02em;">毎日のルーティンが完成</div>
+          <div style="color:rgba(255,255,255,0.8);font-size:8px;margin-top:3px;">洗顔→化粧水→保湿液　3ステップ</div>
+        </div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn" style="background:linear-gradient(180deg,#44bb3a,#2e9630);">詳しく見てみる <span class="cta-arrow">›</span></button></div>
     </div>
 
     <!-- Card 4 -->
     <div class="card">
-      <div class="brand-bar" style="background:linear-gradient(90deg,#1a63b8,#5b9bd8);"><span class="brand-name">ORBIS</span><span class="pr-tag">PR</span></div>
-      <div style="text-align:center;padding:10px 10px 4px;">
-        <div style="font-size:12px;font-weight:800;color:#1a63b8;">まずは14日間、<br>毛穴・ニキビケアを試せる</div>
+      <div class="brand-bar" style="background:linear-gradient(90deg,#005bac,#1976d2);"><span class="brand-name">ORBIS</span><span class="pr-tag">PR</span></div>
+      <div class="card-body" style="padding-bottom:4px;">
+        <div class="body-headline">オルビス初めての方限定<br>スターターセット</div>
       </div>
-      <div style="padding:6px 10px 2px;text-align:center;">
-        <div style="font-size:9.5px;font-weight:700;color:#1a63b8;margin-bottom:4px;">セット内容（14日間分）</div>
-        <div style="font-size:10px;color:#333;line-height:1.8;">
-          ・ウォッシュ 20g<br>
-          ・ローション 40mL<br>
-          ・モイスチャー 14g
+      <div class="set-section">
+        <div class="set-item">ニキビ・毛穴対策ローション（2包）<span class="item-sub">さっぱり／リッチの2テクスチャー</span></div>
+        <div class="set-item">ニキビ・毛穴対策モイスチャライザー（2包）<span class="item-sub">14日間トライアル分</span></div>
+      </div>
+      <div style="margin:6px 10px;background:#fffbe6;border:1.5px dashed #f0c030;border-radius:8px;padding:7px 9px;">
+        <div style="font-size:8px;font-weight:800;color:#b8860b;letter-spacing:0.06em;text-align:center;margin-bottom:4px;">✦ 公式ページ限定特典 ✦</div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="font-size:20px;flex-shrink:0;">🎁</div>
+          <div>
+            <div style="font-size:9.5px;font-weight:900;color:#1a1a1a;line-height:1.3;">オリジナルヘアバンド<br>プレゼント！</div>
+            <div style="font-size:7.5px;color:#666;margin-top:2px;line-height:1.4;">高島屋×オルビス企画。ふわふわ素材で<br>生え際までしっかりキャッチ。</div>
+          </div>
         </div>
       </div>
-      <div class="price-section" style="background:#e8f0f6;border:2px solid #1a63b8;border-radius:8px;margin:6px 10px 4px;">
-        <div class="price-label-sm">初回限定トライアル価格</div>
-        <div class="price-num" style="color:#1a63b8;">980<span class="price-suffix">円（税込・通常¥1,320）</span></div>
+      <div class="price-section" style="background:#f0f8ff;border-color:#c8ddf8;">
+        <div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;"><span class="price-cross">通常価格 ¥2,200</span><span style="font-size:13px;color:#c0392b;font-weight:700;">→</span></div>
+        <div class="price-main-row"><span class="init-badge-sm" style="background:#c0392b;">初回限定</span><span class="price-num">980</span><span class="price-suffix">円（税込）</span></div>
       </div>
-      <div class="cta-wrap"><button class="cta-btn" style="background:linear-gradient(180deg,#5b9bd8,#1a63b8);"><span style="display:block;font-size:9px;font-weight:700;opacity:0.9;margin-bottom:2px;">＼初回限定 980円／</span>お得に試してみる <span class="cta-arrow">›</span></button></div>
+      <div class="trust-row">
+        <div class="trust-badge" style="background:#e8f2ff;border-color:#90bef0;color:#005bac;">🚚<br>送料<br>無料</div>
+        <div class="trust-badge" style="background:#e8f2ff;border-color:#90bef0;color:#005bac;">↩️<br>返品<br>対応あり</div>
+        <div class="trust-badge" style="background:#e8f2ff;border-color:#90bef0;color:#005bac;">⚡<br>最短<br>翌日発送</div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn" style="background:linear-gradient(180deg,#44bb3a,#2e9630);">ご購入はこちら <span class="cta-arrow">›</span></button></div>
     </div>
 
   </div>
