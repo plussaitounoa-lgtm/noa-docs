@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>シミ クリニック選び診断 設計書</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F7F9F8; --surface: #FFFFFF; --border: #DDE8E3;
+    --text: #1A2420; --muted: #5A6E68; --accent: #3A9E78; --accent-light: #EBF6F1;
+  }
+  body { font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.75; padding: 32px 16px 80px; }
+  .doc { max-width: 860px; margin: 0 auto; }
+  .doc-header { border-left: 4px solid var(--accent); padding: 0 0 0 20px; margin-bottom: 40px; }
+  .doc-header .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .doc-header h1 { font-size: 22px; font-weight: 700; line-height: 1.35; }
+  .doc-header .meta { margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .section { margin-bottom: 40px; }
+  .section-title { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  p { margin-bottom: 10px; }
+  .tbl-wrap { overflow-x: auto; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--surface); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+  th { background: var(--accent-light); color: var(--accent); font-weight: 700; font-size: 11px; letter-spacing: .05em; text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #FAFCFB; }
+  .code-block { background: #1A2420; color: #EBF6F1; font-family: "SF Mono", Consolas, monospace; font-size: 12px; line-height: 1.8; border-radius: 8px; padding: 18px 20px; overflow-x: auto; white-space: pre; margin-bottom: 16px; }
+  .note-box { background: var(--accent-light); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-size: 12.5px; color: var(--muted); margin-bottom: 16px; }
+  .warn-box { background: #FBF2E4; border: 1px solid #F0DBB0; border-radius: 8px; padding: 12px 16px; font-size: 12.5px; color: #7a5a1a; margin-bottom: 16px; }
+  .quote { border-left: 3px solid var(--border); padding: 6px 0 6px 14px; margin-bottom: 8px; font-size: 13px; color: var(--muted); }
+  .quote .src { font-size: 11px; opacity: .8; }
+  .link-chip { display: inline-block; font-size: 12px; background: rgba(0,0,0,.06); border-radius: 4px; padding: 3px 10px; margin: 4px 6px 4px 0; word-break: break-all; }
+  .link-chip a { color: var(--text); text-decoration: none; }
+  .back-link { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; }
+  .back-link a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="doc-header">
+    <div class="eyebrow">Design Brief — Diagnosis Flow (v2)</div>
+    <h1>シミ クリニック選び診断 設計書</h1>
+    <div class="meta">作成日: 2026-07-15 ／ 対象: mega-clinic.com シミジャンル・skin-diagnosis記事 ／ 提携先: TCB東京中央美容外科 ピコレーザー（afbアフィリエイト）</div>
+  </div>
+
+  <div class="warn-box">
+    <strong>v1からの変更点：</strong> 当初は2軸×4タイプ×4枚結果カードの作り込み型で設計していたが、2026-07-15朝会で工藤さんより「クリニック診断は結果を作り込まず、すぐにおすすめクリニックを提示する構成でよい」と方針決定。本ページはその決定を反映した<strong>最小構成版（v2）</strong>。
+  </div>
+
+  <div class="section">
+    <div class="section-title">1. ユーザーリサーチ サマリー</div>
+    <p>ターゲットは美容医療（シミ治療）を検討しているが、クリニック選びで迷っている層。知恵袋・note・amebloから10ソースを収集（詳細: <span class="link-chip">data/research/genres/shimi-clinic-select.md</span>）。</p>
+
+    <p><strong>ジャーニー3段階</strong></p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>段階</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>超初期層</td><td>皮膚科と美容皮膚科の違いも分からず、どこに行けばいいか迷っている</td></tr>
+          <tr><td>比較中層</td><td>無料カウンセリングを複数院回って価格・対応・実績を比較している</td></tr>
+          <tr><td>迷い直し層</td><td>一度施術したが結果に不安を感じ、失敗かどうか確認したい</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>最頻出の痛みトップ3</strong></p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>#</th><th>痛み</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>施術結果への不安（効果が出るか、かえって濃くなる・悪化しないか）</td></tr>
+          <tr><td>2</td><td>比較軸が分からない（皮膚科と美容皮膚科の違いすら不明〜「誰の言うことを信じればいいか」まで）</td></tr>
+          <tr><td>3</td><td>金銭・営業への警戒（安さで選んで失敗したくない、高額コース勧誘への恐怖）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>リアルボイス（抜粋）</strong></p>
+    <div class="quote">「美容クリニックって、本当に苦手で、高いコースを勧められるんじゃないかって、心配」<div class="src">出典: note tani40「41歳、人生初のシミ取りへ体験記」</div></div>
+    <div class="quote">「一番心配なのは、何らかの失敗や、肌質に合わなかった理由でかえって濃くなったり広がってしまったり」<div class="src">出典: Yahoo!知恵袋 q14113570034</div></div>
+    <div class="quote">「口コミ、金額、費用対効果」のいずれか1つだけで判断しないようにしている<div class="src">出典: note 春谷氏「後悔したくない。慎重派オタクの美容クリニックの選び方」</div></div>
+
+    <div class="note-box">この本音リサーチは marketing-research スキルで実施。intent-dive（成功パターン抽出→検索需要の定量比較）は未実施。診断コンセプト自体は朝会で「診断＋PR」に確定済みのため、今回は追加実施を見送り。</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">2. 朝会決定事項（2026-07-15）</div>
+    <ul style="padding-left: 20px; margin-bottom: 10px;">
+      <li>「診断結果ページ＋長い説明」は必須としない</li>
+      <li>基本構成は<strong>「診断＋PR」</strong>。「あなたに合うクリニックはここ」と直接提示</li>
+      <li>診断結果は1枚程度の簡易的なものでよい</li>
+      <li>まずは最小構成で公開し、数値を見て改善する（スピード優先）</li>
+      <li>ジャンル優先順位: <strong>シミが最優先</strong> → クマ → エラボトックス → ほくろ（優先度低）</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">3. NG制約（医療広告ガイドライン）</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:160px;">禁止事項</th><th>注意点</th></tr></thead>
+        <tbody>
+          <tr><td>体験談</td><td>「実際にやってよかった」等の患者体験談は一切使わない</td></tr>
+          <tr><td>ビフォーアフター写真</td><td>使わない</td></tr>
+          <tr><td>比較優良広告</td><td>「他院より優れている」は書かない。TCB自身の事実（価格・院数・方針）のみ提示</td></tr>
+          <tr><td>誇大広告・保証表現</td><td>「必ず消える」等は使わない。TCB公式LPの表現（「〜が期待できます」）に準じる</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">4. TCBピコレーザー 商材データ（LP実測・裏取り済み）</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:140px;">項目</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>展開規模</td><td>全国97院</td></tr>
+          <tr><td>料金</td><td>ピコレーザー：ライト1回9,800円／5回49,900円／10回91,660円。スタンダード1回33,200円。プレミア1回66,300円。シミ取り（サイズ別）6,600円〜64,900円。シミ取り放題（全顔・10分・個数無制限）63,000円（全て税込）</td></tr>
+          <tr><td>初診・再診料</td><td>無料（麻酔代等は別途の場合あり）</td></tr>
+          <tr><td>キャンペーン</td><td>期間限定30,000円OFF（2026/6/29〜7/26）。初来院限定クーポンも別途あり（併用可否は未確認）</td></tr>
+          <tr><td>お試し制度</td><td>初めて来院する方全員「お試し0円」、肌状態の条件なし</td></tr>
+          <tr><td>契約プロセス</td><td>「じっくりお考えいただき、ご納得いただけましたらご契約」とLPに明記。当日施術も後日でも選べる</td></tr>
+          <tr><td>カウンセリング</td><td>受付→美容カウンセラー→ドクター（シミュレーション込み）。すべて無料</td></tr>
+          <tr><td>ダウンタイム</td><td>施術直後の赤み程度。24時間でほぼ改善、当日メイクOK</td></tr>
+          <tr><td>予約方法</td><td>Web／LINE／電話</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><span class="link-chip"><a href="https://t-c-b-biyougeka.com/picolaser" target="_blank">https://t-c-b-biyougeka.com/picolaser</a></span></p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">5. 診断フロー（最小構成）</div>
+    <div class="code-block">[PU] 「あなたに合うクリニックの選び方、診断でわかる」
+  ↓
+[友だち追加]
+  ↓
+[Q1（1問のみ）] クリニック選びで一番気になるのは？
+  ① 強引に勧誘されないか不安
+  ② 効果が出るか・悪化しないか不安
+  ③ 費用がどれくらいかかるか不安
+  ④ 通いやすさ・予約の取りやすさが心配
+  ↓
+[結果（1枚）] 回答に応じた一言 → 「くわしく見る」
+  ↓
+[PRカルーセル（5枚）] TCBピコレーザー
+  ↓
+[CV（アフィリリンク）]</div>
+
+    <p><strong>結果（1枚・回答別）</strong></p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:160px;">回答</th><th>結果の一言</th></tr></thead>
+        <tbody>
+          <tr><td>①勧誘不安</td><td>「TCBは、ご納得いただくまでご契約を急がせない方針です」</td></tr>
+          <tr><td>②効果・悪化不安</td><td>「TCBは施術前にドクターとのシミュレーションで、リスクも含めて確認できます」</td></tr>
+          <tr><td>③費用不安</td><td>「TCBは初診・再診料が無料。追加料金の有無も事前に確認できます」</td></tr>
+          <tr><td>④通いやすさ不安</td><td>「TCBは全国97院。Web・LINE・電話でどこからでも予約できます」</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note-box">段階把握Q（超初心者／比較中／施術後不安）を追加すればパーソナライズの厚みは増すが、朝会方針（スピード優先）に従い今回は見送り。公開後の数値を見て追加判断。</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">6. PU文言</div>
+    <p><strong>推奨:</strong> 「あなたに合うクリニックの選び方、診断でわかる」</p>
+    <p><strong>比較用:</strong> 「クリニック選びで気になること、1問でわかります」</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">7. PRカルーセル（TCBピコレーザー・5枚）</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:50px;">Card</th><th style="width:160px;">見出し</th><th>本文</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>全国97院、ピコレーザーのTCB</td><td>シミ・そばかす・肝斑にレーザーで対応。全国97院だから、近くで通える</td></tr>
+          <tr><td>2</td><td>初診料も再診料も、0円</td><td>施術料金はシミ取り1mm以下6,600円〜。麻酔代など別途かかる場合は事前に確認できる</td></tr>
+          <tr><td>3</td><td>その場で決めなくていい</td><td>プランやリスクに納得できるまで契約を急がせない方針。当日施術も、後日でもどちらも選べる</td></tr>
+          <tr><td>4</td><td>今なら初回お試し0円</td><td>初めての来院なら「お試し0円」。期間限定クーポンも実施中（2026/7/26まで）</td></tr>
+          <tr><td>5</td><td>無料カウンセリング、Web・LINE・電話で</td><td>悩み相談から施術シミュレーションまで、カウンセリングは全部無料</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">8. 次アクション</div>
+    <ul style="padding-left: 20px;">
+      <li>齋藤（Noa）: 本設計書を工藤（Ren）へ共有・壁打ち</li>
+      <li>工藤（Ren）確認後、デザイン依頼・LINE実装</li>
+      <li>キャンペーン併用可否（25,000円OFFと30,000円OFF）を要再確認</li>
+      <li>公開後、PV・CV数値を確認→クマ・エラボトックスへの横展開判断</li>
+    </ul>
+    <p style="margin-top:10px;">詳細設計書（md）: <span class="link-chip">data/output/briefs/診断-シミクリニック選び診断-2026-07-15.md</span></p>
+  </div>
+
+  <div class="back-link">
+    <a href="index.html">← トップへ</a>
+  </div>
+
+</div>
+</body>
+</html>
