@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>シミ クリニック選び診断 v2.4 フロー図</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f0f2f0; color: #1d1d1f; font-size: 13px; padding: 40px 24px 60px; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 20px; }
+
+  .revision-note { background: #eef1ff; border-left: 3px solid #4a4a6a; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 28px; font-size: 12px; color: #333; line-height: 1.8; max-width: 800px; margin-left:auto; margin-right:auto; }
+  .revision-note b { color: #1a1a1a; }
+
+  .node { background: #fff; border-radius: 12px; padding: 14px 20px; box-shadow: 0 1px 6px rgba(0,0,0,.07); text-align: center; margin: 0 auto; }
+  .node-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #aaa; margin-bottom: 4px; }
+  .node-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .node-choices { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 6px; }
+  .choice { font-size: 11px; background: #f5f5f7; border-radius: 5px; padding: 3px 10px; }
+
+  .node-start { background: #b45b1f; color: #fff; max-width: 460px; }
+  .node-start .node-label { color: #f0cba5; }
+  .node-start .node-title { color: #fff; font-size: 15px; }
+  .node-start .node-sub { color: #fbe4cc; font-size: 11px; margin-top: 4px; }
+  .node-start .node-copy { color: #fbe4cc; font-size: 11px; margin-top: 8px; line-height: 1.7; }
+
+  .node-q { max-width: 640px; }
+  .node-q1 { border-left: 4px solid #bdbdbd; }
+  .node-q-branch { border-left: 4px solid #b45b1f; border: 2px solid #b45b1f; }
+
+  .arr { text-align: center; color: #ccc; font-size: 22px; line-height: 1; margin: 4px 0; }
+
+  .bridge-box { background: #e8f5e9; border: 1px solid #81c784; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #2e7d32; text-align: center; margin: 8px auto; max-width: 560px; line-height: 1.8; }
+
+  .fanout { display: grid; gap: 10px; max-width: 900px; margin: 10px auto 0; }
+  .fanout-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .fanout-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .fan-item { background: #fff; border-radius: 8px; padding: 8px 10px; text-align: center; font-size: 10.5px; line-height: 1.6; border: 1.5px solid #e0c9b5; }
+  .fan-item .fan-q { color: #666; margin-bottom: 4px; }
+  .fan-item .fan-arrow { color: #b45b1f; font-weight: 700; margin: 2px 0; }
+  .fan-item .fan-menu { color: #8a3f10; font-weight: 700; background: #fdeee0; border-radius: 5px; padding: 2px 6px; display: inline-block; }
+
+  .combine-box { max-width: 720px; margin: 8px auto 0; background: #fff8e1; border: 1px solid #ffe082; border-radius: 10px; padding: 14px 18px; font-size: 11.5px; line-height: 1.9; color: #7a5c00; text-align: center; }
+  .combine-box .combine-tag { font-size: 9.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; display: block; margin-bottom: 6px; color: #e37400; }
+  .combine-formula { font-size: 13px; font-weight: 700; color: #4a3300; margin: 6px 0; }
+  .combine-example { background: #fff; border-radius: 8px; padding: 10px 14px; margin-top: 8px; font-size: 11px; color: #333; text-align: left; }
+
+  .pr-node { border-radius: 8px; padding: 10px 12px; text-align: center; color: #fff; font-size: 11px; line-height: 1.6; max-width: 640px; margin: 0 auto; }
+  .pr-node .pr-tag2 { font-size: 9px; font-weight: 800; letter-spacing: .04em; display: block; margin-bottom: 4px; opacity: .85; }
+  .step-label { font-size: 9px; font-weight: 700; color: #aaa; text-align: center; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+
+  .section-divider { text-align: center; font-size: 10px; color: #aaa; letter-spacing: .1em; font-weight: 700; margin: 20px 0 10px; }
+
+  .warn-note { max-width: 720px; margin: 0 auto; background: #fbf2e4; border: 1px solid #f0dbb0; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #7a5a1a; text-align: center; line-height: 1.7; }
+
+  .back-link { margin-top: 48px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 13px; }
+  .back-link a { color: #b45b1f; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>シミ クリニック選び診断 v2.4 フロー図</h1>
+  <div class="meta">2026-07-16 ｜ mega-clinic.com シミジャンル・skin-diagnosis記事 ｜ 提携先: TCB東京中央美容外科 ピコレーザー（afbアフィリエイト） ｜ 全3問・2軸を組み合わせて結果1枚 → PRカルーセル5枚</div>
+
+  <div class="revision-note">
+    <b>v2.4の構造：</b> クリニック検索アプリの絞り込み軸調査＋シミ治療特化調査を踏まえ、Q1（年代・非分岐）／Q2（気になるシミ・施術メニュー軸）／Q3（重視すること・クリニックの強み軸）の3問構成。Q2・Q3は<b>それぞれ独立に分岐</b>し、結果では2つの一言を組み合わせて1枚にする（3×4＝12パターンを個別に書かず、3+4の素材で組む）。
+  </div>
+
+  <!-- START -->
+  <div class="node node-start">
+    <div class="node-label">PU</div>
+    <div class="node-title">あなたに合うクリニックの選び方、診断でわかる</div>
+    <div class="node-sub">友だち追加 → 3問診断</div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q1">
+    <div class="node-label">Q1 ── 非分岐（導入）</div>
+    <div class="node-title">あなたの年代は？</div>
+    <div class="node-choices">
+      <div class="choice">20代</div>
+      <div class="choice">30代</div>
+      <div class="choice">40代</div>
+      <div class="choice">50代以上</div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q-branch">
+    <div class="node-label" style="color:#b45b1f;">Q2 ── 分岐軸1（施術メニュー）</div>
+    <div class="node-title">気になるシミは？</div>
+  </div>
+  <div class="fanout fanout-3">
+    <div class="fan-item">
+      <div class="fan-q">① 気になる一点をしっかり消したい</div>
+      <div class="fan-arrow">↓</div>
+      <span class="fan-menu">ピコスポット</span>
+    </div>
+    <div class="fan-item">
+      <div class="fan-q">② 顔全体のくすみ・広がったシミもケアしたい</div>
+      <div class="fan-arrow">↓</div>
+      <span class="fan-menu">ピコトーニング</span>
+    </div>
+    <div class="fan-item">
+      <div class="fan-q">③ とにかくまとめて全部消したい</div>
+      <div class="fan-arrow">↓</div>
+      <span class="fan-menu">シミ取り放題</span>
+    </div>
+  </div>
+  <div class="bridge-box">専門用語（ピコスポット等）はここでは出さない。ユーザーには症状ベースの選択肢のみ見せ、施術名は結果表示で初めて開示する</div>
+
+  <!-- Q3 -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q-branch">
+    <div class="node-label" style="color:#b45b1f;">Q3 ── 分岐軸2（クリニックの強み）</div>
+    <div class="node-title">クリニックを選ぶなら、一番重視するのは？</div>
+  </div>
+  <div class="fanout fanout-4">
+    <div class="fan-item">
+      <div class="fan-q">① 費用を抑えたい</div>
+      <div class="fan-arrow">↓</div>
+      <span class="fan-menu">初回0円+9,800円〜</span>
+    </div>
+    <div class="fan-item">
+      <div class="fan-q">② 通いやすさ</div>
+      <div class="fan-arrow">↓</div>
+      <span class="fan-menu">全国97院+LINE予約</span>
+    </div>
+    <div class="fan-item">
+      <div class="fan-q">③ 保証・アフターケア</div>
+      <div class="fan-arrow">↓</div>
+      <span class="fan-menu">トラブル時無料対応</span>
+    </div>
+    <div class="fan-item">
+      <div class="fan-q">④ じっくり相談したい</div>
+      <div class="fan-arrow">↓</div>
+      <span class="fan-menu">カウンセリング無料</span>
+    </div>
+  </div>
+
+  <!-- 結果：組み合わせ -->
+  <div class="arr">↓</div>
+  <div class="combine-box">
+    <span class="combine-tag">結果（1枚）</span>
+    <div class="combine-formula">Q2の一言　＋　Q3の一言</div>
+    <div class="combine-example">
+      <b>表示例（Q2=②、Q3=②の場合）：</b><br>
+      「顔全体のくすみ・広がったシミが気になるなら、TCBの『ピコトーニング』が合いそうです。全国97院、LINEでいつでも予約できます」
+    </div>
+  </div>
+  <div class="bridge-box">タイプ名・長い説明は付けない。「くわしく見る」ボタンでPRカルーセルへ</div>
+
+  <!-- PRカルーセル -->
+  <div class="section-divider">── PRカルーセル（5枚・TCBピコレーザー） ──</div>
+
+  <div class="step-label">Card 1</div>
+  <div class="pr-node" style="background:#b45b1f;">
+    <span class="pr-tag2">導入</span>
+    シミのタイプに合わせて選べる、TCBのピコレーザー
+  </div>
+  <div class="arr">↓</div>
+  <div class="step-label">Card 2</div>
+  <div class="pr-node" style="background:#c26a2c;">
+    <span class="pr-tag2">価格・キャンペーン</span>
+    初回お試し0円＋25,000円OFF（ライトプラン1回9,800円〜）
+  </div>
+  <div class="arr">↓</div>
+  <div class="step-label">Card 3</div>
+  <div class="pr-node" style="background:#cf7a3b;">
+    <span class="pr-tag2">通いやすさ</span>
+    全国97院。LINEでいつでも予約
+  </div>
+  <div class="arr">↓</div>
+  <div class="step-label">Card 4</div>
+  <div class="pr-node" style="background:#dc894a;">
+    <span class="pr-tag2">トラブル対応</span>
+    万が一の時も、無料で修正・回復対応
+  </div>
+  <div class="arr">↓</div>
+  <div class="step-label">Card 5</div>
+  <div class="pr-node" style="background:#e89959;">
+    <span class="pr-tag2">相談のしやすさ＋CTA</span>
+    相談だけでもOK。カウンセリングは無料 → 無料カウンセリング予約
+  </div>
+
+  <div class="arr">↓</div>
+  <div class="node" style="max-width:520px;background:#fafafa;border:1px dashed #ccc;">
+    <div class="node-label">CV</div>
+    <div style="font-size:11px;color:#666;margin-top:4px;">無料カウンセリング予約（TCBアフィリリンク）</div>
+  </div>
+
+  <div class="section-divider">── 注意事項 ──</div>
+  <div class="warn-note">
+    医療広告ガイドライン対応: 体験談・ビフォーアフター・比較優良広告（他院より優れている等）は一切使用しない。全カード・結果文はTCBの検証済み事実のみで構成。詳細は<code>data/output/briefs/診断-シミクリニック選び診断-2026-07-15.md</code>参照
+  </div>
+
+  <div class="back-link"><a href="index.html">← トップへ</a></div>
+
+</div>
+</body>
+</html>
