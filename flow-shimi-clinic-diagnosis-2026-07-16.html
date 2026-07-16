@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>シミ クリニック選び診断 v2.4 フロー図</title>
+<title>シミ クリニック選び診断 v2.6 フロー図</title>
   <link rel="icon" type="image/png" href="favicon.png">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -63,11 +63,11 @@
 <body>
 <div class="container">
 
-  <h1>シミ クリニック選び診断 v2.5 フロー図</h1>
+  <h1>シミ クリニック選び診断 v2.6 フロー図</h1>
   <div class="meta">2026-07-16 ｜ mega-clinic.com シミジャンル・skin-diagnosis記事 ｜ 提携先: TCB東京中央美容外科 ピコレーザー（afbアフィリエイト） ｜ 全4問・2軸を組み合わせて結果1枚 → PRカルーセル5枚</div>
 
   <div class="revision-note">
-    <b>v2.5の構造：</b> クリニック検索アプリの絞り込み軸調査＋シミ治療特化調査を踏まえ、Q1（性別・非分岐）／Q2（年代・非分岐）／Q3（気になるシミ・施術メニュー軸）／Q4（重視すること・クリニックの強み軸）の4問構成。Q3・Q4は<b>それぞれ独立に分岐</b>し、結果では2つの一言を組み合わせて1枚にする（3×4＝12パターンを個別に書かず、3+4の素材で組む）。
+    <b>v2.6の構造：</b> クリニック検索アプリの絞り込み軸調査＋シミ治療特化調査を踏まえ、Q1（性別・非分岐）／Q2（年代・非分岐）／Q3（現在抱えているお悩み・施術メニュー軸）／Q4（重視すること・クリニックの強み軸）の4問構成。Q3はクマ診断の参考UI（症状の見え方で選ばせ裏で原因タイプにマッピング）を採用し3択→4択に変更。Q3・Q4は<b>それぞれ独立に分岐</b>し、結果では2つの一言を組み合わせて1枚にする（4×4＝16パターンを個別に書かず、4+4の素材で組む）。
   </div>
 
   <!-- START -->
@@ -105,26 +105,31 @@
   <div class="arr">↓</div>
   <div class="node node-q node-q-branch">
     <div class="node-label" style="color:#b45b1f;">Q3 ── 分岐軸1（施術メニュー）</div>
-    <div class="node-title">気になるシミは？</div>
+    <div class="node-title">現在抱えているお悩みは？</div>
   </div>
-  <div class="fanout fanout-3">
+  <div class="fanout fanout-4">
     <div class="fan-item">
-      <div class="fan-q">① 気になる一点をしっかり消したい</div>
+      <div class="fan-q">① はっきりとした茶色いシミが気になる</div>
       <div class="fan-arrow">↓</div>
       <span class="fan-menu">ピコスポット</span>
     </div>
     <div class="fan-item">
-      <div class="fan-q">② 顔全体のくすみ・広がったシミもケアしたい</div>
+      <div class="fan-q">② 頬まわりにモヤっと広がったシミ・くすみが気になる</div>
       <div class="fan-arrow">↓</div>
       <span class="fan-menu">ピコトーニング</span>
     </div>
     <div class="fan-item">
-      <div class="fan-q">③ とにかくまとめて全部消したい</div>
+      <div class="fan-q">③ 小さいシミ・そばかすが多数ある</div>
+      <div class="fan-arrow">↓</div>
+      <span class="fan-menu">ピコトーニング</span>
+    </div>
+    <div class="fan-item">
+      <div class="fan-q">④ 複数当てはまる</div>
       <div class="fan-arrow">↓</div>
       <span class="fan-menu">シミ取り放題</span>
     </div>
   </div>
-  <div class="bridge-box">専門用語（ピコスポット等）はここでは出さない。ユーザーには症状ベースの選択肢のみ見せ、施術名は結果表示で初めて開示する</div>
+  <div class="bridge-box">クマ診断の参考UI（症状の見え方で選ばせ裏で原因タイプにマッピング）を採用。専門用語（肝斑・そばかす・ピコスポット等）はここでは出さない。ユーザーには症状の見た目の記述のみ見せ、施術名は結果表示で初めて開示する</div>
 
   <!-- Q4 -->
   <div class="arr">↓</div>
@@ -162,7 +167,7 @@
     <div class="combine-formula">Q3の一言　＋　Q4の一言</div>
     <div class="combine-example">
       <b>表示例（Q3=②、Q4=②の場合）：</b><br>
-      「顔全体のくすみ・広がったシミが気になるなら、TCBの『ピコトーニング』が合いそうです。全国97院、LINEでいつでも予約できます」
+      「頬まわりのモヤっとしたシミ・くすみが気になるなら、TCBの『ピコトーニング』が合いそうです。全国97院、LINEでいつでも予約できます」
     </div>
   </div>
   <div class="bridge-box">タイプ名・長い説明は付けない。「くわしく見る」ボタンでPRカルーセルへ</div>
