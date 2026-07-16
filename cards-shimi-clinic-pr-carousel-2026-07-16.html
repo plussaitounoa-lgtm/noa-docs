@@ -106,6 +106,17 @@
   .achievement-badge .ach-sub { font-size: 8px; font-weight: 800; color: #7a5a10; line-height: 1.3; }
   .achievement-footnote { font-size: 6px; color: #999; padding: 0 10px 6px; line-height: 1.5; }
 
+  /* ─── Card5: 最終CTA（実LPのオレンジ祝祭カラー・ラストプッシュ） ─── */
+  .card-final { border: 2px solid #ff8a3d; }
+  .final-ribbon { background: #d6336c; color: #fff; text-align: center; font-size: 8.5px; font-weight: 800; padding: 4px 6px; }
+  .final-headline { background: linear-gradient(180deg,#fff3e8,#fff); text-align: center; padding: 10px 8px 6px; }
+  .final-headline .fh-title { font-size: 15px; font-weight: 900; color: #ff6a00; line-height: 1.3; }
+  .final-headline .fh-sub { font-size: 8.5px; color: #888; margin-top: 3px; }
+  .final-price { text-align: center; padding: 4px 8px 8px; }
+  .final-price .fp-num { font-size: 30px; font-weight: 900; color: #ff4500; line-height: 1; }
+  .final-price .fp-note { font-size: 7px; color: #999; margin-top: 2px; }
+  .final-cta { background: linear-gradient(90deg,#ff8a3d,#ff6a00); }
+
   .fact-box { margin: 8px 10px; background: #eef8fc; border-radius: 10px; padding: 8px 10px; }
   .fact-box .fact-line { font-size: 9.5px; color: #333; line-height: 1.8; }
   .fact-box .fact-line b { color: #1a9cc7; }
@@ -250,15 +261,35 @@
       <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
     </div>
 
-    <!-- Card 5: 相談・CTA -->
-    <div class="card">
-      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="point-row" style="padding-top:14px;"><div class="point-headline">まずは、<br>相談だけでもいい</div></div>
-      <div class="card-body" style="padding-top:4px;">
-        <div class="body-headline">「施術するか分からないけど、相談だけしたい」も歓迎</div>
-        <div class="body-text">カウンセリングは何度でも無料。万が一のトラブル時も、無料で修正・回復対応する体制があります。</div>
+    <!-- Card 5: 最終CTA（オレンジ祝祭カラー・実LPのクーポン再訴求ページ準拠） -->
+    <div class="card card-final">
+      <div class="final-ribbon">＼ ここから予約すると使える ／</div>
+      <div class="final-headline">
+        <div class="fh-title">Webクーポン<br>配布中！</div>
+        <div class="fh-sub">1円以上の全施術で利用可能</div>
       </div>
-      <div class="cta-wrap"><button class="cta-btn" style="background:linear-gradient(90deg,#44bb3a,#2e9630);box-shadow:0 3px 6px rgba(46,150,48,0.3);">無料カウンセリングを予約する <span class="cta-arrow">›</span></button></div>
+      <div class="final-price">
+        <div class="fp-num">¥25,000 OFF</div>
+        <div class="fp-note">※初診のみ有効</div>
+      </div>
+      <div class="coupon-pair" style="padding-top:0;">
+        <div class="coupon-box">
+          <span class="coupon-pill" style="background:linear-gradient(90deg,#ff4eb6,#d03577);">ピコトーニング</span>
+          <div class="coupon-tag">ライト1回</div>
+          <div class="coupon-before">¥9,800</div>
+          <div class="coupon-after">→ ¥0</div>
+        </div>
+        <div class="coupon-box">
+          <span class="coupon-pill" style="background:linear-gradient(90deg,#04b6b4,#0f95da);">ピコスポット</span>
+          <div class="coupon-tag">シミ取り1mm以下</div>
+          <div class="coupon-before">¥6,600</div>
+          <div class="coupon-after">→ ¥0</div>
+        </div>
+      </div>
+      <div class="card-body" style="padding-top:6px;">
+        <div class="body-text" style="text-align:center;">まずはお気軽にご相談ください。カウンセリングは何度でも無料、万が一のトラブル時も無料で対応します。</div>
+      </div>
+      <div class="cta-wrap"><button class="cta-btn final-cta" style="box-shadow:0 3px 6px rgba(255,106,0,0.35);">無料カウンセリング予約 <span class="cta-arrow">›</span></button></div>
     </div>
 
   </div>
