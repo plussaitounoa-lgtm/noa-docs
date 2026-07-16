@@ -47,8 +47,11 @@
   .menu-all .menu-pill { background: linear-gradient(90deg,#9b37da,#7a2ab5); }
 
   /* ─── Card1: キャンペーン訴求強化パーツ ─── */
-  .campaign-banner { background: linear-gradient(90deg,#f5c542,#e8a820); color: #4a3300; text-align: center; font-size: 10.5px; font-weight: 800; padding: 6px 8px; line-height: 1.5; }
-  .campaign-banner b { font-size: 13px; }
+  .campaign-sticker-wrap { text-align: center; padding: 10px 0 2px; }
+  .campaign-sticker { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 92px; height: 92px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #ffe3ef); border: 2px dashed #ff6a9d; box-shadow: 0 2px 8px rgba(214,51,108,0.2); }
+  .campaign-sticker .cs-top { font-size: 7px; font-weight: 800; color: #d6336c; }
+  .campaign-sticker .cs-price { font-size: 15px; font-weight: 900; color: #d6336c; line-height: 1.15; margin: 2px 0; }
+  .campaign-sticker .cs-bottom { font-size: 7.5px; font-weight: 800; color: #d6336c; }
   .coupon-pair { display: flex; gap: 6px; padding: 8px 10px 4px; }
   .coupon-box { flex: 1; background: #eef8fc; border-radius: 8px; padding: 6px 5px; text-align: center; }
   .coupon-box .coupon-pill { display: inline-block; font-size: 8px; font-weight: 800; color: #fff; padding: 2px 7px; border-radius: 10px; margin-bottom: 4px; }
@@ -163,7 +166,13 @@
     <!-- Card 1: 導入＋キャンペーン訴求強化 -->
     <div class="card">
       <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="campaign-banner">初来院限定<br><b>25,000円OFF</b>クーポン配布中</div>
+      <div class="campaign-sticker-wrap">
+        <div class="campaign-sticker">
+          <div class="cs-top">WEB予約で！</div>
+          <div class="cs-price">＼¥25,000<br>OFF／</div>
+          <div class="cs-bottom">クーポンをGET♥</div>
+        </div>
+      </div>
       <div class="point-row" style="padding-top:6px;"><div class="point-headline">シミ取りレーザーで、<br>素肌をトーンアップ</div></div>
       <div class="split-face">
         <div class="split-half split-toning">
