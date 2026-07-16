@@ -63,24 +63,35 @@
 <body>
 <div class="container">
 
-  <h1>シミ クリニック選び診断 v2.4 フロー図</h1>
-  <div class="meta">2026-07-16 ｜ mega-clinic.com シミジャンル・skin-diagnosis記事 ｜ 提携先: TCB東京中央美容外科 ピコレーザー（afbアフィリエイト） ｜ 全3問・2軸を組み合わせて結果1枚 → PRカルーセル5枚</div>
+  <h1>シミ クリニック選び診断 v2.5 フロー図</h1>
+  <div class="meta">2026-07-16 ｜ mega-clinic.com シミジャンル・skin-diagnosis記事 ｜ 提携先: TCB東京中央美容外科 ピコレーザー（afbアフィリエイト） ｜ 全4問・2軸を組み合わせて結果1枚 → PRカルーセル5枚</div>
 
   <div class="revision-note">
-    <b>v2.4の構造：</b> クリニック検索アプリの絞り込み軸調査＋シミ治療特化調査を踏まえ、Q1（年代・非分岐）／Q2（気になるシミ・施術メニュー軸）／Q3（重視すること・クリニックの強み軸）の3問構成。Q2・Q3は<b>それぞれ独立に分岐</b>し、結果では2つの一言を組み合わせて1枚にする（3×4＝12パターンを個別に書かず、3+4の素材で組む）。
+    <b>v2.5の構造：</b> クリニック検索アプリの絞り込み軸調査＋シミ治療特化調査を踏まえ、Q1（性別・非分岐）／Q2（年代・非分岐）／Q3（気になるシミ・施術メニュー軸）／Q4（重視すること・クリニックの強み軸）の4問構成。Q3・Q4は<b>それぞれ独立に分岐</b>し、結果では2つの一言を組み合わせて1枚にする（3×4＝12パターンを個別に書かず、3+4の素材で組む）。
   </div>
 
   <!-- START -->
   <div class="node node-start">
     <div class="node-label">PU</div>
     <div class="node-title">あなたに合うクリニックの選び方、診断でわかる</div>
-    <div class="node-sub">友だち追加 → 3問診断</div>
+    <div class="node-sub">友だち追加 → 4問診断</div>
   </div>
 
   <!-- Q1 -->
   <div class="arr">↓</div>
   <div class="node node-q node-q1">
     <div class="node-label">Q1 ── 非分岐（導入）</div>
+    <div class="node-title">性別を教えてください</div>
+    <div class="node-choices">
+      <div class="choice">女性</div>
+      <div class="choice">男性</div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q1">
+    <div class="node-label">Q2 ── 非分岐（導入）</div>
     <div class="node-title">あなたの年代は？</div>
     <div class="node-choices">
       <div class="choice">20代</div>
@@ -90,10 +101,10 @@
     </div>
   </div>
 
-  <!-- Q2 -->
+  <!-- Q3 -->
   <div class="arr">↓</div>
   <div class="node node-q node-q-branch">
-    <div class="node-label" style="color:#b45b1f;">Q2 ── 分岐軸1（施術メニュー）</div>
+    <div class="node-label" style="color:#b45b1f;">Q3 ── 分岐軸1（施術メニュー）</div>
     <div class="node-title">気になるシミは？</div>
   </div>
   <div class="fanout fanout-3">
@@ -115,10 +126,10 @@
   </div>
   <div class="bridge-box">専門用語（ピコスポット等）はここでは出さない。ユーザーには症状ベースの選択肢のみ見せ、施術名は結果表示で初めて開示する</div>
 
-  <!-- Q3 -->
+  <!-- Q4 -->
   <div class="arr">↓</div>
   <div class="node node-q node-q-branch">
-    <div class="node-label" style="color:#b45b1f;">Q3 ── 分岐軸2（クリニックの強み）</div>
+    <div class="node-label" style="color:#b45b1f;">Q4 ── 分岐軸2（クリニックの強み）</div>
     <div class="node-title">クリニックを選ぶなら、一番重視するのは？</div>
   </div>
   <div class="fanout fanout-4">
@@ -148,9 +159,9 @@
   <div class="arr">↓</div>
   <div class="combine-box">
     <span class="combine-tag">結果（1枚）</span>
-    <div class="combine-formula">Q2の一言　＋　Q3の一言</div>
+    <div class="combine-formula">Q3の一言　＋　Q4の一言</div>
     <div class="combine-example">
-      <b>表示例（Q2=②、Q3=②の場合）：</b><br>
+      <b>表示例（Q3=②、Q4=②の場合）：</b><br>
       「顔全体のくすみ・広がったシミが気になるなら、TCBの『ピコトーニング』が合いそうです。全国97院、LINEでいつでも予約できます」
     </div>
   </div>
