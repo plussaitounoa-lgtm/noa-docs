@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>シミ クリニック選び診断 v2.6 フロー図</title>
+<title>シミ クリニック選び診断 v2.7 フロー図</title>
   <link rel="icon" type="image/png" href="favicon.png">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,16 +29,19 @@
 
   .node-q { max-width: 640px; }
   .node-q1 { border-left: 4px solid #bdbdbd; }
+  .node-q-echo { border-left: 4px solid #8a8a4a; border: 1.5px dashed #b8b860; }
   .node-q-branch { border-left: 4px solid #b45b1f; border: 2px solid #b45b1f; }
 
   .arr { text-align: center; color: #ccc; font-size: 22px; line-height: 1; margin: 4px 0; }
 
   .bridge-box { background: #e8f5e9; border: 1px solid #81c784; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #2e7d32; text-align: center; margin: 8px auto; max-width: 560px; line-height: 1.8; }
+  .echo-box { background: #fbfbe8; border: 1px solid #d8d888; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #6a6a2a; text-align: center; margin: 8px auto; max-width: 620px; line-height: 1.8; }
 
   .fanout { display: grid; gap: 10px; max-width: 900px; margin: 10px auto 0; }
   .fanout-3 { grid-template-columns: 1fr 1fr 1fr; }
   .fanout-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
   .fan-item { background: #fff; border-radius: 8px; padding: 8px 10px; text-align: center; font-size: 10.5px; line-height: 1.6; border: 1.5px solid #e0c9b5; }
+  .fan-item.echo-item { border: 1.5px dashed #d8d888; }
   .fan-item .fan-q { color: #666; margin-bottom: 4px; }
   .fan-item .fan-arrow { color: #b45b1f; font-weight: 700; margin: 2px 0; }
   .fan-item .fan-menu { color: #8a3f10; font-weight: 700; background: #fdeee0; border-radius: 5px; padding: 2px 6px; display: inline-block; }
@@ -56,6 +59,10 @@
 
   .warn-note { max-width: 720px; margin: 0 auto; background: #fbf2e4; border: 1px solid #f0dbb0; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #7a5a1a; text-align: center; line-height: 1.7; }
 
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 0 0 20px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #666; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
   .back-link { margin-top: 48px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 13px; }
   .back-link a { color: #b45b1f; text-decoration: none; }
 </style>
@@ -63,18 +70,24 @@
 <body>
 <div class="container">
 
-  <h1>シミ クリニック選び診断 v2.6 フロー図</h1>
-  <div class="meta">2026-07-16 ｜ mega-clinic.com シミジャンル・skin-diagnosis記事 ｜ 提携先: TCB東京中央美容外科 ピコレーザー（afbアフィリエイト） ｜ 全4問・2軸を組み合わせて結果1枚 → PRカルーセル5枚</div>
+  <h1>シミ クリニック選び診断 v2.7 フロー図</h1>
+  <div class="meta">2026-07-16 ｜ mega-clinic.com シミジャンル・skin-diagnosis記事 ｜ 提携先: TCB東京中央美容外科 ピコレーザー（afbアフィリエイト） ｜ 全5問（非分岐3・分岐2） → 結果1枚 → PRカルーセル5枚</div>
 
   <div class="revision-note">
-    <b>v2.6の構造：</b> クリニック検索アプリの絞り込み軸調査＋シミ治療特化調査を踏まえ、Q1（性別・非分岐）／Q2（年代・非分岐）／Q3（現在抱えているお悩み・施術メニュー軸）／Q4（重視すること・クリニックの強み軸）の4問構成。Q3はクマ診断の参考UI（症状の見え方で選ばせ裏で原因タイプにマッピング）を採用し3択→4択に変更。Q3・Q4は<b>それぞれ独立に分岐</b>し、結果では2つの一言を組み合わせて1枚にする（4×4＝16パターンを個別に書かず、4+4の素材で組む）。
+    <b>v2.7の構造：</b> Noaより「元の『気になるシミは？』の内容も残したい」との要望で、Q3（現在抱えているお悩み・症状の見た目）とQ4「シミ取りで期待することは？」（対処スコープ）を<b>別軸として両方残す</b>5問構成にした。Q3は「症状がどう見えるか」、Q4は「どこまで対処したいか」で、両者は必ずしも一致しない（例:「茶色いシミがある」けど「まとめて全部消したい」人もいる）ため、Q3は分岐に使わず結果文の共感の一言（エコー）に留め、Q4とQ5の2軸だけを組み合わせて施術メニュー＋クリニックの強みを提示する。
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#bdbdbd;"></div>非分岐（導入）</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#b8b860;"></div>非分岐（エコー・結果文に反映）</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#b45b1f;"></div>分岐軸</div>
   </div>
 
   <!-- START -->
   <div class="node node-start">
     <div class="node-label">PU</div>
     <div class="node-title">あなたに合うクリニックの選び方、診断でわかる</div>
-    <div class="node-sub">友だち追加 → 4問診断</div>
+    <div class="node-sub">友だち追加 → 5問診断</div>
   </div>
 
   <!-- Q1 -->
@@ -101,40 +114,49 @@
     </div>
   </div>
 
-  <!-- Q3 -->
+  <!-- Q3（エコー用） -->
   <div class="arr">↓</div>
-  <div class="node node-q node-q-branch">
-    <div class="node-label" style="color:#b45b1f;">Q3 ── 分岐軸1（施術メニュー）</div>
+  <div class="node node-q node-q-echo">
+    <div class="node-label" style="color:#8a8a4a;">Q3 ── 非分岐（エコー・結果文の共感に使用）</div>
     <div class="node-title">現在抱えているお悩みは？</div>
   </div>
   <div class="fanout fanout-4">
+    <div class="fan-item echo-item"><div class="fan-q">① はっきりとした茶色いシミが気になる</div></div>
+    <div class="fan-item echo-item"><div class="fan-q">② 頬まわりにモヤっと広がったシミ・くすみが気になる</div></div>
+    <div class="fan-item echo-item"><div class="fan-q">③ 小さいシミ・そばかすが多数ある</div></div>
+    <div class="fan-item echo-item"><div class="fan-q">④ 複数当てはまる</div></div>
+  </div>
+  <div class="echo-box">クマ診断の参考UI（症状の見え方で選ばせる）を採用。<b>分岐には使わない。</b>結果文冒頭の共感の一言（例:「頬まわりのくすみ、気になりますよね。」）として使う</div>
+
+  <!-- Q4（分岐軸1） -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q-branch">
+    <div class="node-label" style="color:#b45b1f;">Q4 ── 分岐軸1（施術メニュー）</div>
+    <div class="node-title">シミ取りで期待することは？</div>
+  </div>
+  <div class="fanout fanout-3">
     <div class="fan-item">
-      <div class="fan-q">① はっきりとした茶色いシミが気になる</div>
+      <div class="fan-q">① 気になる一点をしっかり消したい</div>
       <div class="fan-arrow">↓</div>
       <span class="fan-menu">ピコスポット</span>
     </div>
     <div class="fan-item">
-      <div class="fan-q">② 頬まわりにモヤっと広がったシミ・くすみが気になる</div>
+      <div class="fan-q">② 顔全体のくすみもケアしたい</div>
       <div class="fan-arrow">↓</div>
       <span class="fan-menu">ピコトーニング</span>
     </div>
     <div class="fan-item">
-      <div class="fan-q">③ 小さいシミ・そばかすが多数ある</div>
-      <div class="fan-arrow">↓</div>
-      <span class="fan-menu">ピコトーニング</span>
-    </div>
-    <div class="fan-item">
-      <div class="fan-q">④ 複数当てはまる</div>
+      <div class="fan-q">③ とにかくまとめて全部消したい</div>
       <div class="fan-arrow">↓</div>
       <span class="fan-menu">シミ取り放題</span>
     </div>
   </div>
-  <div class="bridge-box">クマ診断の参考UI（症状の見え方で選ばせ裏で原因タイプにマッピング）を採用。専門用語（肝斑・そばかす・ピコスポット等）はここでは出さない。ユーザーには症状の見た目の記述のみ見せ、施術名は結果表示で初めて開示する</div>
+  <div class="bridge-box">Q3（症状の見た目）とは別軸＝「対処のスコープ」を聞く。専門用語（ピコスポット等）はここでは出さない。施術名は結果表示で初めて開示する</div>
 
-  <!-- Q4 -->
+  <!-- Q5（分岐軸2） -->
   <div class="arr">↓</div>
   <div class="node node-q node-q-branch">
-    <div class="node-label" style="color:#b45b1f;">Q4 ── 分岐軸2（クリニックの強み）</div>
+    <div class="node-label" style="color:#b45b1f;">Q5 ── 分岐軸2（クリニックの強み）</div>
     <div class="node-title">クリニックを選ぶなら、一番重視するのは？</div>
   </div>
   <div class="fanout fanout-4">
@@ -164,10 +186,10 @@
   <div class="arr">↓</div>
   <div class="combine-box">
     <span class="combine-tag">結果（1枚）</span>
-    <div class="combine-formula">Q3の一言　＋　Q4の一言</div>
+    <div class="combine-formula">（Q3の共感の一言）＋　Q4の一言　＋　Q5の一言</div>
     <div class="combine-example">
-      <b>表示例（Q3=②、Q4=②の場合）：</b><br>
-      「頬まわりのモヤっとしたシミ・くすみが気になるなら、TCBの『ピコトーニング』が合いそうです。全国97院、LINEでいつでも予約できます」
+      <b>表示例（Q3=②、Q4=②、Q5=②の場合）：</b><br>
+      「頬まわりのくすみ、気になりますよね。顔全体のくすみもケアしたいなら、TCBの『ピコトーニング』が合いそうです。全国97院、LINEでいつでも予約できます」
     </div>
   </div>
   <div class="bridge-box">タイプ名・長い説明は付けない。「くわしく見る」ボタンでPRカルーセルへ</div>
