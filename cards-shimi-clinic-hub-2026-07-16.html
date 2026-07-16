@@ -216,12 +216,10 @@
   #section-faq .type-header { border-bottom-color: #b8e6f5; }
   #section-faq .tonmana-note { border: 1px solid #b8e6f5; }
   #section-faq .tonmana-note b { color: #1a9cc7; }
-  #section-faq .faq-list { max-width: 700px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 4px 18px; box-shadow: 0 4px 18px rgba(0,0,0,0.08); }
-  #section-faq .faq-item { border-bottom: 1px solid #eef2f5; padding: 14px 0; }
-  #section-faq .faq-item:last-child { border-bottom: none; }
-  #section-faq .faq-q { display: flex; gap: 10px; font-size: 13px; font-weight: 700; color: #333; line-height: 1.6; margin-bottom: 8px; }
-  #section-faq .faq-a { display: flex; gap: 10px; font-size: 12px; color: #555; line-height: 1.8; }
-  #section-faq .faq-icon { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; }
+  #section-faq .faq-card-body { padding: 10px 12px 14px; }
+  #section-faq .faq-q { display: flex; gap: 6px; font-size: 11px; font-weight: 700; color: #333; line-height: 1.6; margin-bottom: 8px; }
+  #section-faq .faq-a { display: flex; gap: 6px; font-size: 10px; color: #555; line-height: 1.7; }
+  #section-faq .faq-icon { flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9.5px; font-weight: 900; }
   #section-faq .faq-icon-q { background: #fff; border: 2px solid #1a9cc7; color: #1a9cc7; }
   #section-faq .faq-icon-a { background: linear-gradient(90deg,#4dc9e8,#1a9cc7); color: #fff; }
   #section-faq .back-link a { color: #1a9cc7; text-decoration: none; }
@@ -617,36 +615,54 @@
 
   <div class="tonmana-note"><b>構成:</b> TCB公式LPのピコレーザーFAQをそのまま抽出（全6問）。ピコトーニング・ピコスポット共通の質問のため、メインカラー（水色）を使用。</div>
 
-  <div class="faq-list">
+  <div class="cards-row">
 
-    <div class="faq-item">
-      <div class="faq-q"><span class="faq-icon faq-icon-q">Q</span>ピコレーザーの施術料金には、初診料や再診料は含まれていますか？</div>
-      <div class="faq-a"><span class="faq-icon faq-icon-a">A</span>当院では初診料や再診料はいただいておりませんので、ご安心ください。※麻酔代等、その他料金は別途発生する場合がございます。</div>
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="faq-card-body">
+        <div class="faq-q"><span class="faq-icon faq-icon-q">Q</span>ピコレーザーの施術料金には、初診料や再診料は含まれていますか？</div>
+        <div class="faq-a"><span class="faq-icon faq-icon-a">A</span>当院では初診料や再診料はいただいておりませんので、ご安心ください。※麻酔代等、その他料金は別途発生する場合がございます。</div>
+      </div>
     </div>
 
-    <div class="faq-item">
-      <div class="faq-q"><span class="faq-icon faq-icon-q">Q</span>施術当日にメイクは可能ですか？</div>
-      <div class="faq-a"><span class="faq-icon faq-icon-a">A</span>ピコレーザー全てのメニューに関して施術当日からメイクはして頂けます。</div>
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="faq-card-body">
+        <div class="faq-q"><span class="faq-icon faq-icon-q">Q</span>施術当日にメイクは可能ですか？</div>
+        <div class="faq-a"><span class="faq-icon faq-icon-a">A</span>ピコレーザー全てのメニューに関して施術当日からメイクはして頂けます。</div>
+      </div>
     </div>
 
-    <div class="faq-item">
-      <div class="faq-q"><span class="faq-icon faq-icon-q">Q</span>ダウンタイムはどのくらいですか？</div>
-      <div class="faq-a"><span class="faq-icon faq-icon-a">A</span>個人差はありますが、施術直後は赤みが出る場合がございます。ですが24時間で治ることがほとんどなのと、当日メイクOKなためファンデーション等で一時的に隠される患者様もいらっしゃいます。</div>
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="faq-card-body">
+        <div class="faq-q"><span class="faq-icon faq-icon-q">Q</span>ダウンタイムはどのくらいですか？</div>
+        <div class="faq-a"><span class="faq-icon faq-icon-a">A</span>個人差はありますが、施術直後は赤みが出る場合がございます。ですが24時間で治ることがほとんどなのと、当日メイクOKなためファンデーション等で一時的に隠される患者様もいらっしゃいます。</div>
+      </div>
     </div>
 
-    <div class="faq-item">
-      <div class="faq-q"><span class="faq-icon faq-icon-q">Q</span>施術後の運動や飲酒は可能ですか？</div>
-      <div class="faq-a"><span class="faq-icon faq-icon-a">A</span>施術後は過度な飲酒、過度な運動など血行が良くなることはお控え頂いております。</div>
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="faq-card-body">
+        <div class="faq-q"><span class="faq-icon faq-icon-q">Q</span>施術後の運動や飲酒は可能ですか？</div>
+        <div class="faq-a"><span class="faq-icon faq-icon-a">A</span>施術後は過度な飲酒、過度な運動など血行が良くなることはお控え頂いております。</div>
+      </div>
     </div>
 
-    <div class="faq-item">
-      <div class="faq-q"><span class="faq-icon faq-icon-q">Q</span>お試し0円料金が適用される条件はありますか？</div>
-      <div class="faq-a"><span class="faq-icon faq-icon-a">A</span>当院に初めてご来院される方全員にお試し0円が適用となります。患者様のお肌の状態による条件等はございません。</div>
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="faq-card-body">
+        <div class="faq-q"><span class="faq-icon faq-icon-q">Q</span>お試し0円料金が適用される条件はありますか？</div>
+        <div class="faq-a"><span class="faq-icon faq-icon-a">A</span>当院に初めてご来院される方全員にお試し0円が適用となります。患者様のお肌の状態による条件等はございません。</div>
+      </div>
     </div>
 
-    <div class="faq-item">
-      <div class="faq-q"><span class="faq-icon faq-icon-q">Q</span>ピコレーザーの治療は何回くらい受ければ効果を感じられますか？</div>
-      <div class="faq-a"><span class="faq-icon faq-icon-a">A</span>当院の施術では1度でトーンアップ・毛穴・そばかすの改善効果が見込めます。深いシミや肝斑等は約5回前後で改善が期待できます。お肌には個人差がございますので、無料カウンセリングにてご相談ください。</div>
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="faq-card-body">
+        <div class="faq-q"><span class="faq-icon faq-icon-q">Q</span>ピコレーザーの治療は何回くらい受ければ効果を感じられますか？</div>
+        <div class="faq-a"><span class="faq-icon faq-icon-a">A</span>当院の施術では1度でトーンアップ・毛穴・そばかすの改善効果が見込めます。深いシミや肝斑等は約5回前後で改善が期待できます。お肌には個人差がございますので、無料カウンセリングにてご相談ください。</div>
+      </div>
     </div>
 
   </div>
