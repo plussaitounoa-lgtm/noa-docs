@@ -61,6 +61,11 @@
   .pr-node .pr-tag2 { font-size: 9px; font-weight: 800; letter-spacing: .04em; display: block; margin-bottom: 4px; opacity: .85; }
   .step-label { font-size: 9px; font-weight: 700; color: #aaa; text-align: center; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
 
+  /* ─── 診断完了メッセージ＋ボタン ─── */
+  .complete-msg { max-width: 420px; margin: 8px auto 0; background: #fff; border-radius: 14px; padding: 14px 18px; box-shadow: 0 1px 6px rgba(0,0,0,.07); text-align: center; }
+  .complete-msg .cm-text { font-size: 13px; color: #333; line-height: 1.8; margin-bottom: 12px; }
+  .complete-msg .cm-btn { display: inline-block; background: linear-gradient(90deg,#4dc9e8,#1a9cc7); color: #fff; font-size: 12px; font-weight: 700; padding: 9px 24px; border-radius: 20px; }
+
   /* ─── PRカルーセル：横スライド表示 ─── */
   .pr-slider-wrap { overflow-x: auto; padding: 4px 4px 16px; }
   .pr-slider { display: flex; gap: 14px; width: max-content; margin: 0 auto; padding: 0 4px; }
@@ -197,10 +202,17 @@
     </div>
   </div>
 
+  <!-- 診断完了メッセージ＋ボタン -->
+  <div class="arr">↓</div>
+  <div class="complete-msg">
+    <div class="cm-text">診断お疲れさまでした！✨<br>○○さんのおすすめのクリニックはこちらです！</div>
+    <div class="cm-btn">診断結果を見る</div>
+  </div>
+
   <!-- 結果：組み合わせ -->
   <div class="arr">↓</div>
   <div class="combine-box">
-    <span class="combine-tag">結果（1枚）</span>
+    <span class="combine-tag">結果（1枚・ボタンタップ後に表示）</span>
     <div class="combine-formula">（Q3の共感の一言）＋　Q4の一言　＋　Q5の一言</div>
     <div class="combine-example">
       <b>表示例（Q3=②、Q4=②、Q5=②の場合）：</b><br>
