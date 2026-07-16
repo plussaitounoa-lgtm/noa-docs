@@ -7,61 +7,70 @@
   <link rel="icon" type="image/png" href="favicon.png">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f0f4f8; color: #1d1d1f; font-size: 13px; }
+  body { font-family: -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: linear-gradient(180deg,#e7ebf3,#f7f9fc); color: #3e3e3e; font-size: 13px; }
 
   .page-header { background: #fff; border-bottom: 1px solid #e0e0e0; padding: 14px 24px; position: sticky; top: 0; z-index: 100; }
   .page-header h1 { font-size: 15px; font-weight: 700; color: #333; }
   .page-header p { font-size: 11px; color: #888; margin-top: 2px; }
 
   .container { max-width: 1300px; margin: 0 auto; padding: 20px 24px 40px; }
-  .type-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #e0c9b5; }
-  .type-label { font-size: 16px; font-weight: 700; color: #b45b1f; }
+  .type-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #f5c8dd; }
+  .type-label { font-size: 16px; font-weight: 700; color: #d03577; }
   .type-sub { font-size: 11px; color: #888; }
+  .tonmana-note { max-width: 900px; margin: 0 0 16px; background: #fff; border: 1px solid #f5c8dd; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #666; line-height: 1.8; }
+  .tonmana-note b { color: #d03577; }
   .cards-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 16px; align-items: flex-start; }
 
-  .card { width: 220px; min-width: 220px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.18); display: flex; flex-direction: column; font-size: 12px; }
-  .card-header { background: linear-gradient(90deg,#b45b1f,#dc894a); padding: 6px 10px; display: flex; align-items: center; justify-content: space-between; }
+  .card { width: 220px; min-width: 220px; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.12); display: flex; flex-direction: column; font-size: 12px; }
+  .card-header { background: linear-gradient(90deg,#ff4eb6,#d03577); padding: 6px 10px; display: flex; align-items: center; justify-content: space-between; }
   .card-header .brand { color: #fff; font-weight: 800; font-size: 13px; letter-spacing: 0.04em; }
-  .card-header .pr-badge { background: rgba(255,255,255,0.25); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+  .card-header .pr-badge { background: rgba(255,255,255,0.3); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
 
-  .img-area { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 5px; height: 100px; background: #fdeee0; color: #8a3f10; }
-  .img-area .img-icon { font-size: 26px; opacity: 0.5; }
-  .img-area .img-label { font-size: 9px; font-weight: 700; }
+  .img-area { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 5px; height: 90px; background: linear-gradient(180deg,#eef4fb,#fdf5f9); color: #a05a8a; }
+  .img-area .img-icon { font-size: 24px; opacity: 0.6; }
+  .img-area .img-label { font-size: 8.5px; font-weight: 700; }
 
-  .point-row { padding: 8px 10px; background: #fdeee0; }
-  .point-headline { font-size: 13px; font-weight: 800; color: #222; line-height: 1.4; }
+  .eyebrow-en { text-align: center; font-size: 9px; letter-spacing: 0.12em; color: #d03577; font-family: Georgia, 'Times New Roman', serif; padding-top: 8px; }
+  .point-row { padding: 4px 10px 8px; text-align: center; }
+  .point-headline { font-size: 13.5px; font-weight: 800; color: #333; line-height: 1.4; }
 
   .menu-list { padding: 8px 10px; display: flex; flex-direction: column; gap: 6px; }
-  .menu-item { display: flex; align-items: center; gap: 7px; padding: 5px 7px; background: #fff8f2; border-radius: 6px; border: 1px solid #f0dbc5; }
-  .menu-item .menu-icon { font-size: 16px; }
-  .menu-item .menu-name { font-size: 9.5px; font-weight: 800; color: #8a3f10; }
+  .menu-item { display: flex; align-items: center; gap: 7px; padding: 5px 7px; border-radius: 8px; }
+  .menu-item .menu-icon { font-size: 15px; }
+  .menu-pill { display: inline-block; font-size: 9px; font-weight: 800; color: #fff; padding: 2px 9px; border-radius: 12px; margin-bottom: 2px; }
   .menu-item .menu-desc { font-size: 8px; color: #777; }
+  .menu-toning { background: #fff0f7; }
+  .menu-toning .menu-pill { background: linear-gradient(90deg,#ff4eb6,#d03577); }
+  .menu-spot { background: #e8fbfa; }
+  .menu-spot .menu-pill { background: linear-gradient(90deg,#04b6b4,#0f95da); }
+  .menu-all { background: #f6ecfb; }
+  .menu-all .menu-pill { background: linear-gradient(90deg,#9b37da,#7a2ab5); }
 
   .card-body { padding: 10px 11px 8px; flex: 1; }
   .body-headline { font-size: 13px; font-weight: 800; color: #1a1a1a; margin-bottom: 6px; line-height: 1.45; }
   .body-text { font-size: 10.5px; color: #555; line-height: 1.75; }
 
-  .price-section { padding: 8px 11px; border-top: 1px solid #f0dbc5; border-bottom: 1px solid #f0dbc5; background: #fff8f2; }
+  .price-section { padding: 8px 11px; text-align: center; background: linear-gradient(180deg,#fff0f7,#fff); border-top: 1px solid #f5c8dd; border-bottom: 1px solid #f5c8dd; }
   .price-label-sm { font-size: 9px; color: #888; margin-bottom: 2px; }
-  .price-main-row { display: flex; align-items: flex-end; gap: 5px; }
-  .price-num { font-size: 24px; font-weight: 900; color: #b45b1f; line-height: 1; }
+  .price-main-row { display: flex; align-items: flex-end; justify-content: center; gap: 5px; }
+  .price-num { font-size: 24px; font-weight: 900; color: #d03577; line-height: 1; }
   .price-suffix { font-size: 10px; color: #888; }
-  .coupon-badge { display: inline-block; background: #c0392b; color: #fff; font-size: 9px; font-weight: 800; padding: 2px 8px; border-radius: 4px; margin-top: 5px; }
+  .coupon-badge { display: inline-block; background: linear-gradient(90deg,#ff4eb6,#d03577); color: #fff; font-size: 9px; font-weight: 800; padding: 3px 10px; border-radius: 12px; margin-top: 6px; }
 
   .trust-row { display: flex; gap: 4px; padding: 8px 11px; }
-  .trust-badge { flex: 1; border-radius: 5px; padding: 5px 3px; font-size: 8.5px; font-weight: 700; text-align: center; line-height: 1.4; border: 1px solid #f0dbc5; background: #fff8f2; color: #8a3f10; }
+  .trust-badge { flex: 1; border-radius: 8px; padding: 6px 3px; font-size: 8.5px; font-weight: 700; text-align: center; line-height: 1.4; background: #fff0f7; color: #d03577; }
 
-  .fact-box { margin: 8px 10px; background: #fff8f2; border: 1.5px solid #f0dbc5; border-radius: 8px; padding: 8px 10px; }
-  .fact-box .fact-line { font-size: 9.5px; color: #333; line-height: 1.7; }
-  .fact-box .fact-line b { color: #8a3f10; }
+  .fact-box { margin: 8px 10px; background: #eef4fb; border-radius: 10px; padding: 8px 10px; }
+  .fact-box .fact-line { font-size: 9.5px; color: #333; line-height: 1.8; }
+  .fact-box .fact-line b { color: #0f95da; }
 
   .cta-wrap { padding: 8px 10px 10px; }
-  .cta-btn { display: block; width: 100%; background: linear-gradient(180deg, #dc894a 0%, #b45b1f 100%); border: none; border-radius: 50px; padding: 10px 8px; font-size: 11px; font-weight: 800; color: #fff; text-align: center; line-height: 1.35; box-shadow: 0 3px 6px rgba(0,0,0,0.2); position: relative; }
-  .cta-arrow { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.85; }
+  .cta-btn { display: block; width: 100%; background: linear-gradient(90deg, #ff4eb6, #d03577); border: none; border-radius: 50px; padding: 10px 8px; font-size: 11px; font-weight: 800; color: #fff; text-align: center; line-height: 1.35; box-shadow: 0 3px 6px rgba(208,53,119,0.3); position: relative; }
+  .cta-arrow { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.9; }
 
-  .warn-note { max-width: 900px; margin: 20px auto 0; background: #fbf2e4; border: 1px solid #f0dbb0; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #7a5a1a; line-height: 1.7; }
+  .warn-note { max-width: 900px; margin: 20px auto 0; background: #fff; border: 1px solid #f0dbb0; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #7a5a1a; line-height: 1.7; }
   .back-link { max-width: 1300px; margin: 40px auto 0; padding: 20px 24px 0; border-top: 1px solid #ddd; font-size: 13px; }
-  .back-link a { color: #b45b1f; text-decoration: none; }
+  .back-link a { color: #d03577; text-decoration: none; }
 </style>
 </head>
 <body>
@@ -77,17 +86,20 @@
     <span class="type-sub">全5枚・単一商材（afbアフィリエイト）</span>
   </div>
 
+  <div class="tonmana-note"><b>トンマナ:</b> TCB公式LP（picolaser）実物に合わせ、淡いブルー系グラデーション背景＋ピンク（<b>#ff4eb6/#d03577</b>）をメインカラーに変更。メニュー名はLP同様のデュオトーン（ピコトーニング=ピンク／ピコスポット=ティール<b>#04b6b4</b>／シミ取り放題=パープル<b>#9b37da</b>、TCB公式CSSのアクセントカラーパレットから採用）でピル型バッジ化。</div>
+
   <div class="cards-row">
 
     <!-- Card 1: 導入 -->
     <div class="card">
       <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="img-area"><div class="img-icon">📍</div><div class="img-label">施術イメージ写真</div></div>
+      <div class="img-area"><div class="img-icon">👩</div><div class="img-label">施術メニュー比較イラスト<br>（LPの顔イラスト風）</div></div>
+      <div class="eyebrow-en">RECOMMEND</div>
       <div class="point-row"><div class="point-headline">あなたに合う施術、<br>TCBにあります</div></div>
       <div class="menu-list">
-        <div class="menu-item"><span class="menu-icon">🎯</span><div><div class="menu-name">ピコスポット</div><div class="menu-desc">一点集中で消したい方向け</div></div></div>
-        <div class="menu-item"><span class="menu-icon">✨</span><div><div class="menu-name">ピコトーニング</div><div class="menu-desc">顔全体のくすみもケア</div></div></div>
-        <div class="menu-item"><span class="menu-icon">🔄</span><div><div class="menu-name">シミ取り放題</div><div class="menu-desc">まとめて対応したい方向け</div></div></div>
+        <div class="menu-item menu-toning"><span class="menu-icon">✨</span><div><span class="menu-pill">ピコトーニング</span><div class="menu-desc">顔全体のくすみもケア</div></div></div>
+        <div class="menu-item menu-spot"><span class="menu-icon">🎯</span><div><span class="menu-pill">ピコスポット</span><div class="menu-desc">一点集中で消したい方向け</div></div></div>
+        <div class="menu-item menu-all"><span class="menu-icon">🔄</span><div><span class="menu-pill">シミ取り放題</span><div class="menu-desc">まとめて対応したい方向け</div></div></div>
       </div>
       <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
     </div>
@@ -95,7 +107,7 @@
     <!-- Card 2: 価格 -->
     <div class="card">
       <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="point-row"><div class="point-headline">初回は、<br>実質0円から</div></div>
+      <div class="point-row" style="padding-top:14px;"><div class="point-headline">初回は、<br>実質0円から</div></div>
       <div class="price-section">
         <div class="price-label-sm">ライトプラン</div>
         <div class="price-main-row"><span class="price-num">9,800</span><span class="price-suffix">円〜（税込・1回）</span></div>
@@ -110,7 +122,7 @@
     <!-- Card 3: 通いやすさ -->
     <div class="card">
       <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="point-row"><div class="point-headline">予約は、<br>LINEで今すぐ</div></div>
+      <div class="point-row" style="padding-top:14px;"><div class="point-headline">予約は、<br>LINEで今すぐ</div></div>
       <div class="fact-box">
         <div class="fact-line">🏥 全国 <b>97院</b> 展開中</div>
         <div class="fact-line">📱 予約方法: <b>Web／LINE／電話</b></div>
@@ -124,7 +136,7 @@
     <!-- Card 4: トラブル対応 -->
     <div class="card">
       <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="point-row"><div class="point-headline">もしものときも、<br>無料で対応</div></div>
+      <div class="point-row" style="padding-top:14px;"><div class="point-headline">もしものときも、<br>無料で対応</div></div>
       <div class="trust-row">
         <div class="trust-badge">🛡️<br>トラブル時<br>無料修正</div>
         <div class="trust-badge">💬<br>無料<br>カウンセリング</div>
@@ -138,12 +150,12 @@
     <!-- Card 5: 相談・CTA -->
     <div class="card">
       <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="point-row"><div class="point-headline">まずは、<br>相談だけでもいい</div></div>
-      <div class="card-body" style="padding-top:14px;">
+      <div class="point-row" style="padding-top:14px;"><div class="point-headline">まずは、<br>相談だけでもいい</div></div>
+      <div class="card-body" style="padding-top:4px;">
         <div class="body-headline">「施術するか分からないけど、相談だけしたい」も歓迎</div>
         <div class="body-text">カウンセリングは何度でも無料。無理な勧誘や即決を求める案内はここでは行いません（結果ページで案内済みの範囲のみ）。</div>
       </div>
-      <div class="cta-wrap"><button class="cta-btn" style="background:linear-gradient(180deg,#44bb3a,#2e9630);">無料カウンセリングを予約する <span class="cta-arrow">›</span></button></div>
+      <div class="cta-wrap"><button class="cta-btn" style="background:linear-gradient(90deg,#44bb3a,#2e9630);box-shadow:0 3px 6px rgba(46,150,48,0.3);">無料カウンセリングを予約する <span class="cta-arrow">›</span></button></div>
     </div>
 
   </div>
