@@ -46,6 +46,19 @@
   .menu-all { background: #f6ecfb; }
   .menu-all .menu-pill { background: linear-gradient(90deg,#9b37da,#7a2ab5); }
 
+  /* ─── Card1: キャンペーン訴求強化パーツ ─── */
+  .campaign-banner { background: linear-gradient(90deg,#f5c542,#e8a820); color: #4a3300; text-align: center; font-size: 10.5px; font-weight: 800; padding: 6px 8px; line-height: 1.5; }
+  .campaign-banner b { font-size: 13px; }
+  .coupon-pair { display: flex; gap: 6px; padding: 8px 10px 4px; }
+  .coupon-box { flex: 1; background: #eef8fc; border-radius: 8px; padding: 6px 5px; text-align: center; }
+  .coupon-box .coupon-pill { display: inline-block; font-size: 8px; font-weight: 800; color: #fff; padding: 2px 7px; border-radius: 10px; margin-bottom: 4px; }
+  .coupon-box .coupon-tag { font-size: 7.5px; color: #666; margin-bottom: 2px; }
+  .coupon-box .coupon-name { font-size: 9.5px; font-weight: 800; color: #333; margin-bottom: 4px; }
+  .coupon-box .coupon-before { font-size: 9px; color: #999; text-decoration: line-through; }
+  .coupon-box .coupon-after { font-size: 20px; font-weight: 900; color: #d03577; line-height: 1.2; }
+  .benefit-badges { display: flex; gap: 5px; padding: 6px 10px 4px; }
+  .benefit-badge { flex: 1; background: #fff; border: 1.5px solid #b8e6f5; border-radius: 8px; padding: 4px 3px; text-align: center; font-size: 8.5px; font-weight: 700; color: #1a9cc7; line-height: 1.4; }
+
   .card-body { padding: 10px 11px 8px; flex: 1; }
   .body-headline { font-size: 13px; font-weight: 800; color: #1a1a1a; margin-bottom: 6px; line-height: 1.45; }
   .body-text { font-size: 10.5px; color: #555; line-height: 1.75; }
@@ -90,16 +103,32 @@
 
   <div class="cards-row">
 
-    <!-- Card 1: 導入 -->
+    <!-- Card 1: 導入＋キャンペーン訴求強化 -->
     <div class="card">
       <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="img-area"><div class="img-icon">👩</div><div class="img-label">施術メニュー比較イラスト<br>（LPの顔イラスト風）</div></div>
-      <div class="eyebrow-en">RECOMMEND</div>
-      <div class="point-row"><div class="point-headline">あなたに合う施術、<br>TCBにあります</div></div>
-      <div class="menu-list">
-        <div class="menu-item menu-toning"><span class="menu-icon">✨</span><div><span class="menu-pill">ピコトーニング</span><div class="menu-desc">顔全体のくすみもケア</div></div></div>
-        <div class="menu-item menu-spot"><span class="menu-icon">🎯</span><div><span class="menu-pill">ピコスポット</span><div class="menu-desc">一点集中で消したい方向け</div></div></div>
-        <div class="menu-item menu-all"><span class="menu-icon">🔄</span><div><span class="menu-pill">シミ取り放題</span><div class="menu-desc">まとめて対応したい方向け</div></div></div>
+      <div class="campaign-banner">初来院限定<br><b>25,000円OFF</b>クーポン配布中</div>
+      <div class="img-area"><div class="img-icon">👩</div><div class="img-label">施術イメージ写真<br>（LP同様、悩み別に部位を示す）</div></div>
+      <div class="point-row" style="padding-top:2px;"><div class="point-headline">シミ取りレーザーで、<br>素肌をトーンアップ</div></div>
+      <div class="coupon-pair">
+        <div class="coupon-box">
+          <span class="coupon-pill" style="background:linear-gradient(90deg,#ff4eb6,#d03577);">ピコトーニング</span>
+          <div class="coupon-tag">広範囲のシミ改善に</div>
+          <div class="coupon-name">ライト1回</div>
+          <div class="coupon-before">¥9,800</div>
+          <div class="coupon-after">→ ¥0</div>
+        </div>
+        <div class="coupon-box">
+          <span class="coupon-pill" style="background:linear-gradient(90deg,#04b6b4,#0f95da);">ピコスポット</span>
+          <div class="coupon-tag">集中的なシミ改善に</div>
+          <div class="coupon-name">シミ取り1mm以下</div>
+          <div class="coupon-before">¥6,600</div>
+          <div class="coupon-after">→ ¥0</div>
+        </div>
+      </div>
+      <div class="body-text" style="text-align:center;padding:0 10px 6px;font-size:9px;color:#888;">※初来院限定クーポン適用時。まとめて対応したい方には「シミ取り放題」（全顔・63,000円〜）も</div>
+      <div class="benefit-badges">
+        <div class="benefit-badge">痛みが<br>少ない</div>
+        <div class="benefit-badge">当日メイク<br>可能</div>
       </div>
       <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
     </div>
