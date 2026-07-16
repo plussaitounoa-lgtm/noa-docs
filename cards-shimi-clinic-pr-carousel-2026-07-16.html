@@ -59,6 +59,31 @@
   .benefit-badges { display: flex; gap: 5px; padding: 6px 10px 4px; }
   .benefit-badge { flex: 1; background: #fff; border: 1.5px solid #b8e6f5; border-radius: 8px; padding: 4px 3px; text-align: center; font-size: 8.5px; font-weight: 700; color: #1a9cc7; line-height: 1.4; }
 
+  /* ─── Card1: 顔イラスト診断風の左右分割プレースホルダー ─── */
+  .split-face { display: flex; border-radius: 8px; overflow: hidden; margin: 0 10px 8px; }
+  .split-half { flex: 1; padding: 8px 6px; text-align: center; }
+  .split-toning { background: #fde3ef; }
+  .split-spot { background: #e3f8f6; }
+  .split-half .split-pill { display: inline-block; font-size: 8.5px; font-weight: 800; color: #fff; padding: 2px 8px; border-radius: 10px; margin-bottom: 5px; }
+  .split-toning .split-pill { background: linear-gradient(90deg,#ff4eb6,#d03577); }
+  .split-spot .split-pill { background: linear-gradient(90deg,#04b6b4,#0f95da); }
+  .split-half .split-item { font-size: 7.5px; color: #555; line-height: 1.9; }
+
+  /* ─── Card2: こんな方にオススメ！！ チェックリスト2カラム ─── */
+  .recommend-eyebrow { text-align: center; font-size: 9px; letter-spacing: 0.12em; color: #1a9cc7; font-weight: 700; padding-top: 8px; }
+  .recommend-title { text-align: center; font-size: 14px; font-weight: 800; color: #333; padding: 2px 0 8px; }
+  .check-cols { display: flex; gap: 6px; padding: 0 10px 8px; }
+  .check-col { flex: 1; text-align: center; }
+  .check-col .check-photo { height: 48px; border-radius: 6px; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .check-toning .check-photo { background: #fde3ef; color: #c2447a; }
+  .check-spot .check-photo { background: #e3f8f6; color: #0a8a86; }
+  .check-col .check-pill { display: inline-block; font-size: 8.5px; font-weight: 800; color: #fff; padding: 2px 8px; border-radius: 10px; margin-bottom: 5px; }
+  .check-toning .check-pill { background: linear-gradient(90deg,#ff4eb6,#d03577); }
+  .check-spot .check-pill { background: linear-gradient(90deg,#04b6b4,#0f95da); }
+  .check-list { text-align: left; font-size: 7.5px; color: #555; line-height: 1.9; }
+  .check-item { padding: 1px 0; }
+  .check-item::before { content: "☑ "; color: #1a9cc7; font-weight: 800; }
+
   .card-body { padding: 10px 11px 8px; flex: 1; }
   .body-headline { font-size: 13px; font-weight: 800; color: #1a1a1a; margin-bottom: 6px; line-height: 1.45; }
   .body-text { font-size: 10.5px; color: #555; line-height: 1.75; }
@@ -72,6 +97,14 @@
 
   .trust-row { display: flex; gap: 4px; padding: 8px 11px; }
   .trust-badge { flex: 1; border-radius: 8px; padding: 6px 3px; font-size: 8.5px; font-weight: 700; text-align: center; line-height: 1.4; background: #eef8fc; color: #1a9cc7; }
+
+  /* ─── Card4: 全社実績バッジ（公式データ） ─── */
+  .achievement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 0 10px 6px; }
+  .achievement-badge { background: radial-gradient(circle at 30% 30%, #fdf6e3, #ecd48a); border: 1.5px solid #d4af37; border-radius: 10px; padding: 8px 4px; text-align: center; }
+  .achievement-badge .ach-label { font-size: 6.5px; color: #8a6d1a; font-weight: 700; margin-bottom: 2px; line-height: 1.3; }
+  .achievement-badge .ach-value { font-size: 14px; font-weight: 900; color: #7a5a10; line-height: 1.15; }
+  .achievement-badge .ach-sub { font-size: 8px; font-weight: 800; color: #7a5a10; line-height: 1.3; }
+  .achievement-footnote { font-size: 6px; color: #999; padding: 0 10px 6px; line-height: 1.5; }
 
   .fact-box { margin: 8px 10px; background: #eef8fc; border-radius: 10px; padding: 8px 10px; }
   .fact-box .fact-line { font-size: 9.5px; color: #333; line-height: 1.8; }
@@ -99,7 +132,7 @@
     <span class="type-sub">全5枚・単一商材（afbアフィリエイト）</span>
   </div>
 
-  <div class="tonmana-note"><b>トンマナ（修正済み）:</b> メインカラーはTCB公式LPの実際のテーブル・見出しに合わせ水色系（<b>#4dc9e8〜#1a9cc7</b>）に変更。ピンク（<b>#ff4eb6/#d03577</b>）はCTAボタンのみに限定。メニュー名はLPのデュオトーン（ピコトーニング=ピンク／ピコスポット=ティール<b>#04b6b4</b>／シミ取り放題=パープル<b>#9b37da</b>、TCB公式CSSのアクセントカラーパレットから採用）でピル型バッジ化。</div>
+  <div class="tonmana-note"><b>構成:</b> Card1（キャンペーン+施術タイプ診断風）／Card2（こんな方にオススメ！！チェックリスト、実LP構成準拠）／Card3（通いやすさ）／Card4（全社実績・公式アンケートデータ）／Card5（相談・CTA）。メインカラーは水色系（<b>#4dc9e8〜#1a9cc7</b>）、CTA・メニューバッジはピンク/ティール/パープルのデュオトーン。</div>
 
   <div class="cards-row">
 
@@ -107,8 +140,22 @@
     <div class="card">
       <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
       <div class="campaign-banner">初来院限定<br><b>25,000円OFF</b>クーポン配布中</div>
-      <div class="img-area"><div class="img-icon">👩</div><div class="img-label">施術イメージ写真<br>（LP同様、悩み別に部位を示す）</div></div>
-      <div class="point-row" style="padding-top:2px;"><div class="point-headline">シミ取りレーザーで、<br>素肌をトーンアップ</div></div>
+      <div class="point-row" style="padding-top:6px;"><div class="point-headline">シミ取りレーザーで、<br>素肌をトーンアップ</div></div>
+      <div class="split-face">
+        <div class="split-half split-toning">
+          <span class="split-pill">ピコトーニング</span>
+          <div class="split-item">薄いシミ・そばかす</div>
+          <div class="split-item">肝斑・くすみ</div>
+          <div class="split-item">毛穴の開き・黒ずみ</div>
+          <div class="split-item">肌質改善</div>
+        </div>
+        <div class="split-half split-spot">
+          <span class="split-pill">ピコスポット</span>
+          <div class="split-item">濃いシミ</div>
+          <div class="split-item">そばかす</div>
+          <div class="split-item">ほくろ</div>
+        </div>
+      </div>
       <div class="coupon-pair">
         <div class="coupon-box">
           <span class="coupon-pill" style="background:linear-gradient(90deg,#ff4eb6,#d03577);">ピコトーニング</span>
@@ -133,17 +180,32 @@
       <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
     </div>
 
-    <!-- Card 2: 価格 -->
+    <!-- Card 2: こんな方にオススメ！！（チェックリスト2カラム） -->
     <div class="card">
       <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="point-row" style="padding-top:14px;"><div class="point-headline">初回は、<br>実質0円から</div></div>
-      <div class="price-section">
-        <div class="price-label-sm">ライトプラン</div>
-        <div class="price-main-row"><span class="price-num">9,800</span><span class="price-suffix">円〜（税込・1回）</span></div>
-        <div class="coupon-badge">初めての来院は「お試し0円」</div>
-      </div>
-      <div class="card-body">
-        <div class="body-text">今なら25,000円OFFクーポンも使える。麻酔代等が別途かかる場合は事前に確認できる。</div>
+      <div class="recommend-eyebrow">RECOMMEND</div>
+      <div class="recommend-title">こんな方に<br>オススメ！！</div>
+      <div class="check-cols">
+        <div class="check-col check-toning">
+          <div class="check-photo">✨</div>
+          <span class="check-pill">ピコトーニング</span>
+          <div class="check-list">
+            <div class="check-item">肝斑が気になる</div>
+            <div class="check-item">シミ・くすみに悩んでいる</div>
+            <div class="check-item">毛穴の開きが気になる</div>
+            <div class="check-item">お肌のトーンアップを目指したい</div>
+          </div>
+        </div>
+        <div class="check-col check-spot">
+          <div class="check-photo">🎯</div>
+          <span class="check-pill">ピコスポット</span>
+          <div class="check-list">
+            <div class="check-item">濃いシミが気になる</div>
+            <div class="check-item">そばかすをなんとかしたい</div>
+            <div class="check-item">ピンポイントでシミを取りたい</div>
+            <div class="check-item">1回でもしっかりシミ改善したい</div>
+          </div>
+        </div>
       </div>
       <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
     </div>
@@ -162,17 +224,29 @@
       <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
     </div>
 
-    <!-- Card 4: トラブル対応 -->
+    <!-- Card 4: 全社実績（公式アンケートデータ） -->
     <div class="card">
       <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="point-row" style="padding-top:14px;"><div class="point-headline">もしものときも、<br>無料で対応</div></div>
-      <div class="trust-row">
-        <div class="trust-badge">🛡️<br>トラブル時<br>無料修正</div>
-        <div class="trust-badge">💬<br>無料<br>カウンセリング</div>
+      <div class="point-row" style="padding-top:10px;"><div class="point-headline">私たちTCBは<br>全国で選ばれています</div></div>
+      <div class="achievement-grid">
+        <div class="achievement-badge">
+          <div class="ach-label">2024年度<br>来院数</div>
+          <div class="ach-value">96万<br>5,785人</div>
+        </div>
+        <div class="achievement-badge">
+          <div class="ach-label">どこでも<br>通いやすい</div>
+          <div class="ach-sub">全国展開<br>全院駅チカ</div>
+        </div>
+        <div class="achievement-badge">
+          <div class="ach-label">施術の<br>満足度<sup>※1</sup></div>
+          <div class="ach-value">91.0%</div>
+        </div>
+        <div class="achievement-badge">
+          <div class="ach-label">リピート<br>意思<sup>※2</sup></div>
+          <div class="ach-value">96.7%</div>
+        </div>
       </div>
-      <div class="card-body">
-        <div class="body-text">万が一トラブルが発生した際は、修正・回復まで無料で対応する体制。</div>
-      </div>
+      <div class="achievement-footnote">※TCB全体の実績（施術・部位を問わない全社データ）。※1 2025年7月アンケートn=2,378人（TCB調べ）「施術の満足度」に満足〜やや満足と回答した割合。※2 同n=2,360人「また受けたい」等と回答した割合</div>
       <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
     </div>
 
@@ -182,7 +256,7 @@
       <div class="point-row" style="padding-top:14px;"><div class="point-headline">まずは、<br>相談だけでもいい</div></div>
       <div class="card-body" style="padding-top:4px;">
         <div class="body-headline">「施術するか分からないけど、相談だけしたい」も歓迎</div>
-        <div class="body-text">カウンセリングは何度でも無料。無理な勧誘や即決を求める案内はここでは行いません（結果ページで案内済みの範囲のみ）。</div>
+        <div class="body-text">カウンセリングは何度でも無料。万が一のトラブル時も、無料で修正・回復対応する体制があります。</div>
       </div>
       <div class="cta-wrap"><button class="cta-btn" style="background:linear-gradient(90deg,#44bb3a,#2e9630);box-shadow:0 3px 6px rgba(46,150,48,0.3);">無料カウンセリングを予約する <span class="cta-arrow">›</span></button></div>
     </div>
