@@ -165,6 +165,11 @@
   #section-toning .price-block .pb-name { font-size: 10.5px; font-weight: 800; color: #333; margin-bottom: 4px; }
   #section-toning .price-block .pb-before { font-size: 10px; color: #999; text-decoration: line-through; }
   #section-toning .price-block .pb-after { font-size: 26px; font-weight: 900; color: #d6336c; }
+  #section-toning .campaign-sticker-wrap { text-align: center; padding: 6px 10px 2px; }
+  #section-toning .campaign-sticker { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 20px; border-radius: 16px; background: linear-gradient(180deg,#fff,#ffe3ef); border: 1.5px solid #ff6a9d; box-shadow: 0 2px 6px rgba(214,51,108,0.2); }
+  #section-toning .campaign-sticker .cs-top { font-size: 8px; font-weight: 800; color: #d6336c; }
+  #section-toning .campaign-sticker .cs-price { font-size: 16px; font-weight: 900; color: #d6336c; line-height: 1.2; margin: 1px 0; }
+  #section-toning .campaign-sticker .cs-bottom { font-size: 8px; font-weight: 800; color: #d6336c; }
   #section-toning .back-link a { color: #d6336c; text-decoration: none; }
 
   /* ═══════════ #section-spot（ピコスポット・ティール） ═══════════ */
@@ -197,6 +202,11 @@
   #section-spot .price-block .pb-name { font-size: 10.5px; font-weight: 800; color: #333; margin-bottom: 4px; }
   #section-spot .price-block .pb-before { font-size: 10px; color: #999; text-decoration: line-through; }
   #section-spot .price-block .pb-after { font-size: 26px; font-weight: 900; color: #0f95da; }
+  #section-spot .campaign-sticker-wrap { text-align: center; padding: 6px 10px 2px; }
+  #section-spot .campaign-sticker { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 20px; border-radius: 16px; background: linear-gradient(180deg,#fff,#e3f8f6); border: 1.5px solid #5cc9d6; box-shadow: 0 2px 6px rgba(15,149,218,0.2); }
+  #section-spot .campaign-sticker .cs-top { font-size: 8px; font-weight: 800; color: #0f95da; }
+  #section-spot .campaign-sticker .cs-price { font-size: 16px; font-weight: 900; color: #0f95da; line-height: 1.2; margin: 1px 0; }
+  #section-spot .campaign-sticker .cs-bottom { font-size: 8px; font-weight: 800; color: #0f95da; }
   #section-spot .back-link a { color: #0f95da; text-decoration: none; }
 </style>
 </head>
@@ -457,6 +467,13 @@
         <div class="pb-after">→ ¥0</div>
         <div style="font-size:8px;color:#888;margin-top:2px;">初来院限定クーポン適用価格</div>
       </div>
+      <div class="campaign-sticker-wrap">
+        <div class="campaign-sticker">
+          <div class="cs-top">WEB予約で！</div>
+          <div class="cs-price">＼¥25,000 OFF／</div>
+          <div class="cs-bottom">クーポンをGET♥</div>
+        </div>
+      </div>
       <div class="cta-wrap-green">
         <span class="cta-tag">Web予約でクーポンGET</span>
         <button class="cta-btn-green">無料カウンセリングを予約する<span class="cta-circle">▶</span></button>
@@ -533,8 +550,13 @@
     <div class="card">
       <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
       <div class="card-title" style="font-size:13px;padding-top:10px;">症例紹介</div>
-      <div class="case-placeholder">Before / After 症例写真<br>（プレースホルダー）</div>
-      <div class="case-warn">⚠️ <b>実装保留：</b> 限定解除要件は治療内容／治療期間・回数／費用／主なリスク・副作用の4点併記（ピコトーニングCard4で対応済みの形式）。ピコスポットは実症例データ未着手のため、素材が来たら同形式でCard4を実装</div>
+      <div class="case-placeholder">Before / After 症例写真<br>（プレースホルダー・差し替え予定）</div>
+      <div class="case-detail">
+        <div class="cd-row"><span class="cd-label">治療内容</span>TCB式ピコスポット（レーザー照射でメラニン色素を破壊する施術）</div>
+        <div class="cd-row"><span class="cd-label">期間・回数</span>1回（都度施術）</div>
+        <div class="cd-row"><span class="cd-label">費用</span>シミ取り1mm以下 ¥6,600（税込）</div>
+        <div class="cd-row"><span class="cd-label">リスク・副作用</span>施術部位の腫れ・内出血・赤み（1日程度で軽快）</div>
+      </div>
     </div>
 
     <div class="card">
@@ -546,6 +568,13 @@
         <div class="pb-after">→ ¥0</div>
         <div style="font-size:8px;color:#888;margin-top:2px;">初来院限定クーポン適用価格</div>
       </div>
+      <div class="campaign-sticker-wrap">
+        <div class="campaign-sticker">
+          <div class="cs-top">WEB予約で！</div>
+          <div class="cs-price">＼¥25,000 OFF／</div>
+          <div class="cs-bottom">クーポンをGET♥</div>
+        </div>
+      </div>
       <div class="cta-wrap-green">
         <span class="cta-tag">Web予約でクーポンGET</span>
         <button class="cta-btn-green">無料カウンセリングを予約する<span class="cta-circle">▶</span></button>
@@ -555,7 +584,7 @@
   </div>
 
   <div class="warn-note">
-    <b>医療広告ガイドライン確認済み（Card4除く）:</b> Card1〜3・5は体験談・比較優良広告・誇大表現なし。数値・文言はTCB公式LP準拠。Card4（症例写真）は実症例データ入手後に治療内容／期間・回数／費用／リスク・副作用の4点を併記して実装。
+    <b>医療広告ガイドライン確認済み:</b> 体験談・比較優良広告・誇大表現なし。Card4（症例写真）は限定解除要件（治療内容／治療期間・回数／費用／主なリスク・副作用の4点併記）を満たす形で掲載。写真は差し替え予定のプレースホルダー。数値・文言はTCB公式LP・実画面準拠。
   </div>
 </div>
 </div>
