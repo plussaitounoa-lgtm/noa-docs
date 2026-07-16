@@ -106,6 +106,19 @@
   .achievement-badge .ach-sub { font-size: 8px; font-weight: 800; color: #7a5a10; line-height: 1.3; }
   .achievement-footnote { font-size: 6px; color: #999; padding: 0 10px 6px; line-height: 1.5; }
 
+  /* ─── Card3: おすすめオプション施術（水色テーブル・実LP準拠） ─── */
+  .option-hook { text-align: center; padding: 8px 10px 6px; }
+  .option-hook .oh-tag { font-size: 8.5px; color: #1a9cc7; font-weight: 800; }
+  .option-hook .oh-main { font-size: 11px; font-weight: 800; color: #333; line-height: 1.5; margin-top: 2px; }
+  .option-hook .oh-zero { font-size: 20px; font-weight: 900; color: #1a9cc7; }
+  .option-table { margin: 0 10px 8px; border-radius: 8px; overflow: hidden; border: 1px solid #b8e6f5; }
+  .option-table .ot-head { background: linear-gradient(90deg,#4dc9e8,#1a9cc7); color: #fff; text-align: center; font-size: 10px; font-weight: 800; padding: 6px; }
+  .option-table .ot-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; font-size: 8.5px; border-bottom: 1px solid #eef8fc; background: #fff; }
+  .option-table .ot-row:nth-child(even) { background: #f5fbfd; }
+  .option-table .ot-row:last-child { border-bottom: none; }
+  .option-table .ot-name { color: #1a9cc7; font-weight: 700; }
+  .option-table .ot-price { color: #333; font-weight: 800; }
+
   /* ─── Card5: 最終CTA（実LPのオレンジ祝祭カラー・ラストプッシュ） ─── */
   .card-final { border: 2px solid #ff8a3d; }
   .final-ribbon { background: #d6336c; color: #fff; text-align: center; font-size: 8.5px; font-weight: 800; padding: 4px 6px; }
@@ -143,7 +156,7 @@
     <span class="type-sub">全5枚・単一商材（afbアフィリエイト）</span>
   </div>
 
-  <div class="tonmana-note"><b>構成:</b> Card1（キャンペーン+施術タイプ診断風）／Card2（こんな方にオススメ！！チェックリスト、実LP構成準拠）／Card3（通いやすさ）／Card4（全社実績・公式アンケートデータ）／Card5（相談・CTA）。メインカラーは水色系（<b>#4dc9e8〜#1a9cc7</b>）、CTA・メニューバッジはピンク/ティール/パープルのデュオトーン。</div>
+  <div class="tonmana-note"><b>構成:</b> Card1（キャンペーン+施術タイプ診断風）／Card2（こんな方にオススメ！！チェックリスト）／Card3（おすすめオプション施術・追加してもクーポンで¥0）／Card4（全社実績・公式アンケートデータ）／Card5（最終CTA・オレンジ祝祭カラーでクーポン再訴求）。全て実LP実画面の構成準拠。メインカラーは水色系（<b>#4dc9e8〜#1a9cc7</b>）、CTA・メニューバッジはピンク/ティール/パープルのデュオトーン。</div>
 
   <div class="cards-row">
 
@@ -221,17 +234,22 @@
       <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
     </div>
 
-    <!-- Card 3: 通いやすさ -->
+    <!-- Card 3: おすすめオプション施術（追加してもクーポンで¥0） -->
     <div class="card">
       <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="point-row" style="padding-top:14px;"><div class="point-headline">予約は、<br>LINEで今すぐ</div></div>
-      <div class="fact-box">
-        <div class="fact-line">🏥 全国 <b>97院</b> 展開中</div>
-        <div class="fact-line">📱 予約方法: <b>Web／LINE／電話</b></div>
+      <div class="option-hook">
+        <div class="oh-tag">＼必見！！おトク情報／</div>
+        <div class="oh-main">25,000円OFFクーポン適用で<br>さらに施術を追加しても<br><span class="oh-zero">¥0</span></div>
       </div>
-      <div class="card-body">
-        <div class="body-text">近くの院を探しやすく、都合の良い方法で予約できる。</div>
+      <div class="option-table">
+        <div class="ot-head">おすすめオプション施術</div>
+        <div class="ot-row"><span class="ot-name">イオン導入（1回）</span><span class="ot-price">¥8,150</span></div>
+        <div class="ot-row"><span class="ot-name">白玉点滴プレミアム 1回</span><span class="ot-price">¥13,200</span></div>
+        <div class="ot-row"><span class="ot-name">RegenSkinSRSマスク 1回</span><span class="ot-price">¥2,040</span></div>
+        <div class="ot-row"><span class="ot-name">サリチル酸ピーリング 1回</span><span class="ot-price">¥9,170</span></div>
+        <div class="ot-row"><span class="ot-name">シミ・肝斑セット</span><span class="ot-price">¥5,500</span></div>
       </div>
+      <div class="body-text" style="text-align:center;padding:0 10px 6px;font-size:9px;color:#888;">価格は全て税込。組み合わせ額が25,000円以内なら合わせて0円になる場合も</div>
       <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
     </div>
 
