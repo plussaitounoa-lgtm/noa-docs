@@ -46,6 +46,12 @@
   .fan-item .fan-arrow { color: #b45b1f; font-weight: 700; margin: 2px 0; }
   .fan-item .fan-menu { color: #8a3f10; font-weight: 700; background: #fdeee0; border-radius: 5px; padding: 2px 6px; display: inline-block; }
 
+  /* ─── PRカル後の追加メニュー（LINEチャット風・＋4項目） ─── */
+  .chat-menu { max-width: 320px; margin: 8px auto 0; background: #fff; border-radius: 18px; padding: 14px 18px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+  .chat-menu-item { display: flex; align-items: center; gap: 8px; padding: 10px 4px; font-size: 12px; color: #333; font-weight: 600; }
+  .chat-menu-item:not(:last-child) { border-bottom: 1px solid #eee; }
+  .chat-menu-item .chat-arrow { color: #3a94b8; font-size: 10px; }
+
   .combine-box { max-width: 720px; margin: 8px auto 0; background: #fff8e1; border: 1px solid #ffe082; border-radius: 10px; padding: 14px 18px; font-size: 11.5px; line-height: 1.9; color: #7a5c00; text-align: center; }
   .combine-box .combine-tag { font-size: 9.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; display: block; margin-bottom: 6px; color: #e37400; }
   .combine-formula { font-size: 13px; font-weight: 700; color: #4a3300; margin: 6px 0; }
@@ -226,6 +232,17 @@
     <span class="pr-tag2">CTA: 無料カウンセリングを予約する（緑）</span>
     「Webクーポン配布中！¥25,000 OFF（※初診のみ有効）」＋コスチャル¥0再訴求＋「まずはお気軽にご相談ください」
   </div>
+
+  <!-- 追加メニュー（＋4項目） -->
+  <div class="arr">↓</div>
+  <div class="step-label">追加メニュー（PRカル後・LINEチャット風）</div>
+  <div class="chat-menu">
+    <div class="chat-menu-item"><span class="chat-arrow">▶</span>ピコトーニングって？</div>
+    <div class="chat-menu-item"><span class="chat-arrow">▶</span>ピコスポットって？</div>
+    <div class="chat-menu-item"><span class="chat-arrow">▶</span>よくある質問を見る</div>
+    <div class="chat-menu-item"><span class="chat-arrow">▶</span>予約の流れを見てみる</div>
+  </div>
+  <div class="bridge-box">CTAで即予約に進まないユーザー向けの補足導線。各項目タップでLINE内の説明メッセージ・FAQ・予約フロー案内に遷移</div>
 
   <div class="arr">↓</div>
   <div class="node" style="max-width:520px;background:#fafafa;border:1px dashed #ccc;">
