@@ -47,11 +47,11 @@
   .menu-all .menu-pill { background: linear-gradient(90deg,#9b37da,#7a2ab5); }
 
   /* ─── Card1: キャンペーン訴求強化パーツ ─── */
-  .campaign-sticker-wrap { text-align: center; padding: 10px 0 2px; }
-  .campaign-sticker { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 92px; height: 92px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #ffe3ef); border: 2px dashed #ff6a9d; box-shadow: 0 2px 8px rgba(214,51,108,0.2); }
-  .campaign-sticker .cs-top { font-size: 7px; font-weight: 800; color: #d6336c; }
-  .campaign-sticker .cs-price { font-size: 15px; font-weight: 900; color: #d6336c; line-height: 1.15; margin: 2px 0; }
-  .campaign-sticker .cs-bottom { font-size: 7.5px; font-weight: 800; color: #d6336c; }
+  .campaign-sticker-wrap { text-align: center; padding: 6px 10px 2px; }
+  .campaign-sticker { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 20px; border-radius: 16px; background: linear-gradient(180deg,#fff,#ffe3ef); border: 1.5px solid #ff6a9d; box-shadow: 0 2px 6px rgba(214,51,108,0.2); }
+  .campaign-sticker .cs-top { font-size: 8px; font-weight: 800; color: #d6336c; }
+  .campaign-sticker .cs-price { font-size: 16px; font-weight: 900; color: #d6336c; line-height: 1.2; margin: 1px 0; }
+  .campaign-sticker .cs-bottom { font-size: 8px; font-weight: 800; color: #d6336c; }
   .coupon-pair { display: flex; gap: 6px; padding: 8px 10px 4px; }
   .coupon-box { flex: 1; background: #eef8fc; border-radius: 8px; padding: 6px 5px; text-align: center; }
   .coupon-box .coupon-pill { display: inline-block; font-size: 8px; font-weight: 800; color: #fff; padding: 2px 7px; border-radius: 10px; margin-bottom: 4px; }
@@ -141,6 +141,12 @@
   .cta-btn { display: block; width: 100%; background: linear-gradient(90deg, #ff4eb6, #d03577); border: none; border-radius: 50px; padding: 10px 8px; font-size: 11px; font-weight: 800; color: #fff; text-align: center; line-height: 1.35; box-shadow: 0 3px 6px rgba(208,53,119,0.3); position: relative; }
   .cta-arrow { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.9; }
 
+  /* ─── 共通CTA（Card1以外・実LP準拠のグリーンボタン） ─── */
+  .cta-wrap-green { padding: 16px 10px 10px; position: relative; }
+  .cta-tag { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); background: #fff; border: 1.5px solid #4caf50; color: #3d9e42; font-size: 8px; font-weight: 700; padding: 3px 11px; border-radius: 12px; white-space: nowrap; z-index: 2; }
+  .cta-btn-green { display: block; width: 100%; background: linear-gradient(180deg,#6cc670,#3d9e42); border: none; border-radius: 50px; padding: 12px 26px 11px 10px; font-size: 11px; font-weight: 800; color: #fff; text-align: center; line-height: 1.3; position: relative; box-shadow: 0 3px 6px rgba(61,158,66,0.35); }
+  .cta-circle { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; color: #3d9e42; font-size: 9px; }
+
   .warn-note { max-width: 900px; margin: 20px auto 0; background: #fff; border: 1px solid #f0dbb0; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #7a5a1a; line-height: 1.7; }
   .back-link { max-width: 1300px; margin: 40px auto 0; padding: 20px 24px 0; border-top: 1px solid #ddd; font-size: 13px; }
   .back-link a { color: #1a9cc7; text-decoration: none; }
@@ -166,29 +172,7 @@
     <!-- Card 1: 導入＋キャンペーン訴求強化 -->
     <div class="card">
       <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="campaign-sticker-wrap">
-        <div class="campaign-sticker">
-          <div class="cs-top">WEB予約で！</div>
-          <div class="cs-price">＼¥25,000<br>OFF／</div>
-          <div class="cs-bottom">クーポンをGET♥</div>
-        </div>
-      </div>
-      <div class="point-row" style="padding-top:6px;"><div class="point-headline">シミ取りレーザーで、<br>素肌をトーンアップ</div></div>
-      <div class="split-face">
-        <div class="split-half split-toning">
-          <span class="split-pill">ピコトーニング</span>
-          <div class="split-item">薄いシミ・そばかす</div>
-          <div class="split-item">肝斑・くすみ</div>
-          <div class="split-item">毛穴の開き・黒ずみ</div>
-          <div class="split-item">肌質改善</div>
-        </div>
-        <div class="split-half split-spot">
-          <span class="split-pill">ピコスポット</span>
-          <div class="split-item">濃いシミ</div>
-          <div class="split-item">そばかす</div>
-          <div class="split-item">ほくろ</div>
-        </div>
-      </div>
+      <div class="point-row" style="padding-top:8px;"><div class="point-headline">シミ取りレーザーで、<br>素肌をトーンアップ</div></div>
       <div class="coupon-pair">
         <div class="coupon-box">
           <span class="coupon-pill" style="background:linear-gradient(90deg,#ff4eb6,#d03577);">ピコトーニング</span>
@@ -209,6 +193,13 @@
       <div class="benefit-badges">
         <div class="benefit-badge">痛みが<br>少ない</div>
         <div class="benefit-badge">当日メイク<br>可能</div>
+      </div>
+      <div class="campaign-sticker-wrap">
+        <div class="campaign-sticker">
+          <div class="cs-top">WEB予約で！</div>
+          <div class="cs-price">＼¥25,000 OFF／</div>
+          <div class="cs-bottom">クーポンをGET♥</div>
+        </div>
       </div>
       <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
     </div>
@@ -240,7 +231,7 @@
           </div>
         </div>
       </div>
-      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      <div class="cta-wrap-green"><span class="cta-tag">Web予約でクーポンGET</span><button class="cta-btn-green">無料カウンセリングを予約する<span class="cta-circle">▶</span></button></div>
     </div>
 
     <!-- Card 3: おすすめオプション施術（追加してもクーポンで¥0） -->
@@ -259,7 +250,7 @@
         <div class="ot-row"><span class="ot-name">シミ・肝斑セット</span><span class="ot-price">¥5,500</span></div>
       </div>
       <div class="body-text" style="text-align:center;padding:0 10px 6px;font-size:6.5px;color:#999;">価格は全て税込。組み合わせ額が25,000円以内なら合わせて0円になる場合も</div>
-      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      <div class="cta-wrap-green"><span class="cta-tag">Web予約でクーポンGET</span><button class="cta-btn-green">無料カウンセリングを予約する<span class="cta-circle">▶</span></button></div>
     </div>
 
     <!-- Card 4: 全社実績（公式アンケートデータ） -->
@@ -285,7 +276,7 @@
         </div>
       </div>
       <div class="achievement-footnote">※TCB全体の実績（施術・部位を問わない全社データ）。※1 2025年7月アンケートn=2,378人（TCB調べ）「施術の満足度」に満足〜やや満足と回答した割合。※2 同n=2,360人「また受けたい」等と回答した割合</div>
-      <div class="cta-wrap"><button class="cta-btn">詳しく見てみる <span class="cta-arrow">›</span></button></div>
+      <div class="cta-wrap-green"><span class="cta-tag">Web予約でクーポンGET</span><button class="cta-btn-green">無料カウンセリングを予約する<span class="cta-circle">▶</span></button></div>
     </div>
 
     <!-- Card 5: 最終CTA（オレンジ祝祭カラー・実LPのクーポン再訴求ページ準拠） -->
@@ -316,7 +307,7 @@
       <div class="card-body" style="padding-top:6px;">
         <div class="body-text" style="text-align:center;">まずはお気軽にご相談ください。カウンセリングは何度でも無料、万が一のトラブル時も無料で対応します。</div>
       </div>
-      <div class="cta-wrap"><button class="cta-btn final-cta" style="box-shadow:0 3px 6px rgba(255,106,0,0.35);">無料カウンセリング予約 <span class="cta-arrow">›</span></button></div>
+      <div class="cta-wrap-green"><span class="cta-tag">Web予約でクーポンGET</span><button class="cta-btn-green">無料カウンセリングを予約する<span class="cta-circle">▶</span></button></div>
     </div>
 
   </div>
