@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ピコスポットって？ カード図 2026-07-16</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: linear-gradient(180deg,#e7ebf3,#f7f9fc); color: #3e3e3e; font-size: 13px; }
+
+  .page-header { background: #fff; border-bottom: 1px solid #e0e0e0; padding: 14px 24px; position: sticky; top: 0; z-index: 100; }
+  .page-header h1 { font-size: 15px; font-weight: 700; color: #333; }
+  .page-header p { font-size: 11px; color: #888; margin-top: 2px; }
+
+  .container { max-width: 1300px; margin: 0 auto; padding: 20px 24px 40px; }
+  .type-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #b8e6f5; }
+  .type-label { font-size: 16px; font-weight: 700; color: #0f95da; }
+  .type-sub { font-size: 11px; color: #888; }
+  .tonmana-note { max-width: 900px; margin: 0 0 16px; background: #fff; border: 1px solid #b8e6f5; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #666; line-height: 1.8; }
+  .tonmana-note b { color: #0f95da; }
+  .cards-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 16px; align-items: flex-start; }
+
+  .card { width: 220px; min-width: 220px; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.12); display: flex; flex-direction: column; font-size: 12px; }
+  .card-header { background: linear-gradient(90deg,#04b6b4,#0f95da); padding: 6px 10px; display: flex; align-items: center; justify-content: space-between; }
+  .card-header .brand { color: #fff; font-weight: 800; font-size: 13px; letter-spacing: 0.04em; }
+  .card-header .pr-badge { background: rgba(255,255,255,0.3); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+
+  .eyebrow-en { text-align: center; font-size: 9px; letter-spacing: 0.12em; color: #0f95da; font-weight: 700; padding-top: 10px; }
+  .step-badge-wrap { text-align: center; padding: 6px 0; }
+  .step-badge { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; background: radial-gradient(circle,#fff,#e3f8f6); border: 1.5px solid #7fd8d0; }
+  .step-badge .sb-num { font-size: 14px; font-weight: 900; color: #0f95da; line-height: 1.1; }
+  .step-badge .sb-en { font-size: 6px; color: #0f95da; font-style: italic; }
+
+  .card-title { text-align: center; font-size: 15px; font-weight: 800; color: #333; padding: 4px 10px 8px; }
+  .card-text { font-size: 10px; color: #555; line-height: 1.8; padding: 0 12px 10px; }
+  .card-text b { color: #0f95da; }
+
+  /* Card2: ナノ秒パルス vs ピコ秒パルス 図解 */
+  .diagram-cols { display: flex; gap: 6px; padding: 0 10px 10px; }
+  .diagram-col { flex: 1; text-align: center; }
+  .diagram-col .dc-head { font-size: 9px; font-weight: 800; color: #fff; padding: 4px; border-radius: 4px 4px 0 0; }
+  .dc-old .dc-head { background: #999; }
+  .dc-new .dc-head { background: #04b6b4; }
+  .diagram-col .dc-body { border: 1px solid #eee; border-top: none; border-radius: 0 0 6px 6px; padding: 6px 4px; }
+  .laser-beam { width: 0; height: 0; border-left: 14px solid transparent; border-right: 14px solid transparent; margin: 0 auto; }
+  .dc-old .laser-beam { border-top: 22px solid #bbb; }
+  .dc-new .laser-beam { border-top: 22px solid #04b6b4; }
+  .skin-layer { position: relative; height: 44px; background: linear-gradient(180deg,#ffd9c2 0%,#ffd9c2 40%,#f7b98f 40%,#f7b98f 100%); border-radius: 4px; margin-top: 4px; display: flex; align-items: center; justify-content: center; }
+  .heat-zone-wide { width: 30px; height: 22px; border-radius: 50%; background: rgba(255,120,60,0.45); display: flex; align-items: center; justify-content: center; }
+  .heat-zone-narrow { width: 14px; height: 14px; border-radius: 50%; background: rgba(4,182,180,0.35); display: flex; align-items: center; justify-content: center; }
+  .melanin-dot { width: 8px; height: 8px; border-radius: 50%; background: #4a3020; }
+  .diagram-label { font-size: 6px; color: #888; margin-top: 3px; }
+  .diagram-result { font-size: 8px; font-weight: 800; padding: 3px; border-radius: 4px; margin-top: 4px; }
+  .dc-old .diagram-result { background: #f0f0f0; color: #888; }
+  .dc-new .diagram-result { background: #e3f8f6; color: #0f95da; }
+
+  /* Card3: こんな方にオススメ */
+  .check-list { text-align: left; font-size: 10px; color: #555; line-height: 2; padding: 0 14px 10px; }
+  .check-item::before { content: "☑ "; color: #0f95da; font-weight: 800; }
+
+  /* Card4: 症例写真プレースホルダー */
+  .case-placeholder { margin: 0 10px 8px; height: 130px; border-radius: 8px; background: repeating-linear-gradient(45deg,#f5f5f5,#f5f5f5 10px,#ebebeb 10px,#ebebeb 20px); display: flex; align-items: center; justify-content: center; text-align: center; color: #999; font-size: 10px; padding: 8px; }
+  .case-warn { margin: 0 10px 10px; background: #fbf2e4; border: 1px solid #f0dbb0; border-radius: 8px; padding: 8px 10px; font-size: 8.5px; color: #7a5a1a; line-height: 1.7; }
+
+  /* Card5: キャンペーン+CTA */
+  .price-block { margin: 4px 10px 8px; text-align: center; background: #e8fbfa; border-radius: 8px; padding: 10px; }
+  .price-block .pb-name { font-size: 10.5px; font-weight: 800; color: #333; margin-bottom: 4px; }
+  .price-block .pb-before { font-size: 10px; color: #999; text-decoration: line-through; }
+  .price-block .pb-after { font-size: 26px; font-weight: 900; color: #0f95da; }
+  .cta-wrap-green { padding: 8px 10px 12px; position: relative; }
+  .cta-tag { display: block; text-align: center; background: #fff; border: 1.5px solid #4caf50; color: #3d9e42; font-size: 8px; font-weight: 700; padding: 3px 0; border-radius: 12px; margin: 0 auto 6px; width: 80%; }
+  .cta-btn-green { display: block; width: 100%; background: linear-gradient(180deg,#6cc670,#3d9e42); border: none; border-radius: 50px; padding: 12px 26px 11px 10px; font-size: 11px; font-weight: 800; color: #fff; text-align: center; line-height: 1.3; position: relative; box-shadow: 0 3px 6px rgba(61,158,66,0.35); }
+  .cta-circle { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; color: #3d9e42; font-size: 9px; }
+
+  .warn-note { max-width: 900px; margin: 20px auto 0; background: #fff; border: 1px solid #f0dbb0; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #7a5a1a; line-height: 1.7; }
+  .back-link { max-width: 1300px; margin: 40px auto 0; padding: 20px 24px 0; border-top: 1px solid #ddd; font-size: 13px; }
+  .back-link a { color: #0f95da; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>「ピコスポットって？」カード図</h1>
+  <p>PRカルーセル後の追加メニュー（＋4項目）の1つ。タップ後に表示される5枚。ピコトーニングと同一構成。</p>
+</div>
+
+<div class="container">
+  <div class="type-header">
+    <span class="type-label">ピコスポットって？</span>
+    <span class="type-sub">全5枚（説明→図解→おすすめ→症例→キャンペーン）</span>
+  </div>
+
+  <div class="tonmana-note"><b>構成:</b> ピコトーニングと同一（Card1説明／Card2図解／Card3おすすめ／Card4症例プレースホルダー／Card5キャンペーン+CTA）。カラーはピコスポットのブランドカラー（ティール<b>#04b6b4</b>/ブルー<b>#0f95da</b>）に変更</div>
+
+  <div class="cards-row">
+
+    <!-- Card 1: ピコスポットとは -->
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="eyebrow-en">TREATMENT TYPE</div>
+      <div class="step-badge-wrap">
+        <div class="step-badge"><div class="sb-num">02</div><div class="sb-en">Pico Spot</div></div>
+      </div>
+      <div class="card-title">ピコスポット</div>
+      <div class="card-text">少ない照射回数で気になる顔や身体のシミ・そばかすに<b>ピンポイントでアプローチ</b>する治療法です。レーザーの衝撃波により色素沈着の改善を目指します。肌のダメージを抑えながらシミ取り治療ができ、薄いシミであれば<b>1回の照射で除去が可能な場合</b>もあります。</div>
+    </div>
+
+    <!-- Card 2: 図解（ナノ秒パルス vs ピコ秒パルス） -->
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="card-title" style="font-size:13px;padding-top:10px;">レーザーのしくみ</div>
+      <div class="diagram-cols">
+        <div class="diagram-col dc-old">
+          <div class="dc-head">ナノ秒パルス</div>
+          <div class="dc-body">
+            <div class="laser-beam"></div>
+            <div class="skin-layer"><div class="heat-zone-wide"><div class="melanin-dot"></div></div></div>
+            <div class="diagram-label">熱影響層（広い）</div>
+            <div class="diagram-result">熱の影響が大きい</div>
+          </div>
+        </div>
+        <div class="diagram-col dc-new">
+          <div class="dc-head">ピコ秒パルス</div>
+          <div class="dc-body">
+            <div class="laser-beam"></div>
+            <div class="skin-layer"><div class="heat-zone-narrow"><div class="melanin-dot"></div></div></div>
+            <div class="diagram-label">熱影響層（狭い）</div>
+            <div class="diagram-result">熱の影響が少ない</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-text" style="padding-top:0;">ピコ秒（ナノ秒よりさらに短い時間）で照射することで、メラニン色素周辺への熱の影響を抑えながらアプローチできる</div>
+    </div>
+
+    <!-- Card 3: こんな方にオススメ！！ -->
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="card-title">こんな方に<br>オススメ！！</div>
+      <div class="check-list">
+        <div class="check-item">濃いシミが気になる</div>
+        <div class="check-item">そばかすをなんとかしたい</div>
+        <div class="check-item">ピンポイントでシミを取りたい</div>
+        <div class="check-item">1回でもしっかりシミ改善したい</div>
+      </div>
+    </div>
+
+    <!-- Card 4: 症例写真（プレースホルダー・要確認） -->
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="card-title" style="font-size:13px;padding-top:10px;">症例紹介</div>
+      <div class="case-placeholder">Before / After 症例写真<br>（プレースホルダー）</div>
+      <div class="case-warn">⚠️ <b>実装前に要確認：</b> ビフォーアフター写真は医療広告ガイドラインの限定解除要件（自由診療である旨／費用／主なリスク・副作用の詳細／加工していない旨／個人差がある旨、を全て併記）を満たさないと掲載不可。全要件が揃うまでこのカードは実装しない（ピコトーニングと同一の注意事項）</div>
+    </div>
+
+    <!-- Card 5: キャンペーン＋CTA -->
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="card-title" style="font-size:13px;padding-top:10px;">今なら、実質0円</div>
+      <div class="price-block">
+        <div class="pb-name">ピコスポット シミ取り1mm以下</div>
+        <div class="pb-before">通常価格 ¥6,600（税込）</div>
+        <div class="pb-after">→ ¥0</div>
+        <div style="font-size:8px;color:#888;margin-top:2px;">初来院限定クーポン適用価格</div>
+      </div>
+      <div class="cta-wrap-green">
+        <span class="cta-tag">Web予約でクーポンGET</span>
+        <button class="cta-btn-green">無料カウンセリングを予約する<span class="cta-circle">▶</span></button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="warn-note">
+    <b>医療広告ガイドライン確認済み（Card4除く）:</b> Card1〜3・5は体験談・比較優良広告・誇大表現なし。数値・文言はTCB公式LP準拠。Card4（症例写真）は限定解除要件が全て確認できるまで実装保留。詳細は<code>data/output/briefs/診断-シミクリニック選び診断-2026-07-15.md</code>参照
+  </div>
+</div>
+
+<div class="back-link"><a href="cards-shimi-picotoning-2026-07-16.html">← ピコトーニングって？へ</a> ／ <a href="cards-shimi-clinic-pr-carousel-2026-07-16.html">PRカルーセル カード図へ</a> ／ <a href="index.html">トップへ</a></div>
+
+</body>
+</html>
