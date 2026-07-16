@@ -25,6 +25,8 @@
   .tab-btn.tab-spot.active { background: linear-gradient(90deg,#04b6b4,#0f95da); border-color: #0f95da; }
   .tab-btn.tab-faq { border-color: #1a9cc7; color: #1a9cc7; }
   .tab-btn.tab-faq.active { background: linear-gradient(90deg,#4dc9e8,#1a9cc7); border-color: #1a9cc7; }
+  .tab-btn.tab-flow { border-color: #1a9cc7; color: #1a9cc7; }
+  .tab-btn.tab-flow.active { background: linear-gradient(90deg,#4dc9e8,#1a9cc7); border-color: #1a9cc7; }
   .tab-btn.tab-soon { opacity: .5; cursor: default; }
 
   .tab-section { display: none; }
@@ -222,6 +224,20 @@
   #section-faq .faq-headline { font-size: 14.5px; font-weight: 900; color: #1a9cc7; line-height: 1.35; margin-bottom: 8px; }
   #section-faq .faq-illust { height: 58px; border-radius: 8px; margin-bottom: 8px; background: repeating-linear-gradient(45deg,#f5f5f5,#f5f5f5 10px,#ebebeb 10px,#ebebeb 20px); display: flex; align-items: center; justify-content: center; text-align: center; color: #999; font-size: 8px; line-height: 1.5; padding: 4px; }
   #section-faq .faq-body { font-size: 9.5px; color: #555; line-height: 1.75; }
+
+  /* ═══════════ #section-flow（予約の流れ） ═══════════ */
+  #section-flow .type-label { color: #1a9cc7; }
+  #section-flow .type-header { border-bottom-color: #b8e6f5; }
+  #section-flow .tonmana-note { border: 1px solid #b8e6f5; }
+  #section-flow .tonmana-note b { color: #1a9cc7; }
+  #section-flow .card-header { background: linear-gradient(90deg,#4dc9e8,#1a9cc7); }
+  #section-flow .step-badge-wrap { text-align: center; padding: 8px 0 2px; }
+  #section-flow .step-badge { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; background: radial-gradient(circle,#fff,#e3f4fb); border: 1.5px solid #7fcbe8; }
+  #section-flow .step-badge .sb-num { font-size: 14px; font-weight: 900; color: #1a9cc7; line-height: 1.1; }
+  #section-flow .step-badge .sb-en { font-size: 6px; color: #1a9cc7; font-style: italic; }
+  #section-flow .flow-title { text-align: center; font-size: 13.5px; font-weight: 800; color: #333; padding: 4px 10px 8px; }
+  #section-flow .flow-text { font-size: 10px; color: #555; line-height: 1.8; padding: 0 12px 12px; }
+  #section-flow .back-link a { color: #1a9cc7; text-decoration: none; }
   #section-faq .faq-icon-q { background: #fff; border: 2px solid #1a9cc7; color: #1a9cc7; }
   #section-faq .faq-icon-a { background: linear-gradient(90deg,#4dc9e8,#1a9cc7); color: #fff; }
   #section-faq .back-link a { color: #1a9cc7; text-decoration: none; }
@@ -239,7 +255,7 @@
   <button class="tab-btn tab-toning" onclick="switchTab('toning')">ピコトーニングって？</button>
   <button class="tab-btn tab-spot" onclick="switchTab('spot')">ピコスポットって？</button>
   <button class="tab-btn tab-faq" onclick="switchTab('faq')">よくある質問を見る</button>
-  <button class="tab-btn tab-soon" title="準備中">予約の流れ（準備中）</button>
+  <button class="tab-btn tab-flow" onclick="switchTab('flow')">予約の流れを見てみる</button>
 </div>
 
 <!-- ══════════════ TAB 1: PRカルーセル ══════════════ -->
@@ -689,6 +705,61 @@
 
   <div class="warn-note">
     <b>医療広告ガイドライン確認済み:</b> 全問TCB公式LP実データ準拠。誇大表現・体験談・比較優良広告なし。
+  </div>
+</div>
+</div>
+
+<!-- ══════════════ TAB 5: 予約の流れ ══════════════ -->
+<div class="tab-section" id="section-flow">
+<div class="container">
+  <div class="type-header">
+    <span class="type-label">予約の流れ</span>
+    <span class="type-sub">全5枚・TCB公式LP実データ準拠</span>
+  </div>
+
+  <div class="tonmana-note"><b>構成:</b> TCB公式LP「施術の流れ」の5ステップを、ユーザー目線でコンパクトに要約。公式LPの丁寧な長文からガイド調の短文に短縮（トンマナは既存カードの水色を継続）。</div>
+
+  <div class="cards-row">
+
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="step-badge-wrap"><div class="step-badge"><div class="sb-num">01</div><div class="sb-en">Reservation</div></div></div>
+      <div class="flow-title">カウンセリング予約</div>
+      <div class="flow-text">カウンセリングは無料。Web・LINE・電話で予約OK。施術するか迷っている段階でも気軽に相談できる。</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="step-badge-wrap"><div class="step-badge"><div class="sb-num">02</div><div class="sb-en">Counseling</div></div></div>
+      <div class="flow-title">美容カウンセラーとの<br>カウンセリング</div>
+      <div class="flow-text">来院当日、専任カウンセラーが悩みや不安をヒアリング。ドクターに聞きにくいことや料金の支払い方法もここで相談できる。</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="step-badge-wrap"><div class="step-badge"><div class="sb-num">03</div><div class="sb-en">Doctor</div></div></div>
+      <div class="flow-title">担当ドクターとの<br>カウンセリング</div>
+      <div class="flow-text">シミュレーションから施術まで同じドクターが担当。予算や理想のイメージを踏まえて最適なプランを提案。シミュレーション画像は持ち帰りOK、何度でも受けられる。</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="step-badge-wrap"><div class="step-badge"><div class="sb-num">04</div><div class="sb-en">Contract</div></div></div>
+      <div class="flow-title">ご契約</div>
+      <div class="flow-text">プランやダウンタイム、リスクに納得できたら契約。空きがあれば当日施術も可能。</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="step-badge-wrap"><div class="step-badge"><div class="sb-num">05</div><div class="sb-en">Aftercare</div></div></div>
+      <div class="flow-title">術後のアフターケア</div>
+      <div class="flow-text">施術後のケア方法を説明。必要に応じて後日の経過観察あり。</div>
+    </div>
+
+  </div>
+
+  <div class="warn-note">
+    <b>医療広告ガイドライン確認済み:</b> 全ステップTCB公式LP実データ準拠。誇大表現・体験談・比較優良広告なし。
   </div>
 </div>
 </div>
