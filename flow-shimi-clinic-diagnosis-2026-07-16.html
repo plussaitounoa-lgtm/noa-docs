@@ -61,6 +61,15 @@
   .pr-node .pr-tag2 { font-size: 9px; font-weight: 800; letter-spacing: .04em; display: block; margin-bottom: 4px; opacity: .85; }
   .step-label { font-size: 9px; font-weight: 700; color: #aaa; text-align: center; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
 
+  /* ─── PRカルーセル：横スライド表示 ─── */
+  .pr-slider-wrap { overflow-x: auto; padding: 4px 4px 16px; }
+  .pr-slider { display: flex; gap: 14px; width: max-content; margin: 0 auto; padding: 0 4px; }
+  .pr-slide { width: 210px; flex-shrink: 0; }
+  .pr-slide .step-label { margin-bottom: 6px; }
+  .pr-slide .pr-node { max-width: none; height: 100%; font-size: 10px; }
+  .pr-slide-arrow { display: flex; align-items: center; color: #ccc; font-size: 18px; flex-shrink: 0; }
+  .slider-hint { text-align: center; font-size: 10px; color: #999; margin-bottom: 6px; }
+
   .section-divider { text-align: center; font-size: 10px; color: #aaa; letter-spacing: .1em; font-weight: 700; margin: 20px 0 10px; }
 
   .warn-note { max-width: 720px; margin: 0 auto; background: #fbf2e4; border: 1px solid #f0dbb0; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #7a5a1a; text-align: center; line-height: 1.7; }
@@ -200,37 +209,58 @@
   </div>
   <div class="bridge-box">タイプ名・長い説明は付けない。「くわしく見る」ボタンでPRカルーセルへ</div>
 
-  <!-- PRカルーセル -->
+  <!-- PRカルーセル（横スライド表示） -->
   <div class="section-divider">── PRカルーセル（5枚・TCBピコレーザー、実LP準拠） ──</div>
+  <div class="slider-hint">← 横にスライドして5枚を見る →</div>
 
-  <div class="step-label">Card 1｜導入</div>
-  <div class="pr-node" style="background:#4dc9e8;">
-    <span class="pr-tag2">CTA: 詳しく見てみる（ピンク）</span>
-    「あなたにピッタリのクリニックはTCB東京中央美容外科」＋ピコトーニング／ピコスポットの2択クーポン（¥9,800→¥0／¥6,600→¥0）＋「痛みが少ない」「当日メイク可能」バッジ＋25,000円OFFステッカー
-  </div>
-  <div class="arr">↓</div>
-  <div class="step-label">Card 2｜こんな方にオススメ！！</div>
-  <div class="pr-node" style="background:#1a9cc7;">
-    <span class="pr-tag2">CTA: 無料カウンセリングを予約する（緑）</span>
-    ピコトーニング／ピコスポットのチェックリスト2カラム（実LP「RECOMMEND」構成準拠）
-  </div>
-  <div class="arr">↓</div>
-  <div class="step-label">Card 3｜おすすめオプション施術</div>
-  <div class="pr-node" style="background:#1a9cc7;">
-    <span class="pr-tag2">CTA: 無料カウンセリングを予約する（緑）</span>
-    「25,000円OFFクーポン適用でさらに施術を追加しても¥0」＋オプション施術5項目の価格表
-  </div>
-  <div class="arr">↓</div>
-  <div class="step-label">Card 4｜全社実績</div>
-  <div class="pr-node" style="background:#1a9cc7;">
-    <span class="pr-tag2">CTA: 無料カウンセリングを予約する（緑）</span>
-    「通いやすさと高い満足度」。2024年度来院数96万5,785人／全国展開・全院駅チカ／満足度91.0%／リピート意思96.7%（TCB公式アンケート出典明記）
-  </div>
-  <div class="arr">↓</div>
-  <div class="step-label">Card 5｜最終CTA（オレンジ祝祭カラー）</div>
-  <div class="pr-node" style="background:#ff6a00;">
-    <span class="pr-tag2">CTA: 無料カウンセリングを予約する（緑）</span>
-    「Webクーポン配布中！¥25,000 OFF（※初診のみ有効）」＋コスチャル¥0再訴求＋「まずはお気軽にご相談ください」
+  <div class="pr-slider-wrap">
+    <div class="pr-slider">
+
+      <div class="pr-slide">
+        <div class="step-label">Card 1｜導入</div>
+        <div class="pr-node" style="background:#4dc9e8;">
+          <span class="pr-tag2">CTA: 詳しく見てみる（ピンク）</span>
+          「あなたにピッタリのクリニックはTCB東京中央美容外科」＋ピコトーニング／ピコスポットの2択クーポン（¥9,800→¥0／¥6,600→¥0）＋「痛みが少ない」「当日メイク可能」バッジ＋25,000円OFFステッカー
+        </div>
+      </div>
+      <div class="pr-slide-arrow">→</div>
+
+      <div class="pr-slide">
+        <div class="step-label">Card 2｜こんな方にオススメ！！</div>
+        <div class="pr-node" style="background:#1a9cc7;">
+          <span class="pr-tag2">CTA: 無料カウンセリングを予約する（緑）</span>
+          ピコトーニング／ピコスポットのチェックリスト2カラム（実LP「RECOMMEND」構成準拠）
+        </div>
+      </div>
+      <div class="pr-slide-arrow">→</div>
+
+      <div class="pr-slide">
+        <div class="step-label">Card 3｜おすすめオプション施術</div>
+        <div class="pr-node" style="background:#1a9cc7;">
+          <span class="pr-tag2">CTA: 無料カウンセリングを予約する（緑）</span>
+          「25,000円OFFクーポン適用でさらに施術を追加しても¥0」＋オプション施術5項目の価格表
+        </div>
+      </div>
+      <div class="pr-slide-arrow">→</div>
+
+      <div class="pr-slide">
+        <div class="step-label">Card 4｜全社実績</div>
+        <div class="pr-node" style="background:#1a9cc7;">
+          <span class="pr-tag2">CTA: 無料カウンセリングを予約する（緑）</span>
+          「通いやすさと高い満足度」。2024年度来院数96万5,785人／全国展開・全院駅チカ／満足度91.0%／リピート意思96.7%（TCB公式アンケート出典明記）
+        </div>
+      </div>
+      <div class="pr-slide-arrow">→</div>
+
+      <div class="pr-slide">
+        <div class="step-label">Card 5｜最終CTA（オレンジ祝祭カラー）</div>
+        <div class="pr-node" style="background:#ff6a00;">
+          <span class="pr-tag2">CTA: 無料カウンセリングを予約する（緑）</span>
+          「Webクーポン配布中！¥25,000 OFF（※初診のみ有効）」＋コスチャル¥0再訴求＋「まずはお気軽にご相談ください」
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <!-- 追加メニュー（＋4項目） -->
