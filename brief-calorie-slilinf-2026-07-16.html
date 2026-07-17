@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>カロリー診断×SLILIN F 結果カルーセル設計（t183）2026-07-16</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; }
+    header { background: #1a1a2e; color: white; padding: 40px 32px 32px; }
+    header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+    header p { color: #aaa; font-size: 14px; }
+    .update-banner { background: #1a2e2e; color: #7effd4; font-size: 13px; padding: 10px 32px; }
+    main { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+
+    .section { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 28px; margin-bottom: 24px; }
+    .section-title { font-size: 13px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+    h3 { font-size: 15px; font-weight: 600; margin: 24px 0 10px; color: #333; }
+    p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    ul { padding-left: 20px; margin-bottom: 10px; }
+    li { font-size: 14px; line-height: 1.8; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+    th { background: #f7f7f7; text-align: left; padding: 8px 10px; font-weight: 600; color: #555; border-bottom: 2px solid #e8e8e8; font-size: 11px; }
+    td { padding: 7px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+    .red   { background: #fff0f0; color: #c0392b; }
+    .green { background: #f0fff4; color: #27ae60; }
+    .blue  { background: #f0f4ff; color: #2c52b0; }
+    .gray  { background: #f0f0f0; color: #888; }
+    .orange{ background: #fff8f0; color: #b05f00; }
+
+    .highlight { background: #fffbea; border-left: 3px solid #f39c12; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .alert     { background: #fff0f0; border-left: 3px solid #e74c3c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .good      { background: #f0fff4; border-left: 3px solid #27ae60; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+    .info      { background: #f0f4ff; border-left: 3px solid #2c52b0; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 14px; line-height: 1.6; }
+
+    .card-block { border-radius: 10px; padding: 18px 22px; margin: 14px 0; border: 2px solid #e8e8e8; background: white; }
+    .card-block.new { border-color: #f39c12; background: #fffbf0; }
+    .card-block .card-label { font-size: 11px; font-weight: 700; color: #888; margin-bottom: 6px; }
+    .card-block .hook { font-size: 17px; font-weight: 800; color: #1a1a2e; margin-bottom: 8px; }
+    .card-block .card-body { font-size: 13px; color: #444; line-height: 1.7; }
+    .card-block .hook-note { font-size: 12px; color: #999; margin-top: 8px; }
+
+    .note { font-size: 12px; color: #999; }
+
+    footer { text-align: center; padding: 40px; color: #bbb; font-size: 12px; }
+    a.back { display: inline-block; margin-bottom: 32px; font-size: 13px; color: #888; text-decoration: none; }
+    a.back:hover { color: #333; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>カロリー診断×SLILIN F 結果カルーセル設計（t183）</h1>
+  <p>2026-07-16確定（v12）｜記事：こいずみ_1日_摂取カロリー（glp1_seo）｜接続先：SLILIN F（サプリ案件）</p>
+</header>
+<div class="update-banner">結果カルーセル 4枚→6枚構成｜Card1・2・3・6は既存流用・Card4・5が新規｜タイプ別回答比重 A33.4%／B37.4%／C18.3%／D10.8%</div>
+
+<main>
+  <a class="back" href="index.html">← トップへ</a>
+
+  <!-- 背景 -->
+  <div class="section">
+    <div class="section-title">Background</div>
+    <h2>背景・変更範囲</h2>
+    <p>既存「あなた専用カロリー設計診断」のCard3・Card4は「食事を減らすと食欲ホルモンが増えて体が抵抗する→大事なのは食欲をコントロールできるかどうか」という訴求軸。これはGLP-1（食欲抑制の薬）だからこそ成立する理屈。</p>
+    <p>SLILIN Fの機能性届出は食欲抑制ではなく別の作用機序：</p>
+    <ul>
+      <li>成分①ブラックジンジャー由来ポリメトキシフラボン：日常活動時のエネルギー代謝で脂肪を消費しやすくする／おなかの脂肪（内臓・皮下）を減らす</li>
+      <li>成分②アムラ由来エラグ酸：血流を上げ体温を回復する</li>
+    </ul>
+    <div class="alert">
+      <strong>「食欲をコントロールする」ものさしのままSLILIN Fに繋ぐと、結果カルーセルが作った文脈と実際の解決策（代謝・脂肪の燃えやすさ）がズレる。</strong><br>
+      結果カルーセルを機能軸に合わせて書き換え、Card1・2・3・6は変更なし、Card4・5を新規追加した6枚構成に拡張。
+    </div>
+    <p class="note">変更なし：PU文言／表紙／設問Q1〜Q4／Card1（結果提示）／Card2（対比構成）／Card3（代謝ものさし）／Card6（欲求＋CTA）。接続先PRカルーセルは隠れ肥満タイプ診断と共通の既存4枚をそのまま流用。</p>
+  </div>
+
+  <!-- タイプ別回答比重 -->
+  <div class="section">
+    <div class="section-title">Response Distribution</div>
+    <h2>タイプ別回答比重</h2>
+    <p>診断のQ4（活動量の設問）で分岐する4タイプの実際の回答分布。医療ダイエットガイド友だちリスト（2026-07-17時点エクスポート）から、当該診断関連の流入分649件を集計。</p>
+    <table>
+      <tr>
+        <th>タイプ</th>
+        <th>Q4回答</th>
+        <th>件数</th>
+        <th>比率</th>
+      </tr>
+      <tr>
+        <td>A（1,400kcal）</td>
+        <td>ほぼ座り仕事・在宅中心</td>
+        <td>217</td>
+        <td>33.4%</td>
+      </tr>
+      <tr>
+        <td>B（1,600kcal）</td>
+        <td>通勤や家事でそこそこ動く</td>
+        <td>243</td>
+        <td>37.4%</td>
+      </tr>
+      <tr>
+        <td>C（1,800kcal）</td>
+        <td>週2-3回は運動してる</td>
+        <td>119</td>
+        <td>18.3%</td>
+      </tr>
+      <tr>
+        <td>D（2,100kcal）</td>
+        <td>毎日しっかり体を動かしてる</td>
+        <td>70</td>
+        <td>10.8%</td>
+      </tr>
+    </table>
+    <div class="highlight">
+      <strong>C＋D（運動習慣層）で合計29.1%。約3割を占めるため「比重が小さいから工数をかけない」という判断は成立しない。</strong><br>
+      A・Bが多数派（合計70.8%）で最優先だが、C・Dも全体の3割弱を占める規模のため、結果カルーセルの作り込みを省略しない方針で確定。
+    </div>
+  </div>
+
+  <!-- 結果カルーセル構成 -->
+  <div class="section">
+    <div class="section-title">Carousel Structure</div>
+    <h2>結果カルーセル構成（6枚・v12確定）</h2>
+
+    <h3>Card1 — 結果提示（タイプ別・変更なし）</h3>
+    <table>
+      <tr><th>タイプ</th><th>コピー</th></tr>
+      <tr><td>A</td><td>約1,400kcal（座り仕事・在宅中心の方の目安です）</td></tr>
+      <tr><td>B</td><td>約1,600kcal（通勤や家事でそこそこ動く方の目安です）</td></tr>
+      <tr><td>C</td><td>約1,800kcal（週2-3回運動してる方の目安です）</td></tr>
+      <tr><td>D</td><td>約2,100kcal（毎日しっかり体を動かしてる方の目安です）</td></tr>
+    </table>
+
+    <h3>Card2 — 「同じカロリー・違う中身」対比構成（タイプ別・変更なし）</h3>
+    <p>共通ヘッドライン「同じ○,○○○kcal？！」。同じ合計kcalでも①品目少なめ・ジャンク寄り／②品目多め・バランス型の2パターンがあることを対比表で示す。下部フック「決め手は量より中身！！」</p>
+
+    <div class="card-block">
+      <div class="card-label">Card3 — ものさしづくり（全タイプ共通・変更なし）</div>
+      <div class="hook">活かせないのは、意志のせいじゃない！</div>
+      <div class="card-body">①同じように気をつけて食べても →②使いこなせる力は人によって違う →③代謝が低いと、活かしきれない</div>
+      <div class="hook-note">下部フック：ちゃんと活かせる体になれば…</div>
+    </div>
+
+    <div class="card-block new">
+      <div class="card-label">Card4 — 一般的な対策とその壁（全タイプ共通・★新規）</div>
+      <div class="hook">代謝を上げるには？</div>
+      <div class="card-body">栄養バランスの良い食事／適度な運動 という一般論を提示 →「でも」食事管理を続けるのは大変…／運動の時間を作るのも難しい…／気をつけても、実感が湧きにくい…</div>
+      <div class="hook-note">下部フック：じゃあ、どうすればいいの…？</div>
+    </div>
+
+    <div class="card-block new">
+      <div class="card-label">Card5 — サプリ（カテゴリ）へのブリッジ（全タイプ共通・★新規）</div>
+      <div class="hook">続けるのが大変なら…</div>
+      <div class="card-body">代謝や巡りをサポートしてくれるサプリという選択肢も。無理なく、日常に取り入れられる。（固有名詞・価格は出さない）</div>
+      <div class="hook-note">下部フック：自分に合う方法、見てみない？</div>
+    </div>
+
+    <h3>Card6 — 欲求＋CTA（旧Card4をスライド・変更なし）</h3>
+    <table>
+      <tr><th>対象</th><th>ヘッドライン</th></tr>
+      <tr><td>A・B</td><td>もしも／脂肪を溜め込みにくい体になったら？</td></tr>
+      <tr><td>C・D</td><td>もしも／運動の効果がちゃんと脂肪に出たら？</td></tr>
+    </table>
+    <p>共通CTA：「▼ その方法を知りたい ▼」（価格・商品名はここでは出さずPRカルーセル側へ）</p>
+  </div>
+
+  <!-- 全体接続フロー -->
+  <div class="section">
+    <div class="section-title">Flow</div>
+    <h2>全体接続フロー</h2>
+    <table>
+      <tr><th>順</th><th>内容</th></tr>
+      <tr><td>Card1</td><td>適正カロリー数値提示（結果提示）</td></tr>
+      <tr><td>Card2</td><td>同じ○,○○○kcal？！ ジャンクvsバランス対比 →「決め手は量より中身！！」</td></tr>
+      <tr><td>Card3</td><td>活かせないのは、意志のせいじゃない！（代謝ものさし）→「ちゃんと活かせる体になれば…」</td></tr>
+      <tr><td>Card4</td><td>代謝を上げるには？（一般的対策）→でも続けるのが大変…→「じゃあ、どうすればいいの…？」</td></tr>
+      <tr><td>Card5</td><td>続けるのが大変なら…（サプリという一般名詞へのブリッジ）→「自分に合う方法、見てみない？」</td></tr>
+      <tr><td>Card6</td><td>もしも〜になったら？（欲求＋タイプ別吹き出し）→CTA「その方法を知りたい」</td></tr>
+      <tr><td>PRカルーセル</td><td>隠れ肥満タイプ診断と共通・SLILIN F商品紹介〜CTA（既存4枚を流用・新規制作不要）</td></tr>
+    </table>
+  </div>
+
+  <!-- レギュレーション確認 -->
+  <div class="section">
+    <div class="section-title">Regulation Check</div>
+    <h2>レギュレーション確認（Card4・5）</h2>
+    <table>
+      <tr><th>項目</th><th>本コピーでの扱い</th><th>判定</th></tr>
+      <tr><td>即効性表現</td><td>Card4・5とも未使用</td><td><span class="badge green">OK</span></td></tr>
+      <tr><td>効果効能の断定</td><td>「サポート」表現に統一。「痩せる」「効果がある」等の断定は未使用</td><td><span class="badge green">OK</span></td></tr>
+      <tr><td>機能範囲の断定</td><td>「代謝」「巡り」という届出範囲内の言葉のみ。部位・体重の数値には触れない</td><td><span class="badge green">OK</span></td></tr>
+      <tr><td>特定商品名の先出し</td><td>Card5は「サプリ」という一般名詞のみ。固有名詞・価格はPRカルーセルCard1で初登場</td><td><span class="badge green">OK</span></td></tr>
+      <tr><td>イラストの断定表現</td><td>体型変化の図示なし。Card5は商品パッケージ・ロゴを描かず抽象カプセルのみ</td><td><span class="badge green">OK</span></td></tr>
+    </table>
+  </div>
+
+  <!-- 懸念点 -->
+  <div class="section">
+    <div class="section-title">Open Points</div>
+    <h2>懸念点・今後の確認事項</h2>
+    <ul>
+      <li>カード枚数が4枚→6枚に増えたことによる離脱リスクは未検証。実装後、Card4・5の閲覧率とCard6到達率をタイプ別に計測する</li>
+      <li>成分②（血流・体温）はCard5で軽く触れたのみで、結果カルーセル全体としては成分①（代謝・脂肪）が引き続き主軸。複合ニーズ（冷えも気になる層）は今回深く拾えていない</li>
+    </ul>
+  </div>
+
+</main>
+
+<footer>
+  作成：2026-07-16 ／ 担当：Noa
+</footer>
+
+</body>
+</html>
