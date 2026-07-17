@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LINE実装設計書：シミ クリニック選び診断</title>
+<style>
+  :root {
+    --accent: #1a9cc7;
+    --accent-light: #D6F0F8;
+    --bg: #FAFAFA;
+    --surface: #FFFFFF;
+    --border: #E5E7EB;
+    --text: #111827;
+    --text-muted: #6B7280;
+    --warn: #D97706;
+    --warn-bg: #FEF3C7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111827; --surface: #1F2937; --border: #374151;
+      --text: #F9FAFB; --text-muted: #9CA3AF;
+    }
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: "Hiragino Sans", "Yu Gothic UI", system-ui, sans-serif; font-size: 14px; line-height: 1.7; }
+  .doc { max-width: 860px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  .doc-header { margin-bottom: 48px; }
+  .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  h1 { font-size: 26px; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; }
+  .meta { font-size: 12px; color: var(--text-muted); margin-top: 10px; }
+  .badge { display: inline-block; background: var(--accent-light); color: var(--accent); font-size: 12px; font-weight: 700; padding: 3px 12px; border-radius: 4px; margin-top: 10px; }
+
+  .section { margin-bottom: 48px; }
+  .section-title { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); padding-bottom: 8px; border-bottom: 2px solid var(--accent-light); margin-bottom: 20px; }
+
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .flow-q { background: var(--accent-light); border: 1.5px solid var(--accent); border-radius: 8px; padding: 12px 24px; text-align: center; width: 100%; max-width: 400px; }
+  .flow-q-label { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: .06em; text-transform: uppercase; }
+  .flow-q-text { font-size: 13px; font-weight: 700; color: var(--text); margin-top: 2px; }
+  .flow-arrow { color: var(--border); font-size: 20px; line-height: 1; padding: 4px 0; }
+  .flow-echo { background: #F3F4F6; border: 1.5px dashed var(--border); }
+  .flow-echo .flow-q-label, .flow-echo .flow-q-text { color: var(--text-muted); }
+  .flow-note { font-size: 11px; color: var(--text-muted); margin: -2px 0 4px; text-align: center; }
+  .flow-result { background: #F3F4F6; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 24px; font-size: 12px; color: var(--text-muted); font-weight: 700; text-align: center; }
+
+  .q-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; }
+  .q-card-label { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .q-card-text { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+  .q-options { display: flex; flex-direction: column; gap: 8px; }
+  .q-opt { display: flex; gap: 10px; align-items: flex-start; }
+  .opt-badge { background: var(--accent-light); color: var(--accent); font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .opt-text { font-size: 13px; }
+  .q-note { margin-top: 14px; padding: 12px 14px; background: var(--warn-bg); border-left: 3px solid var(--warn); border-radius: 0 6px 6px 0; font-size: 12px; line-height: 1.8; }
+  .q-note strong { color: var(--warn); }
+
+  .tbl-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--bg); font-weight: 700; padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border); color: var(--text-muted); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+
+  .notice { background: var(--warn-bg); border: 1px solid #FDE68A; border-radius: 8px; padding: 14px 18px; font-size: 13px; margin-top: 16px; line-height: 1.8; }
+  .notice strong { color: var(--warn); }
+  .notice.block { background: #FEE2E2; border-color: #FCA5A5; }
+  .notice.block strong { color: #B91C1C; }
+
+  .back-link { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; }
+  .back-link a { color: var(--accent); text-decoration: none; }
+  .back-link a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="doc-header">
+    <div class="eyebrow">Shimi Clinic Diagnosis — LINE Implementation Brief</div>
+    <h1>シミ クリニック選び診断<br>LINE実装設計書</h1>
+    <div class="meta">作成: 2026-07-17 ／ 対象: LINEシナリオ構築担当</div>
+    <div class="badge">連携用</div>
+  </div>
+
+  <!-- 概要 -->
+  <div class="section">
+    <div class="section-title">概要</div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><td style="font-weight:700;width:180px;">診断名</td><td>シミ クリニック選び診断</td></tr>
+        <tr><td style="font-weight:700;">質問数</td><td>5問（Q1〜Q5）。分岐はQ4・Q5の2軸のみ、Q1〜Q3は非分岐</td></tr>
+        <tr><td style="font-weight:700;">振り分け結果</td><td>タイプ分けなし。結果は1枚（Q4×Q5の回答を組み合わせた一言メッセージ）</td></tr>
+        <tr><td style="font-weight:700;">提携先</td><td>TCB東京中央美容外科 ピコレーザー（afbアフィリエイト経由）</td></tr>
+        <tr><td style="font-weight:700;">アフィリリンク</td><td>LP: <code>https://t-c-b-biyougeka.com/picolaser</code>（実際に貼るafbトラッキングURL＝utmパラメータ付き完全版は構築前にNoaへ確認）</td></tr>
+        <tr><td style="font-weight:700;">PRカルーセル</td><td>結果メッセージ直後に送信。本体5枚＋「＋」追加メニュー4項目（ピコトーニングって？5枚／ピコスポットって？5枚／よくある質問を見る6枚／施術までの流れを見てみる5枚）</td></tr>
+        <tr><td style="font-weight:700;">設置予定記事</td><td>mega-clinic.com「skin-diagnosis」記事（未設置・友だち見込み最大と推計済み。記事の公開状況・確定URLはNoaに確認）</td></tr>
+      </table>
+    </div>
+    <div class="notice block">
+      <strong>⚠️ 実装着手前に必ず確認：</strong> mega-clinic.comのシミ/エラボトックス/クマジャンル用LINE公式アカウントの有無が未確認（<code>knowledge/genre-insights.md</code>参照）。既存LINEアカウントに相乗りするか新規アカウントが必要かで着手内容が変わるため、構築開始前にNoa/Renに確認すること。
+    </div>
+  </div>
+
+  <!-- フロー図 -->
+  <div class="section">
+    <div class="section-title">診断フロー図</div>
+    <div class="flow">
+
+      <div class="flow-q">
+        <div class="flow-q-label">Q1</div>
+        <div class="flow-q-text">性別を教えてください</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+
+      <div class="flow-q">
+        <div class="flow-q-label">Q2</div>
+        <div class="flow-q-text">あなたの年代は？</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+
+      <div class="flow-q flow-echo">
+        <div class="flow-q-label">Q3 — エコー用（分岐には使わない）</div>
+        <div class="flow-q-text">現在抱えているお悩みは？</div>
+      </div>
+      <div class="flow-note">※ Q3の回答は振り分けに使わず、結果メッセージ冒頭の共感の一言としてのみ使用</div>
+      <div class="flow-arrow">↓</div>
+
+      <div class="flow-q">
+        <div class="flow-q-label">Q4 — 分岐軸1（施術メニュー）</div>
+        <div class="flow-q-text">シミ取りで期待することは？</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+
+      <div class="flow-q">
+        <div class="flow-q-label">Q5 — 分岐軸2（重視すること）</div>
+        <div class="flow-q-text">クリニックを選ぶなら、一番重視するのは？</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+
+      <div class="flow-result">結果（1枚・Q4×Q5の組み合わせ文、Q3は冒頭の共感の一言に反映）</div>
+      <div class="flow-arrow">↓</div>
+
+      <div class="flow-result" style="background:var(--accent-light);border-color:var(--accent);color:var(--accent);">「くわしく見る」→ PRカルーセル（Card1〜5）→ 無料カウンセリング予約（アフィリリンク）</div>
+
+    </div>
+  </div>
+
+  <!-- 質問詳細 -->
+  <div class="section">
+    <div class="section-title">質問詳細</div>
+
+    <div class="q-card">
+      <div class="q-card-label">Q1 — 性別（非分岐）</div>
+      <div class="q-card-text">性別を教えてください</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">①</span><span class="opt-text">女性</span></div>
+        <div class="q-opt"><span class="opt-badge">②</span><span class="opt-text">男性</span></div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-card-label">Q2 — 年代（非分岐）</div>
+      <div class="q-card-text">あなたの年代は？</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">①</span><span class="opt-text">20代</span></div>
+        <div class="q-opt"><span class="opt-badge">②</span><span class="opt-text">30代</span></div>
+        <div class="q-opt"><span class="opt-badge">③</span><span class="opt-text">40代</span></div>
+        <div class="q-opt"><span class="opt-badge">④</span><span class="opt-text">50代以上</span></div>
+      </div>
+    </div>
+
+    <div class="q-card" style="border-color:var(--border);background:#F9FAFB;">
+      <div class="q-card-label" style="color:var(--text-muted);">Q3 — 現在抱えているお悩み（非分岐・エコー用）</div>
+      <div class="q-card-text">現在抱えているお悩みは？</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge" style="background:#F3F4F6;color:var(--text-muted);">①</span><span class="opt-text">はっきりした茶色いシミ</span></div>
+        <div class="q-opt"><span class="opt-badge" style="background:#F3F4F6;color:var(--text-muted);">②</span><span class="opt-text">頬にモヤっと広がるシミ・くすみ</span></div>
+        <div class="q-opt"><span class="opt-badge" style="background:#F3F4F6;color:var(--text-muted);">③</span><span class="opt-text">小さいシミ・そばかすが多数ある</span></div>
+        <div class="q-opt"><span class="opt-badge" style="background:#F3F4F6;color:var(--text-muted);">④</span><span class="opt-text">複数当てはまる</span></div>
+      </div>
+      <div class="q-note" style="border-color:#9CA3AF;background:#F3F4F6;color:var(--text-muted);">※ この回答は振り分けに使用しません。結果メッセージ冒頭の共感の一言（例:「頬まわりのくすみ、気になりますよね。」）としてのみ使用。①②は2026-07-16にLINE UIの文字数制限（15字以内）に合わせて短縮済み</div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-card-label">Q4 — シミ取りで期待すること（分岐軸1）</div>
+      <div class="q-card-text">シミ取りで期待することは？</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">①</span><span class="opt-text">気になる一点をしっかり消したい</span></div>
+        <div class="q-opt"><span class="opt-badge">②</span><span class="opt-text">顔全体のくすみもケアしたい</span></div>
+        <div class="q-opt"><span class="opt-badge">③</span><span class="opt-text">とにかくまとめて全部消したい</span></div>
+      </div>
+      <div class="q-note">結果メッセージの文言だけが変わる分岐（①→ピコスポット／②→ピコトーニング／③→シミ取り放題）。専門用語は設問側では出さず、結果表示で初めて開示する</div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-card-label">Q5 — クリニックを選ぶなら重視すること（分岐軸2・最終設問）</div>
+      <div class="q-card-text">クリニックを選ぶなら、一番重視するのは？</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">①</span><span class="opt-text">できるだけ費用を抑えたい</span></div>
+        <div class="q-opt"><span class="opt-badge">②</span><span class="opt-text">通いやすさ・予約のしやすさ</span></div>
+        <div class="q-opt"><span class="opt-badge">③</span><span class="opt-text">万が一のときの対応・アフターケア</span></div>
+        <div class="q-opt"><span class="opt-badge">④</span><span class="opt-text">じっくり相談してから決めたい</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 結果メッセージ組み合わせロジック -->
+  <div class="section">
+    <div class="section-title">結果メッセージ 組み合わせロジック</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">タイプ判定はしない。Q4対応の一言＋Q5対応の一言を単純に組み合わせて1枚の結果メッセージにする（3パターン×4パターン＝12通りだが、素材は3+4個のみ用意すればよい）。</p>
+
+    <div style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Q4対応（施術メニュー）</div>
+    <div class="tbl-wrap" style="margin-bottom:24px;">
+      <table>
+        <thead><tr><th>Q4の回答</th><th>一言</th></tr></thead>
+        <tbody>
+          <tr><td>①一点をしっかり消したい</td><td>「気になる一点をしっかり消したいなら、TCBの『ピコスポット』が合いそうです」</td></tr>
+          <tr><td>②顔全体のくすみもケア</td><td>「顔全体のくすみもケアしたいなら、TCBの『ピコトーニング』が合いそうです」</td></tr>
+          <tr><td>③まとめて全部消したい</td><td>「まとめて消したいなら、TCBの『シミ取り放題』が合いそうです」</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Q5対応（重視軸）</div>
+    <div class="tbl-wrap" style="margin-bottom:20px;">
+      <table>
+        <thead><tr><th>Q5の回答</th><th>一言</th></tr></thead>
+        <tbody>
+          <tr><td>①費用を抑えたい</td><td>「初回お試し0円。ライトプランなら1回9,800円から始められます」</td></tr>
+          <tr><td>②通いやすさ重視</td><td>「全国97院。LINEでいつでも予約できます」</td></tr>
+          <tr><td>③保証・アフターケア重視</td><td>「万が一のトラブル時も、無料で修正・回復対応する体制があります」</td></tr>
+          <tr><td>④じっくり相談したい</td><td>「カウンセリングは無料。施術するか迷っている段階での相談だけでもOKです」</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="notice">
+      <strong>結果表示例</strong>（Q3=②・Q4=②・Q5=②の場合）:<br>
+      「頬まわりのくすみ、気になりますよね。顔全体のくすみもケアしたいなら、TCBの『ピコトーニング』が合いそうです。全国97院、LINEでいつでも予約できます」
+    </div>
+  </div>
+
+  <!-- PRカルーセル・追加メニュー（制作済み） -->
+  <div class="section">
+    <div class="section-title">PRカルーセル・追加メニュー（制作済み）</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;">全5タブを1ファイルに統合済み。タブ切替UIはあくまで社内確認用で、実装時はPRカルーセル（Card1〜5）→「＋」追加メニュー4項目という構成でLINE側に実装する。</p>
+
+    <a href="cards-shimi-clinic-hub-2026-07-16.html" target="_blank" style="display:inline-block;background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:700;padding:8px 18px;border-radius:6px;text-decoration:none;margin-bottom:12px;">別タブで開く →</a>
+    <iframe
+      src="cards-shimi-clinic-hub-2026-07-16.html"
+      style="width:100%;height:640px;border:1px solid var(--border);border-radius:8px;display:block;margin-bottom:20px;"
+      loading="lazy"
+    ></iframe>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:220px;">要素</th><th>枚数</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:700;">① PRカルーセル本体</td><td>5枚（キャンペーン導入／こんな方にオススメ／通いやすさ／全社実績／最終CTA）</td></tr>
+          <tr><td style="font-weight:700;">② ピコトーニングって？</td><td>5枚（説明／図解／おすすめ／症例紹介／キャンペーン+CTA）</td></tr>
+          <tr><td style="font-weight:700;">③ ピコスポットって？</td><td>5枚（②と同構成、ブランドカラーのみ変更）</td></tr>
+          <tr><td style="font-weight:700;">④ よくある質問を見る</td><td>6枚（料金／メイク／ダウンタイム／運動飲酒／お試し0円条件／回数と効果）</td></tr>
+          <tr><td style="font-weight:700;">⑤ 施術までの流れを見てみる</td><td>5枚（予約→カウンセラー→ドクター→契約→アフターケア）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- NG制約 -->
+  <div class="section">
+    <div class="section-title">NG制約（医療広告ガイドライン）</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">TCBという特定医療機関の特定施術を紹介するアフィリエイトコンテンツのため、医療法6条の5に基づく医療広告ガイドラインの対象。構築時も以下を厳守すること。</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:180px;">禁止事項</th><th>この診断・PRカルでの扱い</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:700;">体験談</td><td>「実際にやってよかった」等の患者体験談は一切使わない</td></tr>
+          <tr><td style="font-weight:700;">ビフォーアフター写真</td><td>ピコトーニング／ピコスポットの「症例紹介」カードでのみ使用可。限定解除要件（治療内容／治療期間・回数／費用／主なリスク・副作用の4点併記）を満たす形で掲載済み。写真自体は現状プレースホルダーで、実装時はTCBから使用許諾を得た実写真に差し替える</td></tr>
+          <tr><td style="font-weight:700;">比較優良広告</td><td>「他院より優れている」等、競合を名指し・示唆する比較表現は一切使わない。TCB自身の事実（価格・院数・方針）のみ提示</td></tr>
+          <tr><td style="font-weight:700;">誇大広告・保証表現</td><td>「必ず消える」「絶対失敗しない」は使わない。TCB公式LPの表現（「〜が期待できます」等）に準じる</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 実装メモ -->
+  <div class="section">
+    <div class="section-title">実装メモ</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:200px;">項目</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:700;">LINEアカウント</td><td>シミ/エラボトックス/クマ用アカウントの有無が未確認。着手前に必ずNoa/Renへ確認</td></tr>
+          <tr><td style="font-weight:700;">アフィリリンクの完全版</td><td>afbのutmパラメータ付き完全URLを構築前にNoaから受け取る（LPのベースURLのみ確認済み）</td></tr>
+          <tr><td style="font-weight:700;">Q3の扱い</td><td>振り分けには使わない。結果メッセージ冒頭のパーソナライズ（共感の一言）にのみ使用</td></tr>
+          <tr><td style="font-weight:700;">Q4・Q5の扱い</td><td>タイプ判定ではなく、それぞれの回答に対応する一言を単純に組み合わせるだけ。Q4③（まとめて全部消したい）には結果メッセージ以外の行き先（別カード等）は設定しない</td></tr>
+          <tr><td style="font-weight:700;">クーポン表示額</td><td>実装直前にLPのクーポン表示状態を再確認（CSSの<code>@layer</code>切替で25,000円OFF/30,000円OFFどちらが表示中か時期により変わりうる）</td></tr>
+          <tr><td style="font-weight:700;">症例紹介の写真</td><td>プレースホルダーのまま公開しない。TCBから使用許諾済みの実写真を受け取ってから差し替える</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="back-link">
+    <a href="index.html">← トップへ</a>
+  </div>
+
+</div>
+</body>
+</html>
