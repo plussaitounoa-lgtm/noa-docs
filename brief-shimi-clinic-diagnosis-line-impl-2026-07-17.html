@@ -89,10 +89,10 @@
         <tr><td style="font-weight:700;width:180px;">診断名</td><td>シミ クリニック選び診断</td></tr>
         <tr><td style="font-weight:700;">診断表紙</td><td>あり（「ピッタリのシミ取りクリニックがわかる！」）。友だち追加直後、Q1の前に表示</td></tr>
         <tr><td style="font-weight:700;">質問数</td><td>5問（Q1〜Q5）。分岐はQ4・Q5の2軸のみ、Q1〜Q3は非分岐</td></tr>
-        <tr><td style="font-weight:700;">振り分け結果</td><td>タイプ分けなし。結果は1枚（Q4×Q5の回答を組み合わせた一言メッセージ）</td></tr>
+        <tr><td style="font-weight:700;">振り分け結果</td><td>タイプ分けなし。Q5完了後は「診断お疲れさまでした！✨ ○○さんのおすすめのクリニックはこちらです！」の定型メッセージ＋ボタンのみ（TCB・施術名はここでは出さない。PRカルーセルで初めて開示）</td></tr>
         <tr><td style="font-weight:700;">提携先</td><td>TCB東京中央美容外科 ピコレーザー（afbアフィリエイト経由）</td></tr>
         <tr><td style="font-weight:700;">アフィリリンク</td><td>LP: <code>https://t-c-b-biyougeka.com/picolaser</code>（実際に貼るafbトラッキングURL＝utmパラメータ付き完全版は構築前にNoaへ確認）</td></tr>
-        <tr><td style="font-weight:700;">PRカルーセル</td><td>結果メッセージ直後に送信。本体5枚＋「＋」追加メニュー4項目（ピコトーニングって？5枚／ピコスポットって？5枚／よくある質問を見る6枚／施術までの流れを見てみる5枚）</td></tr>
+        <tr><td style="font-weight:700;">PRカルーセル</td><td>診断完了メッセージ直後に送信。本体5枚＋「＋」追加メニュー4項目（ピコトーニングって？5枚／ピコスポットって？5枚／よくある質問を見る6枚／施術までの流れを見てみる5枚）</td></tr>
         <tr><td style="font-weight:700;">設置予定記事</td><td>mega-clinic.com「skin-diagnosis」記事（未設置・友だち見込み最大と推計済み。記事の公開状況・確定URLはNoaに確認）</td></tr>
       </table>
     </div>
@@ -125,7 +125,7 @@
         <div class="flow-q-label">Q3 — エコー用（分岐には使わない）</div>
         <div class="flow-q-text">現在抱えているお悩みは？</div>
       </div>
-      <div class="flow-note">※ Q3の回答は振り分けに使わず、結果メッセージ冒頭の共感の一言としてのみ使用</div>
+      <div class="flow-note">※ Q3の回答は振り分け・結果メッセージのどちらにも使用しない。診断の網羅感を出すための設問</div>
       <div class="flow-arrow">↓</div>
 
       <div class="flow-q">
@@ -140,7 +140,7 @@
       </div>
       <div class="flow-arrow">↓</div>
 
-      <div class="flow-result">結果（1枚・Q4×Q5の組み合わせ文、Q3は冒頭の共感の一言に反映）</div>
+      <div class="flow-result">診断完了メッセージ「診断お疲れさまでした！✨ ○○さんのおすすめのクリニックはこちらです！」＋ボタン「診断結果を見る」</div>
       <div class="flow-arrow">↓</div>
 
       <div class="flow-result" style="background:var(--accent-light);border-color:var(--accent);color:var(--accent);">「くわしく見る」→ PRカルーセル（Card1〜5）→ 無料カウンセリング予約（アフィリリンク）</div>
@@ -181,7 +181,7 @@
         <div class="q-opt"><span class="opt-badge" style="background:#F3F4F6;color:var(--text-muted);">③</span><span class="opt-text">小さいシミ・そばかすが多数ある</span></div>
         <div class="q-opt"><span class="opt-badge" style="background:#F3F4F6;color:var(--text-muted);">④</span><span class="opt-text">複数当てはまる</span></div>
       </div>
-      <div class="q-note" style="border-color:#9CA3AF;background:#F3F4F6;color:var(--text-muted);">※ この回答は振り分けに使用しません。結果メッセージ冒頭の共感の一言（例:「頬まわりのくすみ、気になりますよね。」）としてのみ使用。①②は2026-07-16にLINE UIの文字数制限（15字以内）に合わせて短縮済み</div>
+      <div class="q-note" style="border-color:#9CA3AF;background:#F3F4F6;color:var(--text-muted);">※ この回答は振り分け・結果メッセージのどちらにも使用しません。診断の網羅感を出すための設問です。①②は2026-07-16にLINE UIの文字数制限（15字以内）に合わせて短縮済み</div>
     </div>
 
     <div class="q-card">
@@ -192,7 +192,7 @@
         <div class="q-opt"><span class="opt-badge">②</span><span class="opt-text">顔全体のくすみもケアしたい</span></div>
         <div class="q-opt"><span class="opt-badge">③</span><span class="opt-text">とにかくまとめて全部消したい</span></div>
       </div>
-      <div class="q-note">結果メッセージの文言だけが変わる分岐（①→ピコスポット／②→ピコトーニング／③→シミ取り放題）。専門用語は設問側では出さず、結果表示で初めて開示する</div>
+      <div class="q-note">診断完了メッセージ・PRカルーセルは全員共通（固定）で分岐しない。専門用語（ピコスポット等）は設問側では出さず、PRカルーセルで初めて開示する</div>
     </div>
 
     <div class="q-card">
@@ -207,38 +207,14 @@
     </div>
   </div>
 
-  <!-- 結果メッセージ組み合わせロジック -->
+  <!-- 診断完了メッセージ -->
   <div class="section">
-    <div class="section-title">結果メッセージ 組み合わせロジック</div>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">タイプ判定はしない。Q4対応の一言＋Q5対応の一言を単純に組み合わせて1枚の結果メッセージにする（3パターン×4パターン＝12通りだが、素材は3+4個のみ用意すればよい）。</p>
-
-    <div style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Q4対応（施術メニュー）</div>
-    <div class="tbl-wrap" style="margin-bottom:24px;">
-      <table>
-        <thead><tr><th>Q4の回答</th><th>一言</th></tr></thead>
-        <tbody>
-          <tr><td>①一点をしっかり消したい</td><td>「気になる一点をしっかり消したいなら、TCBの『ピコスポット』が合いそうです」</td></tr>
-          <tr><td>②顔全体のくすみもケア</td><td>「顔全体のくすみもケアしたいなら、TCBの『ピコトーニング』が合いそうです」</td></tr>
-          <tr><td>③まとめて全部消したい</td><td>「まとめて消したいなら、TCBの『シミ取り放題』が合いそうです」</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Q5対応（重視軸）</div>
-    <div class="tbl-wrap" style="margin-bottom:20px;">
-      <table>
-        <thead><tr><th>Q5の回答</th><th>一言</th></tr></thead>
-        <tbody>
-          <tr><td>①費用を抑えたい</td><td>「初回お試し0円。ライトプランなら1回9,800円から始められます」</td></tr>
-          <tr><td>②通いやすさ重視</td><td>「全国97院。LINEでいつでも予約できます」</td></tr>
-          <tr><td>③保証・アフターケア重視</td><td>「万が一のトラブル時も、無料で修正・回復対応する体制があります」</td></tr>
-          <tr><td>④じっくり相談したい</td><td>「カウンセリングは無料。施術するか迷っている段階での相談だけでもOKです」</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <div class="section-title">診断完了メッセージ</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Q4・Q5の回答による分岐・パーソナライズはしない。全員共通の定型メッセージ＋ボタンのみ。</p>
     <div class="notice">
-      <strong>結果表示例</strong>（Q3=②・Q4=②・Q5=②の場合）:<br>
-      「頬まわりのくすみ、気になりますよね。顔全体のくすみもケアしたいなら、TCBの『ピコトーニング』が合いそうです。全国97院、LINEでいつでも予約できます」
+      <strong>表示文言</strong>:<br>
+      「診断お疲れさまでした！✨<br>○○さんのおすすめのクリニックはこちらです！」<br>
+      ボタン: 「診断結果を見る」→ タップでPRカルーセルへ
     </div>
   </div>
 
@@ -305,8 +281,7 @@
         <tbody>
           <tr><td style="font-weight:700;">LINEアカウント</td><td>シミ/エラボトックス/クマ用アカウントの有無が未確認。着手前に必ずNoa/Renへ確認</td></tr>
           <tr><td style="font-weight:700;">アフィリリンクの完全版</td><td>afbのutmパラメータ付き完全URLを構築前にNoaから受け取る（LPのベースURLのみ確認済み）</td></tr>
-          <tr><td style="font-weight:700;">Q3の扱い</td><td>振り分けには使わない。結果メッセージ冒頭のパーソナライズ（共感の一言）にのみ使用</td></tr>
-          <tr><td style="font-weight:700;">Q4・Q5の扱い</td><td>タイプ判定ではなく、それぞれの回答に対応する一言を単純に組み合わせるだけ。Q4③（まとめて全部消したい）には結果メッセージ以外の行き先（別カード等）は設定しない</td></tr>
+          <tr><td style="font-weight:700;">Q3・Q4・Q5の扱い</td><td>振り分け・結果メッセージのどちらにも使用しない。診断完了メッセージ・PRカルーセルは全員共通（固定）。TCB・施術名は診断完了メッセージでは出さず、PRカルーセルで初めて開示する（恣意的に見えるのを避けるため）</td></tr>
           <tr><td style="font-weight:700;">クーポン表示額</td><td>実装直前にLPのクーポン表示状態を再確認（CSSの<code>@layer</code>切替で25,000円OFF/30,000円OFFどちらが表示中か時期により変わりうる）</td></tr>
           <tr><td style="font-weight:700;">症例紹介の写真</td><td>プレースホルダーのまま公開しない。TCBから使用許諾済みの実写真を受け取ってから差し替える</td></tr>
         </tbody>
