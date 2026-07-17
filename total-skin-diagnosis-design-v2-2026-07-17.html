@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>総合肌タイプ診断 v2（コスメ④横断診断） 設計書 2026-07-17</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f5f5f7; color: #1d1d1f; font-size: 14px; line-height: 1.7; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 36px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
+  h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #444; }
+  .card { background: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .grid4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #4a6a5a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:hover td { background: #fafafa; }
+  .highlight { background: #fffde7; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .note { background: #e8f5e9; border-left: 3px solid #34a853; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .warn { background: #fff8e1; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-green  { background: #e6f4ea; color: #1e8e3e; }
+  .badge-blue   { background: #e8f0fe; color: #1967d2; }
+  .badge-yellow { background: #fff8e1; color: #e37400; }
+  .badge-red    { background: #fce8e6; color: #c5221f; }
+  .badge-teal   { background: #e0f2f1; color: #00796b; }
+  .funnel { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+  .funnel-step { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; }
+  .funnel-arrow { color: #aaa; font-size: 18px; }
+  .q-block { background: #fff; border-radius: 10px; padding: 16px 20px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.06); border-left: 4px solid #4a6a5a; }
+  .q-num { font-size: 11px; font-weight: 700; color: #888; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .q-text { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .choices { display: flex; gap: 8px; flex-wrap: wrap; }
+  .choice { background: #f5f5f7; border-radius: 6px; padding: 6px 14px; font-size: 13px; }
+  .choice.key { background: #e0f2f1; color: #00796b; font-weight: 600; }
+  .card-preview { background: #f8faf9; border: 1px solid #e0e0e0; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; font-size: 13px; }
+  .card-preview-num { font-size: 11px; font-weight: 700; color: #888; margin-bottom: 4px; }
+  .card-preview-text { color: #333; white-space: pre-line; }
+  .sim-block { background: #fff; border-radius: 10px; padding: 16px 20px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .sim-persona { font-size: 12px; color: #888; margin-bottom: 8px; }
+  .sim-flow { font-size: 13px; color: #444; margin-bottom: 4px; }
+  .pu-box { background: #f8f9ff; border: 1px solid #c5cae9; border-radius: 8px; padding: 14px 18px; margin-bottom: 12px; }
+  .pu-label { font-size: 11px; font-weight: 700; color: #5c6bc0; margin-bottom: 6px; letter-spacing: 0.05em; }
+  .pu-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .pu-copy { font-size: 13px; color: #333; margin-bottom: 8px; }
+  .pu-btn { display: inline-block; background: #4a6a5a; color: #fff; border-radius: 6px; padding: 4px 14px; font-size: 12px; margin-right: 6px; }
+  ul { padding-left: 18px; }
+  li { margin-bottom: 4px; }
+  p { margin-bottom: 8px; }
+  .back-link { margin-top: 48px; padding-top: 20px; border-top: 1px solid #e0e0e0; font-size: 13px; }
+  .type-header { display: flex; align-items: center; gap: 10px; margin: 28px 0 10px; }
+  .type-dot { width: 14px; height: 14px; border-radius: 50%; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>総合肌タイプ診断 v2 設計書</h1>
+  <div class="meta">2026-07-17 ｜ Carena（carenacosmetic.co.jp）× LINE診断 ｜ コスメ診断ロードマップ④・横断診断 ｜ ステータス: v2初稿・対象記事URL確定待ち</div>
+
+  <div class="warn"><strong>v1からの変更点：</strong> v1（2026-07-15版）は「タイプ→別の専門診断へ誘導」という2段階構造だったが、Noaより「結果は乾燥肌/脂性肌/混合肌/敏感肌の4タイプで、それぞれに合うクレンジング・基礎化粧品・化粧水を"スキンケアステップのおすすめ商品"として直接紹介する」という確定仕様が提示され、v2として全面作り直し。</div>
+
+  <!-- ファネル位置づけ -->
+  <h2>ファネル上の位置づけ</h2>
+  <div class="card">
+    <div class="funnel">
+      <div class="funnel-step">①②③に属さない記事<br><small style="color:#888;font-weight:400">ファンデ/BB比較・美容オイル・成分解説等</small></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">PU設置<br><small style="color:#888;font-weight:400">「あなたの肌タイプ診断」</small></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">LINE友達追加</div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step" style="border-color:#34a853;background:#e8f5e9;color:#1e8e3e;">LINE内 肌タイプ診断<br><small style="font-weight:400">←ここの設計</small></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">4タイプ判定<br><small style="font-weight:400">乾燥/脂性/混合/敏感</small></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">3ステップ<br>おすすめ商品 → CV</div>
+    </div>
+    <div class="note">v1との違い：診断結果＝別の診断への誘導ではなく、その場でクレンジング／スキンケア／化粧水の3ステップ分の商品を直接レコメンド。既存①②③診断の商材をそのまま流用（新規アフィリ提携不要）。</div>
+    <div class="warn">対象記事の実URL一覧は未確定（v1から持ち越し）。Search ConsoleのUIから直接CSVエクスポート→未設置検知ツールへのcarenaプリセット追加が次の一手。</div>
+  </div>
+
+  <!-- 商材マッピング -->
+  <h2>1. 商材マッピング（4肌タイプ × 3ステップ）</h2>
+  <div class="card">
+    <table>
+      <tr><th>肌タイプ</th><th>①クレンジング</th><th>②スキンケア</th><th>③化粧水</th></tr>
+      <tr><td><strong>乾燥肌</strong></td><td>クリームタイプ<br>オルビス オフクリーム ¥5,000</td><td>保湿バリア修復型<br>ビーグレン QuSomeローション ¥5,500</td><td>タイプA-うるおいチャージ<br>プリマモイスト¥1,200 / オルビスユー¥980</td></tr>
+      <tr><td><strong>脂性肌</strong></td><td>オイルタイプ<br>アテニア スキンクリア ¥4,500</td><td>皮脂コントロール型<br>オルビス クリアフル ¥980</td><td>タイプD-毛穴ケア<br>オルビス クリアフル ¥980</td></tr>
+      <tr><td><strong>混合肌</strong></td><td>ジェルタイプ<br>マナラ ホットクレンジングゲル ¥6,000</td><td>保湿バリア修復型<br>ビーグレン QuSomeローション ¥5,500</td><td>タイプA-うるおいチャージ<br>プリマモイスト¥1,200 / オルビスユー¥980</td></tr>
+      <tr><td><strong>敏感肌</strong></td><td>ミルクタイプ<br>アクセーヌ</td><td>低刺激・肌環境改善型<br>ファンケル 無添加アクネケア ¥1,750</td><td>タイプA内・ディセンシア ¥1,480<br>（敏感肌×乾燥ケア専用商材）</td></tr>
+    </table>
+    <div class="note" style="margin-top:12px;">1:1の完全対応にはこだわらず、商品特徴が最も近いものを充てる方針（Noa確認済み・2026-07-17）。乾燥肌と混合肌は②③で同じ商材推奨になるが問題なし。②の美白・エイジングケア型（VCスターター）、③のタイプB/C（ハリ・美白）は肌質軸でなく悩み・年代軸のため対象外。</div>
+  </div>
+
+  <!-- ものさしづくり -->
+  <h2>2. ものさしづくり</h2>
+  <div class="card">
+    <h3>今のものさし（診断前）</h3>
+    <div class="card-preview">
+      <div class="card-preview-text">「この商品（ファンデ/オイル/成分）を変えれば、肌の状態はよくなるはず」
+  ↓
+「試したけど、あんまり変わらない…」
+  ↓
+「そもそも自分の肌質に合わせて選べているのか分からない」</div>
+    </div>
+    <div class="highlight">リアルボイス：「自分の肌質が何なのか全くわかりません」「パーソナルカラーや骨格診断のようにプロの診断で調べてもらっているのでしょうか」</div>
+
+    <h3>新しいものさし</h3>
+    <div class="card-preview">
+      <div class="card-preview-text">「単品を良いものに変えるより先に、まず自分の肌タイプを正しく知る」
+  ↓
+「肌タイプがわかれば、クレンジング・スキンケア・化粧水、
+ スキンケアの3ステップ全部を迷わず選べる」</div>
+    </div>
+
+    <h3>ハンマー</h3>
+    <p>「3問で肌タイプを診断し、3ステップ分のおすすめ商品をまとめて提示する」。既存の肌質診断（au beauty/MAQUIA等）が「あなたは乾燥肌です」で終わるのに対し、本診断は3ステップの具体的な商品まで一気に提示する点が差別化軸。</p>
+  </div>
+
+  <!-- 診断フロー -->
+  <h2>3. 診断フロー（全3問）</h2>
+
+  <div class="card" style="margin-bottom:14px;">
+    <div class="q-num">WELCOME</div>
+    <div class="q-text">あなたの肌タイプ診断</div>
+    <div style="font-size:13px;color:#555;">その化粧品、自分の肌タイプに合わせて選べてる？3問でわかる無料診断。匿名・無料</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">Q1 — 振り分け主軸</div>
+    <div class="q-text">洗顔後15分、何もつけずにいると肌は？</div>
+    <div class="choices">
+      <div class="choice key">A: 突っ張る、粉をふくことがある → 乾燥肌</div>
+      <div class="choice key">B: 顔全体がテカって皮脂が浮く → 脂性肌</div>
+      <div class="choice key">C: おでこ・鼻はテカるのに頬は突っ張る → 混合肌</div>
+      <div class="choice key">D: 赤みが出たり、ピリピリ・かゆみが出る → 敏感肌</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">「洗顔後の肌状態」という最も普遍的で答えやすい設問。1問で4タイプへ振り分け可能（au beauty/MAQUIA等の既存肌質診断と同じ標準軸）</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">Q2 — 確認・パーソナライズ</div>
+    <div class="q-text">新しいコスメを使い始めたとき、肌に出やすい反応は？</div>
+    <div class="choices">
+      <div class="choice">A: 特に何も起きない</div>
+      <div class="choice">B: 赤み・かゆみが出ることがある</div>
+      <div class="choice">C: 何を使っても変化を感じにくい</div>
+      <div class="choice">D: ニキビ・吹き出物が増えることがある</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">Q1の判定を裏付ける確認軸（振り分けには使わない）。特にBは敏感肌の裏付け。Card2のパーソナライズに使用</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">Q3 — パーソナライズ</div>
+    <div class="q-text">一番気になる肌悩みは？</div>
+    <div class="choices">
+      <div class="choice">A: 乾燥・カサつき</div>
+      <div class="choice">B: 毛穴・テカリ</div>
+      <div class="choice">C: 崩れやすさ・肌の揺らぎ</div>
+      <div class="choice">D: 赤み・刺激に弱い</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">悩みの切実さを重ねてCard2の訴求を強める（振り分けには使わない）</div>
+  </div>
+
+  <!-- 結果カード設計 -->
+  <h2>4. 結果カード設計（4タイプ × 2枚 + おすすめ3点セットカル）</h2>
+  <div class="note">構成: 結果カル（Card1タイプ発表→Card2特徴とアプローチ）→ おすすめ3点セットカル（クレンジング/スキンケア/化粧水の3枚）。結果カルには商材名を出さず、3点セットカルで初めて商品が登場する（①②③の「結果カードとPRカルーセルの役割分離」原則を踏襲）。</div>
+
+  <div class="type-header"><div class="type-dot" style="background:#f4a460;"></div><h3 style="margin:0;">乾燥肌</h3></div>
+  <div class="grid2">
+    <div class="card-preview"><div class="card-preview-num">結果カル Card1｜タイプ発表</div><div class="card-preview-text">あなたの肌タイプは…
+
+乾燥肌です
+
+バッジ: 水分不足 ／ バリア機能が乱れやすい ／ 保湿ケア重視</div></div>
+    <div class="card-preview"><div class="card-preview-num">結果カル Card2｜特徴とアプローチ</div><div class="card-preview-text">皮脂も水分も不足しがちで、バリア機能が乱れやすいタイプ。
+
+うるおいを与えるだけでなく、逃さないように留める工夫が必要です。クレンジング・スキンケア・化粧水、3ステップ全部を「保湿」の視点で揃えることが近道。</div></div>
+  </div>
+  <div class="grid3">
+    <div class="card-preview"><div class="card-preview-num">3点セット Card1｜クレンジング</div><div class="card-preview-text">乾燥肌のあなたに｜クリームタイプ
+オルビス オフクリーム
+
+落としながら、うるおいを守る。乾燥させない洗浄。</div></div>
+    <div class="card-preview"><div class="card-preview-num">3点セット Card2｜基礎化粧品</div><div class="card-preview-text">乾燥肌のあなたに｜保湿バリア修復型
+ビーグレン QuSomeローション
+
+肌の内側からうるおいを届け、バリア機能を立て直す設計。</div></div>
+    <div class="card-preview"><div class="card-preview-num">3点セット Card3｜化粧水</div><div class="card-preview-text">乾燥肌のあなたに｜うるおいチャージ型
+プリマモイスト / オルビスユー
+
+角層の奥までうるおいを届けて留める。
+
+[ボタン] 詳しく見る →</div></div>
+  </div>
+
+  <div class="type-header"><div class="type-dot" style="background:#64b5f6;"></div><h3 style="margin:0;">脂性肌</h3></div>
+  <div class="grid2">
+    <div class="card-preview"><div class="card-preview-num">結果カル Card1｜タイプ発表</div><div class="card-preview-text">あなたの肌タイプは…
+
+脂性肌です
+
+バッジ: 皮脂分泌が活発 ／ テカり・毛穴が気になりやすい ／ しっかり洗浄重視</div></div>
+    <div class="card-preview"><div class="card-preview-num">結果カル Card2｜特徴とアプローチ</div><div class="card-preview-text">皮脂の分泌が活発で、テカり・毛穴が気になりやすいタイプ。
+
+しっかり落とすことは大事ですが、洗いすぎると肌が乾燥から守ろうとして逆に皮脂を増やしてしまいます。クレンジング・スキンケア・化粧水、「絶妙なバランス」で選ぶことが近道。</div></div>
+  </div>
+  <div class="grid3">
+    <div class="card-preview"><div class="card-preview-num">3点セット Card1｜クレンジング</div><div class="card-preview-text">脂性肌のあなたに｜オイルタイプ
+アテニア スキンクリア
+
+高い洗浄力で、毛穴の汚れまでしっかりオフ。</div></div>
+    <div class="card-preview"><div class="card-preview-num">3点セット Card2｜基礎化粧品</div><div class="card-preview-text">脂性肌のあなたに｜皮脂コントロール型
+オルビス クリアフル
+
+皮脂の分泌を根本からコントロールする設計。</div></div>
+    <div class="card-preview"><div class="card-preview-num">3点セット Card3｜化粧水</div><div class="card-preview-text">脂性肌のあなたに｜毛穴ケア型
+オルビス クリアフル
+
+毛穴を引き締めながら、皮脂バランスを整える。
+
+[ボタン] 詳しく見る →</div></div>
+  </div>
+
+  <div class="type-header"><div class="type-dot" style="background:#81c784;"></div><h3 style="margin:0;">混合肌</h3></div>
+  <div class="grid2">
+    <div class="card-preview"><div class="card-preview-num">結果カル Card1｜タイプ発表</div><div class="card-preview-text">あなたの肌タイプは…
+
+混合肌です
+
+バッジ: 部分によって違う肌状態 ／ オールインワン非対応 ／ バランス重視</div></div>
+    <div class="card-preview"><div class="card-preview-num">結果カル Card2｜特徴とアプローチ</div><div class="card-preview-text">おでこや鼻はテカるのに、頬は乾燥する。部分によって肌の状態が違うタイプ。
+
+1つの製品で全部をまかなおうとすると、どこかに無理が出ます。肌全体を整える視点でクレンジング・スキンケア・化粧水を選ぶことが近道。</div></div>
+  </div>
+  <div class="grid3">
+    <div class="card-preview"><div class="card-preview-num">3点セット Card1｜クレンジング</div><div class="card-preview-text">混合肌のあなたに｜ジェルタイプ
+マナラ ホットクレンジングゲル
+
+摩擦レスで洗い上げ、部分ごとの負担を減らす。</div></div>
+    <div class="card-preview"><div class="card-preview-num">3点セット Card2｜基礎化粧品</div><div class="card-preview-text">混合肌のあなたに｜保湿バリア修復型
+ビーグレン QuSomeローション
+
+肌全体のバリア機能を整えて、部分差を目立たなくする。</div></div>
+    <div class="card-preview"><div class="card-preview-num">3点セット Card3｜化粧水</div><div class="card-preview-text">混合肌のあなたに｜うるおいチャージ型
+プリマモイスト / オルビスユー
+
+肌全体にムラなくうるおいを届ける。
+
+[ボタン] 詳しく見る →</div></div>
+  </div>
+
+  <div class="type-header"><div class="type-dot" style="background:#ce93d8;"></div><h3 style="margin:0;">敏感肌</h3></div>
+  <div class="grid2">
+    <div class="card-preview"><div class="card-preview-num">結果カル Card1｜タイプ発表</div><div class="card-preview-text">あなたの肌タイプは…
+
+敏感肌です
+
+バッジ: バリア機能が弱い ／ 刺激に反応しやすい ／ 低刺激重視</div></div>
+    <div class="card-preview"><div class="card-preview-num">結果カル Card2｜特徴とアプローチ</div><div class="card-preview-text">バリア機能が弱く、刺激に反応しやすいタイプ。
+
+低刺激なものを選ぶことはもちろん、バリア機能そのものを育てるケアが必要です。クレンジング・スキンケア・化粧水、「刺激の少なさ」を軸に選ぶことが近道。</div></div>
+  </div>
+  <div class="grid3">
+    <div class="card-preview"><div class="card-preview-num">3点セット Card1｜クレンジング</div><div class="card-preview-text">敏感肌のあなたに｜ミルクタイプ
+アクセーヌ
+
+肌を傷めずに、やさしく落とす低刺激設計。</div></div>
+    <div class="card-preview"><div class="card-preview-num">3点セット Card2｜基礎化粧品</div><div class="card-preview-text">敏感肌のあなたに｜低刺激・肌環境改善型
+ファンケル 無添加アクネケア
+
+刺激ゼロで、肌環境ごと整えるアプローチ。</div></div>
+    <div class="card-preview"><div class="card-preview-num">3点セット Card3｜化粧水</div><div class="card-preview-text">敏感肌のあなたに｜敏感肌×乾燥ケア
+ディセンシア
+
+低刺激設計で、揺らぎがちな肌を落ち着かせる。
+
+[ボタン] 詳しく見る →</div></div>
+  </div>
+
+  <!-- PU文言 -->
+  <h2>5. PU文言</h2>
+  <div class="card" style="margin-bottom:8px;">
+    <div style="font-size:12px;font-weight:700;color:#888;margin-bottom:8px;">ブリッジテスト</div>
+    <table>
+      <tr><th>①診断体験</th><td>3問答えると乾燥肌/脂性肌/混合肌/敏感肌のどれかが判定され、その肌タイプに合うクレンジング・スキンケア・化粧水の3ステップ分のおすすめ商品がまとめて提示される</td></tr>
+      <tr><th>②検索者の気持ち</th><td>「この商品を変えれば良くなるかと思って調べてるけど、自分の肌タイプに合わせて選べているのか自信がない」</td></tr>
+      <tr><th>③翻訳</th><td>「その化粧品、自分の肌タイプに合わせて選べてる？3問でわかる肌タイプ診断」→ ①と③が同じ体験を指している ✅</td></tr>
+    </table>
+  </div>
+
+  <div class="pu-box">
+    <div class="pu-label">案A — 気づき型（主推薦）</div>
+    <div class="pu-title">あなたの肌タイプ診断</div>
+    <div class="pu-copy">その化粧品、自分の肌タイプに合わせて選べてる？<br>/カンタン3問診断</div>
+    <span class="pu-btn">チェックする</span><span style="font-size:12px;color:#888;">/ いいえ</span>
+  </div>
+  <div class="pu-box">
+    <div class="pu-label">案B — 疲弊層向け・問いかけ型</div>
+    <div class="pu-title">あなたの肌タイプ診断</div>
+    <div class="pu-copy">いろいろ試してるのに変わらないなら、肌タイプから見直してみない？<br>/カンタン3問診断</div>
+    <span class="pu-btn">見てみる</span><span style="font-size:12px;color:#888;">/ いいえ</span>
+  </div>
+  <div class="pu-box">
+    <div class="pu-label">案C — 能動意欲型（CTR特化）</div>
+    <div class="pu-title">あなたの肌タイプ診断</div>
+    <div class="pu-copy">自分の肌タイプ、ちゃんと知りたい！<br>/カンタン3問診断</div>
+    <span class="pu-btn">知りたい！</span><span style="font-size:12px;color:#888;">/ いいえ</span>
+  </div>
+
+  <h3>記事タイプ別文言使い分け</h3>
+  <div class="card">
+    <table>
+      <tr><th>記事の傾向</th><th>読者の状態</th><th>推奨案</th></tr>
+      <tr><td>ファンデ/BB比較記事</td><td>商品比較で疲れている</td><td>案B</td></tr>
+      <tr><td>美容オイル記事</td><td>単品への興味段階</td><td>案A</td></tr>
+      <tr><td>成分解説記事</td><td>知識収集・能動的</td><td>案C</td></tr>
+    </table>
+  </div>
+
+  <!-- 通しシミュレーション -->
+  <h2>6. 通しシミュレーション</h2>
+
+  <div class="sim-block">
+    <div class="sim-persona">ペルソナ①：32歳女性 / 「BBクリーム 崩れない」で検索 / 昼にはテカって崩れることが多い（脂性肌想定）</div>
+    <div class="sim-flow">案B PU → 「肌タイプから見直してみない？」→タップ → Q1(B)→Q2(D)→Q3(B)即答 → 結果：脂性肌 → 「洗いすぎると逆に皮脂が増える」に納得 → 3点セット：アテニア/オルビスクリアフル/オルビスクリアフルが「毛穴ケア」で統一感◎</div>
+    <div><span class="badge badge-green">◎ 問題なし</span></div>
+  </div>
+
+  <div class="sim-block">
+    <div class="sim-persona">ペルソナ②：27歳女性 / 「美容オイル 効果ない」で検索 / おでこはテカるのに頬は乾燥（混合肌想定）</div>
+    <div class="sim-flow">案A PU → 「自分の肌タイプに合わせて選べてる？」→タップ → Q1(C)→Q2(A)→Q3(C)即答 → 結果：混合肌 → 「1つの製品で全部まかなおうとすると無理が出る」に納得 → 3点セット：マナラ/ビーグレン/プリマモイストで「3ステップで整える」への転換がスムーズ</div>
+    <div><span class="badge badge-green">◎ 問題なし</span></div>
+  </div>
+
+  <div class="sim-block">
+    <div class="sim-persona">ペルソナ③：43歳女性 / 成分解説記事読了 / 季節の変わり目に乾燥・カサつきが気になる（乾燥肌想定）</div>
+    <div class="sim-flow">案C PU → 「自分の肌タイプ、ちゃんと知りたい！」→タップ → Q1(A)→Q2(C)→Q3(A)即答 → 結果：乾燥肌 → 「うるおいを与えるだけでなく逃さない工夫が必要」に納得 → 3点セット：オルビスオフクリーム/ビーグレン/プリマモイストが「保湿」で統一され迷わず選べる安心感</div>
+    <div><span class="badge badge-green">◎ 問題なし。切実度の高い層に最も刺さる</span></div>
+  </div>
+
+  <div class="highlight" style="margin-top:16px;"><strong>総括：</strong> 4タイプとも3ステップの訴求軸に一貫性がある（乾燥肌=保湿統一、脂性肌=毛穴・バランス統一、混合肌=バランス統一、敏感肌=低刺激統一）。結果カルとおすすめカルの役割分離も維持できている。</div>
+
+  <!-- 期待効果 -->
+  <h2>7. 期待効果（フェルミ推定・レンジ試算）</h2>
+  <div class="card">
+    <div class="warn">対象記事の実URL一覧・実PVは未確定。全コスメ111記事の天井（約20,239クリック/月）から①②③のカバー分（合計16,272推計）を差し引いた残り（推定約58記事）の天井は約3,967クリック/月。</div>
+    <table style="margin-top:12px;">
+      <tr><th>指標</th><th>保守</th><th>標準</th><th>上振れ</th></tr>
+      <tr><td>月間クリック（逆算値）</td><td>3,967</td><td>3,967</td><td>3,967</td></tr>
+      <tr><td>PV換算（CL×1.2倍仮定）</td><td>4,760</td><td>4,760</td><td>4,760</td></tr>
+      <tr><td>PVFR</td><td>0.40%</td><td>0.60%</td><td>0.80%</td></tr>
+      <tr><td><strong>友だち追加数/月</strong></td><td><strong>約19人</strong></td><td><strong>約29人</strong></td><td><strong>約38人</strong></td></tr>
+    </table>
+    <div class="note" style="margin-top:12px;">v1（保守0.30%）よりPVFRをやや高めに設定：v2はCTA後に「別の診断」ではなく「その場で3ステップの商品を直接提示」する一段階構造になり、v1より摩擦が少ない。①②③の目標PVFR（0.70%前後）にはまだ届かないため中間的な値とする。</div>
+  </div>
+
+  <!-- 残タスク -->
+  <h2>残タスク</h2>
+  <div class="card">
+    <ul>
+      <li>[ ] <strong>対象記事の実URL一覧を確定させる（v1から持ち越し・最優先）</strong></li>
+      <li>[ ] 「おすすめ3点セットカル」という新フォーマットの実装可否をCTOに確認（LINE Console側で3商品×3ステップを1カルーセルに収める構成が可能か）</li>
+      <li>[ ] マッピング表（4肌タイプ×3ステップ）の最終確認・アフィリリンク確認</li>
+      <li>[ ] デザイン依頼書の作成</li>
+      <li>[ ] PU案A/B/Cの記事タイプ別出し分けロジック確定</li>
+      <li>[ ] 設置記事の優先順位決め</li>
+    </ul>
+  </div>
+
+  <div class="back-link"><a href="index.html">← トップへ</a></div>
+
+</div>
+</body>
+</html>
