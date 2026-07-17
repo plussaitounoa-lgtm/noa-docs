@@ -59,12 +59,13 @@
   </div>
 
   <div class="section">
-    <div class="section-title">必要な画像一覧<span class="count-badge">34枚</span></div>
+    <div class="section-title">必要な画像一覧<span class="count-badge">35枚</span></div>
     <div class="tbl-wrap">
       <table>
         <thead><tr><th>カテゴリ</th><th>枚数</th><th>備考</th></tr></thead>
         <tbody>
           <tr><td>PUバナー</td><td>2枚</td><td>コピー2案（推奨案／比較用案、ABテスト）</td></tr>
+          <tr><td>診断表紙</td><td>1枚</td><td>「ピッタリのシミ取りクリニックがわかる！」友だち追加直後、Q1の前に表示</td></tr>
           <tr><td>設問パネル</td><td>5枚</td><td>Q1〜Q5 各1枚。Q3のみ非分岐（症状の見た目で選ばせるエコー用）</td></tr>
           <tr><td>結果パネル</td><td>1枚</td><td>タイプ判定なし。Q4×Q5の組み合わせ一言メッセージを表示する1枚のみ</td></tr>
           <tr><td>PRカルーセル本体</td><td><strong>5枚</strong></td><td>キャンペーン導入／こんな方にオススメ／通いやすさ／全社実績／最終CTA</td></tr>
@@ -75,7 +76,7 @@
         </tbody>
       </table>
     </div>
-    <div class="note-box">診断表紙（タイトル画面）は今回設けていません。PU → 友だち追加 → Q1へ直接遷移する最小構成です（2026-07-15朝会決定「診断結果を作り込まず、まずは最小構成で公開する」方針に準拠）。</div>
+    <div class="note-box">診断表紙は友だち追加直後・Q1の前に1枚表示します（②参照）。結果はタイプ判定ではなくQ4×Q5組み合わせの一言メッセージのみで、そこは最小構成のまま（2026-07-15朝会決定「診断結果を作り込まず、まずは最小構成で公開する」方針に準拠）。</div>
   </div>
 
   <div class="section">
@@ -83,6 +84,8 @@
     <div class="code-block">[PU] バナー（mega-clinic.com シミジャンル「skin-diagnosis」記事に設置 / コピー2種ABテスト）
   ↓
 [友だち追加]
+  ↓
+[診断表紙] ピッタリのシミ取りクリニックがわかる！
   ↓
 [Q1] 性別を教えてください
 [Q2] あなたの年代は？
@@ -107,6 +110,7 @@
     <div class="section-title">★フロー図・カード図</div>
     <p>設計・文言・トンマナすべてまとまっているので、こちらご確認いただけると幸いです🙇‍♀️</p>
     <p><strong>ワークフロー設計図:</strong><br><span class="link-chip"><a href="https://plussaitounoa-lgtm.github.io/noa-docs/flow-shimi-clinic-diagnosis-2026-07-16.html" target="_blank">flow-shimi-clinic-diagnosis-2026-07-16.html</a></span></p>
+    <p><strong>診断表紙 カード図:</strong><br><span class="link-chip"><a href="https://plussaitounoa-lgtm.github.io/noa-docs/cards-shimi-clinic-cover-2026-07-17.html" target="_blank">cards-shimi-clinic-cover-2026-07-17.html</a></span></p>
     <p><strong>カード図（PRカルーセル＋追加メニュー4項目・全5タブ）:</strong><br><span class="link-chip"><a href="https://plussaitounoa-lgtm.github.io/noa-docs/cards-shimi-clinic-hub-2026-07-16.html" target="_blank">cards-shimi-clinic-hub-2026-07-16.html</a></span></p>
     <p>見辛いなどあればテキストベースで出すのでお申し付けください🙏</p>
   </div>
@@ -126,7 +130,23 @@
   </div>
 
   <div class="section">
-    <div class="section-title">② 設問パネル（5枚）</div>
+    <div class="section-title">② 診断表紙（1枚）</div>
+    <div class="tbl-wrap">
+      <table>
+        <tbody>
+          <tr><td style="width:100px;"><strong>タグ</strong></td><td>シミ取りタイプ診断</td></tr>
+          <tr><td><strong>ヘッドライン</strong></td><td>ピッタリの<strong>シミ取りクリニック</strong>がわかる！</td></tr>
+          <tr><td><strong>タイトル</strong></td><td>クリニック選び診断</td></tr>
+          <tr><td><strong>サブ</strong></td><td>あなたに合う施術メニューまでわかる</td></tr>
+          <tr><td><strong>CTAバナー</strong></td><td>カンタン5問で診断！／▼タップして診断スタート▼</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note-box">構成はNoa共有の参考画像（クマ取り診断表紙）を踏襲。配色はメインカラー（水色）に調整。カード図: <a href="cards-shimi-clinic-cover-2026-07-17.html" target="_blank">cards-shimi-clinic-cover-2026-07-17.html</a></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">③ 設問パネル（5枚）</div>
     <div class="tbl-wrap">
       <table>
         <thead><tr><th style="width:40px;">#</th><th style="width:220px;">質問</th><th>選択肢</th></tr></thead>
@@ -143,7 +163,7 @@
   </div>
 
   <div class="section">
-    <div class="section-title">③ 結果パネル<span class="count-badge">1枚</span></div>
+    <div class="section-title">④ 結果パネル<span class="count-badge">1枚</span></div>
     <p>タイプ発表・詳しい説明は行わず、Q4対応の一言＋Q5対応の一言を組み合わせた1文のみを表示するシンプルな1枚。</p>
     <div class="tbl-wrap">
       <table>
@@ -159,7 +179,7 @@
   </div>
 
   <div class="section">
-    <div class="section-title">④ PRカルーセル本体<span class="count-badge">5枚</span></div>
+    <div class="section-title">⑤ PRカルーセル本体<span class="count-badge">5枚</span></div>
     <div class="tbl-wrap">
       <table>
         <thead><tr><th style="width:55px;">Card</th><th style="width:180px;">見出し</th><th>本文</th></tr></thead>
@@ -175,7 +195,7 @@
   </div>
 
   <div class="section">
-    <div class="section-title">⑤ ピコトーニングって？<span class="count-badge">5枚</span></div>
+    <div class="section-title">⑥ ピコトーニングって？<span class="count-badge">5枚</span></div>
     <div class="type-block">
       <div class="type-header a">
         <span class="dot"></span>
@@ -197,7 +217,7 @@
   </div>
 
   <div class="section">
-    <div class="section-title">⑥ ピコスポットって？<span class="count-badge">5枚</span></div>
+    <div class="section-title">⑦ ピコスポットって？<span class="count-badge">5枚</span></div>
     <div class="type-block">
       <div class="type-header b">
         <span class="dot"></span>
@@ -220,7 +240,7 @@
   </div>
 
   <div class="section">
-    <div class="section-title">⑦ よくある質問を見る<span class="count-badge">6枚</span></div>
+    <div class="section-title">⑧ よくある質問を見る<span class="count-badge">6枚</span></div>
     <p>公式LPのQ&Aをそのまま転載せず、ユーザー目線の見出し回答型ガイドとして再構成（Qタグ→見出し回答→写真→解説文の順）。メインカラー（水色）を使用。</p>
     <div class="tbl-wrap">
       <table>
@@ -239,7 +259,7 @@
   </div>
 
   <div class="section">
-    <div class="section-title">⑧ 施術までの流れを見てみる<span class="count-badge">5枚</span></div>
+    <div class="section-title">⑨ 施術までの流れを見てみる<span class="count-badge">5枚</span></div>
     <div class="tbl-wrap">
       <table>
         <thead><tr><th style="width:40px;">STEP</th><th style="width:170px;">見出し</th><th>内容</th></tr></thead>
