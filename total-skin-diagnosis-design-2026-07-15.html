@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>総合肌タイプ診断（コスメ④横断診断） 設計書 2026-07-15</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f5f5f7; color: #1d1d1f; font-size: 14px; line-height: 1.7; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 36px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
+  h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #444; }
+  .card { background: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #4a6a5a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:hover td { background: #fafafa; }
+  .highlight { background: #fffde7; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .note { background: #e8f5e9; border-left: 3px solid #34a853; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .warn { background: #fff8e1; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-green  { background: #e6f4ea; color: #1e8e3e; }
+  .badge-blue   { background: #e8f0fe; color: #1967d2; }
+  .badge-yellow { background: #fff8e1; color: #e37400; }
+  .badge-red    { background: #fce8e6; color: #c5221f; }
+  .badge-teal   { background: #e0f2f1; color: #00796b; }
+  .funnel { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+  .funnel-step { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; }
+  .funnel-arrow { color: #aaa; font-size: 18px; }
+  .q-block { background: #fff; border-radius: 10px; padding: 16px 20px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.06); border-left: 4px solid #4a6a5a; }
+  .q-num { font-size: 11px; font-weight: 700; color: #888; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .q-text { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .choices { display: flex; gap: 8px; flex-wrap: wrap; }
+  .choice { background: #f5f5f7; border-radius: 6px; padding: 6px 14px; font-size: 13px; }
+  .choice.key { background: #e0f2f1; color: #00796b; font-weight: 600; }
+  .result-card-wrap { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .result-block { background: #fff; border-radius: 10px; padding: 16px 20px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .result-type { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .result-product { font-size: 12px; color: #555; margin-bottom: 8px; }
+  .pu-box { background: #f8f9ff; border: 1px solid #c5cae9; border-radius: 8px; padding: 14px 18px; margin-bottom: 12px; }
+  .pu-label { font-size: 11px; font-weight: 700; color: #5c6bc0; margin-bottom: 6px; letter-spacing: 0.05em; }
+  .pu-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .pu-copy { font-size: 13px; color: #333; margin-bottom: 8px; }
+  .pu-btn { display: inline-block; background: #4a6a5a; color: #fff; border-radius: 6px; padding: 4px 14px; font-size: 12px; margin-right: 6px; }
+  .sim-block { background: #fff; border-radius: 10px; padding: 16px 20px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .sim-persona { font-size: 12px; color: #888; margin-bottom: 8px; }
+  .sim-flow { font-size: 13px; color: #444; margin-bottom: 4px; }
+  ul { padding-left: 18px; }
+  li { margin-bottom: 4px; }
+  p { margin-bottom: 8px; }
+  .logic-row { display: flex; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+  .logic-row:last-child { border-bottom: none; }
+  .logic-cond { color: #555; flex: 1; }
+  .logic-arrow { color: #aaa; }
+  .logic-result { font-weight: 700; color: #00796b; }
+  .card-preview { background: #f8faf9; border: 1px solid #e0e0e0; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; font-size: 13px; }
+  .card-preview-num { font-size: 11px; font-weight: 700; color: #888; margin-bottom: 4px; }
+  .card-preview-text { color: #333; white-space: pre-line; }
+  .back-link { margin-top: 48px; padding-top: 20px; border-top: 1px solid #e0e0e0; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>総合肌タイプ診断 設計書</h1>
+  <div class="meta">2026-07-15 ｜ Carena（carenacosmetic.co.jp）× LINE診断 ｜ コスメ診断ロードマップ④・横断診断 ｜ ステータス: 初稿・対象記事URL確定待ち</div>
+
+  <!-- ファネル位置づけ -->
+  <h2>ファネル上の位置づけ</h2>
+  <div class="card">
+    <div class="funnel">
+      <div class="funnel-step">①②③に属さない記事<br><small style="color:#888;font-weight:400">ファンデ/BB比較・美容オイル・成分解説等</small></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">PU設置<br><small style="color:#888;font-weight:400">「あなたの肌チェック」</small></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">LINE友達追加</div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step" style="border-color:#34a853;background:#e8f5e9;color:#1e8e3e;">LINE内 肌チェック診断<br><small style="font-weight:400">←ここの設計</small></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">ステップ判定（3タイプ）</div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step">①クレンジング診断<br>②スキンケア診断<br>③化粧水診断 へ誘導</div>
+    </div>
+    <div class="note">①②③との構造的な違い：診断結果が「商材タイプ」ではなく「次に受けるべき専門診断」。CTA後はPRカルーセルを持たず、該当する専門診断のLINEフローへ直接接続する。商材名・価格は本診断では一切出さない。</div>
+    <div class="warn">対象記事の実URL一覧は未確定。<code>knowledge/genre-insights.md</code>記載の全コスメ111記事の天井から①②③のカバー分を差し引いた概算では、残り約58記事・月間クリック天井約3,967。Search ConsoleのUIから直接CSVエクスポート→未設置検知ツールへのcarenaプリセット追加が次の一手。</div>
+  </div>
+
+  <!-- ものさしづくり -->
+  <h2>1. ものさしづくり</h2>
+  <div class="card">
+    <h3>今のものさし（診断前）</h3>
+    <div class="card-preview">
+      <div class="card-preview-text">「この商品（ファンデ/オイル/成分）を変えれば、肌の状態はよくなるはず」
+  ↓
+「試したけど、あんまり変わらない…」
+  ↓
+「次は何を変えればいいんだろう」（→また単品を探して彷徨う）</div>
+    </div>
+    <div class="highlight">
+      リアルボイス（data/research/genres/cosme-skincare.mdより流用）:「自分の肌質が何なのか全くわかりません」「みなさんパーソナルカラーや骨格診断のようにプロの診断で調べてもらっているのでしょうか」「約1年間、毎月エステ通いやピーリング実施したが改善しない」
+    </div>
+
+    <h3>新しいものさし（診断が提供する視点の変換）</h3>
+    <div class="card-preview">
+      <div class="card-preview-text">「スキンケアは"落とす"→"ととのえる"→"うるおす"の3ステップの掛け算」
+  ↓
+「1つの化粧品だけ良いものに変えても、他のステップが崩れていたら意味がない」
+  ↓
+「まず自分が崩れているのは"どのステップ"かを知ることが先」</div>
+    </div>
+
+    <h3>ハンマー</h3>
+    <p>「化粧品選びの前に、"どのステップが崩れているか"を診断する」。単品の良し悪しではなく工程（ステップ）という新しい単位でユーザーに気づきを与え、該当ステップの専門診断（①②③）へ自然に橋渡しする。</p>
+  </div>
+
+  <!-- 誘導先の核心価値 -->
+  <h2>2. 誘導先（次に受けるべき専門診断）の核心価値</h2>
+  <div class="result-card-wrap">
+    <div class="result-block" style="border-top: 3px solid #f4a460;">
+      <div class="result-type">A：落とし方が整っていないタイプ</div>
+      <div class="result-product">→ ①クレンジング診断</div>
+      <div style="font-size:13px;">「汚れの上に何を重ねても意味がない。まず落とし方から見直す」</div>
+    </div>
+    <div class="result-block" style="border-top: 3px solid #64b5f6;">
+      <div class="result-type">B：肌の土台が安定していないタイプ</div>
+      <div class="result-product">→ ②スキンケア診断</div>
+      <div style="font-size:13px;">「季節や体調で変わる肌に、ケアの"やり方"自体が追いついていない」</div>
+    </div>
+    <div class="result-block" style="border-top: 3px solid #ce93d8;">
+      <div class="result-type">C：仕上げの化粧水が最適化されていないタイプ</div>
+      <div class="result-product">→ ③化粧水診断</div>
+      <div style="font-size:13px;">「土台は整ってきたのに、化粧水だけ"なんとなく"で選んでいる」</div>
+    </div>
+  </div>
+
+  <!-- 診断フロー -->
+  <h2>3. 診断フロー（全4問）</h2>
+
+  <div class="card" style="margin-bottom:14px;">
+    <div class="q-num">WELCOME</div>
+    <div class="q-text">あなたの肌チェック</div>
+    <div style="font-size:13px;color:#555;">その化粧品選び、崩れているステップを見逃してるかも。4問でわかる無料診断。匿名・無料</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">Q1 — 振り分け主軸①</div>
+    <div class="q-text">メイクを落とした直後、鏡で気になるのは？</div>
+    <div class="choices">
+      <div class="choice key">A: 毛穴の黒ずみ・ザラつき、メイクの落ち残り感</div>
+      <div class="choice key">B: 洗顔後すぐの突っ張りやテカリが、日によって違う</div>
+      <div class="choice key">C: 特に問題は感じない。乾燥・ハリ不足・くすみが気になる</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">「洗顔後30分の肌状態」を入口に使う、最も普遍的で答えやすい設問。3タイプへの主軸振り分け</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">Q2 — 振り分け主軸②</div>
+    <div class="q-text">スキンケアをしていて「あ、微妙」と感じる瞬間は？</div>
+    <div class="choices">
+      <div class="choice key">A: クレンジング・洗顔をしている時点で「ちゃんと落ちてる気がしない」</div>
+      <div class="choice key">B: 化粧水や乳液をつけても、肌の調子自体が安定しない日が多い</div>
+      <div class="choice key">C: 化粧水はちゃんと浸透してる感じはあるが、狙ってる悩みには効いてる気がしない</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">Q1と同軸を「行動の途中で感じる違和感」という別角度から確認。自己評価スケールではなく具体的な行動シーンで聞く</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">Q3 — 振り分け主軸③</div>
+    <div class="q-text">一番気になる肌悩みは？</div>
+    <div class="choices">
+      <div class="choice key">A: 毛穴づまり・くすみ・メイク残り</div>
+      <div class="choice key">B: 季節や体調で肌質が変わる、乾燥と皮脂が同時に起きる</div>
+      <div class="choice key">C: 乾燥・ハリ不足・シミくすみなど特定の悩みが解決しない</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">Q1・Q2の行動軸に「悩みの切実さ」を重ねてタイプ確定の精度を上げる。Card2のパーソナライズにも使用</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-num">Q4 — 環境補助軸</div>
+    <div class="q-text">普段の生活で、肌に影響してそうなものは？</div>
+    <div class="choices">
+      <div class="choice">A: メイクを毎日する・濃いめのメイクが多い</div>
+      <div class="choice">B: 季節の変わり目・ストレス・寝不足が多い</div>
+      <div class="choice">C: 紫外線・エアコンなど外的環境</div>
+      <div class="choice">D: 特に思い当たらない</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">振り分け軸ではなくCard2パーソナライズ専用（①②③診断と同じ設計思想）。回答負荷が低い</div>
+  </div>
+
+  <!-- 振り分けロジック -->
+  <h2>4. 振り分けロジック（Q1×Q2×Q3）</h2>
+  <div class="card">
+    <div class="logic-row">
+      <div class="logic-cond">Q1-A × Q2-A × Q3-A</div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-result">落とし方が整っていないタイプ / ①クレンジング診断</div>
+    </div>
+    <div class="logic-row">
+      <div class="logic-cond">Q1-B × Q2-B × Q3-B</div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-result">肌の土台が安定していないタイプ / ②スキンケア診断</div>
+    </div>
+    <div class="logic-row">
+      <div class="logic-cond">Q1-C × Q2-C × Q3-C</div>
+      <div class="logic-arrow">→</div>
+      <div class="logic-result">仕上げの化粧水が最適化されていないタイプ / ③化粧水診断</div>
+    </div>
+    <div class="highlight" style="margin-top:12px;">競合時の優先順位：Q1（最も客観的な行動事実）を主軸とする。Q2・Q3が割れた場合はQ1を優先。Q1が割れて判定できない稀なケースはQ3（悩みの切実度）を優先。</div>
+  </div>
+
+  <!-- 結果カード設計 -->
+  <h2>5. 結果カード設計（3タイプ × 4枚構成）</h2>
+  <div class="note">構成: Card1（タイプ発表）→ Card2（根本示唆・行動起点の因果）→ Card3（体験イメージ）→ Card4（未来＋CTA）。①②③との違い：Card4のCTAは商材PRカルーセルではなく該当する専門診断のLINEフローへ直接接続。商材名・価格は一切出さない。</div>
+
+  <h3 style="margin-top:20px;">タイプA：落とし方が整っていないタイプ（→①クレンジング診断へ）</h3>
+  <div class="grid2">
+    <div class="card-preview"><div class="card-preview-num">Card 1 | タイプ発表</div><div class="card-preview-text">あなたの肌チェック結果は…
+
+「落とし方」がまだ整っていないタイプです
+
+バッジ: メイク残りサイン ／ 毛穴つまりリスク ／ クレンジング要見直し</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 2 | 根本示唆</div><div class="card-preview-text">その化粧水、届く前に止まっているかもしれません。
+
+メイクや汚れが毛穴に残ったまま次のケアを重ねると、せっかくの化粧水や美容液も肌の表面までしか届きません。まず「落とす」工程を見直すことが、その先のケア全部の土台になります。
+
+（Q4-Aの場合）「メイクが濃いめだと、汚れも落としきれていない可能性が高くなります」</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 3 | 体験イメージ</div><div class="card-preview-text">すっきり落ちて、次のケアがちゃんと届く感覚。
+
+洗い上がりの肌に、何もつけていないのに指がすべる。
+
+これが、汚れがきちんと落ちている肌の手触り。</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 4 | 未来＋CTA</div><div class="card-preview-text">土台が整えば、その先のケア全部が変わる。
+
+「クレンジングを変えただけで、その後の化粧水の入り方が違う」
+
+まずは、あなたに合う落とし方を見つける。
+
+[ボタン] クレンジングタイプを診断する →</div></div>
+  </div>
+
+  <h3>タイプB：肌の土台が安定していないタイプ（→②スキンケア診断へ）</h3>
+  <div class="grid2">
+    <div class="card-preview"><div class="card-preview-num">Card 1 | タイプ発表</div><div class="card-preview-text">あなたの肌チェック結果は…
+
+肌の「土台」が安定していないタイプです
+
+バッジ: ゆらぎ肌サイン ／ ケア迷子リスク ／ スキンケア方法要見直し</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 2 | 根本示唆</div><div class="card-preview-text">同じケアを続けているのに、肌の調子が毎回違うのはそのせいかもしれません。
+
+季節や体調によって肌が必要としているものは変わります。同じ方法を機械的に続けていると、今の肌とズレたケアを毎日重ねることになります。まず「今の自分に合うケアの仕方」を知ることが先。
+
+（Q4-Bの場合）「ストレスや寝不足は、肌のコンディションを日によって大きく変えます」</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 3 | 体験イメージ</div><div class="card-preview-text">その日の肌に、ちゃんと合ったケアができている感覚。
+
+「今日は乾燥気味だから」「今日はテカりやすいから」
+
+肌に振り回されるのではなく、肌に合わせて選べるようになる。</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 4 | 未来＋CTA</div><div class="card-preview-text">安定したケアが、当たり前になる。
+
+「自分に合う方法がわかってから、肌の調子に振り回されなくなった」
+
+ケア迷子を、卒業する。
+
+[ボタン] スキンケア方法を診断する →</div></div>
+  </div>
+
+  <h3>タイプC：仕上げの化粧水が最適化されていないタイプ（→③化粧水診断へ）</h3>
+  <div class="grid2">
+    <div class="card-preview"><div class="card-preview-num">Card 1 | タイプ発表</div><div class="card-preview-text">あなたの肌チェック結果は…
+
+「仕上げの化粧水」がまだ最適化されていないタイプです
+
+バッジ: 土台は良好 ／ 化粧水ミスマッチ疑い ／ 化粧水要見直し</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 2 | 根本示唆</div><div class="card-preview-text">基本のケアはできているのに変化を感じないのは、化粧水の選び方が原因かもしれません。
+
+洗う・ととのえるができていても、仕上げの化粧水が今の肌に合っていなければ、狙った悩みには届きません。「なんとなく良さそう」ではなく、今の肌が欲しがっている機能で選ぶことが必要。
+
+（Q4-Cの場合）「紫外線やエアコンによる乾燥は、化粧水選びに直結します」</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 3 | 体験イメージ</div><div class="card-preview-text">つけた瞬間、狙った変化がちゃんと返ってくる感覚。
+
+なんとなく選んでいた化粧水が、「これが今の自分に必要なもの」に変わる。</div></div>
+    <div class="card-preview"><div class="card-preview-num">Card 4 | 未来＋CTA</div><div class="card-preview-text">狙った悩みに、ちゃんと届くケアへ。
+
+「化粧水を選び直してから、気になっていた悩みに変化が出てきた」
+
+最後のピースを、埋める。
+
+[ボタン] 化粧水タイプを診断する →</div></div>
+  </div>
+
+  <!-- PU文言 -->
+  <h2>6. PU文言</h2>
+
+  <div class="card" style="margin-bottom:8px;">
+    <div style="font-size:12px;font-weight:700;color:#888;margin-bottom:8px;">ブリッジテスト</div>
+    <table>
+      <tr><th>①診断体験</th><td>4問答えると、"落とす／ととのえる／うるおす"のどのステップが崩れているかが判定され、該当する専門診断（クレンジング/スキンケア/化粧水）へ案内される</td></tr>
+      <tr><th>②検索者の気持ち</th><td>「この商品を変えれば良くなるかと思って調べてるけど、本当にこれでいいのか自信がない。何を変えればいいのか分からない」</td></tr>
+      <tr><th>③翻訳</th><td>「その化粧品選び、崩れているステップを見逃してるかも。4問でわかる肌チェック」→ ①と③が同じ体験を指している ✅</td></tr>
+    </table>
+  </div>
+
+  <div class="pu-box">
+    <div class="pu-label">案A — 気づき型（主推薦）</div>
+    <div class="pu-title">あなたの肌チェック</div>
+    <div class="pu-copy">その化粧品選び、崩れているステップを見逃してるかも<br>/カンタン4問診断</div>
+    <span class="pu-btn">チェックする</span><span style="font-size:12px;color:#888;">/ いいえ</span>
+  </div>
+  <div class="pu-box">
+    <div class="pu-label">案B — 疲弊層向け・問いかけ型</div>
+    <div class="pu-title">あなたの肌チェック</div>
+    <div class="pu-copy">いろいろ試してるのに変わらないなら、見直す場所が違うのかも<br>/カンタン4問診断</div>
+    <span class="pu-btn">見てみる</span><span style="font-size:12px;color:#888;">/ いいえ</span>
+  </div>
+  <div class="pu-box">
+    <div class="pu-label">案C — 能動意欲型（CTR特化）</div>
+    <div class="pu-title">あなたの肌チェック</div>
+    <div class="pu-copy">自分に必要なケア、順番から知りたい！<br>/カンタン4問診断</div>
+    <span class="pu-btn">知りたい！</span><span style="font-size:12px;color:#888;">/ いいえ</span>
+  </div>
+
+  <h3>記事タイプ別文言使い分け</h3>
+  <div class="card">
+    <table>
+      <tr><th>記事の傾向</th><th>読者の状態</th><th>推奨案</th></tr>
+      <tr><td>ファンデ/BB比較記事（◯選）</td><td>商品比較で疲れている、まだ購入検討段階</td><td>案B</td></tr>
+      <tr><td>美容オイル記事</td><td>単品への興味段階</td><td>案A</td></tr>
+      <tr><td>成分解説記事</td><td>知識収集・能動的</td><td>案C</td></tr>
+    </table>
+    <div class="warn" style="margin-top:12px;">記事URL・実H1KWは未確認。設置時は必ず記事を実読してKWを確認する（URLパス名とH1KWは一致しないケースがある）。</div>
+  </div>
+
+  <!-- 通しシミュレーション -->
+  <h2>7. 通しシミュレーション</h2>
+
+  <div class="sim-block">
+    <div class="sim-persona">ペルソナ①：32歳女性 / 「BBクリーム 崩れない」で検索し比較記事を読了 / メイクのりが悪い日が多い（タイプA想定）</div>
+    <div class="sim-flow">案B PU → <span class="badge badge-green">◎</span>「いろいろ試してるのに変わらないなら、見直す場所が違うのかも」→ Q1(A)→Q2(A)→Q3(A)即答でコミット → 結果：落とし方が整っていないタイプ → Card2「化粧水も表面までしか届かない」で「だからいくら重ねても変わらなかったのか」腹落ち → Card4「クレンジングタイプを診断する」</div>
+    <div><span class="badge badge-yellow">△ 誘導先（クレンジング）が元記事（ファンデ）と全く違うカテゴリ。Card2の「土台」説明で接続しているが実装後の離脱率を要観察。</span></div>
+  </div>
+
+  <div class="sim-block">
+    <div class="sim-persona">ペルソナ②：27歳女性 / 「美容オイル 効果ない」で検索 / 季節の変わり目に肌の調子が安定しない（タイプB想定）</div>
+    <div class="sim-flow">案A PU → <span class="badge badge-green">◎</span>「オイルのせいじゃないのかも…」→ Q1(B)→Q2(B)→Q3(B)即答 → 結果：肌の土台が安定していないタイプ → Card2「同じ方法を機械的に続けている」で「そうそう、いつも同じことしてた」納得 → Card4「スキンケア方法を診断する」</div>
+    <div><span class="badge badge-green">問題なし。オイル記事はもともとスキンケア方法に近い文脈で誘導が最も自然。</span></div>
+  </div>
+
+  <div class="sim-block">
+    <div class="sim-persona">ペルソナ③：43歳女性 / 成分解説記事（ナイアシンアミド等）を読了 / 土台のケアはできている自覚があるがシミ・くすみだけ変化なし（タイプC想定）</div>
+    <div class="sim-flow">案C PU → <span class="badge badge-green">◎</span>「成分の勉強はしたけど、結局何を選べばいいかはわからないまま」→ Q1(C)→Q2(C)→Q3(C)、切実度高く強くコミット → 結果：仕上げの化粧水が最適化されていないタイプ → Card1「土台はできてるって言われて安心した」ポジティブな納得 → Card4「化粧水タイプを診断する」</div>
+    <div><span class="badge badge-green">問題なし。切実度の高い層に最も刺さり、成分解説→化粧水診断への誘導も自然。</span></div>
+  </div>
+
+  <!-- 期待効果 -->
+  <h2>8. 期待効果（フェルミ推定・レンジ試算）</h2>
+  <div class="card">
+    <div class="warn">対象記事の実URL一覧・実PVは未確定。以下は全体天井からの逆算による概算であり、対象記事一覧が確定次第、再計算が必須。</div>
+    <table style="margin-top:12px;">
+      <tr><th>指標</th><th>保守</th><th>標準</th><th>上振れ</th></tr>
+      <tr><td>月間クリック（逆算値）</td><td>3,967</td><td>3,967</td><td>3,967</td></tr>
+      <tr><td>PV換算（CL×1.2倍仮定）</td><td>4,760</td><td>4,760</td><td>4,760</td></tr>
+      <tr><td>PVFR</td><td>0.30%</td><td>0.50%</td><td>0.70%</td></tr>
+      <tr><td><strong>友だち追加数/月</strong></td><td><strong>約14人</strong></td><td><strong>約24人</strong></td><td><strong>約33人</strong></td></tr>
+    </table>
+    <div class="note" style="margin-top:12px;">逆算ロジック：全コスメ111記事の月間クリック天井合計（約20,239）− 既知3診断のカバー分（①6,476＋②4,933推計＋③3,639潜在＝小計16,272）＝ 残り（④対象・推定約58記事）約3,967。PVFRは①②③（0.70%前後）より保守的に置く：本診断はCTA後に商材ではなく「別の診断」へ誘導する二段階構造のため。</div>
+    <div class="note">友だち追加後は①②③いずれかの専門診断フローに乗るため、収益（アフィリ報酬）は最終的に①②③側のFCVR・単価に依存する。④単体でのCV単価は設定しない（あくまで①②③への送客ハブ）。</div>
+  </div>
+
+  <!-- 残タスク -->
+  <h2>残タスク</h2>
+  <div class="card">
+    <ul>
+      <li>[ ] <strong>対象記事の実URL一覧を確定させる（最優先）</strong>：カレーナのファンデ/BB/美容オイル/成分解説記事を洗い出す。Search ConsoleのUIから直接エクスポート→未設置検知ツールにcarenaプリセットを追加するのが望ましい</li>
+      <li>[ ] 確定した記事一覧でPVFR・期待効果を再計算</li>
+      <li>[ ] タイプA（クレンジングへ誘導）の文脈接続について、実装後の離脱率をモニタリングし、必要ならCard2の接続ロジックを調整</li>
+      <li>[ ] Card4のCTAボタンから各専門診断への遷移実装（LINE Console側のフロー設計）</li>
+      <li>[ ] デザイン依頼書の作成（①②③と同フォーマット）</li>
+      <li>[ ] PU案A/B/Cを記事タイプ（ファンデ比較/オイル/成分解説）で出し分けるロジックの確定</li>
+      <li>[ ] 設置記事の優先順位決め（クリック数上位から）</li>
+    </ul>
+  </div>
+
+  <div class="back-link"><a href="index.html">← トップへ</a></div>
+
+</div>
+</body>
+</html>
