@@ -109,13 +109,30 @@
   .section-divider { text-align: center; font-size: 10px; color: #aaa; letter-spacing: .1em; font-weight: 700; margin: 10px 0; }
 
   .back-link { margin-top: 48px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 13px; }
+
+  /* ─── 判定ロジック（決定木） ─── */
+  .logic-wrap { max-width: 760px; margin: 16px auto; background: #fff; border: 2px solid #4a6a5a; border-radius: 14px; padding: 18px 22px; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+  .logic-title { font-size: 12px; font-weight: 800; color: #4a6a5a; text-align: center; letter-spacing: .04em; margin-bottom: 12px; }
+  .vote-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
+  .vote-box { background: #f5f5f7; border: 1.5px solid #ccc; border-radius: 8px; padding: 8px 12px; font-size: 11px; text-align: center; min-width: 140px; }
+  .vote-box .vq { font-size: 9.5px; font-weight: 700; color: #888; display: block; margin-bottom: 2px; }
+  .vote-box .vresult { font-size: 12px; font-weight: 700; }
+  .logic-arr-down { text-align: center; color: #4a6a5a; font-size: 18px; margin: 4px 0; }
+  .decision { background: #fffde7; border: 1.5px dashed #f9ab00; border-radius: 8px; padding: 8px 14px; font-size: 11px; text-align: center; color: #7a5c00; margin: 6px auto; max-width: 480px; }
+  .decision-branch { display: flex; gap: 10px; justify-content: center; margin: 6px 0; flex-wrap: wrap; }
+  .branch-item { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .branch-label { font-size: 9.5px; color: #999; font-weight: 700; }
+  .branch-result { background: #e8f5e9; border: 1px solid #81c784; border-radius: 6px; padding: 5px 10px; font-size: 10.5px; color: #2e7d32; font-weight: 700; }
+  .example-table { width: 100%; margin-top: 10px; font-size: 10.5px; border-collapse: collapse; }
+  .example-table th { background: #eef1ee; color: #555; padding: 5px 8px; font-weight: 700; }
+  .example-table td { padding: 5px 8px; border-bottom: 1px solid #eee; text-align: center; }
 </style>
 </head>
 <body>
 <div class="container">
 
   <h1>総合肌タイプ診断 v2 フロー図</h1>
-  <div class="meta">2026-07-21（同日改訂：設問7問化） ｜ コスメ診断ロードマップ④・横断診断 ｜ 全7問 ｜ Q1年代→Q2〜Q4で4タイプ分岐（AND判定） → 結果カルーセル → おすすめ3点セットカル ｜ ①②③の既存商材をそのまま流用</div>
+  <div class="meta">2026-07-21（同日2回目改訂：判定ロジックの決定木を可視化） ｜ コスメ診断ロードマップ④・横断診断 ｜ 全7問 ｜ Q1年代→Q2〜Q4で4タイプ分岐（AND判定） → 結果カルーセル → おすすめ3点セットカル ｜ ①②③の既存商材をそのまま流用</div>
 
   <div class="revision-note">
     <b>①②③との構造の違い：</b> ①クレンジング診断・②スキンケア診断・③化粧水診断は「タイプ判定→結果カル→セレクトカル/PRカルで商材登場」という各カテゴリ単独の設計。本診断は<b>1回の診断結果でクレンジング・スキンケア・化粧水の3カテゴリ分の商品を横断的に1つのカルーセルで提示する</b>点が新しい。結果カルとおすすめ3点セットカルの役割分離（商材名は結果カルで出さない）は①②③と同じ原則を踏襲。
@@ -207,9 +224,43 @@
   </div>
   <div class="bridge-box">競合分析で判明した「敏感肌は他社が軽視しがちな軸」への対策として、季節変化という敏感肌が最も出やすい切り口を専用に設けた</div>
 
-  <div class="multi-box">
-    <span class="multi-tag">振り分けロジック</span>
-    Q2・Q3・Q4の3問で各タイプに投票し、多数決（2問以上一致）で確定。3問とも割れた場合はQ2（最も普遍的で答えやすい軸）を優先。
+  <!-- ── 判定ロジック（決定木） ── -->
+  <div class="arr">↓</div>
+  <div class="logic-wrap">
+    <div class="logic-title">◆ 判定ロジック（ここでタイプが内部的に確定。画面上はQ7終了後に表示）</div>
+
+    <div class="vote-row">
+      <div class="vote-box"><span class="vq">Q2の回答</span><span class="vresult">タイプ①へ投票</span></div>
+      <div class="vote-box"><span class="vq">Q3の回答</span><span class="vresult">タイプ②へ投票</span></div>
+      <div class="vote-box"><span class="vq">Q4の回答</span><span class="vresult">タイプ③へ投票</span></div>
+    </div>
+    <div class="logic-arr-down">↓</div>
+
+    <div class="decision">分岐① 3問とも同じタイプに投票した？</div>
+    <div class="decision-branch">
+      <div class="branch-item"><span class="branch-label">YES</span><div class="branch-result">そのタイプで確定</div></div>
+      <div class="branch-item"><span class="branch-label">NO ↓</span></div>
+    </div>
+
+    <div class="decision">分岐② 2問だけ同じタイプに投票した？</div>
+    <div class="decision-branch">
+      <div class="branch-item"><span class="branch-label">YES</span><div class="branch-result">多数派（2問一致）のタイプで確定</div></div>
+      <div class="branch-item"><span class="branch-label">NO ↓</span></div>
+    </div>
+
+    <div class="decision">分岐③ 3問とも異なるタイプに投票した（完全に割れた）</div>
+    <div class="decision-branch">
+      <div class="branch-item"><span class="branch-label">→</span><div class="branch-result">Q2の回答が示すタイプで確定（タイブレーク）</div></div>
+    </div>
+
+    <table class="example-table">
+      <thead><tr><th>Q2</th><th>Q3</th><th>Q4</th><th>判定結果</th></tr></thead>
+      <tbody>
+        <tr><td>脂性肌</td><td>脂性肌</td><td>脂性肌</td><td>脂性肌（分岐① 3問一致）</td></tr>
+        <tr><td>混合肌</td><td>混合肌</td><td>乾燥肌</td><td>混合肌（分岐② 2問一致）</td></tr>
+        <tr><td>乾燥肌</td><td>脂性肌</td><td>敏感肌</td><td>乾燥肌（分岐③ Q2優先タイブレーク）</td></tr>
+      </tbody>
+    </table>
   </div>
 
   <!-- ── Q5（根拠づけ） ── -->
@@ -254,8 +305,9 @@
   </div>
   <div class="bridge-box">悩みの切実さを重ねてCard2・Card3の訴求を強める最後の根拠づけ設問</div>
 
-  <!-- ── 4分岐矢印 ── -->
+  <!-- ── 画面上の分岐（判定ロジックで確定済みのタイプに応じて表示を切替） ── -->
   <div class="arr">↓</div>
+  <div class="bridge-box" style="max-width:640px;">Q5〜Q7は全ユーザー共通で表示（タイプに関わらず同じ質問）。回答内容はここでは使わず、判定ロジックで既に確定しているタイプに応じて、ここから先の画面表示だけが分岐する</div>
   <div class="split-header">
     <div class="split-arr" style="color:#f4a460;">↓</div>
     <div class="split-arr" style="color:#64b5f6;">↓</div>
@@ -266,25 +318,24 @@
   <!-- ── タイプ見出し ── -->
   <div class="type-cols" style="margin-top:2px;">
     <div class="type-head type-a-head">
-      <div class="cond">突っ張る・粉ふき</div>
+      <div class="cond">判定ロジックで確定</div>
       <div class="name">乾燥肌</div>
     </div>
     <div class="type-head type-b-head">
-      <div class="cond">顔全体テカる</div>
+      <div class="cond">判定ロジックで確定</div>
       <div class="name">脂性肌</div>
     </div>
     <div class="type-head type-c-head">
-      <div class="cond">部分によって違う</div>
+      <div class="cond">判定ロジックで確定</div>
       <div class="name">混合肌</div>
     </div>
     <div class="type-head type-d-head">
-      <div class="cond">赤み・ピリピリ</div>
+      <div class="cond">判定ロジックで確定</div>
       <div class="name">敏感肌</div>
     </div>
   </div>
 
-  <!-- ── Q1の回答で直接、結果へ ── -->
-  <div class="section-divider" style="margin-top:12px;">── Q2×Q3×Q4のAND判定（多数決）で結果が確定（Q1・Q5〜Q7は根拠づけ・パーソナライズ専用） ──</div>
+  <div class="section-divider" style="margin-top:12px;">── ここから先の画面表示のみタイプ別に分岐（判定自体は上記ロジックで完了済み） ──</div>
   <div class="type-cols">
 
     <!-- 乾燥肌 -->
