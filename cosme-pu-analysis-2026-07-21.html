@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>コスメPU改修 数値分析 — 2026-07-21</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 960px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .back-link { display: inline-block; font-size: 12px; color: #64748b; text-decoration: none; margin-bottom: 16px; font-weight: 600; }
+    .back-link:hover { color: #3b82f6; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-gray { background: #94a3b8; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; white-space: nowrap; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .table-wrap { overflow-x: auto; margin-bottom: 12px; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .slug { font-family: ui-monospace, Consolas, monospace; font-size: 12px; color: #6d5a8a; font-weight: 600; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #15803d; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+    .badge-purple { background: #f3e8ff; color: #6d28d9; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #22c55e; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green { background: #dcfce7; color: #166534; border-left: 4px solid #16a34a; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+    h3 { font-size: 14px; font-weight: 700; color: #334155; margin-bottom: 10px; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 4px; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a class="back-link" href="index.html">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">コスメ / seo_cosme 分析 — 2026-07-21</div>
+    <h1>コスメPU改修 数値分析</h1>
+    <p class="desc">クレンジング診断・スキンケア診断の記事単位・PU単位ドリルダウン。PU取捨選択（消す/残す/保留）の判断材料と、実施済み変更の効果検証状況。</p>
+  </div>
+
+  <!-- サマリー -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">S</div>
+      <div>
+        <div class="section-title">サマリー</div>
+        <div class="section-sub">両診断累計・稼働PU数・取捨選択の進捗</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">クレンジング診断</div>
+          <div class="kpi-value">12人</div>
+          <div class="kpi-sub">累計友だち（7/1〜7/16集計時点）</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">スキンケア診断</div>
+          <div class="kpi-value">8人</div>
+          <div class="kpi-sub">累計友だち（7/9〜7/16集計時点）</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">停止処理済みPU</div>
+          <div class="kpi-value">4本</div>
+          <div class="kpi-sub">実効性は要再確認</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">要対応PU（★）</div>
+          <div class="kpi-value">7本</div>
+          <div class="kpi-sub">ドリルダウン or 新文言検討対象</div>
+        </div>
+      </div>
+
+      <div class="verdict verdict-yellow">両診断ともCTRは基準クリア（13%台）だがPVFR・追加率は基準を大きく下回る。PU文言の訴求力は機能しており、ボトルネックは「クリック後」＝LP・友達追加画面側の比重が大きい。</div>
+      <div class="verdict verdict-red">2026-07-17付けで4PUを台帳上「停止」処理したが、7/20時点のデータでは表示・クリックが継続しており実効性が未確認。GTM側で再更新済み、次回データ反映後に再チェックが必要。</div>
+    </div>
+  </div>
+
+  <!-- 1. 全体ファネル -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">1</div>
+      <div>
+        <div class="section-title">全体ファネル数値</div>
+        <div class="section-sub">診断単位・期間別</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>診断</th><th>期間</th><th>LP imp</th><th>PU imp(表示率)</th><th>Click(CTR)</th><th>友だち</th><th>追加率</th><th>PVFR</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>クレンジング</td><td>累計(7/1-7/16)</td><td>5,159</td><td>1,652(32.0%)</td><td>245<span class="badge badge-green">14.8%</span></td><td>12</td><td class="down">4.9%</td><td class="down">0.23%</td>
+          </tr>
+          <tr>
+            <td>クレンジング</td><td>直近1週間</td><td>2,241</td><td>721(32.2%)</td><td>116<span class="badge badge-green">16.1%</span></td><td>6</td><td class="down">5.2%</td><td class="down">0.27%</td>
+          </tr>
+          <tr>
+            <td>スキンケア</td><td>累計(7/9-7/16)</td><td>2,728</td><td>1,055(38.7%)</td><td>137<span class="badge badge-green">13.0%</span></td><td>8</td><td class="down">5.8%</td><td class="down">0.29%</td>
+          </tr>
+          <tr>
+            <td>スキンケア</td><td>直近1週間</td><td>2,498</td><td>972(38.9%)</td><td>127<span class="badge badge-green">13.1%</span></td><td>8</td><td class="down">6.3%</td><td class="down">0.32%</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="note">基準: PVFR≥0.80% / CTR≥13% / 追加率≥11%。CTRのみ両診断とも基準クリア、それ以外は基準割れ。</p>
+    </div>
+  </div>
+
+  <!-- 2. PU取捨選択：実施済み4本 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">2</div>
+      <div>
+        <div class="section-title">停止処理済み4PU — 効果検証は保留中</div>
+        <div class="section-sub">2026-07-17付けで台帳ステータスを「停止」に変更</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>PU</th><th>記事</th><th>停止前指標（累計）</th><th>判定根拠</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>自信クレ</td><td class="slug">cleansing-fifties</td>
+            <td>CTR11.1% / 友0 / PVFR0%</td>
+            <td>兄弟2PU（PVFR0.99%/0.53%）は友だち獲得、自分だけ0人</td>
+          </tr>
+          <tr>
+            <td>肌に合うクレ</td><td class="slug">cleansing-acne</td>
+            <td>CTR7.8% / 友0 / PVFR0%</td>
+            <td>兄弟PU（ぴったりのクレ、PVFR1.00%）が獲得する中、CTRも記事内最低</td>
+          </tr>
+          <tr>
+            <td>肌悩みスキンケア</td><td class="slug">skincare-shisei-oily</td>
+            <td>CTR11.9% / 友0 / PVFR0%</td>
+            <td>記事最大母数(imp211)。兄弟2PU（PVFR0.74%/0.37%）は獲得、自分は最下位</td>
+          </tr>
+          <tr>
+            <td>肌悩みスキンケア</td><td class="slug">skincare-innerdry</td>
+            <td>CTR4.0% / 友0 / PVFR0%</td>
+            <td>兄弟PUの1/4以下のCTR（4.0% vs 15〜17%）</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="insight insight-red">
+        <strong>⚠️ 停止後（7/17〜7/20）のデータでも4PUとも表示・クリックが継続。2本（cleansing-acne肌に合うクレ／skincare-shisei-oily肌悩みスキンケア）は日次でむしろ増加傾向。</strong>
+        Noaが実機でskincare-shisei-oily記事を確認したところPU非表示を確認済みのため、データ側の反映ラグ（7/20夜〜7/21頃に停止が有効化された可能性）が濃厚。GTM側を再更新済み、7/22以降のデータで再チェック予定。
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 新規カット候補 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">3</div>
+      <div>
+        <div class="section-title">サンプル増加で新たに判断可能になったPU</div>
+        <div class="section-sub">7/21再分析、サンプル閾値（PU imp≥50 / Click≥10）到達分</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>PU</th><th>記事</th><th>指標</th><th>判定</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>自信クレ</td><td class="slug">cleansing-acne</td>
+            <td>imp73/click11・CTR15.1%✅・友0・PVFR0%</td>
+            <td><span class="badge badge-red">消す候補に格上げ</span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="insight insight-yellow">
+        CTRは基準クリアで健全なのに友だち0人。同記事の兄弟PU「ぴったりのクレ」はPVFR0.8%・友2人と実際に転換しており、サンプルが十分になった今回初めて「本物の劣後」と判断できる状態になった。
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. ★7本の推奨アクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">4</div>
+      <div>
+        <div class="section-title">★マーク7PUの推奨アクション</div>
+        <div class="section-sub">「ドリルダウン分析して判断」または「新規訴求文言を検討」の対象としてNoaが事前フラグ済み</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>PU</th><th>記事</th><th>主要指標（累計）</th><th>推奨アクション</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>肌悩みスキンケア</td><td class="slug">skincare-hikishime</td>
+            <td>imp142/click20・CTR14.1%（兄弟20.0%より明確に低い）・友0</td>
+            <td><span class="badge badge-purple">新しい訴求文言を検討</span></td>
+          </tr>
+          <tr>
+            <td>自信クレ</td><td class="slug">cleansing-shihan</td>
+            <td>imp130/click16・CTR12.3%（兄弟と大差なし）・友0</td>
+            <td><span class="badge badge-yellow">記事側の構造問題を疑う</span></td>
+          </tr>
+          <tr>
+            <td>肌悩みスキンケア</td><td class="slug">skincare-shishunki</td>
+            <td>imp63/click10・CTR15.9%✅・友0</td>
+            <td><span class="badge badge-yellow">記事側の構造問題を疑う</span></td>
+          </tr>
+          <tr>
+            <td>自信クレ</td><td class="slug">cleansing-substitute</td>
+            <td>imp60/click6・CTR10.0%・友0</td>
+            <td><span class="badge badge-gray">データ様子見</span></td>
+          </tr>
+          <tr>
+            <td>自信クレ</td><td class="slug">cleansing-milk</td>
+            <td>imp32/click2・CTR6.3%・友0</td>
+            <td><span class="badge badge-gray">データ様子見</span></td>
+          </tr>
+          <tr>
+            <td>自信クレ</td><td class="slug">cleansing-forties</td>
+            <td>imp58/click10・CTR17.2%✅・友0</td>
+            <td><span class="badge badge-gray">データ様子見</span></td>
+          </tr>
+          <tr>
+            <td>肌悩みスキンケア</td><td class="slug">skincare-jitan</td>
+            <td>imp5/click0・友0</td>
+            <td><span class="badge badge-gray">データ様子見</span></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="insight insight-blue">
+        「記事側の構造問題を疑う」は、CTRが兄弟PUと大差ない、または基準超えなのに友だちが出ない＝CTR高×FR低型。コピーではなくLP・友達追加画面側の課題として別途扱う。「新しい訴求文言を検討」は、同記事内で兄弟PUと比べてCTR自体が明確に低いケース＝コピー起因の疑いが濃い。
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 判断保留リスト -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-gray">5</div>
+      <div>
+        <div class="section-title">まだ判断保留のPU</div>
+        <div class="section-sub">サンプル不足、または記事全体が均等に弱く個別PUの優劣と言えないもの</div>
+      </div>
+    </div>
+    <div class="body">
+      <p><strong>サンプル不足（imp&lt;50 または click&lt;10）:</strong> cleansing-keana両PU／cleansing-matsueku両PU／cleansing-milk両PU／skincare-combination両PU／skincare-jitan両PU／skincare-yuragihada両PU／skincare-innerdry「肌に合う」「ぴったりの」</p>
+      <p><strong>記事全体が構造的に弱い（PU間引きでは解決しない）:</strong> cleansing-shihan全3PU／cleansing-nuretate両PU（ぴったりのクレがやや優勢の傾向は2回連続で継続、差は小さい）</p>
+      <p><strong>要注意・消してはいけないパターン（CTR高×FR低）:</strong> cleansing-nomakeup両PU（CTR30〜34%と非常に高いのに友だち0人。PU文言は強いが遷移先側の問題。ここを消すと機能してる訴求を失う）</p>
+    </div>
+  </div>
+
+  <!-- 6. 次のアクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">6</div>
+      <div>
+        <div class="section-title">次のアクション</div>
+      </div>
+    </div>
+    <div class="body">
+      <p>1. GTM再更新後、7/22以降のデータで停止4PUの表示・クリックが実際にゼロになっているか再確認</p>
+      <p>2. 停止が確定したら、空いた枠（cleansing-fifties/acne、skincare-shisei-oily/innerdry）の新規PU文言を検討</p>
+      <p>3. cleansing-acne「自信クレ」の停止判断をNoaが最終確定</p>
+      <p>4. skincare-hikishime「肌悩みスキンケア」の新規訴求文言を検討</p>
+      <p>5. cleansing-shihan・skincare-shishunkiの記事側構造問題（LP/友達追加画面）を別途調査</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
