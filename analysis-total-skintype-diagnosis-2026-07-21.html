@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>総合肌タイプ診断 ユーザーダイブ 2026-07-21</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f5f5f7; color: #1d1d1f; font-size: 14px; line-height: 1.7; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 20px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
+  h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #444; }
+  p { margin-bottom: 10px; }
+  .card { background: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #4a4a6a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:hover td { background: #fafafa; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin: 2px; }
+  .tag-bb      { background: #e8f0fe; color: #1967d2; }
+  .tag-oil     { background: #fce8e6; color: #c5221f; }
+  .tag-ingr    { background: #e6f4ea; color: #1e8e3e; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-fact  { background: #e6f4ea; color: #1e8e3e; }
+  .badge-interp { background: #fff8e1; color: #e37400; }
+  .position-note { background: #eef1ff; border-left: 3px solid #4a4a6a; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 24px; font-size: 13px; color: #333; }
+  .highlight { background: #fffde7; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; }
+  .pending { background: #fce8e6; border-left: 3px solid #ea4335; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; }
+  .voice { background: #f7f7fb; border-left: 3px solid #8a8ab0; padding: 10px 16px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; font-style: italic; color: #444; }
+  .voice .src { display: block; margin-top: 4px; font-style: normal; font-size: 11px; color: #999; }
+  .section-note { font-size: 12px; color: #888; margin-top: 6px; }
+  .stat-box { text-align: center; padding: 16px; }
+  .stat-num { font-size: 20px; font-weight: 700; color: #4a4a6a; }
+  .stat-label { font-size: 11px; color: #888; margin-top: 2px; }
+  .arrow { color: #888; margin: 0 8px; }
+  .ruler { display: flex; align-items: center; gap: 4px; font-size: 13px; flex-wrap: wrap; margin: 10px 0; }
+  .ruler-step { background: #fff; border: 1px solid #ddd; padding: 6px 12px; border-radius: 6px; }
+  .empathy-row { display: flex; gap: 8px; margin-bottom: 6px; font-size: 13px; align-items: flex-start; }
+  .empathy-row b { min-width: 100px; flex-shrink: 0; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  .back-link { display: inline-block; margin-top: 8px; font-size: 12px; color: #4a4a6a; text-decoration: none; }
+  .back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>総合肌タイプ診断（コスメ④横断診断） ユーザーダイブ</h1>
+  <div class="meta">2026-07-21 作成 ｜ 担当: Noa ｜ ステータス: 設問設計インプット確定</div>
+
+  <div class="position-note">
+    <strong>このdocsの位置づけ：</strong> 既存の<code>cosme-skincare.md</code>（②スキンケア方法診断向け）とは対象読者が異なるため、④横断診断の実際の設置対象（ファンデ/BB比較記事・美容オイル記事・成分解説記事の読者）に絞って追加リサーチ。保存先: <code>data/research/genres/cosme-total-skintype.md</code>。設計書は<a href="total-skin-diagnosis-design-v2-2026-07-17.html">「総合肌タイプ診断 v2 設計書」</a>、競合分析は<a href="competitor-analysis-total-skin-diagnosis-2026-07-21.html">「競合4社分析」</a>参照。
+  </div>
+
+  <!-- ① 対象読者3グループ -->
+  <h2>① 対象読者3グループ</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th></th><th><span class="tag tag-bb">ファンデ/BB比較記事読者</span></th><th><span class="tag tag-oil">美容オイル記事読者</span></th><th><span class="tag tag-ingr">成分解説記事読者</span></th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>検索例</strong></td>
+          <td>「BBクリーム 崩れない」「ファンデーション 選び方」</td>
+          <td>「美容オイル 効果ない」「美容オイル 肌に合わない」</td>
+          <td>「ナイアシンアミド 効果ない」</td>
+        </tr>
+        <tr>
+          <td><strong>ジャーニー段階</strong></td>
+          <td>経験者〜何度も失敗（複数商品を試し済み）</td>
+          <td>初心者〜経験者（単品への興味が入口）</td>
+          <td>経験者（能動的に知識収集、成分名を覚えている）</td>
+        </tr>
+        <tr>
+          <td><strong>リアルボイスの濃さ</strong></td>
+          <td><span class="badge badge-fact">濃い（一次情報多数）</span></td>
+          <td><span class="badge badge-interp">やや薄い（二次情報中心）</span></td>
+          <td><span class="badge badge-fact">中程度</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ② 核心の問い：単品への関心は診断への関心につながるか -->
+  <h2>② 核心の問い：単品への関心は、肌タイプ診断への関心につながるか</h2>
+  <div class="card">
+    <div class="highlight">
+      <strong>結論：つながる。ただし単品記事を読んでいるその瞬間はまだ関心が薄く、失敗体験を重ねてから気づくパターンが多い。</strong>
+    </div>
+    <p class="section-note">正直な注記：美容オイルの情報源はほぼ二次情報（マーケ記事）で、生の声はファンデ/BBほど濃くは取れていない。過大評価しないこと。</p>
+  </div>
+
+  <!-- ③ リアルボイス -->
+  <h2>③ リアルボイス（引用付き）</h2>
+
+  <div class="card">
+    <h3>単品選びの試行錯誤系</h3>
+    <div class="voice">
+      「ただBBクリームを塗っただけ...時間がたつと、ムラになってきて、すごく汚くなります。粉っぽくなってくる」
+      <span class="src">Yahoo!知恵袋 q14110206499 — 乾燥肌が原因と思われるBBクリーム粉ふきの訴え</span>
+    </div>
+    <div class="voice">
+      「レビューの星が高くても、乾燥肌の自分には合わなかった。レビュアーが脂性肌だった」
+      <span class="src">note.com「BBクリームとファンデーションの違い」記事内の実体験</span>
+    </div>
+    <div class="voice">
+      「30種類以上試してやっと見つけた」
+      <span class="src">note.com — メンズBBクリーム選びの記事内の実体験</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>肌質不明の自覚系</h3>
+    <div class="voice">
+      「自分の肌質(脂性肌、乾燥肌等)を調べるには何をすればいいですか？みなさんパーソナルカラーや骨格診断のようにプロの診断で調べてもらっているのでしょうか」
+      <span class="src">Yahoo!知恵袋 q12291249982 — cosme-skincare.mdにも同一引用あり。ファンデ関連の検索でも独立して再出現することを確認</span>
+    </div>
+    <div class="voice">
+      「肌が薄いためか、艶やハリがありません。ファンデとパウダーでツヤ肌にしたいのですが、どうしてもファンデが馴染みません。乾燥と脂性の混合肌で」
+      <span class="src">Yahoo!知恵袋 q14308974869 — ファンデの悩みを語る中でユーザー自身が「混合肌」と自己診断している実例</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>単品への不信・原因追及系</h3>
+    <div class="voice">
+      「美容オイルが合わない人いますか？評判の良いオイルを使ったが...」
+      <span class="src">Yahoo!知恵袋 q10186128910</span>
+    </div>
+    <div class="voice">
+      オレイン酸含有量の高いオイルがニキビの原因になりうる、ホホバオイルは合うがアルガンオイルは合わない等、同じ「オイル」でも個人の肌質適合性で結果が真逆になるという体験談
+      <span class="src">Ameblo複数記事の要約（rik01194 / nanae-aroma 等）</span>
+    </div>
+    <div class="voice">
+      ナイアシンアミド使用2日でニキビ悪化
+      <span class="src">Yahoo!知恵袋 q14258350934 — 成分と肌質のミスマッチの実例</span>
+    </div>
+  </div>
+
+  <!-- ④ エンパシーマップ -->
+  <h2>④ エンパシーマップ</h2>
+  <div class="card">
+    <div class="empathy-row"><b>Think & Feel</b><span><span class="badge badge-fact">FACT</span> 「レビュアーと自分の肌質が違ったから合わなかったのでは」という気づき（note.com実体験）</span></div>
+    <div class="empathy-row"><b></b><span><span class="badge badge-interp">INTERPRETATION</span> 単品への興味が強いうちは肌質の話への関心は薄いが、失敗を繰り返すと関心が芽生える → 時系列データなし、要検証</span></div>
+    <div class="empathy-row"><b>Hear</b><span><span class="badge badge-fact">FACT</span> 「肌質は乾燥肌/脂性肌/混合肌等に分類できる」という情報は既に浸透している（自らその名称を使って質問している）</span></div>
+    <div class="empathy-row"><b></b><span><span class="badge badge-fact">FACT</span> 「オイルは脂性肌には不要」という俗説が広く流布しているが実際は逆、という専門家発信もある（二次情報）</span></div>
+    <div class="empathy-row"><b>See</b><span><span class="badge badge-interp">INTERPRETATION</span> 比較記事・ランキング記事を読み比べ、成分名でさらに検索する行動が推測される（直接観察はできていない）</span></div>
+    <div class="empathy-row"><b>Say & Do</b><span><span class="badge badge-fact">FACT</span> 星評価・ランキングだけを頼りに単品を選んで失敗する／何十種類も試してからたどり着く／自分の肌質を他人に聞く</span></div>
+    <div class="empathy-row"><b>Pain</b><span><span class="badge badge-fact">FACT</span> 単品を変えても自分の肌質に合ってるか分からないまま選んでいるため試行錯誤のコストが高い／同じ商品カテゴリでも肌質次第で結果が真逆になることを痛い目に遭って学ぶ</span></div>
+    <div class="empathy-row"><b>Gain</b><span><span class="badge badge-fact">FACT</span> 「プロの診断で肌質を調べてもらいたい」という明示的な願望（パーソナルカラー・骨格診断との比較で語られる）</span></div>
+  </div>
+
+  <!-- ⑤ 今のものさし → 新しいものさし -->
+  <h2>⑤ 今のものさし → 新しいものさし</h2>
+  <div class="card">
+    <div class="ruler">
+      <div class="ruler-step">単品（ファンデ/オイル/成分）を選ぶ</div><span class="arrow">→</span>
+      <div class="ruler-step">高評価・話題の商品を試す</div><span class="arrow">→</span>
+      <div class="ruler-step">合わない・効果を感じない</div><span class="arrow">→</span>
+      <div class="ruler-step">「レビュアーと肌質が違ったのかも」に気づく（ここまで来て初めて）</div>
+    </div>
+    <div class="highlight">
+      新しいものさし：「単品を選ぶ前に、まず自分の肌タイプを知っておけば、この試行錯誤は避けられた」
+    </div>
+  </div>
+
+  <!-- ⑥ ハマるシーン候補 -->
+  <h2>⑥ ハマるシーン候補（PU文言・設問設計の起点）</h2>
+  <div class="card">
+    <ul>
+      <li>BBクリーム/ファンデ比較記事を読みながら「星評価の高い商品を試したのに合わなかった」経験を思い出す瞬間 → 「レビュアーと自分の肌質が違ったのでは」という気づきへの橋渡しが効きやすい</li>
+      <li>美容オイル記事で「このオイル本当に効くのかな」と半信半疑になっている瞬間 → 肌質次第で同じオイルの評価が真逆になる、という話が刺さりやすい</li>
+      <li>成分解説記事で複数成分を比較検討している瞬間 → 「成分を知っても、自分の肌に合うかは別」という切り口が刺さりやすい</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>データの限界（正直な注記）</h3>
+    <div class="pending">
+      <ul>
+        <li>Ahrefs未使用（web_searchのみ）。検索ボリュームは未確認、鮮度に注意</li>
+        <li>美容オイルの情報源はほぼ二次情報（マーケ記事）で、生の声の濃さはファンデ/BBに劣る</li>
+        <li>「単品記事読了時点でまだ肌質への関心が薄い」は時系列データがなく仮説段階（要検証マーク済み）</li>
+      </ul>
+    </div>
+  </div>
+
+  <a class="back-link" href="total-skin-diagnosis-design-v2-2026-07-17.html">← 総合肌タイプ診断 v2 設計書に戻る</a>
+
+  <div style="margin-top:40px; font-size:11px; color:#bbb; text-align:center;">
+    generated: 2026-07-21 ｜ noa-docs
+  </div>
+
+</div>
+</body>
+</html>
