@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>結果カード図 | 総合肌タイプ診断</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; background: #f0f4f8; color: #333; }
+
+  /* ── ヘッダー ── */
+  .page-header { background: #fff; border-bottom: 1px solid #e0e0e0; padding: 16px 24px; position: sticky; top: 0; z-index: 100; }
+  .page-header h1 { font-size: 15px; font-weight: 700; color: #333; }
+  .page-header p { font-size: 11px; color: #888; margin-top: 2px; }
+
+  .revision-note { margin: 14px 24px 0; padding: 10px 14px; background: #eef1ff; border-left: 3px solid #4a4a6a; border-radius: 0 6px 6px 0; font-size: 11.5px; color: #333; line-height: 1.7; }
+
+  /* ── タイプタブ ── */
+  .type-tabs { display: flex; gap: 8px; padding: 16px 24px 0; overflow-x: auto; flex-wrap: wrap; }
+  .tab-btn { padding: 8px 20px; border-radius: 20px; border: 2px solid transparent; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; background: #fff; transition: all 0.2s; margin-bottom: 8px; }
+  .tab-btn.tab-a { border-color: #f4a460; color: #b45b1f; }
+  .tab-btn.tab-a.active { background: #d9822f; color: #fff; }
+  .tab-btn.tab-b { border-color: #64b5f6; color: #1a6a95; }
+  .tab-btn.tab-b.active { background: #3a94b8; color: #fff; }
+  .tab-btn.tab-c { border-color: #81c784; color: #2e7d32; }
+  .tab-btn.tab-c.active { background: #4c9950; color: #fff; }
+  .tab-btn.tab-d { border-color: #ce93d8; color: #7b3f8f; }
+  .tab-btn.tab-d.active { background: #9c5aa8; color: #fff; }
+
+  /* ── カード列 ── */
+  .cards-section { display: none; padding: 20px 24px 40px; }
+  .cards-section.active { display: block; }
+
+  .cards-row { display: grid; grid-auto-flow: column; grid-auto-columns: 280px; gap: 16px; overflow-x: auto; padding-bottom: 8px; }
+
+  /* ── 1枚のカード（LINEカルーセルイメージ） ── */
+  .line-card { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.10); display: flex; flex-direction: column; min-height: 380px; }
+
+  .card-header { padding: 18px 16px 14px; color: #fff; position: relative; }
+  .card-num { font-size: 10px; font-weight: 700; opacity: 0.85; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .card-title { font-size: 15px; font-weight: 800; line-height: 1.4; }
+
+  .card-body { padding: 14px 16px; font-size: 12.5px; line-height: 1.8; color: #444; flex: 1; }
+  .card-lead { font-weight: 700; color: #222; margin-bottom: 6px; font-size: 13px; }
+
+  .card-cta { display: block; text-align: center; padding: 12px 16px; font-size: 13px; font-weight: 700; color: #fff; border-radius: 0 0 16px 16px; cursor: default; letter-spacing: 0.5px; margin-top: auto; }
+
+  /* タイプ別カラー */
+  .type-a .card-header { background: linear-gradient(135deg, #f4a460, #d9822f); }
+  .type-a .card-cta    { background: #d9822f; }
+  .type-b .card-header { background: linear-gradient(135deg, #7ec8e0, #3a94b8); }
+  .type-b .card-cta    { background: #3a94b8; }
+  .type-c .card-header { background: linear-gradient(135deg, #a5d6a7, #4c9950); }
+  .type-c .card-cta    { background: #4c9950; }
+  .type-d .card-header { background: linear-gradient(135deg, #ce93d8, #9c5aa8); }
+  .type-d .card-cta    { background: #9c5aa8; }
+
+  .type-label { font-size: 13px; font-weight: 700; color: #666; margin-bottom: 16px; }
+  .type-label span { padding: 3px 12px; border-radius: 12px; font-size: 12px; color: #fff; margin-right: 8px; }
+  .type-a-label span { background: #d9822f; }
+  .type-b-label span { background: #3a94b8; }
+  .type-c-label span { background: #4c9950; }
+  .type-d-label span { background: #9c5aa8; }
+
+  .note-box { max-width: 900px; margin: 0 0 20px; padding: 10px 14px; background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px; font-size: 11.5px; color: #7a5c00; line-height: 1.7; }
+  .ec-note { max-width: 900px; margin: 0 0 20px; padding: 10px 14px; background: #e8f5e9; border: 1px solid #81c784; border-radius: 8px; font-size: 11.5px; color: #2e7d32; line-height: 1.7; }
+
+  .back-link { display: inline-block; margin: 20px 24px 0; font-size: 12px; color: #888; text-decoration: none; }
+  .back-link:hover { color: #555; }
+
+  @media (max-width: 700px) {
+    .cards-row { grid-auto-columns: 240px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>総合肌タイプ診断 — 結果カード図（タイプ発表4枚・商材名は出さない・4タイプ）</h1>
+  <p>Card1（タイプ発表＋<b>チェックリスト4項目</b>）→ Card2（根本示唆＋<b>矢印図式で悪循環を提示</b>）→ Card3（<b>クレンジング/スキンケア/化粧水3ステップのアプローチ提示</b>）→ Card4（未来の肌状態＋<b>メリット列挙3項目</b>＋CTA）。②スキンケア方法診断・③化粧水診断の構造パターンをそのまま移植し、全タイプ4枚固定。<b>商材名・価格はここでは一切出さない。</b>CTA「あなたに合うケアを見る→」をタップした先の<a href="cards-total-skin-diagnosis-pr-carousel-2026-07-21.html">おすすめ3点セットカル</a>で初めて商材が並列登場する。タブでタイプ切り替え。</p>
+</div>
+
+<div class="revision-note">
+  <b>設計書との対応：</b> 診断-総合肌タイプ診断-v2-2026-07-17.md「4. 結果カード設計」の全文をそのままカード化。①②③のどれにも属さない記事（ファンデ/BB比較・美容オイル・成分解説等）の読者向け横断診断で、結果は「別の診断への誘導」ではなくこの場でクレンジング・スキンケア・化粧水3ステップ分の商品を直接レコメンドする一段階構造のため、Card3は成分リストではなく「3ステップのアプローチ」形式にしている（①②③のCard3＝成分リストとはここが異なる）。
+</div>
+
+<div class="type-tabs">
+  <button class="tab-btn tab-a active" onclick="switchTab('a')">乾燥肌</button>
+  <button class="tab-btn tab-b" onclick="switchTab('b')">脂性肌</button>
+  <button class="tab-btn tab-c" onclick="switchTab('c')">混合肌</button>
+  <button class="tab-btn tab-d" onclick="switchTab('d')">敏感肌</button>
+</div>
+
+<!-- ══ 乾燥肌 ══ -->
+<div class="cards-section active" id="section-a">
+  <div class="type-label type-a-label" style="padding-top:12px;">
+    <span>乾燥肌</span>結果カードでは商材名を出さない
+  </div>
+  <div class="ec-note">CTAタップ後のおすすめ3点セットカルで、オルビス オフクリーム（クレンジング）・ビーグレン QuSomeローション（基礎化粧品）・アテニア プリマモイスト/オルビスユー（化粧水）が並列表示される（このページには表示しない）。</div>
+
+  <div class="cards-row">
+
+    <div class="line-card type-a">
+      <div class="card-header">
+        <div class="card-num">Card 1 — タイプ発表</div>
+        <div class="card-title">あなたは<br>「乾燥肌」</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:12px;line-height:2.2;color:#444;">
+          <div>☑ 洗顔後すぐ、肌がつっぱる</div>
+          <div>☑ 化粧水をつけても、乾いた感じがすぐ戻る</div>
+          <div>☑ 季節の変わり目に肌が荒れやすい</div>
+          <div>☑ 粉をふくことがある</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="line-card type-a">
+      <div class="card-header">
+        <div class="card-num">Card 2 — 根本示唆</div>
+        <div class="card-title">うるおいを与えても<br>乾燥が戻る、<br>本当の理由。</div>
+      </div>
+      <div class="card-body">
+        <div style="margin:0 0 10px;padding:10px 12px;background:#fdecd9;border-radius:8px;font-size:11.5px;line-height:2;color:#555;">
+          肌のバリア機能が乱れている<br>
+          <span style="color:#d9822f;font-weight:700;">↓</span><br>
+          角層の水分保持力が低下する<br>
+          <span style="color:#d9822f;font-weight:700;">↓</span><br>
+          与えたうるおいもすぐ蒸発する<br>
+          <span style="color:#d9822f;font-weight:700;">↓</span><br>
+          乾燥が進む
+        </div>
+        <div style="background:#d9822f;color:#fff;border-radius:8px;padding:8px 12px;font-size:12.5px;font-weight:700;text-align:center;line-height:1.5;">うるおいを「届ける」だけでなく「留める」ケアが必要！</div>
+      </div>
+    </div>
+
+    <div class="line-card type-a">
+      <div class="card-header">
+        <div class="card-num">Card 3 — アプローチ3ステップ</div>
+        <div class="card-title">うるおいを届けて、<br>逃さないケアが<br>カギ</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:11.5px;line-height:2.2;color:#444;">
+          <div><span style="color:#d9822f;font-weight:700;">✓</span> クレンジング <span style="color:#888;font-size:11px;">→ 洗いながらもうるおいを守るタイプへ</span></div>
+          <div><span style="color:#d9822f;font-weight:700;">✓</span> スキンケア <span style="color:#888;font-size:11px;">→ バリア機能を立て直すタイプへ</span></div>
+          <div><span style="color:#d9822f;font-weight:700;">✓</span> 化粧水 <span style="color:#888;font-size:11px;">→ 角層の奥までうるおいを届けて留めるタイプへ</span></div>
+        </div>
+        <div style="background:#d9822f;color:#fff;border-radius:8px;padding:8px 12px;font-size:12.5px;font-weight:700;text-align:center;line-height:1.5;margin-top:10px;">3ステップ全部を「保湿」の視点で揃えるアプローチ。</div>
+      </div>
+    </div>
+
+    <div class="line-card type-a">
+      <div class="card-header">
+        <div class="card-num">Card 4 — 未来+CTA</div>
+        <div class="card-title">うるおいのバリアが<br>整うだけで、<br>肌が変わる。</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:12px;line-height:2.2;color:#444;">
+          <div><span style="color:#d9822f;font-weight:700;">✓</span> つけた瞬間、じゅわっとうるおいが入る</div>
+          <div><span style="color:#d9822f;font-weight:700;">✓</span> 季節の変わり目でも肌が揺らぎにくくなる</div>
+          <div><span style="color:#d9822f;font-weight:700;">✓</span> もちっとした肌感が続く</div>
+        </div>
+        <div style="margin-top:10px;font-size:12.5px;font-weight:700;color:#444;">うるおいに満ちた、乾燥知らずの肌へ。</div>
+      </div>
+      <div class="card-cta">あなたに合うケアを見る →</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ 脂性肌 ══ -->
+<div class="cards-section" id="section-b">
+  <div class="type-label type-b-label" style="padding-top:12px;">
+    <span>脂性肌</span>結果カードでは商材名を出さない
+  </div>
+  <div class="ec-note">CTAタップ後のおすすめ3点セットカルで、アテニア スキンクリア（クレンジング）・オルビス クリアフル（基礎化粧品／化粧水）が並列表示される（このページには表示しない）。</div>
+
+  <div class="cards-row">
+
+    <div class="line-card type-b">
+      <div class="card-header">
+        <div class="card-num">Card 1 — タイプ発表</div>
+        <div class="card-title">あなたは<br>「脂性肌」</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:12px;line-height:2.2;color:#444;">
+          <div>☑ 顔全体がすぐテカる</div>
+          <div>☑ 皮脂が浮いてくる感じがある</div>
+          <div>☑ 毛穴が目立ちやすい</div>
+          <div>☑ 洗浄力を上げてもすぐ皮脂が戻る</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="line-card type-b">
+      <div class="card-header">
+        <div class="card-num">Card 2 — 根本示唆</div>
+        <div class="card-title">洗ってもすぐテカる、<br>本当の理由。</div>
+      </div>
+      <div class="card-body">
+        <div style="margin:0 0 10px;padding:10px 12px;background:#e3f2fd;border-radius:8px;font-size:11.5px;line-height:2;color:#555;">
+          洗浄力を上げて皮脂を取りすぎる<br>
+          <span style="color:#3a94b8;font-weight:700;">↓</span><br>
+          肌が乾燥から守ろうとする<br>
+          <span style="color:#3a94b8;font-weight:700;">↓</span><br>
+          皮脂の分泌がさらに増える<br>
+          <span style="color:#3a94b8;font-weight:700;">↓</span><br>
+          もっとテカる
+        </div>
+        <div style="background:#3a94b8;color:#fff;border-radius:8px;padding:8px 12px;font-size:12.5px;font-weight:700;text-align:center;line-height:1.5;">「しっかり落とす」と「乾燥させない」を両立させることが必要！</div>
+      </div>
+    </div>
+
+    <div class="line-card type-b">
+      <div class="card-header">
+        <div class="card-num">Card 3 — アプローチ3ステップ</div>
+        <div class="card-title">皮脂と上手に<br>付き合うケアが<br>カギ</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:11.5px;line-height:2.2;color:#444;">
+          <div><span style="color:#3a94b8;font-weight:700;">✓</span> クレンジング <span style="color:#888;font-size:11px;">→ 毛穴の汚れまでしっかり落とすタイプへ</span></div>
+          <div><span style="color:#3a94b8;font-weight:700;">✓</span> スキンケア <span style="color:#888;font-size:11px;">→ 皮脂の分泌を根本からコントロールするタイプへ</span></div>
+          <div><span style="color:#3a94b8;font-weight:700;">✓</span> 化粧水 <span style="color:#888;font-size:11px;">→ 毛穴を引き締めながら整えるタイプへ</span></div>
+        </div>
+        <div style="background:#3a94b8;color:#fff;border-radius:8px;padding:8px 12px;font-size:12.5px;font-weight:700;text-align:center;line-height:1.5;margin-top:10px;">「絶妙なバランス」で3ステップを揃えるアプローチ。</div>
+      </div>
+    </div>
+
+    <div class="line-card type-b">
+      <div class="card-header">
+        <div class="card-num">Card 4 — 未来+CTA</div>
+        <div class="card-title">皮脂のリズムが<br>整うだけで、<br>肌が変わる。</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:12px;line-height:2.2;color:#444;">
+          <div><span style="color:#3a94b8;font-weight:700;">✓</span> 鏡を見ても毛穴が気にならなくなる</div>
+          <div><span style="color:#3a94b8;font-weight:700;">✓</span> 皮脂によるメイク崩れが減る</div>
+          <div><span style="color:#3a94b8;font-weight:700;">✓</span> キメが整って、つるんとした質感になる</div>
+        </div>
+        <div style="margin-top:10px;font-size:12.5px;font-weight:700;color:#444;">皮脂に振り回されない、引き締まった肌へ。</div>
+      </div>
+      <div class="card-cta">あなたに合うケアを見る →</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ 混合肌 ══ -->
+<div class="cards-section" id="section-c">
+  <div class="type-label type-c-label" style="padding-top:12px;">
+    <span>混合肌</span>結果カードでは商材名を出さない
+  </div>
+  <div class="ec-note">CTAタップ後のおすすめ3点セットカルで、マナラ ホットクレンジングゲル（クレンジング）・ビーグレン QuSomeローション（基礎化粧品）・アテニア プリマモイスト/オルビスユー（化粧水）が並列表示される（このページには表示しない）。</div>
+
+  <div class="cards-row">
+
+    <div class="line-card type-c">
+      <div class="card-header">
+        <div class="card-num">Card 1 — タイプ発表</div>
+        <div class="card-title">あなたは<br>「混合肌」</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:12px;line-height:2.2;color:#444;">
+          <div>☑ おでこ・鼻はテカるのに、頬は乾燥する</div>
+          <div>☑ 部分によって肌の調子が違う</div>
+          <div>☑ オールインワンだと物足りなさを感じる</div>
+          <div>☑ 季節で崩れる場所が変わる</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="line-card type-c">
+      <div class="card-header">
+        <div class="card-num">Card 2 — 根本示唆</div>
+        <div class="card-title">部分ごとに違う肌、<br>本当の理由。</div>
+      </div>
+      <div class="card-body">
+        <div style="margin:0 0 10px;padding:10px 12px;background:#e8f5e9;border-radius:8px;font-size:11.5px;line-height:2;color:#555;">
+          皮脂腺の分布が部位ごとに違う<br>
+          <span style="color:#4c9950;font-weight:700;">↓</span><br>
+          Tゾーンは皮脂が出やすく頬は乾燥しやすい<br>
+          <span style="color:#4c9950;font-weight:700;">↓</span><br>
+          1つの製品で全部をまかなおうとする<br>
+          <span style="color:#4c9950;font-weight:700;">↓</span><br>
+          どこかに無理が出る
+        </div>
+        <div style="background:#4c9950;color:#fff;border-radius:8px;padding:8px 12px;font-size:12.5px;font-weight:700;text-align:center;line-height:1.5;">肌全体を整える視点でケアすることが必要！</div>
+      </div>
+    </div>
+
+    <div class="line-card type-c">
+      <div class="card-header">
+        <div class="card-num">Card 3 — アプローチ3ステップ</div>
+        <div class="card-title">バランスを<br>整えるケアが<br>カギ</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:11.5px;line-height:2.2;color:#444;">
+          <div><span style="color:#4c9950;font-weight:700;">✓</span> クレンジング <span style="color:#888;font-size:11px;">→ 摩擦レスで部分ごとの負担を減らすタイプへ</span></div>
+          <div><span style="color:#4c9950;font-weight:700;">✓</span> スキンケア <span style="color:#888;font-size:11px;">→ 肌全体のバリア機能を整えるタイプへ</span></div>
+          <div><span style="color:#4c9950;font-weight:700;">✓</span> 化粧水 <span style="color:#888;font-size:11px;">→ 肌全体にムラなくうるおいを届けるタイプへ</span></div>
+        </div>
+        <div style="background:#4c9950;color:#fff;border-radius:8px;padding:8px 12px;font-size:12.5px;font-weight:700;text-align:center;line-height:1.5;margin-top:10px;">「バランス」で3ステップを揃えるアプローチ。</div>
+      </div>
+    </div>
+
+    <div class="line-card type-c">
+      <div class="card-header">
+        <div class="card-num">Card 4 — 未来+CTA</div>
+        <div class="card-title">肌全体のバランスが<br>整うだけで、<br>肌が変わる。</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:12px;line-height:2.2;color:#444;">
+          <div><span style="color:#4c9950;font-weight:700;">✓</span> 部分ごとの調子の差が気にならなくなる</div>
+          <div><span style="color:#4c9950;font-weight:700;">✓</span> 崩れやすさが落ち着く</div>
+          <div><span style="color:#4c9950;font-weight:700;">✓</span> 肌全体がワントーンに見える</div>
+        </div>
+        <div style="margin-top:10px;font-size:12.5px;font-weight:700;color:#444;">どこも無理していない、整った肌へ。</div>
+      </div>
+      <div class="card-cta">あなたに合うケアを見る →</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ 敏感肌 ══ -->
+<div class="cards-section" id="section-d">
+  <div class="type-label type-d-label" style="padding-top:12px;">
+    <span>敏感肌</span>結果カードでは商材名を出さない
+  </div>
+  <div class="ec-note">CTAタップ後のおすすめ3点セットカルで、アクセーヌ（クレンジング）・ファンケル 無添加アクネケア（基礎化粧品）・ディセンシア（化粧水）が並列表示される（このページには表示しない）。</div>
+
+  <div class="cards-row">
+
+    <div class="line-card type-d">
+      <div class="card-header">
+        <div class="card-num">Card 1 — タイプ発表</div>
+        <div class="card-title">あなたは<br>「敏感肌」</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:12px;line-height:2.2;color:#444;">
+          <div>☑ 新しいコスメで赤み・かゆみが出ることがある</div>
+          <div>☑ 季節の変わり目に肌が揺らぎやすい</div>
+          <div>☑ 洗顔後、ヒリつくことがある</div>
+          <div>☑ 刺激の強いものは避けている</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="line-card type-d">
+      <div class="card-header">
+        <div class="card-num">Card 2 — 根本示唆</div>
+        <div class="card-title">また揺らいだ、<br>本当の理由。</div>
+      </div>
+      <div class="card-body">
+        <div style="margin:0 0 10px;padding:10px 12px;background:#f3e5f8;border-radius:8px;font-size:11.5px;line-height:2;color:#555;">
+          バリア機能が弱っている<br>
+          <span style="color:#9c5aa8;font-weight:700;">↓</span><br>
+          刺激をブロックしきれない<br>
+          <span style="color:#9c5aa8;font-weight:700;">↓</span><br>
+          成分にすら過敏に反応する<br>
+          <span style="color:#9c5aa8;font-weight:700;">↓</span><br>
+          赤み・かゆみが出る
+        </div>
+        <div style="background:#9c5aa8;color:#fff;border-radius:8px;padding:8px 12px;font-size:12.5px;font-weight:700;text-align:center;line-height:1.5;">刺激をゼロに近づけながら、バリアを育てることが必要！</div>
+      </div>
+    </div>
+
+    <div class="line-card type-d">
+      <div class="card-header">
+        <div class="card-num">Card 3 — アプローチ3ステップ</div>
+        <div class="card-title">刺激の少なさを<br>軸にしたケアが<br>カギ</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:11.5px;line-height:2.2;color:#444;">
+          <div><span style="color:#9c5aa8;font-weight:700;">✓</span> クレンジング <span style="color:#888;font-size:11px;">→ 肌を傷めずやさしく落とすタイプへ</span></div>
+          <div><span style="color:#9c5aa8;font-weight:700;">✓</span> スキンケア <span style="color:#888;font-size:11px;">→ 刺激ゼロで肌環境ごと整えるタイプへ</span></div>
+          <div><span style="color:#9c5aa8;font-weight:700;">✓</span> 化粧水 <span style="color:#888;font-size:11px;">→ 低刺激設計で揺らぎを落ち着かせるタイプへ</span></div>
+        </div>
+        <div style="background:#9c5aa8;color:#fff;border-radius:8px;padding:8px 12px;font-size:12.5px;font-weight:700;text-align:center;line-height:1.5;margin-top:10px;">「刺激の少なさ」で3ステップを揃えるアプローチ。</div>
+      </div>
+    </div>
+
+    <div class="line-card type-d">
+      <div class="card-header">
+        <div class="card-num">Card 4 — 未来+CTA</div>
+        <div class="card-title">バリアが<br>育つだけで、<br>肌が変わる。</div>
+      </div>
+      <div class="card-body">
+        <div style="font-size:12px;line-height:2.2;color:#444;">
+          <div><span style="color:#9c5aa8;font-weight:700;">✓</span> 新しいものを試すのが怖くなくなる</div>
+          <div><span style="color:#9c5aa8;font-weight:700;">✓</span> 季節の変わり目でも荒れにくくなる</div>
+          <div><span style="color:#9c5aa8;font-weight:700;">✓</span> 肌が安定している日が増える</div>
+        </div>
+        <div style="margin-top:10px;font-size:12.5px;font-weight:700;color:#444;">安心してつけられる毎日へ。</div>
+      </div>
+      <div class="card-cta">あなたに合うケアを見る →</div>
+    </div>
+
+  </div>
+</div>
+
+<a class="back-link" href="index.html">← トップへ</a>
+
+<script>
+function switchTab(type) {
+  document.querySelectorAll('.cards-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-' + type).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.tab-' + type).classList.add('active');
+}
+</script>
+
+</body>
+</html>
