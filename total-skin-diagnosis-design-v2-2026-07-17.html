@@ -62,10 +62,10 @@
 <div class="container">
 
   <h1>総合肌タイプ診断 v2 設計書</h1>
-  <div class="meta">2026-07-17（2026-07-21改訂：設問7問化） ｜ Carena（carenacosmetic.co.jp）× LINE診断 ｜ コスメ診断ロードマップ④・横断診断 ｜ ステータス: v2改訂・対象記事URL確定待ち</div>
+  <div class="meta">2026-07-17（2026-07-21再改訂：分岐ロジック確定） ｜ Carena（carenacosmetic.co.jp）× LINE診断 ｜ コスメ診断ロードマップ④・横断診断 ｜ ステータス: v2確定・対象記事URL確定待ち</div>
 
   <div class="warn"><strong>v1からの変更点：</strong> v1（2026-07-15版）は「タイプ→別の専門診断へ誘導」という2段階構造だったが、Noaより「結果は乾燥肌/脂性肌/混合肌/敏感肌の4タイプで、それぞれに合うクレンジング・基礎化粧品・化粧水を"スキンケアステップのおすすめ商品"として直接紹介する」という確定仕様が提示され、v2として全面作り直し。</div>
-  <div class="warn"><strong>2026-07-21改訂（設問数見直し）：</strong> 当初の全3問（Q1が単独で4タイプに直接分岐）は「3問で何がわかるのか、設問が少なすぎて説得力に欠ける」とNoaに指摘され、競合4社（Dr.サポーター/AYAKA/津田コスメ/DHC）リサーチ＋対象読者ユーザーダイブを実施した上で全7問に再構成。詳細は<a href="research-total-skintype-diagnosis-2026-07-21.html">リサーチまとめ</a>参照。</div>
+  <div class="warn"><strong>2026-07-21確定版：</strong> 当初の全3問は「説得力不足」と指摘され競合4社（Dr.サポーター/AYAKA/津田コスメ/DHC）リサーチ＋ユーザーダイブを実施（詳細は<a href="research-total-skintype-diagnosis-2026-07-21.html">リサーチまとめ</a>）。一度「3問AND判定・多数決」で設計したが、システム制約<strong>NG-2</strong>（`claude-projects/line-dashboard/docs/constraints-ng-list.md`：診断結果は最終設問の回答のみで分岐する。複数設問の統合は不可）に抵触し実装不可と判明。「Q5で仮判定→Q6でグループ別に確定」という<strong>2段階アダプティブ分岐</strong>（NG-2準拠）に組み直し、さらに①②③診断と同じ「非分岐を先に、分岐は最後」の構成に合わせて全6問に確定。</div>
 
   <!-- ファネル位置づけ -->
   <h2>ファネル上の位置づけ</h2>
@@ -122,21 +122,21 @@
     </div>
 
     <h3>ハンマー</h3>
-    <p>「7問で肌タイプを診断し、3ステップ分のおすすめ商品をまとめて提示する」。既存の肌質診断（au beauty/MAQUIA等）が「あなたは乾燥肌です」で終わるのに対し、本診断は3ステップの具体的な商品まで一気に提示する点が差別化軸。3ステップ分の商品を推薦する重い提案をする以上、設問数はそれに見合う説得力が必要（Noa指摘・2026-07-21、競合4社リサーチで裏付け）。</p>
+    <p>「6問で肌タイプを診断し、3ステップ分のおすすめ商品をまとめて提示する」。既存の肌質診断（au beauty/MAQUIA等）が「あなたは乾燥肌です」で終わるのに対し、本診断は3ステップの具体的な商品まで一気に提示する点が差別化軸。3ステップ分の商品を推薦する重い提案をする以上、設問数はそれに見合う説得力が必要（Noa指摘・2026-07-21、競合4社リサーチで裏付け）。</p>
   </div>
 
   <!-- 診断フロー -->
-  <h2>3. 診断フロー（全7問）</h2>
-  <div class="warn">当初の全3問（Q1が単独で4タイプに直接分岐）を、競合リサーチ（AYAKA・津田コスメ）を踏まえて全7問に再構成。<strong>振り分け軸を1問→3問（AND判定）に増やして精度と説得力を上げた</strong>のが核心の変更点。</div>
+  <h2>3. 診断フロー（全6問・非分岐4問→分岐2問）</h2>
+  <div class="warn">「Q2〜Q4の3問をAND判定・多数決」という案はシステム制約NG-2に抵触し実装不可と判明。<strong>Q5で肌質を仮判定→Q6でグループ別に確認・確定</strong>という2段階のアダプティブ分岐に変更（各ルートの最終設問＝Q6のみで確定するためNG-2準拠）。①②③診断と同じ「非分岐の設問を先に集め、分岐は最後に置く」構成に合わせて並び替え、全6問で確定。</div>
 
   <div class="card" style="margin-bottom:14px;">
     <div class="q-num">WELCOME</div>
     <div class="q-text">あなたの肌タイプ診断</div>
-    <div style="font-size:13px;color:#555;">その化粧品、自分の肌タイプに合わせて選べてる？7問でわかる無料診断。匿名・無料</div>
+    <div style="font-size:13px;color:#555;">その化粧品、自分の肌タイプに合わせて選べてる？6問でわかる無料診断。匿名・無料</div>
   </div>
 
   <div class="q-block">
-    <div class="q-num">Q1 — 非分岐・最初の設問</div>
+    <div class="q-num">Q1 — 非分岐</div>
     <div class="q-text">年代を教えてください</div>
     <div class="choices">
       <div class="choice">A: 10〜20代</div>
@@ -147,47 +147,19 @@
   </div>
 
   <div class="q-block">
-    <div class="q-num">Q2 — 振り分け軸①</div>
-    <div class="q-text">洗顔後15分、何もつけずにいると肌は？</div>
+    <div class="q-num">Q2 — 非分岐・根拠づけ</div>
+    <div class="q-text">お化粧をしていて、崩れ方で当てはまるのは？</div>
     <div class="choices">
-      <div class="choice key">A: 突っ張る、粉をふくことがある → 乾燥肌</div>
-      <div class="choice key">B: 顔全体がテカって皮脂が浮く → 脂性肌</div>
-      <div class="choice key">C: おでこ・鼻はテカるのに頬は突っ張る → 混合肌</div>
-      <div class="choice key">D: 赤みが出たり、ピリピリ・かゆみが出る → 敏感肌</div>
+      <div class="choice">A: 崩れるというより、乾燥で粉をふいてくる</div>
+      <div class="choice">B: 皮脂で全体的にドロドロ崩れる</div>
+      <div class="choice">C: Tゾーンだけ崩れて、頬はそのまま</div>
+      <div class="choice">D: 新しいコスメだと崩れ方がいつもと違う</div>
     </div>
-    <div style="font-size:12px;color:#888;margin-top:8px;">「洗顔後の肌状態」という最も普遍的で答えやすい設問（Dr.サポーター・AYAKA・津田コスメ全社共通の軸）。3問の振り分け軸のうち最優先（競合時のタイブレーク基準）</div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">競合Dr.サポーターの「メイクの崩れ方」軸。対象記事（ファンデ/BB比較記事）の読者に特に刺さる。振り分けには使わないが、Card2・Card3のパーソナライズに使用</div>
   </div>
 
   <div class="q-block">
-    <div class="q-num">Q3 — 振り分け軸②</div>
-    <div class="q-text">化粧崩れ・テカりについて当てはまるのは？</div>
-    <div class="choices">
-      <div class="choice key">A: 特に気にならない、乾燥の方が気になる → 乾燥肌</div>
-      <div class="choice key">B: 日中ずっとテカり・化粧崩れが気になる → 脂性肌</div>
-      <div class="choice key">C: Tゾーンだけ崩れる、頬は乾燥で粉をふく → 混合肌</div>
-      <div class="choice key">D: 新しい化粧品を使った時に限って肌が反応する → 敏感肌</div>
-    </div>
-    <div style="font-size:12px;color:#888;margin-top:8px;">Q2とは別角度（皮脂・化粧崩れの軸）で確認する2本目の振り分け軸。津田コスメのQ6に相当</div>
-  </div>
-
-  <div class="q-block">
-    <div class="q-num">Q4 — 振り分け軸③・敏感肌の裏付け強化</div>
-    <div class="q-text">季節の変わり目、肌の調子はどうなりやすい？</div>
-    <div class="choices">
-      <div class="choice key">A: 乾燥でカサつきが増す → 乾燥肌</div>
-      <div class="choice key">B: 皮脂が増えてベタつく → 脂性肌</div>
-      <div class="choice key">C: 部分によって違う反応が出る → 混合肌</div>
-      <div class="choice key">D: 赤み・かゆみ等ゆらぎが出やすい → 敏感肌</div>
-    </div>
-    <div style="font-size:12px;color:#888;margin-top:8px;">3本目の振り分け軸。競合分析で判明した「敏感肌は他社が軽視しがちな軸」への対策として、季節変化という敏感肌が最も出やすい切り口を専用に設けた</div>
-  </div>
-
-  <div class="note">
-    <strong>振り分けロジック（Q2×Q3×Q4のAND判定）:</strong> 3問で各タイプに投票し、多数決（2問以上一致）で確定。3問とも割れた場合はQ2（最も普遍的で答えやすい軸）を優先。
-  </div>
-
-  <div class="q-block">
-    <div class="q-num">Q5 — 非分岐・根拠づけ</div>
+    <div class="q-num">Q3 — 非分岐・根拠づけ</div>
     <div class="q-text">毛穴の目立ちやすい場所は？</div>
     <div class="choices">
       <div class="choice">A: 目立たない</div>
@@ -199,19 +171,7 @@
   </div>
 
   <div class="q-block">
-    <div class="q-num">Q6 — 非分岐・敏感肌の裏付け＋パーソナライズ</div>
-    <div class="q-text">新しいコスメを使い始めたとき、肌に出やすい反応は？</div>
-    <div class="choices">
-      <div class="choice">A: 特に何も起きない</div>
-      <div class="choice">B: 赤み・かゆみが出ることがある</div>
-      <div class="choice">C: 何を使っても変化を感じにくい</div>
-      <div class="choice">D: ニキビ・吹き出物が増えることがある</div>
-    </div>
-    <div style="font-size:12px;color:#888;margin-top:8px;">振り分けには使わないが、敏感肌の裏付けをさらに厚くする（特にB）。Card2のパーソナライズにも使用</div>
-  </div>
-
-  <div class="q-block">
-    <div class="q-num">Q7 — 非分岐・最後の根拠づけ</div>
+    <div class="q-num">Q4 — 非分岐・根拠づけ</div>
     <div class="q-text">一番気になる肌悩みは？</div>
     <div class="choices">
       <div class="choice">A: 乾燥・カサつき</div>
@@ -219,7 +179,39 @@
       <div class="choice">C: 崩れやすさ・肌の揺らぎ</div>
       <div class="choice">D: 赤み・刺激に弱い</div>
     </div>
-    <div style="font-size:12px;color:#888;margin-top:8px;">悩みの切実さを重ねてCard2・Card3の訴求を強める最後の根拠づけ設問</div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">悩みの切実さを重ねてCard2・Card3の訴求を強める根拠づけ設問</div>
+  </div>
+
+  <div class="q-block" style="border-left-color:#4a6a5a;border:2px solid #4a6a5a;">
+    <div class="q-num" style="color:#4a6a5a;">Q5 — 第一分岐・グループ仮判定</div>
+    <div class="q-text">洗顔後15分、何もつけずにいると肌は？</div>
+    <div class="choices">
+      <div class="choice key">A: 突っ張る、粉をふくことがある → 乾燥・敏感グループ</div>
+      <div class="choice key">B: 顔全体がテカって皮脂が浮く → 脂性・混合グループ</div>
+      <div class="choice key">C: おでこ・鼻はテカるのに頬は突っ張る → 脂性・混合グループ</div>
+      <div class="choice key">D: 赤みが出たり、ピリピリ・かゆみが出る → 乾燥・敏感グループ</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">「洗顔後の肌状態」という最も普遍的で答えやすい設問（Dr.サポーター・AYAKA・津田コスメ全社共通の軸）。回答を2グループに振り分け、Q6で各グループ専用の確認設問に分岐する。<strong>この時点ではまだ結果は確定しない</strong>（NG-2対応）</div>
+  </div>
+
+  <div class="q-block" style="border-left-color:#4a6a5a;border:2px solid #4a6a5a;">
+    <div class="q-num" style="color:#4a6a5a;">Q6 — 第二分岐・最終設問＝ここで確定</div>
+    <div class="q-text">グループ別設問（Q5の回答によって2パターンのどちらかが表示）</div>
+    <div style="margin-top:10px;padding:10px 14px;background:#fdecd9;border-radius:8px;">
+      <strong>Q6-①（Q5でA/D＝乾燥・敏感グループ）:</strong> 「新しいコスメを使うと、赤みやかゆみが出やすいですか？」
+      <div class="choices" style="margin-top:6px;">
+        <div class="choice key">はい、出やすい → 敏感肌</div>
+        <div class="choice key">いいえ、特にない → 乾燥肌</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;padding:10px 14px;background:#e3f2fd;border-radius:8px;">
+      <strong>Q6-②（Q5でB/C＝脂性・混合グループ）:</strong> 「頬やフェイスラインは、テカりより乾燥が気になりますか？」
+      <div class="choices" style="margin-top:6px;">
+        <div class="choice key">いいえ、頬もテカる／全体的にテカる → 脂性肌</div>
+        <div class="choice key">はい、頬は乾燥する → 混合肌</div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:8px;">Q5で2グループに仮判定した後、グループ専用の確認設問1問だけで最終確定。構築パネルはQ6-①・Q6-②の2枚のみ（4パターン専用より構築負担が軽い）。<strong>Q6の回答のみで結果が確定するため、NG-2に完全準拠</strong></div>
   </div>
 
   <!-- 結果カード設計 -->
@@ -419,28 +411,28 @@
   <div class="card" style="margin-bottom:8px;">
     <div style="font-size:12px;font-weight:700;color:#888;margin-bottom:8px;">ブリッジテスト</div>
     <table>
-      <tr><th>①診断体験</th><td>7問答えると乾燥肌/脂性肌/混合肌/敏感肌のどれかが判定され、その肌タイプに合うクレンジング・スキンケア・化粧水の3ステップ分のおすすめ商品がまとめて提示される</td></tr>
+      <tr><th>①診断体験</th><td>6問答えると乾燥肌/脂性肌/混合肌/敏感肌のどれかが判定され、その肌タイプに合うクレンジング・スキンケア・化粧水の3ステップ分のおすすめ商品がまとめて提示される</td></tr>
       <tr><th>②検索者の気持ち</th><td>「この商品を変えれば良くなるかと思って調べてるけど、自分の肌タイプに合わせて選べているのか自信がない」</td></tr>
-      <tr><th>③翻訳</th><td>「その化粧品、自分の肌タイプに合わせて選べてる？7問でわかる肌タイプ診断」→ ①と③が同じ体験を指している ✅</td></tr>
+      <tr><th>③翻訳</th><td>「その化粧品、自分の肌タイプに合わせて選べてる？6問でわかる肌タイプ診断」→ ①と③が同じ体験を指している ✅</td></tr>
     </table>
   </div>
 
   <div class="pu-box">
     <div class="pu-label">案A — 気づき型（主推薦）</div>
     <div class="pu-title">あなたの肌タイプ診断</div>
-    <div class="pu-copy">その化粧品、自分の肌タイプに合わせて選べてる？<br>/カンタン7問診断</div>
+    <div class="pu-copy">その化粧品、自分の肌タイプに合わせて選べてる？<br>/カンタン6問診断</div>
     <span class="pu-btn">チェックする</span><span style="font-size:12px;color:#888;">/ いいえ</span>
   </div>
   <div class="pu-box">
     <div class="pu-label">案B — 疲弊層向け・問いかけ型</div>
     <div class="pu-title">あなたの肌タイプ診断</div>
-    <div class="pu-copy">いろいろ試してるのに変わらないなら、肌タイプから見直してみない？<br>/カンタン7問診断</div>
+    <div class="pu-copy">いろいろ試してるのに変わらないなら、肌タイプから見直してみない？<br>/カンタン6問診断</div>
     <span class="pu-btn">見てみる</span><span style="font-size:12px;color:#888;">/ いいえ</span>
   </div>
   <div class="pu-box">
     <div class="pu-label">案C — 能動意欲型（CTR特化）</div>
     <div class="pu-title">あなたの肌タイプ診断</div>
-    <div class="pu-copy">自分の肌タイプ、ちゃんと知りたい！<br>/カンタン7問診断</div>
+    <div class="pu-copy">自分の肌タイプ、ちゃんと知りたい！<br>/カンタン6問診断</div>
     <span class="pu-btn">知りたい！</span><span style="font-size:12px;color:#888;">/ いいえ</span>
   </div>
 
@@ -459,29 +451,29 @@
 
   <div class="sim-block">
     <div class="sim-persona">ペルソナ①：32歳女性 / 「BBクリーム 崩れない」で検索 / 昼にはテカって崩れることが多い（脂性肌想定）</div>
-    <div class="sim-flow">案B PU → 「肌タイプから見直してみない？」→タップ → Q1(30代)→Q2(B)→Q3(B・Q2と一致)→Q4(B・3問一致で脂性肌確定)→Q5(B)→Q6(D)→Q7(B) → 結果：脂性肌 → 「洗いすぎると逆に皮脂が増える」に納得 → 3点セット：アテニア/オルビスクリアフル/オルビスクリアフルが「毛穴ケア」で統一感◎</div>
-    <div><span class="badge badge-green">◎ 問題なし。7問でも全て「あるある」で即答でき離脱感なし</span></div>
+    <div class="sim-flow">案B PU → 「肌タイプから見直してみない？」→タップ → Q1(30代)→Q2(皮脂で全体的にドロドロ崩れる)→Q3(頬・フェイスライン全体)→Q4(毛穴・テカリ)→Q5(顔全体がテカって皮脂が浮く・脂性/混合グループへ)→Q6-②(いいえ、頬もテカる→脂性肌で確定) → 結果：脂性肌 → 「洗いすぎると逆に皮脂が増える」に納得 → 3点セット：アテニア/オルビスクリアフル/オルビスクリアフルが「毛穴ケア」で統一感◎</div>
+    <div><span class="badge badge-green">◎ 問題なし。非分岐4問→分岐2問の流れで違和感なし</span></div>
   </div>
 
   <div class="sim-block">
     <div class="sim-persona">ペルソナ②：27歳女性 / 「美容オイル 効果ない」で検索 / おでこはテカるのに頬は乾燥（混合肌想定）</div>
-    <div class="sim-flow">案A PU → 「自分の肌タイプに合わせて選べてる？」→タップ → Q1(20代)→Q2(C)→Q3(C・Q2と一致)→Q4(C・3問一致で混合肌確定)→Q5(C)→Q6(A)→Q7(C) → 結果：混合肌 → 「1つの製品で全部まかなおうとすると無理が出る」に納得 → 3点セット：マナラ/ビーグレン/プリマモイストで「3ステップで整える」への転換がスムーズ</div>
+    <div class="sim-flow">案A PU → 「自分の肌タイプに合わせて選べてる？」→タップ → Q1(20代)→Q2(Tゾーンだけ崩れて頬はそのまま)→Q3(Tゾーン)→Q4(崩れやすさ・肌の揺らぎ)→Q5(おでこ・鼻はテカる、頬は突っ張る・脂性/混合グループへ)→Q6-②(はい、頬は乾燥する→混合肌で確定) → 結果：混合肌 → 「1つの製品で全部まかなおうとすると無理が出る」に納得 → 3点セット：マナラ/ビーグレン/プリマモイストで「3ステップで整える」への転換がスムーズ</div>
     <div><span class="badge badge-green">◎ 問題なし</span></div>
   </div>
 
   <div class="sim-block">
     <div class="sim-persona">ペルソナ③：43歳女性 / 成分解説記事読了 / 季節の変わり目に乾燥・カサつきが気になる（乾燥肌想定）</div>
-    <div class="sim-flow">案C PU → 「自分の肌タイプ、ちゃんと知りたい！」→タップ → Q1(40代以上)→Q2(A)→Q3(A・Q2と一致)→Q4(A・3問一致で乾燥肌確定)→Q5(D)→Q6(C)→Q7(A) → 結果：乾燥肌 → 「うるおいを与えるだけでなく逃さない工夫が必要」に納得 → 3点セット：オルビスオフクリーム/ビーグレン/プリマモイストが「保湿」で統一され迷わず選べる安心感</div>
+    <div class="sim-flow">案C PU → 「自分の肌タイプ、ちゃんと知りたい！」→タップ → Q1(40代以上)→Q2(乾燥で粉をふいてくる)→Q3(頬・口周りなど乾燥ゾーン)→Q4(乾燥・カサつき)→Q5(突っ張る、粉をふく・乾燥/敏感グループへ)→Q6-①(いいえ、特にない→乾燥肌で確定) → 結果：乾燥肌 → 「うるおいを与えるだけでなく逃さない工夫が必要」に納得 → 3点セット：オルビスオフクリーム/ビーグレン/プリマモイストが「保湿」で統一され迷わず選べる安心感</div>
     <div><span class="badge badge-green">◎ 問題なし。切実度の高い層に最も刺さる</span></div>
   </div>
 
   <div class="sim-block">
-    <div class="sim-persona">ペルソナ④（新規追加）：22歳女性 / 「ファンデーション 崩れない」で検索 / 新しいコスメで赤みが出やすく季節の変わり目に肌が揺らぐ（敏感肌想定）</div>
-    <div class="sim-flow">案B PU → 「新しいの試すたびに荒れるの、肌タイプのせいかも」→タップ → Q1(20代)→Q2(D)→Q3(D・Q2と一致)→Q4(D・3問一致で敏感肌確定)→Q5(A)→Q6(B・「まさにこれ」)→Q7(D) → 結果：敏感肌 → 「バリア機能が弱く刺激をブロックしきれない」に「だから毎回荒れるのか」と腹落ち → 3点セット：アクセーヌ/ファンケル/ディセンシアが「低刺激」で統一され安心して選べる</div>
-    <div><span class="badge badge-green">◎ 問題なし。Q4（季節変化）の敏感肌裏付け強化の効果を確認——Q2だけでも判定可能だがQ3・Q4で重ねることで結果への納得感が強まる</span></div>
+    <div class="sim-persona">ペルソナ④：22歳女性 / 「ファンデーション 崩れない」で検索 / 新しいコスメで赤みが出やすく季節の変わり目に肌が揺らぐ（敏感肌想定）</div>
+    <div class="sim-flow">案B PU → 「新しいの試すたびに荒れるの、肌タイプのせいかも」→タップ → Q1(20代)→Q2(新しいコスメだと崩れ方がいつもと違う)→Q3(目立たない)→Q4(赤み・刺激に弱い)→Q5(赤み・ピリピリ・かゆみが出る・乾燥/敏感グループへ)→Q6-①(はい、出やすい→敏感肌で確定) → 結果：敏感肌 → 「バリア機能が弱く刺激をブロックしきれない」に「だから毎回荒れるのか」と腹落ち → 3点セット：アクセーヌ/ファンケル/ディセンシアが「低刺激」で統一され安心して選べる</div>
+    <div><span class="badge badge-green">◎ 問題なし。Q2〜Q4の非分岐設問が既に敏感肌らしさを積み重ねているため、Q6での確定に違和感がない</span></div>
   </div>
 
-  <div class="highlight" style="margin-top:16px;"><strong>総括：</strong> 4シミュレーションとも振り分け軸3問（Q2〜Q4）が一致し多数決ロジックが機能する場面（割れるケース）は発生せず。今後の実データで割れるケースの挙動も要検証。4タイプとも3ステップの訴求軸に一貫性がある（乾燥肌=保湿統一、脂性肌=毛穴・バランス統一、混合肌=バランス統一、敏感肌=低刺激統一）。結果カルとおすすめカルの役割分離も維持できている。</div>
+  <div class="highlight" style="margin-top:16px;"><strong>総括：</strong> 4シミュレーションとも、結果はQ6（グループ別最終設問）の回答のみで確定している。Q1〜Q5は根拠づけ・グループ仮判定に留まり、結果に直接統合されていない（NG-2準拠）。4タイプとも3ステップの訴求軸に一貫性がある（乾燥肌=保湿統一、脂性肌=毛穴・バランス統一、混合肌=バランス統一、敏感肌=低刺激統一）。結果カルとおすすめカルの役割分離も維持できている。</div>
 
   <!-- 期待効果 -->
   <h2>7. 期待効果（フェルミ推定・レンジ試算）</h2>
@@ -495,7 +487,7 @@
       <tr><td><strong>友だち追加数/月</strong></td><td><strong>約19人</strong></td><td><strong>約29人</strong></td><td><strong>約38人</strong></td></tr>
     </table>
     <div class="note" style="margin-top:12px;">v1（保守0.30%）よりPVFRをやや高めに設定：v2はCTA後に「別の診断」ではなく「その場で3ステップの商品を直接提示」する一段階構造になり、v1より摩擦が少ない。①②③の目標PVFR（0.70%前後）にはまだ届かないため中間的な値とする。</div>
-    <div class="warn" style="margin-top:8px;"><strong>2026-07-21追記（設問数増加の影響）:</strong> 全3問→全7問への拡張で診断内離脱リスクは上がりうるが、①②③診断も5問前後で運用実績があり7問は競合水準内（津田コスメ7問・AYAKA12問）。PVFRレンジは据え置くが、設置後は設問別離脱率（特にQ4〜Q7）をモニタリング対象とする。</div>
+    <div class="warn" style="margin-top:8px;"><strong>2026-07-21追記（設問数・分岐ロジック確定の影響）:</strong> 全3問→全6問（非分岐4問→分岐2問）への拡張で診断内離脱リスクは上がりうるが、①②③診断も5問前後で運用実績があり6問は競合水準内（津田コスメ7問・AYAKA12問）。分岐がQ5・Q6（後半）に集中するため、途中離脱してもQ1〜Q4の根拠づけ情報は既に取得済みという副次的メリットもある。PVFRレンジは据え置くが、設置後は設問別離脱率（特にQ5・Q6の分岐部分）をモニタリング対象とする。</div>
   </div>
 
   <!-- 残タスク -->
@@ -503,12 +495,13 @@
   <div class="card">
     <ul>
       <li>[x] 「おすすめ3点セットカル」という新フォーマットの実装可否をCTOに確認 → 技術的ハードルなしと確認済み</li>
-      <li>[x] デザイン依頼書の作成 → 完成済み（設問数見直しに伴い要更新）</li>
-      <li>[x] 設問数の見直し（3問→7問、競合4社リサーチ＋ユーザーダイブ実施済み）</li>
+      <li>[x] 設問数の見直し（3問→6問、競合4社リサーチ＋ユーザーダイブ実施済み）</li>
+      <li>[x] 分岐ロジックの実装可否をCTOに確認 → 「AND判定・多数決」はNG-2に抵触し不可と判明。「Q5仮判定→Q6グループ別確定」の2段階アダプティブ分岐に組み直しNG-2準拠を確認</li>
+      <li>[x] デザイン依頼書・フロー図を最終の6問構成に合わせて更新</li>
       <li>[ ] <strong>対象記事の実URL一覧を確定させる（v1から持ち越し・Noa判断で最後に回す方針）</strong></li>
       <li>[ ] マッピング表（4肌タイプ×3ステップ）の最終確認・アフィリリンク確認</li>
       <li>[ ] PU案A/B/Cの記事タイプ別出し分けロジック確定</li>
-      <li>[ ] デザイン依頼書・フロー図・カード図を7問構成に合わせて更新</li>
+      <li>[ ] カード図の作成</li>
       <li>[ ] 設置記事の優先順位決め</li>
     </ul>
   </div>
