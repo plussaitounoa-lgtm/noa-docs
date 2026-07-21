@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>枝分かれ構造の概念図v4（2段階・合流でパネル数を圧縮） 2026-07-21</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #eef1f4; color: #1d1d1f; font-size: 13px; padding: 40px 24px 60px; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 16px; }
+  .note-box { background: #eef1ff; border-left: 3px solid #4a4a6a; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 24px; font-size: 12px; color: #333; line-height: 1.8; }
+
+  .tree { background: #fff; border-radius: 16px; padding: 30px 20px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+
+  .tbox { border: 2px solid #ccc; border-radius: 10px; padding: 10px 14px; font-size: 12px; font-weight: 700; text-align: center; background: #fafbfc; margin: 0 auto; }
+  .tbox.root { max-width: 320px; border-color: #4a6a5a; background: #eef5f2; }
+  .tbox.q3 { max-width: 260px; font-size: 11.5px; border-color: #999; }
+  .tbox.leaf { color: #fff; font-size: 12px; max-width: 120px; border: none; padding: 8px 10px; }
+  .leaf-dry { background: #f4a460; }
+  .leaf-oil { background: #64b5f6; }
+  .leaf-mix { background: #81c784; }
+  .leaf-sen { background: #ce93d8; }
+
+  .arr-down { text-align: center; color: #aaa; font-size: 18px; margin: 2px 0; }
+
+  .l1-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin: 6px 0; }
+  .l1-choice { border-radius: 8px; padding: 8px 10px; font-size: 10.5px; font-weight: 700; text-align: center; }
+  .c-dry { background: #fdecd9; color: #b45b1f; border: 1.5px solid #f4a460; }
+  .c-oil { background: #e3f2fd; color: #1a6a95; border: 1.5px solid #64b5f6; }
+  .c-mix { background: #e8f5e9; color: #2e7d32; border: 1.5px solid #81c784; }
+  .c-sen { background: #f3e5f8; color: #7b3f8f; border: 1.5px solid #ce93d8; }
+
+  .converge-svg { width: 100%; height: 40px; }
+
+  .l2-row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 6px auto; max-width: 700px; }
+  .l2-col { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .q3-choices { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; width: 100%; }
+  .q3-choice { background: #f5f5f7; border-radius: 5px; padding: 5px 8px; font-size: 10px; text-align: left; }
+  .q3-choice .to { display: block; font-size: 9.5px; color: #999; margin-top: 1px; }
+
+  .leaf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 700px; margin: 6px auto; }
+  .leaf-pair { display: flex; gap: 8px; justify-content: center; }
+
+  .section-divider { text-align: center; font-size: 10px; color: #aaa; letter-spacing: .1em; font-weight: 700; margin: 30px 0 14px; }
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 12px; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.07); }
+  .compare-table th { background: #4a6a5a; color: #fff; padding: 8px 12px; text-align: left; }
+  .compare-table td { padding: 8px 12px; border-bottom: 1px solid #eee; vertical-align: top; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>枝分かれ構造の概念図 v4（2段階分岐・合流でパネル数を圧縮）</h1>
+  <div class="meta">2026-07-21 ｜ 「分岐2個くらい（枝分かれの枝分かれ）」で構築リソースを抑える方向で再設計</div>
+
+  <div class="note-box">
+    <strong>v3からの変更点：</strong> v3はQ2の4択それぞれに専用のQ3を用意し4パターン作る必要があった（構築パネル4枚）。今回はQ2の4択を「乾燥系（A・D）」「脂性系（B・C）」の<strong>2グループに集約</strong>し、Q3もグループごとに1つずつ＝<strong>2パターンだけ</strong>で済むようにした。分岐は2段階（Q2→Q3）のままで、構築側の負担を半分に圧縮。
+  </div>
+
+  <div class="tree">
+    <div class="tbox root" style="margin-bottom:8px;">Q2（第一問）<br>洗顔後15分、何もつけずにいると肌は？</div>
+
+    <div class="l1-row">
+      <div class="l1-choice c-dry">A: 突っ張る、粉をふく</div>
+      <div class="l1-choice c-sen">D: 赤み・ピリピリ・かゆみが出る</div>
+      <div class="l1-choice c-oil">B: 顔全体がテカって皮脂が浮く</div>
+      <div class="l1-choice c-mix">C: おでこ・鼻はテカるのに頬は突っ張る</div>
+    </div>
+
+    <div class="l1-row" style="margin-top:2px;">
+      <div class="arr-down">↘</div><div class="arr-down">↙</div><div class="arr-down">↘</div><div class="arr-down">↙</div>
+    </div>
+
+    <div style="text-align:center;font-size:10px;color:#999;margin-bottom:4px;">A・D は「乾燥・敏感グループ」へ合流　／　B・C は「脂性・混合グループ」へ合流</div>
+
+    <div class="l2-row">
+      <div class="l2-col">
+        <div class="tbox q3">Q3-①（乾燥・敏感グループ共通）<br>新しいコスメを使うと、赤みやかゆみが出やすいですか？</div>
+        <div class="q3-choices">
+          <div class="q3-choice">はい、出やすい<span class="to">→敏感肌</span></div>
+          <div class="q3-choice">いいえ、特にない<span class="to">→乾燥肌</span></div>
+        </div>
+      </div>
+      <div class="l2-col">
+        <div class="tbox q3">Q3-②（脂性・混合グループ共通）<br>頬やフェイスラインは、テカりより乾燥が気になりますか？</div>
+        <div class="q3-choices">
+          <div class="q3-choice">いいえ、頬もテカる／全体的にテカる<span class="to">→脂性肌</span></div>
+          <div class="q3-choice">はい、頬は乾燥する<span class="to">→混合肌</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="l2-row" style="margin-top:4px;">
+      <div class="arr-down">↓</div>
+      <div class="arr-down">↓</div>
+    </div>
+
+    <div class="leaf-row">
+      <div class="leaf-pair">
+        <div class="tbox leaf leaf-sen">敏感肌</div>
+        <div class="tbox leaf leaf-dry">乾燥肌</div>
+      </div>
+      <div class="leaf-pair">
+        <div class="tbox leaf leaf-oil">脂性肌</div>
+        <div class="tbox leaf leaf-mix">混合肌</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider">── v3（4パターン）との比較 ──</div>
+  <table class="compare-table">
+    <thead><tr><th></th><th>v3：Q3を4パターン用意</th><th>v4（本案）：Q3を2パターンに集約</th></tr></thead>
+    <tbody>
+      <tr><td><strong>分岐段階</strong></td><td>2段階（Q2→Q3、Q3は4種）</td><td>2段階（Q2→Q3、Q3は2種）</td></tr>
+      <tr><td><strong>Q3の構築パネル数</strong></td><td>4枚（A/B/C/D別々）</td><td><strong>2枚</strong>（グループ共通）</td></tr>
+      <tr><td><strong>NG-2適合</strong></td><td>✅</td><td>✅（各ルートの最終設問＝Q3のみで確定）</td></tr>
+      <tr><td><strong>設問のきめ細かさ</strong></td><td>ルートごとに完全専用の質問</td><td>やや汎用（2グループで共有）だが、内容自体は各グループに合わせて調整済み</td></tr>
+      <tr><td><strong>構築リソース感</strong></td><td>やや重い（4分岐先を個別に組む）</td><td><strong>軽い（分岐先2つのみ）</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note-box" style="margin-top:16px;">
+    <strong>Q4以降（変わらず）：</strong> Q3で確定後は、Q1（年代）と合わせて共通の根拠づけ設問（毛穴の目立つ場所／一番気になる悩み）を続ける想定。全体では<br>
+    Q1年代 → Q2(第一分岐) → Q3(2グループのどちらか・ここで確定) → Q4毛穴 → Q5気になる悩み　の<strong>5問構成</strong>。
+  </div>
+
+</div>
+</body>
+</html>
