@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>総合肌タイプ診断 リサーチまとめ 2026-07-21</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f5f5f7; color: #1d1d1f; font-size: 14px; line-height: 1.7; }
+
+  .page-header { background: #fff; border-bottom: 1px solid #e0e0e0; padding: 16px 24px; position: sticky; top: 0; z-index: 100; }
+  .page-header h1 { font-size: 18px; font-weight: 700; color: #1d1d1f; }
+  .page-header .meta { font-size: 12px; color: #888; margin-top: 2px; }
+
+  .tab-bar { display: flex; gap: 8px; padding: 12px 24px 0; background: transparent; position: sticky; top: 65px; z-index: 90; flex-wrap: wrap; }
+  .tab-btn { padding: 8px 18px; border-radius: 20px; border: 2px solid #ccc; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; background: #fff; color: #888; transition: all .2s; }
+  .tab-btn.active { color: #fff; }
+  .tab-btn.tab-competitor { border-color: #4a4a6a; color: #4a4a6a; }
+  .tab-btn.tab-competitor.active { background: #4a4a6a; border-color: #4a4a6a; }
+  .tab-btn.tab-userdive { border-color: #8a8ab0; color: #8a8ab0; }
+  .tab-btn.tab-userdive.active { background: #8a8ab0; border-color: #8a8ab0; }
+
+  .tab-section { display: none; }
+  .tab-section.active { display: block; }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 20px 24px 40px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
+  h2:first-child { margin-top: 0; }
+  h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #444; }
+  p { margin-bottom: 10px; }
+  .card { background: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #4a4a6a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:hover td { background: #fafafa; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin: 2px; }
+  .tag-drsup { background: #e8f0fe; color: #1967d2; }
+  .tag-ayaka { background: #fce8e6; color: #c5221f; }
+  .tag-tsuda { background: #e6f4ea; color: #1e8e3e; }
+  .tag-dhc   { background: #f0f0f0; color: #666; }
+  .tag-bb    { background: #e8f0fe; color: #1967d2; }
+  .tag-oil   { background: #fce8e6; color: #c5221f; }
+  .tag-ingr  { background: #e6f4ea; color: #1e8e3e; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge-fact  { background: #e6f4ea; color: #1e8e3e; }
+  .badge-interp { background: #fff8e1; color: #e37400; }
+  .position-note { background: #eef1ff; border-left: 3px solid #4a4a6a; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 24px; font-size: 13px; color: #333; }
+  .highlight { background: #fffde7; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; }
+  .adopt { background: #e6f4ea; border-left: 3px solid #1e8e3e; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .skip { background: #f0f0f0; border-left: 3px solid #999; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; color: #666; }
+  .pending { background: #fce8e6; border-left: 3px solid #ea4335; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; }
+  .voice { background: #f7f7fb; border-left: 3px solid #8a8ab0; padding: 10px 16px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; font-style: italic; color: #444; }
+  .voice .src { display: block; margin-top: 4px; font-style: normal; font-size: 11px; color: #999; }
+  .section-note { font-size: 12px; color: #888; margin-top: 6px; }
+  .axis-box { border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; font-size: 13px; }
+  .axis-dry { background: #fdecd9; border-left: 3px solid #f4a460; }
+  .axis-oil { background: #e3f2fd; border-left: 3px solid #64b5f6; }
+  .axis-dull { background: #ede7f6; border-left: 3px solid #7e57c2; }
+  .flow { display: flex; align-items: center; gap: 4px; font-size: 12px; flex-wrap: wrap; margin: 10px 0; }
+  .flow-step { background: #fff; border: 1px solid #ddd; padding: 6px 10px; border-radius: 6px; }
+  .arrow { color: #888; margin: 0 4px; }
+  .ruler { display: flex; align-items: center; gap: 4px; font-size: 13px; flex-wrap: wrap; margin: 10px 0; }
+  .ruler-step { background: #fff; border: 1px solid #ddd; padding: 6px 12px; border-radius: 6px; }
+  .empathy-row { display: flex; gap: 8px; margin-bottom: 6px; font-size: 13px; align-items: flex-start; }
+  .empathy-row b { min-width: 100px; flex-shrink: 0; }
+  .unavailable { background: #fce8e6; border-left: 3px solid #ea4335; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; color: #666; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  .back-link { display: inline-block; margin-top: 8px; font-size: 12px; color: #4a4a6a; text-decoration: none; }
+  .back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+  <div class="page-header">
+    <h1>総合肌タイプ診断（コスメ④横断診断） リサーチまとめ</h1>
+    <div class="meta">2026-07-21 作成 ｜ 担当: Noa ｜ 競合4社分析＋対象読者ユーザーダイブをタブで1枚に統合 ｜ 設計書は<a href="total-skin-diagnosis-design-v2-2026-07-17.html">v2設計書</a>参照</div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn tab-competitor active" onclick="switchTab('competitor')">① 競合4社分析</button>
+    <button class="tab-btn tab-userdive" onclick="switchTab('userdive')">② ユーザーダイブ</button>
+  </div>
+
+  <!-- ══════════════ ① 競合分析タブ ══════════════ -->
+  <div id="section-competitor" class="tab-section active">
+    <div class="container">
+
+      <div class="position-note">
+        「肌タイプ診断なのに3問では設問数が少なすぎて説得力に欠ける（最低6問は必要）」というNoaの指摘を受け、既存の全3問構成を見直すための競合リサーチ。設問設計への反映方針は末尾の「統合推奨」を参照。
+      </div>
+
+      <h2>4社比較サマリー</h2>
+      <div class="card">
+        <table>
+          <thead><tr><th></th><th><span class="tag tag-drsup">Dr.サポーター</span></th><th><span class="tag tag-ayaka">AYAKA</span></th><th><span class="tag tag-tsuda">津田コスメ</span></th><th><span class="tag tag-dhc">DHC</span></th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>設問数</strong></td>
+              <td>5問</td>
+              <td><strong>12問</strong>（年代1問＋はい/どちらでもない/いいえ11問）</td>
+              <td>7問（はい/いいえ/軽度・時々）</td>
+              <td>2問前後（yes/no・二分木）</td>
+            </tr>
+            <tr>
+              <td><strong>最初の設問</strong></td>
+              <td>肌の状態（5択・症状ベース）</td>
+              <td><strong>年代（ドロップダウン）</strong></td>
+              <td>洗顔後のつっぱり有無</td>
+              <td>起床後（洗顔前）の乾燥・つっぱり感</td>
+            </tr>
+            <tr>
+              <td><strong>診断ロジック</strong></td>
+              <td>単一の症状選択式</td>
+              <td><strong>複数質問の積み上げでスコア化 → 水分量×油分量の2軸マトリクス</strong></td>
+              <td>単一質問ずつYES/NOの直列判定</td>
+              <td>yes/noの二分木</td>
+            </tr>
+            <tr>
+              <td><strong>結果タイプ</strong></td>
+              <td>非公開（結果画面遷移のため未確認）</td>
+              <td>2軸マトリクス＋くすみ等の悩み軸を別途分析</td>
+              <td><strong>3タイプ（脂性肌・混合肌・乾燥肌。敏感肌は無し）</strong></td>
+              <td>普通肌を含む5タイプ想定</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Dr.サポーター（<span class="tag tag-drsup">member.drsupporter.com/pages/skintype_selfcheck</span>）</h2>
+      <div class="card">
+        <h3>診断フロー（全5問）</h3>
+        <div class="flow">
+          <div class="flow-step">Q1 肌の状態（乾燥/季節で変わる/Tゾーンベタつく/部分乾燥+ベタつき/全体ベタつきの5択）</div><span class="arrow">→</span>
+          <div class="flow-step">Q2 洗顔後の肌の感覚（5択）</div><span class="arrow">→</span>
+          <div class="flow-step">Q3 毛穴の目立ちやすい場所（5択）</div><span class="arrow">→</span>
+          <div class="flow-step">Q4 メイクの崩れ方（5択）</div><span class="arrow">→</span>
+          <div class="flow-step">Q5 肌トラブルで悩むことが多いこと（5択）</div>
+        </div>
+        <p class="section-note">結果画面はボタン遷移後の別ページのため、診断結果タイプの種類・名称は未確認。</p>
+      </div>
+
+      <h2>AYAKA（<span class="tag tag-ayaka">ayaka-ch.jp/web-diagnostics</span>）</h2>
+      <div class="card">
+        <h3>診断フロー（全12問・Noa提供のスクリーンショットで詳細確認）</h3>
+        <p><strong>Q1（年代・ドロップダウン）</strong>を最初に聞いた後、11問を3つの軸に分けて「はい／どちらでもない／いいえ」「はい／いいえ」で積み上げるスコア式。</p>
+
+        <div class="axis-box axis-dry">
+          <strong>水分量（乾燥）軸　Q2〜Q4</strong><br>
+          Q2. 肌になめらかさが足りないと感じることはありますか？<br>
+          Q3. 肌に吸いつくようなしっとりさが足りないと感じることはありますか？<br>
+          Q4. 肌に触れた時、カサカサ・ゴワゴワしていると感じることはありますか？
+        </div>
+        <div class="axis-box axis-oil">
+          <strong>油分量（皮脂）軸　Q5〜Q7</strong><br>
+          Q5. 日中、肌のテカリが気になりますか？<br>
+          Q6. あぶらとり紙で皮脂を度々取らなければならないでしょうか？<br>
+          Q7. お化粧なおしをする際、化粧くずれは気になりますか？
+        </div>
+        <div class="axis-box axis-dull">
+          <strong>くすみ・透明感（悩み）軸　Q8〜Q12（はい/いいえのみ）</strong><br>
+          Q8. シミ・ソバカスが気になると感じることはありますか？<br>
+          Q9. 透明感のある肌にあこがれますか？<br>
+          Q10. 化粧をする前の顔色が、さえないと感じることはありますか？<br>
+          Q11. 特に目の下が、どんよりとくすんで見えると感じることはありますか？<br>
+          Q12. 肌の色が何となく黄色っぽい、全体的に暗いと感じることはありますか？
+        </div>
+
+        <h3>結果画面の構成（回答例: 水分量少ない×油分量少ない）</h3>
+        <ul>
+          <li><strong>診断結果（タイプ発表）</strong>: 「お客様のお肌は、乾燥して肌あれに近い状態です。」＋水分量×油分量の2軸グラフ</li>
+          <li><strong>お肌の分析（3枚）</strong>: 「肌あれで」「シワで」「ハリのなさで」お悩みではありませんか？＋各因果関係の断面図イラスト</li>
+          <li><strong>原因（Q8〜12のくすみ軸に対応）</strong>: シミ・ソバカス／血行不良によるくすみ／クマ、それぞれの原因を断面図イラストで解説。<strong>くすみ軸はタイプ判定とは独立して原因説明セクションとして別途表示される</strong></li>
+          <li><strong>スキンケアのポイント</strong>: 「保湿ケアがポイントです」＋「化粧水:しっとり」「乳液:しっとり」という<strong>テクスチャー傾向の直接レコメンド</strong></li>
+          <li><strong>おすすめのケア</strong>: 分析・原因それぞれに対応する具体的ケア方法の解説文</li>
+        </ul>
+        <div class="highlight">
+          <strong>最重要発見:</strong> AYAKAは「肌タイプ＝水分量×油分量の2軸」と「くすみ・シミ等の悩み＝別軸」を明確に分離。<strong>敏感肌は独立したタイプとして存在せず</strong>、津田コスメも同様。うちは「4タイプ確定」の仕様のため敏感肌は維持するが、専用の裏付け設問を意識的に厚めに入れる必要がある。
+        </div>
+      </div>
+
+      <h2>津田コスメ（<span class="tag tag-tsuda">tsuda-cosme.com/choose/skin_type</span>）</h2>
+      <div class="card">
+        <h3>診断フロー（全7問・はい/いいえ/軽度・時々の3択）</h3>
+        <div class="flow">
+          <div class="flow-step">Q1 洗顔後・起床時のつっぱり/ゴワつき</div><span class="arrow">→</span>
+          <div class="flow-step">Q2 保湿してもすぐ乾く</div><span class="arrow">→</span>
+          <div class="flow-step">Q3 Tゾーンのテカリ・ベタつき</div><span class="arrow">→</span>
+          <div class="flow-step">Q4 部分的な乾燥と皮脂の混在</div><span class="arrow">→</span>
+          <div class="flow-step">Q5 毛穴の開き・キメの乱れ</div><span class="arrow">→</span>
+          <div class="flow-step">Q6 日中のベタつき・化粧崩れ</div><span class="arrow">→</span>
+          <div class="flow-step">Q7 一年通してのニキビ・吹き出物</div>
+        </div>
+        <p><strong>結果タイプ: 脂性肌・混合肌・乾燥肌の3種類</strong>（敏感肌は無し）</p>
+        <p class="section-note">Q4（部分的な乾燥と皮脂の混在）が混合肌の直接的な確定質問として機能。Q1・Q2が乾燥軸、Q3・Q6が脂性軸、Q5・Q7が毛穴・ニキビという悩み軸で、こちらも「軸ごとに複数質問」の設計。</p>
+      </div>
+
+      <h2>DHC（<span class="tag tag-dhc">dhc.co.jp/contents/cosmetics/page_lp_skintype_index</span>）</h2>
+      <div class="card">
+        <p class="section-note">WebFetchでは取得不可（JS描画）だったが、Noaが実際に診断を進めたスクリーンショットで確認。</p>
+        <h3>診断フロー（yes/noの二分木・回答例で2問確認）</h3>
+        <div class="flow">
+          <div class="flow-step">Q1 起床後（洗顔前）、肌の乾燥やつっぱり感はありますか？（yes/no）</div><span class="arrow">→</span>
+          <div class="flow-step">Q2 肌はベタつきやすいですか？（yes/no・「ひとつ前の質問に戻る」導線あり）</div>
+        </div>
+        <p class="section-note">回答例（乾燥no×ベタつきno）で「普通肌さんタイプ」が確定。他社より圧倒的に設問数が少なく、yes/noの二分木で最短2〜3問のうちにタイプが決まる設計と推測される。</p>
+
+        <h3>結果画面の構成</h3>
+        <ul>
+          <li><strong>タイプ発表</strong>: 「あなたは普通肌さんタイプ」＋キャラクターイラスト</li>
+          <li><strong>お肌の特徴</strong>: 水分量・皮脂量・キメの状態を2〜3文で説明</li>
+          <li><strong>スキンケアアドバイス</strong>: 季節変化への対応（使用量調整の具体アドバイス）</li>
+          <li><strong>お悩み別スキンケアシリーズ</strong>: タイプに直結した単一商品ではなく、<strong>悩み別に複数の商品ラインを提示し、ユーザー自身に選ばせる</strong></li>
+        </ul>
+        <div class="highlight">
+          DHCは設問数が最少だが、その分「タイプ確定後も単一商品を推さず、悩み別に複数ラインから選ばせる」形で説得力を補っている。<strong>うちの設計（3ステップ商品を直接指名する一段階構造）とは方向性が逆</strong>——設問を厚くする方針は変えず、「季節変化に応じた使用量調整」アドバイス文だけCard2/3の参考にできる。
+        </div>
+      </div>
+
+      <h2>統合推奨（設問設計への反映方針）</h2>
+      <div class="card">
+        <h3>取り込む（優先度高）</h3>
+        <div class="adopt"><strong>1. 年代を最初の設問（Q1）にする</strong>（AYAKA・Noa指摘）</div>
+        <div class="adopt"><strong>2. 「1つの軸を複数の具体的設問で裏付ける」設計にする</strong>（AYAKA・津田コスメ共通）。現行v2は「洗顔後の状態」1問だけで4タイプに直接分岐していたが、これが説得力不足の根本原因</div>
+        <div class="adopt"><strong>3. 混合肌の確定には「部分的な乾燥と皮脂の混在」を直接聞く設問を入れる</strong>（津田コスメQ4）</div>
+        <div class="adopt"><strong>4. 敏感肌は他社が軽視する軸なので専用設問を厚めに確保する</strong></div>
+        <div class="adopt"><strong>5. 結果画面に「回答エコー」＋因果関係の説明を入れる</strong>（既存Card2矢印図式と方向性一致、変更不要）</div>
+      </div>
+      <div class="card">
+        <h3>今回は見送り</h3>
+        <div class="skip"><strong>6. くすみ・シミ軸を独立の悩み軸として全設問に追加する</strong>。既存②③診断の悩み軸が別途カバー済みのため重複深掘り不要</div>
+        <div class="skip"><strong>7. スコア加算式の厳密な集計ロジック</strong>。LINE BOTでの実装工数が高いため、軸ごとの代表質問でAND/OR判定に留める</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════ ② ユーザーダイブタブ ══════════════ -->
+  <div id="section-userdive" class="tab-section">
+    <div class="container">
+
+      <div class="position-note">
+        既存の<code>cosme-skincare.md</code>（②スキンケア方法診断向け）とは対象読者が異なるため、④横断診断の実際の設置対象（ファンデ/BB比較記事・美容オイル記事・成分解説記事の読者）に絞って追加リサーチ。保存先: <code>data/research/genres/cosme-total-skintype.md</code>
+      </div>
+
+      <h2>対象読者3グループ</h2>
+      <div class="card">
+        <table>
+          <thead><tr><th></th><th><span class="tag tag-bb">ファンデ/BB比較記事読者</span></th><th><span class="tag tag-oil">美容オイル記事読者</span></th><th><span class="tag tag-ingr">成分解説記事読者</span></th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>検索例</strong></td>
+              <td>「BBクリーム 崩れない」「ファンデーション 選び方」</td>
+              <td>「美容オイル 効果ない」「美容オイル 肌に合わない」</td>
+              <td>「ナイアシンアミド 効果ない」</td>
+            </tr>
+            <tr>
+              <td><strong>ジャーニー段階</strong></td>
+              <td>経験者〜何度も失敗（複数商品を試し済み）</td>
+              <td>初心者〜経験者（単品への興味が入口）</td>
+              <td>経験者（能動的に知識収集、成分名を覚えている）</td>
+            </tr>
+            <tr>
+              <td><strong>リアルボイスの濃さ</strong></td>
+              <td><span class="badge badge-fact">濃い（一次情報多数）</span></td>
+              <td><span class="badge badge-interp">やや薄い（二次情報中心）</span></td>
+              <td><span class="badge badge-fact">中程度</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>核心の問い：単品への関心は、肌タイプ診断への関心につながるか</h2>
+      <div class="card">
+        <div class="highlight">
+          <strong>結論：つながる。ただし単品記事を読んでいるその瞬間はまだ関心が薄く、失敗体験を重ねてから気づくパターンが多い。</strong>
+        </div>
+        <p class="section-note">正直な注記：美容オイルの情報源はほぼ二次情報（マーケ記事）で、生の声はファンデ/BBほど濃くは取れていない。過大評価しないこと。</p>
+      </div>
+
+      <h2>リアルボイス（引用付き）</h2>
+      <div class="card">
+        <h3>単品選びの試行錯誤系</h3>
+        <div class="voice">
+          「ただBBクリームを塗っただけ...時間がたつと、ムラになってきて、すごく汚くなります。粉っぽくなってくる」
+          <span class="src">Yahoo!知恵袋 q14110206499 — 乾燥肌が原因と思われるBBクリーム粉ふきの訴え</span>
+        </div>
+        <div class="voice">
+          「レビューの星が高くても、乾燥肌の自分には合わなかった。レビュアーが脂性肌だった」
+          <span class="src">note.com「BBクリームとファンデーションの違い」記事内の実体験</span>
+        </div>
+        <div class="voice">
+          「30種類以上試してやっと見つけた」
+          <span class="src">note.com — メンズBBクリーム選びの記事内の実体験</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>肌質不明の自覚系</h3>
+        <div class="voice">
+          「自分の肌質(脂性肌、乾燥肌等)を調べるには何をすればいいですか？みなさんパーソナルカラーや骨格診断のようにプロの診断で調べてもらっているのでしょうか」
+          <span class="src">Yahoo!知恵袋 q12291249982 — cosme-skincare.mdにも同一引用あり。ファンデ関連の検索でも独立して再出現することを確認</span>
+        </div>
+        <div class="voice">
+          「肌が薄いためか、艶やハリがありません。ファンデとパウダーでツヤ肌にしたいのですが、どうしてもファンデが馴染みません。乾燥と脂性の混合肌で」
+          <span class="src">Yahoo!知恵袋 q14308974869 — ファンデの悩みを語る中でユーザー自身が「混合肌」と自己診断している実例</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>単品への不信・原因追及系</h3>
+        <div class="voice">
+          「美容オイルが合わない人いますか？評判の良いオイルを使ったが...」
+          <span class="src">Yahoo!知恵袋 q10186128910</span>
+        </div>
+        <div class="voice">
+          オレイン酸含有量の高いオイルがニキビの原因になりうる、ホホバオイルは合うがアルガンオイルは合わない等、同じ「オイル」でも個人の肌質適合性で結果が真逆になるという体験談
+          <span class="src">Ameblo複数記事の要約（rik01194 / nanae-aroma 等）</span>
+        </div>
+        <div class="voice">
+          ナイアシンアミド使用2日でニキビ悪化
+          <span class="src">Yahoo!知恵袋 q14258350934 — 成分と肌質のミスマッチの実例</span>
+        </div>
+      </div>
+
+      <h2>エンパシーマップ</h2>
+      <div class="card">
+        <div class="empathy-row"><b>Think & Feel</b><span><span class="badge badge-fact">FACT</span> 「レビュアーと自分の肌質が違ったから合わなかったのでは」という気づき（note.com実体験）</span></div>
+        <div class="empathy-row"><b></b><span><span class="badge badge-interp">INTERPRETATION</span> 単品への興味が強いうちは肌質の話への関心は薄いが、失敗を繰り返すと関心が芽生える → 時系列データなし、要検証</span></div>
+        <div class="empathy-row"><b>Hear</b><span><span class="badge badge-fact">FACT</span> 「肌質は乾燥肌/脂性肌/混合肌等に分類できる」という情報は既に浸透している（自らその名称を使って質問している）</span></div>
+        <div class="empathy-row"><b></b><span><span class="badge badge-fact">FACT</span> 「オイルは脂性肌には不要」という俗説が広く流布しているが実際は逆、という専門家発信もある（二次情報）</span></div>
+        <div class="empathy-row"><b>See</b><span><span class="badge badge-interp">INTERPRETATION</span> 比較記事・ランキング記事を読み比べ、成分名でさらに検索する行動が推測される（直接観察はできていない）</span></div>
+        <div class="empathy-row"><b>Say & Do</b><span><span class="badge badge-fact">FACT</span> 星評価・ランキングだけを頼りに単品を選んで失敗する／何十種類も試してからたどり着く／自分の肌質を他人に聞く</span></div>
+        <div class="empathy-row"><b>Pain</b><span><span class="badge badge-fact">FACT</span> 単品を変えても自分の肌質に合ってるか分からないまま選んでいるため試行錯誤のコストが高い／同じ商品カテゴリでも肌質次第で結果が真逆になることを痛い目に遭って学ぶ</span></div>
+        <div class="empathy-row"><b>Gain</b><span><span class="badge badge-fact">FACT</span> 「プロの診断で肌質を調べてもらいたい」という明示的な願望（パーソナルカラー・骨格診断との比較で語られる）</span></div>
+      </div>
+
+      <h2>今のものさし → 新しいものさし</h2>
+      <div class="card">
+        <div class="ruler">
+          <div class="ruler-step">単品（ファンデ/オイル/成分）を選ぶ</div><span class="arrow">→</span>
+          <div class="ruler-step">高評価・話題の商品を試す</div><span class="arrow">→</span>
+          <div class="ruler-step">合わない・効果を感じない</div><span class="arrow">→</span>
+          <div class="ruler-step">「レビュアーと肌質が違ったのかも」に気づく（ここまで来て初めて）</div>
+        </div>
+        <div class="highlight">
+          新しいものさし：「単品を選ぶ前に、まず自分の肌タイプを知っておけば、この試行錯誤は避けられた」
+        </div>
+      </div>
+
+      <h2>ハマるシーン候補（PU文言・設問設計の起点）</h2>
+      <div class="card">
+        <ul>
+          <li>BBクリーム/ファンデ比較記事を読みながら「星評価の高い商品を試したのに合わなかった」経験を思い出す瞬間 → 「レビュアーと自分の肌質が違ったのでは」という気づきへの橋渡しが効きやすい</li>
+          <li>美容オイル記事で「このオイル本当に効くのかな」と半信半疑になっている瞬間 → 肌質次第で同じオイルの評価が真逆になる、という話が刺さりやすい</li>
+          <li>成分解説記事で複数成分を比較検討している瞬間 → 「成分を知っても、自分の肌に合うかは別」という切り口が刺さりやすい</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>データの限界（正直な注記）</h3>
+        <div class="pending">
+          <ul>
+            <li>Ahrefs未使用（web_searchのみ）。検索ボリュームは未確認、鮮度に注意</li>
+            <li>美容オイルの情報源はほぼ二次情報（マーケ記事）で、生の声の濃さはファンデ/BBに劣る</li>
+            <li>「単品記事読了時点でまだ肌質への関心が薄い」は時系列データがなく仮説段階（要検証マーク済み）</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:0;">
+    <a class="back-link" href="total-skin-diagnosis-design-v2-2026-07-17.html">← 総合肌タイプ診断 v2 設計書に戻る</a>
+    <div style="margin-top:24px; font-size:11px; color:#bbb; text-align:center;">
+      generated: 2026-07-21 ｜ noa-docs
+    </div>
+  </div>
+
+<script>
+  function switchTab(name) {
+    document.querySelectorAll('.tab-section').forEach(function(el){ el.classList.remove('active'); });
+    document.getElementById('section-' + name).classList.add('active');
+    document.querySelectorAll('.tab-btn').forEach(function(el){ el.classList.remove('active'); });
+    document.querySelector('.tab-' + name).classList.add('active');
+  }
+</script>
+</body>
+</html>
