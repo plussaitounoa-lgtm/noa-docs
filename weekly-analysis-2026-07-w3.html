@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>週次分析 7月W3 — 2026-07-13〜07-19</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 900px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-card.warn-card { border-color: #fde68a; background: #fffbeb; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-highest { background: #fee2e2; color: #991b1b; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .pill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+    .pill-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px; }
+    .pill-card.bad { border-color: #fca5a5; background: #fff1f2; }
+    .pill-card.mixed { border-color: #fde68a; background: #fffbeb; }
+    .pill-card.good { border-color: #86efac; background: #f0fdf4; }
+    .pill-title { font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 8px; }
+    .pill-metric { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 3px; }
+    .pill-metric .label { color: #64748b; }
+    .pill-metric .val { font-weight: 700; color: #0f172a; }
+    .pill-metric .val.bad { color: #dc2626; }
+    .pill-metric .val.good { color: #16a34a; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">週次分析 — 7月W3</div>
+    <h1>2026-07-13〜07-19 週次分析レポート</h1>
+    <p class="desc">作成: 2026-07-21 ／ 前週: 7月W2（7/6〜7/12）</p>
+  </div>
+
+  <!-- ① 7月GOAL進捗 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">1</div>
+      <div>
+        <div class="section-title">7月 GOAL進捗</div>
+        <div class="section-sub">目標1,200人 に対する当月累計（19日時点）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card alert">
+          <div class="kpi-label">7月累計</div>
+          <div class="kpi-value">504人</div>
+          <div class="kpi-sub">19日経過（達成率42.0%）</div>
+        </div>
+        <div class="kpi-card warn-card">
+          <div class="kpi-label">日均</div>
+          <div class="kpi-value">26.5人</div>
+          <div class="kpi-sub">必要日均 58.0人</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">月末予測</div>
+          <div class="kpi-value">822人</div>
+          <div class="kpi-sub">残12日（目標比 68.5%）</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">GOALギャップ</div>
+          <div class="kpi-value">▲696人</div>
+          <div class="kpi-sub">月末予測ベースで▲378人</div>
+        </div>
+      </div>
+      <div class="insight insight-red">
+        <strong>月末予測822人 = 目標1,200人の68.5%で着地見込み。</strong>
+        W2で見えた回復基調がW3で反転（後述）。必要日均58.0人に対し実績日均26.5人と大きく届いておらず、GLP-1の立て直しが月末予測を左右する。
+      </div>
+    </div>
+  </div>
+
+  <!-- ② W3全体ファネル -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">2</div>
+      <div>
+        <div class="section-title">7月W3 週次パフォーマンス</div>
+        <div class="section-sub">7/13〜7/19 vs 7/6〜7/12（W2）比較</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>指標</th>
+            <th>W3（7/13〜7/19）</th>
+            <th>W2（7/6〜7/12）</th>
+            <th>前週比</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>友達合計</strong></td>
+            <td><strong>154人</strong>（PU101 + バナー53）</td>
+            <td>186人（PU122 + バナー64）</td>
+            <td class="down">▲32人（▲17.2%）</td>
+          </tr>
+          <tr>
+            <td>LP imp</td>
+            <td>29,970</td>
+            <td>32,669</td>
+            <td class="down">▲8.3%（▲2,699）</td>
+          </tr>
+          <tr>
+            <td>PU imp</td>
+            <td>12,213</td>
+            <td>13,602</td>
+            <td class="down">▲10.2%</td>
+          </tr>
+          <tr>
+            <td>PU click</td>
+            <td>1,653</td>
+            <td>779</td>
+            <td class="up">+112.2%</td>
+          </tr>
+          <tr>
+            <td>CTR</td>
+            <td class="up">13.53%</td>
+            <td>5.73%</td>
+            <td class="up">+7.80pt</td>
+          </tr>
+          <tr>
+            <td>友達追加率（PU）</td>
+            <td>6.11%</td>
+            <td>15.66%</td>
+            <td class="down">▲9.55pt</td>
+          </tr>
+          <tr>
+            <td>PVFR（全体）</td>
+            <td class="warn">0.51%</td>
+            <td class="warn">0.57%</td>
+            <td>▲0.06pt ほぼ横ばい</td>
+          </tr>
+          <tr>
+            <td>日均</td>
+            <td>22.0人</td>
+            <td>26.6人</td>
+            <td class="down">▲4.6人</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-red">
+        <strong>友達▲32人（▲17.2%）と減少に転じた。</strong>
+        CTR自体は13.53%と基準超えまで改善しておりPU文言は機能中。ボトルネックはLP流入の縮小（▲8.3%）と追加率の急落（15.66%→6.11%）で、主犯は医療ダイエット(GLP-1)（後述）。
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ ジャンル別 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">3</div>
+      <div>
+        <div class="section-title">ジャンル別 W3 vs W2</div>
+        <div class="section-sub">友達増減の内訳</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>ジャンル</th>
+            <th>W3 友達</th>
+            <th>W2 友達</th>
+            <th>差</th>
+            <th>PVFR</th>
+            <th>CTR</th>
+            <th>追加率</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>医療ダイエット(GLP-1)</strong></td>
+            <td><strong>60人</strong></td>
+            <td>76人</td>
+            <td class="down">▲16人</td>
+            <td class="warn">0.43%</td>
+            <td class="up">14.90%</td>
+            <td class="warn">7.35%</td>
+          </tr>
+          <tr>
+            <td>コスメ</td>
+            <td>11人</td>
+            <td>9人</td>
+            <td class="up">+2人</td>
+            <td>0.26%</td>
+            <td>14.46%</td>
+            <td>4.98%</td>
+          </tr>
+          <tr>
+            <td>オンラインピル</td>
+            <td>14人</td>
+            <td>15人</td>
+            <td class="down">▲1人</td>
+            <td>0.48%</td>
+            <td>12.22%</td>
+            <td>9.79%</td>
+          </tr>
+          <tr>
+            <td>ED</td>
+            <td>2人</td>
+            <td>3人</td>
+            <td class="down">▲1人</td>
+            <td>0.32%</td>
+            <td>14.07%</td>
+            <td>5.41%</td>
+          </tr>
+          <tr>
+            <td>包茎手術(PLUS)</td>
+            <td>6人</td>
+            <td>9人</td>
+            <td class="down">▲3人</td>
+            <td>0.20%</td>
+            <td class="warn">10.91%</td>
+            <td class="down">3.85%</td>
+          </tr>
+          <tr>
+            <td>ICL</td>
+            <td>0人</td>
+            <td>3人</td>
+            <td class="down">▲3人</td>
+            <td>0.00%</td>
+            <td>0.00%</td>
+            <td>0.00%</td>
+          </tr>
+          <tr>
+            <td>AGA</td>
+            <td>6人</td>
+            <td>3人</td>
+            <td class="up">+3人</td>
+            <td>0.42%</td>
+            <td>11.48%</td>
+            <td>7.89%</td>
+          </tr>
+          <tr>
+            <td>FAGA</td>
+            <td>2人</td>
+            <td>3人</td>
+            <td class="down">▲1人</td>
+            <td>0.22%</td>
+            <td>14.83%</td>
+            <td>3.03%</td>
+          </tr>
+          <tr>
+            <td>いびき</td>
+            <td>0人</td>
+            <td>1人</td>
+            <td class="down">▲1人</td>
+            <td>0.00%</td>
+            <td>0.00%</td>
+            <td>0.00%</td>
+          </tr>
+          <tr>
+            <td><strong>バナー計</strong></td>
+            <td><strong>53人</strong></td>
+            <td>64人</td>
+            <td class="down">▲11人</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-red">
+        <strong>医療ダイエット(GLP-1)が76→60人（▲16人）と減少し、全体減少59人の27%を占める。</strong>
+        包茎・ICLも各▲3人。逆にAGA(+3人)・コスメ(+2人)は伸長。母数の小さいジャンルの増減はノイズの範囲。
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 施策振り返り -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">4</div>
+      <div>
+        <div class="section-title">W3 施策振り返り</div>
+        <div class="section-sub">W3期間中（7/13〜7/19）の施策効果</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr>
+            <th>施策</th>
+            <th>結果</th>
+            <th>判定</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>「食べていいのは何㎉？」「1日で食べていい量」PU 継続稼働</td>
+            <td>友達15→7人（1日で食べていい量）。LP流入もこいずみ全体で▲26%と縮小し反動</td>
+            <td><span class="badge badge-yellow">△ 反動</span></td>
+          </tr>
+          <tr>
+            <td>サプリ(SLILIN F)案件 構築依頼（啓音さんへ送付済み）</td>
+            <td>構築進行中、公開待ち。通常リンクでの先行リリース準備中</td>
+            <td><span class="badge badge-gray">― 進行中</span></td>
+          </tr>
+          <tr>
+            <td>カレーナ コスメ診断（クレンジング+スキンケア）LINE導線（累積6/24〜7/19）</td>
+            <td>累積友達24人（前回12人から+12人）。脂性肌おすすめ(9人)・50代おすすめ(6人)が牽引</td>
+            <td><span class="badge badge-green">○ 継続伸長</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-yellow">
+        <strong>W2の回復はLP流入回復が主因だったが、W3は流入が再び縮小し反動。</strong>
+        PU文言側の問題ではなく記事流入側の変動。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ ジャンル別指標詳細 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">5</div>
+      <div>
+        <div class="section-title">注目ジャンル — 主犯ドリルダウン</div>
+        <div class="section-sub">W3で動きが大きかったジャンルのハイライト</div>
+      </div>
+    </div>
+    <div class="body">
+
+      <!-- 医療ダイエット -->
+      <p style="font-size:13px; font-weight:700; color:#475569; margin-bottom:8px;">■ 医療ダイエット(GLP-1) — こいずみサイトのLP流入低下＋「痩せる薬」反動</p>
+      <div class="verdict verdict-red">▲ 友達76→60人（▲16人）。震源はこいずみサイト（▲32人、70→38人）。</div>
+      <table>
+        <thead>
+          <tr><th>サイト</th><th>W2 LP imp</th><th>W3 LP imp</th><th>W2 友達</th><th>W3 友達</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>こいずみ</strong></td>
+            <td>12,193</td>
+            <td class="down">8,984（▲26.3%）</td>
+            <td><strong>70人</strong></td>
+            <td class="down"><strong>38人</strong>（▲45.7%）</td>
+          </tr>
+          <tr>
+            <td>渋谷</td>
+            <td>4,359</td>
+            <td class="down">3,216（▲26.2%）</td>
+            <td>11人</td>
+            <td class="up">16人（+45.5%）</td>
+          </tr>
+          <tr>
+            <td>天白</td>
+            <td>978</td>
+            <td class="down">760（▲22.3%）</td>
+            <td>4人</td>
+            <td>3人</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-red">
+        <strong>こいずみ・渋谷・天白の3サイトともLP impが一律▲20〜30%落ちており、サイト単位のトラフィック低下（原因未特定・サチコ順位変動を要確認）。</strong>
+        ただし友達への影響は非対称：こいずみは流入減以上に友達が急減（PVFR 0.57%→0.42%）した一方、渋谷は流入減にもかかわらず友達が増加（PVFR 0.25%→0.50%と改善）。震源は明確にこいずみ側の転換率低下。
+      </div>
+      <table style="margin-top:12px;">
+        <thead>
+          <tr><th>こいずみ「痩せる薬」記事</th><th>LP imp</th><th>PU imp</th><th>click</th><th>友達</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>W2（7/6〜7/12）</td>
+            <td>1,070</td>
+            <td>478</td>
+            <td>81</td>
+            <td class="up"><strong>19人</strong></td>
+          </tr>
+          <tr>
+            <td>W3（7/13〜7/19）</td>
+            <td class="down">574（▲46.4%）</td>
+            <td>222</td>
+            <td>45</td>
+            <td class="down"><strong>2人</strong>（▲89.5%）</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-yellow">
+        「痩せる薬」1記事だけでこいずみの友達減少32人のうち17人を占める。W2時点の19人は決断層ユーザーの一時的な集中流入だった可能性が高く、W3で正常化（反動）した可能性がある。
+      </div>
+
+      <hr>
+
+      <!-- 包茎 -->
+      <p style="font-size:13px; font-weight:700; color:#475569; margin:16px 0 8px;">■ 包茎手術(PLUS) houhien / toha — PU追加率0%調査（t176）向け直近データ</p>
+      <div class="verdict verdict-red">▲ 4タグ合計クリック184回に対し友達3人。CTR自体も基準割れ気味で、文言＋LP両面の改修余地。</div>
+      <table>
+        <thead>
+          <tr><th>サイト・タグ</th><th>LP imp</th><th>PU imp</th><th>click</th><th>友達</th><th>CTR</th><th>追加率</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>houhien_自分に合った治し方が知りたい</td>
+            <td>1,101</td><td>567</td><td>61</td><td>2人</td><td>10.8%</td><td class="down">3.3%</td>
+          </tr>
+          <tr>
+            <td>houhien_自分に自信をつけたい</td>
+            <td>1,175</td><td>691</td><td>83</td><td>0人</td><td>12.0%</td><td class="down">0.0%</td>
+          </tr>
+          <tr>
+            <td>toha_包茎を治して自分に自信をつけたい!</td>
+            <td>589</td><td>317</td><td>28</td><td>1人</td><td>8.8%</td><td class="down">3.6%</td>
+          </tr>
+          <tr>
+            <td>toha_自分に合った治し方が知りたい</td>
+            <td>605</td><td>247</td><td>12</td><td>0人</td><td class="down">4.9%</td><td class="down">0.0%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="insight insight-yellow">
+        当初「CTRは良いのに追加率だけ0%」という想定だったが、実際はCTR自体も基準13%を下回っており入口から弱い（特にtohaの自分に合った治し方が知りたいは4.9%）。追加率はほぼ壊滅（0〜3.6%）で、文言＋LP両面の改修が必要というのがデータの結論。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ ネクストアクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">6</div>
+      <div>
+        <div class="section-title">7月W4 ネクストアクション</div>
+        <div class="section-sub">優先度順</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-highest">最優先</span>
+          <div class="action-body">
+            <strong>こいずみサイトのLP流入低下の原因調査</strong>
+            <span>全記事一律▲20〜30%。サチコで順位変動を確認→必要ならCTOへ。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">高</span>
+          <div class="action-body">
+            <strong>包茎手術(PLUS) houhien/toha のPU追加率0%改修の方向性決定</strong>
+            <span>CTR自体も基準割れのため、文言＋LP両面の改修方針を確定する。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">高</span>
+          <div class="action-body">
+            <strong>コスメPU改修（記事内取捨選択）の最終カット案確定→デザイン依頼書作成</strong>
+            <span>コスメバナー作成・設置もあわせて進める。</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ⑦ 7月方針 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">7</div>
+      <div>
+        <div class="section-title">7月方針</div>
+        <div class="section-sub">バーティカル注力への移行期間フェーズ</div>
+      </div>
+    </div>
+    <div class="body">
+      <p>コスメジャンルの基盤を整える。PU/バナー改修は週次分析をもとに随時進める。</p>
+      <p style="font-size:13px; color:#64748b; margin-top:4px;">※8月以降：バーティカル側注力。LINEは2割稼働で改修進め、数値維持継続。</p>
+    </div>
+  </div>
+
+  <!-- ⑧ 総括 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">8</div>
+      <div>
+        <div class="section-title">週次総括</div>
+        <div class="section-sub">W3の因果関係まとめ</div>
+      </div>
+    </div>
+    <div class="body">
+      <p><strong>今週の一言:</strong> 友達▲32人（▲17.2%）と減少に転じた。主犯は医療ダイエット(GLP-1)の▲16人で、震源はこいずみサイトのLP流入低下（▲26%）と「痩せる薬」記事の反動（19→2人）。月次累計504人（7/1〜7/19）、目標1,200人に対し月末予測822人・達成率68.5%。</p>
+      <hr>
+      <p><strong>なぜ友達が減ったか:</strong></p>
+      <p>友達154人（前週▲32人/▲17.2%）。LP imp▲8.3%（32,669→29,970）と縮小。医療ダイエット(GLP-1)が76→60人（▲16人）と減少し、こいずみ・渋谷・天白の3サイトともLP impが一律▲20〜30%落ちるサイト単位のトラフィック低下が発生。ただし友達への影響はこいずみだけ非対称に大きく、「痩せる薬」記事のW2一時的高転換（19人）が反動（2人）したことが最大要因。CTRは14.9%と基準超えでPU文言は機能中、ボトルネックはLP流入・追加率側。</p>
+      <hr>
+      <p><strong>月次着地の現実:</strong></p>
+      <p>7月累計504人（目標1,200人 / 達成率42.0%（19日経過）/ 月末予測822人・達成率68.5%）。GLP-1の立て直しができなければ月末予測はさらに下振れするリスクがある。</p>
+      <hr>
+      <p><strong>今週の施策サマリー:</strong></p>
+      <p>摂取カロリー系PU継続稼働も友達15→7人と反動。サプリ(SLILIN F)案件は啓音さんへ構築依頼済みで公開待ち。カレーナ コスメ診断は累積友達24人まで伸長。次週はこいずみLP流入低下の原因調査、包茎houhien/toha改修方針決定、コスメPU改修の最終カット案確定を進める。</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
