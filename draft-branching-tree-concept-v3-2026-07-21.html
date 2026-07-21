@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>枝分かれ構造の概念図v3（複数選択のまま・アダプティブ分岐） 2026-07-21</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #eef1f4; color: #1d1d1f; font-size: 13px; padding: 40px 24px 60px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 16px; }
+  .note-box { background: #eef1ff; border-left: 3px solid #4a4a6a; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 24px; font-size: 12px; color: #333; line-height: 1.8; }
+
+  .tree { background: #fff; border-radius: 16px; padding: 30px 20px; box-shadow: 0 2px 12px rgba(0,0,0,.08); overflow-x: auto; }
+
+  .tbox { border: 2px solid #ccc; border-radius: 10px; padding: 10px 14px; font-size: 12px; font-weight: 700; text-align: center; background: #fafbfc; margin: 0 auto; }
+  .tbox.root { max-width: 320px; border-color: #4a6a5a; background: #eef5f2; }
+  .tbox.q3 { max-width: 210px; font-size: 11px; }
+  .tbox.leaf { color: #fff; font-size: 12px; max-width: 130px; border: none; padding: 8px 10px; }
+  .leaf-dry { background: #f4a460; }
+  .leaf-oil { background: #64b5f6; }
+  .leaf-mix { background: #81c784; }
+  .leaf-sen { background: #ce93d8; }
+
+  .arr-down { text-align: center; color: #aaa; font-size: 18px; margin: 2px 0; }
+
+  /* Level 1 choices (4-way, colored like original Q) */
+  .l1-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin: 6px 0; }
+  .l1-choice { border-radius: 8px; padding: 8px 10px; font-size: 10.5px; font-weight: 700; text-align: center; }
+  .c-dry { background: #fdecd9; color: #b45b1f; border: 1.5px solid #f4a460; }
+  .c-oil { background: #e3f2fd; color: #1a6a95; border: 1.5px solid #64b5f6; }
+  .c-mix { background: #e8f5e9; color: #2e7d32; border: 1.5px solid #81c784; }
+  .c-sen { background: #f3e5f8; color: #7b3f8f; border: 1.5px solid #ce93d8; }
+
+  .l2-col { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .q3-choices { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .q3-choice { background: #f5f5f7; border-radius: 5px; padding: 4px 8px; font-size: 9.5px; text-align: left; }
+  .q3-choice .to { display: block; font-size: 9px; color: #999; margin-top: 1px; }
+
+  .section-divider { text-align: center; font-size: 10px; color: #aaa; letter-spacing: .1em; font-weight: 700; margin: 30px 0 14px; }
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 12px; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.07); }
+  .compare-table th { background: #4a6a5a; color: #fff; padding: 8px 12px; text-align: left; }
+  .compare-table td { padding: 8px 12px; border-bottom: 1px solid #eee; vertical-align: top; }
+  .warn-box { background: #fff8e1; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 16px 0; font-size: 12px; color: #7a5c00; line-height: 1.8; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>枝分かれ構造の概念図 v3（複数選択のまま・アダプティブ分岐）</h1>
+  <div class="meta">2026-07-21 ｜ Y/N縛りをやめ、元の4択シーン描写のまま「回答によって次の設問が変わる」木構造に再設計</div>
+
+  <div class="note-box">
+    <strong>v2からの変更点：</strong> Noaから「別にYES/NOじゃなくて回答自体はそのままでいい」と指摘。二択に縛らず、既存の4択（シーン描写）のままアダプティブ分岐にした。<strong>Q2の回答で「疑いタイプ」を仮決定→各疑いタイプ専用のQ3で確認/補正→Q3の回答のみで最終確定</strong>。NG-2（最終設問のみが結果に紐づく）に準拠。
+  </div>
+
+  <!-- Level 1: Q2 (root, 4択) -->
+  <div class="tree">
+    <div class="tbox root" style="margin-bottom:8px;">Q2（第一問）<br>洗顔後15分、何もつけずにいると肌は？</div>
+
+    <div class="l1-row">
+      <div class="l1-choice c-dry">A: 突っ張る、粉をふく<br><span style="font-weight:400;">（乾燥疑い）</span></div>
+      <div class="l1-choice c-oil">B: 顔全体がテカって皮脂が浮く<br><span style="font-weight:400;">（脂性疑い）</span></div>
+      <div class="l1-choice c-mix">C: おでこ・鼻はテカるのに頬は突っ張る<br><span style="font-weight:400;">（混合疑い）</span></div>
+      <div class="l1-choice c-sen">D: 赤みが出たり、ピリピリ・かゆみが出る<br><span style="font-weight:400;">（敏感疑い）</span></div>
+    </div>
+
+    <div class="l1-row" style="margin-top:2px;">
+      <div class="arr-down">↓</div><div class="arr-down">↓</div><div class="arr-down">↓</div><div class="arr-down">↓</div>
+    </div>
+
+    <!-- Level 2: Q3（4パターン、確認/補正） -->
+    <div class="l1-row" style="align-items:start;">
+
+      <div class="l2-col">
+        <div class="tbox q3">Q3-A（乾燥ルート）<br>季節の変わり目、その乾燥はどうなりますか？</div>
+        <div class="q3-choices">
+          <div class="q3-choice">もっとひどくなり、肌が荒れやすい<span class="to">→敏感肌</span></div>
+          <div class="q3-choice">変わらず乾燥したまま<span class="to">→乾燥肌</span></div>
+          <div class="q3-choice">実は皮脂も気になる時がある<span class="to">→混合肌</span></div>
+        </div>
+      </div>
+
+      <div class="l2-col">
+        <div class="tbox q3">Q3-B（脂性ルート）<br>そのテカり、日中どう変化しますか？</div>
+        <div class="q3-choices">
+          <div class="q3-choice">一日中ずっと均一にテカる<span class="to">→脂性肌</span></div>
+          <div class="q3-choice">夕方だけ、それ以外は乾燥気味<span class="to">→混合肌</span></div>
+        </div>
+      </div>
+
+      <div class="l2-col">
+        <div class="tbox q3">Q3-C（混合ルート）<br>新しいコスメを使うと、肌に変化はありますか？</div>
+        <div class="q3-choices">
+          <div class="q3-choice">特にない、いつも通りの混合の状態<span class="to">→混合肌</span></div>
+          <div class="q3-choice">赤みやかゆみが出やすい<span class="to">→敏感肌</span></div>
+        </div>
+      </div>
+
+      <div class="l2-col">
+        <div class="tbox q3">Q3-D（敏感ルート）<br>その反応、季節の変わり目にも出ますか？</div>
+        <div class="q3-choices">
+          <div class="q3-choice">はい、新コスメ以外でも出る<span class="to">→敏感肌</span></div>
+          <div class="q3-choice">いいえ、新コスメを使った時だけ<span class="to">→敏感肌</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="l1-row" style="margin-top:2px;">
+      <div class="arr-down">↓</div><div class="arr-down">↓</div><div class="arr-down">↓</div><div class="arr-down">↓</div>
+    </div>
+
+    <!-- Leaves -->
+    <div class="l1-row">
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;">
+        <div class="tbox leaf leaf-sen">敏感肌</div>
+        <div class="tbox leaf leaf-dry">乾燥肌</div>
+        <div class="tbox leaf leaf-mix">混合肌</div>
+      </div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;">
+        <div class="tbox leaf leaf-oil">脂性肌</div>
+        <div class="tbox leaf leaf-mix">混合肌</div>
+      </div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;">
+        <div class="tbox leaf leaf-mix">混合肌</div>
+        <div class="tbox leaf leaf-sen">敏感肌</div>
+      </div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;">
+        <div class="tbox leaf leaf-sen">敏感肌</div>
+        <div class="tbox leaf leaf-sen">敏感肌</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="warn-box">
+    <strong>これはラフ案（内容は未精査）。</strong> Q3-Dは2択とも「敏感肌」に着地しており実質分岐していない（Card2のパーソナライズ用の確認questionとして機能）。Q2で「疑いタイプ」を立てた後、Q3で確認 or 別タイプへ補正するという構造は、参考画像（Me on./バルクオム）の「合流あり多段階ツリー」と発想は同じだが、今回は各ルート専用のQ3を用意したため合流は発生していない（合流させるかどうかは要検討）。設問数は1人あたりQ2→Q3の2問で確定。既存Q1(年代)・Q4〜Q7(根拠づけ)を組み合わせるかは別途整理が必要。
+  </div>
+
+  <div class="section-divider">── 案の比較 ──</div>
+  <table class="compare-table">
+    <thead><tr><th></th><th>案A：多数決（NG-2違反）</th><th>案B：YES/NO二分岐＋合流</th><th>案C：本案（複数選択のまま4分岐）</th></tr></thead>
+    <tbody>
+      <tr><td><strong>設問形式</strong></td><td>4択×3問、全員共通</td><td>YES/NOの二択のみ</td><td>元の4択シーン描写のまま</td></tr>
+      <tr><td><strong>NG-2適合</strong></td><td>❌</td><td>✅</td><td>✅</td></tr>
+      <tr><td><strong>体感の答えやすさ</strong></td><td>普通</td><td>YES/NOなので楽だが情報量は薄い</td><td>これまで通りの具体的シーン描写を維持</td></tr>
+      <tr><td><strong>制作パネル数</strong></td><td>7問分</td><td>Q1+Q2(2)+Q3(3)=6枚</td><td>Q2(1)+Q3(4パターン)=5枚（+Q1年代等を足す場合は追加）</td></tr>
+    </tbody>
+  </table>
+
+</div>
+</body>
+</html>
