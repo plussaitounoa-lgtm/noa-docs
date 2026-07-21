@@ -154,163 +154,243 @@
     </div>
   </div>
 
-  <!-- 2. PU取捨選択：実施済み4本 -->
+  <!-- 2. クレンジング診断：記事別PU一覧 -->
   <div class="section">
     <div class="section-head">
       <div class="num num-red">2</div>
       <div>
-        <div class="section-title">停止処理済み4PU — 効果検証は保留中</div>
-        <div class="section-sub">2026-07-17付けで台帳ステータスを「停止」に変更</div>
+        <div class="section-title">クレンジング診断 — 記事別PU一覧</div>
+        <div class="section-sub">全10記事・24PU。記事ごとにPUを束ねて表示（累計 7/1〜7/16基準、★はNoa事前フラグ）</div>
       </div>
     </div>
     <div class="body">
+
+      <h3 class="slug" style="font-size:13px;">cleansing-fifties</h3>
       <div class="table-wrap">
       <table>
-        <thead>
-          <tr><th>PU</th><th>記事</th><th>停止前指標（累計）</th><th>判定根拠</th></tr>
-        </thead>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
         <tbody>
-          <tr>
-            <td>自信クレ</td><td class="slug">cleansing-fifties</td>
-            <td>CTR11.1% / 友0 / PVFR0%</td>
-            <td>兄弟2PU（PVFR0.99%/0.53%）は友だち獲得、自分だけ0人</td>
-          </tr>
-          <tr>
-            <td>肌に合うクレ</td><td class="slug">cleansing-acne</td>
-            <td>CTR7.8% / 友0 / PVFR0%</td>
-            <td>兄弟PU（ぴったりのクレ、PVFR1.00%）が獲得する中、CTRも記事内最低</td>
-          </tr>
-          <tr>
-            <td>肌悩みスキンケア</td><td class="slug">skincare-shisei-oily</td>
-            <td>CTR11.9% / 友0 / PVFR0%</td>
-            <td>記事最大母数(imp211)。兄弟2PU（PVFR0.74%/0.37%）は獲得、自分は最下位</td>
-          </tr>
-          <tr>
-            <td>肌悩みスキンケア</td><td class="slug">skincare-innerdry</td>
-            <td>CTR4.0% / 友0 / PVFR0%</td>
-            <td>兄弟PUの1/4以下のCTR（4.0% vs 15〜17%）</td>
-          </tr>
+          <tr><td>自信クレ</td><td>11.1%</td><td>0 / 0%</td><td><span class="badge badge-red">停止済み(07/17)</span></td></tr>
+          <tr><td>ぴったりのク</td><td>21.2%✅</td><td>4 / 0.99%</td><td><span class="badge badge-green">残す・好調</span></td></tr>
+          <tr><td>肌に合うクレ</td><td>15.5%✅</td><td>2 / 0.53%</td><td><span class="badge badge-yellow">残す寄り・直近週鈍化要観察</span></td></tr>
         </tbody>
       </table>
       </div>
 
-      <div class="insight insight-red">
-        <strong>⚠️ 停止後（7/17〜7/20）のデータでも4PUとも表示・クリックが継続。2本（cleansing-acne肌に合うクレ／skincare-shisei-oily肌悩みスキンケア）は日次でむしろ増加傾向。</strong>
-        Noaが実機でskincare-shisei-oily記事を確認したところPU非表示を確認済みのため、データ側の反映ラグ（7/20夜〜7/21頃に停止が有効化された可能性）が濃厚。GTM側を再更新済み、7/22以降のデータで再チェック予定。
+      <h3 class="slug" style="font-size:13px;">cleansing-acne</h3>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>肌に合うクレ</td><td>7.8%</td><td>0 / 0%</td><td><span class="badge badge-red">停止済み(07/17)</span></td></tr>
+          <tr><td>ぴったりのクレ</td><td>18.6%✅</td><td>2 / 1.00%</td><td><span class="badge badge-green">残す・好調</span></td></tr>
+          <tr><td>自信クレ</td><td>15.1%✅</td><td>0 / 0%</td><td><span class="badge badge-red">消す候補(NEW・7/21格上げ)</span></td></tr>
+        </tbody>
+      </table>
       </div>
+
+      <h3 class="slug" style="font-size:13px;">cleansing-shihan</h3>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>自信クレ ★</td><td>13.9%✅</td><td>0 / 0%</td><td><span class="badge badge-yellow">記事側の構造問題を疑う</span></td></tr>
+          <tr><td>ぴったりのク</td><td>12.1%</td><td>1 / 0.31%</td><td><span class="badge badge-gray">保留・記事全体が弱い</span></td></tr>
+          <tr><td>肌に合うクレ</td><td>14.5%✅</td><td>0 / 0%</td><td><span class="badge badge-gray">保留・記事全体が弱い</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="note">3PUともCTRは横並び(12〜15%)でPVFRも0.31%以下と揃って低い。個別PUの優劣ではなく記事・LP側の問題を疑う。</p>
+
+      <h3 class="slug" style="font-size:13px;">cleansing-nuretate</h3>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>ぴったりのクレ</td><td>18.6%✅</td><td>1 / 0.29%</td><td><span class="badge badge-gray">保留・やや優勢傾向</span></td></tr>
+          <tr><td>自信クレ</td><td>17.0%✅</td><td>0 / 0%</td><td><span class="badge badge-gray">保留</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="slug" style="font-size:13px;">cleansing-substitute</h3>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>肌に合うクレ</td><td>16.3%</td><td>0 / 0%</td><td><span class="badge badge-gray">保留・サンプル不足</span></td></tr>
+          <tr><td>ぴったりのクレ</td><td>5.4%</td><td>0 / 0%</td><td><span class="badge badge-gray">保留・サンプル不足（click2は最薄）</span></td></tr>
+          <tr><td>自信クレ ★</td><td>10.0%</td><td>0 / 0%</td><td><span class="badge badge-gray">データ様子見</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="note">3PUとも友だち0でPVFR完全タイ。CTR差だけで1本を狙い撃ちする根拠はない。</p>
+
+      <h3 class="slug" style="font-size:13px;">cleansing-matsueku</h3>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>ぴったりのクレ</td><td>10.2%</td><td>0 / 0%</td><td><span class="badge badge-gray">保留・サンプル不足</span></td></tr>
+          <tr><td>自信クレ</td><td>14.0%✅</td><td>0 / 0%</td><td><span class="badge badge-gray">保留・サンプル不足</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="slug" style="font-size:13px;">cleansing-forties</h3>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>自信クレ ★</td><td>17.2%✅</td><td>0 / 0%</td><td><span class="badge badge-gray">データ様子見・CTR良好</span></td></tr>
+          <tr><td>ぴったりのク</td><td>12.1%</td><td>0 / 0%</td><td><span class="badge badge-gray">保留・サンプル不足</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="slug" style="font-size:13px;">cleansing-nomakeup</h3>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>ぴったりのクレ</td><td>29.7%✅</td><td>0 / 0%</td><td><span class="badge badge-purple">触るな（CTR高×FR低）</span></td></tr>
+          <tr><td>自信クレ</td><td>34.4%✅</td><td>0 / 0%</td><td><span class="badge badge-purple">触るな（CTR高×FR低）</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="note">CTR30%超と非常に高いのに友だち0人。PU文言は強い可能性が高く、消すと機能してる訴求を失う。遷移先(LP/友達追加画面)側の問題として別途調査。</p>
+
+      <h3 class="slug" style="font-size:13px;">cleansing-milk</h3>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>ぴったりのクレ</td><td>9.7%</td><td>0 / 0%</td><td><span class="badge badge-gray">保留・サンプル不足</span></td></tr>
+          <tr><td>自信クレ ★</td><td>6.3%</td><td>0 / 0%</td><td><span class="badge badge-gray">データ様子見</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="slug" style="font-size:13px;">cleansing-keana</h3>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>ぴったりのクレ</td><td>—</td><td>1 / 0.67%</td><td><span class="badge badge-gray">保留・サンプル不足（母数小さいが追加率は全記事中最高）</span></td></tr>
+          <tr><td>自信クレ</td><td>—</td><td>1 / 0.67%</td><td><span class="badge badge-gray">保留・サンプル不足</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
     </div>
   </div>
 
-  <!-- 3. 新規カット候補 -->
+  <!-- 3. スキンケア診断：記事別PU一覧 -->
   <div class="section">
     <div class="section-head">
       <div class="num num-amber">3</div>
       <div>
-        <div class="section-title">サンプル増加で新たに判断可能になったPU</div>
-        <div class="section-sub">7/21再分析、サンプル閾値（PU imp≥50 / Click≥10）到達分</div>
+        <div class="section-title">スキンケア診断 — 記事別PU一覧</div>
+        <div class="section-sub">全7記事・16PU。記事ごとにPUを束ねて表示（累計 7/9〜7/16基準、★はNoa事前フラグ）</div>
       </div>
     </div>
     <div class="body">
-      <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>PU</th><th>記事</th><th>指標</th><th>判定</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>自信クレ</td><td class="slug">cleansing-acne</td>
-            <td>imp73/click11・CTR15.1%✅・友0・PVFR0%</td>
-            <td><span class="badge badge-red">消す候補に格上げ</span></td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="insight insight-yellow">
-        CTRは基準クリアで健全なのに友だち0人。同記事の兄弟PU「ぴったりのクレ」はPVFR0.8%・友2人と実際に転換しており、サンプルが十分になった今回初めて「本物の劣後」と判断できる状態になった。
-      </div>
-    </div>
-  </div>
 
-  <!-- 4. ★7本の推奨アクション -->
-  <div class="section">
-    <div class="section-head">
-      <div class="num num-green">4</div>
-      <div>
-        <div class="section-title">★マーク7PUの推奨アクション</div>
-        <div class="section-sub">「ドリルダウン分析して判断」または「新規訴求文言を検討」の対象としてNoaが事前フラグ済み</div>
-      </div>
-    </div>
-    <div class="body">
+      <h3 class="slug" style="font-size:13px;">skincare-shisei-oily</h3>
       <div class="table-wrap">
       <table>
-        <thead>
-          <tr><th>PU</th><th>記事</th><th>主要指標（累計）</th><th>推奨アクション</th></tr>
-        </thead>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
         <tbody>
-          <tr>
-            <td>肌悩みスキンケア</td><td class="slug">skincare-hikishime</td>
-            <td>imp142/click20・CTR14.1%（兄弟20.0%より明確に低い）・友0</td>
-            <td><span class="badge badge-purple">新しい訴求文言を検討</span></td>
-          </tr>
-          <tr>
-            <td>自信クレ</td><td class="slug">cleansing-shihan</td>
-            <td>imp130/click16・CTR12.3%（兄弟と大差なし）・友0</td>
-            <td><span class="badge badge-yellow">記事側の構造問題を疑う</span></td>
-          </tr>
-          <tr>
-            <td>肌悩みスキンケア</td><td class="slug">skincare-shishunki</td>
-            <td>imp63/click10・CTR15.9%✅・友0</td>
-            <td><span class="badge badge-yellow">記事側の構造問題を疑う</span></td>
-          </tr>
-          <tr>
-            <td>自信クレ</td><td class="slug">cleansing-substitute</td>
-            <td>imp60/click6・CTR10.0%・友0</td>
-            <td><span class="badge badge-gray">データ様子見</span></td>
-          </tr>
-          <tr>
-            <td>自信クレ</td><td class="slug">cleansing-milk</td>
-            <td>imp32/click2・CTR6.3%・友0</td>
-            <td><span class="badge badge-gray">データ様子見</span></td>
-          </tr>
-          <tr>
-            <td>自信クレ</td><td class="slug">cleansing-forties</td>
-            <td>imp58/click10・CTR17.2%✅・友0</td>
-            <td><span class="badge badge-gray">データ様子見</span></td>
-          </tr>
-          <tr>
-            <td>肌悩みスキンケア</td><td class="slug">skincare-jitan</td>
-            <td>imp5/click0・友0</td>
-            <td><span class="badge badge-gray">データ様子見</span></td>
-          </tr>
+          <tr><td>肌に合うスキンケア</td><td>14.1%✅</td><td>4 / 0.74%</td><td><span class="badge badge-green">残す・好調</span></td></tr>
+          <tr><td>ぴったりのスキンケア</td><td>13.3%✅</td><td>2 / 0.37%</td><td><span class="badge badge-yellow">残す寄り</span></td></tr>
+          <tr><td>肌悩みスキンケア</td><td>11.9%</td><td>0 / 0%</td><td><span class="badge badge-red">停止済み(07/17)</span></td></tr>
         </tbody>
       </table>
+      </div>
+
+      <h3 class="slug" style="font-size:13px;">skincare-hikishime</h3>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>肌に合うスキンケア</td><td>20.0%✅</td><td>1 / 0.22%</td><td><span class="badge badge-yellow">残す寄り・優勢</span></td></tr>
+          <tr><td>肌悩みスキンケア ★</td><td>14.1%✅</td><td>0 / 0%</td><td><span class="badge badge-purple">新しい訴求文言を検討</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="note">兄弟PU(20.0%)と比べて明確にCTRが低い。同記事の他パターンと違い偏りが大きく、コピー起因の疑いが濃い。</p>
+
+      <h3 class="slug" style="font-size:13px;">skincare-shishunki</h3>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>肌に合うスキンケア</td><td>10.7%</td><td>1 / 0.90%</td><td><span class="badge badge-gray">保留・やや優勢</span></td></tr>
+          <tr><td>肌悩みスキンケア ★</td><td>15.9%✅</td><td>0 / 0%</td><td><span class="badge badge-yellow">記事側の構造問題を疑う</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="note">CTR15.9%と基準超えで健全なのに友だち0人。CTR高×FR低型でコピー起因ではない可能性。</p>
+
+      <h3 class="slug" style="font-size:13px;">skincare-innerdry</h3>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>肌に合うスキンケア</td><td>16.7%✅</td><td>0 / 0%</td><td><span class="badge badge-gray">保留・サンプル不足</span></td></tr>
+          <tr><td>ぴったりのスキンケア</td><td>15.6%✅</td><td>0 / 0%</td><td><span class="badge badge-gray">保留・サンプル不足</span></td></tr>
+          <tr><td>肌悩みスキンケア</td><td>4.0%</td><td>0 / 0%</td><td><span class="badge badge-red">停止済み(07/17)</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="slug" style="font-size:13px;">skincare-jitan</h3>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>肌に合うスキンケア</td><td>—</td><td>0 / 0%</td><td><span class="badge badge-gray">保留・母数極小</span></td></tr>
+          <tr><td>肌悩みスキンケア ★</td><td>—</td><td>0 / 0%</td><td><span class="badge badge-gray">データ様子見・母数極小</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="slug" style="font-size:13px;">skincare-combination</h3>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>肌に合うスキンケア</td><td>16.7%</td><td>0 / 0%</td><td><span class="badge badge-gray">保留・母数極小</span></td></tr>
+          <tr><td>肌悩みスキンケア</td><td>14.3%</td><td>0 / 0%</td><td><span class="badge badge-gray">保留・母数極小</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="slug" style="font-size:13px;">skincare-yuragihada</h3>
+      <div class="table-wrap">
+      <table>
+        <thead><tr><th>PU</th><th>CTR</th><th>友/PVFR</th><th>状態</th></tr></thead>
+        <tbody>
+          <tr><td>肌に合うスキンケア</td><td>—</td><td>0 / 0%</td><td><span class="badge badge-gray">保留・母数極小</span></td></tr>
+          <tr><td>肌悩みスキンケア</td><td>—</td><td>0 / 0%</td><td><span class="badge badge-gray">保留・母数極小</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="insight insight-red" style="margin-top:16px;">
+        <strong>⚠️ 停止済み4PU（cleansing-fifties自信クレ／cleansing-acne肌に合うクレ／skincare-shisei-oily肌悩みスキンケア／skincare-innerdry肌悩みスキンケア）は、7/20時点のデータで表示・クリックが継続していた（2本は増加傾向）。</strong>
+        Noaが実機でskincare-shisei-oily記事を確認したところPU非表示を確認済みのため、データ側の反映ラグ（7/20夜〜7/21頃に停止有効化）が濃厚。GTM側を再更新済み、7/22以降のデータで再チェック予定。
       </div>
       <div class="insight insight-blue">
-        「記事側の構造問題を疑う」は、CTRが兄弟PUと大差ない、または基準超えなのに友だちが出ない＝CTR高×FR低型。コピーではなくLP・友達追加画面側の課題として別途扱う。「新しい訴求文言を検討」は、同記事内で兄弟PUと比べてCTR自体が明確に低いケース＝コピー起因の疑いが濃い。
+        <strong>凡例:</strong> <span class="badge badge-red">停止済み/消す候補</span> 兄弟PUに対しPVFRが明確に劣後 　<span class="badge badge-green">残す・好調</span> PVFRが実際に立っている 　<span class="badge badge-purple">新しい訴求文言を検討</span> CTRが兄弟より明確に低い(コピー起因) 　<span class="badge badge-yellow">記事側の構造問題を疑う</span> CTR高or横並いなのにFR/PVFRが記事全体で弱い 　<span class="badge badge-gray">保留</span> サンプル不足で判断不可
       </div>
     </div>
   </div>
 
-  <!-- 5. 判断保留リスト -->
+  <!-- 4. 次のアクション -->
   <div class="section">
     <div class="section-head">
-      <div class="num num-gray">5</div>
-      <div>
-        <div class="section-title">まだ判断保留のPU</div>
-        <div class="section-sub">サンプル不足、または記事全体が均等に弱く個別PUの優劣と言えないもの</div>
-      </div>
-    </div>
-    <div class="body">
-      <p><strong>サンプル不足（imp&lt;50 または click&lt;10）:</strong> cleansing-keana両PU／cleansing-matsueku両PU／cleansing-milk両PU／skincare-combination両PU／skincare-jitan両PU／skincare-yuragihada両PU／skincare-innerdry「肌に合う」「ぴったりの」</p>
-      <p><strong>記事全体が構造的に弱い（PU間引きでは解決しない）:</strong> cleansing-shihan全3PU／cleansing-nuretate両PU（ぴったりのクレがやや優勢の傾向は2回連続で継続、差は小さい）</p>
-      <p><strong>要注意・消してはいけないパターン（CTR高×FR低）:</strong> cleansing-nomakeup両PU（CTR30〜34%と非常に高いのに友だち0人。PU文言は強いが遷移先側の問題。ここを消すと機能してる訴求を失う）</p>
-    </div>
-  </div>
-
-  <!-- 6. 次のアクション -->
-  <div class="section">
-    <div class="section-head">
-      <div class="num num-blue">6</div>
+      <div class="num num-blue">4</div>
       <div>
         <div class="section-title">次のアクション</div>
       </div>
