@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>枝分かれ構造の概念図（検討用ドラフト） 2026-07-21</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f0f2f0; color: #1d1d1f; font-size: 13px; padding: 40px 24px 60px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 20px; }
+  .note-box { background: #eef1ff; border-left: 3px solid #4a4a6a; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 24px; font-size: 12px; color: #333; line-height: 1.8; max-width: 900px; margin-left:auto; margin-right:auto; }
+  .warn-box { background: #fff8e1; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 24px; font-size: 12px; color: #7a5c00; line-height: 1.8; max-width: 900px; margin-left:auto; margin-right:auto; }
+
+  .node { background: #fff; border-radius: 10px; padding: 10px 16px; box-shadow: 0 1px 6px rgba(0,0,0,.07); text-align: center; margin: 0 auto; }
+  .node-root { max-width: 420px; border: 2px solid #4a6a5a; }
+  .node-root .label { font-size: 10px; font-weight: 700; color: #4a6a5a; }
+  .node-root .q { font-size: 13px; font-weight: 700; margin-top: 3px; }
+
+  .arr { text-align: center; color: #ccc; font-size: 20px; line-height: 1; margin: 2px 0; }
+
+  /* ── 4分岐（木構造） ── */
+  .branch-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; margin-top: 4px; }
+  .branch-col { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .branch-connector { width: 100%; height: 16px; position: relative; }
+  .branch-connector::before {
+    content: ''; position: absolute; top: 0; left: 50%; width: 2px; height: 100%; background: #ccc;
+  }
+
+  .q2-answer { border-radius: 8px; padding: 6px 10px; font-size: 10.5px; font-weight: 700; text-align: center; width: 100%; }
+  .q2-a { background: #fdecd9; color: #b45b1f; border: 1.5px solid #f4a460; }
+  .q2-b { background: #e3f2fd; color: #1a6a95; border: 1.5px solid #64b5f6; }
+  .q2-c { background: #e8f5e9; color: #2e7d32; border: 1.5px solid #81c784; }
+  .q2-d { background: #f3e5f8; color: #7b3f8f; border: 1.5px solid #ce93d8; }
+
+  .q3-node { background: #fff; border-radius: 8px; padding: 8px 10px; font-size: 10px; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,.06); width: 100%; }
+  .q3-node .q3-label { font-size: 8.5px; font-weight: 700; color: #999; display: block; margin-bottom: 3px; }
+  .q3-node .q3-text { font-weight: 700; margin-bottom: 4px; }
+  .q3-choices { display: flex; flex-direction: column; gap: 3px; }
+  .q3-choice { background: #f7f7f7; border-radius: 4px; padding: 3px 6px; font-size: 9px; text-align: left; }
+
+  .final-leaf { border-radius: 8px; padding: 8px 10px; color: #fff; font-size: 10.5px; font-weight: 700; text-align: center; width: 100%; }
+  .leaf-a { background: #f4a460; }
+  .leaf-b { background: #64b5f6; }
+  .leaf-c { background: #81c784; }
+  .leaf-d { background: #ce93d8; }
+
+  .compliance-tag { font-size: 8.5px; color: #1e8e3e; font-weight: 700; text-align: center; margin-top: 2px; }
+
+  .section-divider { text-align: center; font-size: 10px; color: #aaa; letter-spacing: .1em; font-weight: 700; margin: 28px 0 10px; }
+
+  .compare-table { width: 100%; max-width: 900px; margin: 12px auto; border-collapse: collapse; font-size: 12px; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.07); }
+  .compare-table th { background: #4a6a5a; color: #fff; padding: 8px 12px; text-align: left; }
+  .compare-table td { padding: 8px 12px; border-bottom: 1px solid #eee; vertical-align: top; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>枝分かれ構造の概念図（検討用ドラフト・未確定）</h1>
+  <div class="meta">2026-07-21 ｜ 総合肌タイプ診断v2の判定ロジックを「多数決」から「本当のアダプティブ分岐（木構造）」に変える案の視覚化</div>
+
+  <div class="note-box"><strong>これは何か：</strong> 前回の「Q2・Q3・Q4の3問を集計して多数決」という設計は、システム制約NG-2（結果は最終設問のみで分岐可能）に抵触し実装不可。一方、<strong>Q2の回答によって次に聞くQ3の中身自体を変える「本当の枝分かれ」</strong>なら、各ルートの最後の設問だけで結果が決まるためNG-2に準拠する。この図はその構造イメージ（一部のルートのみ詳細化した検討用ドラフト）。</div>
+
+  <!-- ── Q2（第一分岐） ── -->
+  <div class="node node-root">
+    <div class="label">Q2（第一分岐）</div>
+    <div class="q">洗顔後15分、何もつけずにいると肌は？</div>
+  </div>
+  <div class="arr">↓</div>
+
+  <div class="branch-row">
+    <div class="branch-col">
+      <div class="q2-answer q2-a">A: 突っ張る、粉をふく</div>
+      <div class="branch-connector"></div>
+      <div class="q3-node">
+        <span class="q3-label">Q3-A（乾燥ルート専用）</span>
+        <div class="q3-text">その乾燥、季節を問わず一年中ですか？</div>
+        <div class="q3-choices">
+          <div class="q3-choice">はい（一年中）→ 乾燥肌</div>
+          <div class="q3-choice">季節の変わり目だけ →敏感肌</div>
+        </div>
+      </div>
+      <div class="branch-connector"></div>
+      <div class="final-leaf leaf-a">乾燥肌 or 敏感肌</div>
+      <div class="compliance-tag">✓ Q3-Aの回答のみで確定</div>
+    </div>
+
+    <div class="branch-col">
+      <div class="q2-answer q2-b">B: 顔全体がテカる</div>
+      <div class="branch-connector"></div>
+      <div class="q3-node">
+        <span class="q3-label">Q3-B（脂性ルート専用）</span>
+        <div class="q3-text">そのテカり、頬まで均一に出ますか？</div>
+        <div class="q3-choices">
+          <div class="q3-choice">はい（顔全体均一）→ 脂性肌</div>
+          <div class="q3-choice">Tゾーンだけ強い →混合肌</div>
+        </div>
+      </div>
+      <div class="branch-connector"></div>
+      <div class="final-leaf leaf-b">脂性肌 or 混合肌</div>
+      <div class="compliance-tag">✓ Q3-Bの回答のみで確定</div>
+    </div>
+
+    <div class="branch-col">
+      <div class="q2-answer q2-c">C: おでこ・鼻はテカる<br>頬は突っ張る</div>
+      <div class="branch-connector"></div>
+      <div class="q3-node">
+        <span class="q3-label">Q3-C（混合ルート専用）</span>
+        <div class="q3-text">新しいコスメで肌が反応することは？</div>
+        <div class="q3-choices">
+          <div class="q3-choice">特にない → 混合肌</div>
+          <div class="q3-choice">赤み等が出やすい →敏感肌</div>
+        </div>
+      </div>
+      <div class="branch-connector"></div>
+      <div class="final-leaf leaf-c">混合肌 or 敏感肌</div>
+      <div class="compliance-tag">✓ Q3-Cの回答のみで確定</div>
+    </div>
+
+    <div class="branch-col">
+      <div class="q2-answer q2-d">D: 赤み・ピリピリ<br>かゆみが出る</div>
+      <div class="branch-connector"></div>
+      <div class="q3-node">
+        <span class="q3-label">Q3-D（敏感ルート専用）</span>
+        <div class="q3-text">その反応、新しいコスメを使った時だけ？</div>
+        <div class="q3-choices">
+          <div class="q3-choice">はい（新コスメ時のみ）→ 敏感肌</div>
+          <div class="q3-choice">季節の変わり目にも出る →敏感肌</div>
+        </div>
+      </div>
+      <div class="branch-connector"></div>
+      <div class="final-leaf leaf-d">敏感肌</div>
+      <div class="compliance-tag">✓ Q3-Dの回答のみで確定</div>
+    </div>
+  </div>
+
+  <div class="section-divider">── この構造の特徴 ──</div>
+
+  <table class="compare-table">
+    <thead><tr><th></th><th>前回案（多数決・NG-2違反）</th><th>今回案（アダプティブ分岐・NG-2準拠）</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Q2〜Q4の役割</strong></td><td>全員同じ3問に答え、3票を集計</td><td>Q2の回答によって次に出るQ3の中身が変わる（Q3-A〜Dの4パターンが存在）</td></tr>
+      <tr><td><strong>判定方法</strong></td><td>3問の投票結果を比較（複数設問の統合）</td><td>各ルートの最後の設問（Q3-A〜D）の回答のみで確定</td></tr>
+      <tr><td><strong>NG-2適合</strong></td><td>❌ 抵触（複数設問を統合している）</td><td>✅ 準拠（どのルートでも「最終設問のみ」で確定）</td></tr>
+      <tr><td><strong>実装イメージ</strong></td><td>スコア加算・比較ロジックが必要</td><td>WINUTの通常の「1問→分岐」を4パターン分用意するだけ</td></tr>
+      <tr><td><strong>制作コスト</strong></td><td>―</td><td>Q3が4パターン必要（Q3-A/B/C/D）。設問パネル画像も4種類×1枚＝4枚に増える</td></tr>
+      <tr><td><strong>設問の体感数</strong></td><td>Q1(年代)+Q2+Q3+Q4+Q5+Q6+Q7 = 7問</td><td>Q1(年代)+Q2+Q3(分岐後)+Q4〜Q6(根拠づけ) = 実質1人あたり6問通過（体感は変わらず）</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    <strong>未確定・検討が必要な点：</strong>
+    <ul style="padding-left:18px; margin-top:6px;">
+      <li>上記はQ3の4パターンをラフに作った例。実際にこの分岐先の設問文言・選択肢は精査が必要（特にQ3-Aの「季節の変わり目だけ→敏感肌」は、乾燥ルートから敏感肌に着地する流れが自然か要検証）</li>
+      <li>Q4〜Q6（毛穴・新コスメ反応・気になる悩み）は結果確定後の根拠づけとして引き続き使う想定だが、Q3で既に分岐後なのでQ4以降の位置づけ再整理が必要</li>
+      <li>WINUT側で「Q2の回答によってQ3の表示内容を変える」という条件分岐が実際に組めるか、CTOでの最終確認は別途必要（今回はNG-2「集計・統合はNG」は明確に確認済みだが、「単純な条件分岐を4パターン用意する」こと自体の実装は前提として問題ない認識）</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
