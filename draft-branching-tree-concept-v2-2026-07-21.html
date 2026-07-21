@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>枝分かれ構造の概念図v2（YES/NO二分岐＋合流） 2026-07-21</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #eef1f4; color: #1d1d1f; font-size: 13px; padding: 40px 24px 60px; }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 16px; }
+  .note-box { background: #eef1ff; border-left: 3px solid #4a4a6a; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 24px; font-size: 12px; color: #333; line-height: 1.8; }
+
+  .legend { display: flex; gap: 20px; justify-content: center; margin-bottom: 24px; font-size: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-line { width: 24px; height: 0; border-top: 2px solid; }
+  .legend-yes { border-color: #d6336c; }
+  .legend-no { border-color: #4a6a95; }
+
+  .tree { background: #fff; border-radius: 16px; padding: 30px 20px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+
+  .tbox { border: 2px solid #ccc; border-radius: 10px; padding: 10px 14px; font-size: 12px; font-weight: 700; text-align: center; background: #fafbfc; margin: 0 auto; max-width: 220px; }
+  .tbox.root { max-width: 280px; border-color: #4a6a5a; background: #eef5f2; }
+  .tbox.leaf { color: #fff; font-size: 13px; max-width: 140px; border: none; }
+  .leaf-dry { background: #f4a460; }
+  .leaf-oil { background: #64b5f6; }
+  .leaf-mix { background: #81c784; }
+  .leaf-sen { background: #ce93d8; }
+
+  /* row layout */
+  .row { display: flex; justify-content: center; margin: 4px 0; }
+  .row-2 { gap: 60px; }
+  .row-3 { gap: 30px; }
+  .row-4 { gap: 14px; }
+
+  /* connectors */
+  .connectors { position: relative; height: 34px; margin: 0 auto; }
+  .conn-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+  .conn-label { position: absolute; font-size: 9.5px; font-weight: 800; padding: 1px 5px; border-radius: 3px; background: #fff; }
+  .conn-label.yes { color: #d6336c; }
+  .conn-label.no { color: #4a6a95; }
+
+  .col-wrap { display: flex; flex-direction: column; align-items: center; width: 200px; }
+
+  .section-divider { text-align: center; font-size: 10px; color: #aaa; letter-spacing: .1em; font-weight: 700; margin: 30px 0 14px; }
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 12px; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.07); }
+  .compare-table th { background: #4a6a5a; color: #fff; padding: 8px 12px; text-align: left; }
+  .compare-table td { padding: 8px 12px; border-bottom: 1px solid #eee; vertical-align: top; }
+  .warn-box { background: #fff8e1; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 16px 0; font-size: 12px; color: #7a5c00; line-height: 1.8; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>枝分かれ構造の概念図 v2（YES/NO二分岐＋合流）</h1>
+  <div class="meta">2026-07-21 ｜ Noa共有の参考画像（Me on. / バルクオムSKIN CARE BOOK）と同じ構造で総合肌タイプ診断v2を再設計</div>
+
+  <div class="note-box">
+    参考画像同様、<strong>各設問はYES/NOの二択のみ</strong>。答えによって次に出る設問が変わり（アダプティブ分岐）、複数のルートが同じ設問に合流することもある（例: 「Tゾーンのテカり」は2つの経路から到達）。<strong>どのルートでも最後の設問のYES/NOだけで4タイプのどれかに確定する</strong>ため、NG-2（最終設問のみが結果に紐づく）に完全準拠。
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-line legend-yes"></div>YES</div>
+    <div class="legend-item"><div class="legend-line legend-no"></div>NO</div>
+  </div>
+
+  <div class="tree">
+
+    <!-- Level 1: Root -->
+    <div class="row">
+      <div class="tbox root">Q1<br>洗顔後15分、何もつけずにいると<br>肌がつっぱりますか？</div>
+    </div>
+
+    <div class="connectors" style="max-width:500px;">
+      <svg class="conn-svg" viewBox="0 0 500 34" preserveAspectRatio="none">
+        <line x1="250" y1="0" x2="120" y2="34" stroke="#d6336c" stroke-width="2"/>
+        <line x1="250" y1="0" x2="380" y2="34" stroke="#4a6a95" stroke-width="2"/>
+      </svg>
+      <div class="conn-label yes" style="left:26%;top:6px;">YES</div>
+      <div class="conn-label no" style="left:68%;top:6px;">NO</div>
+    </div>
+
+    <!-- Level 2 -->
+    <div class="row row-2">
+      <div class="col-wrap">
+        <div class="tbox">Q2-A<br>顔全体的に<br>つっぱりますか？</div>
+      </div>
+      <div class="col-wrap">
+        <div class="tbox">Q2-B<br>毛穴の開き・黒ずみが<br>気になりますか？</div>
+      </div>
+    </div>
+
+    <div class="connectors" style="max-width:700px;">
+      <svg class="conn-svg" viewBox="0 0 700 34" preserveAspectRatio="none">
+        <!-- Q2-A branches -->
+        <line x1="150" y1="0" x2="60" y2="34" stroke="#d6336c" stroke-width="2"/>
+        <line x1="150" y1="0" x2="280" y2="34" stroke="#4a6a95" stroke-width="2"/>
+        <!-- Q2-B branches (converge point shared with Q2-A's NO) -->
+        <line x1="550" y1="0" x2="280" y2="34" stroke="#d6336c" stroke-width="2"/>
+        <line x1="550" y1="0" x2="620" y2="34" stroke="#4a6a95" stroke-width="2"/>
+      </svg>
+      <div class="conn-label yes" style="left:5%;top:6px;">YES</div>
+      <div class="conn-label no" style="left:35%;top:16px;">NO</div>
+      <div class="conn-label yes" style="left:35%;top:2px;">YES</div>
+      <div class="conn-label no" style="left:85%;top:6px;">NO</div>
+    </div>
+
+    <!-- Level 3 -->
+    <div class="row row-3">
+      <div class="col-wrap">
+        <div class="tbox">Q3-A<br>日常的に乾燥を<br>感じますか？</div>
+      </div>
+      <div class="col-wrap">
+        <div class="tbox" style="border-color:#999;">Q3-合流<br>Tゾーンは特に<br>テカりますか？<br><span style="font-weight:400;font-size:9.5px;color:#999;">（2経路から合流）</span></div>
+      </div>
+      <div class="col-wrap">
+        <div class="tbox">Q3-B<br>新しいコスメで肌が<br>反応しやすいですか？</div>
+      </div>
+    </div>
+
+    <div class="connectors" style="max-width:700px;">
+      <svg class="conn-svg" viewBox="0 0 700 34" preserveAspectRatio="none">
+        <line x1="90" y1="0" x2="30" y2="34" stroke="#d6336c" stroke-width="2"/>
+        <line x1="90" y1="0" x2="150" y2="34" stroke="#4a6a95" stroke-width="2"/>
+        <line x1="350" y1="0" x2="290" y2="34" stroke="#d6336c" stroke-width="2"/>
+        <line x1="350" y1="0" x2="410" y2="34" stroke="#4a6a95" stroke-width="2"/>
+        <line x1="610" y1="0" x2="550" y2="34" stroke="#d6336c" stroke-width="2"/>
+        <line x1="610" y1="0" x2="670" y2="34" stroke="#4a6a95" stroke-width="2"/>
+      </svg>
+      <div class="conn-label yes" style="left:2%;top:8px;">YES</div>
+      <div class="conn-label no" style="left:19%;top:2px;">NO</div>
+      <div class="conn-label yes" style="left:39%;top:8px;">YES</div>
+      <div class="conn-label no" style="left:56%;top:2px;">NO</div>
+      <div class="conn-label yes" style="left:76%;top:8px;">YES</div>
+      <div class="conn-label no" style="left:93%;top:2px;">NO</div>
+    </div>
+
+    <!-- Leaves -->
+    <div class="row row-4">
+      <div class="tbox leaf leaf-dry">乾燥肌</div>
+      <div class="tbox leaf leaf-sen">敏感肌</div>
+      <div class="tbox leaf leaf-oil">脂性肌</div>
+      <div class="tbox leaf leaf-mix">混合肌</div>
+      <div class="tbox leaf leaf-sen">敏感肌</div>
+      <div class="tbox leaf leaf-mix">混合肌</div>
+    </div>
+
+  </div>
+
+  <div class="warn-box">
+    <strong>これはラフ案（内容の精査は未実施）。</strong> 敏感肌・混合肌はそれぞれ2つの経路から到達する設計（参考画像の「混合肌に複数経路が合流」と同じ考え方）。設問文言・YES/NO判定の妥当性（特にQ3-Aの「NO→敏感肌」は乾燥ルートからの着地として自然か）は要検証。設問数は1人あたり最短2問（Q1→Q2→Q3で3問）〜最大3問（同上）で、参考画像（4段階）より浅いツリー。深さを参考画像と同じ4段階に増やすかはNoa判断。
+  </div>
+
+  <div class="section-divider">── 前回案・前々回案との比較 ──</div>
+  <table class="compare-table">
+    <thead><tr><th></th><th>案A：多数決（NG-2違反・不可）</th><th>案B：本ツリー（YES/NO二分岐＋合流）</th></tr></thead>
+    <tbody>
+      <tr><td><strong>設問形式</strong></td><td>4択×3問を全員共通で回答</td><td>YES/NOの二択、回答によって次の設問が変わる</td></tr>
+      <tr><td><strong>NG-2適合</strong></td><td>❌ 抵触</td><td>✅ 準拠（各ルートの最終設問のみで確定）</td></tr>
+      <tr><td><strong>1人あたりの体感設問数</strong></td><td>3問（+根拠づけ4問で計7問）</td><td>3問（Q1→Q2→Q3）+ 根拠づけ用の追加設問を別途検討</td></tr>
+      <tr><td><strong>制作コスト</strong></td><td>―</td><td>設問パネルはQ1(1枚)+Q2(2パターン)+Q3(3パターン)=6枚。前回の単純4択7問より設問パネル自体は少ない</td></tr>
+    </tbody>
+  </table>
+
+</div>
+</body>
+</html>
