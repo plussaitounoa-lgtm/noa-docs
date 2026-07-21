@@ -115,7 +115,7 @@
 <div class="container">
 
   <h1>総合肌タイプ診断 v2 フロー図</h1>
-  <div class="meta">2026-07-21 ｜ コスメ診断ロードマップ④・横断診断 ｜ 全3問 ｜ Q1で4タイプ分岐（振り分け主軸） → 結果カルーセル → おすすめ3点セットカル ｜ ①②③の既存商材をそのまま流用</div>
+  <div class="meta">2026-07-21（同日改訂：設問7問化） ｜ コスメ診断ロードマップ④・横断診断 ｜ 全7問 ｜ Q1年代→Q2〜Q4で4タイプ分岐（AND判定） → 結果カルーセル → おすすめ3点セットカル ｜ ①②③の既存商材をそのまま流用</div>
 
   <div class="revision-note">
     <b>①②③との構造の違い：</b> ①クレンジング診断・②スキンケア診断・③化粧水診断は「タイプ判定→結果カル→セレクトカル/PRカルで商材登場」という各カテゴリ単独の設計。本診断は<b>1回の診断結果でクレンジング・スキンケア・化粧水の3カテゴリ分の商品を横断的に1つのカルーセルで提示する</b>点が新しい。結果カルとおすすめ3点セットカルの役割分離（商材名は結果カルで出さない）は①②③と同じ原則を踏襲。
@@ -145,14 +145,31 @@
   <div class="node node-start">
     <div class="node-label">START</div>
     <div class="node-title">あなたの肌タイプ診断</div>
-    <div class="node-sub">3問でわかる無料診断｜匿名・無料</div>
+    <div class="node-sub">7問でわかる無料診断｜匿名・無料</div>
     <div class="node-copy">その化粧品、自分の肌タイプに合わせて選べてる？</div>
   </div>
 
-  <!-- ── Q1（振り分け主軸） ── -->
+  <div class="revision-note" style="margin:16px auto;">
+    <b>2026-07-21改訂：</b> 当初の全3問（Q1が単独で4タイプに直接分岐）は「3問で何がわかるのか」と説得力不足を指摘され、競合4社リサーチ（Dr.サポーター/AYAKA/津田コスメ/DHC）を踏まえて全7問に再構成。<b>振り分け軸を1問→3問（AND判定）に増やして精度と説得力を上げた</b>のが核心の変更点。
+  </div>
+
+  <!-- ── Q1（年代） ── -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q1">
+    <div class="node-label">Q1 ── 非分岐・最初の設問</div>
+    <div class="node-title">年代を教えてください</div>
+    <div class="node-choices">
+      <div class="choice">10〜20代</div>
+      <div class="choice">30代</div>
+      <div class="choice">40代以上</div>
+    </div>
+  </div>
+  <div class="bridge-box">競合リサーチ（AYAKA）で年代が最初の設問という構成を確認。振り分けには使わないが、Card文言のトーン調整に使用</div>
+
+  <!-- ── Q2（振り分け軸①） ── -->
   <div class="arr">↓</div>
   <div class="node node-q node-q-branch">
-    <div class="node-label" style="color:#4a6a5a;">Q1 ── タイプ確定・振り分け主軸</div>
+    <div class="node-label" style="color:#4a6a5a;">Q2 ── 振り分け軸①（最優先・タイブレーク基準）</div>
     <div class="node-title">洗顔後15分、何もつけずにいると肌は？</div>
     <div class="node-choices">
       <div class="choice" style="background:#fdecd9;color:#b45b1f;font-weight:700;">突っ張る、粉をふくことがある</div>
@@ -162,10 +179,57 @@
     </div>
   </div>
 
-  <!-- ── Q2 ── -->
+  <!-- ── Q3（振り分け軸②） ── -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q-branch">
+    <div class="node-label" style="color:#4a6a5a;">Q3 ── 振り分け軸②</div>
+    <div class="node-title">化粧崩れ・テカりについて当てはまるのは？</div>
+    <div class="node-choices">
+      <div class="choice" style="background:#fdecd9;color:#b45b1f;font-weight:700;">特に気にならない、乾燥の方が気になる</div>
+      <div class="choice" style="background:#e3f2fd;color:#1a6a95;font-weight:700;">日中ずっとテカり・化粧崩れが気になる</div>
+      <div class="choice" style="background:#e8f5e9;color:#2e7d32;font-weight:700;">Tゾーンだけ崩れる、頬は乾燥で粉をふく</div>
+      <div class="choice" style="background:#f3e5f8;color:#7b3f8f;font-weight:700;">新しい化粧品を使った時に限って肌が反応する</div>
+    </div>
+  </div>
+  <div class="bridge-box">Q2とは別角度（皮脂・化粧崩れの軸）で確認する2本目の振り分け軸。津田コスメのQ6に相当</div>
+
+  <!-- ── Q4（振り分け軸③・敏感肌強化） ── -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q-branch">
+    <div class="node-label" style="color:#4a6a5a;">Q4 ── 振り分け軸③・敏感肌の裏付け強化</div>
+    <div class="node-title">季節の変わり目、肌の調子はどうなりやすい？</div>
+    <div class="node-choices">
+      <div class="choice" style="background:#fdecd9;color:#b45b1f;font-weight:700;">乾燥でカサつきが増す</div>
+      <div class="choice" style="background:#e3f2fd;color:#1a6a95;font-weight:700;">皮脂が増えてベタつく</div>
+      <div class="choice" style="background:#e8f5e9;color:#2e7d32;font-weight:700;">部分によって違う反応が出る</div>
+      <div class="choice" style="background:#f3e5f8;color:#7b3f8f;font-weight:700;">赤み・かゆみ等ゆらぎが出やすい</div>
+    </div>
+  </div>
+  <div class="bridge-box">競合分析で判明した「敏感肌は他社が軽視しがちな軸」への対策として、季節変化という敏感肌が最も出やすい切り口を専用に設けた</div>
+
+  <div class="multi-box">
+    <span class="multi-tag">振り分けロジック</span>
+    Q2・Q3・Q4の3問で各タイプに投票し、多数決（2問以上一致）で確定。3問とも割れた場合はQ2（最も普遍的で答えやすい軸）を優先。
+  </div>
+
+  <!-- ── Q5（根拠づけ） ── -->
   <div class="arr">↓</div>
   <div class="node node-q node-q1">
-    <div class="node-label">Q2 ── 共通・非分岐</div>
+    <div class="node-label">Q5 ── 共通・非分岐</div>
+    <div class="node-title">毛穴の目立ちやすい場所は？</div>
+    <div class="node-choices">
+      <div class="choice">目立たない</div>
+      <div class="choice">頬・フェイスライン全体</div>
+      <div class="choice">Tゾーン（おでこ・鼻）</div>
+      <div class="choice">頬・口周りなど乾燥ゾーン</div>
+    </div>
+  </div>
+  <div class="bridge-box">Dr.サポーター・AYAKAで確認された軸。振り分けには使わないが、Card2の毛穴関連の訴求（特に脂性肌・混合肌）の根拠づけに使用</div>
+
+  <!-- ── Q6 ── -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q1">
+    <div class="node-label">Q6 ── 共通・非分岐</div>
     <div class="node-title">新しいコスメを使い始めたとき、肌に出やすい反応は？</div>
     <div class="node-choices">
       <div class="choice">特に何も起きない</div>
@@ -174,12 +238,12 @@
       <div class="choice">ニキビ・吹き出物が増えることがある</div>
     </div>
   </div>
-  <div class="bridge-box">分岐には使わない。Q1の判定を裏付ける確認軸（特に「赤み・かゆみ」は敏感肌の裏付け）。結果カルCard2のパーソナライズに使用</div>
+  <div class="bridge-box">分岐には使わないが、敏感肌の裏付けをさらに厚くする（特に「赤み・かゆみ」）。Card2のパーソナライズにも使用</div>
 
-  <!-- ── Q3 ── -->
+  <!-- ── Q7 ── -->
   <div class="arr">↓</div>
   <div class="node node-q node-q1">
-    <div class="node-label">Q3 ── 共通・非分岐</div>
+    <div class="node-label">Q7 ── 共通・非分岐・最後の根拠づけ</div>
     <div class="node-title">一番気になる肌悩みは？</div>
     <div class="node-choices">
       <div class="choice">乾燥・カサつき</div>
@@ -188,7 +252,7 @@
       <div class="choice">赤み・刺激に弱い</div>
     </div>
   </div>
-  <div class="bridge-box">分岐には使わない。悩みの切実さを重ねてCard2の訴求を強める（根拠づけ用）</div>
+  <div class="bridge-box">悩みの切実さを重ねてCard2・Card3の訴求を強める最後の根拠づけ設問</div>
 
   <!-- ── 4分岐矢印 ── -->
   <div class="arr">↓</div>
@@ -220,7 +284,7 @@
   </div>
 
   <!-- ── Q1の回答で直接、結果へ ── -->
-  <div class="section-divider" style="margin-top:12px;">── Q1の回答のみで結果が直接確定（Q2・Q3は根拠づけ専用） ──</div>
+  <div class="section-divider" style="margin-top:12px;">── Q2×Q3×Q4のAND判定（多数決）で結果が確定（Q1・Q5〜Q7は根拠づけ・パーソナライズ専用） ──</div>
   <div class="type-cols">
 
     <!-- 乾燥肌 -->
