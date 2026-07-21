@@ -26,18 +26,8 @@
   .ruler-arrow { text-align: center; color: #4a6a5a; font-size: 20px; margin: 6px 0; font-weight: 700; }
 
   /* ─── ノード共通 ─── */
-  .node {
-    background: #fff;
-    border-radius: 12px;
-    padding: 14px 20px;
-    box-shadow: 0 1px 6px rgba(0,0,0,.07);
-    text-align: center;
-    margin: 0 auto;
-  }
-  .node-label {
-    font-size: 10px; font-weight: 700; letter-spacing: .08em;
-    text-transform: uppercase; color: #aaa; margin-bottom: 4px;
-  }
+  .node { background: #fff; border-radius: 12px; padding: 14px 20px; box-shadow: 0 1px 6px rgba(0,0,0,.07); text-align: center; margin: 0 auto; }
+  .node-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #aaa; margin-bottom: 4px; }
   .node-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
   .node-choices { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 6px; }
   .choice { font-size: 11px; background: #f5f5f7; border-radius: 5px; padding: 3px 10px; }
@@ -54,19 +44,38 @@
   .node-q1 { border-left: 4px solid #bdbdbd; }
   .node-q-branch { border-left: 4px solid #4a6a5a; border: 2px solid #4a6a5a; }
 
-  /* ─── 矢印 ─── */
   .arr { text-align: center; color: #ccc; font-size: 22px; line-height: 1; margin: 4px 0; }
 
-  /* ─── 橋渡し／echoメッセージ ─── */
-  .bridge-box {
-    background: #e8f5e9; border: 1px solid #81c784; border-radius: 8px;
-    padding: 10px 16px; font-size: 11px; color: #2e7d32; text-align: center; margin: 8px auto;
-    max-width: 560px; line-height: 1.8;
-  }
+  .bridge-box { background: #e8f5e9; border: 1px solid #81c784; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #2e7d32; text-align: center; margin: 8px auto; max-width: 560px; line-height: 1.8; }
 
-  /* ─── 4分岐 ─── */
-  .split-header { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; max-width: 1000px; margin: 8px auto 0; text-align: center; }
-  .split-arr { font-size: 20px; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 24px 0 16px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #666; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .section-divider { text-align: center; font-size: 10px; color: #aaa; letter-spacing: .1em; font-weight: 700; margin: 10px 0; }
+
+  /* ─── Q5 4択（第一分岐） ─── */
+  .q5-choices-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; max-width: 700px; margin: 10px auto 0; }
+  .q5-choice { border-radius: 8px; padding: 8px 10px; font-size: 10.5px; font-weight: 700; text-align: center; }
+  .c-dry { background: #fdecd9; color: #b45b1f; border: 1.5px solid #f4a460; }
+  .c-oil { background: #e3f2fd; color: #1a6a95; border: 1.5px solid #64b5f6; }
+  .c-mix { background: #e8f5e9; color: #2e7d32; border: 1.5px solid #81c784; }
+  .c-sen { background: #f3e5f8; color: #7b3f8f; border: 1.5px solid #ce93d8; }
+
+  .group-label-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; max-width: 700px; margin: 4px auto; text-align: center; font-size: 9.5px; color: #999; }
+
+  /* ─── Q6 グループ別（第二分岐・最終） ─── */
+  .q6-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 700px; margin: 10px auto 0; }
+  .q6-box { background: #fff; border-radius: 10px; padding: 12px 16px; box-shadow: 0 1px 6px rgba(0,0,0,.07); border: 2px solid; }
+  .q6-box.grp-dry { border-color: #f4a460; }
+  .q6-box.grp-oil { border-color: #64b5f6; }
+  .q6-tag { font-size: 9.5px; font-weight: 800; letter-spacing: .04em; display: block; margin-bottom: 4px; }
+  .grp-dry .q6-tag { color: #b45b1f; }
+  .grp-oil .q6-tag { color: #1a6a95; }
+  .q6-text { font-size: 12px; font-weight: 700; margin-bottom: 8px; }
+  .q6-choices { display: flex; flex-direction: column; gap: 5px; }
+  .q6-choice { background: #f5f5f7; border-radius: 5px; padding: 5px 8px; font-size: 10.5px; text-align: left; }
+  .q6-choice .to { display: block; font-size: 9.5px; color: #999; margin-top: 1px; }
 
   /* ─── タイプ列 ─── */
   .type-cols { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; max-width: 1000px; margin: 0 auto; align-items: start; }
@@ -74,7 +83,6 @@
   .type-head { border-radius: 10px; padding: 10px 8px; text-align: center; }
   .type-head .cond { font-size: 10px; font-weight: 700; margin-bottom: 3px; }
   .type-head .name { font-size: 12px; font-weight: 700; line-height: 1.4; }
-
   .type-a-head { background: #fdecd9; border: 2px solid #f4a460; }
   .type-a-head .cond { color: #b45b1f; }
   .type-b-head { background: #e3f2fd; border: 2px solid #64b5f6; }
@@ -84,7 +92,6 @@
   .type-d-head { background: #f3e5f8; border: 2px solid #ce93d8; }
   .type-d-head .cond { color: #7b3f8f; }
 
-  /* 結果ノード（並列表示） */
   .result-node { border-radius: 8px; padding: 10px 8px; text-align: center; color: #fff; font-size: 10px; line-height: 1.6; }
   .result-node .result-title { font-weight: 700; margin-bottom: 4px; }
   .result-node .result-items { font-size: 9px; opacity: .92; }
@@ -95,53 +102,28 @@
 
   .cv-note { font-size: 9.5px; color: #888; text-align: center; margin-top: 2px; line-height: 1.5; }
 
-  /* おすすめ3点セットカル */
   .set-node { border-radius: 8px; padding: 8px 6px; text-align: center; color: #fff; font-size: 9px; line-height: 1.6; }
   .set-node .set-tag2 { font-size: 8.5px; font-weight: 800; letter-spacing: .04em; display: block; margin-bottom: 3px; opacity: .9; }
   .set-node .set-items { font-size: 9px; }
   .step-label { font-size: 8px; font-weight: 700; color: #aaa; text-align: center; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 2px; }
 
-  /* 凡例 */
-  .legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 24px 0 16px; }
-  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #666; }
-  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-
-  .section-divider { text-align: center; font-size: 10px; color: #aaa; letter-spacing: .1em; font-weight: 700; margin: 10px 0; }
-
   .back-link { margin-top: 48px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 13px; }
-
-  /* ─── 判定ロジック（決定木） ─── */
-  .logic-wrap { max-width: 760px; margin: 16px auto; background: #fff; border: 2px solid #4a6a5a; border-radius: 14px; padding: 18px 22px; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
-  .logic-title { font-size: 12px; font-weight: 800; color: #4a6a5a; text-align: center; letter-spacing: .04em; margin-bottom: 12px; }
-  .vote-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
-  .vote-box { background: #f5f5f7; border: 1.5px solid #ccc; border-radius: 8px; padding: 8px 12px; font-size: 11px; text-align: center; min-width: 140px; }
-  .vote-box .vq { font-size: 9.5px; font-weight: 700; color: #888; display: block; margin-bottom: 2px; }
-  .vote-box .vresult { font-size: 12px; font-weight: 700; }
-  .logic-arr-down { text-align: center; color: #4a6a5a; font-size: 18px; margin: 4px 0; }
-  .decision { background: #fffde7; border: 1.5px dashed #f9ab00; border-radius: 8px; padding: 8px 14px; font-size: 11px; text-align: center; color: #7a5c00; margin: 6px auto; max-width: 480px; }
-  .decision-branch { display: flex; gap: 10px; justify-content: center; margin: 6px 0; flex-wrap: wrap; }
-  .branch-item { display: flex; flex-direction: column; align-items: center; gap: 3px; }
-  .branch-label { font-size: 9.5px; color: #999; font-weight: 700; }
-  .branch-result { background: #e8f5e9; border: 1px solid #81c784; border-radius: 6px; padding: 5px 10px; font-size: 10.5px; color: #2e7d32; font-weight: 700; }
-  .example-table { width: 100%; margin-top: 10px; font-size: 10.5px; border-collapse: collapse; }
-  .example-table th { background: #eef1ee; color: #555; padding: 5px 8px; font-weight: 700; }
-  .example-table td { padding: 5px 8px; border-bottom: 1px solid #eee; text-align: center; }
 </style>
 </head>
 <body>
 <div class="container">
 
   <h1>総合肌タイプ診断 v2 フロー図</h1>
-  <div class="meta">2026-07-21（同日2回目改訂：判定ロジックの決定木を可視化） ｜ コスメ診断ロードマップ④・横断診断 ｜ 全7問 ｜ Q1年代→Q2〜Q4で4タイプ分岐（AND判定） → 結果カルーセル → おすすめ3点セットカル ｜ ①②③の既存商材をそのまま流用</div>
+  <div class="meta">2026-07-21（3回目改訂：分岐ロジック確定版） ｜ コスメ診断ロードマップ④・横断診断 ｜ 全6問（非分岐4問→分岐2問） ｜ Q5で仮判定→Q6でグループ別に確定 ｜ ①②③の既存商材をそのまま流用</div>
 
   <div class="revision-note">
-    <b>①②③との構造の違い：</b> ①クレンジング診断・②スキンケア診断・③化粧水診断は「タイプ判定→結果カル→セレクトカル/PRカルで商材登場」という各カテゴリ単独の設計。本診断は<b>1回の診断結果でクレンジング・スキンケア・化粧水の3カテゴリ分の商品を横断的に1つのカルーセルで提示する</b>点が新しい。結果カルとおすすめ3点セットカルの役割分離（商材名は結果カルで出さない）は①②③と同じ原則を踏襲。
+    <b>分岐ロジックの確定経緯：</b> 当初「Q2〜Q4の3問をAND判定・多数決」で設計したが、システム制約<b>NG-2</b>（診断結果は最終設問の回答のみで分岐する。複数設問の統合は不可）に抵触し実装不可と判明。<b>Q5で肌質を仮判定→Q6でグループ別に確認・確定</b>という2段階のアダプティブ分岐に組み直した（各ルートの最終設問＝Q6のみで確定するためNG-2準拠）。さらに①②③診断と同じ「非分岐を先に、分岐は最後」の構成に合わせ、非分岐4問（Q1〜Q4）→分岐2問（Q5〜Q6）の順に確定。
   </div>
 
   <!-- ── 凡例 ── -->
   <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#bdbdbd;"></div>共通設問（結果に紐づかない・根拠づけ用）</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#4a6a5a;"></div>タイプ確定（振り分け主軸）</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#4a6a5a;"></div>分岐設問（Q5仮判定・Q6最終確定）</div>
   </div>
 
   <!-- ── ものさし転換 ── -->
@@ -162,18 +144,14 @@
   <div class="node node-start">
     <div class="node-label">START</div>
     <div class="node-title">あなたの肌タイプ診断</div>
-    <div class="node-sub">7問でわかる無料診断｜匿名・無料</div>
+    <div class="node-sub">6問でわかる無料診断｜匿名・無料</div>
     <div class="node-copy">その化粧品、自分の肌タイプに合わせて選べてる？</div>
   </div>
 
-  <div class="revision-note" style="margin:16px auto;">
-    <b>2026-07-21改訂：</b> 当初の全3問（Q1が単独で4タイプに直接分岐）は「3問で何がわかるのか」と説得力不足を指摘され、競合4社リサーチ（Dr.サポーター/AYAKA/津田コスメ/DHC）を踏まえて全7問に再構成。<b>振り分け軸を1問→3問（AND判定）に増やして精度と説得力を上げた</b>のが核心の変更点。
-  </div>
-
-  <!-- ── Q1（年代） ── -->
+  <!-- ── Q1 ── -->
   <div class="arr">↓</div>
   <div class="node node-q node-q1">
-    <div class="node-label">Q1 ── 非分岐・最初の設問</div>
+    <div class="node-label">Q1 ── 非分岐</div>
     <div class="node-title">年代を教えてください</div>
     <div class="node-choices">
       <div class="choice">10〜20代</div>
@@ -181,92 +159,26 @@
       <div class="choice">40代以上</div>
     </div>
   </div>
-  <div class="bridge-box">競合リサーチ（AYAKA）で年代が最初の設問という構成を確認。振り分けには使わないが、Card文言のトーン調整に使用</div>
+  <div class="bridge-box">競合リサーチ（AYAKA）で年代が最初の設問という構成を確認。Card文言のトーン調整に使用</div>
 
-  <!-- ── Q2（振り分け軸①） ── -->
-  <div class="arr">↓</div>
-  <div class="node node-q node-q-branch">
-    <div class="node-label" style="color:#4a6a5a;">Q2 ── 振り分け軸①（最優先・タイブレーク基準）</div>
-    <div class="node-title">洗顔後15分、何もつけずにいると肌は？</div>
-    <div class="node-choices">
-      <div class="choice" style="background:#fdecd9;color:#b45b1f;font-weight:700;">突っ張る、粉をふくことがある</div>
-      <div class="choice" style="background:#e3f2fd;color:#1a6a95;font-weight:700;">顔全体がテカって皮脂が浮く</div>
-      <div class="choice" style="background:#e8f5e9;color:#2e7d32;font-weight:700;">おでこ・鼻はテカるのに頬は突っ張る</div>
-      <div class="choice" style="background:#f3e5f8;color:#7b3f8f;font-weight:700;">赤みが出たり、ピリピリ・かゆみが出る</div>
-    </div>
-  </div>
-
-  <!-- ── Q3（振り分け軸②） ── -->
-  <div class="arr">↓</div>
-  <div class="node node-q node-q-branch">
-    <div class="node-label" style="color:#4a6a5a;">Q3 ── 振り分け軸②</div>
-    <div class="node-title">化粧崩れ・テカりについて当てはまるのは？</div>
-    <div class="node-choices">
-      <div class="choice" style="background:#fdecd9;color:#b45b1f;font-weight:700;">特に気にならない、乾燥の方が気になる</div>
-      <div class="choice" style="background:#e3f2fd;color:#1a6a95;font-weight:700;">日中ずっとテカり・化粧崩れが気になる</div>
-      <div class="choice" style="background:#e8f5e9;color:#2e7d32;font-weight:700;">Tゾーンだけ崩れる、頬は乾燥で粉をふく</div>
-      <div class="choice" style="background:#f3e5f8;color:#7b3f8f;font-weight:700;">新しい化粧品を使った時に限って肌が反応する</div>
-    </div>
-  </div>
-  <div class="bridge-box">Q2とは別角度（皮脂・化粧崩れの軸）で確認する2本目の振り分け軸。津田コスメのQ6に相当</div>
-
-  <!-- ── Q4（振り分け軸③・敏感肌強化） ── -->
-  <div class="arr">↓</div>
-  <div class="node node-q node-q-branch">
-    <div class="node-label" style="color:#4a6a5a;">Q4 ── 振り分け軸③・敏感肌の裏付け強化</div>
-    <div class="node-title">季節の変わり目、肌の調子はどうなりやすい？</div>
-    <div class="node-choices">
-      <div class="choice" style="background:#fdecd9;color:#b45b1f;font-weight:700;">乾燥でカサつきが増す</div>
-      <div class="choice" style="background:#e3f2fd;color:#1a6a95;font-weight:700;">皮脂が増えてベタつく</div>
-      <div class="choice" style="background:#e8f5e9;color:#2e7d32;font-weight:700;">部分によって違う反応が出る</div>
-      <div class="choice" style="background:#f3e5f8;color:#7b3f8f;font-weight:700;">赤み・かゆみ等ゆらぎが出やすい</div>
-    </div>
-  </div>
-  <div class="bridge-box">競合分析で判明した「敏感肌は他社が軽視しがちな軸」への対策として、季節変化という敏感肌が最も出やすい切り口を専用に設けた</div>
-
-  <!-- ── 判定ロジック（決定木） ── -->
-  <div class="arr">↓</div>
-  <div class="logic-wrap">
-    <div class="logic-title">◆ 判定ロジック（ここでタイプが内部的に確定。画面上はQ7終了後に表示）</div>
-
-    <div class="vote-row">
-      <div class="vote-box"><span class="vq">Q2の回答</span><span class="vresult">タイプ①へ投票</span></div>
-      <div class="vote-box"><span class="vq">Q3の回答</span><span class="vresult">タイプ②へ投票</span></div>
-      <div class="vote-box"><span class="vq">Q4の回答</span><span class="vresult">タイプ③へ投票</span></div>
-    </div>
-    <div class="logic-arr-down">↓</div>
-
-    <div class="decision">分岐① 3問とも同じタイプに投票した？</div>
-    <div class="decision-branch">
-      <div class="branch-item"><span class="branch-label">YES</span><div class="branch-result">そのタイプで確定</div></div>
-      <div class="branch-item"><span class="branch-label">NO ↓</span></div>
-    </div>
-
-    <div class="decision">分岐② 2問だけ同じタイプに投票した？</div>
-    <div class="decision-branch">
-      <div class="branch-item"><span class="branch-label">YES</span><div class="branch-result">多数派（2問一致）のタイプで確定</div></div>
-      <div class="branch-item"><span class="branch-label">NO ↓</span></div>
-    </div>
-
-    <div class="decision">分岐③ 3問とも異なるタイプに投票した（完全に割れた）</div>
-    <div class="decision-branch">
-      <div class="branch-item"><span class="branch-label">→</span><div class="branch-result">Q2の回答が示すタイプで確定（タイブレーク）</div></div>
-    </div>
-
-    <table class="example-table">
-      <thead><tr><th>Q2</th><th>Q3</th><th>Q4</th><th>判定結果</th></tr></thead>
-      <tbody>
-        <tr><td>脂性肌</td><td>脂性肌</td><td>脂性肌</td><td>脂性肌（分岐① 3問一致）</td></tr>
-        <tr><td>混合肌</td><td>混合肌</td><td>乾燥肌</td><td>混合肌（分岐② 2問一致）</td></tr>
-        <tr><td>乾燥肌</td><td>脂性肌</td><td>敏感肌</td><td>乾燥肌（分岐③ Q2優先タイブレーク）</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- ── Q5（根拠づけ） ── -->
+  <!-- ── Q2 ── -->
   <div class="arr">↓</div>
   <div class="node node-q node-q1">
-    <div class="node-label">Q5 ── 共通・非分岐</div>
+    <div class="node-label">Q2 ── 非分岐・根拠づけ</div>
+    <div class="node-title">お化粧をしていて、崩れ方で当てはまるのは？</div>
+    <div class="node-choices">
+      <div class="choice">崩れるというより乾燥で粉をふく</div>
+      <div class="choice">皮脂で全体的にドロドロ崩れる</div>
+      <div class="choice">Tゾーンだけ崩れて頬はそのまま</div>
+      <div class="choice">新しいコスメだと崩れ方が違う</div>
+    </div>
+  </div>
+  <div class="bridge-box">競合Dr.サポーターの「メイクの崩れ方」軸。対象記事（ファンデ/BB比較記事）の読者に特に刺さる。Card2・Card3のパーソナライズに使用</div>
+
+  <!-- ── Q3 ── -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q1">
+    <div class="node-label">Q3 ── 非分岐・根拠づけ</div>
     <div class="node-title">毛穴の目立ちやすい場所は？</div>
     <div class="node-choices">
       <div class="choice">目立たない</div>
@@ -275,26 +187,12 @@
       <div class="choice">頬・口周りなど乾燥ゾーン</div>
     </div>
   </div>
-  <div class="bridge-box">Dr.サポーター・AYAKAで確認された軸。振り分けには使わないが、Card2の毛穴関連の訴求（特に脂性肌・混合肌）の根拠づけに使用</div>
+  <div class="bridge-box">Dr.サポーター・AYAKAで確認された軸。Card2の毛穴関連の訴求（特に脂性肌・混合肌）の根拠づけに使用</div>
 
-  <!-- ── Q6 ── -->
+  <!-- ── Q4 ── -->
   <div class="arr">↓</div>
   <div class="node node-q node-q1">
-    <div class="node-label">Q6 ── 共通・非分岐</div>
-    <div class="node-title">新しいコスメを使い始めたとき、肌に出やすい反応は？</div>
-    <div class="node-choices">
-      <div class="choice">特に何も起きない</div>
-      <div class="choice">赤み・かゆみが出ることがある</div>
-      <div class="choice">何を使っても変化を感じにくい</div>
-      <div class="choice">ニキビ・吹き出物が増えることがある</div>
-    </div>
-  </div>
-  <div class="bridge-box">分岐には使わないが、敏感肌の裏付けをさらに厚くする（特に「赤み・かゆみ」）。Card2のパーソナライズにも使用</div>
-
-  <!-- ── Q7 ── -->
-  <div class="arr">↓</div>
-  <div class="node node-q node-q1">
-    <div class="node-label">Q7 ── 共通・非分岐・最後の根拠づけ</div>
+    <div class="node-label">Q4 ── 非分岐・根拠づけ</div>
     <div class="node-title">一番気になる肌悩みは？</div>
     <div class="node-choices">
       <div class="choice">乾燥・カサつき</div>
@@ -303,39 +201,64 @@
       <div class="choice">赤み・刺激に弱い</div>
     </div>
   </div>
-  <div class="bridge-box">悩みの切実さを重ねてCard2・Card3の訴求を強める最後の根拠づけ設問</div>
+  <div class="bridge-box">悩みの切実さを重ねてCard2・Card3の訴求を強める根拠づけ設問</div>
 
-  <!-- ── 画面上の分岐（判定ロジックで確定済みのタイプに応じて表示を切替） ── -->
+  <!-- ── Q5（第一分岐） ── -->
   <div class="arr">↓</div>
-  <div class="bridge-box" style="max-width:640px;">Q5〜Q7は全ユーザー共通で表示（タイプに関わらず同じ質問）。回答内容はここでは使わず、判定ロジックで既に確定しているタイプに応じて、ここから先の画面表示だけが分岐する</div>
-  <div class="split-header">
-    <div class="split-arr" style="color:#f4a460;">↓</div>
-    <div class="split-arr" style="color:#64b5f6;">↓</div>
-    <div class="split-arr" style="color:#81c784;">↓</div>
-    <div class="split-arr" style="color:#ce93d8;">↓</div>
+  <div class="node node-q node-q-branch">
+    <div class="node-label" style="color:#4a6a5a;">Q5 ── 第一分岐・グループ仮判定</div>
+    <div class="node-title">洗顔後15分、何もつけずにいると肌は？</div>
   </div>
+  <div class="q5-choices-row">
+    <div class="q5-choice c-dry">A: 突っ張る、粉をふく</div>
+    <div class="q5-choice c-oil">B: 顔全体がテカって皮脂が浮く</div>
+    <div class="q5-choice c-mix">C: おでこ・鼻はテカる、頬は突っ張る</div>
+    <div class="q5-choice c-sen">D: 赤み・ピリピリ・かゆみが出る</div>
+  </div>
+  <div class="group-label-row">
+    <div>乾燥・敏感グループへ</div>
+    <div>脂性・混合グループへ</div>
+    <div>脂性・混合グループへ</div>
+    <div>乾燥・敏感グループへ</div>
+  </div>
+  <div class="bridge-box" style="margin-top:10px;">「洗顔後の肌状態」という最も普遍的で答えやすい設問（Dr.サポーター・AYAKA・津田コスメ全社共通の軸）。<strong>この時点ではまだ結果は確定しない</strong>（NG-2対応：確定は次のQ6のみで行う）</div>
+
+  <!-- ── Q6（第二分岐・最終） ── -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q-branch" style="max-width:700px;">
+    <div class="node-label" style="color:#4a6a5a;">Q6 ── 第二分岐・最終設問＝ここで確定</div>
+    <div class="node-title">グループ別設問（Q5の回答で2パターンのどちらかを表示）</div>
+  </div>
+  <div class="q6-row">
+    <div class="q6-box grp-dry">
+      <span class="q6-tag">Q6-①（Q5でA/D＝乾燥・敏感グループ）</span>
+      <div class="q6-text">新しいコスメを使うと、赤みやかゆみが出やすいですか？</div>
+      <div class="q6-choices">
+        <div class="q6-choice">はい、出やすい<span class="to">→敏感肌</span></div>
+        <div class="q6-choice">いいえ、特にない<span class="to">→乾燥肌</span></div>
+      </div>
+    </div>
+    <div class="q6-box grp-oil">
+      <span class="q6-tag">Q6-②（Q5でB/C＝脂性・混合グループ）</span>
+      <div class="q6-text">頬やフェイスラインは、テカりより乾燥が気になりますか？</div>
+      <div class="q6-choices">
+        <div class="q6-choice">いいえ、頬もテカる<span class="to">→脂性肌</span></div>
+        <div class="q6-choice">はい、頬は乾燥する<span class="to">→混合肌</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="bridge-box" style="margin-top:10px;">構築パネルはQ6-①・Q6-②の2枚のみ（4パターン専用より構築負担が軽い）。<strong>Q6の回答のみで結果が確定するため、NG-2に完全準拠</strong></div>
 
   <!-- ── タイプ見出し ── -->
+  <div class="arr" style="margin-top:12px;">↓</div>
   <div class="type-cols" style="margin-top:2px;">
-    <div class="type-head type-a-head">
-      <div class="cond">判定ロジックで確定</div>
-      <div class="name">乾燥肌</div>
-    </div>
-    <div class="type-head type-b-head">
-      <div class="cond">判定ロジックで確定</div>
-      <div class="name">脂性肌</div>
-    </div>
-    <div class="type-head type-c-head">
-      <div class="cond">判定ロジックで確定</div>
-      <div class="name">混合肌</div>
-    </div>
-    <div class="type-head type-d-head">
-      <div class="cond">判定ロジックで確定</div>
-      <div class="name">敏感肌</div>
-    </div>
+    <div class="type-head type-a-head"><div class="cond">Q6-①でNO</div><div class="name">乾燥肌</div></div>
+    <div class="type-head type-b-head"><div class="cond">Q6-②でYES</div><div class="name">脂性肌</div></div>
+    <div class="type-head type-c-head"><div class="cond">Q6-②でNO</div><div class="name">混合肌</div></div>
+    <div class="type-head type-d-head"><div class="cond">Q6-①でYES</div><div class="name">敏感肌</div></div>
   </div>
 
-  <div class="section-divider" style="margin-top:12px;">── ここから先の画面表示のみタイプ別に分岐（判定自体は上記ロジックで完了済み） ──</div>
+  <div class="section-divider" style="margin-top:12px;">── Q6の回答のみで結果が直接確定（Q1〜Q5は根拠づけ・グループ仮判定専用） ──</div>
   <div class="type-cols">
 
     <!-- 乾燥肌 -->
@@ -418,7 +341,7 @@
   <div class="arr" style="margin-top:16px;">↓</div>
   <div class="node" style="max-width:640px;background:#fafafa;border:1px dashed #ccc;">
     <div class="node-label">CTA（LINEを閉じる／記事に戻る）</div>
-    <div style="font-size:11px;color:#666;margin-top:4px;">各ステップの詳細は total-skin-diagnosis-design-v2-2026-07-17.html（設計書）／ brief-total-skin-diagnosis-2026-07-17.html（依頼書）を参照。カード図は別途作成予定</div>
+    <div style="font-size:11px;color:#666;margin-top:4px;">各ステップの詳細は total-skin-diagnosis-design-v2-2026-07-17.html（設計書）／ brief-total-skin-diagnosis-2026-07-17.html（依頼書）／ research-total-skintype-diagnosis-2026-07-21.html（競合分析・ユーザーダイブ）を参照。カード図は別途作成予定</div>
   </div>
 
   <div class="back-link"><a href="index.html">← トップへ</a></div>
