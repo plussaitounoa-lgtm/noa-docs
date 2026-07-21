@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>総合肌タイプ診断 競合4社分析 2026-07-21</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f5f5f7; color: #1d1d1f; font-size: 14px; line-height: 1.7; }
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 20px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 2px solid #e0e0e0; }
+  h3 { font-size: 14px; font-weight: 700; margin: 20px 0 8px; color: #444; }
+  p { margin-bottom: 10px; }
+  .card { background: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #4a4a6a; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:hover td { background: #fafafa; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin: 2px; }
+  .tag-drsup { background: #e8f0fe; color: #1967d2; }
+  .tag-ayaka { background: #fce8e6; color: #c5221f; }
+  .tag-tsuda { background: #e6f4ea; color: #1e8e3e; }
+  .tag-dhc   { background: #f0f0f0; color: #666; }
+  .position-note { background: #eef1ff; border-left: 3px solid #4a4a6a; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 24px; font-size: 13px; color: #333; }
+  .highlight { background: #fffde7; border-left: 3px solid #f9ab00; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 12px 0; }
+  .adopt { background: #e6f4ea; border-left: 3px solid #1e8e3e; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .skip { background: #f0f0f0; border-left: 3px solid #999; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; color: #666; }
+  .unavailable { background: #fce8e6; border-left: 3px solid #ea4335; padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; color: #666; }
+  .section-note { font-size: 12px; color: #888; margin-top: 6px; }
+  .flow { display: flex; align-items: center; gap: 4px; font-size: 12px; flex-wrap: wrap; margin: 10px 0; }
+  .flow-step { background: #fff; border: 1px solid #ddd; padding: 6px 10px; border-radius: 6px; }
+  .arrow { color: #888; margin: 0 4px; }
+  .axis-box { border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; font-size: 13px; }
+  .axis-dry { background: #fdecd9; border-left: 3px solid #f4a460; }
+  .axis-oil { background: #e3f2fd; border-left: 3px solid #64b5f6; }
+  .axis-dull { background: #ede7f6; border-left: 3px solid #7e57c2; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  .back-link { display: inline-block; margin-top: 8px; font-size: 12px; color: #4a4a6a; text-decoration: none; }
+  .back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>総合肌タイプ診断（コスメ④横断診断） 競合4社分析</h1>
+  <div class="meta">2026-07-21 作成 ｜ 担当: Noa ｜ ステータス: 設問設計インプット確定</div>
+
+  <div class="position-note">
+    <strong>このdocsの位置づけ：</strong> 「肌タイプ診断なのに3問では設問数が少なすぎて説得力に欠ける（最低6問は必要）」というNoaの指摘を受け、既存の全3問構成を見直すための競合リサーチ。設問設計への反映方針は末尾の「統合推奨」を参照。設計書本体は
+    <a href="total-skin-diagnosis-design-v2-2026-07-17.html">「総合肌タイプ診断 v2 設計書」</a>参照。
+  </div>
+
+  <!-- ① 4社比較表 -->
+  <h2>① 4社比較サマリー</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th></th><th><span class="tag tag-drsup">Dr.サポーター</span></th><th><span class="tag tag-ayaka">AYAKA</span></th><th><span class="tag tag-tsuda">津田コスメ</span></th><th><span class="tag tag-dhc">DHC</span></th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>設問数</strong></td>
+          <td>5問</td>
+          <td><strong>12問</strong>（年代1問＋はい/どちらでもない/いいえ11問）</td>
+          <td>7問（はい/いいえ/軽度・時々）</td>
+          <td>取得不可（JS描画のため）</td>
+        </tr>
+        <tr>
+          <td><strong>最初の設問</strong></td>
+          <td>肌の状態（5択・症状ベース）</td>
+          <td><strong>年代（ドロップダウン）</strong></td>
+          <td>洗顔後のつっぱり有無</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>診断ロジック</strong></td>
+          <td>単一の症状選択式</td>
+          <td><strong>複数質問の積み上げでスコア化 → 水分量×油分量の2軸マトリクス</strong></td>
+          <td>単一質問ずつYES/NOの直列判定</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>結果タイプ</strong></td>
+          <td>非公開（結果画面遷移のため未確認）</td>
+          <td>2軸マトリクス（水分量×油分量）＋くすみ等の悩み軸を別途分析</td>
+          <td><strong>3タイプ（脂性肌・混合肌・乾燥肌。敏感肌は無し）</strong></td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ② Dr.サポーター -->
+  <h2>② Dr.サポーター（<span class="tag tag-drsup">member.drsupporter.com/pages/skintype_selfcheck</span>）</h2>
+  <div class="card">
+    <h3>診断フロー（全5問）</h3>
+    <div class="flow">
+      <div class="flow-step">Q1 肌の状態（乾燥/季節で変わる/Tゾーンベタつく/部分乾燥+ベタつき/全体ベタつきの5択）</div><span class="arrow">→</span>
+      <div class="flow-step">Q2 洗顔後の肌の感覚（5択）</div><span class="arrow">→</span>
+      <div class="flow-step">Q3 毛穴の目立ちやすい場所（5択）</div><span class="arrow">→</span>
+      <div class="flow-step">Q4 メイクの崩れ方（5択）</div><span class="arrow">→</span>
+      <div class="flow-step">Q5 肌トラブルで悩むことが多いこと（5択）</div>
+    </div>
+    <p class="section-note">結果画面はボタン遷移後の別ページのため、診断結果タイプの種類・名称は未確認。</p>
+  </div>
+
+  <!-- ③ AYAKA -->
+  <h2>③ AYAKA（<span class="tag tag-ayaka">ayaka-ch.jp/web-diagnostics</span>）</h2>
+  <div class="card">
+    <h3>診断フロー（全12問・Noa提供のスクリーンショットで詳細確認）</h3>
+    <p><strong>Q1（年代・ドロップダウン）</strong>を最初に聞いた後、11問を3つの軸に分けて「はい／どちらでもない／いいえ」「はい／いいえ」で積み上げるスコア式。</p>
+
+    <div class="axis-box axis-dry">
+      <strong>水分量（乾燥）軸　Q2〜Q4</strong><br>
+      Q2. 肌になめらかさが足りないと感じることはありますか？<br>
+      Q3. 肌に吸いつくようなしっとりさが足りないと感じることはありますか？<br>
+      Q4. 肌に触れた時、カサカサ・ゴワゴワしていると感じることはありますか？
+    </div>
+    <div class="axis-box axis-oil">
+      <strong>油分量（皮脂）軸　Q5〜Q7</strong><br>
+      Q5. 日中、肌のテカリが気になりますか？<br>
+      Q6. あぶらとり紙で皮脂を度々取らなければならないでしょうか？<br>
+      Q7. お化粧なおしをする際、化粧くずれは気になりますか？
+    </div>
+    <div class="axis-box axis-dull">
+      <strong>くすみ・透明感（悩み）軸　Q8〜Q12（はい/いいえのみ、どちらでもない無し）</strong><br>
+      Q8. シミ・ソバカスが気になると感じることはありますか？<br>
+      Q9. 透明感のある肌にあこがれますか？<br>
+      Q10. 化粧をする前の顔色が、さえないと感じることはありますか？<br>
+      Q11. 特に目の下が、どんよりとくすんで見えると感じることはありますか？<br>
+      Q12. 肌の色が何となく黄色っぽい、全体的に暗いと感じることはありますか？
+    </div>
+
+    <h3>結果画面の構成（回答例: 水分量少ない×油分量少ない）</h3>
+    <ul>
+      <li><strong>診断結果（タイプ発表）</strong>: 「お客様のお肌は、乾燥して肌あれに近い状態です。」＋水分量×油分量の2軸グラフ（散布図に自分の位置がプロットされる）</li>
+      <li><strong>お肌の分析（3枚）</strong>: 「肌あれで」「シワで」「ハリのなさで」お悩みではありませんか？＋各因果関係の断面図イラスト（皮脂膜低下→水分蒸発→キメ乱れ、等）</li>
+      <li><strong>原因（Q8〜12のくすみ軸に対応）</strong>: シミ・ソバカス／血行不良によるくすみ／クマ、それぞれの原因を断面図イラストで解説。<strong>くすみ軸はタイプ判定（2軸マトリクス）とは独立して、原因説明セクションとして別途表示される</strong></li>
+      <li><strong>スキンケアのポイント</strong>: 「保湿ケアがポイントです」＋「化粧水:しっとり」「乳液:しっとり」という<strong>テクスチャー傾向の直接レコメンド</strong>ボタン</li>
+      <li><strong>おすすめのケア</strong>: 分析3項目・原因3項目それぞれに対応する具体的ケア方法の解説文</li>
+    </ul>
+    <div class="highlight">
+      <strong>最重要発見:</strong> AYAKAは「肌タイプ＝水分量×油分量の2軸」と「くすみ・シミ等の悩み＝別軸」を明確に分離している。<strong>敏感肌は独立したタイプとして存在せず</strong>、津田コスメも同様（脂性/混合/乾燥の3分類のみ）。うちは「4タイプ確定（乾燥/脂性/混合/敏感）」の仕様のため敏感肌は維持するが、他社が軽視しがちな軸である分、専用の裏付け設問を意識的に厚めに入れる必要がある。
+    </div>
+  </div>
+
+  <!-- ④ 津田コスメ -->
+  <h2>④ 津田コスメ（<span class="tag tag-tsuda">tsuda-cosme.com/choose/skin_type</span>）</h2>
+  <div class="card">
+    <h3>診断フロー（全7問・はい/いいえ/軽度・時々の3択）</h3>
+    <div class="flow">
+      <div class="flow-step">Q1 洗顔後・起床時のつっぱり/ゴワつき</div><span class="arrow">→</span>
+      <div class="flow-step">Q2 保湿してもすぐ乾く</div><span class="arrow">→</span>
+      <div class="flow-step">Q3 Tゾーンのテカリ・ベタつき</div><span class="arrow">→</span>
+      <div class="flow-step">Q4 部分的な乾燥と皮脂の混在</div><span class="arrow">→</span>
+      <div class="flow-step">Q5 毛穴の開き・キメの乱れ</div><span class="arrow">→</span>
+      <div class="flow-step">Q6 日中のベタつき・化粧崩れ</div><span class="arrow">→</span>
+      <div class="flow-step">Q7 一年通してのニキビ・吹き出物</div>
+    </div>
+    <p><strong>結果タイプ: 脂性肌・混合肌・乾燥肌の3種類</strong>（敏感肌は無し）</p>
+    <p class="section-note">Q4（部分的な乾燥と皮脂の混在）が混合肌の直接的な確定質問として機能。Q1・Q2が乾燥軸、Q3・Q6が脂性軸、Q5・Q7が毛穴・ニキビという悩み軸で、こちらも「軸ごとに複数質問」の設計。</p>
+  </div>
+
+  <!-- ⑤ DHC -->
+  <h2>⑤ DHC（<span class="tag tag-dhc">dhc.co.jp/contents/cosmetics/page_lp_skintype_index</span>）</h2>
+  <div class="card">
+    <div class="unavailable">診断本体がJS描画のクイズアプリのため、WebFetchでは設問内容を取得できず。「今すぐ診断」ボタンの先は別アプリケーションに遷移する構成と推測される。必要であれば実際にクイズを進めてスクリーンショットで確認する形になる。</div>
+  </div>
+
+  <!-- ⑥ 統合推奨 -->
+  <h2>⑥ 統合推奨（設問設計への反映方針）</h2>
+
+  <div class="card">
+    <h3>取り込む（優先度高）</h3>
+    <div class="adopt">
+      <strong>1. 年代を最初の設問（Q1）にする</strong>（AYAKA・Noa指摘）<br>
+      現行v2はQ1が肌状態だったが、AYAKAも年代を最初に聞いている。年代→肌状態の順に組み替える。
+    </div>
+    <div class="adopt">
+      <strong>2. 「1つの軸を複数の具体的設問で裏付ける」設計にする</strong>（AYAKA・津田コスメ共通）<br>
+      現行v2は「洗顔後の状態」1問だけで4タイプに直接分岐していたが、これが「3問で何がわかるの」という説得力不足の根本原因。乾燥軸・脂性軸それぞれに複数の具体的設問（テカりの時間帯、あぶらとり紙の使用頻度、化粧崩れの有無等）を割り当てて精度と説得力を上げる。
+    </div>
+    <div class="adopt">
+      <strong>3. 混合肌の確定には「部分的な乾燥と皮脂の混在」を直接聞く設問を入れる</strong>（津田コスメQ4）<br>
+      現行v2は「おでこ・鼻はテカるのに頬は突っ張る」を1回聞くのみだったが、これを独立した強い確定シグナルとして活用する。
+    </div>
+    <div class="adopt">
+      <strong>4. 敏感肌は他社が軽視する軸なので専用設問を厚めに（複数問）確保する</strong><br>
+      「新しいコスメへの反応」だけでなく、季節変化・洗顔後のヒリつき等、複数の具体的シーンで裏付ける。
+    </div>
+    <div class="adopt">
+      <strong>5. 結果画面に「回答エコー」＋因果関係イラスト相当の説明を入れる</strong>（AYAKA・既存Card2矢印図式と方向性一致、確認済みなので変更不要）
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>今回は見送り</h3>
+    <div class="skip">
+      <strong>6. くすみ・シミ軸を独立の悩み軸として全設問に追加する</strong>（AYAKAのQ8〜12相当）<br>
+      本診断のゴールは「肌タイプ→3ステップ商品レコメンド」であり、くすみ・シミは既存②③診断の悩み軸（美白・エイジング型等）が別途カバー済み。本診断で重複して深掘りする必要性は薄い。既存Q「一番気になる肌悩み」の選択肢に含める程度に留める。
+    </div>
+    <div class="skip">
+      <strong>7. スコア加算式（はい=1点、いいえ=0点等）の厳密な集計ロジック</strong>（AYAKA）<br>
+      LINE BOTでのスコア加算実装は工数が高い（③化粧水診断でも過去に「LINE BOTはスコア加算型が使えないためシンプルな分岐で実装」という制約が確認済み）。軸ごとに代表質問のAND/OR判定に留める。
+    </div>
+  </div>
+
+  <a class="back-link" href="total-skin-diagnosis-design-v2-2026-07-17.html">← 総合肌タイプ診断 v2 設計書に戻る</a>
+
+  <div style="margin-top:40px; font-size:11px; color:#bbb; text-align:center;">
+    generated: 2026-07-21 ｜ noa-docs
+  </div>
+
+</div>
+</body>
+</html>
