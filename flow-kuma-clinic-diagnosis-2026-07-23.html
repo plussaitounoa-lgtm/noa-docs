@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>クマ取り クリニック選び診断 v1.0 フロー図</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', sans-serif; background: #f0f2f0; color: #1d1d1f; font-size: 13px; padding: 40px 24px 60px; }
+  .container { max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .meta { color: #888; font-size: 12px; margin-bottom: 20px; }
+
+  .revision-note { background: #eef1ff; border-left: 3px solid #4a4a6a; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 28px; font-size: 12px; color: #333; line-height: 1.8; max-width: 800px; margin-left:auto; margin-right:auto; }
+  .revision-note b { color: #1a1a1a; }
+
+  .node { background: #fff; border-radius: 12px; padding: 14px 20px; box-shadow: 0 1px 6px rgba(0,0,0,.07); text-align: center; margin: 0 auto; }
+  .node-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #aaa; margin-bottom: 4px; }
+  .node-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .node-choices { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 6px; }
+  .choice { font-size: 11px; background: #f5f5f7; border-radius: 5px; padding: 3px 10px; }
+
+  .node-start { background: #b45b1f; color: #fff; max-width: 460px; }
+  .node-start .node-label { color: #f0cba5; }
+  .node-start .node-title { color: #fff; font-size: 15px; }
+  .node-start .node-sub { color: #fbe4cc; font-size: 11px; margin-top: 4px; }
+
+  .node-cover { background: linear-gradient(160deg,#eaf8fd,#d3eef8); border: 1.5px solid #1a9cc7; max-width: 460px; }
+  .node-cover .node-label { color: #1a9cc7; }
+  .node-cover .node-title { color: #12313d; font-size: 15px; }
+  .node-cover .node-sub { color: #0f6a8a; font-size: 11px; margin-top: 4px; }
+
+  .node-q { max-width: 640px; }
+  .node-q1 { border-left: 4px solid #bdbdbd; }
+  .node-q-branch { border-left: 4px solid #b45b1f; border: 2px solid #b45b1f; }
+
+  .arr { text-align: center; color: #ccc; font-size: 22px; line-height: 1; margin: 4px 0; }
+
+  .bridge-box { background: #e8f5e9; border: 1px solid #81c784; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #2e7d32; text-align: center; margin: 8px auto; max-width: 560px; line-height: 1.8; }
+  .warn-box-inline { background: #fbf2e4; border: 1px solid #f0dbb0; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #7a5a1a; text-align: center; margin: 8px auto; max-width: 640px; line-height: 1.8; }
+
+  .fanout { display: grid; gap: 10px; max-width: 900px; margin: 10px auto 0; }
+  .fanout-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .fan-item { background: #fff; border-radius: 8px; padding: 8px 10px; text-align: center; font-size: 10.5px; line-height: 1.6; border: 1.5px solid #e0c9b5; }
+  .fan-item .fan-q { color: #666; margin-bottom: 4px; }
+  .fan-item .fan-arrow { color: #b45b1f; font-weight: 700; margin: 2px 0; }
+  .fan-item .fan-menu { color: #8a3f10; font-weight: 700; background: #fdeee0; border-radius: 5px; padding: 2px 6px; display: inline-block; }
+  .fan-item.fan-surgery .fan-menu { color: #0f6a8a; background: #e2f4fb; }
+  .fan-item.fan-inject .fan-menu { color: #a0480a; background: #ffe9d8; }
+
+  /* ─── 2分岐（施術別・結果カルーセル） ─── */
+  .branch-fork { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 820px; margin: 10px auto 0; }
+  .branch-col { border-radius: 10px; padding: 12px; }
+  .branch-col.surgery { background: #eaf8fd; border: 1.5px solid #1a9cc7; }
+  .branch-col.inject { background: #fff3e8; border: 1.5px solid #e37400; }
+  .branch-head { font-size: 11px; font-weight: 700; text-align: center; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px dashed rgba(0,0,0,.15); }
+  .branch-col.surgery .branch-head { color: #0f6a8a; }
+  .branch-col.inject .branch-head { color: #a0480a; }
+  .mini-card { background: #fff; border-radius: 7px; padding: 8px 10px; font-size: 10.5px; line-height: 1.6; margin-bottom: 6px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .mini-card:last-child { margin-bottom: 0; }
+  .mini-card .mc-tag { font-size: 9px; font-weight: 700; color: #999; display: block; margin-bottom: 2px; }
+  .mini-card .mc-title { font-weight: 700; color: #222; margin-bottom: 2px; }
+  .mini-cta { text-align: center; font-size: 10px; font-weight: 700; color: #fff; border-radius: 14px; padding: 5px 0; margin-top: 4px; }
+  .branch-col.surgery .mini-cta { background: #1a9cc7; }
+  .branch-col.inject .mini-cta { background: #e37400; }
+
+  /* ─── 深掘りハブ（LINEチャット風） ─── */
+  .chat-menu { max-width: 320px; margin: 8px auto 0; background: #fff; border-radius: 18px; padding: 14px 18px; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+  .chat-menu-item { display: flex; align-items: center; gap: 8px; padding: 10px 4px; font-size: 12px; color: #333; font-weight: 600; }
+  .chat-menu-item:not(:last-child) { border-bottom: 1px solid #eee; }
+  .chat-menu-item .chat-arrow { color: #3a94b8; font-size: 10px; }
+
+  .complete-msg { max-width: 420px; margin: 8px auto 0; background: #fff; border-radius: 14px; padding: 14px 18px; box-shadow: 0 1px 6px rgba(0,0,0,.07); text-align: center; }
+  .complete-msg .cm-text { font-size: 13px; color: #333; line-height: 1.8; }
+
+  .section-divider { text-align: center; font-size: 10px; color: #aaa; letter-spacing: .1em; font-weight: 700; margin: 20px 0 10px; }
+
+  .warn-note { max-width: 720px; margin: 0 auto; background: #fbf2e4; border: 1px solid #f0dbb0; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #7a5a1a; text-align: center; line-height: 1.7; }
+
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin: 0 0 20px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #666; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .back-link { margin-top: 48px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 13px; }
+  .back-link a { color: #b45b1f; text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .fanout-4 { grid-template-columns: 1fr 1fr; }
+    .branch-fork { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>クマ取り クリニック選び診断 v1.0 フロー図</h1>
+  <div class="meta">2026-07-23 ｜ mega-clinic.com クマジャンル（対象記事は未定） ｜ 提携先: TCB東京中央美容外科（afbアフィリエイト） ｜ 診断表紙 → 全2問（非分岐1・分岐1） → 結果カルーセル4枚×2パターン → 深掘りハブ</div>
+
+  <div class="revision-note">
+    <b>シミとの構造の違い：</b> シミはピコレーザー内の施術メニュー違い（トーニング／スポット）で分岐したが、クマは<b>手術（脱脂）と非手術（再生注射）という施術カテゴリそのもの</b>が分岐対象。ダウンタイム・価格帯の差が大きいため、結果を1枚のPRカルーセルに統合せず、<b>脱脂手術パターン／再生注射パターンそれぞれに4枚の結果カルーセル</b>（コスメ診断標準フォーマット：チェックリスト→矢印図式→アプローチ→メリット+CTA）を用意する。<b>Q1はクマの原因タイプ（黒グマ／茶グマ／青グマ）そのものでは分岐しない</b>点が要確認事項（詳細は設計書8章）。
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#bdbdbd;"></div>非分岐（導入）</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#b45b1f;"></div>分岐軸</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#1a9cc7;"></div>脱脂手術パターン</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e37400;"></div>再生注射パターン</div>
+  </div>
+
+  <!-- START -->
+  <div class="node node-start">
+    <div class="node-label">PU（ABテスト）</div>
+    <div class="node-title">A「あなたに合うクマ取り方法、見つかる？」／B「その目のクマ、どうすれば消える？」</div>
+    <div class="node-sub">クマ取りクリニック診断／LINEでカンタン2問 → 友だち追加</div>
+  </div>
+
+  <!-- 診断表紙 -->
+  <div class="arr">↓</div>
+  <div class="node node-cover">
+    <div class="node-label">診断表紙</div>
+    <div class="node-title">あなたに合うクマ改善方法がわかる！</div>
+    <div class="node-sub">脱脂手術／再生注射、どちらが向いているかもわかる／カンタン2問で診断</div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q1">
+    <div class="node-label">Q1 ── 非分岐（導入・共感）</div>
+    <div class="node-title">今、目の下について感じていることは？</div>
+    <div class="node-choices">
+      <div class="choice">① 黒っぽい影・ふくらみが気になる</div>
+      <div class="choice">② 顔色が悪く見られがち</div>
+      <div class="choice">③ メイクで隠しきれない</div>
+      <div class="choice">④ 複数当てはまる</div>
+    </div>
+  </div>
+  <div class="warn-box-inline">分岐には使わず、結果メッセージにも反映しない。①の文言を意図的に「脂肪のふくらみ」寄りにして、脱脂手術が対象とする黒グマへの文脈を入口でさりげなく作る（原因タイプ非分岐リスクへの緩和策）</div>
+
+  <!-- Q2（分岐軸） -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q-branch">
+    <div class="node-label" style="color:#b45b1f;">Q2 ── 分岐軸（重視すること）</div>
+    <div class="node-title">クマ改善で、一番重視することは？</div>
+  </div>
+  <div class="fanout fanout-4">
+    <div class="fan-item fan-surgery">
+      <div class="fan-q">① 脂肪のふくらみ自体をなくしたい</div>
+      <div class="fan-arrow">↓</div>
+      <span class="fan-menu">脱脂手術</span>
+    </div>
+    <div class="fan-item fan-surgery">
+      <div class="fan-q">② 効果重視でしっかり改善したい</div>
+      <div class="fan-arrow">↓</div>
+      <span class="fan-menu">脱脂手術</span>
+    </div>
+    <div class="fan-item fan-inject">
+      <div class="fan-q">③ ダウンタイムを短く抑えたい</div>
+      <div class="fan-arrow">↓</div>
+      <span class="fan-menu">再生注射</span>
+    </div>
+    <div class="fan-item fan-inject">
+      <div class="fan-q">④ まずは気軽に試してみたい</div>
+      <div class="fan-arrow">↓</div>
+      <span class="fan-menu">再生注射</span>
+    </div>
+  </div>
+
+  <div class="arr">↓</div>
+  <div class="complete-msg">
+    <div class="cm-text">診断お疲れさまでした！✨<br>○○さんに合う方法はこちらです！</div>
+  </div>
+
+  <!-- 2分岐：結果カルーセル -->
+  <div class="section-divider">── 結果カルーセル（4枚×2パターン、Q2の回答で分岐） ──</div>
+  <div class="branch-fork">
+    <div class="branch-col surgery">
+      <div class="branch-head">① ② 選択 → 脱脂手術パターン</div>
+      <div class="mini-card"><span class="mc-tag">Card1｜チェックリスト</span><span class="mc-title">あなたのクマは、根本からしっかりケアタイプ</span>脂肪のふくらみ／一度で効果／通院不要／傷跡目立たない、の4項目チェック</div>
+      <div class="mini-card"><span class="mc-tag">Card2｜矢印図式（因果）</span><span class="mc-title">クマの、本当の原因。</span>マッサージ・クリーム→脂肪は移動しない→影が残る→表面ケアの限界</div>
+      <div class="mini-card"><span class="mc-tag">Card3｜アプローチ</span><span class="mc-title">脂肪そのものを取り除く</span>結膜側からアプローチ・傷跡目立たない・抜糸不要・日帰り</div>
+      <div class="mini-card"><span class="mc-tag">Card4｜メリット+CTA</span><span class="mc-title">ちょっと自信が持てる目元へ</span>通院不要／一度で完了／全国97院<div class="mini-cta">詳しく見てみる</div></div>
+    </div>
+    <div class="branch-col inject">
+      <div class="branch-head">③ ④ 選択 → 再生注射パターン</div>
+      <div class="mini-card"><span class="mc-tag">Card1｜チェックリスト</span><span class="mc-title">あなたのクマは、まずは気軽に試したいタイプ</span>ダウンタイム短め／負担少なく／手術はハードル高い／注射の効果が気になる、の4項目チェック</div>
+      <div class="mini-card"><span class="mc-tag">Card2｜矢印図式（因果）</span><span class="mc-title">クマが目立つ、本当の理由。</span>保湿・美容液でケア→ハリ・ボリュームは化粧品で補えない→影が濃く見える→加齢による目元のハリ不足が原因</div>
+      <div class="mini-card"><span class="mc-tag">Card3｜アプローチ</span><span class="mc-title">必要な成分を注入して満たす</span>脂肪溶解+再生因子+ヒアルロン酸を注入・ダウンタイム短い・施術時間も短い</div>
+      <div class="mini-card"><span class="mc-tag">Card4｜メリット+CTA</span><span class="mc-title">気軽に一歩を踏み出せる</span>ダウンタイム少・非手術で試せる・初回0円キャンペーン<div class="mini-cta">詳しく見てみる</div></div>
+    </div>
+  </div>
+
+  <div class="bridge-box">両パターンともCard4「詳しく見てみる」タップで、共通の深掘りハブへ</div>
+
+  <!-- 深掘りハブ -->
+  <div class="arr">↓</div>
+  <div class="step-label" style="text-align:center;font-size:9px;font-weight:700;color:#aaa;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;">深掘りハブ（LINEチャット風）</div>
+  <div class="chat-menu">
+    <div class="chat-menu-item"><span class="chat-arrow">▶</span>症例紹介を見る</div>
+    <div class="chat-menu-item"><span class="chat-arrow">▶</span>よくある質問を見る</div>
+    <div class="chat-menu-item"><span class="chat-arrow">▶</span>キャンペーン・料金を見る</div>
+  </div>
+  <div class="bridge-box">症例紹介は選んだパターン（脱脂／注射）に応じた年代別ケースを表示。限定解除要件（治療内容/期間回数/費用/リスク副作用）を併記</div>
+
+  <div class="arr">↓</div>
+  <div class="node" style="max-width:520px;background:#fafafa;border:1px dashed #ccc;">
+    <div class="node-label">CV</div>
+    <div style="font-size:11px;color:#666;margin-top:4px;">無料カウンセリング予約（TCBアフィリリンク）</div>
+  </div>
+
+  <p style="text-align:center;font-size:11px;margin-top:12px;"><a href="brief-kuma-clinic-diagnosis-2026-07-23.html" target="_blank" style="color:#1a9cc7;">→ 設計書本体（クマ取りクリニック選び診断 v1.0）</a></p>
+
+  <div class="section-divider">── 注意事項 ──</div>
+  <div class="warn-note">
+    医療広告ガイドライン対応: 体験談・比較優良広告（他院より優れている等）は一切使用しない。ビフォーアフター写真は症例紹介パートで限定解除要件を満たす形のみ使用。全カード・結果文はTCBの検証済み事実のみで構成。詳細は<code>data/output/briefs/診断-クマ取りクリニック選び診断-2026-07-23.md</code>参照
+  </div>
+
+  <div class="back-link"><a href="index.html">← トップへ</a></div>
+
+</div>
+</body>
+</html>
