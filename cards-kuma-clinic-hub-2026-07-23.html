@@ -21,6 +21,10 @@
   .tab-btn.tab-surgery.active { background: linear-gradient(90deg,#4dc9e8,#0f6a8a); border-color: #0f6a8a; }
   .tab-btn.tab-inject { border-color: #e37400; color: #e37400; }
   .tab-btn.tab-inject.active { background: linear-gradient(90deg,#ffab4d,#e37400); border-color: #e37400; }
+  .tab-btn.tab-pr-surgery { border-color: #0f6a8a; color: #0f6a8a; }
+  .tab-btn.tab-pr-surgery.active { background: linear-gradient(90deg,#4dc9e8,#0f6a8a); border-color: #0f6a8a; }
+  .tab-btn.tab-pr-inject { border-color: #e37400; color: #e37400; }
+  .tab-btn.tab-pr-inject.active { background: linear-gradient(90deg,#ffab4d,#e37400); border-color: #e37400; }
   .tab-btn.tab-case { border-color: #6a6a6a; color: #6a6a6a; }
   .tab-btn.tab-case.active { background: linear-gradient(90deg,#999,#6a6a6a); border-color: #6a6a6a; }
   .tab-btn.tab-faq { border-color: #6a6a6a; color: #6a6a6a; }
@@ -43,6 +47,8 @@
   .card-header { padding: 6px 10px; display: flex; align-items: center; justify-content: space-between; }
   .card-header .brand { color: #fff; font-weight: 800; font-size: 13px; letter-spacing: 0.04em; }
   .card-header .pr-badge { background: rgba(255,255,255,0.3); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+  .card-header.hdr-surgery { background: linear-gradient(90deg,#4dc9e8,#0f6a8a); }
+  .card-header.hdr-inject { background: linear-gradient(90deg,#ffab4d,#e37400); }
 
   .card-title { text-align: center; font-size: 14.5px; font-weight: 800; color: #333; padding: 8px 10px 6px; line-height: 1.35; }
   .card-text { font-size: 10px; color: #555; line-height: 1.8; padding: 0 12px 10px; }
@@ -61,6 +67,33 @@
   .causal-step { background: #f5f5f5; border-radius: 6px; padding: 6px 9px; font-size: 9px; color: #555; text-align: center; line-height: 1.5; }
   .causal-arrow { text-align: center; font-size: 10px; color: #bbb; line-height: 1; }
   .causal-step.final { background: #fff3e0; color: #a0480a; font-weight: 700; }
+
+  /* ── 3POINT構成（原因→アプローチ→結果、参考LP準拠） ── */
+  .point-block { padding: 6px 12px 8px; border-top: 1px dashed #eee; }
+  .point-block:first-of-type { border-top: none; padding-top: 8px; }
+  .point-badge-row { text-align: center; margin-bottom: 4px; }
+  .point-badge { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; font-size: 9.5px; font-weight: 900; color: #fff; }
+  .point-illust { height: 46px; border-radius: 6px; background: repeating-linear-gradient(45deg,#f5f5f5,#f5f5f5 10px,#ebebeb 10px,#ebebeb 20px); display: flex; align-items: center; justify-content: center; text-align: center; color: #999; font-size: 7.5px; line-height: 1.5; padding: 4px; margin-bottom: 5px; }
+  .point-caption { text-align: center; font-size: 10px; font-weight: 700; color: #333; line-height: 1.5; margin-bottom: 3px; }
+  .point-detail { font-size: 8.5px; color: #666; line-height: 1.6; text-align: center; }
+  #section-surgery .point-badge { background: #0f6a8a; }
+  #section-inject .point-badge { background: #e37400; }
+
+  /* ── PRカルーセル共通部品 ── */
+  .pr-point-row { text-align: center; padding: 8px 10px 4px; }
+  .pr-point-sub { font-size: 10px; font-weight: 600; color: #666; line-height: 1.5; }
+  .pr-point-main { font-size: 14px; font-weight: 900; line-height: 1.35; margin-top: 2px; }
+  .price-tag-wrap { text-align: center; padding: 4px 10px 6px; }
+  .price-tag-before { font-size: 10px; color: #999; text-decoration: line-through; }
+  .price-tag-after { font-size: 22px; font-weight: 900; line-height: 1.2; }
+  .price-tag-note { font-size: 7.5px; color: #888; margin-top: 2px; }
+  .achievement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 6px 10px 6px; }
+  .achievement-badge { background: radial-gradient(circle at 30% 30%, #fdf6e3, #ecd48a); border: 1.5px solid #d4af37; border-radius: 10px; padding: 8px 4px; text-align: center; }
+  .achievement-badge .ach-label { font-size: 6.5px; color: #8a6d1a; font-weight: 700; margin-bottom: 2px; line-height: 1.3; }
+  .achievement-badge .ach-value { font-size: 13px; font-weight: 900; color: #7a5a10; line-height: 1.15; }
+  .achievement-footnote { font-size: 6px; color: #999; padding: 0 10px 6px; line-height: 1.5; }
+  .card-final { border: 2px solid #ff8a3d; }
+  .final-ribbon { background: #d6336c; color: #fff; text-align: center; font-size: 8.5px; font-weight: 800; padding: 4px 6px; }
 
   .benefit-list { padding: 0 12px 8px; }
   .benefit-row { display: flex; align-items: center; gap: 6px; font-size: 9.5px; color: #555; padding: 3px 0; }
@@ -151,12 +184,14 @@
 
 <div class="page-header">
   <h1>クマ取り クリニック選び診断 — カード図まとめ</h1>
-  <p>結果カルーセル（脱脂手術/再生注射）＋深掘りハブ（症例紹介/FAQ/キャンペーン）をタブで切り替え。設計書v1.2準拠。</p>
+  <p>結果カルーセル→PRカルーセル（脱脂手術/再生注射それぞれ）＋深掘りハブ（症例紹介/FAQ/キャンペーン）をタブで切り替え。設計書v1.2準拠。</p>
 </div>
 
 <div class="type-tabs">
   <button class="tab-btn tab-surgery active" onclick="switchTab('surgery')">脱脂手術タイプ</button>
+  <button class="tab-btn tab-pr-surgery" onclick="switchTab('pr-surgery')">脱脂手術PRカル</button>
   <button class="tab-btn tab-inject" onclick="switchTab('inject')">再生注射タイプ</button>
+  <button class="tab-btn tab-pr-inject" onclick="switchTab('pr-inject')">再生注射PRカル</button>
   <button class="tab-btn tab-case" onclick="switchTab('case')">症例紹介を見る</button>
   <button class="tab-btn tab-faq" onclick="switchTab('faq')">よくある質問を見る</button>
   <button class="tab-btn tab-campaign" onclick="switchTab('campaign')">キャンペーン・料金を見る</button>
@@ -229,6 +264,106 @@
 </div>
 </div>
 
+<!-- ══════════════ TAB: 脱脂手術PRカルーセル ══════════════ -->
+<div class="tab-section" id="section-pr-surgery">
+<div class="container">
+  <div class="type-header">
+    <span class="type-label">PRカルーセル｜脱脂手術（TCB東京中央美容外科）</span>
+    <span class="type-sub">全5枚・結果カルーセルCard4「詳しく見てみる」タップ後に表示</span>
+  </div>
+
+  <div class="tonmana-note"><b>構成:</b> Card1（ブランド訴求+料金+クーポン）／Card2（こんな方にオススメ・チェックリスト）／Card3（安心ポイント）／Card4（全社実績・公式アンケートデータ）／Card5（最終CTA・クーポン再訴求）。シミ診断のPRカルーセル構成を踏襲。</div>
+
+  <div class="cards-row">
+
+    <div class="card">
+      <div class="card-header hdr-surgery"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="pr-point-row">
+        <div class="pr-point-sub">あなたにピッタリの方法は</div>
+        <div class="pr-point-main" style="color:#0f6a8a;">TCBの切らない脱脂手術</div>
+      </div>
+      <div class="price-tag-wrap">
+        <div class="price-tag-before">スタンダード〜エクセレント（4グレード）</div>
+        <div class="price-tag-after" style="color:#0f6a8a;">¥83,600〜¥458,000</div>
+        <div class="price-tag-note">（税込・グレードの違いはカウンセリングで確認できます）</div>
+      </div>
+      <div class="campaign-sticker-wrap">
+        <div class="campaign-sticker" style="border:1.5px solid #4dc9e8;">
+          <div class="cs-top" style="color:#0f6a8a;">WEB予約で！</div>
+          <div class="cs-price" style="color:#0f6a8a;">クーポン配布中</div>
+          <div class="cs-bottom" style="color:#0f6a8a;">実際の割引額は実装直前に確認</div>
+        </div>
+      </div>
+      <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#4dc9e8,#0f6a8a);">詳しく見てみる ›</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header hdr-surgery"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="card-title" style="font-size:13px;">こんな方に<br>オススメ！！</div>
+      <div class="check-list-base">
+        <div class="ci">脂肪のふくらみそのものが気になる</div>
+        <div class="ci">一度の施術でしっかり効果を出したい</div>
+        <div class="ci">通院・抜糸の手間を避けたい</div>
+        <div class="ci">傷跡が目立たない方法を選びたい</div>
+      </div>
+      <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#4dc9e8,#0f6a8a);">無料カウンセリングを予約する ▶</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header hdr-surgery"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="card-title" style="font-size:13px;">安心して<br>受けられる理由</div>
+      <div class="benefit-list">
+        <div class="benefit-row">日帰り・抜糸不要・通院不要</div>
+        <div class="benefit-row">結膜側からアプローチ、傷跡が目立ちにくい</div>
+        <div class="benefit-row">全国97院だからどこでも通いやすい</div>
+      </div>
+      <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#4dc9e8,#0f6a8a);">無料カウンセリングを予約する ▶</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header hdr-surgery"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="pr-point-row" style="padding-top:10px;"><div class="pr-point-sub" style="font-size:13px;font-weight:800;color:#333;">通いやすさと<br>高い満足度</div></div>
+      <div class="achievement-grid">
+        <div class="achievement-badge">
+          <div class="ach-label">2024年度<br>来院数</div>
+          <div class="ach-value">96万<br>5,785人</div>
+        </div>
+        <div class="achievement-badge">
+          <div class="ach-label">どこでも<br>通いやすい</div>
+          <div class="ach-value" style="font-size:9px;">全国展開<br>全院駅チカ</div>
+        </div>
+        <div class="achievement-badge">
+          <div class="ach-label">施術の<br>満足度<sup>※1</sup></div>
+          <div class="ach-value">91.0%</div>
+        </div>
+        <div class="achievement-badge">
+          <div class="ach-label">リピート<br>意思<sup>※2</sup></div>
+          <div class="ach-value">96.7%</div>
+        </div>
+      </div>
+      <div class="achievement-footnote">※TCB全体の実績（施術・部位を問わない全社データ、シミ診断と共通）。※1 2025年7月アンケートn=2,378人（TCB調べ）。※2 同n=2,360人</div>
+      <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#4dc9e8,#0f6a8a);">無料カウンセリングを予約する ▶</button></div>
+    </div>
+
+    <div class="card card-final">
+      <div class="final-ribbon">＼ ここから予約すると使える ／</div>
+      <div class="card-title" style="font-size:14px;padding-top:10px;">Webクーポン<br>配布中！</div>
+      <div class="price-tag-wrap">
+        <div class="price-tag-after" style="color:#ff6a00;font-size:26px;">クーポン配布中</div>
+        <div class="price-tag-note">※初診のみ有効・実装直前に金額を確認</div>
+      </div>
+      <div class="card-text" style="text-align:center;">まずはお気軽にご相談ください。カウンセリングは何度でも無料です。</div>
+      <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#4dc9e8,#0f6a8a);">無料カウンセリングを予約する ▶</button></div>
+    </div>
+
+  </div>
+
+  <div class="warn-note">
+    <b>医療広告ガイドライン確認済み:</b> 体験談・比較優良広告（他院より優れている等）・誇大な保証表現は使用していません。実績データはTCB公式ページで裏取り済み（全社データ、施術・部位を問わない）。クーポン金額は実装直前に表示状態を確認して反映します（設計書4章・11章）。
+  </div>
+</div>
+</div>
+
 <!-- ══════════════ TAB 2: 再生注射パターン ══════════════ -->
 <div class="tab-section" id="section-inject">
 <div class="container">
@@ -292,6 +427,107 @@
 
   <div class="warn-note">
     <b>医療広告ガイドライン確認済み:</b> 体験談・比較優良広告・誇大表現は使用していません。商材名・料金はこのカードでは出さず、深掘りハブ（キャンペーン・料金タブ）で開示します。
+  </div>
+</div>
+</div>
+
+<!-- ══════════════ TAB: 再生注射PRカルーセル ══════════════ -->
+<div class="tab-section" id="section-pr-inject">
+<div class="container">
+  <div class="type-header">
+    <span class="type-label">PRカルーセル｜再生注射（TCB東京中央美容外科）</span>
+    <span class="type-sub">全5枚・結果カルーセルCard4「詳しく見てみる」タップ後に表示</span>
+  </div>
+
+  <div class="tonmana-note"><b>構成:</b> 脱脂手術PRカルと同一構成。カラーは再生注射のブランドカラー（オレンジ）に変更。Card1の目玉は「初回0円」。</div>
+
+  <div class="cards-row">
+
+    <div class="card">
+      <div class="card-header hdr-inject"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="pr-point-row">
+        <div class="pr-point-sub">あなたにピッタリの方法は</div>
+        <div class="pr-point-main" style="color:#e37400;">TCBのクマ取り再生注射</div>
+      </div>
+      <div class="price-tag-wrap">
+        <div class="price-tag-before">通常¥9,800（税込）</div>
+        <div class="price-tag-after" style="color:#e37400;">→ 初回¥0</div>
+        <div class="price-tag-note">プレミアム(スネコス)1cc¥69,800／3回コース¥189,000も選択可</div>
+      </div>
+      <div class="campaign-sticker-wrap">
+        <div class="campaign-sticker" style="border:1.5px solid #ffab4d;">
+          <div class="cs-top" style="color:#e37400;">初回0円</div>
+          <div class="cs-price" style="color:#e37400;">キャンペーン中</div>
+          <div class="cs-bottom" style="color:#e37400;">実施期間は予約時に要確認</div>
+        </div>
+      </div>
+      <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#ffab4d,#e37400);">詳しく見てみる ›</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header hdr-inject"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="card-title" style="font-size:13px;">こんな方に<br>オススメ！！</div>
+      <div class="check-list-base">
+        <div class="ci">ダウンタイムはできるだけ短くしたい</div>
+        <div class="ci">まずは負担少なく試してみたい</div>
+        <div class="ci">手術はまだハードルが高いと感じる</div>
+        <div class="ci">注射だけでどのくらい変わるか気になる</div>
+      </div>
+      <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#ffab4d,#e37400);">無料カウンセリングを予約する ▶</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header hdr-inject"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="card-title" style="font-size:13px;">安心して<br>受けられる理由</div>
+      <div class="benefit-list">
+        <div class="benefit-row">ダウンタイムは2日程度と短い</div>
+        <div class="benefit-row">施術時間も短く当日の予定に響きにくい</div>
+        <div class="benefit-row">症例モデル参加でさらにお得になる制度あり</div>
+      </div>
+      <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#ffab4d,#e37400);">無料カウンセリングを予約する ▶</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header hdr-inject"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="pr-point-row" style="padding-top:10px;"><div class="pr-point-sub" style="font-size:13px;font-weight:800;color:#333;">通いやすさと<br>高い満足度</div></div>
+      <div class="achievement-grid">
+        <div class="achievement-badge">
+          <div class="ach-label">2024年度<br>来院数</div>
+          <div class="ach-value">96万<br>5,785人</div>
+        </div>
+        <div class="achievement-badge">
+          <div class="ach-label">どこでも<br>通いやすい</div>
+          <div class="ach-value" style="font-size:9px;">全国展開<br>全院駅チカ</div>
+        </div>
+        <div class="achievement-badge">
+          <div class="ach-label">施術の<br>満足度<sup>※1</sup></div>
+          <div class="ach-value">91.0%</div>
+        </div>
+        <div class="achievement-badge">
+          <div class="ach-label">リピート<br>意思<sup>※2</sup></div>
+          <div class="ach-value">96.7%</div>
+        </div>
+      </div>
+      <div class="achievement-footnote">※TCB全体の実績（施術・部位を問わない全社データ、シミ診断と共通）。※1 2025年7月アンケートn=2,378人（TCB調べ）。※2 同n=2,360人</div>
+      <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#ffab4d,#e37400);">無料カウンセリングを予約する ▶</button></div>
+    </div>
+
+    <div class="card card-final">
+      <div class="final-ribbon">＼ ここから予約すると使える ／</div>
+      <div class="card-title" style="font-size:14px;padding-top:10px;">初回0円<br>キャンペーン中！</div>
+      <div class="price-tag-wrap">
+        <div class="price-tag-before">通常¥9,800（税込）</div>
+        <div class="price-tag-after" style="color:#ff6a00;font-size:26px;">→ ¥0</div>
+        <div class="price-tag-note">※初回のみ・実装直前に実施期間を確認</div>
+      </div>
+      <div class="card-text" style="text-align:center;">まずはお気軽にご相談ください。カウンセリングは何度でも無料です。</div>
+      <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#ffab4d,#e37400);">無料カウンセリングを予約する ▶</button></div>
+    </div>
+
+  </div>
+
+  <div class="warn-note">
+    <b>医療広告ガイドライン確認済み:</b> 体験談・比較優良広告・誇大な保証表現は使用していません。実績データはTCB公式ページで裏取り済み（全社データ）。初回0円の実施期間は実装直前に表示状態を確認して反映します（設計書4章・11章）。
   </div>
 </div>
 </div>
