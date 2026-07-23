@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>クマ取り クリニック選び診断 カード図まとめ 2026-07-23</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif; background: linear-gradient(180deg,#e7ebf3,#f7f9fc); color: #3e3e3e; font-size: 13px; }
+
+  .page-header { background: #fff; border-bottom: 1px solid #e0e0e0; padding: 14px 24px; position: sticky; top: 0; z-index: 100; }
+  .page-header h1 { font-size: 15px; font-weight: 700; color: #333; }
+  .page-header p { font-size: 11px; color: #888; margin-top: 2px; }
+
+  /* ── タブ ── */
+  .type-tabs { display: flex; gap: 8px; padding: 14px 24px 0; overflow-x: auto; background: transparent; position: sticky; top: 57px; z-index: 90; }
+  .tab-btn { padding: 8px 16px; border-radius: 20px; border: 2px solid #ccc; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; background: #fff; color: #888; transition: all .2s; }
+  .tab-btn.active { color: #fff; }
+  .tab-btn.tab-surgery { border-color: #0f6a8a; color: #0f6a8a; }
+  .tab-btn.tab-surgery.active { background: linear-gradient(90deg,#4dc9e8,#0f6a8a); border-color: #0f6a8a; }
+  .tab-btn.tab-inject { border-color: #e37400; color: #e37400; }
+  .tab-btn.tab-inject.active { background: linear-gradient(90deg,#ffab4d,#e37400); border-color: #e37400; }
+  .tab-btn.tab-case { border-color: #6a6a6a; color: #6a6a6a; }
+  .tab-btn.tab-case.active { background: linear-gradient(90deg,#999,#6a6a6a); border-color: #6a6a6a; }
+  .tab-btn.tab-faq { border-color: #6a6a6a; color: #6a6a6a; }
+  .tab-btn.tab-faq.active { background: linear-gradient(90deg,#999,#6a6a6a); border-color: #6a6a6a; }
+  .tab-btn.tab-campaign { border-color: #d6336c; color: #d6336c; }
+  .tab-btn.tab-campaign.active { background: linear-gradient(90deg,#ff4eb6,#d6336c); border-color: #d6336c; }
+
+  .tab-section { display: none; }
+  .tab-section.active { display: block; }
+
+  .container { max-width: 1300px; margin: 0 auto; padding: 16px 24px 40px; }
+  .type-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #ddd; }
+  .type-label { font-size: 16px; font-weight: 700; }
+  .type-sub { font-size: 11px; color: #888; }
+  .tonmana-note { max-width: 900px; margin: 0 0 16px; background: #fff; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #666; line-height: 1.8; }
+  .cards-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 16px; align-items: flex-start; }
+
+  /* ── カード共通 ── */
+  .card { width: 220px; min-width: 220px; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.12); display: flex; flex-direction: column; font-size: 12px; }
+  .card-header { padding: 6px 10px; display: flex; align-items: center; justify-content: space-between; }
+  .card-header .brand { color: #fff; font-weight: 800; font-size: 13px; letter-spacing: 0.04em; }
+  .card-header .pr-badge { background: rgba(255,255,255,0.3); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+
+  .card-title { text-align: center; font-size: 14.5px; font-weight: 800; color: #333; padding: 8px 10px 6px; line-height: 1.35; }
+  .card-text { font-size: 10px; color: #555; line-height: 1.8; padding: 0 12px 10px; }
+  .echo-line { text-align: center; font-size: 9px; color: #888; font-style: italic; padding: 8px 10px 0; }
+
+  .check-list-base { text-align: left; line-height: 2.1; padding: 0 14px 10px; font-size: 10px; color: #444; }
+  .check-list-base .ci::before { content: "✓ "; font-weight: 800; }
+
+  .case-placeholder { margin: 0 10px 8px; height: 100px; border-radius: 8px; background: repeating-linear-gradient(45deg,#f5f5f5,#f5f5f5 10px,#ebebeb 10px,#ebebeb 20px); display: flex; align-items: center; justify-content: center; text-align: center; color: #999; font-size: 9.5px; padding: 8px; }
+  .case-detail { margin: 0 10px 10px; background: #f7f7f7; border-radius: 8px; padding: 7px 9px; font-size: 7.5px; color: #777; line-height: 1.8; }
+  .case-detail .cd-row { padding: 0.5px 0; }
+  .case-detail .cd-label { display: inline-block; min-width: 52px; font-weight: 800; color: #999; }
+
+  /* ── 因果図式（矢印チェーン） ── */
+  .causal-chain { display: flex; flex-direction: column; gap: 3px; padding: 6px 12px 10px; }
+  .causal-step { background: #f5f5f5; border-radius: 6px; padding: 6px 9px; font-size: 9px; color: #555; text-align: center; line-height: 1.5; }
+  .causal-arrow { text-align: center; font-size: 10px; color: #bbb; line-height: 1; }
+  .causal-step.final { background: #fff3e0; color: #a0480a; font-weight: 700; }
+
+  .benefit-list { padding: 0 12px 8px; }
+  .benefit-row { display: flex; align-items: center; gap: 6px; font-size: 9.5px; color: #555; padding: 3px 0; }
+  .benefit-row::before { content: "◎"; font-weight: 800; }
+
+  .cta-wrap { padding: 8px 10px 10px; }
+  .cta-wrap-green { padding: 10px 10px 10px; position: relative; }
+  .cta-tag { display: block; text-align: center; font-size: 8px; font-weight: 700; padding: 0 0 4px; }
+  .cta-btn-green { display: block; width: 100%; border: none; border-radius: 50px; padding: 11px 10px; font-size: 11px; font-weight: 800; color: #fff; text-align: center; line-height: 1.3; }
+
+  .price-block { margin: 4px 10px 8px; text-align: center; border-radius: 8px; padding: 10px; }
+  .price-block .pb-name { font-size: 10px; font-weight: 800; color: #333; margin-bottom: 4px; }
+  .price-block .pb-before { font-size: 9.5px; color: #999; text-decoration: line-through; }
+  .price-block .pb-after { font-size: 22px; font-weight: 900; }
+  .price-block .pb-note { font-size: 7.5px; color: #888; margin-top: 3px; }
+
+  .campaign-sticker-wrap { text-align: center; padding: 6px 10px 4px; }
+  .campaign-sticker { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 20px; border-radius: 16px; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+  .campaign-sticker .cs-top { font-size: 8px; font-weight: 800; }
+  .campaign-sticker .cs-price { font-size: 15px; font-weight: 900; line-height: 1.2; margin: 1px 0; }
+  .campaign-sticker .cs-bottom { font-size: 8px; font-weight: 800; }
+
+  .faq-card-body { padding: 10px 12px 14px; }
+  .faq-qtag { display: inline-block; color: #fff; font-size: 9px; font-weight: 800; padding: 2px 9px; border-radius: 10px; margin-bottom: 7px; }
+  .faq-q2 { font-size: 10px; font-weight: 700; color: #333; line-height: 1.5; margin-bottom: 6px; }
+  .faq-body { font-size: 9.5px; color: #555; line-height: 1.75; }
+
+  .warn-note { max-width: 900px; margin: 20px auto 0; background: #fff; border: 1px solid #f0dbb0; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #7a5a1a; line-height: 1.7; }
+  .back-link { max-width: 1300px; margin: 40px auto 0; padding: 20px 24px 0; border-top: 1px solid #ddd; font-size: 13px; }
+
+  /* ═══ 脱脂手術（青） ═══ */
+  #section-surgery .type-label { color: #0f6a8a; }
+  #section-surgery .type-header { border-bottom-color: #b8e6f5; }
+  #section-surgery .tonmana-note { border: 1px solid #b8e6f5; }
+  #section-surgery .tonmana-note b { color: #0f6a8a; }
+  #section-surgery .card-header { background: linear-gradient(90deg,#4dc9e8,#0f6a8a); }
+  #section-surgery .price-block { background: #eaf8fd; }
+  #section-surgery .price-block .pb-after { color: #0f6a8a; }
+  #section-surgery .campaign-sticker { border: 1.5px solid #4dc9e8; }
+  #section-surgery .campaign-sticker .cs-top,
+  #section-surgery .campaign-sticker .cs-price,
+  #section-surgery .campaign-sticker .cs-bottom { color: #0f6a8a; }
+  #section-surgery .cta-btn-green { background: linear-gradient(180deg,#4dc9e8,#0f6a8a); box-shadow: 0 3px 6px rgba(15,106,138,0.3); }
+  #section-surgery .cta-tag { color: #0f6a8a; }
+  #section-surgery .back-link a { color: #0f6a8a; text-decoration: none; }
+
+  /* ═══ 再生注射（オレンジ） ═══ */
+  #section-inject .type-label { color: #e37400; }
+  #section-inject .type-header { border-bottom-color: #ffd9ad; }
+  #section-inject .tonmana-note { border: 1px solid #ffd9ad; }
+  #section-inject .tonmana-note b { color: #e37400; }
+  #section-inject .card-header { background: linear-gradient(90deg,#ffab4d,#e37400); }
+  #section-inject .price-block { background: #fff3e8; }
+  #section-inject .price-block .pb-after { color: #e37400; }
+  #section-inject .causal-step.final { background: #ffe9d8; color: #a0480a; }
+  #section-inject .campaign-sticker { border: 1.5px solid #ffab4d; }
+  #section-inject .campaign-sticker .cs-top,
+  #section-inject .campaign-sticker .cs-price,
+  #section-inject .campaign-sticker .cs-bottom { color: #e37400; }
+  #section-inject .cta-btn-green { background: linear-gradient(180deg,#ffab4d,#e37400); box-shadow: 0 3px 6px rgba(227,116,0,0.3); }
+  #section-inject .cta-tag { color: #e37400; }
+  #section-inject .back-link a { color: #e37400; text-decoration: none; }
+
+  /* ═══ 症例紹介・FAQ（グレー共通） ═══ */
+  #section-case .type-label, #section-faq .type-label { color: #6a6a6a; }
+  #section-case .type-header, #section-faq .type-header { border-bottom-color: #ddd; }
+  #section-case .tonmana-note, #section-faq .tonmana-note { border: 1px solid #ddd; }
+  #section-case .tonmana-note b, #section-faq .tonmana-note b { color: #6a6a6a; }
+  #section-case .card-header.hdr-surgery, #section-faq .card-header.hdr-surgery { background: linear-gradient(90deg,#4dc9e8,#0f6a8a); }
+  #section-case .card-header.hdr-inject, #section-faq .card-header.hdr-inject { background: linear-gradient(90deg,#ffab4d,#e37400); }
+  #section-faq .faq-qtag.tag-surgery { background: linear-gradient(90deg,#4dc9e8,#0f6a8a); }
+  #section-faq .faq-qtag.tag-inject { background: linear-gradient(90deg,#ffab4d,#e37400); }
+  #section-case .back-link a, #section-faq .back-link a { color: #6a6a6a; text-decoration: none; }
+
+  /* ═══ キャンペーン（ピンク） ═══ */
+  #section-campaign .type-label { color: #d6336c; }
+  #section-campaign .type-header { border-bottom-color: #f5c8dd; }
+  #section-campaign .tonmana-note { border: 1px solid #f5c8dd; }
+  #section-campaign .tonmana-note b { color: #d6336c; }
+  #section-campaign .card-header.hdr-surgery { background: linear-gradient(90deg,#4dc9e8,#0f6a8a); }
+  #section-campaign .card-header.hdr-inject { background: linear-gradient(90deg,#ffab4d,#e37400); }
+  #section-campaign .back-link a { color: #d6336c; text-decoration: none; }
+
+  .sub-divider { font-size: 10px; font-weight: 700; color: #999; letter-spacing: .06em; margin: 4px 0 6px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>クマ取り クリニック選び診断 — カード図まとめ</h1>
+  <p>結果カルーセル（脱脂手術/再生注射）＋深掘りハブ（症例紹介/FAQ/キャンペーン）をタブで切り替え。設計書v1.2準拠。</p>
+</div>
+
+<div class="type-tabs">
+  <button class="tab-btn tab-surgery active" onclick="switchTab('surgery')">脱脂手術タイプ</button>
+  <button class="tab-btn tab-inject" onclick="switchTab('inject')">再生注射タイプ</button>
+  <button class="tab-btn tab-case" onclick="switchTab('case')">症例紹介を見る</button>
+  <button class="tab-btn tab-faq" onclick="switchTab('faq')">よくある質問を見る</button>
+  <button class="tab-btn tab-campaign" onclick="switchTab('campaign')">キャンペーン・料金を見る</button>
+</div>
+
+<!-- ══════════════ TAB 1: 脱脂手術パターン ══════════════ -->
+<div class="tab-section active" id="section-surgery">
+<div class="container">
+  <div class="type-header">
+    <span class="type-label">結果カルーセル｜脱脂手術タイプ</span>
+    <span class="type-sub">全4枚・Q4で①②選択時に表示</span>
+  </div>
+
+  <div class="tonmana-note"><b>構成:</b> Card1（Q3エコー＋タイプ発表＋チェックリスト）／Card2（因果図式）／Card3（アプローチ・施術内容）／Card4（メリット＋CTA）。商材名（TCB）はまだ出さず、施術アプローチの理解を深める役割に徹する。</div>
+
+  <div class="cards-row">
+
+    <div class="card">
+      <div class="card-header"><span class="brand">診断結果</span><span class="pr-badge">TYPE</span></div>
+      <div class="echo-line">「脂肪のふくらみによる影、気になりますよね。」<br><span style="font-size:7.5px;">※Q3回答で4パターン切替（5.4章）</span></div>
+      <div class="card-title">あなたのクマは、<br>根本からしっかりケアタイプ</div>
+      <div class="check-list-base">
+        <div class="ci">脂肪のふくらみそのものが気になる</div>
+        <div class="ci">一度の施術でしっかり効果を出したい</div>
+        <div class="ci">通院・抜糸の手間を避けたい</div>
+        <div class="ci">傷跡が目立たない方法を選びたい</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="brand">診断結果</span><span class="pr-badge">TYPE</span></div>
+      <div class="card-title">クマの、<br>本当の原因。</div>
+      <div class="causal-chain">
+        <div class="causal-step">マッサージや目元クリームで対処してきた</div>
+        <div class="causal-arrow">▼</div>
+        <div class="causal-step">でも脂肪そのものは移動しない</div>
+        <div class="causal-arrow">▼</div>
+        <div class="causal-step">影として残り続ける</div>
+        <div class="causal-arrow">▼</div>
+        <div class="causal-step final">表面のケアでは限界がある</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="brand">診断結果</span><span class="pr-badge">TYPE</span></div>
+      <div class="card-title">アプローチは、<br>脂肪そのものを取り除くこと</div>
+      <div class="benefit-list">
+        <div class="benefit-row">結膜側からアプローチ、傷跡が目立ちにくい</div>
+        <div class="benefit-row">抜糸不要・日帰りで完了</div>
+        <div class="benefit-row">脂肪を直接取り除くから根本的な変化が期待できる</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="brand">診断結果</span><span class="pr-badge">TYPE</span></div>
+      <div class="card-title">鏡を見るたびに、<br>ちょっと自信が持てる目元へ</div>
+      <div class="benefit-list">
+        <div class="benefit-row">通院不要・抜糸不要で日常に戻れる</div>
+        <div class="benefit-row">一度の施術で完了</div>
+        <div class="benefit-row">全国97院だから通いやすい</div>
+      </div>
+      <div class="cta-wrap-green"><button class="cta-btn-green">詳しく見てみる ›</button></div>
+    </div>
+
+  </div>
+
+  <div class="warn-note">
+    <b>医療広告ガイドライン確認済み:</b> 体験談・比較優良広告（他院より優れている等）・誇大表現は使用していません。商材名（TCB）・料金はこのカードでは出さず、深掘りハブ（キャンペーン・料金タブ）で開示します。詳細: <code>data/output/briefs/診断-クマ取りクリニック選び診断-2026-07-23.md</code>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════ TAB 2: 再生注射パターン ══════════════ -->
+<div class="tab-section" id="section-inject">
+<div class="container">
+  <div class="type-header">
+    <span class="type-label">結果カルーセル｜再生注射タイプ</span>
+    <span class="type-sub">全4枚・Q4で③④選択時に表示</span>
+  </div>
+
+  <div class="tonmana-note"><b>構成:</b> 脱脂手術タイプと同一の4枚構成。カラーは再生注射のブランドカラー（オレンジ）に変更。</div>
+
+  <div class="cards-row">
+
+    <div class="card">
+      <div class="card-header"><span class="brand">診断結果</span><span class="pr-badge">TYPE</span></div>
+      <div class="echo-line">「青みがかった血色、気になりますよね。」<br><span style="font-size:7.5px;">※Q3回答で4パターン切替（5.4章）</span></div>
+      <div class="card-title">あなたのクマは、<br>まずは気軽に試したいタイプ</div>
+      <div class="check-list-base">
+        <div class="ci">ダウンタイムはできるだけ短くしたい</div>
+        <div class="ci">まずは負担少なく試してみたい</div>
+        <div class="ci">手術はまだハードルが高いと感じる</div>
+        <div class="ci">注射だけでどのくらい変わるか気になる</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="brand">診断結果</span><span class="pr-badge">TYPE</span></div>
+      <div class="card-title">クマが目立つ、<br>本当の理由。</div>
+      <div class="causal-chain">
+        <div class="causal-step">保湿や目元用美容液でケアしてきた</div>
+        <div class="causal-arrow">▼</div>
+        <div class="causal-step">でも失われたハリ・ボリュームは化粧品では補えない</div>
+        <div class="causal-arrow">▼</div>
+        <div class="causal-step">影が濃く見えたまま</div>
+        <div class="causal-arrow">▼</div>
+        <div class="causal-step final">加齢による目元のハリ不足が原因</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="brand">診断結果</span><span class="pr-badge">TYPE</span></div>
+      <div class="card-title">アプローチは、<br>必要な成分を注入して満たすこと</div>
+      <div class="benefit-list">
+        <div class="benefit-row">脂肪溶解・再生因子・ヒアルロン酸を注入</div>
+        <div class="benefit-row">手術と違いダウンタイムが短い</div>
+        <div class="benefit-row">施術時間も短く当日の予定に響きにくい</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="brand">診断結果</span><span class="pr-badge">TYPE</span></div>
+      <div class="card-title">今日から、<br>気軽に一歩を踏み出せる</div>
+      <div class="benefit-list">
+        <div class="benefit-row">ダウンタイムの少なさ</div>
+        <div class="benefit-row">手軽に試せる非手術という選択肢</div>
+        <div class="benefit-row">初回はお得に試せるキャンペーンあり</div>
+      </div>
+      <div class="cta-wrap-green"><button class="cta-btn-green">詳しく見てみる ›</button></div>
+    </div>
+
+  </div>
+
+  <div class="warn-note">
+    <b>医療広告ガイドライン確認済み:</b> 体験談・比較優良広告・誇大表現は使用していません。商材名・料金はこのカードでは出さず、深掘りハブ（キャンペーン・料金タブ）で開示します。
+  </div>
+</div>
+</div>
+
+<!-- ══════════════ TAB 3: 症例紹介 ══════════════ -->
+<div class="tab-section" id="section-case">
+<div class="container">
+  <div class="type-header">
+    <span class="type-label">症例紹介</span>
+    <span class="type-sub">限定解除要件4点併記・年代別の代表例（全パターンは設計書9章参照）</span>
+  </div>
+
+  <div class="tonmana-note"><b>構成:</b> 医療広告ガイドラインの限定解除要件（治療内容／治療期間・回数／費用／主なリスク・副作用）を満たす形で年代別ケースを掲載。写真は全てプレースホルダーで、実装時にTCBから使用許諾を得た症例画像に差し替える。ここでは代表例を1枚ずつ掲載（4年代分のフルデータは設計書9.1・9.2章）。</div>
+
+  <div class="sub-divider">脱脂手術（LP1）</div>
+  <div class="cards-row">
+    <div class="card">
+      <div class="card-header hdr-surgery"><span class="brand">TCB</span><span class="pr-badge">症例</span></div>
+      <div class="card-title" style="font-size:13px;">症例紹介（30代）</div>
+      <div class="case-placeholder">Before / After 症例写真<br>（プレースホルダー・差し替え予定）</div>
+      <div class="case-detail">
+        <div class="cd-row"><span class="cd-label">治療内容</span>経結膜脱脂（スーパーナチュラル）</div>
+        <div class="cd-row"><span class="cd-label">期間・回数</span>1回・日帰り</div>
+        <div class="cd-row"><span class="cd-label">費用</span>¥173,800（税込）</div>
+        <div class="cd-row"><span class="cd-label">リスク・副作用</span>腫れ・内出血1〜2週間、まれにむくみ・違和感・目のかすみ</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-divider" style="margin-top:8px;">再生注射（LP2・プレースホルダー、要TCB確認）</div>
+  <div class="cards-row">
+    <div class="card">
+      <div class="card-header hdr-inject"><span class="brand">TCB</span><span class="pr-badge">症例</span></div>
+      <div class="card-title" style="font-size:13px;">症例紹介（30代）</div>
+      <div class="case-placeholder">Before / After 症例写真<br>（プレースホルダー・差し替え予定）</div>
+      <div class="case-detail">
+        <div class="cd-row"><span class="cd-label">治療内容</span>クマ取り再生注射（プレミアム・スネコス）</div>
+        <div class="cd-row"><span class="cd-label">期間・回数</span>1回</div>
+        <div class="cd-row"><span class="cd-label">費用</span>¥69,800（税込）</div>
+        <div class="cd-row"><span class="cd-label">リスク・副作用</span>腫れ・痛み・内出血2日程度</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-note">
+    <b>要確認（設計書8章 論点4）:</b> LP2（再生注射）自体に年代別症例ページが存在しないため、上記は暫定の想定データ。実装前にTCBへ実データ提供を依頼するか、全社共通の症例集からの転用可否を確認する必要がある。
+  </div>
+</div>
+</div>
+
+<!-- ══════════════ TAB 4: よくある質問 ══════════════ -->
+<div class="tab-section" id="section-faq">
+<div class="container">
+  <div class="type-header">
+    <span class="type-label">よくある質問</span>
+    <span class="type-sub">脱脂手術8問＋再生注射4問・公式LPをユーザー目線に書き直し</span>
+  </div>
+
+  <div class="tonmana-note"><b>構成:</b> 公式LPの丁寧すぎる口調を、ユーザー目線のカジュアルな言い回しに書き直し。再生注射はLP自体にFAQコンテンツが無いため新規作成（実装前に事実確認を推奨）。</div>
+
+  <div class="sub-divider">脱脂手術（LP1）</div>
+  <div class="cards-row">
+    <div class="card">
+      <div class="card-header hdr-surgery"><span class="brand">TCB</span><span class="pr-badge">FAQ</span></div>
+      <div class="faq-card-body">
+        <span class="faq-qtag tag-surgery">Q1</span>
+        <div class="faq-q2">ダウンタイムってどのくらいかかるの？</div>
+        <div class="faq-body">腫れや内出血が出ることがあって、落ち着くまでは大体1〜2週間が目安。人によってはむくみや違和感、目のかすみが出ることもあるよ</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header hdr-surgery"><span class="brand">TCB</span><span class="pr-badge">FAQ</span></div>
+      <div class="faq-card-body">
+        <span class="faq-qtag tag-surgery">Q2</span>
+        <div class="faq-q2">マッサージとか自力でどうにかならない？</div>
+        <div class="faq-body">脂肪のふくらみが原因のクマは、セルフケアだけで完全になくすのは難しいのが実際のところ。だからこそ施術で直接アプローチする選択肢があるよ</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header hdr-surgery"><span class="brand">TCB</span><span class="pr-badge">FAQ</span></div>
+      <div class="faq-card-body">
+        <span class="faq-qtag tag-surgery">Q3</span>
+        <div class="faq-q2">傷跡って目立たない？</div>
+        <div class="faq-body">下まぶたの裏側（結膜側）からアプローチするから、外から見える傷はほとんど目立たないよ</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header hdr-surgery"><span class="brand">TCB</span><span class="pr-badge">FAQ</span></div>
+      <div class="faq-card-body">
+        <span class="faq-qtag tag-surgery">Q4</span>
+        <div class="faq-q2">20代でも受けて平気？</div>
+        <div class="faq-body">年齢制限はなくて、20代で受ける人もいるよ</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-divider" style="margin-top:8px;">再生注射（LP2・新規作成）</div>
+  <div class="cards-row">
+    <div class="card">
+      <div class="card-header hdr-inject"><span class="brand">TCB</span><span class="pr-badge">FAQ</span></div>
+      <div class="faq-card-body">
+        <span class="faq-qtag tag-inject">Q1</span>
+        <div class="faq-q2">注射だけでどのくらい変わるの？</div>
+        <div class="faq-body">脂肪溶解・再生因子・ヒアルロン酸成分を注入して、クマの見た目にアプローチする施術だよ。変化の感じ方には個人差があるよ</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header hdr-inject"><span class="brand">TCB</span><span class="pr-badge">FAQ</span></div>
+      <div class="faq-card-body">
+        <span class="faq-qtag tag-inject">Q2</span>
+        <div class="faq-q2">ダウンタイムは短いって聞いたけど本当？</div>
+        <div class="faq-body">腫れや痛み、内出血が出ることはあるけど、目安は2日程度。手術タイプに比べるとかなり短めだよ</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header hdr-inject"><span class="brand">TCB</span><span class="pr-badge">FAQ</span></div>
+      <div class="faq-card-body">
+        <span class="faq-qtag tag-inject">Q3</span>
+        <div class="faq-q2">手術と迷ってるんだけど、注射から試すのはあり？</div>
+        <div class="faq-body">非手術で気軽に試せるのが注射タイプの特徴。まずは負担の少ない方法から試したい人に向いてるよ</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header hdr-inject"><span class="brand">TCB</span><span class="pr-badge">FAQ</span></div>
+      <div class="faq-card-body">
+        <span class="faq-qtag tag-inject">Q4</span>
+        <div class="faq-q2">初回0円って本当に無料なの？</div>
+        <div class="faq-body">初回0円キャンペーンとして案内されてるよ。実施期間や条件は変わることがあるから、最新の情報は予約時に確認してね</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-note">
+    <b>全問数はここに掲載していません:</b> 脱脂手術は全8問（残り4問は設計書10.1章）。全問はデザイン依頼時に実装します。
+  </div>
+</div>
+</div>
+
+<!-- ══════════════ TAB 5: キャンペーン・料金 ══════════════ -->
+<div class="tab-section" id="section-campaign">
+<div class="container">
+  <div class="type-header">
+    <span class="type-label">キャンペーン・料金</span>
+    <span class="type-sub">2施術の価格・クーポン表現</span>
+  </div>
+
+  <div class="tonmana-note"><b>構成:</b> 「今だけ」「今しかない」等の煽り・断定表現は避け、TCB公式LPの表記に準じた事実ベースの案内に留める。実装直前にクーポン・キャンペーンの表示状態を再確認すること（設計書4章・11章）。</div>
+
+  <div class="cards-row">
+
+    <div class="card">
+      <div class="card-header hdr-surgery"><span class="brand">TCB</span><span class="pr-badge">料金</span></div>
+      <div class="card-title" style="font-size:13px;">脱脂手術の料金</div>
+      <div class="price-block" style="background:#eaf8fd;">
+        <div class="pb-name">スタンダード〜エクセレント（4グレード）</div>
+        <div class="pb-after" style="color:#0f6a8a;font-size:16px;">¥83,600〜¥458,000</div>
+        <div class="pb-note">グレードの違いはカウンセリングで確認できます（税込）</div>
+      </div>
+      <div class="campaign-sticker-wrap">
+        <div class="campaign-sticker" style="border:1.5px solid #4dc9e8;">
+          <div class="cs-top" style="color:#0f6a8a;">初来院限定</div>
+          <div class="cs-price" style="color:#0f6a8a;">クーポン配布中</div>
+          <div class="cs-bottom" style="color:#0f6a8a;">実際の割引額は実装直前に確認</div>
+        </div>
+      </div>
+      <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#4dc9e8,#0f6a8a);">無料カウンセリングを予約する ▶</button></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header hdr-inject"><span class="brand">TCB</span><span class="pr-badge">料金</span></div>
+      <div class="card-title" style="font-size:13px;">再生注射の料金</div>
+      <div class="price-block" style="background:#fff3e8;">
+        <div class="pb-name">クマ取り再生注射（通常）</div>
+        <div class="pb-before">通常¥9,800（税込）</div>
+        <div class="pb-after" style="color:#e37400;">→ 初回¥0</div>
+        <div class="pb-note">プレミアム(スネコス)1cc¥69,800／3回コース¥189,000も選択可</div>
+      </div>
+      <div class="campaign-sticker-wrap">
+        <div class="campaign-sticker" style="border:1.5px solid #ffab4d;">
+          <div class="cs-top" style="color:#e37400;">初回0円</div>
+          <div class="cs-price" style="color:#e37400;">キャンペーン中</div>
+          <div class="cs-bottom" style="color:#e37400;">実施期間は予約時に要確認</div>
+        </div>
+      </div>
+      <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#ffab4d,#e37400);">無料カウンセリングを予約する ▶</button></div>
+    </div>
+
+  </div>
+
+  <div class="warn-note">
+    <b>要確認（設計書4章）:</b> 脱脂手術の25,000円OFF/30,000円OFFはどちらか一方のみが実際に表示されている常設バナーパターン（シミの前例と同一）。再生注射の初回0円は表示期間が2026/7/26までとLP上に表示されており、実装時期次第で切れている可能性がある。いずれも実装直前に表示状態を再確認すること。
+  </div>
+</div>
+</div>
+
+<div class="back-link"><a href="index.html" style="color:#888;">← トップへ</a></div>
+
+<script>
+  function switchTab(name) {
+    document.querySelectorAll('.tab-section').forEach(function(el){ el.classList.remove('active'); });
+    document.getElementById('section-' + name).classList.add('active');
+    document.querySelectorAll('.tab-btn').forEach(function(el){ el.classList.remove('active'); });
+    document.querySelector('.tab-' + name).classList.add('active');
+  }
+</script>
+
+</body>
+</html>
