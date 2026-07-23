@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>クマ取り クリニック選び診断 設計書</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F7F9F8; --surface: #FFFFFF; --border: #DDE8E3;
+    --text: #1A2420; --muted: #5A6E68; --accent: #3A9E78; --accent-light: #EBF6F1;
+  }
+  body { font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.75; padding: 32px 16px 80px; }
+  .doc { max-width: 860px; margin: 0 auto; }
+  .doc-header { border-left: 4px solid var(--accent); padding: 0 0 0 20px; margin-bottom: 40px; }
+  .doc-header .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .doc-header h1 { font-size: 22px; font-weight: 700; line-height: 1.35; }
+  .doc-header .meta { margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .section { margin-bottom: 40px; }
+  .section-title { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  p { margin-bottom: 10px; }
+  .tbl-wrap { overflow-x: auto; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--surface); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+  th { background: var(--accent-light); color: var(--accent); font-weight: 700; font-size: 11px; letter-spacing: .05em; text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #FAFCFB; }
+  .code-block { background: #1A2420; color: #EBF6F1; font-family: "SF Mono", Consolas, monospace; font-size: 12px; line-height: 1.8; border-radius: 8px; padding: 18px 20px; overflow-x: auto; white-space: pre; margin-bottom: 16px; }
+  .note-box { background: var(--accent-light); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-size: 12.5px; color: var(--muted); margin-bottom: 16px; }
+  .warn-box { background: #FBF2E4; border: 1px solid #F0DBB0; border-radius: 8px; padding: 12px 16px; font-size: 12.5px; color: #7a5a1a; margin-bottom: 16px; }
+  .quote { border-left: 3px solid var(--border); padding: 6px 0 6px 14px; margin-bottom: 8px; font-size: 13px; color: var(--muted); }
+  .quote .src { font-size: 11px; opacity: .8; }
+  .link-chip { display: inline-block; font-size: 12px; background: rgba(0,0,0,.06); border-radius: 4px; padding: 3px 10px; margin: 4px 6px 4px 0; word-break: break-all; }
+  .link-chip a { color: var(--text); text-decoration: none; }
+  .back-link { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; }
+  .back-link a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="doc-header">
+    <div class="eyebrow">Design Brief — Diagnosis Flow (v1.0)</div>
+    <h1>クマ取り クリニック選び診断 設計書</h1>
+    <div class="meta">作成日: 2026-07-23 ／ 対象: mega-clinic.com クマジャンル（対象記事は未定・後日確定）／ 提携先: TCB東京中央美容外科（afbアフィリエイト）／ ステータス: 新規設計・Ren確認前</div>
+  </div>
+
+  <div class="warn-box">
+    <strong>要確認事項（最重要）：</strong> LP1（脱脂手術）は眼窩脂肪型（いわゆる黒グマ＝脂肪のふくらみ・たるみが原因）専用で、色素沈着（茶グマ）・血行不良（青グマ）への言及が公式LPに一切ない。今回の分岐軸は「重視すること」のみで、クマの原因タイプそのものでは分岐しない設計のため、原因が脂肪型でない読者にも脱脂手術が案内されうる。Q1の文言で多少緩和しているが完全な解消ではなく、8章のRen確認事項の最重要論点。
+  </div>
+
+  <div class="section">
+    <div class="section-title">1. 前提整理（シミ前例からの引き継ぎ・今回との違い）</div>
+    <p>朝会決定（診断結果を作り込まず「診断＋PR」の最小構成でよい）はシミ・クマ共通の大方針。ただし今回はNoaとの事前合意で、分岐後の理解を深めるために<strong>コスメ診断の標準フォーマット（チェックリスト→矢印図式→アプローチ→メリット+CTAの4枚）</strong>を結果カルーセルに採用する（6・7章）。シミは「1枚の共通メッセージ→即PRカルーセル」というより軽い構成だったのに対し、今回は施術カテゴリそのものが分かれる（手術／非手術）ため、もう一段階「どちらの施術が自分向きか」を実感してもらう役割の4枚を挟む。</p>
+    <p><strong>シミとの共通点:</strong> TCB提携・報道リスク対応方針・医療広告ガイドライン制約は同一（2・3章）。</p>
+    <p><strong>シミとの相違点:</strong> シミは同一商材（ピコレーザー）内のメニュー違い（トーニング／スポット）で分岐したが、クマは<strong>手術（脱脂）と非手術（再生注射）という施術カテゴリそのもの</strong>が分岐対象。ダウンタイム・価格帯・通院回数の差が大きく、「重視すること」の軸もよりくっきり2極化する。</p>
+    <p><span class="link-chip">詳細設計書（md）: data/output/briefs/診断-クマ取りクリニック選び診断-2026-07-23.md</span></p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">2. NG制約（医療広告ガイドライン）</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:160px;">禁止事項</th><th>この診断・PRカルでの注意点</th></tr></thead>
+        <tbody>
+          <tr><td>体験談</td><td>「実際にやってよかった」等の患者体験談は一切使わない</td></tr>
+          <tr><td>ビフォーアフター写真</td><td>「症例紹介」カードでのみ使用。限定解除要件（治療内容／治療期間・回数／費用／主なリスク・副作用の4点併記）を満たす形で掲載する（自由診療・加工なし・個人差の明記は要件外と確認済み）。写真は差し替え予定のプレースホルダー</td></tr>
+          <tr><td>比較優良広告</td><td>「他院より優れている」「手術より注射の方が優れている」等、施術間・競合間の優劣を断定する表現は一切使わない。分岐は「重視すること」という価値観ベースで行い、TCB自身の事実（価格・ダウンタイム・院数）のみを提示する</td></tr>
+          <tr><td>誇大広告・保証表現</td><td>「必ず消える」「絶対に取れる」は使わない。TCB公式LPの表現（「〜が期待できます」等）に準じる</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warn-box"><strong>脱脂手術の4グレードに注意：</strong> LP1の料金は4グレード（スタンダード／スーパーナチュラル／パーフェクト／エクセレント、¥83,600〜¥458,000）だが、公式LPにグレード間の違いの明確な説明がない。違いを推測で断定して書くと事実誤認・誇大広告のリスクがあるため、PR・キャンペーン表現では価格帯を並記するに留め、「グレードによる違いの詳細はカウンセリングで確認できます」という事実ベースの案内にする。</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">3. TCB報道リスクの確認と対応方針</div>
+    <p>シミ設計書と同一の前提（文春オンライン報道: 高額商法・長時間拘束・追徴課税等、2024年9月〜）。</p>
+    <div class="note-box"><strong>対応方針：</strong> シミ同様、設問を「不安」ベースにせず「重視すること」（価値観）ベースにすることで、TCBの営業・勧誘の"行動"を断定する文言が構造的に不要になる。今回の分岐軸（根本的にしっかり／手軽に試したい）も同じ設計思想で、「勧誘を急がせない」「安心して選べる」のような行動断定の安心訴求は一切使わない。価格・ダウンタイム・院数という検証可能な"事実"のみで回答する設計のため、報道内容と矛盾するリスクは構造的に発生しない。</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">4. TCB LP実データ（PRカル・症例紹介の素材、裏取り済み）</div>
+    <p><strong>4.1 LP1: 切らない脱脂手術（経結膜脱脂）</strong></p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:140px;">項目</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>施術名</td><td>皮膚を切らない目の下のクマ・たるみ取り（経結膜脱脂）</td></tr>
+          <tr><td>対象</td><td>眼窩脂肪型（脂肪のふくらみ・たるみが原因の黒グマ）専用。茶グマ・青グマへの言及なし</td></tr>
+          <tr><td>料金（税込）</td><td>スタンダード¥83,600／スーパーナチュラル¥173,800／パーフェクト¥297,000／エクセレント¥458,000（4グレード。違いの明記なし）</td></tr>
+          <tr><td>ダウンタイム</td><td>腫れ・内出血1〜2週間。まれにむくみ・違和感・目のかすみ</td></tr>
+          <tr><td>施術方法</td><td>日帰り・抜糸不要・通院不要。下まぶたの裏側（結膜側）から数ミリの傷でアプローチ、傷跡は目立ちにくい</td></tr>
+          <tr><td>症例紹介</td><td>年代別（50代／40代／30代／20代）の施術詳細アコーディオンあり。限定解除要件を満たす形で実装済み</td></tr>
+          <tr><td>展開規模</td><td>全国97院</td></tr>
+          <tr><td>クーポン</td><td>25,000円OFF・30,000円OFFの両バナーが常設で存在（シミの時と同じ画像バナーパターン）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><span class="link-chip"><a href="https://t-c-b-biyougeka.com/eye_kuma_fukurami_509_9" target="_blank">https://t-c-b-biyougeka.com/eye_kuma_fukurami_509_9</a></span></p>
+
+    <p style="margin-top:20px;"><strong>4.2 LP2: クマ取り再生注射</strong></p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:140px;">項目</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>施術名</td><td>クマ取り再生注射（非手術）</td></tr>
+          <tr><td>料金（税込）</td><td>通常¥9,800／プレミアム（スネコス注射）1cc¥69,800・3回コース¥189,000</td></tr>
+          <tr><td>内容</td><td>1回の注射で脂肪溶解・再生因子・ヒアルロン酸成分を注入し、クマを改善</td></tr>
+          <tr><td>ダウンタイム</td><td>腫れ・痛み・内出血2日程度（脱脂よりかなり短い）</td></tr>
+          <tr><td>キャンペーン</td><td>初回0円キャンペーン実施中。LP表示は「2026/6/29〜2026/7/26」の期間限定カウントダウン</td></tr>
+          <tr><td>その他</td><td>症例モデル制度あり（写真・インタビュー協力で割引率アップ）。FAQ・原因タイプの説明はLP上に無し（LP自体が薄め）</td></tr>
+          <tr><td>展開規模</td><td>全国97院（LP1と共通）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><span class="link-chip"><a href="https://t-c-b-biyougeka.com/kumatori_injection_02_c" target="_blank">https://t-c-b-biyougeka.com/kumatori_injection_02_c</a></span></p>
+
+    <div class="warn-box">
+      <strong>表示状態の確認が必要な要素（実装直前チェック必須）：</strong>
+      <br>1. 25,000円OFF／30,000円OFF: シミのピコレーザーLPと同じ「常設バナー2種のうち片方のみ表示」パターンの可能性が高い。CSSの<code>display:none</code>の有無を確認してから金額を確定すること。
+      <br>2. 初回0円キャンペーンの表示期間（〜2026/7/26）: 本日（2026-07-23）時点ではまだ期間内だが終了まで3日。実装がこの期間を過ぎる場合、表示が本当に切り替わるのか、他TCB LPと同様の常設パターンなのか、実装直前に必ず再確認する。
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">5. 診断設計</div>
+    <p><strong>設計方針:</strong> 施術が2種類（脱脂手術／再生注射）存在するため、シミと同じ「重視軸→施術分岐」の設計が成立する。ただし今回は価格帯・ダウンタイム・手術/非手術という違いがシミのメニュー違い（同じピコレーザー内）より大きいため、重視軸の解像度を上げて4択にし、うち2択ずつを各施術にマッピングする。Q1は導入として悩み具合の共感を作る非分岐設問、Q2で分岐軸となる「重視すること」を4択で聞く、という前例の2段構成を踏襲する。</p>
+
+    <div class="code-block">[PU] （ABテスト仮説・13章参照）
+  ↓
+[友だち追加]
+  ↓
+[Q1] 今、目の下について感じていることは？（非分岐・共感導入）
+  ① 黒っぽい影・ふくらみが気になる
+  ② 顔色が悪く見られがち
+  ③ メイクで隠しきれない
+  ④ 複数当てはまる
+  ↓
+[Q2] クマ改善で、一番重視することは？（分岐軸）
+  ① 脂肪のふくらみ自体をなくしたい　→ 脱脂手術
+  ② 効果重視でしっかり改善したい　　→ 脱脂手術
+  ③ ダウンタイムを短く抑えたい　　　→ 再生注射
+  ④ まずは気軽に試してみたい　　　　→ 再生注射
+  ↓
+[結果カルーセル 4枚 × 2パターン]（6・7章）
+  ↓
+[深掘りハブ] 症例紹介／よくある質問／キャンペーン・料金
+  ↓
+[CV（アフィリリンク・無料カウンセリング予約）]</div>
+
+    <p class="note-box">Q1は分岐には使わず、結果メッセージにも反映しない（診断の網羅感を出すための導入設問、シミのQ3と同じ役割）。①の選択肢文言を意図的に「脂肪のふくらみ」寄りの表現にすることで、脱脂手術が主に対象とする黒グマ（脂肪型）への文脈を診断の入口でさりげなく作っておく（1章の要確認事項への緩和策）。</p>
+
+    <p><strong>マッピング表</strong></p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:220px;">Q2の回答</th><th style="width:140px;">誘導先施術</th><th>誘導理由</th></tr></thead>
+        <tbody>
+          <tr><td>① 脂肪のふくらみ自体をなくしたい</td><td>脱脂手術（LP1）</td><td>脱脂手術は脂肪そのものを除去するアプローチのため、原因解消を求める回答と一致</td></tr>
+          <tr><td>② 効果重視でしっかり改善したい</td><td>脱脂手術（LP1）</td><td>手術は非手術より確実性の高い変化が期待できる施術のため</td></tr>
+          <tr><td>③ ダウンタイムを短く抑えたい</td><td>再生注射（LP2）</td><td>再生注射のダウンタイムは2日程度で、脱脂手術（1〜2週間）よりかなり短いため</td></tr>
+          <tr><td>④ まずは気軽に試してみたい</td><td>再生注射（LP2）</td><td>非手術・低価格帯・初回0円キャンペーンがあり、「まず試す」ニーズに合うため</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">6. 結果カルーセル（脱脂手術パターン・4枚）</div>
+    <p>Q2で①または②を選んだユーザーに表示。商材名（TCB）はまだ出さず、施術アプローチの理解を深める役割に徹する。</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:50px;">Card</th><th style="width:180px;">見出し</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>あなたのクマは、根本からしっかりケアタイプ</td><td>チェックリスト4項目：✓脂肪のふくらみそのものが気になる／✓一度の施術でしっかり効果を出したい／✓通院・抜糸の手間を避けたい／✓傷跡が目立たない方法を選びたい</td></tr>
+          <tr><td>2</td><td>クマの、本当の原因。</td><td>因果図式：「マッサージや目元クリームで対処してきた」→「でも脂肪そのものは移動しない」→「影として残り続ける」→「表面のケアでは限界がある」</td></tr>
+          <tr><td>3</td><td>アプローチは、脂肪そのものを取り除くこと</td><td>✓下まぶたの裏側（結膜側）からアプローチするから傷跡が目立ちにくい／✓抜糸不要・日帰りで完了／✓出っ張っている脂肪を直接取り除くから根本的な変化が期待できる</td></tr>
+          <tr><td>4</td><td>鏡を見るたびに、ちょっと自信が持てる目元へ</td><td>メリット：通院不要・抜糸不要で日常に戻れる／一度の施術で完了／全国97院だから通いやすい。CTA「詳しく見てみる」</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">7. 結果カルーセル（再生注射パターン・4枚）</div>
+    <p>Q2で③または④を選んだユーザーに表示。</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:50px;">Card</th><th style="width:180px;">見出し</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>あなたのクマは、まずは気軽に試したいタイプ</td><td>チェックリスト4項目：✓ダウンタイムはできるだけ短くしたい／✓まずは負担少なく試してみたい／✓手術はまだハードルが高いと感じる／✓注射だけでどのくらい変わるか気になる</td></tr>
+          <tr><td>2</td><td>クマが目立つ、本当の理由。</td><td>因果図式：「保湿や目元用美容液でケアしてきた」→「でも失われたハリ・ボリュームは化粧品では補えない」→「影が濃く見えたまま」→「加齢とともに目元のハリ・ボリュームが失われるのが根本原因」</td></tr>
+          <tr><td>3</td><td>アプローチは、必要な成分を注入して満たすこと</td><td>✓1回の注射で脂肪溶解・再生因子・ヒアルロン酸成分を注入／✓手術と違いダウンタイムが短い／✓施術時間も短く当日の予定に響きにくい</td></tr>
+          <tr><td>4</td><td>今日から、気軽に一歩を踏み出せる</td><td>メリット：ダウンタイムの少なさ／手軽に試せる非手術という選択肢／初回はお得に試せるキャンペーンあり（金額は11章参照）。CTA「詳しく見てみる」</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">8. Ren確認事項（判断が割れそうなポイント）</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:30px;">#</th><th style="width:280px;">論点</th><th>推奨</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>結果カルーセルをシミ（1枚＋即PR）ではなく4枚×2パターンにする設計逸脱の是非</td><td>施術カテゴリそのものが分かれる（手術／非手術）ため理解の橋渡しとして4枚は妥当と考えるが、朝会の「作り込みすぎない」方針との整合はRen判断が必要</td></tr>
+          <tr><td>2</td><td><strong>Q1がクマの原因タイプ（黒グマ／茶グマ／青グマ）で分岐しないため、脂肪型でない読者にも脱脂手術が案内されるリスク</strong></td><td>Q1の文言で緩和済みだが完全解消ではない。原因タイプ分岐を追加すると設問が増え「作り込みすぎない」方針に反するため、<strong>現状のままで様子見→数値が悪ければ原因タイプ問いを追加</strong>が現実的な落とし所</td></tr>
+          <tr><td>3</td><td>脱脂4グレードの違いが公式に不明なまま、PR・キャンペーンでどう見せるか</td><td>価格帯の併記に留め「詳細はカウンセリングで」と案内する方針を推奨（2章参照）</td></tr>
+          <tr><td>4</td><td>LP2（再生注射）は症例紹介データがLP自体に存在しない</td><td>プレースホルダーで進めるか、TCBに実データ提供を依頼するか要判断（9章参照）</td></tr>
+          <tr><td>5</td><td>LP2の初回0円キャンペーン表示期間（〜7/26）が実装時期次第で切れる可能性</td><td>実装直前に必ず表示状態を再確認する運用で対応（4章参照）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">9. 症例紹介パート（限定解除要件対応・年代別ケース）</div>
+    <p>医療広告ガイドラインの限定解除要件（治療内容／治療期間・回数／費用／主なリスク・副作用の4点併記）を満たす形で、年代別ケースを想定する。写真は全てプレースホルダーで、実装時にTCBから使用許諾を得た症例画像に差し替える。</p>
+    <p><strong>9.1 脱脂手術（LP1）</strong></p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>年代</th><th>治療内容</th><th>治療期間・回数</th><th>費用（税込）</th><th>主なリスク・副作用</th></tr></thead>
+        <tbody>
+          <tr><td>20代</td><td>経結膜脱脂（スタンダード）</td><td>1回・日帰り</td><td>¥83,600</td><td>腫れ・内出血1〜2週間、まれにむくみ・違和感・目のかすみ</td></tr>
+          <tr><td>30代</td><td>経結膜脱脂（スーパーナチュラル）</td><td>1回・日帰り</td><td>¥173,800</td><td>同上</td></tr>
+          <tr><td>40代</td><td>経結膜脱脂（パーフェクト）</td><td>1回・日帰り</td><td>¥297,000</td><td>同上</td></tr>
+          <tr><td>50代</td><td>経結膜脱脂（エクセレント）</td><td>1回・日帰り</td><td>¥458,000</td><td>同上</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:16px;"><strong>9.2 再生注射（LP2・プレースホルダー、要TCB確認）</strong></p>
+    <div class="warn-box">LP2自体に年代別症例ページが存在しない（LP1ほど作り込まれていない）。以下は暫定の想定で、実装前にTCBへ実データ提供を依頼するか、全社共通の症例集からの転用可否を確認する必要がある（8章の論点4）。</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>年代</th><th>治療内容</th><th>治療期間・回数</th><th>費用（税込）</th><th>主なリスク・副作用</th></tr></thead>
+        <tbody>
+          <tr><td>20代</td><td>クマ取り再生注射（通常）</td><td>1回</td><td>¥9,800</td><td>腫れ・痛み・内出血2日程度</td></tr>
+          <tr><td>30代</td><td>クマ取り再生注射（プレミアム・スネコス）</td><td>1回</td><td>¥69,800</td><td>同上</td></tr>
+          <tr><td>40代</td><td>クマ取り再生注射（プレミアム・3回コース）</td><td>3回コース</td><td>¥189,000</td><td>同上</td></tr>
+          <tr><td>50代</td><td>クマ取り再生注射（プレミアム・スネコス）</td><td>1回</td><td>¥69,800</td><td>同上</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">10. よくある質問パート</div>
+    <p>公式LPの丁寧すぎる口調をそのまま転用せず、ユーザー目線のカジュアルな言い回しに書き直す。</p>
+    <p><strong>10.1 脱脂手術（LP1のFAQ8問をベースに書き直し）</strong></p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:260px;">Q</th><th>A</th></tr></thead>
+        <tbody>
+          <tr><td>ダウンタイムってどのくらいかかるの？</td><td>腫れや内出血が出ることがあって、落ち着くまでは大体1〜2週間が目安。人によってはむくみや違和感、目のかすみが出ることもあるよ</td></tr>
+          <tr><td>マッサージとか自力でどうにかならない？</td><td>脂肪のふくらみが原因のクマは、セルフケアだけで完全になくすのは難しいのが実際のところ。だからこそ施術で直接アプローチする選択肢があるよ</td></tr>
+          <tr><td>一度取った脂肪って、また増えたりする？</td><td>施術で取り除いた脂肪細胞自体は基本的に元には戻らないとされているよ</td></tr>
+          <tr><td>施術中って目を開けたままなの？</td><td>ううん、目を閉じた状態で施術するよ</td></tr>
+          <tr><td>傷跡って目立たない？</td><td>下まぶたの裏側（結膜側）からアプローチするから、外から見える傷はほとんど目立たないよ</td></tr>
+          <tr><td>縫うの？</td><td>抜糸は不要。傷が数ミリと小さいから縫わなくて大丈夫なんだ</td></tr>
+          <tr><td>20代でも受けて平気？</td><td>年齢制限はなくて、20代で受ける人もいるよ</td></tr>
+          <tr><td>まつげエクステつけたままでも受けられる？</td><td>つけたままでも施術は受けられるよ</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:16px;"><strong>10.2 再生注射（LP2は原文FAQなし・新規作成、実装前に事実確認を推奨）</strong></p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:260px;">Q</th><th>A</th></tr></thead>
+        <tbody>
+          <tr><td>注射だけでどのくらい変わるの？</td><td>脂肪溶解・再生因子・ヒアルロン酸成分を注入して、クマの見た目にアプローチする施術だよ。変化の感じ方には個人差があるよ</td></tr>
+          <tr><td>ダウンタイムは短いって聞いたけど本当？</td><td>腫れや痛み、内出血が出ることはあるけど、目安は2日程度。手術タイプに比べるとかなり短めだよ</td></tr>
+          <tr><td>手術と迷ってるんだけど、注射から試すのはあり？</td><td>非手術で気軽に試せるのが注射タイプの特徴。まずは負担の少ない方法から試したい人に向いてるよ</td></tr>
+          <tr><td>初回0円って本当に無料なの？</td><td>初回0円キャンペーンとして案内されてるよ。実施期間や条件は変わることがあるから、最新の情報は予約時に確認してね</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">11. キャンペーン・クーポン表現</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:140px;">施術</th><th>表現方針</th></tr></thead>
+        <tbody>
+          <tr><td>脱脂手術（LP1）</td><td>25,000円OFF・30,000円OFFの2種バナーが常設で存在。実装直前に実際どちらが表示中か確認してから金額を確定する。表現は「初来院限定◯◯円OFF」のように、シミの設計と同じ常設クーポンの見せ方に揃える</td></tr>
+          <tr><td>再生注射（LP2）</td><td>「初回0円」を最大の訴求ポイントとして最終CTA直前に配置。通常¥9,800が初回0円になる、というビフォーアフターの分かりやすさを活かす。表示期間（〜7/26）は実装直前に生きているか要再確認</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note-box">医療広告ガイドライン上、「今だけ」「今しかない」のような煽り・断定表現は避け、TCB公式LPの表記に準じた事実ベースの案内に留める。</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">12. リスク・副作用の適切な開示</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:140px;">施術</th><th>ダウンタイム・リスク</th></tr></thead>
+        <tbody>
+          <tr><td>脱脂手術（LP1）</td><td>腫れ・内出血1〜2週間。まれにむくみ・違和感・目のかすみが生じることがある</td></tr>
+          <tr><td>再生注射（LP2）</td><td>腫れ・痛み・内出血2日程度</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>結果カルーセル・PR・症例紹介のいずれの箇所でも、リスク表記を省略せず必ず併記する（症例紹介パートは限定解除要件として必須、それ以外のカードでも「個人差があります」等の一言を添える）。</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">13. PU文言（ABテスト）</div>
+    <p>PU文言はABテスト方式が標準運用（knowledge/playbooks.md確定ルール）。以下は「推奨1本」ではなくABテスト候補として並列に扱う。</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:160px;">項目</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>診断体験</td><td>クマの気になり度合いと重視することを2問で聞き、脱脂手術／再生注射どちらが合うかを提示してPRへ橋渡し</td></tr>
+          <tr><td>検索者の気持ち</td><td>「クマ取りたいけど手術は怖い」「注射でどこまで変わるか知りたい」「自分に合う方法が分からない」</td></tr>
+          <tr><td>PU文言候補（AB）</td><td>A案「あなたに合うクマ取り方法、見つかる？」／B案「その目のクマ、どうすれば消える？」</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note-box">A案は「方法診断」感が強く情報収集フェーズの層に、B案は「悩み共感」が強く既に気になっている層に刺さりやすい、という仮説はあるが、これはABテスト結果の解釈材料であり配信ロジックではない。実装時は両案を対象記事に均等出し分けする。</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">14. 通しシミュレーション・期待効果・工数</div>
+    <div class="code-block">1. 「クマ 消す 方法」「クマ 手術 怖い」等で検索 → 記事到達
+2. PU表示（A/B案どちらか、ABテストで出し分け）→ タップ
+3. 友だち追加 → 診断表紙 → Q1（非分岐）→ Q2（分岐）
+4. Q2の回答に応じて結果カルーセルへ分岐
+   - ①②選択 → 脱脂手術パターン（6章・4枚）
+   - ③④選択 → 再生注射パターン（7章・4枚）
+5. 各パターンのCard4「詳しく見てみる」CTAタップ → 深掘りハブ（症例紹介／よくある質問／キャンペーン・料金）→ 無料カウンセリング予約（アフィリリンク）</div>
+    <p class="note-box">違和感チェック: 分岐後の全カードが施術の事実（内容・ダウンタイム・院数）のみで構成されており、行動を断定する主張（安心して選べる等）が無いことを確認済み。3章の報道リスクとも矛盾しない設計になっている。</p>
+    <p><strong>期待効果:</strong> 対象記事が未確定のため試算不可。記事確定後、PU設置台帳の推計値（LP imp等）を用いて再計算する。</p>
+    <p><strong>工数:</strong> 2問診断＋結果カルーセル2パターン×4枚＋深掘りハブ（症例紹介・FAQ・キャンペーン）。シミ（5問診断＋1枚結果＋PRカル5枚）より結果カルーセル部分は重いが、設問数は少ない。総工数感はシミとほぼ同水準〜やや重めと想定。</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">15. 次アクション</div>
+    <ul style="padding-left: 20px;">
+      <li>齋藤（Noa）: 本設計書をRenへ共有・壁打ち（8章のRen確認事項5点を中心に）</li>
+      <li>Ren確認後、対象記事の確定（PU設置台帳の未設置検知データから優先順位付け）</li>
+      <li>LP2（再生注射）の症例データ・FAQについて、プレースホルダーのままで進めるかTCBへ確認するかを決定</li>
+      <li>実装直前: LP1のクーポン表示状態（25,000円OFF/30,000円OFF）、LP2の初回0円キャンペーン表示期間の両方を再確認</li>
+      <li>デザイン依頼・LINE実装 → 公開後、PV・CV数値を確認して改善</li>
+    </ul>
+  </div>
+
+  <div class="back-link">
+    <a href="index.html">← トップへ</a>
+  </div>
+
+</div>
+</body>
+</html>
