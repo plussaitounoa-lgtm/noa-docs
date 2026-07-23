@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>コスメ・美容医療施策 7月インパクト評価</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 900px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-card.warn-card { border-color: #fde68a; background: #fffbeb; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-highest { background: #fee2e2; color: #991b1b; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .check-list { list-style: none; margin-top: 8px; }
+    .check-list li { padding: 8px 0 8px 22px; position: relative; font-size: 13px; border-bottom: 1px solid #f1f5f9; }
+    .check-list li:last-child { border-bottom: none; }
+    .check-list li::before { content: "✓"; position: absolute; left: 0; color: #10b981; font-weight: 800; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">施策インパクト評価 — コスメ・美容医療</div>
+    <h1>2026年7月 コスメ・美容医療施策 インパクト評価</h1>
+    <p class="desc">作成: 2026-07-23 ／ 対象: コスメ4診断（クレンジング・スキンケア・化粧水・総合肌タイプ）＋ 美容医療診断（シミ・クマ）</p>
+  </div>
+
+  <!-- ① 結論 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">1</div>
+      <div>
+        <div class="section-title">結論</div>
+        <div class="section-sub">友達数・売上への定量貢献 vs 基盤構築の定性成果</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="verdict verdict-red">コスメ・美容医療とも、7月時点で「友達数・売上」への定量リターンはほぼゼロ。今月の価値は完全に基盤構築（定性）側にある。</div>
+      <p>コスメは友達29人（全体の約5%）・PVFR 0.24%で基準の1/3。美容医療（シミ・クマ）は診断が1本も稼働しておらず友達・CVともにゼロ。売上はコスメ側の計測経路が未整備のため、実額は「不明」。</p>
+    </div>
+  </div>
+
+  <!-- ② GOAL進捗との対比 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">2</div>
+      <div>
+        <div class="section-title">7月 GOAL進捗との対比</div>
+        <div class="section-sub">全体実績に対するコスメ・美容医療の位置づけ</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">全体累計</div>
+          <div class="kpi-value">561人</div>
+          <div class="kpi-sub">目標1,200人（達成率46.8%）</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">月末予測</div>
+          <div class="kpi-value">828人</div>
+          <div class="kpi-sub">GOALギャップ ▲372人</div>
+        </div>
+        <div class="kpi-card warn-card">
+          <div class="kpi-label">コスメ寄与</div>
+          <div class="kpi-value">29人</div>
+          <div class="kpi-sub">全体の5.2%</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">美容医療寄与</div>
+          <div class="kpi-value">0人</div>
+          <div class="kpi-sub">診断未稼働のため</div>
+        </div>
+      </div>
+      <div class="insight insight-red">
+        <strong>コスメの29人は月末GOALギャップ（▲372人）の8%にも満たない規模。</strong>
+        医療ダイエット(GLP-1)1ジャンルだけで232人と、コスメの約8倍の絶対量を占める。
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ コスメ ファネル詳細 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">3</div>
+      <div>
+        <div class="section-title">コスメ ファネル指標（7月累計）</div>
+        <div class="section-sub">クレンジング・スキンケア・化粧水診断 合算</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr><th>指標</th><th>実績</th><th>基準</th><th>判定</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LP imp</td><td>12,227</td><td>—</td><td>—</td></tr>
+          <tr><td>PU imp</td><td>4,294</td><td>—</td><td>—</td></tr>
+          <tr><td>PU表示率</td><td class="warn">35.1%</td><td>—</td><td><span class="badge badge-yellow">低め</span></td></tr>
+          <tr><td>CTR</td><td class="up">14.5%</td><td>13%以上</td><td><span class="badge badge-green">✅機能中</span></td></tr>
+          <tr><td>友達追加率</td><td class="down">4.8%</td><td>11%以上</td><td><span class="badge badge-red">🔴最大ボトルネック</span></td></tr>
+          <tr><td><strong>PVFR</strong></td><td class="down"><strong>0.24%</strong></td><td>0.80%以上</td><td><span class="badge badge-red">🔴基準の約1/3</span></td></tr>
+        </tbody>
+      </table>
+      <table>
+        <thead>
+          <tr><th>週</th><th>LP imp</th><th>友達</th><th>PVFR</th><th>CTR</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>W1</td><td>2,257</td><td>5人</td><td>0.22%</td><td>14.1%</td></tr>
+          <tr><td>W2</td><td>5,160</td><td>11人</td><td>0.21%</td><td>14.1%</td></tr>
+          <tr><td>W3</td><td>4,137</td><td>12人</td><td>0.29%</td><td>14.0%</td></tr>
+          <tr><td>W4（途中）</td><td>673</td><td>1人</td><td>0.15%</td><td>16.2%</td></tr>
+        </tbody>
+      </table>
+      <div class="insight insight-yellow">
+        <strong>CTRは基準クリアで安定。PU文言側の問題ではない。</strong>
+        ボトルネックは友達追加率（4.8%、基準の半分未満）＝LP／友達追加画面側。週次でも改善トレンドは出ておらず、月内で構造は変わっていない。
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 美容医療 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">4</div>
+      <div>
+        <div class="section-title">美容医療（シミ・クマ診断）稼働状況</div>
+        <div class="section-sub">mega-clinic.com</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="verdict verdict-yellow">診断リリースがまだで、友達・CVともにゼロ。サイト自体へのLP流入（3,090imp）はあるが、診断による転換が発生していない。</div>
+      <table>
+        <thead>
+          <tr><th>ジャンル</th><th>LP imp</th><th>友達</th><th>状態</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>ほくろ・シミ・クマ（mega-clinic）</td><td>3,090</td><td>0人</td><td><span class="badge badge-gray">診断未稼働</span></td></tr>
+        </tbody>
+      </table>
+      <p class="note">シミクリニック選び診断（TCB提携）は設計・全5タブ完成、デザイン依頼済みで受領待ち。クマ診断はシナリオ作成中。両方ともまだLINE実装前のため、数値としては現れない。</p>
+    </div>
+  </div>
+
+  <!-- ⑤ 売上・CV -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">5</div>
+      <div>
+        <div class="section-title">売上・CV計測状況</div>
+        <div class="section-sub">コスメの実額は現状「不明」</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="verdict verdict-red">コスメのCVリスト該当件数は0件だが、これは「売上ゼロ」ではなく計測経路が繋がっていないため。</div>
+      <p>売上スプシ18期にコスメ用の計上ブロックがなく、CVリスト生成ロジックにもコスメ判定が未実装（対応タスク：CTO担当、未着手）。この状態が続く限り、コスメの売上インパクトは今後も定量化できない。</p>
+    </div>
+  </div>
+
+  <!-- ⑥ 定性成果 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">6</div>
+      <div>
+        <div class="section-title">今月できた基盤（定性）</div>
+        <div class="section-sub">数字にまだ出ていない進捗</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="check-list">
+        <li>クレンジング診断（6/24〜稼働）・スキンケア診断（7/9〜稼働）・化粧水診断（7/23リリース）の3診断が実際に稼働開始</li>
+        <li>総合肌タイプ診断（④横断診断）：設計・カード図v3まで完了、7/27〜31週リリース目前</li>
+        <li>PU設置台帳「コスメ_マスタ」タブの書式・運用ルール確立（停止判断ロジック・カテゴリ分類含む）</li>
+        <li>シミクリニック選び診断（TCB提携）：設計v2.8・全5タブ完成、デザイン依頼済み</li>
+        <li>クマ診断：シナリオ作成中</li>
+        <li>デザイナー制作フロー内製化に着手（生成ツール導入・7/24レクチャー予定）</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ⑦ 確認事項 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">7</div>
+      <div>
+        <div class="section-title">確認事項</div>
+        <div class="section-sub">数字の穴を埋めるための判断</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-highest">最優先</span>
+          <div class="action-body">
+            <strong>コスメCV計測穴の解消優先度</strong>
+            <span>解消しない限り、コスメの売上インパクトは今後も「不明」のまま蓄積する。</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">高</span>
+          <div class="action-body">
+            <strong>美容医療診断のリリース時期の見立て</strong>
+            <span>生成ツール導入（7/24〜）待ちのため、今月リリースは難しく8月着地が前提になる。</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
