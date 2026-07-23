@@ -95,6 +95,24 @@
   .card-final { border: 2px solid #ff8a3d; }
   .final-ribbon { background: #d6336c; color: #fff; text-align: center; font-size: 8.5px; font-weight: 800; padding: 4px 6px; }
 
+  /* ── 価格表+交通費補助（参考LP準拠） ── */
+  .price-table-list { margin: 4px 10px 8px; border-radius: 8px; overflow: hidden; border: 1px solid #ddd; }
+  .price-table-list .pt-head { color: #fff; text-align: center; font-size: 8.5px; font-weight: 800; padding: 6px; line-height: 1.4; }
+  .price-table-list .pt-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 8px; font-size: 8.5px; border-bottom: 1px solid #eee; background: #fff; }
+  .price-table-list .pt-row:nth-child(even) { background: #f7f7f7; }
+  .price-table-list .pt-row:last-child { border-bottom: none; }
+  .price-table-list .pt-name { font-weight: 700; }
+  .price-table-list .pt-price { font-weight: 800; color: #333; }
+  .subsidy-note { text-align: center; font-size: 8.5px; color: #888; padding: 8px 10px 4px; }
+  .subsidy-row { display: flex; gap: 6px; padding: 0 10px 10px; }
+  .subsidy-item { flex: 1; background: #fff; border-radius: 8px; padding: 8px 4px 6px; text-align: center; }
+  .subsidy-item .si-badge { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #fdf6e3, #ecd48a); border: 1.5px solid #d4af37; font-size: 7px; font-weight: 900; color: #7a5a10; margin-bottom: 4px; line-height: 1.25; }
+  .subsidy-item .si-label { font-size: 7.5px; color: #555; line-height: 1.45; }
+  #section-surgery .price-table-list, #section-pr-surgery .price-table-list { border-color: #b8e6f5; }
+  #section-surgery .price-table-list .pt-head, #section-pr-surgery .price-table-list .pt-head { background: linear-gradient(90deg,#4dc9e8,#0f6a8a); }
+  #section-surgery .price-table-list .pt-name, #section-pr-surgery .price-table-list .pt-name { color: #0f6a8a; }
+  #section-surgery .subsidy-item, #section-pr-surgery .subsidy-item { border: 1.5px solid #b8e6f5; }
+
   .benefit-list { padding: 0 12px 8px; }
   .benefit-row { display: flex; align-items: center; gap: 6px; font-size: 9.5px; color: #555; padding: 3px 0; }
   .benefit-row::before { content: "◎"; font-weight: 800; }
@@ -223,15 +241,23 @@
 
     <div class="card">
       <div class="card-header"><span class="brand">診断結果</span><span class="pr-badge">TYPE</span></div>
-      <div class="card-title">クマの、<br>本当の原因。</div>
-      <div class="causal-chain">
-        <div class="causal-step">マッサージや目元クリームで対処してきた</div>
-        <div class="causal-arrow">▼</div>
-        <div class="causal-step">でも脂肪そのものは移動しない</div>
-        <div class="causal-arrow">▼</div>
-        <div class="causal-step">影として残り続ける</div>
-        <div class="causal-arrow">▼</div>
-        <div class="causal-step final">表面のケアでは限界がある</div>
+      <div class="card-title">クマの、<br>本当の原因と対処法</div>
+      <div class="point-block">
+        <div class="point-badge-row"><span class="point-badge">01</span></div>
+        <div class="point-illust">イラスト差し替え予定<br>（目元断面図・眼窩脂肪の位置）</div>
+        <div class="point-caption">黒クマ・ふくらみ・たるみの<br>原因となる<b>眼窩脂肪</b></div>
+      </div>
+      <div class="point-block">
+        <div class="point-badge-row"><span class="point-badge">02</span></div>
+        <div class="point-illust">イラスト差し替え予定<br>（結膜側からのアプローチ）</div>
+        <div class="point-caption"><b>脂肪そのもの</b>を取り除きます</div>
+        <div class="point-detail">下まぶたの内側（結膜）に小さな穴を開けて眼窩脂肪を除去。表面に傷が見えにくい方法です</div>
+      </div>
+      <div class="point-block">
+        <div class="point-badge-row"><span class="point-badge">03</span></div>
+        <div class="point-illust">イラスト差し替え予定<br>（Before/Afterシルエット）</div>
+        <div class="point-caption">目の下の膨らみが消え、<br><b>自然な目元</b>へ</div>
+        <div class="point-detail">脂肪細胞そのものを取り除くため、再び膨らむことはほとんどありません</div>
       </div>
     </div>
 
@@ -311,13 +337,20 @@
 
     <div class="card">
       <div class="card-header hdr-surgery"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="card-title" style="font-size:13px;">安心して<br>受けられる理由</div>
-      <div class="benefit-list">
-        <div class="benefit-row">日帰り・抜糸不要・通院不要</div>
-        <div class="benefit-row">結膜側からアプローチ、傷跡が目立ちにくい</div>
-        <div class="benefit-row">全国97院だからどこでも通いやすい</div>
+      <div class="card-title" style="font-size:14px;">価格</div>
+      <div class="price-table-list">
+        <div class="pt-head">皮膚を切らない<br>目の下のクマ・たるみ取り</div>
+        <div class="pt-row"><span class="pt-name">スタンダード</span><span class="pt-price">¥83,600</span></div>
+        <div class="pt-row"><span class="pt-name">スーパーナチュラル</span><span class="pt-price">¥173,800</span></div>
+        <div class="pt-row"><span class="pt-name">パーフェクト</span><span class="pt-price">¥297,000</span></div>
+        <div class="pt-row"><span class="pt-name">エクセレント</span><span class="pt-price">¥458,000</span></div>
       </div>
       <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#4dc9e8,#0f6a8a);">無料カウンセリングを予約する ▶</button></div>
+      <div class="subsidy-note">少しでも受けやすくするために</div>
+      <div class="subsidy-row">
+        <div class="subsidy-item"><div class="si-badge">駐車場<br>無料</div><div class="si-label">お車でお越しの方に</div></div>
+        <div class="subsidy-item"><div class="si-badge">最高<br>3万円</div><div class="si-label">遠方の医師の施術を受けたい方に交通費補助</div></div>
+      </div>
     </div>
 
     <div class="card">
