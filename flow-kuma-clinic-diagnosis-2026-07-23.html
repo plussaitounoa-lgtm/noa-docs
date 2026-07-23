@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>クマ取り クリニック選び診断 v1.2 フロー図</title>
+<title>クマ取り クリニック選び診断 v1.3 フロー図</title>
   <link rel="icon" type="image/png" href="favicon.png">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -97,11 +97,11 @@
 <body>
 <div class="container">
 
-  <h1>クマ取り クリニック選び診断 v1.2 フロー図</h1>
-  <div class="meta">2026-07-23（v1.2更新） ｜ mega-clinic.com クマジャンル（対象記事は未定） ｜ 提携先: TCB東京中央美容外科（afbアフィリエイト） ｜ 診断表紙 → 全4問（非分岐3・分岐1） → 結果カルーセル4枚×2パターン → 深掘りハブ</div>
+  <h1>クマ取り クリニック選び診断 v1.3 フロー図</h1>
+  <div class="meta">2026-07-23（v1.3更新） ｜ mega-clinic.com クマジャンル（対象記事は未定） ｜ 提携先: TCB東京中央美容外科（afbアフィリエイト） ｜ 診断表紙 → 全4問（非分岐3・分岐1） → 結果カルーセル4枚×2パターン → PRカルーセル5枚×2パターン → 深掘りハブ</div>
 
   <div class="revision-note">
-    <b>v1.1の変更：</b> v1.0はQ1（導入・非分岐）→Q2（重視軸・分岐）の2問構成だったが、Noaより「質問が2個しかなく説得力が弱い」との指摘を受け、前例のシミ診断（性別／年代／悩み・エコー／分岐2軸の5問構成）と同水準に拡張。<b>Q1性別・Q2年代（非分岐）・Q3症状の見え方（非分岐・エコー用）</b>を新設し、旧Q1は廃止・旧Q2は重視軸としてQ4にスライドする4問構成にした。Q3の追加は診断の厚み向上に加え、<b>Q4（重視軸）がクマの原因タイプ（黒グマ／茶グマ／青グマ）そのものでは分岐しない</b>という要確認事項（詳細は設計書8章）を、結果カードの共感一言で多少緩和する狙いもある（完全な解消ではない）。<br><b>v1.2の変更：</b> Q3の質問文を『目の下、鏡で見るとどんな感じ？』に変更（選択肢は変更なし）。
+    <b>v1.1の変更：</b> v1.0はQ1（導入・非分岐）→Q2（重視軸・分岐）の2問構成だったが、Noaより「質問が2個しかなく説得力が弱い」との指摘を受け、前例のシミ診断（性別／年代／悩み・エコー／分岐2軸の5問構成）と同水準に拡張。<b>Q1性別・Q2年代（非分岐）・Q3症状の見え方（非分岐・エコー用）</b>を新設し、旧Q1は廃止・旧Q2は重視軸としてQ4にスライドする4問構成にした。Q3の追加は診断の厚み向上に加え、<b>Q4（重視軸）がクマの原因タイプ（黒グマ／茶グマ／青グマ）そのものでは分岐しない</b>という要確認事項（詳細は設計書8章）を、結果カードの共感一言で多少緩和する狙いもある（完全な解消ではない）。<br><b>v1.2の変更：</b> Q3の質問文を『目の下、鏡で見るとどんな感じ？』に変更（選択肢は変更なし）。<br><b>v1.3の変更：</b> 結果カルーセルとCV導線の間に抜けていたPRカルーセル（脱脂手術/再生注射各5枚）を追加。TCBブランド・料金・全社実績はここで初めて開示する構成に修正（Noa指摘で追加）。
   </div>
 
   <div class="legend">
@@ -218,11 +218,33 @@
     </div>
   </div>
 
-  <div class="bridge-box">両パターンともCard4「詳しく見てみる」タップで、共通の深掘りハブへ</div>
+  <div class="bridge-box">両パターンともCard4「詳しく見てみる」タップで、それぞれのPRカルーセルへ</div>
+
+  <!-- PRカルーセル（2パターン） -->
+  <div class="section-divider">── PRカルーセル（各5枚・v1.3追加。ここで初めてTCBブランド・料金・実績を開示） ──</div>
+  <div class="branch-fork">
+    <div class="branch-col surgery">
+      <div class="branch-head">脱脂手術PRカル</div>
+      <div class="mini-card"><span class="mc-tag">Card1｜ブランド訴求+料金</span><span class="mc-title">TCBの切らない脱脂手術</span>¥83,600〜¥458,000（税込・4グレード）＋クーポン</div>
+      <div class="mini-card"><span class="mc-tag">Card2｜オススメ+チェックリスト</span>脂肪のふくらみが気になる／一度でしっかり効果／通院不要／傷跡目立たない</div>
+      <div class="mini-card"><span class="mc-tag">Card3｜安心ポイント</span>日帰り・抜糸不要・通院不要／全国97院</div>
+      <div class="mini-card"><span class="mc-tag">Card4｜全社実績</span>来院数96万5,785人／満足度91.0%／リピート意思96.7%</div>
+      <div class="mini-card"><span class="mc-tag">Card5｜最終CTA</span>クーポン再訴求<div class="mini-cta">無料カウンセリングを予約する</div></div>
+    </div>
+    <div class="branch-col inject">
+      <div class="branch-head">再生注射PRカル</div>
+      <div class="mini-card"><span class="mc-tag">Card1｜ブランド訴求+料金</span><span class="mc-title">TCBのクマ取り再生注射</span>通常¥9,800→初回¥0＋プレミアム価格</div>
+      <div class="mini-card"><span class="mc-tag">Card2｜オススメ+チェックリスト</span>ダウンタイム短く／気軽に試したい／手術はハードル高い</div>
+      <div class="mini-card"><span class="mc-tag">Card3｜安心ポイント</span>ダウンタイム2日程度／症例モデルでお得</div>
+      <div class="mini-card"><span class="mc-tag">Card4｜全社実績</span>脱脂手術PRカルと同一（TCB全社データ）</div>
+      <div class="mini-card"><span class="mc-tag">Card5｜最終CTA</span>初回0円再訴求<div class="mini-cta">無料カウンセリングを予約する</div></div>
+    </div>
+  </div>
+  <div class="bridge-box">カード図: <a href="cards-kuma-clinic-hub-2026-07-23.html" target="_blank" style="color:#1a9cc7;">cards-kuma-clinic-hub-2026-07-23.html</a>（脱脂手術PRカル／再生注射PRカルタブ）</div>
 
   <!-- 深掘りハブ -->
   <div class="arr">↓</div>
-  <div class="step-label" style="text-align:center;font-size:9px;font-weight:700;color:#aaa;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;">深掘りハブ（LINEチャット風）</div>
+  <div class="step-label" style="text-align:center;font-size:9px;font-weight:700;color:#aaa;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;">深掘りハブ（LINEチャット風・PRカル最終CTAの前後どちらからでも遷移可）</div>
   <div class="chat-menu">
     <div class="chat-menu-item"><span class="chat-arrow">▶</span>症例紹介を見る</div>
     <div class="chat-menu-item"><span class="chat-arrow">▶</span>よくある質問を見る</div>
@@ -236,7 +258,7 @@
     <div style="font-size:11px;color:#666;margin-top:4px;">無料カウンセリング予約（TCBアフィリリンク）</div>
   </div>
 
-  <p style="text-align:center;font-size:11px;margin-top:12px;"><a href="brief-kuma-clinic-diagnosis-2026-07-23.html" target="_blank" style="color:#1a9cc7;">→ 設計書本体（クマ取りクリニック選び診断 v1.2）</a></p>
+  <p style="text-align:center;font-size:11px;margin-top:12px;"><a href="brief-kuma-clinic-diagnosis-2026-07-23.html" target="_blank" style="color:#1a9cc7;">→ 設計書本体（クマ取りクリニック選び診断 v1.3）</a></p>
 
   <div class="section-divider">── 注意事項 ──</div>
   <div class="warn-note">
