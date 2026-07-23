@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>クマ取り クリニック選び診断 v1.0 フロー図</title>
+<title>クマ取り クリニック選び診断 v1.1 フロー図</title>
   <link rel="icon" type="image/png" href="favicon.png">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,16 +33,19 @@
 
   .node-q { max-width: 640px; }
   .node-q1 { border-left: 4px solid #bdbdbd; }
+  .node-q-echo { border-left: 4px solid #8a8a4a; border: 1.5px dashed #b8b860; }
   .node-q-branch { border-left: 4px solid #b45b1f; border: 2px solid #b45b1f; }
 
   .arr { text-align: center; color: #ccc; font-size: 22px; line-height: 1; margin: 4px 0; }
 
   .bridge-box { background: #e8f5e9; border: 1px solid #81c784; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #2e7d32; text-align: center; margin: 8px auto; max-width: 560px; line-height: 1.8; }
   .warn-box-inline { background: #fbf2e4; border: 1px solid #f0dbb0; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #7a5a1a; text-align: center; margin: 8px auto; max-width: 640px; line-height: 1.8; }
+  .echo-box { background: #fbfbe8; border: 1px solid #d8d888; border-radius: 8px; padding: 10px 16px; font-size: 11px; color: #6a6a2a; text-align: center; margin: 8px auto; max-width: 620px; line-height: 1.8; }
 
   .fanout { display: grid; gap: 10px; max-width: 900px; margin: 10px auto 0; }
   .fanout-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
   .fan-item { background: #fff; border-radius: 8px; padding: 8px 10px; text-align: center; font-size: 10.5px; line-height: 1.6; border: 1.5px solid #e0c9b5; }
+  .fan-item.echo-item { border: 1.5px dashed #d8d888; }
   .fan-item .fan-q { color: #666; margin-bottom: 4px; }
   .fan-item .fan-arrow { color: #b45b1f; font-weight: 700; margin: 2px 0; }
   .fan-item .fan-menu { color: #8a3f10; font-weight: 700; background: #fdeee0; border-radius: 5px; padding: 2px 6px; display: inline-block; }
@@ -94,15 +97,16 @@
 <body>
 <div class="container">
 
-  <h1>クマ取り クリニック選び診断 v1.0 フロー図</h1>
-  <div class="meta">2026-07-23 ｜ mega-clinic.com クマジャンル（対象記事は未定） ｜ 提携先: TCB東京中央美容外科（afbアフィリエイト） ｜ 診断表紙 → 全2問（非分岐1・分岐1） → 結果カルーセル4枚×2パターン → 深掘りハブ</div>
+  <h1>クマ取り クリニック選び診断 v1.1 フロー図</h1>
+  <div class="meta">2026-07-23（v1.1更新） ｜ mega-clinic.com クマジャンル（対象記事は未定） ｜ 提携先: TCB東京中央美容外科（afbアフィリエイト） ｜ 診断表紙 → 全4問（非分岐3・分岐1） → 結果カルーセル4枚×2パターン → 深掘りハブ</div>
 
   <div class="revision-note">
-    <b>シミとの構造の違い：</b> シミはピコレーザー内の施術メニュー違い（トーニング／スポット）で分岐したが、クマは<b>手術（脱脂）と非手術（再生注射）という施術カテゴリそのもの</b>が分岐対象。ダウンタイム・価格帯の差が大きいため、結果を1枚のPRカルーセルに統合せず、<b>脱脂手術パターン／再生注射パターンそれぞれに4枚の結果カルーセル</b>（コスメ診断標準フォーマット：チェックリスト→矢印図式→アプローチ→メリット+CTA）を用意する。<b>Q1はクマの原因タイプ（黒グマ／茶グマ／青グマ）そのものでは分岐しない</b>点が要確認事項（詳細は設計書8章）。
+    <b>v1.1の変更：</b> v1.0はQ1（導入・非分岐）→Q2（重視軸・分岐）の2問構成だったが、Noaより「質問が2個しかなく説得力が弱い」との指摘を受け、前例のシミ診断（性別／年代／悩み・エコー／分岐2軸の5問構成）と同水準に拡張。<b>Q1性別・Q2年代（非分岐）・Q3症状の見え方（非分岐・エコー用）</b>を新設し、旧Q1は廃止・旧Q2は重視軸としてQ4にスライドする4問構成にした。Q3の追加は診断の厚み向上に加え、<b>Q4（重視軸）がクマの原因タイプ（黒グマ／茶グマ／青グマ）そのものでは分岐しない</b>という要確認事項（詳細は設計書8章）を、結果カードの共感一言で多少緩和する狙いもある（完全な解消ではない）。
   </div>
 
   <div class="legend">
     <div class="legend-item"><div class="legend-dot" style="background:#bdbdbd;"></div>非分岐（導入）</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#b8b860;"></div>非分岐（エコー・結果文に反映）</div>
     <div class="legend-item"><div class="legend-dot" style="background:#b45b1f;"></div>分岐軸</div>
     <div class="legend-item"><div class="legend-dot" style="background:#1a9cc7;"></div>脱脂手術パターン</div>
     <div class="legend-item"><div class="legend-dot" style="background:#e37400;"></div>再生注射パターン</div>
@@ -112,7 +116,7 @@
   <div class="node node-start">
     <div class="node-label">PU（ABテスト）</div>
     <div class="node-title">A「あなたに合うクマ取り方法、見つかる？」／B「その目のクマ、どうすれば消える？」</div>
-    <div class="node-sub">クマ取りクリニック診断／LINEでカンタン2問 → 友だち追加</div>
+    <div class="node-sub">クマ取りクリニック診断／LINEでカンタン4問 → 友だち追加</div>
   </div>
 
   <!-- 診断表紙 -->
@@ -120,27 +124,51 @@
   <div class="node node-cover">
     <div class="node-label">診断表紙</div>
     <div class="node-title">あなたに合うクマ改善方法がわかる！</div>
-    <div class="node-sub">脱脂手術／再生注射、どちらが向いているかもわかる／カンタン2問で診断</div>
+    <div class="node-sub">脱脂手術／再生注射、どちらが向いているかもわかる／カンタン4問で診断</div>
   </div>
 
   <!-- Q1 -->
   <div class="arr">↓</div>
   <div class="node node-q node-q1">
-    <div class="node-label">Q1 ── 非分岐（導入・共感）</div>
-    <div class="node-title">今、目の下について感じていることは？</div>
+    <div class="node-label">Q1 ── 非分岐（導入）</div>
+    <div class="node-title">性別を教えてください</div>
     <div class="node-choices">
-      <div class="choice">① 黒っぽい影・ふくらみが気になる</div>
-      <div class="choice">② 顔色が悪く見られがち</div>
-      <div class="choice">③ メイクで隠しきれない</div>
-      <div class="choice">④ 複数当てはまる</div>
+      <div class="choice">女性</div>
+      <div class="choice">男性</div>
     </div>
   </div>
-  <div class="warn-box-inline">分岐には使わず、結果メッセージにも反映しない。①の文言を意図的に「脂肪のふくらみ」寄りにして、脱脂手術が対象とする黒グマへの文脈を入口でさりげなく作る（原因タイプ非分岐リスクへの緩和策）</div>
 
-  <!-- Q2（分岐軸） -->
+  <!-- Q2 -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q1">
+    <div class="node-label">Q2 ── 非分岐（導入）</div>
+    <div class="node-title">あなたの年代は？</div>
+    <div class="node-choices">
+      <div class="choice">20代</div>
+      <div class="choice">30代</div>
+      <div class="choice">40代</div>
+      <div class="choice">50代以上</div>
+    </div>
+  </div>
+
+  <!-- Q3（エコー用） -->
+  <div class="arr">↓</div>
+  <div class="node node-q node-q-echo">
+    <div class="node-label" style="color:#8a8a4a;">Q3 ── 非分岐（エコー・結果文の共感に使用）</div>
+    <div class="node-title">目の下の症状の見え方は？</div>
+  </div>
+  <div class="fanout fanout-4">
+    <div class="fan-item echo-item"><div class="fan-q">① 脂肪のふくらみ・影っぽい</div></div>
+    <div class="fan-item echo-item"><div class="fan-q">② 青みがかった血色不良っぽい</div></div>
+    <div class="fan-item echo-item"><div class="fan-q">③ 茶色っぽい色素っぽい</div></div>
+    <div class="fan-item echo-item"><div class="fan-q">④ 複数当てはまる</div></div>
+  </div>
+  <div class="echo-box">分岐には使わない。<b>Q4の分岐（脱脂手術／再生注射）に関わらず</b>、結果カルーセルCard1冒頭の共感の一言（例:「青みがかった血色、気になりますよね。」）として使う。原因タイプ非分岐リスクへの緩和策（完全な解消ではない、詳細は設計書8章）</div>
+
+  <!-- Q4（分岐軸） -->
   <div class="arr">↓</div>
   <div class="node node-q node-q-branch">
-    <div class="node-label" style="color:#b45b1f;">Q2 ── 分岐軸（重視すること）</div>
+    <div class="node-label" style="color:#b45b1f;">Q4 ── 分岐軸（重視すること）</div>
     <div class="node-title">クマ改善で、一番重視することは？</div>
   </div>
   <div class="fanout fanout-4">
@@ -172,18 +200,18 @@
   </div>
 
   <!-- 2分岐：結果カルーセル -->
-  <div class="section-divider">── 結果カルーセル（4枚×2パターン、Q2の回答で分岐） ──</div>
+  <div class="section-divider">── 結果カルーセル（4枚×2パターン、Q4の回答で分岐） ──</div>
   <div class="branch-fork">
     <div class="branch-col surgery">
       <div class="branch-head">① ② 選択 → 脱脂手術パターン</div>
-      <div class="mini-card"><span class="mc-tag">Card1｜チェックリスト</span><span class="mc-title">あなたのクマは、根本からしっかりケアタイプ</span>脂肪のふくらみ／一度で効果／通院不要／傷跡目立たない、の4項目チェック</div>
+      <div class="mini-card"><span class="mc-tag">Card1｜共感一言（Q3別）＋チェックリスト</span><span class="mc-title">あなたのクマは、根本からしっかりケアタイプ</span>冒頭にQ3回答別の共感一言→脂肪のふくらみ／一度で効果／通院不要／傷跡目立たない、の4項目チェック</div>
       <div class="mini-card"><span class="mc-tag">Card2｜矢印図式（因果）</span><span class="mc-title">クマの、本当の原因。</span>マッサージ・クリーム→脂肪は移動しない→影が残る→表面ケアの限界</div>
       <div class="mini-card"><span class="mc-tag">Card3｜アプローチ</span><span class="mc-title">脂肪そのものを取り除く</span>結膜側からアプローチ・傷跡目立たない・抜糸不要・日帰り</div>
       <div class="mini-card"><span class="mc-tag">Card4｜メリット+CTA</span><span class="mc-title">ちょっと自信が持てる目元へ</span>通院不要／一度で完了／全国97院<div class="mini-cta">詳しく見てみる</div></div>
     </div>
     <div class="branch-col inject">
       <div class="branch-head">③ ④ 選択 → 再生注射パターン</div>
-      <div class="mini-card"><span class="mc-tag">Card1｜チェックリスト</span><span class="mc-title">あなたのクマは、まずは気軽に試したいタイプ</span>ダウンタイム短め／負担少なく／手術はハードル高い／注射の効果が気になる、の4項目チェック</div>
+      <div class="mini-card"><span class="mc-tag">Card1｜共感一言（Q3別）＋チェックリスト</span><span class="mc-title">あなたのクマは、まずは気軽に試したいタイプ</span>冒頭にQ3回答別の共感一言→ダウンタイム短め／負担少なく／手術はハードル高い／注射の効果が気になる、の4項目チェック</div>
       <div class="mini-card"><span class="mc-tag">Card2｜矢印図式（因果）</span><span class="mc-title">クマが目立つ、本当の理由。</span>保湿・美容液でケア→ハリ・ボリュームは化粧品で補えない→影が濃く見える→加齢による目元のハリ不足が原因</div>
       <div class="mini-card"><span class="mc-tag">Card3｜アプローチ</span><span class="mc-title">必要な成分を注入して満たす</span>脂肪溶解+再生因子+ヒアルロン酸を注入・ダウンタイム短い・施術時間も短い</div>
       <div class="mini-card"><span class="mc-tag">Card4｜メリット+CTA</span><span class="mc-title">気軽に一歩を踏み出せる</span>ダウンタイム少・非手術で試せる・初回0円キャンペーン<div class="mini-cta">詳しく見てみる</div></div>
@@ -208,7 +236,7 @@
     <div style="font-size:11px;color:#666;margin-top:4px;">無料カウンセリング予約（TCBアフィリリンク）</div>
   </div>
 
-  <p style="text-align:center;font-size:11px;margin-top:12px;"><a href="brief-kuma-clinic-diagnosis-2026-07-23.html" target="_blank" style="color:#1a9cc7;">→ 設計書本体（クマ取りクリニック選び診断 v1.0）</a></p>
+  <p style="text-align:center;font-size:11px;margin-top:12px;"><a href="brief-kuma-clinic-diagnosis-2026-07-23.html" target="_blank" style="color:#1a9cc7;">→ 設計書本体（クマ取りクリニック選び診断 v1.1）</a></p>
 
   <div class="section-divider">── 注意事項 ──</div>
   <div class="warn-note">
