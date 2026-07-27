@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>カロリー診断×SLILIN F 結果カル全6枚 カード図（v19）</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  :root{
+    --bg-1:#dcedfb;
+    --bg-2:#bfdff4;
+    --card:#ffffff;
+    --panel:#eef7ff;
+    --ink:#1e3a5c;
+    --ink-soft:#4d6a87;
+    --gold:#b6864a;
+    --gold-deep:#8f6636;
+    --step:#4f86c1;
+    --bubble:#eaf4ff;
+    --bubble-edge:#bcdcf7;
+    --shadow:rgba(24,49,79,.18);
+    --page-bg-1:#f4f8fb;
+    --page-bg-2:#e7eef5;
+    --ui-ink:#2a3a4a;
+    --ui-soft:#6b7c8c;
+    --ui-line:#dbe4ec;
+    --ui-surface:#ffffff;
+    --toggle-on:#3f6e9c;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Yu Gothic",-apple-system,BlinkMacSystemFont,sans-serif;
+    background:linear-gradient(180deg,var(--page-bg-1),var(--page-bg-2));
+    color:var(--ui-ink);
+    min-height:100vh;
+    padding:32px 20px 64px;
+  }
+  .wrap{max-width:1180px;margin:0 auto}
+  header.page-head{margin-bottom:22px}
+  .eyebrow{
+    font-size:12px;letter-spacing:.08em;color:var(--ui-soft);
+    text-transform:uppercase;font-weight:700;margin:0 0 6px;
+  }
+  h1{
+    font-size:22px;margin:0 0 6px;color:var(--ui-ink);
+    font-weight:800;
+  }
+  .sub{color:var(--ui-soft);font-size:14px;margin:0;line-height:1.6;max-width:64ch}
+
+  .controls{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    margin:20px 0 26px;padding:12px 16px;
+    background:var(--ui-surface);border:1px solid var(--ui-line);
+    border-radius:14px;
+  }
+  .toggle{
+    display:inline-flex;border:1px solid var(--ui-line);border-radius:999px;
+    overflow:hidden;background:var(--page-bg-2);
+  }
+  .toggle button{
+    appearance:none;border:none;background:transparent;color:var(--ui-soft);
+    font:inherit;font-weight:700;font-size:13px;padding:8px 16px;cursor:pointer;
+  }
+  .toggle button.active{background:var(--toggle-on);color:#fff}
+  .controls .hint{font-size:12.5px;color:var(--ui-soft)}
+
+  .type-tabs{display:flex;gap:8px;flex-wrap:wrap}
+  .type-tabs button{
+    appearance:none;cursor:pointer;font:inherit;font-weight:700;font-size:13px;
+    padding:7px 14px;border-radius:10px;border:1px solid var(--ui-line);
+    background:var(--ui-surface);color:var(--ui-soft);
+  }
+  .type-tabs button.active{
+    background:var(--toggle-on);border-color:var(--toggle-on);color:#fff;
+  }
+
+  .strip{
+    display:flex;gap:22px;overflow-x:auto;padding:6px 6px 20px;
+  }
+  .slot{flex:0 0 auto}
+  .slot-label{
+    font-size:12.5px;font-weight:700;color:var(--ui-soft);
+    margin:0 0 8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  }
+  .slot-label .kcal{color:var(--gold-deep);font-variant-numeric:tabular-nums}
+  .diff-badge{
+    background:#fdecc8;color:#8a5a12;border:1px solid #f0cf9e;
+    font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;
+  }
+
+  .phone{
+    width:250px;height:430px;border-radius:22px;
+    background:linear-gradient(165deg,var(--bg-1),var(--bg-2));
+    box-shadow:0 14px 30px -10px var(--shadow), 0 2px 6px rgba(24,49,79,.12);
+    display:flex;flex-direction:column;overflow:hidden;
+    border:1px solid rgba(255,255,255,.5);
+  }
+
+  .head{padding:16px 16px 10px}
+  .pill{
+    display:inline-block;background:rgba(255,255,255,.75);color:var(--ink-soft);
+    font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:8px;
+  }
+  .headline{
+    font-size:16.5px;font-weight:800;color:var(--ink);line-height:1.4;
+    margin:0;
+  }
+  .headline em{
+    font-style:normal;color:var(--gold-deep);
+    text-decoration:underline;text-decoration-color:var(--gold);
+    text-decoration-thickness:2px;text-underline-offset:2px;
+  }
+
+  .body{
+    flex:1;background:var(--card);margin:0 10px;border-radius:16px 16px 0 0;
+    padding:16px 14px 10px;display:flex;flex-direction:column;
+    position:relative;overflow:hidden;
+  }
+
+  .steps{display:flex;flex-direction:column;gap:10px;margin-top:2px}
+  .step{
+    display:flex;align-items:flex-start;gap:10px;
+    background:var(--panel);border:1px solid var(--bubble-edge);
+    border-radius:12px;padding:9px 11px;
+  }
+  .step .num{
+    flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--step);
+    color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;
+  }
+  .step .txt{font-size:13px;color:var(--ink);line-height:1.5;font-weight:600}
+  .arrow-down{
+    align-self:center;color:var(--step);font-size:13px;font-weight:800;margin:-2px 0;
+  }
+  .step.punch{
+    background:linear-gradient(135deg,#fff4e8,#ffe9d2);border-color:#f0cf9e;
+  }
+  .step.punch .num{background:var(--gold)}
+  .step.punch .txt{color:var(--gold-deep)}
+
+  .duo{
+    display:flex;justify-content:center;gap:10px;margin:6px 0 10px;
+  }
+  .avatar{
+    width:64px;height:78px;position:relative;
+  }
+  .avatar .face{
+    width:44px;height:44px;border-radius:50%;background:#ffd9c2;margin:0 auto;position:relative;
+    border:2px solid #f3b892;
+  }
+  .avatar .hair{
+    position:absolute;top:-6px;left:2px;width:40px;height:26px;border-radius:50% 50% 0 0;
+    background:var(--ink-soft);
+  }
+  .avatar.b .hair{background:var(--gold-deep)}
+  .avatar .body-shape{
+    width:52px;height:34px;border-radius:20px 20px 0 0;background:var(--panel);
+    border:2px solid var(--bubble-edge);margin:-4px auto 0;
+  }
+  .avatar.b .body-shape{background:#fff0e6;border-color:#f0cf9e}
+
+  .bubbles{display:flex;flex-direction:column;gap:7px;flex:1}
+  .bubble{
+    background:var(--bubble);border:1px solid var(--bubble-edge);
+    border-radius:12px;padding:8px 12px;font-size:12.5px;font-weight:700;
+    color:var(--ink);line-height:1.4;position:relative;
+  }
+  .bubble::before{
+    content:"";position:absolute;left:16px;top:-6px;width:10px;height:10px;
+    background:var(--bubble);border-left:1px solid var(--bubble-edge);
+    border-top:1px solid var(--bubble-edge);transform:rotate(45deg);
+  }
+  .bubble:first-child::before{display:none}
+
+  .footer{
+    background:var(--panel);margin:0 10px 10px;border-radius:0 0 14px 14px;
+    padding:10px 12px;display:flex;align-items:center;gap:8px;
+    border-top:1px solid var(--bubble-edge);
+  }
+  .footer .dot{
+    width:20px;height:20px;border-radius:50%;background:var(--step);flex:0 0 auto;
+  }
+  .footer .cap{font-size:12px;color:var(--ink-soft);font-weight:600;flex:1}
+  .footer .next{
+    width:22px;height:22px;border-radius:50%;background:#fff;border:1px solid var(--bubble-edge);
+    display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--step);flex:0 0 auto;
+  }
+
+  .cta-footer{
+    margin:0 10px 12px;padding:12px;border-radius:14px;
+    background:linear-gradient(180deg,var(--gold),var(--gold-deep));
+    text-align:center;color:#fff;font-weight:800;font-size:13px;
+    box-shadow:0 6px 14px -6px rgba(143,102,54,.6);
+  }
+
+  .legend{
+    margin-top:26px;padding:16px 18px;background:var(--ui-surface);
+    border:1px solid var(--ui-line);border-radius:14px;font-size:13px;color:var(--ui-soft);
+    line-height:1.7;
+  }
+  .legend b{color:var(--ui-ink)}
+
+  .meal-list{display:flex;flex-direction:column;gap:6px;margin-top:2px}
+  .meal-row{
+    display:flex;align-items:center;gap:8px;background:var(--panel);
+    border:1px solid var(--bubble-edge);border-radius:10px;padding:6px 10px;
+  }
+  .meal-row .clock{
+    width:16px;height:16px;border-radius:50%;border:2px solid var(--step);flex:0 0 auto;
+    position:relative;
+  }
+  .meal-row .clock::after{
+    content:"";position:absolute;left:6px;top:2px;width:1px;height:5px;background:var(--step);
+  }
+  .meal-row .icon{
+    width:22px;height:22px;border-radius:6px;background:#fff;border:1px solid var(--bubble-edge);
+    flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:12px;
+  }
+  .meal-row .label{font-size:12px;font-weight:700;color:var(--ink);flex:1}
+  .meal-row .kcal-range{font-size:11.5px;font-weight:700;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+  .meal-total{
+    margin-top:8px;background:linear-gradient(135deg,#fff4e8,#ffe9d2);border:1px solid #f0cf9e;
+    border-radius:10px;padding:7px 12px;text-align:center;font-size:13px;font-weight:800;color:var(--gold-deep);
+  }
+  .meal-caption{
+    margin-top:8px;font-size:12px;font-weight:700;color:var(--ink-soft);text-align:center;
+    line-height:1.5;
+  }
+  .footer.with-avatar .dot{
+    width:26px;height:26px;background:var(--bubble);border:1px solid var(--bubble-edge);position:relative;
+  }
+  .footer.with-avatar .dot::after{
+    content:"😟";font-size:13px;position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  }
+  .num-chip{
+    display:inline-block;background:#fff;color:var(--gold-deep);font-weight:800;
+    padding:3px 10px;border-radius:8px;border:1.5px solid var(--gold);
+  }
+  .unchanged-badge{
+    background:#e7f3e8;color:#2f6b3a;border:1px solid #bfe0c4;
+    font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;
+  }
+  .v7-badge{
+    background:#fdecc8;color:#8a5a12;border:1px solid #f0cf9e;
+    font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;
+  }
+
+  .compare{display:flex;flex-direction:column;gap:9px;margin-top:2px}
+  .pattern{
+    border-radius:12px;padding:9px 11px;border:1px solid var(--bubble-edge);
+  }
+  .pattern.junk{background:linear-gradient(135deg,#fdeeee,#fbe2e2);border-color:#f0bcbc}
+  .pattern.balanced{background:linear-gradient(135deg,#eaf6ee,#dcf0e3);border-color:#b9ddc3}
+  .pattern .tag{
+    display:inline-block;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:999px;
+    margin-bottom:5px;
+  }
+  .pattern.junk .tag{background:#e6807a;color:#fff}
+  .pattern.balanced .tag{background:#5fa876;color:#fff}
+  .pattern .items{font-size:11.5px;color:var(--ink);line-height:1.5;font-weight:600}
+  .pattern .same{
+    margin-top:5px;font-size:11px;font-weight:800;text-align:right;
+  }
+  .pattern.junk .same{color:#b5453e}
+  .pattern.balanced .same{color:#357a4d}
+  .nutri-label{
+    margin-top:5px;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:6px;
+    display:inline-block;
+  }
+  .nutri-label.junk{background:#f6c9c6;color:#8f322c}
+  .nutri-label.balanced{background:#bfe3cb;color:#295c3d}
+  .vs-divider{
+    align-self:center;font-size:11px;font-weight:800;color:var(--ui-soft);
+    background:var(--ui-surface);border:1px solid var(--ui-line);border-radius:999px;
+    padding:1px 10px;margin:-4px 0;position:relative;z-index:1;
+  }
+  #c2-view-current, #c2-view-new,
+  #c3-view-current, #c3-view-new{
+    display:none;flex-direction:column;height:100%;
+  }
+  #c2-view-current.active, #c2-view-new.active,
+  #c3-view-current.active, #c3-view-new.active{display:flex}
+
+  .sad-char{display:flex;flex-direction:column;align-items:center;gap:2px;margin:0}
+  .sad-char .face{font-size:32px;line-height:1}
+  .burn-compare{display:flex;gap:14px;justify-content:center;margin-top:2px}
+  .burn-figure{display:flex;flex-direction:column;align-items:center;gap:1px}
+  .burn-figure .flame{font-size:15px;margin-bottom:-4px}
+  .burn-figure .fig{font-size:28px;line-height:1}
+  .burn-figure .tag{font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px}
+  .burn-figure .tag.hot{background:#fde3cf;color:#a15a1f}
+  .burn-figure .tag.cold{background:#e7edf2;color:#5c6b78}
+
+  .back-link{max-width:1180px;margin:30px auto 0;padding-top:16px;border-top:1px solid var(--ui-line);font-size:13px}
+  .back-link a{color:var(--ui-soft);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="page-head">
+    <p class="eyebrow">1日_摂取カロリー診断 &middot; 結果カル差し替え案（6枚構成・v19）</p>
+    <h1>結果カル全6枚 レイアウト確認用モックアップ</h1>
+    <p class="sub">Card1・2・3・6は既存フォーマット踏襲、Card4・5が今回新規追加分です。イラストは仮の簡易表現で、最終的なタッチはデザイナー依頼後に確定します。切り替えで現行コピーと新コピー（SLILIN F軸）を比較できます。</p>
+  </header>
+
+  <div class="controls">
+    <div class="toggle" role="group" aria-label="コピー切り替え">
+      <button type="button" data-copy="current">現行（食欲コントロール軸）</button>
+      <button type="button" data-copy="new" class="active">新案（脂肪代謝・体質軸）</button>
+    </div>
+    <span class="hint">Card2・Card4はタイプで切り替わります／Card3は全タイプ共通</span>
+    <div class="type-tabs" role="group" aria-label="タイプ切り替え">
+      <button type="button" data-type="A" class="active">A・1,400kcal</button>
+      <button type="button" data-type="B">B・1,600kcal</button>
+      <button type="button" data-type="C">C・1,800kcal</button>
+      <button type="button" data-type="D">D・2,100kcal</button>
+    </div>
+  </div>
+
+  <div class="strip">
+    <!-- Card1 -->
+    <div class="slot">
+      <p class="slot-label">Card1 &middot; 結果提示 <span class="unchanged-badge">変更なし</span></p>
+      <div class="phone">
+        <div class="head">
+          <span class="pill" id="c1-pill">座り仕事・在宅中心の</span>
+          <p class="headline"><em>あなたの適正カロリーは</em></p>
+        </div>
+        <div class="body" style="align-items:center;justify-content:center;text-align:center">
+          <div style="font-size:34px;font-weight:800;color:var(--gold-deep)">およそ<br><span id="c1-kcal-big">1,400</span><span style="font-size:20px">kcal</span></div>
+          <div style="font-size:11px;color:var(--ink-soft);margin-top:8px">※身長・体重で±200kcal程度の個人差あり</div>
+        </div>
+        <div class="footer">
+          <div class="dot"></div>
+          <div class="cap" id="c1-foot">1,400kcalってどのくらい食べられる？</div>
+          <div class="next">›</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card2 -->
+    <div class="slot">
+      <p class="slot-label">Card2 <span class="kcal" id="c2-kcal">1,400kcal</span><span class="v7-badge" id="c2-badge">v13: ジャンクvsバランス対比+栄養素ラベル</span></p>
+      <div class="phone">
+        <div id="c2-view-current">
+          <div class="head">
+            <p class="headline" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+              <span class="num-chip" id="c2-chip-kcal-cur">1,400kcal</span>
+              <span>ってどのくらい？</span>
+            </p>
+          </div>
+          <div class="body">
+            <div class="meal-list" id="c2-meals"></div>
+            <div class="meal-total" id="c2-total">これで合計 約1,400kcal</div>
+            <div class="meal-caption" id="c2-caption-cur">意外と余裕がない！</div>
+          </div>
+          <div class="footer with-avatar">
+            <div class="dot"></div>
+            <div class="cap">この食事量を続けられるか不安…</div>
+            <div class="next">›</div>
+          </div>
+        </div>
+        <div id="c2-view-new">
+          <div class="head">
+            <p class="headline" id="c2-headline-new">同じ1,400kcal？！</p>
+          </div>
+          <div class="body">
+            <div class="compare">
+              <div class="pattern junk">
+                <span class="tag">パターン①</span>
+                <div class="items" id="c2-junk-items"></div>
+                <div class="nutri-label junk" id="c2-junk-nutri">脂質・糖質に偏りがち</div>
+                <div class="same" id="c2-junk-total">合計 約1,400kcal</div>
+              </div>
+              <div class="vs-divider">VS</div>
+              <div class="pattern balanced">
+                <span class="tag">パターン②</span>
+                <div class="items" id="c2-balanced-items"></div>
+                <div class="nutri-label balanced" id="c2-balanced-nutri">たんぱく質・食物繊維がしっかり</div>
+                <div class="same" id="c2-balanced-total">合計 約1,400kcal</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer with-avatar">
+            <div class="dot"></div>
+            <div class="cap">決め手は量より中身！！</div>
+            <div class="next">›</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card3 -->
+    <div class="slot">
+      <p class="slot-label">Card3 &middot; 代謝の反転（全タイプ共通）<span class="v7-badge">v17: イラスト構成に刷新（Noaのラフ案）</span></p>
+      <div class="phone">
+        <div id="c3-view-current">
+          <div class="head">
+            <p class="headline"><em id="c3-headline"></em></p>
+          </div>
+          <div class="body">
+            <div class="steps" id="c3-steps"></div>
+          </div>
+          <div class="footer">
+            <div class="dot"></div>
+            <div class="cap" id="c3-foot"></div>
+            <div class="next">›</div>
+          </div>
+        </div>
+        <div id="c3-view-new">
+          <div class="head">
+            <p class="headline"><em>適正カロリー以内なのに太る？！</em></p>
+          </div>
+          <div class="body" style="align-items:center;text-align:center;gap:5px;padding-top:6px;justify-content:center">
+            <div class="bubble" style="align-self:center;font-size:12px;padding:6px 12px">栄養バランスもカロリーも気をつけてるのに…</div>
+            <div class="sad-char">
+              <div class="face">😟</div>
+            </div>
+            <div class="bubble" style="align-self:center;padding:3px 12px;font-size:10.5px">それ</div>
+            <div style="font-size:15px;font-weight:800;color:var(--gold-deep);margin:1px 0">代謝の差かも</div>
+            <div class="burn-compare">
+              <div class="burn-figure hot">
+                <div class="flame">🔥</div>
+                <div class="fig">🙆</div>
+                <div class="tag hot">燃えてる</div>
+              </div>
+              <div class="burn-figure cold">
+                <div class="fig">🧍</div>
+                <div class="tag cold">燃えてない</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <div class="dot"></div>
+            <div class="cap">ちゃんと燃やせる体になれば…</div>
+            <div class="next">›</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card4 -->
+    <div class="slot">
+      <p class="slot-label">Card4 &middot; 一般的な対策の壁 <span class="v7-badge">v19: 困りごとをタイプ別に分岐</span></p>
+      <div class="phone">
+        <div class="head">
+          <p class="headline"><em>体温｜代謝 をアップするなら</em></p>
+        </div>
+        <div class="body">
+          <div class="compare" style="margin-top:0">
+            <div class="pattern balanced">
+              <span class="tag">対策</span>
+              <div class="items">栄養バランスの良い食事／適度な運動</div>
+            </div>
+          </div>
+          <div class="bubbles" style="margin-top:10px" id="c4new-bubbles"></div>
+        </div>
+        <div class="footer">
+          <div class="dot"></div>
+          <div class="cap">じゃあ、どうすればいいの…？</div>
+          <div class="next">›</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card5 -->
+    <div class="slot">
+      <p class="slot-label">Card5 &middot; サプリへの橋渡し <span class="v7-badge">v18: 既存アセットほぼそのまま採用</span></p>
+      <div class="phone">
+        <div class="head">
+          <p class="headline"><em>食事管理も運動も続けるのが難しい…</em></p>
+        </div>
+        <div class="body" style="align-items:center;justify-content:center;text-align:center;gap:8px">
+          <div class="bubble" style="align-self:center">そんなときは</div>
+          <div style="font-size:17px;font-weight:800;color:var(--gold-deep)">サプリがおすすめ！</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center">
+            <span class="nutri-label balanced">代謝UP</span>
+            <span class="nutri-label balanced">脂肪燃焼</span>
+            <span class="nutri-label balanced">血行促進</span>
+          </div>
+          <div class="meal-total" style="font-size:12.5px">のサポートをしてくれる</div>
+          <div style="font-size:12.5px;color:var(--ink-soft);font-weight:700">日常生活でも無理なく続けられる！</div>
+        </div>
+        <div class="footer">
+          <div class="dot"></div>
+          <div class="cap">自分に合う方法、見てみない？</div>
+          <div class="next">›</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card6 -->
+    <div class="slot">
+      <p class="slot-label">Card6 &middot; 欲求＋CTA <span class="kcal" id="c4-kcal">1,400kcal</span><span class="diff-badge" id="c4-diff-badge" hidden>C・Dは見出しも変更</span><span class="unchanged-badge">v3のまま・変更なし</span></p>
+      <div class="phone">
+        <div class="head">
+          <span class="pill">もしも</span>
+          <p class="headline"><em id="c4-headline">食欲をコントロールできたら？</em></p>
+        </div>
+        <div class="body">
+          <div class="duo">
+            <div class="avatar"><div class="hair"></div><div class="face"></div><div class="body-shape"></div></div>
+            <div class="avatar b"><div class="hair"></div><div class="face"></div><div class="body-shape"></div></div>
+          </div>
+          <div class="bubbles" id="c4-bubbles"></div>
+        </div>
+        <div class="cta-footer">▼ その方法を知りたい ▼</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <b>見方：</b> 「新案」トグルがSLILIN F接続版、「現行」トグルがNoa共有スクリーンショットの実物コピーです。タイプA〜Dの切り替えは全カードに影響します（Card3は全タイプ共通のため変化なし）。<b>v19時点：</b> Card4の「でも」の困りごとをタイプ別に分岐。A・B（活動量少なめ）は「運動の時間を作るのも大変」のまま、C・D（既に運動習慣あり）は「食事管理・栄養バランスへの意識の方が大変」という角度に変更（C・Dも"ダイエットのために運動を頑張ってる"わけではなく単に活動量が高い生活スタイルという前提は維持）。イラストは配置確認用の簡易プレースホルダーです。
+  </div>
+
+  <div class="back-link"><a href="index.html">← トップへ</a></div>
+</div>
+
+<script>
+(function(){
+  var DATA = {
+    current: {
+      c3headline: "食事制限が続かないのは意志のせいじゃない！",
+      c3steps: [
+        {n:1, t:"食事を減らす", punch:false},
+        {n:2, t:"脳が抵抗する", punch:false},
+        {n:3, t:"かえって食欲が増えてしまう！", punch:true}
+      ],
+      c3foot: "食欲がコントロールできれば…",
+      c4headline: "食欲をコントロールできたら？",
+      types: {
+        A: {kcal:"1,400kcal", bubbles:["お腹が空かない！","自然と1,400kcalに収まる！","食べ物のことばかり考えずに済む！"]},
+        B: {kcal:"1,600kcal", bubbles:["ご褒美スイーツも我慢しない！","自然と1,600kcalに収まる！","食欲に振り回されない！"]},
+        C: {kcal:"1,800kcal", bubbles:["運動後も食欲が穏やかに！","自然と1,800kcalに収まる！","運動の成果がそのまま体に出る！"]},
+        D: {kcal:"2,100kcal", bubbles:["「動いた分食べる」が減る！","自然と2,100kcalに収まる！","運動の成果がそのまま体に出る！"]}
+      }
+    },
+    new: {
+      c3headline: "普通に食べてるだけなのに、最近なんか肉がついてきた",
+      c3steps: [
+        {n:1, t:"栄養バランスも気にして、カロリーも守ってるのに", punch:false},
+        {n:2, t:"最近、お腹まわりが気になってきた", punch:false},
+        {n:3, t:"それ、燃やせる量（代謝）の差かもしれない", punch:true}
+      ],
+      c3foot: "ちゃんと燃やせる体になれば…",
+      c4headline: "脂肪を溜め込みにくい体になったら？",
+      types: {
+        A: {kcal:"1,400kcal", bubbles:["お腹に脂肪がつきにくい！","同じ量でも溜め込まない！","カロリーばかり気にしなくていい！"]},
+        B: {kcal:"1,600kcal", bubbles:["ご褒美スイーツも怖くない！","脂肪をためこみにくい体に！","神経質にならなくて済む！"]},
+        C: {kcal:"1,800kcal", headline:"運動の効果がちゃんと脂肪に出たら？", bubbles:["運動の効果が脂肪に出る！","動いた分、ちゃんと消費される！","「動いたのに…」が終わる！"]},
+        D: {kcal:"2,100kcal", headline:"運動の効果がちゃんと脂肪に出たら？", bubbles:["動いた分、ちゃんと結果に出る！","脂肪の消費がしっかり進む！","「なぜか減らない」がなくなる！"]}
+      }
+    }
+  };
+
+  var MEALS = {
+    A: {kcal:"1,400kcal", total:"これで合計 約1,400kcal", caption:"意外と余裕がない！", items:[
+      {icon:"🍞", label:"朝食", range:"250〜350kcal"},
+      {icon:"🍛", label:"ランチ", range:"550〜800kcal"},
+      {icon:"☕", label:"休憩", range:"100〜150kcal"},
+      {icon:"🍱", label:"夕食", range:"250〜350kcal"}
+    ]},
+    B: {kcal:"1,600kcal", total:"これで合計 約1,600kcal", caption:"意外と余裕がない！", items:[
+      {icon:"🍞", label:"朝食", range:"250〜350kcal"},
+      {icon:"🍛", label:"ランチ", range:"550〜800kcal"},
+      {icon:"🍰", label:"おやつ", range:"275〜375kcal"},
+      {icon:"🍱", label:"夕食", range:"250〜350kcal"}
+    ]},
+    C: {kcal:"1,800kcal", total:"これで合計 約1,800kcal", caption:"運動した分食べるとあっという間", items:[
+      {icon:"🍞", label:"朝食", range:"250〜350kcal"},
+      {icon:"🍛", label:"ランチ", range:"550〜800kcal"},
+      {icon:"🍰", label:"おやつ", range:"275〜375kcal"},
+      {icon:"🍱", label:"夕食", range:"250〜350kcal"},
+      {icon:"🥤", label:"運動後の補食", range:"150〜250kcal"}
+    ]},
+    D: {kcal:"2,100kcal", total:"これで合計 約2,100kcal", caption:"運動している分食欲も増える…", items:[
+      {icon:"🍞", label:"朝食", range:"250〜350kcal"},
+      {icon:"🍛", label:"ランチ", range:"550〜800kcal"},
+      {icon:"🍩", label:"間食", range:"425〜525kcal"},
+      {icon:"🍱", label:"夕食", range:"250〜350kcal"},
+      {icon:"🥤", label:"運動後の補食", range:"300〜400kcal"}
+    ]}
+  };
+
+  var C1_LABEL = {
+    A: {kcal:"1,400", label:"座り仕事・在宅中心の"},
+    B: {kcal:"1,600", label:"通勤や家事でそこそこ動く"},
+    C: {kcal:"1,800", label:"週2-3回は運動してる"},
+    D: {kcal:"2,100", label:"毎日しっかり体を動かしてる"}
+  };
+
+  var COMPARE = {
+    A: {kcal:"1,400kcal", total:"合計 約1,400kcal",
+      junk:"菓子パン2個＋ポテトチップス1袋", junkNutri:"脂質・糖質に偏りがち",
+      balanced:"朝食(ご飯・卵・味噌汁)＋昼食(魚定食)＋夕食(鶏肉・野菜)", balancedNutri:"たんぱく質・食物繊維がしっかり"},
+    B: {kcal:"1,600kcal", total:"合計 約1,600kcal",
+      junk:"からあげ弁当＋ポテトチップス1袋＋甘い飲み物", junkNutri:"脂質・糖質に偏りがち",
+      balanced:"和定食(ご飯・焼き魚・副菜)を3食", balancedNutri:"たんぱく質・食物繊維がしっかり"},
+    C: {kcal:"1,800kcal", total:"合計 約1,800kcal",
+      junk:"ラーメン大盛＋餃子＋チャーハン", junkNutri:"糖質・脂質に偏り、たんぱく質は少なめ",
+      balanced:"鶏むね肉・玄米・野菜の副菜を3食＋プロテイン", balancedNutri:"たんぱく質・食物繊維がしっかり"},
+    D: {kcal:"2,100kcal", total:"合計 約2,100kcal",
+      junk:"牛丼特盛＋ラーメン＋からあげ4個", junkNutri:"脂質・糖質に偏りがち",
+      balanced:"高タンパクな3食＋間食にナッツ・プロテイン", balancedNutri:"たんぱく質・良質な脂質がしっかり"}
+  };
+
+  var C4_WORRIES = {
+    A: ["気をつけてるけど続かない…", "意識するの、正直めんどう…", "運動の時間を作るのも大変…"],
+    B: ["気をつけてるけど続かない…", "意識するの、正直めんどう…", "運動の時間を作るのも大変…"],
+    C: ["動いてるけど、食事までは気が回らない…", "栄養バランスまで気にするのはしんどい…", "毎日のことだから、意識し続けるのは大変…"],
+    D: ["動いてるけど、食事までは気が回らない…", "栄養バランスまで気にするのはしんどい…", "毎日のことだから、意識し続けるのは大変…"]
+  };
+
+  var state = { copy: "new", type: "A" };
+
+  function render(){
+    var d = DATA[state.copy];
+    var t = d.types[state.type];
+
+    document.getElementById("c2-kcal").textContent = COMPARE[state.type].kcal;
+    document.getElementById("c2-badge").textContent = state.copy === "new" ? "v13: ジャンクvsバランス対比+栄養素ラベル" : "現行: 時間帯別内訳表";
+
+    document.getElementById("c2-view-current").className = state.copy === "current" ? "active" : "";
+    document.getElementById("c2-view-new").className = state.copy === "new" ? "active" : "";
+    document.getElementById("c3-view-current").className = state.copy === "current" ? "active" : "";
+    document.getElementById("c3-view-new").className = state.copy === "new" ? "active" : "";
+
+    var c1 = C1_LABEL[state.type];
+    document.getElementById("c1-pill").textContent = c1.label + "の";
+    document.getElementById("c1-kcal-big").textContent = c1.kcal;
+    document.getElementById("c1-foot").textContent = c1.kcal + "kcalってどのくらい食べられる？";
+
+    var m = MEALS[state.type];
+    document.getElementById("c2-chip-kcal-cur").textContent = m.kcal;
+    document.getElementById("c2-total").textContent = m.total;
+    document.getElementById("c2-caption-cur").textContent = m.caption;
+    var mealsWrap = document.getElementById("c2-meals");
+    mealsWrap.innerHTML = "";
+    m.items.forEach(function(it){
+      var row = document.createElement("div");
+      row.className = "meal-row";
+      row.innerHTML = '<div class="clock"></div><div class="icon">' + it.icon + '</div>' +
+        '<div class="label">' + it.label + '</div><div class="kcal-range">' + it.range + '</div>';
+      mealsWrap.appendChild(row);
+    });
+
+    var c = COMPARE[state.type];
+    document.getElementById("c2-headline-new").textContent = "同じ" + c.kcal + "？！";
+    document.getElementById("c2-junk-items").textContent = c.junk;
+    document.getElementById("c2-junk-nutri").textContent = c.junkNutri;
+    document.getElementById("c2-junk-total").textContent = c.total;
+    document.getElementById("c2-balanced-items").textContent = c.balanced;
+    document.getElementById("c2-balanced-nutri").textContent = c.balancedNutri;
+    document.getElementById("c2-balanced-total").textContent = c.total;
+
+    document.getElementById("c3-headline").textContent = d.c3headline;
+    document.getElementById("c3-foot").textContent = d.c3foot;
+    document.getElementById("c4-headline").textContent = t.headline || d.c4headline;
+    document.getElementById("c4-kcal").textContent = t.kcal;
+
+    var badge = document.getElementById("c4-diff-badge");
+    if (t.headline) {
+      badge.hidden = false;
+    } else {
+      badge.hidden = true;
+    }
+
+    var stepsWrap = document.getElementById("c3-steps");
+    stepsWrap.innerHTML = "";
+    d.c3steps.forEach(function(s, i){
+      var el = document.createElement("div");
+      el.className = "step" + (s.punch ? " punch" : "");
+      el.innerHTML = '<div class="num">' + s.n + '</div><div class="txt">' + s.t + '</div>';
+      stepsWrap.appendChild(el);
+      if (i < d.c3steps.length - 1){
+        var arrow = document.createElement("div");
+        arrow.className = "arrow-down";
+        arrow.textContent = "↓";
+        stepsWrap.appendChild(arrow);
+      }
+    });
+
+    var bubbleWrap = document.getElementById("c4-bubbles");
+    bubbleWrap.innerHTML = "";
+    t.bubbles.forEach(function(b){
+      var el = document.createElement("div");
+      el.className = "bubble";
+      el.textContent = b;
+      bubbleWrap.appendChild(el);
+    });
+
+    var c4newWrap = document.getElementById("c4new-bubbles");
+    c4newWrap.innerHTML = "";
+    C4_WORRIES[state.type].forEach(function(b){
+      var el = document.createElement("div");
+      el.className = "bubble";
+      el.textContent = b;
+      c4newWrap.appendChild(el);
+    });
+  }
+
+  document.querySelectorAll(".toggle button").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll(".toggle button").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      state.copy = btn.getAttribute("data-copy");
+      render();
+    });
+  });
+  document.querySelectorAll(".type-tabs button").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll(".type-tabs button").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      state.type = btn.getAttribute("data-type");
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
