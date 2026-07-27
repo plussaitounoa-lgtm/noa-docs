@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>カロリー診断×SLILIN F 結果カル全6枚 カード図（v19）</title>
+<title>カロリー診断×SLILIN F 結果カル全5枚 カード図（v23）</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <style>
   :root{
@@ -291,6 +291,9 @@
   .burn-figure .tag.hot{background:#fde3cf;color:#a15a1f}
   .burn-figure .tag.cold{background:#e7edf2;color:#5c6b78}
 
+  /* Card5 v23: 統合版の吹き出しは少し詰める */
+  #c5new-bubbles .bubble{font-size:11px;padding:6px 10px}
+
   .back-link{max-width:1180px;margin:30px auto 0;padding-top:16px;border-top:1px solid var(--ui-line);font-size:13px}
   .back-link a{color:var(--ui-soft);text-decoration:none}
 </style>
@@ -299,9 +302,9 @@
 
 <div class="wrap">
   <header class="page-head">
-    <p class="eyebrow">1日_摂取カロリー診断 &middot; 結果カル差し替え案（6枚構成・v19）</p>
-    <h1>結果カル全6枚 レイアウト確認用モックアップ</h1>
-    <p class="sub">Card1・2・3・6は既存フォーマット踏襲、Card4・5が今回新規追加分です。イラストは仮の簡易表現で、最終的なタッチはデザイナー依頼後に確定します。切り替えで現行コピーと新コピー（SLILIN F軸）を比較できます。</p>
+    <p class="eyebrow">1日_摂取カロリー診断 &middot; 結果カル差し替え案（5枚構成・v23）</p>
+    <h1>結果カル全5枚 レイアウト確認用モックアップ</h1>
+    <p class="sub">Card1・2・3は既存フォーマット踏襲、Card4が新規追加、Card5は旧Card5+旧Card6を統合した最終版です。イラストは仮の簡易表現で、最終的なタッチはデザイナー依頼後に確定します。切り替えで現行コピーと新コピー（SLILIN F軸）を比較できます。</p>
   </header>
 
   <div class="controls">
@@ -309,7 +312,7 @@
       <button type="button" data-copy="current">現行（食欲コントロール軸）</button>
       <button type="button" data-copy="new" class="active">新案（脂肪代謝・体質軸）</button>
     </div>
-    <span class="hint">Card2・Card4はタイプで切り替わります／Card3は全タイプ共通</span>
+    <span class="hint">Card2・Card4・Card5はタイプで切り替わります／Card3は全タイプ共通</span>
     <div class="type-tabs" role="group" aria-label="タイプ切り替え">
       <button type="button" data-type="A" class="active">A・1,400kcal</button>
       <button type="button" data-type="B">B・1,600kcal</button>
@@ -466,46 +469,30 @@
       </div>
     </div>
 
-    <!-- Card5 -->
+    <!-- Card5 (統合版・旧Card5+旧Card6): サプリへの橋渡し＋リソミラ -->
     <div class="slot">
-      <p class="slot-label">Card5 &middot; サプリへの橋渡し <span class="v7-badge">v20: 続けやすさ主役・フック削除</span></p>
+      <p class="slot-label">Card5 &middot; サプリへの橋渡し＋リソミラ（統合） <span class="v7-badge">v23: 6枚→5枚に統合</span></p>
       <div class="phone">
         <div class="head">
           <p class="headline"><em>食事管理も運動も続けるのが難しい…</em></p>
         </div>
-        <div class="body" style="align-items:center;justify-content:center;text-align:center;gap:8px">
-          <div class="bubble" style="align-self:center">そんなときは</div>
-          <div style="font-size:17px;font-weight:800;color:var(--gold-deep);line-height:1.4">サプリという選択肢も◎</div>
-          <div style="font-size:12.5px;color:var(--ink-soft);font-weight:700">日常生活でも無理なく続けられる</div>
-          <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-top:4px">
-            <span class="nutri-label balanced" style="font-size:9px">代謝UP</span>
-            <span class="nutri-label balanced" style="font-size:9px">脂肪燃焼</span>
-            <span class="nutri-label balanced" style="font-size:9px">血行促進</span>
+        <div class="body" style="gap:4px;padding-top:8px">
+          <div style="text-align:center">
+            <div class="bubble" style="display:inline-block;font-size:11px;padding:5px 12px">そんなときは</div>
+            <div style="font-size:14.5px;font-weight:800;color:var(--gold-deep);margin-top:5px">サプリという選択肢も◎</div>
+            <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin-top:4px">
+              <span class="nutri-label balanced" style="font-size:8.5px">代謝UP</span>
+              <span class="nutri-label balanced" style="font-size:8.5px">脂肪燃焼</span>
+              <span class="nutri-label balanced" style="font-size:8.5px">血行促進</span>
+            </div>
+            <div style="font-size:9px;color:var(--ui-soft)">のサポートをしてくれる</div>
           </div>
-          <div style="font-size:9.5px;color:var(--ui-soft)">のサポートをしてくれる</div>
-        </div>
-        <div class="footer">
-          <div class="dot"></div>
-          <div class="cap"></div>
-          <div class="next">›</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Card6 -->
-    <div class="slot">
-      <p class="slot-label">Card6 &middot; 欲求＋CTA <span class="kcal" id="c4-kcal">1,400kcal</span><span class="diff-badge" id="c4-diff-badge" hidden>C・Dは見出しも変更</span><span class="unchanged-badge">v3のまま・変更なし</span></p>
-      <div class="phone">
-        <div class="head">
-          <span class="pill">もしも</span>
-          <p class="headline"><em id="c4-headline">食欲をコントロールできたら？</em></p>
-        </div>
-        <div class="body">
-          <div class="duo">
+          <div style="border-top:1px dashed var(--bubble-edge);margin:5px 4px"></div>
+          <div class="duo" style="margin:0 0 6px">
             <div class="avatar"><div class="hair"></div><div class="face"></div><div class="body-shape"></div></div>
             <div class="avatar b"><div class="hair"></div><div class="face"></div><div class="body-shape"></div></div>
           </div>
-          <div class="bubbles" id="c4-bubbles"></div>
+          <div class="bubbles" id="c5new-bubbles" style="gap:5px"></div>
         </div>
         <div class="cta-footer">▼ その方法を知りたい ▼</div>
       </div>
@@ -513,7 +500,7 @@
   </div>
 
   <div class="legend">
-    <b>見方：</b> 「新案」トグルがSLILIN F接続版、「現行」トグルがNoa共有スクリーンショットの実物コピーです。タイプA〜Dの切り替えは全カードに影響します（Card3は全タイプ共通のため変化なし）。<b>v20時点：</b> Card5は機能タグ主役から「毎日にちょい足しするだけでいい」という続けやすさ主役に刷新し、下部フックはCard6の「もしも」と噛み合わないため削除。<b>v19：</b>Card4の困りごとをタイプ別分岐（A・Bは運動時間の話、C・Dは食事管理の話）。<b>v17：</b>Card3をイラスト2枚構成に刷新。イラストは配置確認用の簡易プレースホルダーです。
+    <b>見方：</b> 「新案」トグルがSLILIN F接続版、「現行」トグルがNoa共有スクリーンショットの実物コピーです。タイプA〜Dの切り替えは全カードに影響します（Card3は全タイプ共通のため変化なし）。<b>v23更新（最新・6枚→5枚に統合）：</b> 旧Card5（サプリという選択肢も◎）と旧Card6（もしも〜になったら？＋タイプ別吹き出し＋CTA）を1枚に統合。旧Card6の「もしも」見出しは削除し、イラスト＋吹き出しでその意味を代替。「日常生活でも無理なく続けられる」という続けやすさの訴求も、上部のテキストで言い切るのではなく下部のリソミラ（理想の未来＋続けているイメージ）の吹き出し4つ目として統合。<b>v22：</b>Card5メイン文言「サプリという選択肢も◎」確定。<b>v19：</b>Card4の困りごとをタイプ別分岐。<b>v17：</b>Card3をイラスト2枚構成に刷新。イラストは配置確認用の簡易プレースホルダーです。
   </div>
 
   <div class="back-link"><a href="index.html">← トップへ</a></div>
@@ -546,12 +533,11 @@
         {n:3, t:"それ、燃やせる量（代謝）の差かもしれない", punch:true}
       ],
       c3foot: "ちゃんと燃やせる体になれば…",
-      c4headline: "脂肪を溜め込みにくい体になったら？",
       types: {
-        A: {kcal:"1,400kcal", bubbles:["お腹に脂肪がつきにくい！","同じ量でも溜め込まない！","カロリーばかり気にしなくていい！"]},
-        B: {kcal:"1,600kcal", bubbles:["ご褒美スイーツも怖くない！","脂肪をためこみにくい体に！","神経質にならなくて済む！"]},
-        C: {kcal:"1,800kcal", headline:"運動の効果がちゃんと脂肪に出たら？", bubbles:["運動の効果が脂肪に出る！","動いた分、ちゃんと消費される！","「動いたのに…」が終わる！"]},
-        D: {kcal:"2,100kcal", headline:"運動の効果がちゃんと脂肪に出たら？", bubbles:["動いた分、ちゃんと結果に出る！","脂肪の消費がしっかり進む！","「なぜか減らない」がなくなる！"]}
+        A: {kcal:"1,400kcal", bubbles:["お腹に脂肪がつきにくい！","同じ量でも溜め込まない！","カロリーばかり気にしなくていい！","日常生活でも無理なく続けられる！"]},
+        B: {kcal:"1,600kcal", bubbles:["ご褒美スイーツも怖くない！","脂肪をためこみにくい体に！","神経質にならなくて済む！","日常生活でも無理なく続けられる！"]},
+        C: {kcal:"1,800kcal", bubbles:["運動の効果が脂肪に出る！","動いた分、ちゃんと消費される！","「動いたのに…」が終わる！","日常生活でも無理なく続けられる！"]},
+        D: {kcal:"2,100kcal", bubbles:["動いた分、ちゃんと結果に出る！","脂肪の消費がしっかり進む！","「なぜか減らない」がなくなる！","日常生活でも無理なく続けられる！"]}
       }
     }
   };
@@ -658,15 +644,6 @@
 
     document.getElementById("c3-headline").textContent = d.c3headline;
     document.getElementById("c3-foot").textContent = d.c3foot;
-    document.getElementById("c4-headline").textContent = t.headline || d.c4headline;
-    document.getElementById("c4-kcal").textContent = t.kcal;
-
-    var badge = document.getElementById("c4-diff-badge");
-    if (t.headline) {
-      badge.hidden = false;
-    } else {
-      badge.hidden = true;
-    }
 
     var stepsWrap = document.getElementById("c3-steps");
     stepsWrap.innerHTML = "";
@@ -683,7 +660,7 @@
       }
     });
 
-    var bubbleWrap = document.getElementById("c4-bubbles");
+    var bubbleWrap = document.getElementById("c5new-bubbles");
     bubbleWrap.innerHTML = "";
     t.bubbles.forEach(function(b){
       var el = document.createElement("div");
