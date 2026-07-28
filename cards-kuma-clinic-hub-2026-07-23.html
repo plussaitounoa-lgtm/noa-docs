@@ -25,8 +25,6 @@
   .tab-btn.tab-pr-surgery.active { background: linear-gradient(90deg,#4dc9e8,#0f6a8a); border-color: #0f6a8a; }
   .tab-btn.tab-pr-inject { border-color: #e37400; color: #e37400; }
   .tab-btn.tab-pr-inject.active { background: linear-gradient(90deg,#ffab4d,#e37400); border-color: #e37400; }
-  .tab-btn.tab-case { border-color: #6a6a6a; color: #6a6a6a; }
-  .tab-btn.tab-case.active { background: linear-gradient(90deg,#999,#6a6a6a); border-color: #6a6a6a; }
   .tab-btn.tab-faq { border-color: #6a6a6a; color: #6a6a6a; }
   .tab-btn.tab-faq.active { background: linear-gradient(90deg,#999,#6a6a6a); border-color: #6a6a6a; }
   .tab-btn.tab-campaign { border-color: #d6336c; color: #d6336c; }
@@ -175,16 +173,16 @@
   #section-inject .cta-tag { color: #e37400; }
   #section-inject .back-link a { color: #e37400; text-decoration: none; }
 
-  /* ═══ 症例紹介・FAQ（グレー共通） ═══ */
-  #section-case .type-label, #section-faq .type-label { color: #6a6a6a; }
-  #section-case .type-header, #section-faq .type-header { border-bottom-color: #ddd; }
-  #section-case .tonmana-note, #section-faq .tonmana-note { border: 1px solid #ddd; }
-  #section-case .tonmana-note b, #section-faq .tonmana-note b { color: #6a6a6a; }
-  #section-case .card-header.hdr-surgery, #section-faq .card-header.hdr-surgery { background: linear-gradient(90deg,#4dc9e8,#0f6a8a); }
-  #section-case .card-header.hdr-inject, #section-faq .card-header.hdr-inject { background: linear-gradient(90deg,#ffab4d,#e37400); }
+  /* ═══ FAQ（グレー） ═══ */
+  #section-faq .type-label { color: #6a6a6a; }
+  #section-faq .type-header { border-bottom-color: #ddd; }
+  #section-faq .tonmana-note { border: 1px solid #ddd; }
+  #section-faq .tonmana-note b { color: #6a6a6a; }
+  #section-faq .card-header.hdr-surgery { background: linear-gradient(90deg,#4dc9e8,#0f6a8a); }
+  #section-faq .card-header.hdr-inject { background: linear-gradient(90deg,#ffab4d,#e37400); }
   #section-faq .faq-qtag.tag-surgery { background: linear-gradient(90deg,#4dc9e8,#0f6a8a); }
   #section-faq .faq-qtag.tag-inject { background: linear-gradient(90deg,#ffab4d,#e37400); }
-  #section-case .back-link a, #section-faq .back-link a { color: #6a6a6a; text-decoration: none; }
+  #section-faq .back-link a { color: #6a6a6a; text-decoration: none; }
 
   /* ═══ キャンペーン（ピンク） ═══ */
   #section-campaign .type-label { color: #d6336c; }
@@ -202,7 +200,7 @@
 
 <div class="page-header">
   <h1>クマ取り クリニック選び診断 — カード図まとめ</h1>
-  <p>結果カルーセル→PRカルーセル（脱脂手術/再生注射それぞれ）＋深掘りハブ（症例紹介/FAQ/キャンペーン）をタブで切り替え。設計書v1.2準拠。</p>
+  <p>結果カルーセル→PRカルーセル（脱脂手術/再生注射それぞれ）＋深掘りハブ（FAQ/キャンペーン）をタブで切り替え。症例紹介は素材使用不可のため対象外。設計書v1.7準拠。</p>
 </div>
 
 <div class="type-tabs">
@@ -210,7 +208,6 @@
   <button class="tab-btn tab-pr-surgery" onclick="switchTab('pr-surgery')">脱脂手術PRカル</button>
   <button class="tab-btn tab-inject" onclick="switchTab('inject')">再生注射タイプ</button>
   <button class="tab-btn tab-pr-inject" onclick="switchTab('pr-inject')">再生注射PRカル</button>
-  <button class="tab-btn tab-case" onclick="switchTab('case')">症例紹介を見る</button>
   <button class="tab-btn tab-faq" onclick="switchTab('faq')">よくある質問を見る</button>
   <button class="tab-btn tab-campaign" onclick="switchTab('campaign')">キャンペーン・料金を見る</button>
 </div>
@@ -313,12 +310,12 @@
 
     <div class="card">
       <div class="card-header hdr-surgery"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="card-title" style="font-size:13px;">こんな方に<br>オススメ！！</div>
-      <div class="check-list-base">
-        <div class="ci">脂肪のふくらみそのものが気になる</div>
-        <div class="ci">一度の施術でしっかり効果を出したい</div>
-        <div class="ci">通院・抜糸の手間を避けたい</div>
-        <div class="ci">傷跡が目立たない方法を選びたい</div>
+      <div class="card-title" style="font-size:14px;">施術について</div>
+      <div class="benefit-list">
+        <div class="benefit-row">施術名：皮膚を切らない目の下のクマ・たるみ取り（経結膜脱脂）</div>
+        <div class="benefit-row">下まぶたの裏側（結膜）から脂肪を取り出し、ふくらみ・たるみを改善</div>
+        <div class="benefit-row">傷は結膜側にあるため、表からは見えにくい</div>
+        <div class="benefit-row">ダウンタイムの目安：腫れ・内出血1〜2週間程度</div>
       </div>
       <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#4dc9e8,#0f6a8a);">無料カウンセリングを予約する ▶</button></div>
     </div>
@@ -552,53 +549,7 @@
 </div>
 </div>
 
-<!-- ══════════════ TAB 3: 症例紹介 ══════════════ -->
-<div class="tab-section" id="section-case">
-<div class="container">
-  <div class="type-header">
-    <span class="type-label">症例紹介</span>
-    <span class="type-sub">限定解除要件4点併記・年代別の代表例（全パターンは設計書9章参照）</span>
-  </div>
-
-  <div class="tonmana-note"><b>構成:</b> 医療広告ガイドラインの限定解除要件（治療内容／治療期間・回数／費用／主なリスク・副作用）を満たす形で年代別ケースを掲載。写真は全てプレースホルダーで、実装時にTCBから使用許諾を得た症例画像に差し替える。ここでは代表例を1枚ずつ掲載（4年代分のフルデータは設計書9.1・9.2章）。</div>
-
-  <div class="sub-divider">脱脂手術（LP1）</div>
-  <div class="cards-row">
-    <div class="card">
-      <div class="card-header hdr-surgery"><span class="brand">TCB</span><span class="pr-badge">症例</span></div>
-      <div class="card-title" style="font-size:13px;">症例紹介（30代）</div>
-      <div class="case-placeholder">Before / After 症例写真<br>（プレースホルダー・差し替え予定）</div>
-      <div class="case-detail">
-        <div class="cd-row"><span class="cd-label">治療内容</span>経結膜脱脂（スーパーナチュラル）</div>
-        <div class="cd-row"><span class="cd-label">期間・回数</span>1回・日帰り</div>
-        <div class="cd-row"><span class="cd-label">費用</span>¥173,800（税込）</div>
-        <div class="cd-row"><span class="cd-label">リスク・副作用</span>腫れ・内出血1〜2週間、まれにむくみ・違和感・目のかすみ</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="sub-divider" style="margin-top:8px;">再生注射（LP2・プレースホルダー、要TCB確認）</div>
-  <div class="cards-row">
-    <div class="card">
-      <div class="card-header hdr-inject"><span class="brand">TCB</span><span class="pr-badge">症例</span></div>
-      <div class="card-title" style="font-size:13px;">症例紹介（30代）</div>
-      <div class="case-placeholder">Before / After 症例写真<br>（プレースホルダー・差し替え予定）</div>
-      <div class="case-detail">
-        <div class="cd-row"><span class="cd-label">治療内容</span>クマ取り再生注射（プレミアム・スネコス）</div>
-        <div class="cd-row"><span class="cd-label">期間・回数</span>1回</div>
-        <div class="cd-row"><span class="cd-label">費用</span>¥69,800（税込）</div>
-        <div class="cd-row"><span class="cd-label">リスク・副作用</span>腫れ・痛み・内出血2日程度</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="warn-note">
-    <b>要確認（設計書8章 論点4）:</b> LP2（再生注射）自体に年代別症例ページが存在しないため、上記は暫定の想定データ。実装前にTCBへ実データ提供を依頼するか、全社共通の症例集からの転用可否を確認する必要がある。
-  </div>
-</div>
-</div>
-
-<!-- ══════════════ TAB 4: よくある質問 ══════════════ -->
+<!-- ══════════════ TAB: よくある質問 ══════════════ -->
 <div class="tab-section" id="section-faq">
 <div class="container">
   <div class="type-header">
