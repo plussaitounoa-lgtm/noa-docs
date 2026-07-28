@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>クマ取り診断（旧版）実績分析</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 900px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">実績分析 — クマ取り（mega-clinic.com）</div>
+    <h1>クマ取り診断（旧版）実績分析</h1>
+    <p class="desc">作成: 2026-07-28 ／ 対象期間: 2024-08〜2026-07 ／ t188（クマ取りクリニック選び診断リニューアル）の前提データ</p>
+  </div>
+
+  <!-- ① 結論 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">1</div>
+      <div>
+        <div class="section-title">結論</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="verdict verdict-red">旧クマ取り診断はリスティング広告依存の構造で、2025年頭に広告流入が縮小して以降ほぼ死んでいる。SEO経由の実績は全期間を通じてゼロ。</div>
+      <p>累計791人が診断に流入し、finish302件・MCV243件・CV5件（売上190,000円）を記録したが、これは100%リス＋アド経由。mega-clinic.comのSEO記事に診断・PUが設置されたことは一度もない。t188はこのジャンルで初めてのSEO展開になる。</p>
+    </div>
+  </div>
+
+  <!-- ② 累計実績 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">2</div>
+      <div>
+        <div class="section-title">累計実績（2024-08〜2026-07）</div>
+        <div class="section-sub">診断ファネル＋CV・売上</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">診断START</div>
+          <div class="kpi-value">729人</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">finish</div>
+          <div class="kpi-value">302件</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">MCV（合計）</div>
+          <div class="kpi-value">606件</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">CV</div>
+          <div class="kpi-value">5件</div>
+          <div class="kpi-sub">売上190,000円</div>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>指標</th><th>累計</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>診断START</td><td>729</td></tr>
+          <tr><td>質問通過（pass_06）</td><td>711</td></tr>
+          <tr><td>診断finish</td><td>302</td></tr>
+          <tr><td>MCV</td><td>243</td></tr>
+          <tr><td>rich_mcv</td><td>261</td></tr>
+          <tr><td>atooi_mcv</td><td>102</td></tr>
+          <tr><td>all_mcv（合計）</td><td>606</td></tr>
+          <tr><td>J+K合算（直MCV）</td><td>504</td></tr>
+          <tr><td>CV件数</td><td>5</td></tr>
+          <tr><td>売上</td><td>190,000円（単価38,000円で一定）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ③ チャネル別の崩壊過程 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">3</div>
+      <div>
+        <div class="section-title">チャネル別 月次推移</div>
+        <div class="section-sub">診断流入数（all_user）</div>
+      </div>
+    </div>
+    <div class="body">
+      <table>
+        <thead>
+          <tr><th>月</th><th>リス</th><th>アド</th><th>SEO</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2024-08</td><td>102</td><td>3</td><td>0</td></tr>
+          <tr><td>2024-09</td><td>84</td><td>8</td><td>0</td></tr>
+          <tr><td>2024-10</td><td>90</td><td>9</td><td>0</td></tr>
+          <tr><td>2024-11</td><td>110</td><td>22</td><td>0</td></tr>
+          <tr><td>2024-12（ピーク）</td><td><strong>147</strong></td><td>5</td><td>0</td></tr>
+          <tr><td>2025-01</td><td class="down">83</td><td>5</td><td>0</td></tr>
+          <tr><td>2025-02</td><td class="down">27</td><td>0</td><td>0</td></tr>
+          <tr><td>2025-03</td><td>14</td><td>0</td><td>0</td></tr>
+          <tr><td>2025-04</td><td>9</td><td>0</td><td>0</td></tr>
+          <tr><td>2025-05</td><td>10</td><td>0</td><td>0</td></tr>
+          <tr><td>2025-06</td><td>28</td><td>0</td><td>0</td></tr>
+          <tr><td>2025-07</td><td>17</td><td>0</td><td>0</td></tr>
+          <tr><td>2025-08</td><td>11</td><td>0</td><td>0</td></tr>
+          <tr><td>2025-09</td><td>4</td><td>0</td><td>0</td></tr>
+          <tr><td>2025-10〜2026-06</td><td>0</td><td>0</td><td>0</td></tr>
+        </tbody>
+      </table>
+      <div class="insight insight-red">
+        <strong>2024-12（147人）→2025-01（83人、-43%）→2025-02（27人、-67%）と2ヶ月連続で崩壊し、以降は月0〜30人台の低空飛行が続いた末、2025-10以降は完全停止。</strong>
+        崩壊は全ての流入パターン（S2_テキスト／イラスト×複数訴求）で同時に起きており、特定クリエイティブの劣化ではなく媒体側の送客量そのものが絞られた現象。アドも同時期（2025-02）にゼロへ消滅している。
+      </div>
+      <p class="note">SEOは全期間を通じて0のまま。mega-clinic.comのクマ関連記事（クマ取り 名古屋・札幌・福岡等）は一貫してPU未設置区分に分類されている。</p>
+    </div>
+  </div>
+
+  <!-- ④ データ品質の注意点 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">4</div>
+      <div>
+        <div class="section-title">データ品質の注意点</div>
+        <div class="section-sub">「クマ取り」アカウントへのシミ実績混入</div>
+      </div>
+    </div>
+    <div class="body">
+      <p>2026-07-24・25に「クマ取り」アカウントの実績としてSEO流入が2件記録されているが、タグ内容は<code>/shimi_seo/シミ取り横浜_あなたにピッタリ</code><code>/shimi_seo/シミ取り名古屋_自分にピッタリ</code>で、実体はシミ診断のテスト流入。</p>
+      <div class="insight insight-yellow">
+        <strong>mega-clinic.comの美容医療アカウントは、クマ・シミがgenre単位でまだ分離されておらず、「クマ取り」という単一ラベルに両方の実績が混ざって計上される。</strong>
+        t188リリース後も同じ状態のままだと、クマ単体の効果測定ができない。genre値の分離をCTOに依頼する必要がある。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ t188への示唆 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">5</div>
+      <div>
+        <div class="section-title">t188（リニューアル版）への示唆</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul style="margin-left: 18px; font-size: 14px;">
+        <li style="margin-bottom: 8px;">旧診断の実績（累計791人・CV5件）はリス依存の広告流入から生まれたもので、SEO記事に設置するt188の期待値の参考にはならない</li>
+        <li style="margin-bottom: 8px;">t188はこのジャンルで初めてのSEO展開のため、比較対象となる過去実績が存在しない</li>
+        <li>リリース後の効果測定は、クマ・シミのgenre分離が済んでから「クマ」タグ単位で厳密に絞り込む必要がある</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
