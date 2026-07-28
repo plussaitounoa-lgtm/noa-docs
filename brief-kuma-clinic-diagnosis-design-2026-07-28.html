@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>デザイン依頼書：クマ取り クリニック選び診断</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F5FAFC; --surface: #FFFFFF; --border: #D6E8EF;
+    --text: #14232A; --muted: #5C7480; --accent: #0f6a8a; --accent-light: #E3F4FA;
+    --tag-a: #0f6a8a; --tag-b: #e37400;
+    --tag-a-bg: #E3F4FA; --tag-b-bg: #FFF3E8;
+  }
+  body { font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.75; padding: 32px 16px 80px; }
+  .doc { max-width: 860px; margin: 0 auto; }
+  .doc-header { border-left: 4px solid var(--accent); padding: 0 0 0 20px; margin-bottom: 40px; }
+  .doc-header .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .doc-header h1 { font-size: 22px; font-weight: 700; line-height: 1.35; }
+  .doc-header .meta { margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .section { margin-bottom: 40px; }
+  .section-title { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  p { margin-bottom: 10px; }
+  .tbl-wrap { overflow-x: auto; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--surface); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+  th { background: var(--accent-light); color: var(--accent); font-weight: 700; font-size: 11px; letter-spacing: .05em; text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #F7FCFD; }
+  .type-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 24px; }
+  .type-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; font-weight: 700; font-size: 13px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .type-header.a { background: var(--tag-a-bg); color: var(--tag-a); border-color: #BFE0EE; }
+  .type-header.b { background: var(--tag-b-bg); color: var(--tag-b); border-color: #FFD9AD; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .type-header.a .dot { background: var(--tag-a); }
+  .type-header.b .dot { background: var(--tag-b); }
+  .type-meta { font-size: 11px; font-weight: 400; opacity: .8; margin-left: 4px; }
+  .link-chip { display: inline-block; font-size: 12px; background: rgba(0,0,0,.05); border-radius: 4px; padding: 3px 10px; margin: 4px 6px 4px 0; word-break: break-all; }
+  .link-chip a { color: var(--text); text-decoration: none; }
+  .link-chip a:hover { text-decoration: underline; }
+  .count-badge { display: inline-block; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin-left: 6px; vertical-align: middle; }
+  .code-block { background: #14232A; color: #E3F4FA; font-family: "SF Mono", Consolas, monospace; font-size: 12px; line-height: 1.8; border-radius: 8px; padding: 18px 20px; overflow-x: auto; white-space: pre; margin-bottom: 16px; }
+  .swatch-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; }
+  .swatch { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; border: 1px solid rgba(0,0,0,.1); }
+  .note-box { background: var(--accent-light); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-size: 12.5px; color: var(--muted); margin-bottom: 16px; }
+  .warn-box { background: #FBF2E4; border: 1px solid #F0DBB0; border-radius: 8px; padding: 12px 16px; font-size: 12.5px; color: #7a5a1a; margin-bottom: 16px; }
+  .back-link { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; }
+  .back-link a { color: var(--accent); text-decoration: none; }
+  .back-link a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="doc-header">
+    <div class="eyebrow">Design Brief — Diagnosis Flow</div>
+    <h1>デザイン依頼書：クマ取り クリニック選び診断</h1>
+    <div class="meta">作成日: 2026-07-28 ／ 診断フロー（PU・Q1〜Q5・結果）＋ 結果カルーセル（脱脂手術/再生注射 各4枚）＋ PRカルーセル（各5枚）＋ よくある質問</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">必要な画像一覧<span class="count-badge">38枚</span></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>カテゴリ</th><th>枚数</th><th>備考</th></tr></thead>
+        <tbody>
+          <tr><td>PUバナー</td><td>2枚</td><td>コピー2案（A/B案、ABテスト）</td></tr>
+          <tr><td>診断表紙</td><td>1枚</td><td>「あなたに合うクマ改善方法がわかる！」友だち追加直後、Q1の前に表示</td></tr>
+          <tr><td>設問パネル</td><td>5枚</td><td>Q1〜Q5 各1枚。Q3・Q4は非分岐（診断の厚み用、結果に反映なし）</td></tr>
+          <tr><td>結果カルーセル｜脱脂手術タイプ</td><td><strong>4枚</strong></td><td>タイプ発表＋チェックリスト／原因／アプローチ／メリット+CTA</td></tr>
+          <tr><td>結果カルーセル｜再生注射タイプ</td><td><strong>4枚</strong></td><td>脱脂手術タイプと同構成、ブランドカラーのみ変更（オレンジ）</td></tr>
+          <tr><td>PRカルーセル｜脱脂手術</td><td><strong>5枚</strong></td><td>ブランド訴求+料金／施術について／価格+交通費補助／全社実績／最終CTA</td></tr>
+          <tr><td>PRカルーセル｜再生注射</td><td><strong>5枚</strong></td><td>ブランド訴求+料金／こんな方にオススメ／安心ポイント／全社実績／最終CTA</td></tr>
+          <tr><td>よくある質問（脱脂手術）</td><td><strong>8枚</strong></td><td>ダウンタイム／セルフケア／再発／目の状態／傷跡／縫合／年齢／まつげエクステ</td></tr>
+          <tr><td>よくある質問（再生注射）</td><td><strong>4枚</strong></td><td>効果の程度／ダウンタイム／手術との比較／初回0円の条件</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note-box">診断表紙は友だち追加直後・Q1の前に1枚表示します（②参照）。Q5完了後は「診断お疲れさまでした！✨」の定型メッセージのみで、画像デザインは不要です（Noa側で用意）。<strong>症例紹介（Before/After写真）は今回は無し</strong>です（後述の要確認事項参照）。</div>
+  </div>
+
+  <div class="warn-box">
+    <strong>制作前に確認してほしいこと（3点）</strong><br>
+    1. <strong>症例紹介は使いません。</strong> 案件都合でBefore/After写真の使用が不可のため、診断フローに症例紹介パートは含まれていません。<br>
+    2. <strong>クーポン金額は仮です。</strong> 脱脂手術の「25,000円OFF／30,000円OFF」はTCB公式LP上どちらか一方のみ表示される仕様（実装直前に確定額を連絡します）。再生注射の「初回0円」キャンペーンも表示期限があるため、実装直前に生きているか再確認してから金額を反映してください。<br>
+    3. <strong>再生注射のPRカルーセルCard2はまだ「こんな方にオススメ」のままです。</strong> 脱脂手術側は結果カルーセルと内容が重複していたため「施術について」に差し替え済みですが、再生注射側は未着手です。着手前にNoaに一声かけてください（差し替わる可能性があります）。
+  </div>
+
+  <div class="section">
+    <div class="section-title">全体フロー</div>
+    <div class="code-block">[PU] バナー（mega-clinic.com クマジャンル記事に設置 / コピー2種ABテスト・対象記事は後日確定）
+  ↓
+[友だち追加]
+  ↓
+[診断表紙] あなたに合うクマ改善方法がわかる！
+  ↓
+[Q1] 性別を教えてください
+[Q2] あなたの年代は？
+[Q3] 目の下、鏡で見るとどんな感じ？  ← 非分岐・診断の厚み用（結果に反映なし）
+[Q4] クマ取りで不安なことは？        ← 非分岐・診断の厚み用（結果に反映なし）
+[Q5] クマ改善で、一番重視することは？  ← 分岐軸（脱脂手術／再生注射）
+  ↓
+[結果カルーセル 4枚]（Q5の回答で脱脂手術／再生注射に分岐）
+  ↓
+[PRカルーセル 5枚]（ここで初めてTCBブランド・料金・実績を開示）
+  ↓
+[よくある質問]（脱脂手術8問／再生注射4問）
+  ↓
+[CV（アフィリリンク・無料カウンセリング予約）]</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">★フロー図・カード図</div>
+    <p>設計・文言・トンマナすべてまとまっているので、こちらご確認いただけると幸いです🙇‍♀️</p>
+    <p><strong>ワークフロー設計図:</strong><br><span class="link-chip"><a href="https://plussaitounoa-lgtm.github.io/noa-docs/flow-kuma-clinic-diagnosis-2026-07-23.html" target="_blank">flow-kuma-clinic-diagnosis-2026-07-23.html</a></span></p>
+    <p><strong>カード図（結果カルーセル＋PRカルーセル＋FAQ・全5タブ）:</strong><br><span class="link-chip"><a href="https://plussaitounoa-lgtm.github.io/noa-docs/cards-kuma-clinic-hub-2026-07-23.html" target="_blank">cards-kuma-clinic-hub-2026-07-23.html</a></span></p>
+    <p><strong>設計書本体:</strong><br><span class="link-chip"><a href="https://plussaitounoa-lgtm.github.io/noa-docs/brief-kuma-clinic-diagnosis-2026-07-23.html" target="_blank">brief-kuma-clinic-diagnosis-2026-07-23.html</a></span></p>
+    <p>見辛いなどあればテキストベースで出すのでお申し付けください🙏</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">① PUバナー（2枚）</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:110px;">案</th><th>コピー</th></tr></thead>
+        <tbody>
+          <tr><td>A案</td><td>あなたに合うクマ取り方法、見つかる？</td></tr>
+          <tr><td>B案</td><td>その目のクマ、どうすれば消える？</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>ヘッドライン（共通）: クマ取りクリニック診断<br>サブ（共通）: LINEでカンタン5問<br>ボタン: 「はい」 / 「いいえ」</p>
+    <div class="note-box">設置記事は未定（Noa側で後日確定・連絡します）。A/B均等出し分けのABテスト運用です。</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">② 診断表紙（1枚）</div>
+    <div class="tbl-wrap">
+      <table>
+        <tbody>
+          <tr><td style="width:100px;"><strong>タグ</strong></td><td>クマ改善タイプ診断</td></tr>
+          <tr><td><strong>ヘッドライン</strong></td><td>あなたに合う<strong>クマ改善方法</strong>がわかる！</td></tr>
+          <tr><td><strong>タイトル</strong></td><td>クリニック選び診断</td></tr>
+          <tr><td><strong>サブ</strong></td><td>脱脂手術／再生注射、どちらが向いているかもわかる</td></tr>
+          <tr><td><strong>CTAバナー</strong></td><td>カンタン5問で診断！／▼タップして診断スタート▼</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note-box">構成はシミ診断表紙（元々Noa共有の参考画像＝クマ取り診断表紙を踏襲したもの）と同一。カード図: <a href="cards-kuma-clinic-cover-2026-07-28.html" target="_blank">cards-kuma-clinic-cover-2026-07-28.html</a></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">③ 設問パネル（5枚）</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:40px;">#</th><th style="width:220px;">質問</th><th>選択肢</th></tr></thead>
+        <tbody>
+          <tr><td>Q1</td><td>性別を教えてください</td><td>女性 / 男性</td></tr>
+          <tr><td>Q2</td><td>あなたの<strong>年代</strong>は？</td><td>20代 / 30代 / 40代 / 50代以上</td></tr>
+          <tr><td>Q3</td><td>目の下、鏡で見るとどんな感じ？（非分岐）</td><td>脂肪のふくらみ・影っぽい / 青みがかった血色不良っぽい / 茶色っぽい色素っぽい / 複数当てはまる</td></tr>
+          <tr><td>Q4</td><td>クマ取りで<strong>不安なこと</strong>は？（非分岐）</td><td>費用が高額にならないか / 仕上がり / 効果は持続するのか / ダウンタイムの長さ</td></tr>
+          <tr><td>Q5</td><td>クマ改善で、一番<strong>重視すること</strong>は？（分岐軸・最終設問）</td><td>脂肪のふくらみ自体をなくしたい / 効果重視でしっかり改善したい / ダウンタイムを短く抑えたい / まずは気軽に試してみたい</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note-box">Q3・Q4は振り分けに使わない非分岐設問（診断の厚み・説得力を出すためだけ）。専門用語（脱脂手術・再生注射等）は設問側では一切出さず、結果カルーセル以降で初めて開示する。</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">④ 結果カルーセル｜脱脂手術タイプ<span class="count-badge">4枚</span></div>
+    <div class="type-block">
+      <div class="type-header a">
+        <span class="dot"></span>
+        脱脂手術｜水色系（#0f6a8a）
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:55px;">Card</th><th style="width:180px;">見出し</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>あなたのクマは、根本からしっかりケアタイプ</td><td>チェックリスト4項目：脂肪のふくらみそのものが気になる／一度の施術でしっかり効果を出したい／通院・抜糸の手間を避けたい／傷跡が目立たない方法を選びたい</td></tr>
+            <tr><td>2</td><td>クマの原因</td><td>イラスト（目元断面図・眼窩脂肪の位置）＋「黒クマ・ふくらみ・たるみの原因となる眼窩脂肪」「加齢や生まれつきで押し出された脂肪が、影となって現れます」</td></tr>
+            <tr><td>3</td><td>脂肪を取り除くアプローチが◎</td><td>イラスト（結膜側からのアプローチ）＋下まぶたの裏側（結膜側）からアプローチするから傷跡が目立ちにくい／抜糸不要・日帰りで完了／出っ張っている脂肪を直接取り除くから根本的な変化が期待できる</td></tr>
+            <tr><td>4</td><td>鏡を見るたびに、ちょっと自信が持てる目元へ</td><td>メリット：脂肪細胞ごと除去するから再び膨らむことはほとんどない／通院不要・抜糸不要で日常に戻れる／一度の施術で完了。CTA「詳しく見てみる」</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">⑤ 結果カルーセル｜再生注射タイプ<span class="count-badge">4枚</span></div>
+    <div class="type-block">
+      <div class="type-header b">
+        <span class="dot"></span>
+        再生注射｜オレンジ系（#e37400）
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:55px;">Card</th><th style="width:180px;">見出し</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>あなたのクマは、まずは気軽に試したいタイプ</td><td>チェックリスト4項目：ダウンタイムはできるだけ短くしたい／まずは負担少なく試してみたい／手術はまだハードルが高いと感じる／注射だけでどのくらい変わるか気になる</td></tr>
+            <tr><td>2</td><td>クマが目立つ、本当の理由。</td><td>因果図式：「保湿や目元用美容液でケアしてきた」→「でも失われたハリ・ボリュームは化粧品では補えない」→「影が濃く見えたまま」→「加齢とともに目元のハリ・ボリュームが失われるのが根本原因」</td></tr>
+            <tr><td>3</td><td>アプローチは、必要な成分を注入して満たすこと</td><td>1回の注射で脂肪溶解・再生因子・ヒアルロン酸成分を注入／手術と違いダウンタイムが短い／施術時間も短く当日の予定に響きにくい</td></tr>
+            <tr><td>4</td><td>今日から、気軽に一歩を踏み出せる</td><td>メリット：ダウンタイムの少なさ／手軽に試せる非手術という選択肢／初回はお得に試せるキャンペーンあり。CTA「詳しく見てみる」</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="note-box">脱脂手術タイプと構成・トンマナは同一、配色のみブランドカラーを変更。</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">⑥ PRカルーセル｜脱脂手術<span class="count-badge">5枚</span></div>
+    <div class="type-block">
+      <div class="type-header a">
+        <span class="dot"></span>
+        脱脂手術｜水色系（#0f6a8a）
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:55px;">Card</th><th style="width:150px;">役割</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>ブランド訴求+料金</td><td>TCBの切らない脱脂手術。スタンダード〜エクセレント¥83,600〜¥458,000（税込）＋クーポンバナー（金額は実装直前に確認）。CTA「詳しく見てみる」</td></tr>
+            <tr><td>2</td><td>施術について</td><td>施術名：皮膚を切らない目の下のクマ・たるみ取り（経結膜脱脂）／下まぶたの裏側（結膜）から脂肪を取り出し、ふくらみ・たるみを改善／傷は結膜側にあるため表からは見えにくい／ダウンタイムの目安：腫れ・内出血1〜2週間程度</td></tr>
+            <tr><td>3</td><td>価格＋交通費補助</td><td>4グレード価格表（スタンダード¥83,600／スーパーナチュラル¥173,800／パーフェクト¥297,000／エクセレント¥458,000）＋CTA＋交通費補助（駐車場無料／遠方の医師の施術を受けたい方に交通費補助最高3万円）</td></tr>
+            <tr><td>4</td><td>全社実績</td><td>2024年度来院数96万5,785人／全国展開・全院駅チカ／施術満足度91.0%／リピート意思96.7%（全社データと明記）</td></tr>
+            <tr><td>5</td><td>最終CTA</td><td>Webクーポン配布中！（金額は実装直前に確認）。「まずはお気軽にご相談ください」＋無料カウンセリング予約CTA</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">⑦ PRカルーセル｜再生注射<span class="count-badge">5枚</span></div>
+    <div class="type-block">
+      <div class="type-header b">
+        <span class="dot"></span>
+        再生注射｜オレンジ系（#e37400）
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:55px;">Card</th><th style="width:150px;">役割</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>ブランド訴求+料金</td><td>TCBのクマ取り再生注射。通常¥9,800→初回¥0。プレミアム(スネコス)1cc¥69,800／3回コース¥189,000も選択可。CTA「詳しく見てみる」</td></tr>
+            <tr><td>2</td><td>こんな方にオススメ<span style="color:#e37400;font-weight:700;">（要確認・上部warn参照）</span></td><td>ダウンタイムはできるだけ短くしたい／まずは負担少なく試してみたい／手術はまだハードルが高いと感じる／注射だけでどのくらい変わるか気になる</td></tr>
+            <tr><td>3</td><td>安心ポイント</td><td>ダウンタイム2日程度／施術時間も短い／症例モデル参加でさらにお得な制度あり</td></tr>
+            <tr><td>4</td><td>全社実績</td><td>脱脂手術PRカルと同一（全社データ）</td></tr>
+            <tr><td>5</td><td>最終CTA</td><td>初回0円キャンペーン中！（実施期間は実装直前に確認）。「まずはお気軽にご相談ください」＋無料カウンセリング予約CTA</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">⑧ よくある質問<span class="count-badge">12枚</span></div>
+    <p>公式LPのQ&Aをそのまま転載せず、ユーザー目線のカジュアルな言い回しに書き直す。</p>
+    <p style="margin-top:8px;"><strong>脱脂手術（8問）</strong></p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:40px;">#</th><th>質問</th><th>回答</th></tr></thead>
+        <tbody>
+          <tr><td>Q1</td><td>ダウンタイムってどのくらいかかるの？</td><td>腫れや内出血が出ることがあって、落ち着くまでは大体1〜2週間が目安。人によってはむくみや違和感、目のかすみが出ることもあるよ</td></tr>
+          <tr><td>Q2</td><td>マッサージとか自力でどうにかならない？</td><td>脂肪のふくらみが原因のクマは、セルフケアだけで完全になくすのは難しいのが実際のところ。だからこそ施術で直接アプローチする選択肢があるよ</td></tr>
+          <tr><td>Q3</td><td>一度取った脂肪って、また増えたりする？</td><td>施術で取り除いた脂肪細胞自体は基本的に元には戻らないとされているよ</td></tr>
+          <tr><td>Q4</td><td>施術中って目を開けたままなの？</td><td>ううん、目を閉じた状態で施術するよ</td></tr>
+          <tr><td>Q5</td><td>傷跡って目立たない？</td><td>下まぶたの裏側（結膜側）からアプローチするから、外から見える傷はほとんど目立たないよ</td></tr>
+          <tr><td>Q6</td><td>縫うの？</td><td>抜糸は不要。傷が数ミリと小さいから縫わなくて大丈夫なんだ</td></tr>
+          <tr><td>Q7</td><td>20代でも受けて平気？</td><td>年齢制限はなくて、20代で受ける人もいるよ</td></tr>
+          <tr><td>Q8</td><td>まつげエクステつけたままでも受けられる？</td><td>つけたままでも施術は受けられるよ</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:16px;"><strong>再生注射（4問）</strong></p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th style="width:40px;">#</th><th>質問</th><th>回答</th></tr></thead>
+        <tbody>
+          <tr><td>Q1</td><td>注射だけでどのくらい変わるの？</td><td>脂肪溶解・再生因子・ヒアルロン酸成分を注入して、クマの見た目にアプローチする施術だよ。変化の感じ方には個人差があるよ</td></tr>
+          <tr><td>Q2</td><td>ダウンタイムは短いって聞いたけど本当？</td><td>腫れや痛み、内出血が出ることはあるけど、目安は2日程度。手術タイプに比べるとかなり短めだよ</td></tr>
+          <tr><td>Q3</td><td>手術と迷ってるんだけど、注射から試すのはあり？</td><td>非手術で気軽に試せるのが注射タイプの特徴。まずは負担の少ない方法から試したい人に向いてるよ</td></tr>
+          <tr><td>Q4</td><td>初回0円って本当に無料なの？</td><td>初回0円キャンペーンとして案内されてるよ。実施期間や条件は変わることがあるから、最新の情報は予約時に確認してね</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note-box">各カードに写真・イラストのプレースホルダーあり（差し替え予定）。詳細文言はカード図参照。</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">トンマナ</div>
+    <p>全体: 医療クリニック系らしい清潔感のある配色。カード図（cards-kuma-clinic-hub-2026-07-23.html）に準拠。</p>
+    <div class="swatch-row"><span class="swatch" style="background:#0f6a8a;"></span>脱脂手術（結果カル／PRカル）: 水色系（#4dc9e8 〜 #0f6a8a）</div>
+    <div class="swatch-row"><span class="swatch" style="background:#e37400;"></span>再生注射（結果カル／PRカル）: オレンジ系（#ffab4d 〜 #e37400）</div>
+    <div class="swatch-row"><span class="swatch" style="background:#6a6a6a;"></span>よくある質問: グレー系（既存カードトンマナ踏襲）</div>
+    <p style="margin-top:12px;">全体感: 清潔感 × 信頼感 × シンプル。誇大な演出は避け、事実ベースの提示を意識。医療広告ガイドライン上、体験談・比較優良広告・誇大表現は使用しない</p>
+  </div>
+
+  <div class="back-link">
+    <a href="index.html">← トップへ</a>
+  </div>
+
+</div>
+</body>
+</html>
