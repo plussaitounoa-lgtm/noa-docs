@@ -98,11 +98,11 @@
         <tr><td style="font-weight:700;width:180px;">診断名</td><td>クマ取り クリニック選び診断</td></tr>
         <tr><td style="font-weight:700;">診断表紙</td><td>あり（「あなたに合うクマ改善方法がわかる！」）。友だち追加直後、Q1の前に表示</td></tr>
         <tr><td style="font-weight:700;">質問数</td><td>5問（Q1〜Q5）。分岐はQ5の1軸のみ、Q1〜Q4は非分岐</td></tr>
-        <tr><td style="font-weight:700;">振り分け結果</td><td>Q5の回答で<strong>脱脂手術／再生注射の2パターンに分岐</strong>。分岐後、それぞれ結果カルーセル4枚→PRカルーセル5枚と続く。TCB・施術名は結果カルーセルでは出さず、PRカルーセルで初めて開示する</td></tr>
+        <tr><td style="font-weight:700;">振り分け結果</td><td>Q5の回答で<strong>脱脂手術／再生注射の2パターンに分岐</strong>。分岐後、それぞれ結果カルーセル3枚→PRカルーセル5枚と続く。TCB・施術名は結果カルーセルでは出さず、PRカルーセルで初めて開示する</td></tr>
         <tr><td style="font-weight:700;">提携先</td><td>TCB東京中央美容外科（afbアフィリエイト経由）。<br>・脱脂手術＝LP1「皮膚を切らない目の下のクマ・たるみ取り」（<code>https://t-c-b-biyougeka.com/eye_kuma_fukurami_509_9</code>）<br>・再生注射＝LP2「クマ取り再生注射」（<code>https://t-c-b-biyougeka.com/kumatori_injection_02_c</code>）</td></tr>
         <tr><td style="font-weight:700;">アフィリリンク（メタリフ）</td><td><span class="pill ptbd">未確定</span> afb経由の遷移先URL（シミの<code>line-collect.com/organic/shimi/...</code>に相当するもの）がまだ用意できていません。実装直前にNoaへ確認・連携します</td></tr>
-        <tr><td style="font-weight:700;">結果カルーセル</td><td>脱脂手術タイプ4枚・再生注射タイプ4枚（それぞれ独立、Q5の回答でどちらか一方のみ表示）</td></tr>
-        <tr><td style="font-weight:700;">PRカルーセル</td><td>結果カルーセルCard4「詳しく見てみる」タップ後に表示。脱脂手術用5枚・再生注射用5枚（それぞれ独立）</td></tr>
+        <tr><td style="font-weight:700;">結果カルーセル</td><td>脱脂手術タイプ3枚・再生注射タイプ3枚（それぞれ独立、Q5の回答でどちらか一方のみ表示）</td></tr>
+        <tr><td style="font-weight:700;">PRカルーセル</td><td>結果カルーセルCard3「詳しく見てみる」タップ後に表示。脱脂手術用5枚・再生注射用5枚（それぞれ独立）</td></tr>
         <tr><td style="font-weight:700;">深掘りハブ</td><td>PRカルーセルの後（または途中離脱時）に「よくある質問を見る」のみ。<strong>症例紹介・キャンペーン単独タブは無し</strong>（下記NG制約・実装メモ参照）</td></tr>
         <tr><td style="font-weight:700;">設置予定記事</td><td><span class="pill ptbd">未定</span> mega-clinic.com クマジャンル記事のいずれか。Noa側で後日確定・連携します（下記PU設置先一覧参照）</td></tr>
       </table>
@@ -159,8 +159,8 @@
       <div class="flow-arrow">↓</div>
 
       <div class="flow-branch">
-        <div class="flow-branch-col a">結果カルーセル4枚</div>
-        <div class="flow-branch-col b">結果カルーセル4枚</div>
+        <div class="flow-branch-col a">結果カルーセル3枚</div>
+        <div class="flow-branch-col b">結果カルーセル3枚</div>
       </div>
       <div class="flow-arrow">↓</div>
 
@@ -247,8 +247,8 @@
       <table>
         <thead><tr><th style="width:160px;">Q5回答</th><th>結果カルーセル</th><th>PRカルーセル</th></tr></thead>
         <tbody>
-          <tr><td>①②</td><td>脱脂手術タイプ（4枚）</td><td>脱脂手術PRカル（5枚）</td></tr>
-          <tr><td>③④</td><td>再生注射タイプ（4枚）</td><td>再生注射PRカル（5枚）</td></tr>
+          <tr><td>①②</td><td>脱脂手術タイプ（3枚）</td><td>脱脂手術PRカル（5枚）</td></tr>
+          <tr><td>③④</td><td>再生注射タイプ（3枚）</td><td>再生注射PRカル（5枚）</td></tr>
         </tbody>
       </table>
     </div>
@@ -281,8 +281,8 @@
       <table>
         <thead><tr><th style="width:220px;">要素</th><th>枚数</th></tr></thead>
         <tbody>
-          <tr><td style="font-weight:700;">① 結果カルーセル｜脱脂手術</td><td>4枚（チェックリスト／原因／アプローチ／メリット+CTA）</td></tr>
-          <tr><td style="font-weight:700;">② 結果カルーセル｜再生注射</td><td>4枚（①と同構成、ブランドカラーのみ変更）</td></tr>
+          <tr><td style="font-weight:700;">① 結果カルーセル｜脱脂手術</td><td>3枚（チェックリスト／原因／アプローチ+CTA）</td></tr>
+          <tr><td style="font-weight:700;">② 結果カルーセル｜再生注射</td><td>3枚（①と同構成、ブランドカラーのみ変更）</td></tr>
           <tr><td style="font-weight:700;">③ PRカルーセル｜脱脂手術</td><td>5枚（ブランド訴求+料金／施術について／価格+交通費補助／全社実績／最終CTA）</td></tr>
           <tr><td style="font-weight:700;">④ PRカルーセル｜再生注射</td><td>5枚（ブランド訴求+料金／こんな方にオススメ／安心ポイント／全社実績／最終CTA）</td></tr>
           <tr><td style="font-weight:700;">⑤ よくある質問</td><td>12枚（脱脂手術8問／再生注射4問）</td></tr>
