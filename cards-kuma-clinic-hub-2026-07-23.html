@@ -27,8 +27,6 @@
   .tab-btn.tab-pr-inject.active { background: linear-gradient(90deg,#ffab4d,#e37400); border-color: #e37400; }
   .tab-btn.tab-faq { border-color: #6a6a6a; color: #6a6a6a; }
   .tab-btn.tab-faq.active { background: linear-gradient(90deg,#999,#6a6a6a); border-color: #6a6a6a; }
-  .tab-btn.tab-campaign { border-color: #d6336c; color: #d6336c; }
-  .tab-btn.tab-campaign.active { background: linear-gradient(90deg,#ff4eb6,#d6336c); border-color: #d6336c; }
 
   .tab-section { display: none; }
   .tab-section.active { display: block; }
@@ -185,13 +183,6 @@
   #section-faq .back-link a { color: #6a6a6a; text-decoration: none; }
 
   /* ═══ キャンペーン（ピンク） ═══ */
-  #section-campaign .type-label { color: #d6336c; }
-  #section-campaign .type-header { border-bottom-color: #f5c8dd; }
-  #section-campaign .tonmana-note { border: 1px solid #f5c8dd; }
-  #section-campaign .tonmana-note b { color: #d6336c; }
-  #section-campaign .card-header.hdr-surgery { background: linear-gradient(90deg,#4dc9e8,#0f6a8a); }
-  #section-campaign .card-header.hdr-inject { background: linear-gradient(90deg,#ffab4d,#e37400); }
-  #section-campaign .back-link a { color: #d6336c; text-decoration: none; }
 
   .sub-divider { font-size: 10px; font-weight: 700; color: #999; letter-spacing: .06em; margin: 4px 0 6px; }
 </style>
@@ -200,7 +191,7 @@
 
 <div class="page-header">
   <h1>クマ取り クリニック選び診断 — カード図まとめ</h1>
-  <p>結果カルーセル→PRカルーセル（脱脂手術/再生注射それぞれ）＋深掘りハブ（FAQ/キャンペーン）をタブで切り替え。症例紹介は素材使用不可のため対象外。設計書v1.7準拠。</p>
+  <p>結果カルーセル→PRカルーセル（脱脂手術/再生注射それぞれ）＋深掘りハブ（FAQのみ）をタブで切り替え。症例紹介・キャンペーン単独タブは対象外（PRカルに統合／素材使用不可）。設計書v1.7準拠。</p>
 </div>
 
 <div class="type-tabs">
@@ -209,7 +200,6 @@
   <button class="tab-btn tab-inject" onclick="switchTab('inject')">再生注射タイプ</button>
   <button class="tab-btn tab-pr-inject" onclick="switchTab('pr-inject')">再生注射PRカル</button>
   <button class="tab-btn tab-faq" onclick="switchTab('faq')">よくある質問を見る</button>
-  <button class="tab-btn tab-campaign" onclick="switchTab('campaign')">キャンペーン・料金を見る</button>
 </div>
 
 <!-- ══════════════ TAB 1: 脱脂手術パターン ══════════════ -->
@@ -217,10 +207,10 @@
 <div class="container">
   <div class="type-header">
     <span class="type-label">結果カルーセル｜脱脂手術タイプ</span>
-    <span class="type-sub">全4枚・Q4で①②選択時に表示</span>
+    <span class="type-sub">全4枚・Q5で①②選択時に表示</span>
   </div>
 
-  <div class="tonmana-note"><b>構成:</b> Card1（Q3エコー＋タイプ発表＋チェックリスト）／Card2（因果図式）／Card3（アプローチ・施術内容）／Card4（メリット＋CTA）。商材名（TCB）はまだ出さず、施術アプローチの理解を深める役割に徹する。</div>
+  <div class="tonmana-note"><b>構成:</b> Card1（タイプ発表＋チェックリスト）／Card2（原因・イラスト1点）／Card3（アプローチ・施術内容・イラスト1点）／Card4（メリット＋CTA）。商材名（TCB）はまだ出さず、施術アプローチの理解を深める役割に徹する。Q3の共感一言（エコー）はv1.5で削除済み。</div>
 
   <div class="cards-row">
 
@@ -283,7 +273,7 @@
     <span class="type-sub">全5枚・結果カルーセルCard4「詳しく見てみる」タップ後に表示</span>
   </div>
 
-  <div class="tonmana-note"><b>構成:</b> Card1（ブランド訴求+料金+クーポン）／Card2（こんな方にオススメ・チェックリスト）／Card3（安心ポイント）／Card4（全社実績・公式アンケートデータ）／Card5（最終CTA・クーポン再訴求）。シミ診断のPRカルーセル構成を踏襲。</div>
+  <div class="tonmana-note"><b>構成:</b> Card1（ブランド訴求+料金+クーポン）／Card2（施術について）／Card3（価格+交通費補助）／Card4（全社実績・公式アンケートデータ）／Card5（最終CTA・クーポン再訴求）。シミ診断のPRカルーセル構成を踏襲。Card2は当初「こんな方にオススメ」だったが結果カルーセルCard1と内容重複のため施術解説に差し替え（v1.7）。</div>
 
   <div class="cards-row">
 
@@ -387,7 +377,7 @@
 <div class="container">
   <div class="type-header">
     <span class="type-label">結果カルーセル｜再生注射タイプ</span>
-    <span class="type-sub">全4枚・Q4で③④選択時に表示</span>
+    <span class="type-sub">全4枚・Q5で③④選択時に表示</span>
   </div>
 
   <div class="tonmana-note"><b>構成:</b> 脱脂手術タイプと同一の4枚構成。カラーは再生注射のブランドカラー（オレンジ）に変更。</div>
@@ -633,63 +623,6 @@
 
   <div class="warn-note">
     <b>全問数はここに掲載していません:</b> 脱脂手術は全8問（残り4問は設計書10.1章）。全問はデザイン依頼時に実装します。
-  </div>
-</div>
-</div>
-
-<!-- ══════════════ TAB 5: キャンペーン・料金 ══════════════ -->
-<div class="tab-section" id="section-campaign">
-<div class="container">
-  <div class="type-header">
-    <span class="type-label">キャンペーン・料金</span>
-    <span class="type-sub">2施術の価格・クーポン表現</span>
-  </div>
-
-  <div class="tonmana-note"><b>構成:</b> 「今だけ」「今しかない」等の煽り・断定表現は避け、TCB公式LPの表記に準じた事実ベースの案内に留める。実装直前にクーポン・キャンペーンの表示状態を再確認すること（設計書4章・11章）。</div>
-
-  <div class="cards-row">
-
-    <div class="card">
-      <div class="card-header hdr-surgery"><span class="brand">TCB</span><span class="pr-badge">料金</span></div>
-      <div class="card-title" style="font-size:13px;">脱脂手術の料金</div>
-      <div class="price-block" style="background:#eaf8fd;">
-        <div class="pb-name">スタンダード〜エクセレント（4グレード）</div>
-        <div class="pb-after" style="color:#0f6a8a;font-size:16px;">¥83,600〜¥458,000</div>
-        <div class="pb-note">グレードの違いはカウンセリングで確認できます（税込）</div>
-      </div>
-      <div class="campaign-sticker-wrap">
-        <div class="campaign-sticker" style="border:1.5px solid #4dc9e8;">
-          <div class="cs-top" style="color:#0f6a8a;">初来院限定</div>
-          <div class="cs-price" style="color:#0f6a8a;">クーポン配布中</div>
-          <div class="cs-bottom" style="color:#0f6a8a;">実際の割引額は実装直前に確認</div>
-        </div>
-      </div>
-      <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#4dc9e8,#0f6a8a);">無料カウンセリングを予約する ▶</button></div>
-    </div>
-
-    <div class="card">
-      <div class="card-header hdr-inject"><span class="brand">TCB</span><span class="pr-badge">料金</span></div>
-      <div class="card-title" style="font-size:13px;">再生注射の料金</div>
-      <div class="price-block" style="background:#fff3e8;">
-        <div class="pb-name">クマ取り再生注射（通常）</div>
-        <div class="pb-before">通常¥9,800（税込）</div>
-        <div class="pb-after" style="color:#e37400;">→ 初回¥0</div>
-        <div class="pb-note">プレミアム(スネコス)1cc¥69,800／3回コース¥189,000も選択可</div>
-      </div>
-      <div class="campaign-sticker-wrap">
-        <div class="campaign-sticker" style="border:1.5px solid #ffab4d;">
-          <div class="cs-top" style="color:#e37400;">初回0円</div>
-          <div class="cs-price" style="color:#e37400;">キャンペーン中</div>
-          <div class="cs-bottom" style="color:#e37400;">実施期間は予約時に要確認</div>
-        </div>
-      </div>
-      <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#ffab4d,#e37400);">無料カウンセリングを予約する ▶</button></div>
-    </div>
-
-  </div>
-
-  <div class="warn-note">
-    <b>要確認（設計書4章）:</b> 脱脂手術の25,000円OFF/30,000円OFFはどちらか一方のみが実際に表示されている常設バナーパターン（シミの前例と同一）。再生注射の初回0円は表示期間が2026/7/26までとLP上に表示されており、実装時期次第で切れている可能性がある。いずれも実装直前に表示状態を再確認すること。
   </div>
 </div>
 </div>
