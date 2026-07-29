@@ -152,16 +152,87 @@
     </div>
   </div>
 
-  <!-- ③ 補足 -->
+  <!-- ③ 記事の規模とMCV転換 -->
   <div class="section">
     <div class="section-head">
-      <div class="num num-slate">3</div>
+      <div class="num num-green">3</div>
+      <div>
+        <div class="section-title">記事の規模とMCV転換</div>
+        <div class="section-sub">森林さんの依頼背景：この記事がどれだけのインパクトを持ち、MCV→CVにどう繋がっているか</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">月間クリック数（GSC）</div>
+          <div class="kpi-value">1,847</div>
+          <div class="kpi-sub">ED全18記事中1位（2位ed-dmm 782の2.4倍）</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">年初来累計（2026年）友だち</div>
+          <div class="kpi-value">13人</div>
+          <div class="kpi-sub">PU 9人＋バナー 4人</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">MCV件数</div>
+          <div class="kpi-value">8件</div>
+          <div class="kpi-sub">MCVR 61.5%（友だち13人中）</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">CV件数・売上</div>
+          <div class="kpi-value">取得不可</div>
+          <div class="kpi-sub">ジャンル単位集計のみ</div>
+        </div>
+      </div>
+      <p><strong>ed-aphrodisiacはED全記事の中で月間クリック数が最大（1,847/月）で、トラフィック規模としては最もインパクトのある記事。</strong>年初来の友だち13人のうちMCVに進んだのは8件（MCVR 61.5%）で、診断・PU接続後の転換自体は悪くない。</p>
+      <div class="insight insight-blue">
+        <strong>CV・売上は現状「取得不可」。</strong>売上管理スプシがED全体（ジャンル単位）でしか集計されておらず、記事単位に分解する仕組みがない。この記事がどれだけCVに貢献しているかを正確に知るには、売上データ側にタグ・記事単位のブレークダウンを追加する必要がある。
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 参考：他にバナーが入っている記事 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">4</div>
+      <div>
+        <div class="section-title">参考：現在バナーが入っている他記事</div>
+        <div class="section-sub">ed-self（ED初期症状）— ED genreでバナーが入っているのはこの1記事のみ</div>
+      </div>
+    </div>
+    <div class="body">
+      <p>ED genre全体で、バナータグが実際に稼働しているのは<strong>ed-aphrodisiac</strong>とこの<strong>ed-self（初期症状）</strong>の2記事のみ。ed-selfは記事・診断タイプの相性が違うため、参考として並べる。</p>
+      <table>
+        <thead>
+          <tr><th>指標</th><th>ed-aphrodisiac<br>（本レポート対象）</th><th>ed-self<br>（ED初期症状）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>年初来累計 LP表示</td><td>1,094</td><td>920</td></tr>
+          <tr><td>年初来累計 PU表示</td><td>671</td><td>367</td></tr>
+          <tr><td>年初来累計 PUクリック</td><td>108</td><td>39</td></tr>
+          <tr><td>友だち（PU経由）</td><td>9人</td><td>0人</td></tr>
+          <tr><td>友だち（バナー経由）</td><td>4人</td><td>4人</td></tr>
+          <tr><td>友だち合計</td><td>13人</td><td>4人</td></tr>
+          <tr><td>MCV件数</td><td>8件</td><td>4件</td></tr>
+          <tr><td>MCVR（対友だち）</td><td>61.5%</td><td>100%</td></tr>
+        </tbody>
+      </table>
+      <div class="insight insight-blue">
+        ed-selfは<strong>PU経由の友だち追加がゼロで、実績が全てバナー経由</strong>という珍しいパターン（記事の性質上、PU自体のCTRが低い可能性）。ed-aphrodisiacはPU・バナー両方が寄与しており、記事によってバナー／PUの効き方が違うことが伺える。MCVR（100%）はn=4と極小のため参考値どまり。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ 補足 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">5</div>
       <div>
         <div class="section-title">補足</div>
       </div>
     </div>
     <div class="body">
-      <p>集計は<code>/seo_ed/勃起役おすすめ_*</code>タグ（PU3種＋バナー）のみに絞っており、別記事の「精力剤10選」タグは含まない。バナー設置時期は2026年2月末〜3月頭（Ren→森林さん依頼）としてこの日付で区切っている。</p>
+      <p>集計は<code>/seo_ed/勃起役おすすめ_*</code>タグ（PU3種＋バナー）のみに絞っており、別記事の「精力剤10選」タグは含まない。バナー設置時期は2026年2月末〜3月頭（Ren→森林さん依頼）としてこの日付で区切っている。月間クリック数（GSC）はdashboard/add_ed_sheet.pyの記録値。</p>
     </div>
   </div>
 
