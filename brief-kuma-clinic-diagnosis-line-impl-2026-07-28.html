@@ -103,7 +103,7 @@
         <tr><td style="font-weight:700;">アフィリリンク（メタリフ）</td><td><span class="pill ptbd">未確定</span> afb経由の遷移先URL（シミの<code>line-collect.com/organic/shimi/...</code>に相当するもの）がまだ用意できていません。実装直前にNoaへ確認・連携します</td></tr>
         <tr><td style="font-weight:700;">結果カルーセル</td><td>脱脂手術タイプ3枚・再生注射タイプ3枚（それぞれ独立、Q5の回答でどちらか一方のみ表示）</td></tr>
         <tr><td style="font-weight:700;">PRカルーセル</td><td>結果カルーセルCard3「おすすめのクリニックを見る」タップ後に表示。脱脂手術用5枚・再生注射用5枚（それぞれ独立）</td></tr>
-        <tr><td style="font-weight:700;">深掘りハブ</td><td>PRカルーセルの後（または途中離脱時）に「よくある質問を見る」のみ。<strong>症例紹介・キャンペーン単独タブは無し</strong>（下記NG制約・実装メモ参照）</td></tr>
+        <tr><td style="font-weight:700;">深掘りハブ</td><td>PRカルーセルの後（または途中離脱時）に「よくある質問を見る」「施術までの流れを見てみる」の2メニュー。「施術までの流れ」はシミ診断と共通（TCB全体の来院フローのため）。<strong>症例紹介・キャンペーン単独タブは無し</strong>（下記NG制約・実装メモ参照）</td></tr>
         <tr><td style="font-weight:700;">設置予定記事</td><td><span class="pill ptbd">未定</span> mega-clinic.com クマジャンル記事のいずれか。Noa側で後日確定・連携します（下記PU設置先一覧参照）</td></tr>
       </table>
     </div>
@@ -170,7 +170,7 @@
       </div>
       <div class="flow-arrow">↓</div>
 
-      <div class="flow-result">深掘りハブ「よくある質問を見る」</div>
+      <div class="flow-result">深掘りハブ「よくある質問を見る」／「施術までの流れを見てみる」</div>
       <div class="flow-arrow">↓</div>
 
       <div class="flow-result" style="background:var(--accent-light);border-color:var(--accent);color:var(--accent);">無料カウンセリング予約（アフィリリンク）</div>
@@ -267,8 +267,8 @@
 
   <!-- 結果カルーセル・PRカルーセル・FAQ（制作済み） -->
   <div class="section">
-    <div class="section-title">結果カルーセル・PRカルーセル・FAQ（制作済み）</div>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;">全5タブを1ファイルに統合済み。タブ切替UIはあくまで社内確認用で、実装時はQ5の回答値に応じて「結果カルーセル（Card1〜4）→PRカルーセル（Card1〜5）」を出し分け、その後は共通の「よくある質問」に合流する構成でLINE側に実装する。</p>
+    <div class="section-title">結果カルーセル・PRカルーセル・FAQ・施術までの流れ（制作済み）</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;">全6タブを1ファイルに統合済み。タブ切替UIはあくまで社内確認用で、実装時はQ5の回答値に応じて「結果カルーセル（Card1〜3）→PRカルーセル（Card1〜5）」を出し分け、その後は共通の「よくある質問」「施術までの流れ」に合流する構成でLINE側に実装する。</p>
 
     <a href="cards-kuma-clinic-hub-2026-07-23.html" target="_blank" style="display:inline-block;background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:700;padding:8px 18px;border-radius:6px;text-decoration:none;margin-bottom:12px;">別タブで開く →</a>
     <iframe
@@ -286,6 +286,7 @@
           <tr><td style="font-weight:700;">③ PRカルーセル｜脱脂手術</td><td>5枚（ブランド訴求+料金／施術について／価格+交通費補助／全社実績／最終CTA）</td></tr>
           <tr><td style="font-weight:700;">④ PRカルーセル｜再生注射</td><td>5枚（ブランド訴求+料金／施術について・配合成分バブルイラスト／期間限定キャンペーン／全社実績／最終CTA）</td></tr>
           <tr><td style="font-weight:700;">⑤ よくある質問</td><td>12枚（脱脂手術8問／再生注射4問）</td></tr>
+          <tr><td style="font-weight:700;">⑥ 施術までの流れ</td><td>5枚（予約→カウンセラー→ドクター→契約→アフターケア。シミ診断と共通のためそのまま流用）</td></tr>
         </tbody>
       </table>
     </div>

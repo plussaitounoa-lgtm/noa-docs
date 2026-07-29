@@ -27,6 +27,8 @@
   .tab-btn.tab-pr-inject.active { background: linear-gradient(90deg,#a9bcd6,#55698f); border-color: #55698f; }
   .tab-btn.tab-faq { border-color: #6a6a6a; color: #6a6a6a; }
   .tab-btn.tab-faq.active { background: linear-gradient(90deg,#999,#6a6a6a); border-color: #6a6a6a; }
+  .tab-btn.tab-flow { border-color: #1a9cc7; color: #1a9cc7; }
+  .tab-btn.tab-flow.active { background: linear-gradient(90deg,#4dc9e8,#1a9cc7); border-color: #1a9cc7; }
 
   .tab-section { display: none; }
   .tab-section.active { display: block; }
@@ -180,6 +182,15 @@
   #section-inject .campaign-sticker .cs-bottom { color: #d6336c; }
   #section-inject .back-link a { color: #55698f; text-decoration: none; }
 
+  /* ═══ 施術までの流れ（水色・シミ診断と共通） ═══ */
+  .recommend-photo { margin: 10px 14px 8px; height: 70px; border-radius: 8px; background: repeating-linear-gradient(45deg,#f5f5f5,#f5f5f5 10px,#ebebeb 10px,#ebebeb 20px); display: flex; align-items: center; justify-content: center; text-align: center; color: #999; font-size: 8.5px; line-height: 1.5; padding: 6px; }
+  #section-flow .step-badge-wrap { text-align: center; padding: 8px 0 2px; }
+  #section-flow .step-badge { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; background: radial-gradient(circle,#fff,#e3f4fb); border: 1.5px solid #7fcbe8; }
+  #section-flow .step-badge .sb-num { font-size: 14px; font-weight: 900; color: #1a9cc7; line-height: 1.1; }
+  #section-flow .step-badge .sb-en { font-size: 6px; color: #1a9cc7; font-style: italic; }
+  #section-flow .flow-title { text-align: center; font-size: 13.5px; font-weight: 800; color: #333; padding: 4px 10px 8px; }
+  #section-flow .flow-text { font-size: 10px; color: #555; line-height: 1.8; padding: 0 12px 12px; }
+
   /* ═══ FAQ（グレー） ═══ */
   #section-faq .type-label { color: #6a6a6a; }
   #section-faq .type-header { border-bottom-color: #ddd; }
@@ -209,6 +220,7 @@
   <button class="tab-btn tab-inject" onclick="switchTab('inject')">再生注射タイプ</button>
   <button class="tab-btn tab-pr-inject" onclick="switchTab('pr-inject')">再生注射PRカル</button>
   <button class="tab-btn tab-faq" onclick="switchTab('faq')">よくある質問を見る</button>
+  <button class="tab-btn tab-flow" onclick="switchTab('flow')">施術までの流れを見てみる</button>
 </div>
 
 <!-- ══════════════ TAB 1: 脱脂手術パターン ══════════════ -->
@@ -633,6 +645,66 @@
 
   <div class="warn-note">
     <b>全問数はここに掲載していません:</b> 脱脂手術は全8問（残り4問は設計書10.1章）。全問はデザイン依頼時に実装します。
+  </div>
+</div>
+</div>
+
+<!-- ══════════════ TAB: 施術までの流れ ══════════════ -->
+<div class="tab-section" id="section-flow">
+<div class="container">
+  <div class="type-header">
+    <span class="type-label">施術までの流れ</span>
+    <span class="type-sub">全5枚・TCB公式LP実データ準拠（シミ診断と共通、そのまま流用）</span>
+  </div>
+
+  <div class="tonmana-note"><b>構成:</b> TCB公式LP「施術の流れ」の5ステップを、ユーザー目線でコンパクトに要約。シミ診断で作成済みの内容をそのまま流用（TCB全体で共通の流れのため）。</div>
+
+  <div class="cards-row">
+
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="step-badge-wrap"><div class="step-badge"><div class="sb-num">01</div><div class="sb-en">Reservation</div></div></div>
+      <div class="flow-title">カウンセリング予約</div>
+      <div class="recommend-photo">STEP01 イメージイラスト<br>（差し替え予定）</div>
+      <div class="flow-text">カウンセリングは無料。Web・LINE・電話で予約OK。施術するか迷っている段階でも気軽に相談できます。</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="step-badge-wrap"><div class="step-badge"><div class="sb-num">02</div><div class="sb-en">Counseling</div></div></div>
+      <div class="flow-title">美容カウンセラーとの<br>カウンセリング</div>
+      <div class="recommend-photo">STEP02 イメージイラスト<br>（差し替え予定）</div>
+      <div class="flow-text">来院当日、専任カウンセラーが悩みや不安をヒアリング。ドクターに聞きにくいことや料金の支払い方法など不明点を解消できます。</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="step-badge-wrap"><div class="step-badge"><div class="sb-num">03</div><div class="sb-en">Doctor</div></div></div>
+      <div class="flow-title">担当ドクターとの<br>カウンセリング</div>
+      <div class="recommend-photo">STEP03 イメージイラスト<br>（差し替え予定）</div>
+      <div class="flow-text">シミュレーションから施術まで同じドクターが担当。予算や理想のイメージを踏まえて最適なプランを提案してくれます。シミュレーション画像は持ち帰りOK！</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="step-badge-wrap"><div class="step-badge"><div class="sb-num">04</div><div class="sb-en">Contract</div></div></div>
+      <div class="flow-title">ご契約</div>
+      <div class="recommend-photo">STEP04 イメージイラスト<br>（差し替え予定）</div>
+      <div class="flow-text">プランやダウンタイム、リスクに納得できたら契約。空きがあれば当日施術も可能です。</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
+      <div class="step-badge-wrap"><div class="step-badge"><div class="sb-num">05</div><div class="sb-en">Aftercare</div></div></div>
+      <div class="flow-title">術後のアフターケア</div>
+      <div class="recommend-photo">STEP05 イメージイラスト<br>（差し替え予定）</div>
+      <div class="flow-text">施術後のケア方法を説明。必要に応じて後日の経過観察もあります。</div>
+    </div>
+
+  </div>
+
+  <div class="warn-note">
+    <b>医療広告ガイドライン確認済み:</b> 全ステップTCB公式LP実データ準拠。誇大表現・体験談・比較優良広告なし。
   </div>
 </div>
 </div>
