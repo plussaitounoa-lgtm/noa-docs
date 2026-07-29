@@ -103,6 +103,10 @@
   .subsidy-row { display: flex; gap: 6px; padding: 0 10px 10px; }
   .subsidy-item { flex: 1; background: #fff; border-radius: 8px; padding: 8px 4px 6px; text-align: center; }
   .subsidy-item .si-badge { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #fdf6e3, #ecd48a); border: 1.5px solid #d4af37; font-size: 7px; font-weight: 900; color: #7a5a10; margin-bottom: 4px; line-height: 1.25; }
+  .benefit-badges { display: flex; gap: 5px; padding: 6px 10px 4px; }
+  .benefit-badge { flex: 1; background: #fff; border: 1.5px solid; border-radius: 8px; padding: 4px 3px; text-align: center; font-size: 8.5px; font-weight: 700; line-height: 1.4; }
+  #section-pr-surgery .benefit-badge { border-color: #b8e6f5; color: #0f6a8a; }
+  #section-pr-inject .benefit-badge { border-color: #ffd9ad; color: #e37400; }
   .subsidy-item .si-label { font-size: 7.5px; color: #555; line-height: 1.45; }
   #section-surgery .price-table-list, #section-pr-surgery .price-table-list { border-color: #b8e6f5; }
   #section-surgery .price-table-list .pt-head, #section-pr-surgery .price-table-list .pt-head { background: linear-gradient(90deg,#4dc9e8,#0f6a8a); }
@@ -435,7 +439,7 @@
     <span class="type-sub">全5枚・結果カルーセルCard4「詳しく見てみる」タップ後に表示</span>
   </div>
 
-  <div class="tonmana-note"><b>構成:</b> 脱脂手術PRカルと同一構成。カラーは再生注射のブランドカラー（オレンジ）に変更。Card1の目玉は「初回0円」。</div>
+  <div class="tonmana-note"><b>構成:</b> Card1（ブランド訴求+料金、シミCard1準拠・単一施術のためクーポンボックスは1つ）／Card2（施術について・配合成分4つ、LPのFV参照）／Card3（期間限定キャンペーン、実際のLP表示に準拠）／Card4（全社実績）／Card5（最終CTA・初回0円再訴求）。カラーは再生注射のブランドカラー（オレンジ）。</div>
 
   <div class="cards-row">
 
@@ -447,14 +451,18 @@
       </div>
       <div class="price-tag-wrap">
         <div class="price-tag-before">通常¥9,800（税込）</div>
-        <div class="price-tag-after" style="color:#e37400;">→ 初回¥0</div>
-        <div class="price-tag-note">プレミアム(スネコス)1cc¥69,800／3回コース¥189,000も選択可</div>
+        <div class="price-tag-after" style="color:#e37400;">→ ¥0</div>
+        <div class="price-tag-note">※初来院限定クーポン適用時</div>
+      </div>
+      <div class="benefit-badges">
+        <div class="benefit-badge">ダウンタイム<br>ほぼ0<sup>※</sup></div>
+        <div class="benefit-badge">当日メイク<br>可能</div>
       </div>
       <div class="campaign-sticker-wrap">
         <div class="campaign-sticker" style="border:1.5px solid #ffab4d;">
-          <div class="cs-top" style="color:#e37400;">初回0円</div>
-          <div class="cs-price" style="color:#e37400;">キャンペーン中</div>
-          <div class="cs-bottom" style="color:#e37400;">実施期間は予約時に要確認</div>
+          <div class="cs-top" style="color:#e37400;">WEB予約で！</div>
+          <div class="cs-price" style="color:#e37400;">初回0円キャンペーン</div>
+          <div class="cs-bottom" style="color:#e37400;">クーポンをGET♥</div>
         </div>
       </div>
       <div class="cta-wrap-green"><button class="cta-btn-green" style="background:linear-gradient(180deg,#ffab4d,#e37400);">詳しく見てみる ›</button></div>
@@ -462,24 +470,33 @@
 
     <div class="card">
       <div class="card-header hdr-inject"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="card-title" style="font-size:13px;">こんな方に<br>オススメ！！</div>
-      <div class="check-list-base">
-        <div class="ci">ダウンタイムはできるだけ短くしたい</div>
-        <div class="ci">まずは負担少なく試してみたい</div>
-        <div class="ci">手術はまだハードルが高いと感じる</div>
-        <div class="ci">注射だけでどのくらい変わるか気になる</div>
+      <div class="card-title" style="font-size:14px;">クマ取り再生注射とは？</div>
+      <div class="card-text" style="text-align:center;">ダウンタイムほぼなしの、<br>切らないクマ取り施術です</div>
+      <div class="benefit-list">
+        <div class="benefit-row">脂肪溶解成分</div>
+        <div class="benefit-row">FGF再生因子</div>
+        <div class="benefit-row">ヒアルロン酸</div>
+        <div class="benefit-row">漢方エキス</div>
       </div>
+      <div class="card-text" style="text-align:center;font-size:9px;">これらの成分をギュッと凝縮して、<br>目の下に注入</div>
       <div class="cta-wrap-green"><span class="cta-tag">Web予約でクーポンGET</span><button class="cta-btn-green" style="background:linear-gradient(180deg,#ffab4d,#e37400);">無料カウンセリングを予約する<span class="cta-circle">▶</span></button></div>
     </div>
 
     <div class="card">
       <div class="card-header hdr-inject"><span class="brand">TCB</span><span class="pr-badge">PR</span></div>
-      <div class="card-title" style="font-size:13px;">安心して<br>受けられる理由</div>
-      <div class="benefit-list">
-        <div class="benefit-row">ダウンタイムは2日程度と短い</div>
-        <div class="benefit-row">施術時間も短く当日の予定に響きにくい</div>
-        <div class="benefit-row">症例モデル参加でさらにお得になる制度あり</div>
+      <div class="card-title" style="font-size:13px;">期間限定<br>キャンペーン中！</div>
+      <div class="card-text" style="text-align:center;font-size:8px;color:#999;">2026/7/27(月)〜2026/8/31(月)</div>
+      <div class="price-tag-wrap">
+        <div class="price-tag-before" style="font-size:9px;">通常¥25,000 OFFのところ</div>
+        <div class="price-tag-after" style="color:#e37400;font-size:20px;">今だけ¥30,000 OFF</div>
+        <div class="price-tag-note">※初来院のみ有効・1円以上の対象施術で利用可能</div>
       </div>
+      <div class="price-table-list" style="margin:4px 14px 8px;">
+        <div class="pt-head" style="background:linear-gradient(90deg,#ffab4d,#e37400);">クマ取り再生注射</div>
+        <div class="pt-row"><span class="pt-name" style="color:#999;text-decoration:line-through;">通常価格</span><span class="pt-price" style="color:#999;text-decoration:line-through;">¥9,800</span></div>
+        <div class="pt-row"><span class="pt-name" style="color:#e37400;">期間限定クーポン適用価格</span><span class="pt-price" style="color:#d6336c;">¥0</span></div>
+      </div>
+      <div class="card-text" style="text-align:center;font-size:7.5px;color:#999;">※実装直前にキャンペーン期間を再確認（ローリング更新の可能性あり）</div>
       <div class="cta-wrap-green"><span class="cta-tag">Web予約でクーポンGET</span><button class="cta-btn-green" style="background:linear-gradient(180deg,#ffab4d,#e37400);">無料カウンセリングを予約する<span class="cta-circle">▶</span></button></div>
     </div>
 
@@ -523,7 +540,7 @@
   </div>
 
   <div class="warn-note">
-    <b>医療広告ガイドライン確認済み:</b> 体験談・比較優良広告・誇大な保証表現は使用していません。実績データはTCB公式ページで裏取り済み（全社データ）。初回0円の実施期間は実装直前に表示状態を確認して反映します（設計書4章・11章）。
+    <b>医療広告ガイドライン確認済み:</b> 体験談・比較優良広告・誇大な保証表現は使用していません。実績データはTCB公式ページで裏取り済み（全社データ）。Card3の「2026/7/27〜8/31」キャンペーンは、前回確認時（2026/6/29〜7/26）から期間が切り替わっており、ローリング更新型の可能性が高い。初回0円・期間限定クーポンの実施期間は実装直前に表示状態を必ず再確認して反映します（設計書4章・11章）。
   </div>
 </div>
 </div>
