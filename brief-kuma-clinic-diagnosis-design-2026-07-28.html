@@ -10,8 +10,8 @@
   :root {
     --bg: #F5FAFC; --surface: #FFFFFF; --border: #D6E8EF;
     --text: #14232A; --muted: #5C7480; --accent: #0f6a8a; --accent-light: #E3F4FA;
-    --tag-a: #0f6a8a; --tag-b: #e37400;
-    --tag-a-bg: #E3F4FA; --tag-b-bg: #FFF3E8;
+    --tag-a: #0f6a8a; --tag-b: #d6336c;
+    --tag-a-bg: #E3F4FA; --tag-b-bg: #FDEEF2;
   }
   body { font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.75; padding: 32px 16px 80px; }
   .doc { max-width: 860px; margin: 0 auto; }
@@ -31,7 +31,7 @@
   .type-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 24px; }
   .type-header { display: flex; align-items: center; gap: 10px; padding: 14px 18px; font-weight: 700; font-size: 13px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
   .type-header.a { background: var(--tag-a-bg); color: var(--tag-a); border-color: #BFE0EE; }
-  .type-header.b { background: var(--tag-b-bg); color: var(--tag-b); border-color: #FFD9AD; }
+  .type-header.b { background: var(--tag-b-bg); color: var(--tag-b); border-color: #F3B8CD; }
   .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .type-header.a .dot { background: var(--tag-a); }
   .type-header.b .dot { background: var(--tag-b); }
@@ -69,7 +69,7 @@
           <tr><td>診断表紙</td><td>1枚</td><td>「あなたに合うクマ改善方法がわかる！」友だち追加直後、Q1の前に表示</td></tr>
           <tr><td>設問パネル</td><td>5枚</td><td>Q1〜Q5 各1枚。Q3・Q4は非分岐（診断の厚み用、結果に反映なし）</td></tr>
           <tr><td>結果カルーセル｜脱脂手術タイプ</td><td><strong>3枚</strong></td><td>タイプ発表＋チェックリスト／原因／アプローチ+CTA</td></tr>
-          <tr><td>結果カルーセル｜再生注射タイプ</td><td><strong>3枚</strong></td><td>脱脂手術タイプと同構成、ブランドカラーのみ変更（オレンジ）</td></tr>
+          <tr><td>結果カルーセル｜再生注射タイプ</td><td><strong>3枚</strong></td><td>脱脂手術タイプと同構成、ブランドカラーのみ変更（くすみブルー×ピンク）</td></tr>
           <tr><td>PRカルーセル｜脱脂手術</td><td><strong>5枚</strong></td><td>ブランド訴求+料金／施術について／価格／全社実績+交通費補助／最終CTA</td></tr>
           <tr><td>PRカルーセル｜再生注射</td><td><strong>5枚</strong></td><td>ブランド訴求+料金／施術について（配合成分）／期間限定キャンペーン／全社実績／最終CTA</td></tr>
           <tr><td>よくある質問（脱脂手術）</td><td><strong>8枚</strong></td><td>ダウンタイム／セルフケア／再発／目の状態／傷跡／縫合／年齢／まつげエクステ</td></tr>
@@ -81,10 +81,9 @@
   </div>
 
   <div class="warn-box">
-    <strong>制作前に確認してほしいこと（3点）</strong><br>
+    <strong>制作前に確認してほしいこと（2点）</strong><br>
     1. <strong>症例紹介は使いません。</strong> 案件都合でBefore/After写真の使用が不可のため、診断フローに症例紹介パートは含まれていません。<br>
-    2. <strong>クーポン金額は仮です。</strong> 脱脂手術の「25,000円OFF／30,000円OFF」はTCB公式LP上どちらか一方のみ表示される仕様（実装直前に確定額を連絡します）。再生注射の「初回0円」キャンペーンも表示期限があるため、実装直前に生きているか再確認してから金額を反映してください。<br>
-    3. <strong>再生注射のPRカルーセルCard2はまだ「こんな方にオススメ」のままです。</strong> 脱脂手術側は結果カルーセルと内容が重複していたため「施術について」に差し替え済みですが、再生注射側は未着手です。着手前にNoaに一声かけてください（差し替わる可能性があります）。
+    2. <strong>クーポン金額・キャンペーン期間は仮です。</strong> 脱脂手術の「25,000円OFF／30,000円OFF」はTCB公式LP上どちらか一方のみ表示される仕様（実装直前に確定額を連絡します）。再生注射の「初回0円」キャンペーン・期間限定キャンペーン（2026/7/27〜8/31・¥30,000 OFF）はどちらもローリング更新型の可能性が高いため、実装直前に生きているか再確認してから金額・期間を反映してください。
   </div>
 
   <div class="section">
@@ -192,7 +191,7 @@
     <div class="type-block">
       <div class="type-header b">
         <span class="dot"></span>
-        再生注射｜オレンジ系（#e37400）
+        再生注射｜くすみブルー×ピンク系（#55698f／#d6336c）
       </div>
       <div class="tbl-wrap">
         <table>
@@ -235,7 +234,7 @@
     <div class="type-block">
       <div class="type-header b">
         <span class="dot"></span>
-        再生注射｜オレンジ系（#e37400）
+        再生注射｜くすみブルー×ピンク系（#55698f／#d6336c）
       </div>
       <div class="tbl-wrap">
         <table>
@@ -290,7 +289,7 @@
     <div class="section-title">トンマナ</div>
     <p>全体: 医療クリニック系らしい清潔感のある配色。カード図（cards-kuma-clinic-hub-2026-07-23.html）に準拠。</p>
     <div class="swatch-row"><span class="swatch" style="background:#0f6a8a;"></span>脱脂手術（結果カル／PRカル）: 水色系（#4dc9e8 〜 #0f6a8a）</div>
-    <div class="swatch-row"><span class="swatch" style="background:#e37400;"></span>再生注射（結果カル／PRカル）: オレンジ系（#ffab4d 〜 #e37400）</div>
+    <div class="swatch-row"><span class="swatch" style="background:#d6336c;"></span>再生注射（結果カル／PRカル）: くすみブルー×ピンク系（#a9bcd6〜#55698f／アクセント#d6336c）</div>
     <div class="swatch-row"><span class="swatch" style="background:#6a6a6a;"></span>よくある質問: グレー系（既存カードトンマナ踏襲）</div>
     <p style="margin-top:12px;">全体感: 清潔感 × 信頼感 × シンプル。誇大な演出は避け、事実ベースの提示を意識。医療広告ガイドライン上、体験談・比較優良広告・誇大表現は使用しない</p>
   </div>
