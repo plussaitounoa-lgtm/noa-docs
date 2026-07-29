@@ -31,6 +31,7 @@
     tr:last-child td { border-bottom: none; }
     .up { color: #10b981; font-weight: 700; }
     .down { color: #ef4444; font-weight: 700; }
+    .row-marker td { background: #fef9c3; }
 
     .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
     .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
@@ -72,8 +73,8 @@
       </div>
     </div>
     <div class="body">
-      <div class="verdict verdict-blue">PVFRは0.79%→3.16%→0.52%と推移。設置直後（3〜4月）は改善したが、直近（5月追加後〜7月）はBeforeより悪化しており、一時的なブレだった可能性が高い。母数が一桁台のため、どの期間も断定はできない。</div>
-      <p>3つの59日間で比較：<strong>Before</strong>（設置前・2026-01-01〜02-28）／<strong>After1</strong>（初回設置直後・2026-03-01〜04-28）／<strong>After2</strong>（5月の追加設置後・2026-05-15〜07-12）。※データが取得できる最も古い日が2026-01-01のため、Beforeが59日間しか取れない制約があり、他の期間もこれに合わせて59日間で揃えた。</p>
+      <div class="verdict verdict-blue">現状のデータではバナー効果は判定できない。振れの主因はバナーではなく検索順位変動（GSC実データで裏付け済み）による母数の増減とみられる。バナーを外す理由もないため<strong>設置は維持し、検索順位が落ち着いてから改めて効果を検証する</strong>。</div>
+      <p>PVFRは0.79%→3.16%→0.52%と推移し、設置直後（3〜4月）は改善、直近（5月追加後〜7月）はBeforeより悪化した。3つの59日間で比較：<strong>Before</strong>（設置前・2026-01-01〜02-28）／<strong>After1</strong>（初回設置直後・2026-03-01〜04-28）／<strong>After2</strong>（5月の追加設置後・2026-05-15〜07-12）。※データが取得できる最も古い日が2026-01-01のため、Beforeが59日間しか取れない制約があり、他の期間もこれに合わせて59日間で揃えた。</p>
     </div>
   </div>
 
@@ -123,7 +124,7 @@
           <tr><td>PUクリック</td><td>46</td><td>15</td><td>28</td></tr>
           <tr><td>PU CTR</td><td>25.3%</td><td>17.6%</td><td>8.7%</td></tr>
           <tr><td>友だち追加（PU経由）</td><td>3人</td><td>2人</td><td>1人</td></tr>
-          <tr><td>友だち追加（バナー経由）</td><td>0人</td><td>3人</td><td>1人</td></tr>
+          <tr class="row-marker"><td>友だち追加（バナー経由）</td><td>0人</td><td>3人</td><td>1人</td></tr>
           <tr><td>友だち追加率（PU、対クリック）</td><td>6.5%</td><td>13.3%</td><td>3.6%</td></tr>
           <tr><td>友だち合計</td><td>3人</td><td>5人</td><td>2人</td></tr>
           <tr><td>MCV件数</td><td>2件</td><td>2件</td><td>1件</td></tr>
