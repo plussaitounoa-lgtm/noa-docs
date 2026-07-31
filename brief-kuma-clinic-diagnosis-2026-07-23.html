@@ -28,13 +28,14 @@
   tr:nth-child(even) td { background: #FAFCFB; }
   .code-block { background: #1A2420; color: #EBF6F1; font-family: "SF Mono", Consolas, monospace; font-size: 12px; line-height: 1.8; border-radius: 8px; padding: 18px 20px; overflow-x: auto; white-space: pre; margin-bottom: 16px; }
   .note-box { background: var(--accent-light); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; font-size: 12.5px; color: var(--muted); margin-bottom: 16px; }
-  details.note-box { padding: 10px 16px; margin-bottom: 6px; }
-  details.note-box summary { cursor: pointer; font-weight: 700; color: var(--accent); font-size: 12.5px; list-style: none; }
-  details.note-box summary::-webkit-details-marker { display: none; }
-  details.note-box summary::before { content: "▶ "; font-size: 10px; }
-  details.note-box[open] summary::before { content: "▼ "; }
-  details.note-box[open] summary { margin-bottom: 8px; }
-  details.note-box .note-box-body { padding-left: 2px; }
+  details.update-history { border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; margin-bottom: 24px; }
+  details.update-history summary { cursor: pointer; color: var(--accent); font-size: 13px; list-style: none; }
+  details.update-history summary::-webkit-details-marker { display: none; }
+  details.update-history summary::before { content: "▶ "; font-size: 10px; }
+  details.update-history[open] summary::before { content: "▼ "; }
+  details.update-history[open] summary { margin-bottom: 12px; }
+  details.update-history .note-box { margin-bottom: 8px; }
+  details.update-history .note-box:last-child { margin-bottom: 0; }
   .warn-box { background: #FBF2E4; border: 1px solid #F0DBB0; border-radius: 8px; padding: 12px 16px; font-size: 12.5px; color: #7a5a1a; margin-bottom: 16px; }
   .quote { border-left: 3px solid var(--border); padding: 6px 0 6px 14px; margin-bottom: 8px; font-size: 13px; color: var(--muted); }
   .quote .src { font-size: 11px; opacity: .8; }
@@ -50,56 +51,36 @@
   <div class="doc-header">
     <div class="eyebrow">Design Brief — Diagnosis Flow (v1.12)</div>
     <h1>クマ取り クリニック選び診断 設計書</h1>
-    <div class="meta">作成日: 2026-07-23（v1.24更新） ／ 対象: mega-clinic.com クマジャンル（対象記事は未定・後日確定）／ 提携先: TCB東京中央美容外科（afbアフィリエイト）／ ステータス: 新規設計・Ren確認前</div>
+    <div class="meta">作成日: 2026-07-23（v1.25更新） ／ 対象: mega-clinic.com クマジャンル（対象記事は未定・後日確定）／ 提携先: TCB東京中央美容外科（afbアフィリエイト）／ ステータス: 新規設計・Ren確認前</div>
   </div>
 
-  <details class="note-box" open><summary>v1.24更新履歴</summary><div class="note-box-body">Noaから「更新履歴が長くて邪魔で見づらい」と指摘を受け、この更新履歴（note-box）を折りたたみ式（HTML標準のdetails/summary要素、JS/API不使用）に変更。最新版以外は閉じた状態で表示するよう改善。</div></details>
-
-  <details class="note-box"><summary>v1.23更新履歴</summary><div class="note-box-body">デザイナーさん（米原さん）からNoa経由で2点質問。①FAQ「残り4問の原稿はどこにあるか」→10.1章に全8問分の原稿が実在することを確認・共有。②PRカルCard1「スタンダード〜エクセレント（4グレード）」ラベルの打ち消し線を指摘→<code>.price-tag-before</code>クラス（本来は値引き前価格用で取り消し線がデフォルト）をカテゴリラベルに誤用していたバグと判明、修正。あわせてこの質問をきっかけにこのHTML本文がv1.11頃から更新履歴だけ更新され本文テーブルが同期していなかった問題を発見。6〜11章・4.1章の本文を現行版に全面同期し、10.5章（施術までの流れ）を追加、症例紹介を「実装済み」と誤記していた4.1章の致命的な矛盾（9章の削除方針と真逆）も修正。</div></details>
-
-  <details class="note-box"><summary>v1.22更新履歴</summary><div class="note-box-body">Noaから「施術の流れも入れます。でもこれはシミ取りで一緒だったからそのまま入れていいよ」と指示。シミ診断で作成済みの「施術までの流れ」5枚（予約→カウンセラー→ドクター→契約→アフターケア、TCB全体共通フロー）をそのまま流用し10.5章として新設。深掘りハブに新規タブとして追加（よくある質問と並列の2メニュー構成に）。画像枚数36枚→41枚に更新。</div></details>
-
-  <details class="note-box"><summary>v1.21更新履歴</summary><div class="note-box-body">Noaから「結果カルの最後のCTAは、おすすめのクリニックを見る にして」と指示。結果カルーセルCard3（脱脂手術・再生注射両パターン）のCTAボタン文言を「詳しく見てみる」→「おすすめのクリニックを見る」に変更。あわせてカード図の「結果カルーセルCard4」表記（v1.8のCard4→Card3統合後に更新漏れ）を「Card3」に修正。</div></details>
-
-  <details class="note-box"><summary>v1.20更新履歴</summary><div class="note-box-body">Noaから「FAQカルの語尾を〜だよから〜ですますに変えて」と指示。10章の脱脂手術8問・再生注射4問すべての回答文の語尾を「〜だよ」から「〜です／ます」の丁寧語に変更（質問文はカジュアルな口語のまま維持）。カード図・デザイン依頼書のFAQサンプルにも同様に反映。</div></details>
-
-  <details class="note-box"><summary>v1.19更新履歴</summary><div class="note-box-body">Noaから「見出し変更したい。価格じゃなくてクマの原因を取り除けるにして」と指示。脱脂手術PRカルCard3の見出しを「価格」→「クマの原因を取り除ける」に変更（価格表・交通費補助・CTAの内容は変更なし）。</div></details>
-
-  <details class="note-box"><summary>v1.18更新履歴</summary><div class="note-box-body">Noaから「ごめん間違えた。3枚目にしたかった」と指摘。v1.17でCard2に置いた交通費補助をCard3（価格）に再移動、価格表の下・CTAの上に配置（CTAより前を厳守）。Card2は施術について（因果図式3ステップ＋施術名・ダウンタイム）のみのシンプルな構成に戻した。</div></details>
-
-  <details class="note-box"><summary>v1.17更新履歴</summary><div class="note-box-body">Noaが交通費補助（駐車場無料／遠方交通費補助最高3万円）の参考画像を再共有し「ここやっぱり2枚目に戻そう。だけどCTAの下にはやらないでくれ」と指示。v1.10でCard3のCTA下からCard4上部に移動していた交通費補助を、Card2「施術について」のCTAより前に再配置。Card4は全社実績データのみのシンプルな構成に戻した。</div></details>
-
-  <details class="note-box"><summary>v1.16更新履歴</summary><div class="note-box-body">v1.15の適用先を誤り（Noaは「脱脂のPR」＝PRカルーセルCard2「施術について」を指していたが、結果カルーセルCard2/3に反映していた）。Noaの指摘を受け訂正：結果カルーセルCard2「クマの原因」・Card3「脂肪を取り除くアプローチが◎」はv1.14以前の内容に復元。PRカルーセル脱脂手術Card2「施術について」を因果図式3ステップ（v1.15の文言を流用）＋施術名・ダウンタイムの一行補足に変更。</div></details>
-
-  <details class="note-box"><summary>v1.15更新履歴</summary><div class="note-box-body">Noaが脱脂手術LPの実際のPOINT01〜03画像（眼窩脂肪の解剖図・原因→アプローチ→効果）を共有し、結果カルーセルCard2をこの内容で1枚に収めるよう指示。causal-chainパーツの1行あたり文字数上限（約20〜21文字）を実測しトリム版を再提示、STEP3は実LP画像の「目の下の膨らみが消え、自然な目元へ」をそのまま採用。Card2を「クマの原因と、脱脂手術のアプローチ」＋因果図式3ステップに変更、Card3は重複文言を削除し「結膜側だから、傷跡が目立ちにくい」＋2項目リスト＋CTAにスリム化。</div></details>
-
-  <details class="note-box"><summary>v1.14更新履歴</summary><div class="note-box-body">Noaが成分バブルの参考画像を再共有し、「Card5はこのままでいい、Card2はテキスト列挙でなくこのイラストを入れて」と指示。再生注射PRカルCard2の配合成分表現を、テキスト箇条書きから4つの円形バブルを上下左右に配置したイラスト表現に変更。あわせてCard5への「無理な勧誘はない」追記案はNoaが現状維持を選択。</div></details>
-
-  <details class="note-box"><summary>v1.13更新履歴</summary><div class="note-box-body">Noaから「CTAの色を緑にして、シミの時と一緒」と指示。カード図のCTAボタン・タグ・矢印アイコンを脱脂手術/再生注射の区別なくシミ診断と同じ緑（#6cc670〜#3d9e42）に統一。あわせてNoaから「注射の方LPトンマナオレンジじゃなくない？」と指摘を受けTCB LP2を再確認したところ実際のトンマナは「くすみブルー×ピンク」と判明（Noa共有の実LPスクショで確認）。再生注射セクションのブランドカラーをオレンジ系からくすみブルー（#a9bcd6〜#55698f・構造色）×ピンク（#d6336c・アクセント色）の二色構成に全面変更。Card3の期間限定キャンペーンバナーは実際の販促画像に基づく色のため対象外。</div></details>
-
-  <details class="note-box"><summary>v1.12更新履歴</summary><div class="note-box-body">Noaがシミ診断のPRカルCard1画像とTCB再生注射LPのFV画像を共有し、再生注射PRカルの刷新を指示。Card1をシミCard1構造準拠に、バッジを「ダウンタイムほぼ0」「当日メイク可能」に、キャンペーンステッカーを「初回0円」に変更。Card2を「クマ取り再生注射とは？」＋配合成分4つ（脂肪溶解成分／FGF再生因子／ヒアルロン酸／漢方エキス）に差し替え。Card3を実際のLP掲載キャンペーン（2026/7/27〜8/31、¥25,000→¥30,000 OFF、¥9,800→¥0）に差し替え、ローリング更新型の可能性を明記。あわせてLP2のFVは3タイプ全てに訴求する設計と判明し、原因タイプ非分岐リスク（8章論点2）は実質「Q5で脱脂手術を選んだ場合」に限定されることを追記。</div></details>
-
-  <details class="note-box"><summary>v1.11更新履歴</summary><div class="note-box-body">Noaがシミ診断のPRカルーセル実物カード図を共有し「④⑤はほぼ同じでいい（⑤の施術は異なる）」と指示。Card5をシミ準拠のクーポンボックス表示に変更（¥25,000 OFF＋スタンダード¥83,600→¥58,600〜）。ただし脱脂手術の最安値はシミのライトプラン（¥9,800）と異なり25,000円OFFでも¥0にはならないため「→¥0」表記は使わず正しい引き算で表示。</div></details>
-
-  <details class="note-box"><summary>v1.10更新履歴</summary><div class="note-box-body">脱脂手術PRカルCard3でCTAボタンの下に交通費補助を置いていたが、Noaから「CTAの下に置いてる意味が分からない」と指摘。交通費補助をCard4（全社実績）に移動しCard3はCTAで終わる構成に修正。あわせて8章論点3（脱脂4グレードの違い）を再調査し、公式には本当に説明が無いことを確認（第三者比較サイトの情報は出典間で食い違うため不採用）。</div></details>
-
-  <details class="note-box"><summary>v1.9更新履歴</summary><div class="note-box-body">Q5④の選択肢を「まずは気軽に試してみたい」から「コスパを重視したい」に変更（Noa指示）。マッピング表の誘導理由も費用軸に合わせて修正。</div></details>
-
-  <details class="note-box"><summary>v1.8更新履歴</summary><div class="note-box-body">Noaから「結果カルーセルの4枚目は不要、3枚目にCTAを置く形にしたい」と指示。両パターンとも旧Card4（未来＋メリット列挙3項目＋CTA）を削除し、CTAのみCard3に統合。メリット列挙は復活させずシンプルな形を採用（Noaがテキストモックアップ2案から選択）。結果カルーセルは4枚→3枚に縮小。</div></details>
-
-  <details class="note-box"><summary>v1.7更新履歴</summary><div class="note-box-body">①案件都合で症例素材が使用不可のため、症例紹介パートを診断フローから完全削除。②Q4「クマ取りで不安なことは？」（非分岐、費用/仕上がり/効果持続/ダウンタイムの4択）を新設し、旧Q4（重視軸・分岐）はQ5にスライド、全5問構成に拡張。③脱脂手術PRカルCard2「こんな方にオススメ」が結果カルーセルCard1と内容重複していたため「施術について」に差し替え。④深掘りハブの「キャンペーン・料金を見る」をPRカルーセルと統合・削除。</div></details>
-
-  <details class="note-box"><summary>v1.6更新履歴</summary><div class="note-box-body">脱脂手術結果カルーセルCard2の見出しを「クマの、本当の原因。」→「クマの原因」に、Card3の見出しを「アプローチは、脂肪そのものを取り除くこと」→「脂肪を取り除くアプローチが◎」に変更（Noa指示）。</div></details>
-
-  <details class="note-box"><summary>v1.5更新履歴</summary><div class="note-box-body">Noaから「Card2に3POINT全部詰め込むのは1枚で収まるわけない」と指摘。POINT01（原因）のみCard2に残し、POINT02（アプローチ）はCard3の既存内容に統合、POINT03（再発ほぼなし）はCard4のメリット列挙に追加。あわせてCard1のQ3回答別エコー文言を削除（Noaの意図として当初から反映させる予定はなかった）。Q3は分岐にも結果表示にも反映しない、診断の厚みのためだけの設問に整理。8章論点2は緩和策なしの状態に戻り、Ren確認事項として維持。</div></details>
-
-  <details class="note-box"><summary>v1.4更新履歴</summary><div class="note-box-body">結果カルーセル脱脂手術パターンCard2を因果図式から3POINT構成（原因→アプローチ→結果、TCB公式LP施術説明画像を参照）に変更。脱脂手術PRカルCard3を「安心して受けられる理由」から「価格＋交通費補助」に変更、4章に交通費補助（駐車場無料／遠方交通費補助最高3万円）を追加。</div></details>
-
-  <details class="note-box"><summary>v1.3更新履歴</summary><div class="note-box-body">結果カルーセルとCV導線の間に抜けていたPRカルーセル（7.5章、脱脂手術/再生注射各5枚）を追加。TCBブランド・料金・全社実績はここで初めて開示する構成に修正。8章に論点6を追加。カード図にも2本のPRカルタブを追加。</div></details>
-
-  <details class="note-box"><summary>v1.1更新履歴</summary><div class="note-box-body">Noaより「質問が2個しかなく説得力が弱い」との指摘を受け、Q1性別・Q2年代（非分岐）・Q3症状の見え方（非分岐・エコー用）を新設し、旧Q1は廃止・旧Q2は重視軸としてQ4にスライドする4問構成に拡張（5章）。Q3回答別の共感一言を結果カルーセルCard1冒頭に追加し、8章論点2は多少緩和（解消はしていない）と明記。「作り込みすぎない」方針を理由にした記述は削除・修正した。</div></details>
-
-  <details class="note-box"><summary>v1.2更新履歴</summary><div class="note-box-body">Q3の質問文を『目の下、鏡で見るとどんな感じ？』に変更（選択肢は変更なし）。</div></details>
+  <details class="update-history"><summary><strong>更新履歴（全25件・クリックで展開）</strong></summary>
+  <div class="note-box"><strong>v1.25更新履歴：</strong> Noaから「いや、更新し歴として閉じてほしいの。その中にまた今の状態のvごとの入れてくれればいい」と指摘。v1.24でバージョンごとに個別開閉できる形にしたが、意図は違い「更新履歴」全体を1つの折りたたみにまとめ、中に各バージョンをそのまま並べる形が正しかった。25個の個別開閉を1つの外枠開閉に統合し直した。</div>
+  <div class="note-box"><strong>v1.24更新履歴：</strong> Noaから「更新履歴が長くて邪魔で見づらい」と指摘を受け、この更新履歴（note-box）を折りたたみ式（HTML標準のdetails/summary要素、JS/API不使用）に変更。最新版以外は閉じた状態で表示するよう改善。</div>
+  <div class="note-box"><strong>v1.23更新履歴：</strong> デザイナーさん（米原さん）からNoa経由で2点質問。①FAQ「残り4問の原稿はどこにあるか」→10.1章に全8問分の原稿が実在することを確認・共有。②PRカルCard1「スタンダード〜エクセレント（4グレード）」ラベルの打ち消し線を指摘→<code>.price-tag-before</code>クラス（本来は値引き前価格用で取り消し線がデフォルト）をカテゴリラベルに誤用していたバグと判明、修正。あわせてこの質問をきっかけにこのHTML本文がv1.11頃から更新履歴だけ更新され本文テーブルが同期していなかった問題を発見。6〜11章・4.1章の本文を現行版に全面同期し、10.5章（施術までの流れ）を追加、症例紹介を「実装済み」と誤記していた4.1章の致命的な矛盾（9章の削除方針と真逆）も修正。</div>
+  <div class="note-box"><strong>v1.22更新履歴：</strong> Noaから「施術の流れも入れます。でもこれはシミ取りで一緒だったからそのまま入れていいよ」と指示。シミ診断で作成済みの「施術までの流れ」5枚（予約→カウンセラー→ドクター→契約→アフターケア、TCB全体共通フロー）をそのまま流用し10.5章として新設。深掘りハブに新規タブとして追加（よくある質問と並列の2メニュー構成に）。画像枚数36枚→41枚に更新。</div>
+  <div class="note-box"><strong>v1.21更新履歴：</strong> Noaから「結果カルの最後のCTAは、おすすめのクリニックを見る にして」と指示。結果カルーセルCard3（脱脂手術・再生注射両パターン）のCTAボタン文言を「詳しく見てみる」→「おすすめのクリニックを見る」に変更。あわせてカード図の「結果カルーセルCard4」表記（v1.8のCard4→Card3統合後に更新漏れ）を「Card3」に修正。</div>
+  <div class="note-box"><strong>v1.20更新履歴：</strong> Noaから「FAQカルの語尾を〜だよから〜ですますに変えて」と指示。10章の脱脂手術8問・再生注射4問すべての回答文の語尾を「〜だよ」から「〜です／ます」の丁寧語に変更（質問文はカジュアルな口語のまま維持）。カード図・デザイン依頼書のFAQサンプルにも同様に反映。</div>
+  <div class="note-box"><strong>v1.19更新履歴：</strong> Noaから「見出し変更したい。価格じゃなくてクマの原因を取り除けるにして」と指示。脱脂手術PRカルCard3の見出しを「価格」→「クマの原因を取り除ける」に変更（価格表・交通費補助・CTAの内容は変更なし）。</div>
+  <div class="note-box"><strong>v1.18更新履歴：</strong> Noaから「ごめん間違えた。3枚目にしたかった」と指摘。v1.17でCard2に置いた交通費補助をCard3（価格）に再移動、価格表の下・CTAの上に配置（CTAより前を厳守）。Card2は施術について（因果図式3ステップ＋施術名・ダウンタイム）のみのシンプルな構成に戻した。</div>
+  <div class="note-box"><strong>v1.17更新履歴：</strong> Noaが交通費補助（駐車場無料／遠方交通費補助最高3万円）の参考画像を再共有し「ここやっぱり2枚目に戻そう。だけどCTAの下にはやらないでくれ」と指示。v1.10でCard3のCTA下からCard4上部に移動していた交通費補助を、Card2「施術について」のCTAより前に再配置。Card4は全社実績データのみのシンプルな構成に戻した。</div>
+  <div class="note-box"><strong>v1.16更新履歴：</strong> v1.15の適用先を誤り（Noaは「脱脂のPR」＝PRカルーセルCard2「施術について」を指していたが、結果カルーセルCard2/3に反映していた）。Noaの指摘を受け訂正：結果カルーセルCard2「クマの原因」・Card3「脂肪を取り除くアプローチが◎」はv1.14以前の内容に復元。PRカルーセル脱脂手術Card2「施術について」を因果図式3ステップ（v1.15の文言を流用）＋施術名・ダウンタイムの一行補足に変更。</div>
+  <div class="note-box"><strong>v1.15更新履歴：</strong> Noaが脱脂手術LPの実際のPOINT01〜03画像（眼窩脂肪の解剖図・原因→アプローチ→効果）を共有し、結果カルーセルCard2をこの内容で1枚に収めるよう指示。causal-chainパーツの1行あたり文字数上限（約20〜21文字）を実測しトリム版を再提示、STEP3は実LP画像の「目の下の膨らみが消え、自然な目元へ」をそのまま採用。Card2を「クマの原因と、脱脂手術のアプローチ」＋因果図式3ステップに変更、Card3は重複文言を削除し「結膜側だから、傷跡が目立ちにくい」＋2項目リスト＋CTAにスリム化。</div>
+  <div class="note-box"><strong>v1.14更新履歴：</strong> Noaが成分バブルの参考画像を再共有し、「Card5はこのままでいい、Card2はテキスト列挙でなくこのイラストを入れて」と指示。再生注射PRカルCard2の配合成分表現を、テキスト箇条書きから4つの円形バブルを上下左右に配置したイラスト表現に変更。あわせてCard5への「無理な勧誘はない」追記案はNoaが現状維持を選択。</div>
+  <div class="note-box"><strong>v1.13更新履歴：</strong> Noaから「CTAの色を緑にして、シミの時と一緒」と指示。カード図のCTAボタン・タグ・矢印アイコンを脱脂手術/再生注射の区別なくシミ診断と同じ緑（#6cc670〜#3d9e42）に統一。あわせてNoaから「注射の方LPトンマナオレンジじゃなくない？」と指摘を受けTCB LP2を再確認したところ実際のトンマナは「くすみブルー×ピンク」と判明（Noa共有の実LPスクショで確認）。再生注射セクションのブランドカラーをオレンジ系からくすみブルー（#a9bcd6〜#55698f・構造色）×ピンク（#d6336c・アクセント色）の二色構成に全面変更。Card3の期間限定キャンペーンバナーは実際の販促画像に基づく色のため対象外。</div>
+  <div class="note-box"><strong>v1.12更新履歴：</strong> Noaがシミ診断のPRカルCard1画像とTCB再生注射LPのFV画像を共有し、再生注射PRカルの刷新を指示。Card1をシミCard1構造準拠に、バッジを「ダウンタイムほぼ0」「当日メイク可能」に、キャンペーンステッカーを「初回0円」に変更。Card2を「クマ取り再生注射とは？」＋配合成分4つ（脂肪溶解成分／FGF再生因子／ヒアルロン酸／漢方エキス）に差し替え。Card3を実際のLP掲載キャンペーン（2026/7/27〜8/31、¥25,000→¥30,000 OFF、¥9,800→¥0）に差し替え、ローリング更新型の可能性を明記。あわせてLP2のFVは3タイプ全てに訴求する設計と判明し、原因タイプ非分岐リスク（8章論点2）は実質「Q5で脱脂手術を選んだ場合」に限定されることを追記。</div>
+  <div class="note-box"><strong>v1.11更新履歴：</strong> Noaがシミ診断のPRカルーセル実物カード図を共有し「④⑤はほぼ同じでいい（⑤の施術は異なる）」と指示。Card5をシミ準拠のクーポンボックス表示に変更（¥25,000 OFF＋スタンダード¥83,600→¥58,600〜）。ただし脱脂手術の最安値はシミのライトプラン（¥9,800）と異なり25,000円OFFでも¥0にはならないため「→¥0」表記は使わず正しい引き算で表示。</div>
+  <div class="note-box"><strong>v1.10更新履歴：</strong> 脱脂手術PRカルCard3でCTAボタンの下に交通費補助を置いていたが、Noaから「CTAの下に置いてる意味が分からない」と指摘。交通費補助をCard4（全社実績）に移動しCard3はCTAで終わる構成に修正。あわせて8章論点3（脱脂4グレードの違い）を再調査し、公式には本当に説明が無いことを確認（第三者比較サイトの情報は出典間で食い違うため不採用）。</div>
+  <div class="note-box"><strong>v1.9更新履歴：</strong> Q5④の選択肢を「まずは気軽に試してみたい」から「コスパを重視したい」に変更（Noa指示）。マッピング表の誘導理由も費用軸に合わせて修正。</div>
+  <div class="note-box"><strong>v1.8更新履歴：</strong> Noaから「結果カルーセルの4枚目は不要、3枚目にCTAを置く形にしたい」と指示。両パターンとも旧Card4（未来＋メリット列挙3項目＋CTA）を削除し、CTAのみCard3に統合。メリット列挙は復活させずシンプルな形を採用（Noaがテキストモックアップ2案から選択）。結果カルーセルは4枚→3枚に縮小。</div>
+  <div class="note-box"><strong>v1.7更新履歴：</strong> ①案件都合で症例素材が使用不可のため、症例紹介パートを診断フローから完全削除。②Q4「クマ取りで不安なことは？」（非分岐、費用/仕上がり/効果持続/ダウンタイムの4択）を新設し、旧Q4（重視軸・分岐）はQ5にスライド、全5問構成に拡張。③脱脂手術PRカルCard2「こんな方にオススメ」が結果カルーセルCard1と内容重複していたため「施術について」に差し替え。④深掘りハブの「キャンペーン・料金を見る」をPRカルーセルと統合・削除。</div>
+  <div class="note-box"><strong>v1.6更新履歴：</strong> 脱脂手術結果カルーセルCard2の見出しを「クマの、本当の原因。」→「クマの原因」に、Card3の見出しを「アプローチは、脂肪そのものを取り除くこと」→「脂肪を取り除くアプローチが◎」に変更（Noa指示）。</div>
+  <div class="note-box"><strong>v1.5更新履歴：</strong> Noaから「Card2に3POINT全部詰め込むのは1枚で収まるわけない」と指摘。POINT01（原因）のみCard2に残し、POINT02（アプローチ）はCard3の既存内容に統合、POINT03（再発ほぼなし）はCard4のメリット列挙に追加。あわせてCard1のQ3回答別エコー文言を削除（Noaの意図として当初から反映させる予定はなかった）。Q3は分岐にも結果表示にも反映しない、診断の厚みのためだけの設問に整理。8章論点2は緩和策なしの状態に戻り、Ren確認事項として維持。</div>
+  <div class="note-box"><strong>v1.4更新履歴：</strong> 結果カルーセル脱脂手術パターンCard2を因果図式から3POINT構成（原因→アプローチ→結果、TCB公式LP施術説明画像を参照）に変更。脱脂手術PRカルCard3を「安心して受けられる理由」から「価格＋交通費補助」に変更、4章に交通費補助（駐車場無料／遠方交通費補助最高3万円）を追加。</div>
+  <div class="note-box"><strong>v1.3更新履歴：</strong> 結果カルーセルとCV導線の間に抜けていたPRカルーセル（7.5章、脱脂手術/再生注射各5枚）を追加。TCBブランド・料金・全社実績はここで初めて開示する構成に修正。8章に論点6を追加。カード図にも2本のPRカルタブを追加。</div>
+  <div class="note-box"><strong>v1.1更新履歴：</strong> Noaより「質問が2個しかなく説得力が弱い」との指摘を受け、Q1性別・Q2年代（非分岐）・Q3症状の見え方（非分岐・エコー用）を新設し、旧Q1は廃止・旧Q2は重視軸としてQ4にスライドする4問構成に拡張（5章）。Q3回答別の共感一言を結果カルーセルCard1冒頭に追加し、8章論点2は多少緩和（解消はしていない）と明記。「作り込みすぎない」方針を理由にした記述は削除・修正した。</div>
+  <div class="note-box"><strong>v1.2更新履歴：</strong> Q3の質問文を『目の下、鏡で見るとどんな感じ？』に変更（選択肢は変更なし）。</div>
+</details>
 
   <div class="warn-box">
     <strong>要確認事項（最重要）：</strong> LP1（脱脂手術）は眼窩脂肪型（いわゆる黒グマ＝脂肪のふくらみ・たるみが原因）専用で、色素沈着（茶グマ）・血行不良（青グマ）への言及が公式LPに一切ない。今回の分岐軸は「重視すること」のみで、クマの原因タイプそのものでは分岐しない設計のため、原因が脂肪型でない読者にも脱脂手術が案内されうる。<strong>v1.12で判明：LP2（再生注射）のFVは逆に「青クマ／黒クマ／茶クマ」全タイプへの言及があり、原因タイプを問わず訴求する設計になっている。</strong>そのためこのミスマッチリスクは実質的に「Q5で①②（脱脂手術）を選んだ場合」に限定される。Q3（症状の見え方・非分岐）は診断の厚みのためだけの設問で、結果表示への反映は行わない（v1.5でCard1のエコー文言は削除。Noaの意図として当初から反映させる予定はなかった）ため、この論点への緩和策は無い。8章のRen確認事項の最重要論点。
