@@ -88,8 +88,10 @@
   hr{border:0;border-top:1px solid var(--line);margin:40px 0}
   /* 表示切替（社員／インターン） */
   .intern-note{display:none}
-  body.view-intern .employee-only{display:none}
+  .intern-only{display:none !important}
+  body.view-intern .employee-only{display:none !important}
   body.view-intern .intern-note{display:block}
+  body.view-intern .intern-only{display:block !important}
   .view-toggle{display:flex;gap:8px;justify-content:center;margin:0 0 28px;flex-wrap:wrap}
   .view-toggle button{
     appearance:none;border:1.5px solid var(--line);background:#fff;color:#777;
@@ -120,7 +122,7 @@
   <a class="navlink" href="#glossary">2. 用語集</a>
   <a class="navlink" href="#meta">3. メタリフHTMLを作る</a>
   <a class="navlink" href="#draft">4. WP埋め込みコードの下書き</a>
-  <a class="navlink" href="#handoff">5. 社員に引き継ぐ</a>
+  <a class="navlink intern-only" href="#handoff">5. 社員に引き継ぐ</a>
   <a class="navlink employee-only" href="#ftp">6. FTPへアップロード</a>
   <a class="navlink" href="#wp-publish">7. WP埋め込み・公開確認</a>
   <a class="navlink" href="#matome">8. まとめ・チェックリスト</a>
@@ -313,9 +315,9 @@
     </ul>
   </div>
 
-  <!-- ===== 5. 引き継ぎ ===== -->
+  <!-- ===== 5. 引き継ぎ（インターン限定） ===== -->
+  <div class="intern-only">
   <h2 id="handoff">5. 社員に引き継ぐ<span class="role-tag intern">インターン</span> → <span class="role-tag employee">社員</span></h2>
-  <p class="lead employee-only">手順3・4をインターンが担当した場合のみ発生するステップ。社員自身が手順3・4を作った場合は引き継ぎ不要でそのままFTP作業に進む。</p>
   <p class="lead">以下をまとめて担当社員に共有する。</p>
   <ul>
     <li>バナー画像ファイル</li>
@@ -323,6 +325,7 @@
     <li>WP埋め込み用コード（手順4で作ったもの）</li>
     <li>対象記事のURL・設置位置メモ</li>
   </ul>
+  </div>
 
   <!-- ===== 6. FTP（社員限定） ===== -->
   <div class="employee-only">
