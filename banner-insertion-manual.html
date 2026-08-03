@@ -1,195 +1,243 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>バナー挿入マニュアル — Noa Docs</title>
-  <link rel="icon" type="image/png" href="favicon.png">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', "Hiragino Sans", "Yu Gothic UI", sans-serif; background: #f5f5f5; color: #1a1a1a; line-height: 1.7; }
-    header { background: #1a1a2e; color: white; padding: 32px; }
-    header h1 { font-size: 24px; font-weight: 700; }
-    header p { color: #aaa; font-size: 13px; margin-top: 4px; }
-    main { max-width: 780px; margin: 40px auto; padding: 0 24px 80px; }
-
-    h2 { font-size: 18px; font-weight: 700; margin: 40px 0 12px; padding-bottom: 8px; border-bottom: 2px solid #e8e8e8; }
-    h3 { font-size: 15px; font-weight: 700; margin: 24px 0 8px; color: #1a1a1a; }
-    p { font-size: 14px; color: #444; margin-bottom: 12px; }
-    pre { background: #1e1e2e; color: #cdd6f4; border-radius: 8px; padding: 16px 20px; font-size: 13px; overflow-x: auto; margin: 8px 0 20px; line-height: 1.6; }
-    code { font-family: 'Fira Code', 'Courier New', monospace; }
-    .inline-code { background: #eceef1; color: #1a1a1a; padding: 1px 6px; border-radius: 4px; font-size: 13px; }
-    pre .ph { color: #f5a97f; }
-
-    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 8px; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e8e8e8; }
-    th { background: #f0f0f0; padding: 10px 14px; text-align: left; font-weight: 700; color: #555; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
-    td { padding: 10px 14px; border-top: 1px solid #efefef; color: #333; vertical-align: middle; }
-
-    .badge { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; white-space: nowrap; }
-    .badge-line { background: #eef0f2; color: #555; }
-    .badge-employee { background: #dbeafe; color: #1d4ed8; }
-    .badge-intern { background: #fef3c7; color: #92400e; }
-
-    .note { background: #fffbeb; border-left: 3px solid #f59e0b; padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 13px; color: #92400e; margin: 8px 0 20px; }
-    .danger { background: #fef2f2; border-left: 3px solid #ef4444; padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 13px; color: #991b1b; margin: 12px 0; }
-
-    ul { font-size: 14px; color: #444; padding-left: 20px; margin-bottom: 16px; }
-    ol { font-size: 14px; color: #444; padding-left: 20px; margin-bottom: 16px; }
-    li { margin-bottom: 6px; }
-
-    .checklist { list-style: none; padding-left: 0; }
-    .checklist li { display: flex; gap: 10px; align-items: flex-start; }
-    .checklist li::before { content: ""; flex: none; width: 15px; height: 15px; margin-top: 3px; border-radius: 4px; border: 2px solid #94a3b8; }
-
-    /* ロールタブ */
-    .role-tabs { display: flex; gap: 4px; margin: 32px 0 0; border-bottom: 2px solid #e8e8e8; }
-    .role-tab {
-      appearance: none; border: none; background: transparent; cursor: pointer;
-      font: inherit; font-size: 14px; font-weight: 700; color: #999;
-      padding: 10px 18px; border-bottom: 3px solid transparent; transform: translateY(2px);
-    }
-    .role-tab:hover { color: #555; }
-    .role-tab[aria-selected="true"][data-role="employee"] { color: #1d4ed8; border-bottom-color: #1d4ed8; }
-    .role-tab[aria-selected="true"][data-role="intern"] { color: #92400e; border-bottom-color: #f59e0b; }
-
-    .role-panel { display: none; padding-top: 24px; }
-    .role-panel.active { display: block; }
-
-    .role-summary { background: white; border: 1px solid #e8e8e8; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; font-size: 13px; }
-    .role-summary strong { color: #1a1a1a; }
-
-    .step-block { margin-bottom: 28px; padding-left: 18px; border-left: 3px solid #e8e8e8; }
-    .step-block h3 { display: flex; align-items: center; gap: 8px; }
-    .step-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #1a1a2e; color: white; font-size: 12px; font-weight: 700; }
-
-    .sub-label { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #999; margin: 14px 0 4px; }
-
-    footer { text-align: center; padding: 20px; color: #bbb; font-size: 12px; border-top: 1px solid #eee; background: white; margin-top: 40px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>バナー挿入マニュアル｜メタリフ作成 → FTPアップロード → WP公開</title>
+<style>
+  :root{
+    --green:#1B7A3D; --green-l:#8FCBA6; --green-bg:#F2F8F4;
+    --ink:#222; --muted:#777; --line:#e3e3e3;
+    --amber:#8A6100; --amber-bg:#FFF4D6; --amber-line:#E8B84B;
+    --red:#9B2C2C; --red-bg:#FDE7E7; --red-line:#E5A0A0;
+    --blue:#1B4E84; --blue-bg:#E8F1FB; --blue-line:#9CC2E8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
+    color:var(--ink);line-height:1.75;background:#fafafa}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px 80px}
+  header.hero{background:linear-gradient(135deg,#1B7A3D,#2EA85C);color:#fff;padding:48px 20px 40px;text-align:center}
+  header.hero h1{margin:0 0 8px;font-size:30px;letter-spacing:.02em}
+  header.hero .sub{font-size:17px;font-weight:700;opacity:.95}
+  header.hero .meta{font-size:13px;opacity:.85;margin-top:14px}
+  h2{color:var(--green);border-bottom:3px solid var(--green-l);padding-bottom:6px;margin-top:48px;font-size:23px;scroll-margin-top:16px}
+  h3{color:#333;margin-top:28px;font-size:18px}
+  .lead{font-size:15px;color:#444}
+  a{color:var(--green)}
+  code,.mono{font-family:"SF Mono",Menlo,Consolas,monospace}
+  /* ロールタグ */
+  .role-tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 11px;border-radius:20px;margin-left:8px;vertical-align:middle;white-space:nowrap}
+  .role-tag.line{background:#f1f1f1;color:#777}
+  .role-tag.employee{background:var(--blue-bg);color:var(--blue)}
+  .role-tag.intern{background:var(--amber-bg);color:var(--amber)}
+  /* TOC */
+  nav.toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 22px;margin:28px 0}
+  nav.toc b{display:block;color:var(--green);margin-bottom:8px}
+  nav.toc ol{margin:0;padding-left:20px}
+  nav.toc li{margin:3px 0}
+  /* steps */
+  ol.steps{counter-reset:s;list-style:none;padding-left:0}
+  ol.steps>li{counter-increment:s;position:relative;padding:8px 0 8px 44px;border-bottom:1px dashed var(--line)}
+  ol.steps>li::before{content:counter(s);position:absolute;left:0;top:8px;width:30px;height:30px;
+    background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+  ol.steps b{color:var(--green)}
+  /* callouts */
+  .box{border-radius:10px;padding:14px 18px;margin:18px 0;border:1px solid}
+  .box .t{font-weight:700;margin-bottom:4px}
+  .point{background:var(--blue-bg);border-color:var(--blue-line)} .point,.point .t{color:var(--blue)}
+  .warn{background:var(--red-bg);border-color:var(--red-line)} .warn,.warn .t{color:var(--red)}
+  .pending{background:#f4f4f4;border-color:#ccc;border-style:dashed} .pending,.pending .t{color:#777}
+  .box ul{margin:6px 0 0;padding-left:20px}
+  /* code */
+  pre{background:#2b2b2b;color:#e6e6e6;padding:14px 16px;border-radius:8px;overflow:auto;font-size:13px}
+  pre .ph{color:#f5c26b}
+  /* screenshot slot */
+  figure.shot{margin:18px 0;border:2px solid var(--amber-line);border-radius:10px;overflow:hidden;background:#fff}
+  figure.shot img{display:block;width:100%;height:auto;border-bottom:1px solid var(--line)}
+  figure.shot .ph{display:none;min-height:150px;align-items:center;justify-content:center;flex-direction:column;
+    background:var(--amber-bg);color:var(--amber);padding:26px 18px;text-align:center;gap:6px}
+  figure.shot .ph .cam{font-size:30px}
+  figure.shot .ph .save{font-size:12px;background:#fff;border:1px dashed var(--amber-line);border-radius:6px;padding:3px 10px;margin-top:4px}
+  figure.shot figcaption{padding:8px 14px;font-size:13px;font-weight:700;color:var(--amber);background:#fffaf0}
+  /* flow diagram */
+  .diagram{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin:22px 0}
+  /* pill / menu path */
+  .path{display:inline-block;background:var(--green-bg);border:1px solid var(--green-l);color:var(--green);
+    border-radius:6px;padding:2px 10px;font-weight:700;font-size:14px}
+  a.doclink{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;text-decoration:none;
+    border-radius:8px;padding:10px 18px;font-weight:700;font-size:15px;margin:4px 0}
+  a.doclink:hover{background:#15602f}
+  /* 全体フロー */
+  .flow{margin:18px 0 8px}
+  .flow-step{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-left:5px solid var(--green);border-radius:10px;padding:14px 18px}
+  .flow-step .n{flex:0 0 auto;width:32px;height:32px;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px}
+  .flow-step .body{flex:1}
+  .flow-step .body b{font-size:16px;color:var(--green)}
+  .flow-step .body p{margin:4px 0 8px;font-size:14px;color:#444}
+  .flow .arrow{text-align:center;color:var(--green);font-size:22px;line-height:1;margin:6px 0}
+  a.toollink{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid var(--green);color:var(--green);text-decoration:none;border-radius:8px;padding:7px 14px;font-weight:700;font-size:14px}
+  a.toollink:hover{background:var(--green-bg)}
+  table.chk{border-collapse:collapse;width:100%;margin:16px 0;font-size:14px}
+  table.chk td,table.chk th{border:1px solid var(--line);padding:8px 10px;text-align:left}
+  table.chk th{background:var(--green-bg);color:var(--green)}
+  table.role{border-collapse:collapse;width:100%;margin:16px 0;font-size:14px;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  table.role td{padding:10px 14px;border-top:1px solid var(--line)}
+  table.role tr:first-child td{border-top:none}
+  table.role td:last-child{width:190px}
+  .tip{font-size:13px;color:var(--muted)}
+  hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+  .quicklinks{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+  .quicklinks a{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--green);border-radius:8px;padding:9px 16px;font-weight:700;font-size:14px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+  /* 左サイドバー（PC幅のみ表示） */
+  nav.side{display:none}
+  @media(min-width:1200px){
+    body{padding-left:280px}
+    nav.side{display:block;position:fixed;top:0;left:0;width:280px;height:100vh;overflow-y:auto;background:#fff;border-right:1px solid var(--line);padding:22px 16px;z-index:10}
+    nav.side .ttl{font-weight:700;color:var(--green);font-size:15px;margin:0 0 12px}
+    nav.side a.navlink{display:block;color:#444;text-decoration:none;font-size:13.5px;padding:7px 10px;border-radius:8px;border-left:3px solid transparent;margin:1px 0}
+    nav.side a.navlink:hover{background:var(--green-bg)}
+    nav.side a.navlink.on{background:var(--green-bg);color:var(--green);border-left-color:var(--green);font-weight:700}
+    nav.toc{display:none}
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>🏷️ バナー挿入マニュアル</h1>
-    <p>記事へのLINE誘導バナー設置作業。社員・インターンの担当パート別手順書</p>
-  </header>
+<nav class="side">
+  <p class="ttl">🏷️ バナー挿入マニュアル</p>
+  <a class="navlink" href="#flow">業務全体の流れ</a>
+  <a class="navlink" href="#zentai">1. まず全体像をつかむ</a>
+  <a class="navlink" href="#glossary">2. 用語集</a>
+  <a class="navlink" href="#meta">3. メタリフHTMLを作る</a>
+  <a class="navlink" href="#draft">4. WP埋め込みコードの下書き</a>
+  <a class="navlink" href="#handoff">5. 社員に引き継ぐ</a>
+  <a class="navlink" href="#ftp">6. FTPへアップロード</a>
+  <a class="navlink" href="#wp-publish">7. WP埋め込み・公開確認</a>
+  <a class="navlink" href="#matome">8. まとめ・チェックリスト</a>
+</nav>
+<header class="hero">
+  <h1>バナー挿入マニュアル</h1>
+  <div class="sub">メタリフ作成 → FTPアップロード → WP埋め込み公開</div>
+  <div class="meta">社員・インターン共通マニュアル　／　対象ツール：WP・FTP・WINUT</div>
+  <div class="quicklinks">
+    <a href="https://plus-lineteam.github.io/winut/" target="_blank" rel="noopener">📘 Winut操作マニュアル（参考）</a>
+  </div>
+</header>
 
-  <main>
+<div class="wrap">
 
-    <h2>全体像・担当分け</h2>
-    <table>
-      <tr><td>設置対象記事・設置位置の指定</td><td><span class="badge badge-line">LINEチーム</span></td></tr>
-      <tr><td>バナー画像（デザイン素材）の用意</td><td><span class="badge badge-line">LINEチーム</span></td></tr>
-      <tr><td>WINUT流入リンクの発行</td><td><span class="badge badge-line">LINEチーム</span></td></tr>
-      <tr><td>Notionで対象記事・ドメイン確認</td><td><span class="badge badge-employee">社員</span> <span class="badge badge-intern">インターン</span></td></tr>
-      <tr><td>メタリフHTMLの組み立て</td><td><span class="badge badge-intern">インターン</span></td></tr>
-      <tr><td>WP埋め込み用コードの下書き作成</td><td><span class="badge badge-intern">インターン</span></td></tr>
-      <tr><td style="font-weight:700;">FTPへの実アップロード</td><td><span class="badge badge-employee">社員</span></td></tr>
-      <tr><td style="font-weight:700;">WP埋め込み・公開確認</td><td><span class="badge badge-employee">社員</span></td></tr>
-      <tr><td>ドメアラサイトの先方依頼</td><td><span class="badge badge-employee">社員</span></td></tr>
-    </table>
-    <div class="note">△ 要確認：インターン→社員の受け渡し方法（Chatwork／共有フォルダ等）はチームの運用に合わせて追記する</div>
+  <div class="box point">
+    <div class="t">💡 このマニュアルでできるようになること</div>
+    <ul>
+      <li>LINEチームから渡された素材から<b>メタリフ（中継用HTML）</b>を組み立てる</li>
+      <li>画像・メタリフを<b>FTP</b>でサーバーにアップロードする</li>
+      <li>記事にバナーを<b>埋め込み、公開確認</b>する</li>
+    </ul>
+  </div>
 
-    <h2>用語集</h2>
-    <table>
-      <tr><td style="font-weight:700;width:140px;">メタリフ</td><td>「meta refresh」の略。クリックされるとGA4に計測タグを送りつつ、WINUTの流入リンクへ自動転送する中継用の小さいHTMLファイル</td></tr>
-      <tr><td style="font-weight:700;">WINUT</td><td>診断への流入経路（リンク）を発行するツール。発行はLINEチーム担当</td></tr>
-      <tr><td style="font-weight:700;">GA4</td><td>Googleアナリティクス4。サイトのアクセス計測ツール。計測IDはサイトごとに固定</td></tr>
-      <tr><td style="font-weight:700;">FTP</td><td>サーバーに直接ファイルをアップロードする方法</td></tr>
-      <tr><td style="font-weight:700;">WP</td><td>WordPress。記事を管理・公開するシステム</td></tr>
-    </table>
+  <h2 id="flow">業務全体の流れ（依頼フロー）</h2>
+  <p class="lead">LINEチームの準備が終わってから、記事にバナーが表示されるまでの一連の流れです。①〜③はインターン、④〜⑤は社員の担当です。</p>
+  <div class="flow">
+    <div class="flow-step"><span class="n">1</span><div class="body"><b>LINEチームが準備<span class="role-tag line">LINEチーム</span></b><p>設置対象記事・設置位置の指定、バナー画像、WINUT流入リンクの3点を用意する。</p></div></div>
+    <div class="arrow">▼</div>
+    <div class="flow-step"><span class="n">2</span><div class="body"><b>メタリフHTMLを作る<span class="role-tag intern">インターン</span></b><p>受け取ったWINUT流入リンク・GA4計測IDでメタリフファイルを組み立てる。</p></div></div>
+    <div class="arrow">▼</div>
+    <div class="flow-step"><span class="n">3</span><div class="body"><b>WP埋め込みコードを下書きする<span class="role-tag intern">インターン</span></b><p>記事に貼る用のコードを、ファイル名を当てはめて下書きする。</p></div></div>
+    <div class="arrow">▼</div>
+    <div class="flow-step"><span class="n">4</span><div class="body"><b>FTPへアップロード<span class="role-tag employee">社員</span></b><p>画像・メタリフの両方をサーバーにアップロードする。</p></div></div>
+    <div class="arrow">▼</div>
+    <div class="flow-step"><span class="n">5</span><div class="body"><b>WPに埋め込み・公開確認<span class="role-tag employee">社員</span></b><p>記事にコードを貼り、プレビュー確認後に公開する。</p></div></div>
+  </div>
 
-    <div class="role-tabs" role="tablist" aria-label="担当別の手順">
-      <button class="role-tab" data-role="employee" role="tab" aria-selected="true" aria-controls="panel-employee">社員向け手順</button>
-      <button class="role-tab" data-role="intern" role="tab" aria-selected="false" aria-controls="panel-intern">インターン向け手順</button>
-    </div>
+  <nav class="toc">
+    <b>目次</b>
+    <ol style="list-style:none;padding-left:4px">
+      <li><a href="#flow">業務全体の流れ</a></li>
+      <li><a href="#zentai">1. まず全体像をつかむ</a></li>
+      <li><a href="#glossary">2. 用語集</a></li>
+      <li><a href="#meta">3. メタリフHTMLを作る</a></li>
+      <li><a href="#draft">4. WP埋め込みコードの下書き</a></li>
+      <li><a href="#handoff">5. 社員に引き継ぐ</a></li>
+      <li><a href="#ftp">6. FTPへアップロード</a></li>
+      <li><a href="#wp-publish">7. WP埋め込み・公開確認</a></li>
+      <li><a href="#matome">8. まとめ・公開前チェックリスト</a></li>
+    </ol>
+  </nav>
 
-    <!-- 社員向け -->
-    <section class="role-panel active" id="panel-employee" role="tabpanel">
+  <!-- ===== 1. 全体像 ===== -->
+  <h2 id="zentai">1. まず全体像をつかむ</h2>
+  <p class="lead">バナー1本の設置は、3者が順番にバトンを渡してひとつのバナーを完成させる。</p>
 
-      <div class="role-summary">
-        インターンから以下を受け取り、本番反映を担当する：
-        <ul style="margin-top:8px;margin-bottom:0;">
-          <li>バナー画像ファイル</li>
-          <li>メタリフHTMLファイル（完成品）</li>
-          <li>WP埋め込み用コード（下書き）</li>
-          <li>対象記事のURL・設置位置メモ</li>
-        </ul>
-      </div>
+  <div class="diagram">
+    <svg viewBox="0 0 820 180" width="100%" role="img" aria-label="LINEチーム→インターン→社員の流れ図">
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+          <path d="M0,0 L7,3 L0,6 Z" fill="#1B7A3D"/>
+        </marker>
+        <style>
+          .ttl{font:700 16px "Hiragino Kaku Gothic ProN",sans-serif;fill:#1B7A3D}
+          .dsc{font:13px "Hiragino Kaku Gothic ProN",sans-serif;fill:#444}
+          .card{fill:#F2F8F4;stroke:#8FCBA6;stroke-width:1.5;rx:12}
+        </style>
+      </defs>
+      <rect class="card" x="20" y="40" width="240" height="120" rx="12"/>
+      <text class="ttl" x="40" y="74">LINEチーム</text>
+      <text class="dsc" x="40" y="100">設置記事・設置位置の指定</text>
+      <text class="dsc" x="40" y="120">バナー画像の用意</text>
+      <text class="dsc" x="40" y="140">WINUT流入リンクの発行</text>
+      <line x1="262" y1="100" x2="296" y2="100" stroke="#1B7A3D" stroke-width="2.5" marker-end="url(#arrow)"/>
+      <rect class="card" x="300" y="40" width="240" height="120" rx="12"/>
+      <text class="ttl" x="320" y="74">インターン</text>
+      <text class="dsc" x="320" y="100">メタリフHTML作成</text>
+      <text class="dsc" x="320" y="120">WP埋め込みコード下書き</text>
+      <text class="dsc" x="320" y="140">材料一式を社員へ引き継ぎ</text>
+      <line x1="542" y1="100" x2="576" y2="100" stroke="#1B7A3D" stroke-width="2.5" marker-end="url(#arrow)"/>
+      <rect class="card" x="580" y="40" width="240" height="120" rx="12"/>
+      <text class="ttl" x="600" y="74">社員</text>
+      <text class="dsc" x="600" y="100">FTPへアップロード</text>
+      <text class="dsc" x="600" y="120">WPへ埋め込み</text>
+      <text class="dsc" x="600" y="140">公開確認</text>
+    </svg>
+  </div>
 
-      <div class="step-block">
-        <h3><span class="step-num">1</span>FTPへのアップロード</h3>
-        <p>FTP認証情報は各自が把握しているものを使用する（本マニュアルには記載しない）。</p>
+  <h3>担当分け一覧</h3>
+  <table class="role">
+    <tr><td>設置対象記事・設置位置の指定</td><td><span class="role-tag line">LINEチーム</span></td></tr>
+    <tr><td>バナー画像（デザイン素材）の用意</td><td><span class="role-tag line">LINEチーム</span></td></tr>
+    <tr><td>WINUT流入リンクの発行</td><td><span class="role-tag line">LINEチーム</span></td></tr>
+    <tr><td>メタリフHTMLの組み立て</td><td><span class="role-tag intern">インターン</span></td></tr>
+    <tr><td>WP埋め込み用コードの下書き作成</td><td><span class="role-tag intern">インターン</span></td></tr>
+    <tr><td style="font-weight:700;">FTPへの実アップロード</td><td><span class="role-tag employee">社員</span></td></tr>
+    <tr><td style="font-weight:700;">WP埋め込み・公開確認</td><td><span class="role-tag employee">社員</span></td></tr>
+    <tr><td>ドメアラサイトの先方依頼</td><td><span class="role-tag employee">社員</span></td></tr>
+  </table>
 
-        <div class="sub-label">画像</div>
-        <ol>
-          <li>FTPクライアント（FileZilla）で対象サイトに接続する</li>
-          <li><span class="inline-code">/assets/uploads</span> にバナー画像をアップロードする</li>
-        </ol>
+  <div class="box pending">
+    <div class="t">△ 要確認</div>
+    インターン→社員の受け渡し方法（Chatwork／共有フォルダ等）はチームの運用に合わせて追記する。
+  </div>
 
-        <div class="sub-label">メタリフHTML</div>
-        <ol>
-          <li>同じFTP接続で <span class="inline-code">/web</span> にメタリフHTMLファイルをアップロードする</li>
-        </ol>
+  <!-- ===== 2. 用語集 ===== -->
+  <h2 id="glossary">2. 用語集</h2>
+  <table class="role">
+    <tr><td style="width:150px;font-weight:700;">メタリフ</td><td>「meta refresh」の略。クリックされるとGA4に計測タグを送りつつ、WINUTの流入リンクへ自動転送する中継用の小さいHTMLファイル</td></tr>
+    <tr><td style="font-weight:700;">WINUT</td><td>診断への流入経路（リンク）を発行するツール。発行は<span class="role-tag line">LINEチーム</span>担当</td></tr>
+    <tr><td style="font-weight:700;">GA4</td><td>Googleアナリティクス4。サイトのアクセス計測ツール。計測IDはサイトごとに固定</td></tr>
+    <tr><td style="font-weight:700;">FTP</td><td>サーバーに直接ファイルをアップロードする方法</td></tr>
+    <tr><td style="font-weight:700;">WP</td><td>WordPress。記事を管理・公開するシステム</td></tr>
+  </table>
 
-        <div class="danger">⚠️ 画像・メタリフのどちらか一方でもFTPに上げ忘れると本番に反映されない</div>
+  <!-- ===== 3. メタリフ ===== -->
+  <h2 id="meta">3. メタリフHTMLを作る<span class="role-tag intern">インターン</span></h2>
+  <p class="lead">LINEチームから受け取ったWINUT流入リンク・GA4計測IDを使って、1つのHTMLファイルを組み立てる。</p>
+  <h3>手順</h3>
+  <ol class="steps">
+    <li>下のテンプレートをコピーする。</li>
+    <li><b>{GA4計測ID}</b> を埋める。サイトごとに決まっている固定の値。分からない場合は社員に確認する。</li>
+    <li><b>{LINEチームからもらったWINUT流入リンク}</b> をそのまま貼り付ける。</li>
+    <li>ファイル名を <b>{ジャンル}-{記事スラッグ}-shindan-line.html</b> の形式で保存する。</li>
+  </ol>
 
-        <div class="sub-label">ドメアラサイト（渋谷・小田など）の場合</div>
-        <p>自社でFTPを直接操作できないため、先方へChatworkで依頼する。</p>
-      </div>
-
-      <div class="step-block">
-        <h3><span class="step-num">2</span>WP側への埋め込み</h3>
-        <ol>
-          <li>WP管理画面にログインし、対象記事を開く（投稿一覧／固定ページ一覧から検索）</li>
-          <li>インターンが用意した下書きコードを、指定された設置位置に貼り付ける</li>
-        </ol>
-        <pre><code>&lt;div class="full_img" style="text-align: center"&gt;
-    &lt;a href="<span class="ph">{メタリフのURL}</span>" target="_blank" rel="nofollow noopener noreferrer"&gt;
-        &lt;img src="<span class="ph">{バナー画像のURL}</span>"
-            alt="<span class="ph">{診断への誘導文言}</span>" /&gt;
-    &lt;/a&gt;
-&lt;/div&gt;</code></pre>
-        <p>コード内のURL（href・src）が、Step1でFTPにアップロードした実際のパスと一致しているか確認する。</p>
-      </div>
-
-      <div class="step-block">
-        <h3><span class="step-num">3</span>公開確認</h3>
-        <ol>
-          <li>プレビューで正常に表示されるか確認する</li>
-          <li>問題なければ更新（公開）する</li>
-          <li>microCMSを使っているサイトは、更新後に手動同期を実行する</li>
-        </ol>
-        <div class="sub-label">公開前チェックリスト</div>
-        <ul class="checklist">
-          <li>画像・メタリフの両方がFTPに上がっている</li>
-          <li>href（メタリフURL）とsrc（画像URL）が実際のアップロード先と一致している</li>
-          <li>alt文言が診断内容・LINEチームの指定と合っている</li>
-          <li>プレビューで正常表示されている</li>
-        </ul>
-      </div>
-
-    </section>
-
-    <!-- インターン向け -->
-    <section class="role-panel" id="panel-intern" role="tabpanel">
-
-      <div class="role-summary">
-        <strong>あなたの担当範囲：</strong>材料を受け取って、本番投稿する一歩手前まで組み立てる。FTPとWP公開作業は社員が行うため担当範囲外。
-        <ul style="margin-top:8px;margin-bottom:0;">
-          <li><strong>受け取るもの</strong>：設置記事・設置位置の指定／バナー画像／WINUT流入リンク</li>
-          <li><strong>渡すもの</strong>：メタリフHTMLファイル（完成品）／WP埋め込み用コード（下書き）</li>
-        </ul>
-      </div>
-
-      <div class="step-block">
-        <h3><span class="step-num">1</span>Notionで対象記事・ドメインを確認する</h3>
-        <p>LINEチームから指定された記事のURL・ドメインをNotionで確認する。</p>
-      </div>
-
-      <div class="step-block">
-        <h3><span class="step-num">2</span>メタリフHTMLファイルを作る</h3>
-        <p>以下のテンプレートの <span class="inline-code">{ }</span> 部分を埋めて、1つのHTMLファイルを作成する。</p>
-        <pre><code>&lt;html&gt;
+  <pre><code>&lt;html&gt;
 &lt;head&gt;
 &lt;title&gt;<span class="ph">{ページタイトル：診断名など任意でOK}</span>&lt;/title&gt;
 &lt;!-- Google tag (gtag.js) --&gt;
@@ -207,60 +255,138 @@
 &lt;META HTTP-EQUIV="REFRESH" CONTENT = "0; URL=<span class="ph">{LINEチームからもらったWINUT流入リンク}</span>" &gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
-        <ul>
-          <li><span class="inline-code">{GA4計測ID}</span>：サイトごとに決まっている固定の値。分からない場合は社員に確認する</li>
-          <li><span class="inline-code">{LINEチームからもらったWINUT流入リンク}</span>：そのまま貼り付ける</li>
-        </ul>
-        <div class="sub-label">ファイル名の付け方</div>
-        <p><span class="inline-code">{ジャンル}-{記事スラッグ}-shindan-line.html</span><br>例：<span class="inline-code">faga-biman-shindan-line.html</span>（ジャンル = faga、記事スラッグ = biman）</p>
-      </div>
 
-      <div class="step-block">
-        <h3><span class="step-num">3</span>WP埋め込み用コードの下書きを作る</h3>
-        <p>記事に貼り付けるコードを、以下のテンプレートで下書きする（実際に記事へ貼るのは社員の作業）。</p>
-        <pre><code>&lt;div class="full_img" style="text-align: center"&gt;
-    &lt;a href="<span class="ph">{Step2で作ったメタリフファイルの名前}</span>" target="_blank" rel="nofollow noopener noreferrer"&gt;
+  <figure class="shot">
+    <img src="images/banner-01-meta-edit.png" alt="メタリフHTML編集画面" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="ph"><div class="cam">📷</div><div>ここに画像を貼る</div><div>撮るポイント：テキストエディタで{GA4計測ID}・{WINUT流入リンク}を埋めているところ</div><div class="save">保存名：images/banner-01-meta-edit.png</div></div>
+    <figcaption>スクショ①：メタリフHTMLを編集している画面</figcaption>
+  </figure>
+
+  <div class="box point">
+    <div class="t">💡 ファイル名の付け方</div>
+    <span class="path">{ジャンル}-{記事スラッグ}-shindan-line.html</span><br>
+    例：<code>faga-biman-shindan-line.html</code>（ジャンル = faga、記事スラッグ = biman）
+  </div>
+
+  <!-- ===== 4. 下書き ===== -->
+  <h2 id="draft">4. WP埋め込み用コードの下書きを作る<span class="role-tag intern">インターン</span></h2>
+  <p class="lead">記事に貼り付けるコードを下書きする（実際に記事へ貼るのは社員の作業）。</p>
+  <pre><code>&lt;div class="full_img" style="text-align: center"&gt;
+    &lt;a href="<span class="ph">{Step3で作ったメタリフファイルの名前}</span>" target="_blank" rel="nofollow noopener noreferrer"&gt;
         &lt;img src="<span class="ph">{もらった画像ファイルの名前}</span>"
             alt="<span class="ph">{診断への誘導文言。LINEチームの指定に従う}</span>" /&gt;
     &lt;/a&gt;
 &lt;/div&gt;</code></pre>
-      </div>
 
-      <div class="step-block">
-        <h3><span class="step-num">4</span>社員に引き継ぐ</h3>
-        <p>以下をまとめて担当社員に共有する：</p>
-        <ul>
-          <li>バナー画像ファイル</li>
-          <li>メタリフHTMLファイル（Step2で作ったもの）</li>
-          <li>WP埋め込み用コード（Step3で作ったもの）</li>
-          <li>対象記事のURL・設置位置メモ</li>
-        </ul>
-      </div>
+  <div class="box warn">
+    <div class="t">⚠ よくあるミス</div>
+    <ul>
+      <li>GA4計測IDやWINUTリンクの<code>{ }</code>を消し忘れる</li>
+      <li>ファイル名の規則（<code>ジャンル-記事スラッグ-shindan-line.html</code>）を守らない</li>
+      <li>alt文言をLINEチームの指定と違う内容にしてしまう</li>
+    </ul>
+  </div>
 
-      <div class="note">
-        <strong>よくあるミス</strong><br>
-        ・GA4計測IDやWINUTリンクの{ }を消し忘れる<br>
-        ・ファイル名の規則（ジャンル-記事スラッグ-shindan-line.html）を守らない<br>
-        ・alt文言をLINEチームの指定と違う内容にしてしまう
-      </div>
+  <!-- ===== 5. 引き継ぎ ===== -->
+  <h2 id="handoff">5. 社員に引き継ぐ<span class="role-tag intern">インターン</span> → <span class="role-tag employee">社員</span></h2>
+  <p class="lead">以下をまとめて担当社員に共有する。</p>
+  <ul>
+    <li>バナー画像ファイル</li>
+    <li>メタリフHTMLファイル（手順3で作ったもの）</li>
+    <li>WP埋め込み用コード（手順4で作ったもの）</li>
+    <li>対象記事のURL・設置位置メモ</li>
+  </ul>
+  <div class="box pending">
+    <div class="t">△ 要確認</div>
+    共有する方法（Chatwork／共有フォルダ等）はチームに確認する。
+  </div>
 
-    </section>
+  <!-- ===== 6. FTP ===== -->
+  <h2 id="ftp">6. FTPへのアップロード<span class="role-tag employee">社員</span></h2>
+  <p class="lead">FTP認証情報は各自が把握しているものを使用する（本マニュアルには記載しない）。</p>
 
-  </main>
+  <h3>画像</h3>
+  <ol class="steps">
+    <li>FTPクライアント（FileZilla）で対象サイトに接続する。</li>
+    <li><span class="path">/assets/uploads</span> にバナー画像をアップロードする。</li>
+  </ol>
 
-  <footer>作成日 2026-08-02 ／ 更新日 2026-08-03</footer>
+  <h3>メタリフHTML</h3>
+  <ol class="steps">
+    <li>同じFTP接続で <span class="path">/web</span> にメタリフHTMLファイルをアップロードする。</li>
+  </ol>
 
-  <script>
-    const tabs = document.querySelectorAll('.role-tab');
-    const panels = document.querySelectorAll('.role-panel');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
-        panels.forEach(p => p.classList.remove('active'));
-        tab.setAttribute('aria-selected', 'true');
-        document.getElementById(tab.getAttribute('aria-controls')).classList.add('active');
-      });
-    });
-  </script>
+  <figure class="shot">
+    <img src="images/banner-02-ftp-upload.png" alt="FTPアップロード画面" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="ph"><div class="cam">📷</div><div>ここに画像を貼る</div><div>撮るポイント：FileZillaで/assets/uploadsまたは/webにアップロードしている様子</div><div class="save">保存名：images/banner-02-ftp-upload.png</div></div>
+    <figcaption>スクショ②：FTPアップロード画面</figcaption>
+  </figure>
+
+  <div class="box warn">
+    <div class="t">⚠ 注意</div>
+    <ul>
+      <li>画像・メタリフのどちらか一方でもFTPに上げ忘れると本番に反映されない。</li>
+    </ul>
+  </div>
+
+  <h3>ドメアラサイト（渋谷・小田など）の場合</h3>
+  <p>自社でFTPを直接操作できないため、先方へChatworkで依頼する。</p>
+
+  <!-- ===== 7. WP公開 ===== -->
+  <h2 id="wp-publish">7. WP埋め込み・公開確認<span class="role-tag employee">社員</span></h2>
+  <ol class="steps">
+    <li>WP管理画面にログインし、対象記事を開く（<span class="path">投稿一覧 / 固定ページ一覧</span> から検索）。</li>
+    <li>インターンが用意した下書きコードを、指定された設置位置に貼り付ける。</li>
+  </ol>
+
+  <pre><code>&lt;div class="full_img" style="text-align: center"&gt;
+    &lt;a href="<span class="ph">{メタリフのURL}</span>" target="_blank" rel="nofollow noopener noreferrer"&gt;
+        &lt;img src="<span class="ph">{バナー画像のURL}</span>"
+            alt="<span class="ph">{診断への誘導文言}</span>" /&gt;
+    &lt;/a&gt;
+&lt;/div&gt;</code></pre>
+
+  <p>コード内のURL（href・src）が、手順6でFTPにアップロードした実際のパスと一致しているか確認する。</p>
+
+  <ol class="steps">
+    <li>プレビューで正常に表示されるか確認する。</li>
+    <li>問題なければ更新（公開）する。</li>
+    <li>microCMSを使っているサイトは、更新後に手動同期を実行する。</li>
+  </ol>
+
+  <figure class="shot">
+    <img src="images/banner-03-preview.png" alt="プレビュー確認画面" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div class="ph"><div class="cam">📷</div><div>ここに画像を貼る</div><div>撮るポイント：記事プレビューでバナーが正常表示されているところ</div><div class="save">保存名：images/banner-03-preview.png</div></div>
+    <figcaption>スクショ③：プレビュー確認画面</figcaption>
+  </figure>
+
+  <!-- ===== 8. まとめ ===== -->
+  <h2 id="matome">8. まとめ：公開前チェックリスト</h2>
+  <table class="chk">
+    <tr><th style="width:40px">✓</th><th>項目</th></tr>
+    <tr><td>☐</td><td>画像・メタリフの両方がFTPに上がっている</td></tr>
+    <tr><td>☐</td><td>href（メタリフURL）とsrc（画像URL）が実際のアップロード先と一致している</td></tr>
+    <tr><td>☐</td><td>alt文言が診断内容・LINEチームの指定と合っている</td></tr>
+    <tr><td>☐</td><td>プレビューで正常表示されている</td></tr>
+  </table>
+
+  <hr>
+  <p class="tip">困ったら：どの手順・どのファイルで詰まったかをメモして、担当者に共有してください。</p>
+  <p class="tip">スクショの入れ方：このHTMLと同じ階層の <code>images/</code> フォルダに、各枠に書かれた保存名でPNGを置くと、自動でその場所に表示されます。</p>
+
+</div>
+<script>
+(function(){
+  var secs = Array.prototype.slice.call(document.querySelectorAll('h2[id]'));
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.side a.navlink'));
+  function spy(){
+    var cur = secs[0];
+    secs.forEach(function(s){ if(s.getBoundingClientRect().top <= 130) cur = s; });
+    links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href') === '#' + (cur && cur.id)); });
+  }
+  document.addEventListener('scroll', spy, {passive:true});
+  spy();
+})();
+</script>
 </body>
 </html>
