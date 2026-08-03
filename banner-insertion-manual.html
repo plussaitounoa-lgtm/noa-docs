@@ -172,36 +172,48 @@
   <p class="lead">バナー1本の設置は、3者が順番にバトンを渡してひとつのバナーを完成させる。</p>
 
   <div class="diagram">
-    <svg viewBox="0 0 820 180" width="100%" role="img" aria-label="LINEチーム→インターン→社員の流れ図">
+    <svg viewBox="0 0 1060 190" width="100%" role="img" aria-label="LINEチーム準備→素材組み立て→FTPアップロード→WP公開の流れ図">
       <defs>
         <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
           <path d="M0,0 L7,3 L0,6 Z" fill="#1B7A3D"/>
         </marker>
         <style>
-          .ttl{font:700 16px "Hiragino Kaku Gothic ProN",sans-serif;fill:#1B7A3D}
-          .dsc{font:13px "Hiragino Kaku Gothic ProN",sans-serif;fill:#444}
+          .ttl{font:700 15px "Hiragino Kaku Gothic ProN",sans-serif;fill:#1B7A3D}
+          .dsc{font:12.5px "Hiragino Kaku Gothic ProN",sans-serif;fill:#444}
+          .who{font:700 11px "Hiragino Kaku Gothic ProN",sans-serif}
           .card{fill:#F2F8F4;stroke:#8FCBA6;stroke-width:1.5;rx:12}
+          .gate{fill:#FDE7E7;stroke:#E5A0A0;stroke-width:1.5;rx:12}
         </style>
       </defs>
-      <rect class="card" x="20" y="40" width="240" height="120" rx="12"/>
-      <text class="ttl" x="40" y="74">LINEチーム</text>
-      <text class="dsc" x="40" y="100">設置記事・設置位置の指定</text>
-      <text class="dsc" x="40" y="120">バナー画像の用意</text>
-      <text class="dsc" x="40" y="140">WINUT流入リンクの発行</text>
-      <line x1="262" y1="100" x2="296" y2="100" stroke="#1B7A3D" stroke-width="2.5" marker-end="url(#arrow)"/>
-      <rect class="card" x="300" y="40" width="240" height="120" rx="12"/>
-      <text class="ttl" x="320" y="74">インターン</text>
-      <text class="dsc" x="320" y="100">メタリフHTML作成</text>
-      <text class="dsc" x="320" y="120">WP埋め込みコード下書き</text>
-      <text class="dsc" x="320" y="140">材料一式を社員へ引き継ぎ</text>
-      <line x1="542" y1="100" x2="576" y2="100" stroke="#1B7A3D" stroke-width="2.5" marker-end="url(#arrow)"/>
-      <rect class="card" x="580" y="40" width="240" height="120" rx="12"/>
-      <text class="ttl" x="600" y="74">社員</text>
-      <text class="dsc" x="600" y="100">FTPへアップロード</text>
-      <text class="dsc" x="600" y="120">WPへ埋め込み</text>
-      <text class="dsc" x="600" y="140">公開確認</text>
+
+      <rect class="card" x="20" y="40" width="230" height="130" rx="12"/>
+      <text class="ttl" x="38" y="72">① LINEチーム</text>
+      <text class="dsc" x="38" y="98">設置記事・設置位置の指定</text>
+      <text class="dsc" x="38" y="116">バナー画像の用意</text>
+      <text class="dsc" x="38" y="134">WINUT流入リンクの発行</text>
+      <line x1="252" y1="105" x2="278" y2="105" stroke="#1B7A3D" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+      <rect class="card" x="280" y="40" width="230" height="130" rx="12"/>
+      <text class="ttl" x="298" y="72">② 素材組み立て</text>
+      <text class="who" x="298" y="90" fill="#1B4E84">社員 / インターン どちらも可</text>
+      <text class="dsc" x="298" y="112">メタリフHTML作成</text>
+      <text class="dsc" x="298" y="130">WP埋め込みコード下書き</text>
+      <line x1="512" y1="105" x2="538" y2="105" stroke="#1B7A3D" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+      <rect class="gate" x="540" y="40" width="230" height="130" rx="12"/>
+      <text class="ttl" x="558" y="72" fill="#9B2C2C">③ FTPアップロード</text>
+      <text class="who" x="558" y="90" fill="#9B2C2C">社員のみ（アクセス権の都合）</text>
+      <text class="dsc" x="558" y="112">画像・メタリフをサーバーへ</text>
+      <line x1="772" y1="105" x2="798" y2="105" stroke="#1B7A3D" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+      <rect class="card" x="800" y="40" width="230" height="130" rx="12"/>
+      <text class="ttl" x="818" y="72">④ WP公開</text>
+      <text class="who" x="818" y="90" fill="#1B4E84">社員 / インターン どちらも可</text>
+      <text class="dsc" x="818" y="112">記事へ埋め込み</text>
+      <text class="dsc" x="818" y="130">プレビュー確認・公開</text>
     </svg>
   </div>
+  <p class="tip">③のFTPアップロードだけが社員限定（サーバーアクセス権の都合）。②④は担当が固定ではなく、社員・インターンどちらが行ってもよい。</p>
 
   <h3>担当分け一覧</h3>
   <table class="role">
