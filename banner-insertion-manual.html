@@ -135,17 +135,21 @@
   </div>
 
   <h2 id="flow">業務全体の流れ（依頼フロー）</h2>
-  <p class="lead">LINEチームの準備が終わってから、記事にバナーが表示されるまでの一連の流れです。①〜③はインターン、④〜⑤は社員の担当です。</p>
+  <p class="lead">LINEチームの準備が終わってから、記事にバナーが表示されるまでの一連の流れです。</p>
+  <div class="box point">
+    <div class="t">💡 担当は固定ではない</div>
+    実質的な制約は④FTPアップロードのみ（サーバーアクセス権の都合で社員限定）。②③⑤は社員・インターンどちらが担当してもよい。
+  </div>
   <div class="flow">
     <div class="flow-step"><span class="n">1</span><div class="body"><b>LINEチームが準備<span class="role-tag line">LINEチーム</span></b><p>設置対象記事・設置位置の指定、バナー画像、WINUT流入リンクの3点を用意する。</p></div></div>
     <div class="arrow">▼</div>
-    <div class="flow-step"><span class="n">2</span><div class="body"><b>メタリフHTMLを作る<span class="role-tag intern">インターン</span></b><p>受け取ったWINUT流入リンク・GA4計測IDでメタリフファイルを組み立てる。</p></div></div>
+    <div class="flow-step"><span class="n">2</span><div class="body"><b>メタリフHTMLを作る<span class="role-tag employee">社員</span><span class="role-tag intern">インターン</span></b><p>受け取ったWINUT流入リンク・GA4計測IDでメタリフファイルを組み立てる。</p></div></div>
     <div class="arrow">▼</div>
-    <div class="flow-step"><span class="n">3</span><div class="body"><b>WP埋め込みコードを下書きする<span class="role-tag intern">インターン</span></b><p>記事に貼る用のコードを、ファイル名を当てはめて下書きする。</p></div></div>
+    <div class="flow-step"><span class="n">3</span><div class="body"><b>WP埋め込みコードを下書きする<span class="role-tag employee">社員</span><span class="role-tag intern">インターン</span></b><p>記事に貼る用のコードを、ファイル名を当てはめて下書きする。</p></div></div>
     <div class="arrow">▼</div>
-    <div class="flow-step"><span class="n">4</span><div class="body"><b>FTPへアップロード<span class="role-tag employee">社員</span></b><p>画像・メタリフの両方をサーバーにアップロードする。</p></div></div>
+    <div class="flow-step"><span class="n">4</span><div class="body"><b>FTPへアップロード<span class="role-tag employee">社員のみ</span></b><p>画像・メタリフの両方をサーバーにアップロードする（サーバーアクセス権の都合で社員限定）。</p></div></div>
     <div class="arrow">▼</div>
-    <div class="flow-step"><span class="n">5</span><div class="body"><b>WPに埋め込み・公開確認<span class="role-tag employee">社員</span></b><p>記事にコードを貼り、プレビュー確認後に公開する。</p></div></div>
+    <div class="flow-step"><span class="n">5</span><div class="body"><b>WPに埋め込み・公開確認<span class="role-tag employee">社員</span><span class="role-tag intern">インターン</span></b><p>記事にコードを貼り、プレビュー確認後に公開する。</p></div></div>
   </div>
 
   <nav class="toc">
@@ -204,10 +208,10 @@
     <tr><td>設置対象記事・設置位置の指定</td><td><span class="role-tag line">LINEチーム</span></td></tr>
     <tr><td>バナー画像（デザイン素材）の用意</td><td><span class="role-tag line">LINEチーム</span></td></tr>
     <tr><td>WINUT流入リンクの発行</td><td><span class="role-tag line">LINEチーム</span></td></tr>
-    <tr><td>メタリフHTMLの組み立て</td><td><span class="role-tag intern">インターン</span></td></tr>
-    <tr><td>WP埋め込み用コードの下書き作成</td><td><span class="role-tag intern">インターン</span></td></tr>
-    <tr><td style="font-weight:700;">FTPへの実アップロード</td><td><span class="role-tag employee">社員</span></td></tr>
-    <tr><td style="font-weight:700;">WP埋め込み・公開確認</td><td><span class="role-tag employee">社員</span></td></tr>
+    <tr><td>メタリフHTMLの組み立て</td><td><span class="role-tag employee">社員</span> <span class="role-tag intern">インターン</span></td></tr>
+    <tr><td>WP埋め込み用コードの下書き作成</td><td><span class="role-tag employee">社員</span> <span class="role-tag intern">インターン</span></td></tr>
+    <tr><td style="font-weight:700;">FTPへの実アップロード</td><td><span class="role-tag employee">社員のみ</span></td></tr>
+    <tr><td>WP埋め込み・公開確認</td><td><span class="role-tag employee">社員</span> <span class="role-tag intern">インターン</span></td></tr>
     <tr><td>ドメアラサイトの先方依頼</td><td><span class="role-tag employee">社員</span></td></tr>
   </table>
 
@@ -227,7 +231,7 @@
   </table>
 
   <!-- ===== 3. メタリフ ===== -->
-  <h2 id="meta">3. メタリフHTMLを作る<span class="role-tag intern">インターン</span></h2>
+  <h2 id="meta">3. メタリフHTMLを作る<span class="role-tag employee">社員</span><span class="role-tag intern">インターン</span></h2>
   <p class="lead">LINEチームから受け取ったWINUT流入リンク・GA4計測IDを使って、1つのHTMLファイルを組み立てる。</p>
   <h3>手順</h3>
   <ol class="steps">
@@ -269,7 +273,7 @@
   </div>
 
   <!-- ===== 4. 下書き ===== -->
-  <h2 id="draft">4. WP埋め込み用コードの下書きを作る<span class="role-tag intern">インターン</span></h2>
+  <h2 id="draft">4. WP埋め込み用コードの下書きを作る<span class="role-tag employee">社員</span><span class="role-tag intern">インターン</span></h2>
   <p class="lead">記事に貼り付けるコードを下書きする（実際に記事へ貼るのは社員の作業）。</p>
   <pre><code>&lt;div class="full_img" style="text-align: center"&gt;
     &lt;a href="<span class="ph">{Step3で作ったメタリフファイルの名前}</span>" target="_blank" rel="nofollow noopener noreferrer"&gt;
@@ -289,6 +293,7 @@
 
   <!-- ===== 5. 引き継ぎ ===== -->
   <h2 id="handoff">5. 社員に引き継ぐ<span class="role-tag intern">インターン</span> → <span class="role-tag employee">社員</span></h2>
+  <p class="lead">②③をインターンが担当した場合のみ発生するステップ。社員自身が②③を作った場合は引き継ぎ不要でそのままFTP作業に進む。</p>
   <p class="lead">以下をまとめて担当社員に共有する。</p>
   <ul>
     <li>バナー画像ファイル</li>
@@ -333,10 +338,10 @@
   <p>自社でFTPを直接操作できないため、先方へChatworkで依頼する。</p>
 
   <!-- ===== 7. WP公開 ===== -->
-  <h2 id="wp-publish">7. WP埋め込み・公開確認<span class="role-tag employee">社員</span></h2>
+  <h2 id="wp-publish">7. WP埋め込み・公開確認<span class="role-tag employee">社員</span><span class="role-tag intern">インターン</span></h2>
   <ol class="steps">
     <li>WP管理画面にログインし、対象記事を開く（<span class="path">投稿一覧 / 固定ページ一覧</span> から検索）。</li>
-    <li>インターンが用意した下書きコードを、指定された設置位置に貼り付ける。</li>
+    <li>手順4で用意した下書きコードを、指定された設置位置に貼り付ける。</li>
   </ol>
 
   <pre><code>&lt;div class="full_img" style="text-align: center"&gt;
