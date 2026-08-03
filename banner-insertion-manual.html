@@ -53,12 +53,12 @@
   pre .ph{color:#f5c26b}
   /* screenshot slot */
   figure.shot{margin:18px 0;border:2px solid var(--amber-line);border-radius:10px;overflow:hidden;background:#fff}
-  figure.shot img{display:block;width:100%;height:auto;border-bottom:1px solid var(--line)}
+  figure.shot img{display:block;width:100%;height:auto}
   figure.shot .ph{display:none;min-height:150px;align-items:center;justify-content:center;flex-direction:column;
     background:var(--amber-bg);color:var(--amber);padding:26px 18px;text-align:center;gap:6px}
   figure.shot .ph .cam{font-size:30px}
   figure.shot .ph .save{font-size:12px;background:#fff;border:1px dashed var(--amber-line);border-radius:6px;padding:3px 10px;margin-top:4px}
-  figure.shot figcaption{padding:8px 14px;font-size:13px;font-weight:700;color:var(--amber);background:#fffaf0}
+  figure.shot figcaption{padding:8px 14px;font-size:13px;font-weight:700;color:var(--amber);background:#fffaf0;border-bottom:1px solid var(--line)}
   /* flow diagram */
   .diagram{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin:22px 0}
   /* pill / menu path */
@@ -267,9 +267,9 @@
 &lt;/html&gt;</code></pre>
 
   <figure class="shot">
-    <img src="images/banner-01-meta-edit.png" alt="メタリフHTML編集画面" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <figcaption>スクショ①：メタリフHTMLの編集例</figcaption>
+    <img src="images/banner-01-meta-edit.png" alt="メタリフHTML編集例" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
     <div class="ph"><div class="cam">📷</div><div>ここに画像を貼る</div><div>撮るポイント：テキストエディタで{GA4計測ID}・{WINUT流入リンク}を埋めているところ</div><div class="save">保存名：images/banner-01-meta-edit.png</div></div>
-    <figcaption>スクショ①：メタリフHTMLを編集している画面</figcaption>
   </figure>
 
   <div class="box point">
@@ -324,9 +324,9 @@
   </ol>
 
   <figure class="shot">
+    <figcaption>スクショ②：FTPアップロード画面</figcaption>
     <img src="images/banner-02-ftp-upload.png" alt="FTPアップロード画面" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
     <div class="ph"><div class="cam">📷</div><div>ここに画像を貼る</div><div>撮るポイント：FileZillaで/assets/uploadsまたは/webにアップロードしている様子</div><div class="save">保存名：images/banner-02-ftp-upload.png</div></div>
-    <figcaption>スクショ②：FTPアップロード画面</figcaption>
   </figure>
 
   <div class="box warn">
@@ -362,9 +362,9 @@
   </ol>
 
   <figure class="shot">
+    <figcaption>スクショ③：プレビュー確認画面</figcaption>
     <img src="images/banner-03-preview.png" alt="プレビュー確認画面" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
     <div class="ph"><div class="cam">📷</div><div>ここに画像を貼る</div><div>撮るポイント：記事プレビューでバナーが正常表示されているところ</div><div class="save">保存名：images/banner-03-preview.png</div></div>
-    <figcaption>スクショ③：プレビュー確認画面</figcaption>
   </figure>
 
   <!-- ===== 8. まとめ ===== -->
