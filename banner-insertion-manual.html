@@ -86,6 +86,17 @@
   table.role td:last-child{width:190px}
   .tip{font-size:13px;color:var(--muted)}
   hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+  /* 表示切替（社員／インターン） */
+  .intern-note{display:none}
+  body.view-intern .employee-only{display:none}
+  body.view-intern .intern-note{display:block}
+  .view-toggle{display:flex;gap:8px;justify-content:center;margin:0 0 28px;flex-wrap:wrap}
+  .view-toggle button{
+    appearance:none;border:1.5px solid var(--line);background:#fff;color:#777;
+    font:inherit;font-weight:700;font-size:14px;padding:9px 20px;border-radius:100px;cursor:pointer;
+  }
+  .view-toggle button[aria-pressed="true"][data-view="employee"]{background:var(--blue-bg);border-color:var(--blue-line);color:var(--blue)}
+  .view-toggle button[aria-pressed="true"][data-view="intern"]{background:var(--amber-bg);border-color:var(--amber-line);color:var(--amber)}
   .quicklinks{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
   .quicklinks a{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--green);border-radius:8px;padding:9px 16px;font-weight:700;font-size:14px;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.18)}
   /* 左サイドバー（PC幅のみ表示） */
@@ -110,7 +121,7 @@
   <a class="navlink" href="#meta">3. メタリフHTMLを作る</a>
   <a class="navlink" href="#draft">4. WP埋め込みコードの下書き</a>
   <a class="navlink" href="#handoff">5. 社員に引き継ぐ</a>
-  <a class="navlink" href="#ftp">6. FTPへアップロード</a>
+  <a class="navlink employee-only" href="#ftp">6. FTPへアップロード</a>
   <a class="navlink" href="#wp-publish">7. WP埋め込み・公開確認</a>
   <a class="navlink" href="#matome">8. まとめ・チェックリスト</a>
 </nav>
@@ -124,6 +135,11 @@
 </header>
 
 <div class="wrap">
+
+  <div class="view-toggle" role="group" aria-label="表示切替">
+    <button type="button" data-view="employee" aria-pressed="true">社員として見る</button>
+    <button type="button" data-view="intern" aria-pressed="false">インターンとして見る</button>
+  </div>
 
   <div class="box point">
     <div class="t">💡 このマニュアルでできるようになること</div>
@@ -161,7 +177,7 @@
       <li><a href="#meta">3. メタリフHTMLを作る</a></li>
       <li><a href="#draft">4. WP埋め込みコードの下書き</a></li>
       <li><a href="#handoff">5. 社員に引き継ぐ</a></li>
-      <li><a href="#ftp">6. FTPへアップロード</a></li>
+      <li class="employee-only"><a href="#ftp">6. FTPへアップロード</a></li>
       <li><a href="#wp-publish">7. WP埋め込み・公開確認</a></li>
       <li><a href="#matome">8. まとめ・公開前チェックリスト</a></li>
     </ol>
@@ -299,7 +315,7 @@
 
   <!-- ===== 5. 引き継ぎ ===== -->
   <h2 id="handoff">5. 社員に引き継ぐ<span class="role-tag intern">インターン</span> → <span class="role-tag employee">社員</span></h2>
-  <p class="lead">②③をインターンが担当した場合のみ発生するステップ。社員自身が②③を作った場合は引き継ぎ不要でそのままFTP作業に進む。</p>
+  <p class="lead">手順3・4をインターンが担当した場合のみ発生するステップ。社員自身が手順3・4を作った場合は引き継ぎ不要でそのままFTP作業に進む。</p>
   <p class="lead">以下をまとめて担当社員に共有する。</p>
   <ul>
     <li>バナー画像ファイル</li>
@@ -308,8 +324,9 @@
     <li>対象記事のURL・設置位置メモ</li>
   </ul>
 
-  <!-- ===== 6. FTP ===== -->
-  <h2 id="ftp">6. FTPへのアップロード<span class="role-tag employee">社員</span></h2>
+  <!-- ===== 6. FTP（社員限定） ===== -->
+  <div class="employee-only">
+  <h2 id="ftp">6. FTPへのアップロード<span class="role-tag employee">社員のみ</span></h2>
   <p class="lead">FTP認証情報は各自が把握しているものを使用する（本マニュアルには記載しない）。</p>
 
   <h3>画像</h3>
@@ -338,6 +355,12 @@
 
   <h3>ドメアラサイト（渋谷・小田など）の場合</h3>
   <p>自社でFTPを直接操作できないため、先方へChatworkで依頼する。</p>
+  </div>
+
+  <div class="intern-note box point">
+    <div class="t">💡 FTPアップロードについて</div>
+    ここは社員の担当。画像・メタリフを渡した後、<b>アップロード先の実際のURL（画像URL・メタリフURL）を社員から共有してもらってから</b>、次の「WP埋め込み・公開確認」に進む。
+  </div>
 
   <!-- ===== 7. WP公開 ===== -->
   <h2 id="wp-publish">7. WP埋め込み・公開確認<span class="role-tag employee">社員</span><span class="role-tag intern">インターン</span></h2>
@@ -353,7 +376,7 @@
     &lt;/a&gt;
 &lt;/div&gt;</code></pre>
 
-  <p>コード内のURL（href・src）が、手順6でFTPにアップロードした実際のパスと一致しているか確認する。</p>
+  <p>コード内のURL（href・src）が、FTPにアップロード済みの実際のパスと一致しているか確認する。</p>
 
   <ol class="steps">
     <li>プレビューで正常に表示されるか確認する。</li>
@@ -387,12 +410,25 @@
   var secs = Array.prototype.slice.call(document.querySelectorAll('h2[id]'));
   var links = Array.prototype.slice.call(document.querySelectorAll('nav.side a.navlink'));
   function spy(){
-    var cur = secs[0];
-    secs.forEach(function(s){ if(s.getBoundingClientRect().top <= 130) cur = s; });
+    var visible = secs.filter(function(s){ return s.getClientRects().length > 0; });
+    var cur = visible[0];
+    visible.forEach(function(s){ if(s.getBoundingClientRect().top <= 130) cur = s; });
     links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href') === '#' + (cur && cur.id)); });
   }
   document.addEventListener('scroll', spy, {passive:true});
   spy();
+})();
+
+// 表示切替（社員／インターン）
+(function(){
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('.view-toggle button'));
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var view = btn.getAttribute('data-view');
+      document.body.classList.toggle('view-intern', view === 'intern');
+      buttons.forEach(function(b){ b.setAttribute('aria-pressed', String(b === btn)); });
+    });
+  });
 })();
 </script>
 </body>
