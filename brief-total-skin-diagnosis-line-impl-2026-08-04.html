@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LINE実装設計書：総合肌タイプ診断</title>
+<style>
+  :root {
+    --accent: #0F766E;
+    --accent-light: #CCFBF1;
+    --bg: #FAFAFA;
+    --surface: #FFFFFF;
+    --border: #E5E7EB;
+    --text: #111827;
+    --text-muted: #6B7280;
+    --warn: #D97706;
+    --warn-bg: #FEF3C7;
+    --t1: #B45B1F; --t1-bg: #FDECD9;
+    --t2: #1A6A95; --t2-bg: #E3F2FD;
+    --t3: #2E7D32; --t3-bg: #E8F5E9;
+    --t4: #7B3F8F; --t4-bg: #F3E5F8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111827; --surface: #1F2937; --border: #374151;
+      --text: #F9FAFB; --text-muted: #9CA3AF;
+    }
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: "Hiragino Sans", "Yu Gothic UI", system-ui, sans-serif; font-size: 14px; line-height: 1.7; }
+  .doc { max-width: 820px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  .doc-header { margin-bottom: 48px; }
+  .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  h1 { font-size: 26px; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; }
+  .meta { font-size: 12px; color: var(--text-muted); margin-top: 10px; }
+  .badge { display: inline-block; background: var(--t3-bg); color: var(--t3); font-size: 12px; font-weight: 700; padding: 3px 12px; border-radius: 4px; margin-top: 10px; }
+
+  .section { margin-bottom: 48px; }
+  .section-title { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); padding-bottom: 8px; border-bottom: 2px solid var(--accent-light); margin-bottom: 20px; }
+
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .flow-q { background: var(--accent-light); border: 1.5px solid var(--accent); border-radius: 8px; padding: 12px 24px; text-align: center; width: 100%; max-width: 400px; }
+  .flow-q-label { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: .06em; text-transform: uppercase; }
+  .flow-q-text { font-size: 13px; font-weight: 700; color: var(--text); margin-top: 2px; }
+  .flow-arrow { color: var(--border); font-size: 20px; line-height: 1; padding: 4px 0; }
+  .flow-types { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; max-width: 640px; margin-top: 4px; }
+  .flow-type { border-radius: 6px; padding: 10px 8px; font-size: 11.5px; font-weight: 700; text-align: center; }
+  .flow-judge { background: #F3F4F6; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 24px; font-size: 12px; color: var(--text-muted); font-weight: 700; letter-spacing: .04em; text-align: center; }
+  .flow-branch-row { display: flex; gap: 12px; width: 100%; max-width: 500px; margin-top: 4px; }
+  .flow-branch { flex: 1; background: #F3F4F6; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 12px; text-align: center; }
+
+  .q-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; }
+  .q-card-label { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .q-card-text { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+  .q-options { display: flex; flex-direction: column; gap: 8px; }
+  .q-opt { display: flex; gap: 10px; align-items: flex-start; }
+  .opt-badge { background: var(--accent-light); color: var(--accent); font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .opt-text { font-size: 13px; }
+  .q-note { margin-top: 14px; padding: 12px 14px; background: var(--warn-bg); border-left: 3px solid var(--warn); border-radius: 0 6px 6px 0; font-size: 12px; line-height: 1.8; }
+  .q-note strong { color: var(--warn); }
+
+  .tbl-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--bg); font-weight: 700; padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border); color: var(--text-muted); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+
+  .pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 4px; white-space: nowrap; }
+  .p1 { background: var(--t1-bg); color: var(--t1); }
+  .p2 { background: var(--t2-bg); color: var(--t2); }
+  .p3 { background: var(--t3-bg); color: var(--t3); }
+  .p4 { background: var(--t4-bg); color: var(--t4); }
+
+  .notice { background: var(--warn-bg); border: 1px solid #FDE68A; border-radius: 8px; padding: 14px 18px; font-size: 13px; margin-top: 16px; line-height: 1.8; }
+  .notice strong { color: var(--warn); }
+  .pending { background: #F3F4F6; border: 1px dashed var(--text-muted); border-radius: 8px; padding: 14px 18px; font-size: 13px; color: var(--text-muted); line-height: 1.8; }
+  .pending strong { color: var(--text); }
+
+  .back-link { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; }
+  .back-link a { color: var(--accent); text-decoration: none; }
+  .back-link a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="doc-header">
+    <div class="eyebrow">Total Skin Type Diagnosis — LINE Implementation Brief</div>
+    <h1>総合肌タイプ診断<br>LINE実装設計書</h1>
+    <div class="meta">作成: 2026-08-04 ／ 対象: LINEシナリオ構築担当</div>
+    <div class="badge">連携用</div>
+  </div>
+
+  <div class="pending" style="margin-bottom:32px;">
+    <strong>⚠️ この設計書はPU設置先一覧が未確定のまま公開しています。</strong>対象記事の実URL一覧確定（Noa判断で最後に回す方針）が決まり次第、末尾のPU設置先一覧セクションを追記します。それ以外のセクションは構築着手可能です。
+  </div>
+
+  <!-- 概要 -->
+  <div class="section">
+    <div class="section-title">概要</div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><td style="font-weight:700;width:160px;">診断名</td><td>あなたの肌タイプ診断</td></tr>
+        <tr><td style="font-weight:700;">対象</td><td>①クレンジング診断②スキンケア診断③化粧水診断のどれにも属さない記事（ファンデ/BB比較・美容オイル・成分解説等）への横断入口診断</td></tr>
+        <tr><td style="font-weight:700;">質問数</td><td>6問（Q1〜Q6。Q6はグループ別に2パターン）</td></tr>
+        <tr><td style="font-weight:700;">振り分け結果</td><td>4タイプ（乾燥肌・脂性肌・混合肌・敏感肌。普通肌は含めない）</td></tr>
+        <tr><td style="font-weight:700;">振り分けロジック</td><td>Q5で肌質を仮判定（2グループへ）→Q6でグループ別の最終設問により確定する2段階アダプティブ分岐。Q1〜Q4は分岐に使わず、結果メッセージの根拠づけ・パーソナライズ用。各ルートとも「最終設問（Q6）の回答のみ」で確定するためNG-2（診断結果は最終設問の回答のみで分岐する）準拠</td></tr>
+        <tr><td style="font-weight:700;">①②③との違い</td><td>結果は「別の診断への誘導」ではなく、その場でクレンジング・基礎化粧品・化粧水の3カテゴリ分の商品を直接レコメンドする一段階構造。①②③の既存商材をそのまま流用するため新規アフィリ提携は不要</td></tr>
+        <tr><td style="font-weight:700;">メタリフ</td><td>全8商材、①②③の実装済み設計書から現行リンクを確認済み（下記メタリフ一覧参照）</td></tr>
+        <tr><td style="font-weight:700;">結果カード</td><td>全タイプ4枚固定・商材名は出さない（<a href="cards-total-skin-diagnosis-2026-07-21.html" target="_blank">cards-total-skin-diagnosis-2026-07-21.html</a>）</td></tr>
+        <tr><td style="font-weight:700;">おすすめ3点セットカル</td><td>結果カードCard4のCTA直後に送信。クッションカード＋クレンジング／基礎化粧品／化粧水の4枚固定（<a href="cards-total-skin-diagnosis-pr-carousel-2026-07-21.html" target="_blank">cards-total-skin-diagnosis-pr-carousel-2026-07-21.html</a>）</td></tr>
+      </table>
+    </div>
+    <div class="notice">
+      <strong>⚠️ セレクトカル不要：</strong>③化粧水診断と違い、本診断はタイプごとに商材が「クレンジング1つ・基礎化粧品1つ・化粧水1つ」で固定（複数商材から選ばせる構造ではない）。したがって③で必要だった「セレクトカル（中間で商材を選ばせるカル）」は本診断には不要。結果カード→おすすめ3点セットカルの2段階のみで完結する。
+    </div>
+  </div>
+
+  <!-- フロー図 -->
+  <div class="section">
+    <div class="section-title">診断フロー図</div>
+    <div class="flow">
+
+      <div class="flow-q">
+        <div class="flow-q-label">Q1</div>
+        <div class="flow-q-text">年代（10〜20代 / 30代 / 40代以上）</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:-4px;margin-bottom:4px;">分岐に使わない。Card2のパーソナライズ用</div>
+
+      <div class="flow-q">
+        <div class="flow-q-label">Q2</div>
+        <div class="flow-q-text">お化粧の崩れ方（A〜D・4択）</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:-4px;margin-bottom:4px;">分岐に使わない。根拠づけ用（ファンデ/BB比較記事の読者に刺さる軸）</div>
+
+      <div class="flow-q">
+        <div class="flow-q-label">Q3</div>
+        <div class="flow-q-text">毛穴の目立ちやすい場所（A〜D・4択）</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:-4px;margin-bottom:4px;">分岐に使わない。根拠づけ用</div>
+
+      <div class="flow-q">
+        <div class="flow-q-label">Q4</div>
+        <div class="flow-q-text">一番気になる肌悩み（A〜D・4択）</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:-4px;margin-bottom:4px;">分岐に使わない。根拠づけ用</div>
+
+      <div class="flow-q" style="background:#F3F4F6;border-color:var(--text-muted);">
+        <div class="flow-q-label" style="color:var(--text-muted);">Q5 — 第一分岐（グループ仮判定）</div>
+        <div class="flow-q-text">洗顔後15分、何もつけずにいると肌は？（A〜D・4択）</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+
+      <div class="flow-branch-row">
+        <div class="flow-branch" style="border-color:var(--t1);color:var(--t1);">A・D → 乾燥・敏感グループ</div>
+        <div class="flow-branch" style="border-color:var(--t2);color:var(--t2);">B・C → 脂性・混合グループ</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+
+      <div class="flow-q" style="background:#F3F4F6;border-color:var(--text-muted);">
+        <div class="flow-q-label" style="color:var(--text-muted);">Q6 — 第二分岐＝最終設問（グループ別に出し分け）</div>
+        <div class="flow-q-text">Q6-①（乾燥・敏感グループ向け）／Q6-②（脂性・混合グループ向け）</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+
+      <div class="flow-judge">各ルートともQ6の回答のみで確定（NG-2準拠）</div>
+      <div class="flow-arrow">↓</div>
+
+      <div class="flow-types">
+        <div class="flow-type" style="background:var(--t1-bg);color:var(--t1);">乾燥肌<br><span style="font-weight:400;font-size:11px;">Q6-①でいいえ</span></div>
+        <div class="flow-type" style="background:var(--t2-bg);color:var(--t2);">脂性肌<br><span style="font-weight:400;font-size:11px;">Q6-②でいいえ</span></div>
+        <div class="flow-type" style="background:var(--t3-bg);color:var(--t3);">混合肌<br><span style="font-weight:400;font-size:11px;">Q6-②ではい</span></div>
+        <div class="flow-type" style="background:var(--t4-bg);color:var(--t4);">敏感肌<br><span style="font-weight:400;font-size:11px;">Q6-①ではい</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 質問詳細 -->
+  <div class="section">
+    <div class="section-title">質問詳細</div>
+
+    <div class="q-card">
+      <div class="q-card-label">Q1 — 年代（パーソナライズ用・分岐に使わない）</div>
+      <div class="q-card-text">年代を教えてください</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">A</span><span class="opt-text">10〜20代</span></div>
+        <div class="q-opt"><span class="opt-badge">B</span><span class="opt-text">30代</span></div>
+        <div class="q-opt"><span class="opt-badge">C</span><span class="opt-text">40代以上</span></div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-card-label">Q2 — お化粧の崩れ方（根拠づけ用・分岐に使わない）</div>
+      <div class="q-card-text">お化粧をしていて、崩れ方で当てはまるのは？</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">A</span><span class="opt-text">乾燥でカサついて、粉をふいてくる</span></div>
+        <div class="q-opt"><span class="opt-badge">B</span><span class="opt-text">皮脂で全体的にドロドロ崩れる</span></div>
+        <div class="q-opt"><span class="opt-badge">C</span><span class="opt-text">Tゾーンだけ崩れて、頬はそのまま</span></div>
+        <div class="q-opt"><span class="opt-badge">D</span><span class="opt-text">新しいコスメだと崩れ方がいつもと違う</span></div>
+      </div>
+      <div class="q-note">分岐には使わない。Card1のチェックリスト・Card2の根本示唆のパーソナライズ用。対象記事（ファンデ/BB比較記事）の読者に刺さりやすい軸。</div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-card-label">Q3 — 毛穴の目立ちやすい場所（根拠づけ用・分岐に使わない）</div>
+      <div class="q-card-text">毛穴の目立ちやすい場所は？</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">A</span><span class="opt-text">目立たない</span></div>
+        <div class="q-opt"><span class="opt-badge">B</span><span class="opt-text">頬・フェイスライン全体</span></div>
+        <div class="q-opt"><span class="opt-badge">C</span><span class="opt-text">Tゾーン（おでこ・鼻）</span></div>
+        <div class="q-opt"><span class="opt-badge">D</span><span class="opt-text">頬・口周りなど乾燥ゾーン</span></div>
+      </div>
+      <div class="q-note">分岐には使わない。根拠づけ用。</div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-card-label">Q4 — 一番気になる肌悩み（根拠づけ用・分岐に使わない）</div>
+      <div class="q-card-text">一番気になる肌悩みは？</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">A</span><span class="opt-text">乾燥・カサつき</span></div>
+        <div class="q-opt"><span class="opt-badge">B</span><span class="opt-text">毛穴・テカリ</span></div>
+        <div class="q-opt"><span class="opt-badge">C</span><span class="opt-text">崩れやすさ・肌の揺らぎ</span></div>
+        <div class="q-opt"><span class="opt-badge">D</span><span class="opt-text">赤み・刺激に弱い</span></div>
+      </div>
+      <div class="q-note">分岐には使わない。根拠づけ用。</div>
+    </div>
+
+    <div class="q-card" style="border-color:var(--accent);background:var(--accent-light);">
+      <div class="q-card-label">Q5 — 第一分岐：グループ仮判定</div>
+      <div class="q-card-text">洗顔後15分、何もつけずにいると肌は？</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">A</span><span class="opt-text">突っ張る、粉をふくことがある → 乾燥・敏感グループへ</span></div>
+        <div class="q-opt"><span class="opt-badge">B</span><span class="opt-text">顔全体がテカって皮脂が浮く → 脂性・混合グループへ</span></div>
+        <div class="q-opt"><span class="opt-badge">C</span><span class="opt-text">おでこ・鼻はテカるのに頬は突っ張る → 脂性・混合グループへ</span></div>
+        <div class="q-opt"><span class="opt-badge">D</span><span class="opt-text">赤みが出たり、ピリピリ・かゆみが出る → 乾燥・敏感グループへ</span></div>
+      </div>
+      <div class="q-note"><strong>⚠️ この回答でQ6の表示パターン（①or②）が決まる。</strong>まだタイプは確定しない（仮判定のみ）。</div>
+    </div>
+
+    <div class="q-card" style="border-color:var(--accent);background:var(--accent-light);">
+      <div class="q-card-label">Q6 — 第二分岐＝最終設問（グループ別に2パターン出し分け）</div>
+      <div class="q-card-text">Q6-①（Q5でA/Dだった人に表示）：新しいコスメを使うと、赤みやかゆみが出やすいですか？</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">はい</span><span class="opt-text">→ 敏感肌で確定</span></div>
+        <div class="q-opt"><span class="opt-badge">いいえ</span><span class="opt-text">→ 乾燥肌で確定</span></div>
+      </div>
+      <div class="q-card-text" style="margin-top:20px;">Q6-②（Q5でB/Cだった人に表示）：頬やフェイスラインは、テカりより乾燥が気になりますか？</div>
+      <div class="q-options">
+        <div class="q-opt"><span class="opt-badge">いいえ</span><span class="opt-text">→ 脂性肌で確定</span></div>
+        <div class="q-opt"><span class="opt-badge">はい</span><span class="opt-text">→ 混合肌で確定</span></div>
+      </div>
+      <div class="q-note"><strong>⚠️ この回答のみでタイプが確定し、結果が直接表示される。</strong>Q1〜Q5は全て根拠づけ・グループ仮判定用のため、ここで初めて最終確定する（NG-2準拠）。</div>
+    </div>
+  </div>
+
+  <!-- 振り分けロジック -->
+  <div class="section">
+    <div class="section-title">振り分けロジック（Q5→Q6の2段階アダプティブ分岐）</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Q5の回答でQ6の表示パターンが決まり、Q6の回答のみでタイプが確定する。Q1〜Q4は結果メッセージのパーソナライズ・根拠づけ用として保持してください。</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Q5の回答</th>
+            <th>Q6のパターン</th>
+            <th>Q6の回答</th>
+            <th>確定タイプ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="2">A・D</td>
+            <td rowspan="2">Q6-①</td>
+            <td>いいえ</td>
+            <td><span class="pill p1">乾燥肌</span></td>
+          </tr>
+          <tr>
+            <td>はい</td>
+            <td><span class="pill p4">敏感肌</span></td>
+          </tr>
+          <tr>
+            <td rowspan="2">B・C</td>
+            <td rowspan="2">Q6-②</td>
+            <td>いいえ</td>
+            <td><span class="pill p2">脂性肌</span></td>
+          </tr>
+          <tr>
+            <td>はい</td>
+            <td><span class="pill p3">混合肌</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="notice"><strong>⚠️ NG-2準拠の確認：</strong>診断結果は最終設問（Q6）の回答のみで分岐する。Q1〜Q5の回答を統合・集計して判定するロジックは実装しない（既存のシステム制約に準拠、詳細はCTOに確認済み）。</div>
+  </div>
+
+  <!-- 商材マッピング -->
+  <div class="section">
+    <div class="section-title">商材マッピング（4タイプ × 3ステップ）</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>タイプ</th><th>クレンジング</th><th>基礎化粧品</th><th>化粧水</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="pill p1">乾燥肌</span></td>
+            <td>オルビス オフクリーム ¥5,000</td>
+            <td>ビーグレン QuSomeローション ¥5,500</td>
+            <td>アテニア プリマモイスト ¥1,200／オルビスユー ¥980</td>
+          </tr>
+          <tr>
+            <td><span class="pill p2">脂性肌</span></td>
+            <td>アテニア スキンクリア ¥4,500</td>
+            <td>オルビス クリアフル ¥980</td>
+            <td>オルビス クリアフル ¥980</td>
+          </tr>
+          <tr>
+            <td><span class="pill p3">混合肌</span></td>
+            <td>マナラ ホットクレンジングゲル ¥6,000</td>
+            <td>ビーグレン QuSomeローション ¥5,500</td>
+            <td>アテニア プリマモイスト ¥1,200／オルビスユー ¥980</td>
+          </tr>
+          <tr>
+            <td><span class="pill p4">敏感肌</span></td>
+            <td>アクセーヌ</td>
+            <td>ファンケル 無添加アクネケア ¥1,750</td>
+            <td>ディセンシア ¥1,480</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="notice"><strong>⚠️ 商材重複について：</strong>乾燥肌と混合肌は基礎化粧品・化粧水が同一商材。脂性肌は基礎化粧品・化粧水も同一商材（オルビス クリアフル、②スキンケア方法診断とは訴求軸を分離済み＝②「テカり・皮脂コントロール」軸／本診断「毛穴引き締め」軸）。1:1の完全対応にはこだわらず商品特徴が最も近いものを充てる方針（Noa確認済み）。</div>
+  </div>
+
+  <!-- メタリフ一覧 -->
+  <div class="section">
+    <div class="section-title">メタリフ一覧</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">全8商材分、①②③の実装済み設計書から現行リンクを確認済み（2026-07-23）。終了・差し替え警告なし。構築前に念のため再確認すること。</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:220px;">商品</th>
+            <th>URL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="font-weight:700;">オルビス オフクリーム</td><td style="font-size:12px;word-break:break-all;font-family:monospace;">https://pr.orbis.co.jp/cosmetics/offcream/100/</td></tr>
+          <tr><td style="font-weight:700;">ビーグレン QuSomeローション</td><td style="font-size:12px;word-break:break-all;font-family:monospace;">https://line-collect.com/organic/cosme/web/bglen_PR.php</td></tr>
+          <tr><td style="font-weight:700;">アテニア プリマモイスト</td><td style="font-size:12px;word-break:break-all;font-family:monospace;">https://line-collect.com/organic/cosme/web/lotion_attenir03_PR.php</td></tr>
+          <tr><td style="font-weight:700;">オルビスユー</td><td style="font-size:12px;word-break:break-all;font-family:monospace;">https://t.felmat.net/fmcl?ak=I2254R.2.F153853_O.B120881Y&amp;pb=line</td></tr>
+          <tr><td style="font-weight:700;">アテニア スキンクリア クレンズオイル</td><td style="font-size:12px;word-break:break-all;font-family:monospace;">https://www.attenir.co.jp/pub/skicle/d_net03/index.html?a8=UnOGgnV4RyWJSwYyV0q_Laja9yNTqO1AZaOJwwjaLSe4RaO_vaO_MyOlvywcmcWqES2yYbOdinOGZs00000000600007&amp;advname=skicle240&amp;argument=ZCLdMVgx&amp;data=14240&amp;dmai=DG_A8RNcleans_0002</td></tr>
+          <tr><td style="font-weight:700;">オルビス クリアフル</td><td style="font-size:12px;word-break:break-all;font-family:monospace;">https://t.felmat.net/fmcl?ak=M2255B.2.Q153563_J.B120881Y&amp;pb=line</td></tr>
+          <tr><td style="font-weight:700;">マナラ ホットクレンジングゲル</td><td style="font-size:12px;word-break:break-all;font-family:monospace;">https://cp.manara.jp/KS03_OMA_ma8_sb?argument=C7rWefvL&amp;dmai=a69d375f0e7823&amp;hc_uus=fcc7b1ed-efbd-48a7-addf-38c2408bf294&amp;ebisOther1=fcc7b1ed-efbd-48a7-addf-38c2408bf294</td></tr>
+          <tr><td style="font-weight:700;">アクセーヌ（ミルクタイプ）</td><td style="font-size:12px;word-break:break-all;font-family:monospace;">https://www.acseine.co.jp/shop/g/gclkit-milk200/</td></tr>
+          <tr><td style="font-weight:700;">ファンケル 無添加アクネケア</td><td style="font-size:12px;word-break:break-all;font-family:monospace;">https://t.felmat.net/fmcl?ak=G48337.2.K153565_0.B120881Y&amp;pb=line</td></tr>
+          <tr><td style="font-weight:700;">ディセンシア</td><td style="font-size:12px;word-break:break-all;font-family:monospace;">https://line-collect.com/organic/cosme/web/decencia_PR.php</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- タイプ別結果カード・PRカルーセル -->
+  <div class="section">
+    <div class="section-title">タイプ別 結果カード・おすすめ3点セットカル（制作済み）</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;">結果カード（タイプ発表）→ おすすめ3点セットカル（クッションカード＋商品提案）の順で送信します。どちらも制作済みです。</p>
+
+    <div style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">① 結果カード（タイプ発表）</div>
+    <a href="cards-total-skin-diagnosis-2026-07-21.html" target="_blank" style="display:inline-block;background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:700;padding:8px 18px;border-radius:6px;text-decoration:none;margin-bottom:12px;">別タブで開く →</a>
+    <iframe
+      src="cards-total-skin-diagnosis-2026-07-21.html"
+      style="width:100%;height:640px;border:1px solid var(--border);border-radius:8px;display:block;margin-bottom:32px;"
+      loading="lazy"
+    ></iframe>
+
+    <div style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">② おすすめ3点セットカル（クッションカード＋商品提案）</div>
+    <a href="cards-total-skin-diagnosis-pr-carousel-2026-07-21.html" target="_blank" style="display:inline-block;background:var(--accent-light);color:var(--accent);font-size:13px;font-weight:700;padding:8px 18px;border-radius:6px;text-decoration:none;margin-bottom:12px;">別タブで開く →</a>
+    <iframe
+      src="cards-total-skin-diagnosis-pr-carousel-2026-07-21.html"
+      style="width:100%;height:640px;border:1px solid var(--border);border-radius:8px;display:block;"
+      loading="lazy"
+    ></iframe>
+  </div>
+
+  <!-- PU設置先一覧 -->
+  <div class="section">
+    <div class="section-title">PU設置先一覧</div>
+    <div class="pending">
+      <strong>⚠️ 未確定：</strong>対象記事の実URL一覧はNoa判断で最後に決定する方針のため、現時点で記事別の設置内容表は作成できていません。URL確定後、このセクションに①②③の実装設計書と同じ形式（設置PU／記事名／タグ（スラグ）／記事URL／月間クリック）で追記します。
+    </div>
+
+    <div style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-transform:uppercase;margin-top:24px;margin-bottom:10px;">PUデザイン一覧（3案・確定済み）</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:40px;">No.</th><th>コピー</th><th>想定読者</th></tr>
+        </thead>
+        <tbody>
+          <tr><td style="font-weight:700;">案A</td><td>その化粧品、自分の肌タイプに合わせて選べてる？</td><td>美容オイル記事（単品への興味段階）</td></tr>
+          <tr><td style="font-weight:700;">案B</td><td>いろいろ試してるのに変わらないなら、肌タイプから見直してみない？</td><td>ファンデ/BB比較記事（商品比較で疲れている層）</td></tr>
+          <tr><td style="font-weight:700;">案C</td><td>自分の肌タイプ、ちゃんと知りたい！</td><td>成分解説記事（知識収集・能動的な層）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="notice" style="margin-top:16px;"><strong>⚠️ 配信方法：</strong>3案は記事タイプ別の決め打ち振り分けではなく、①②③と同じく全対象記事に均等にABテストで出す運用（プロジェクト標準）。上表の「想定読者」は各案を用意した際の読者心理の参考情報。</div>
+  </div>
+
+  <!-- 実装メモ -->
+  <div class="section">
+    <div class="section-title">実装メモ</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:180px;">項目</th><th>内容</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-weight:700;">メタリフ</td>
+            <td>全8商材、①②③の実装済み設計書から現行リンク確認済み。新規アフィリ提携は不要</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">Q1〜Q5の扱い</td>
+            <td>いずれもタイプ確定には使わない。Q1は年代、Q2〜Q4は結果カードのパーソナライズ・根拠づけ用。Q5はQ6の表示パターン（①or②）を決めるグループ仮判定用</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">Q6の出し分け</td>
+            <td>Q5の回答（A/D or B/C）に応じて、Q6-①（乾燥・敏感グループ向け）またはQ6-②（脂性・混合グループ向け）のどちらか一方を表示する。両方は表示しない</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">結果カード</td>
+            <td>商材名・価格は結果カードに一切出さない。CTA「あなたに合うケアを見る→」タップ後のおすすめ3点セットカルで初めて商材が登場する</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">おすすめ3点セットカルの構成</td>
+            <td>クッションカード（タイプごとの導入メッセージ）→クレンジング→基礎化粧品→化粧水の4枚固定。③化粧水診断のような「タイプ内で複数商材から選ばせる」セレクトカルは不要（各タイプとも商材は1カテゴリ1商品ずつで固定のため）</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">普通肌タイプ</td>
+            <td>意図的に含めない。①②③診断も同仕様（症状ベースの4タイプのみ、普通肌枠なし）。設問の選択肢にも「特に問題ない」的な逃げ道は追加していない</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="back-link">
+    <a href="index.html">← トップへ</a>
+  </div>
+
+</div>
+</body>
+</html>
