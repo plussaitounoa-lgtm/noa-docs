@@ -51,10 +51,11 @@
   <div class="doc-header">
     <div class="eyebrow">Design Brief — Diagnosis Flow (v1.12)</div>
     <h1>クマ取り クリニック選び診断 設計書</h1>
-    <div class="meta">作成日: 2026-07-23（v1.29更新） ／ 対象: mega-clinic.com クマジャンル（対象記事7本確定：クマ取り×名古屋/横浜/札幌/福岡/神戸/仙台/広島）／ 提携先: TCB東京中央美容外科（afbアフィリエイト）／ ステータス: 新規設計・Ren確認前</div>
+    <div class="meta">作成日: 2026-07-23（v1.30更新） ／ 対象: mega-clinic.com クマジャンル（対象記事7本確定：クマ取り×名古屋/横浜/札幌/福岡/神戸/仙台/広島）／ 提携先: TCB東京中央美容外科（afbアフィリエイト）／ ステータス: 新規設計・Ren確認前</div>
   </div>
 
-  <details class="update-history"><summary><strong>更新履歴（全29件・クリックで展開）</strong></summary>
+  <details class="update-history"><summary><strong>更新履歴（全30件・クリックで展開）</strong></summary>
+  <div class="note-box"><strong>v1.30更新履歴：</strong> Noaから「クマ取りのPUがおかしいので修正したい」「絶対これじゃあクリックしてくれない」と指摘。設置記事が地域×クリニック検索のhowto記事であることを踏まえ、PU文言を疑問形＋「方法」訴求から一人称・declarative型に変更（シミ診断の確定PU文言と同型）。A案は「方法」→「クリニック」に変更。確定：A案「自分に合うクマ取りクリニック見つけたい！」／B案「その目のクマ、消したくない？」。</div>
   <div class="note-box"><strong>v1.29更新履歴：</strong> Noaから設置対象記事7本（地域×クマ取りのhowto記事：名古屋/横浜/札幌/福岡/神戸/仙台/広島）を共有。それまで「未定」だった全ファイルの対象記事表記を確定情報に更新。PU設置先一覧（LINE実装設計書）も表形式で追加。</div>
   <div class="note-box"><strong>v1.28更新履歴：</strong> Noaから「施術名・施術費用・リスクのサイズもっと小さくて大丈夫」と指示。カード図の<code>.case-detail</code>のfont-sizeを7.5px→6.5pxに縮小、padding・line-height・cd-label幅も合わせて調整。</div>
   <div class="note-box"><strong>v1.27更新履歴：</strong> Noaが「他の症例を見てみる」CTA付きのBefore/After症例カード画像を共有し「2枚目をこの画像の内容に差し替えたい（トンマナは今の診断に寄せる）」と指示。当初は「案件都合で症例素材使用不可」という前提と矛盾すると確認したところ、Noaが別ソース（TCB公式の外部サイト使用可ギャラリー<code>tcb-skin.jp/available?opinfo_category=antiageing_eye</code>、開示情報付き）を発見していたと判明。脱脂手術PRカルCard2を因果図式3ステップから症例写真Before/After＋開示情報＋CTA「他の症例を見てみる」に全面差し替え、トンマナは脱脂手術の水色系に統一。2章NG制約・9章・4.1章に範囲限定の例外を明記。</div>
@@ -396,9 +397,9 @@
       <table>
         <thead><tr><th style="width:160px;">項目</th><th>内容</th></tr></thead>
         <tbody>
-          <tr><td>診断体験</td><td>性別・年代・目の下の症状の見え方・不安なこと・重視することを5問で聞き、脱脂手術／再生注射どちらが合うかを提示してPRへ橋渡し</td></tr>
-          <tr><td>検索者の気持ち</td><td>「クマ取りたいけど手術は怖い」「注射でどこまで変わるか知りたい」「自分に合う方法が分からない」</td></tr>
-          <tr><td>PU文言候補（AB）</td><td>A案「あなたに合うクマ取り方法、見つかる？」／B案「その目のクマ、どうすれば消える？」</td></tr>
+          <tr><td>診断体験</td><td>性別・年代・目の下の症状の見え方・不安なこと・重視することを5問で聞き、脱脂手術／再生注射どちらが合うかを提示してPRへ橋渡し（PRカルーセルで「おすすめのクリニックを見る」CTA）</td></tr>
+          <tr><td>検索者の気持ち</td><td>「（名古屋で）クマ取りできるクリニックどこがいいか知りたい」「もうやる気はあるけど、どこに行けばいいか分からない」「そのクマ、消したい」</td></tr>
+          <tr><td>PU文言候補（AB）</td><td>A案「自分に合うクマ取りクリニック見つけたい！」／B案「その目のクマ、消したくない？」</td></tr>
         </tbody>
       </table>
     </div>
