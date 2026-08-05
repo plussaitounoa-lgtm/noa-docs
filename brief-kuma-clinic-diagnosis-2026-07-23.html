@@ -51,10 +51,11 @@
   <div class="doc-header">
     <div class="eyebrow">Design Brief — Diagnosis Flow (v1.12)</div>
     <h1>クマ取り クリニック選び診断 設計書</h1>
-    <div class="meta">作成日: 2026-07-23（v1.28更新） ／ 対象: mega-clinic.com クマジャンル（対象記事は未定・後日確定）／ 提携先: TCB東京中央美容外科（afbアフィリエイト）／ ステータス: 新規設計・Ren確認前</div>
+    <div class="meta">作成日: 2026-07-23（v1.29更新） ／ 対象: mega-clinic.com クマジャンル（対象記事7本確定：クマ取り×名古屋/横浜/札幌/福岡/神戸/仙台/広島）／ 提携先: TCB東京中央美容外科（afbアフィリエイト）／ ステータス: 新規設計・Ren確認前</div>
   </div>
 
-  <details class="update-history"><summary><strong>更新履歴（全28件・クリックで展開）</strong></summary>
+  <details class="update-history"><summary><strong>更新履歴（全29件・クリックで展開）</strong></summary>
+  <div class="note-box"><strong>v1.29更新履歴：</strong> Noaから設置対象記事7本（地域×クマ取りのhowto記事：名古屋/横浜/札幌/福岡/神戸/仙台/広島）を共有。それまで「未定」だった全ファイルの対象記事表記を確定情報に更新。PU設置先一覧（LINE実装設計書）も表形式で追加。</div>
   <div class="note-box"><strong>v1.28更新履歴：</strong> Noaから「施術名・施術費用・リスクのサイズもっと小さくて大丈夫」と指示。カード図の<code>.case-detail</code>のfont-sizeを7.5px→6.5pxに縮小、padding・line-height・cd-label幅も合わせて調整。</div>
   <div class="note-box"><strong>v1.27更新履歴：</strong> Noaが「他の症例を見てみる」CTA付きのBefore/After症例カード画像を共有し「2枚目をこの画像の内容に差し替えたい（トンマナは今の診断に寄せる）」と指示。当初は「案件都合で症例素材使用不可」という前提と矛盾すると確認したところ、Noaが別ソース（TCB公式の外部サイト使用可ギャラリー<code>tcb-skin.jp/available?opinfo_category=antiageing_eye</code>、開示情報付き）を発見していたと判明。脱脂手術PRカルCard2を因果図式3ステップから症例写真Before/After＋開示情報＋CTA「他の症例を見てみる」に全面差し替え、トンマナは脱脂手術の水色系に統一。2章NG制約・9章・4.1章に範囲限定の例外を明記。</div>
   <div class="note-box"><strong>v1.26更新履歴：</strong> デザイナーさんのFAQ原稿質問（v1.23）に対し「10.1章にあります」と回答だけして終えていたが、Noaから「その件、入れたの？」と再確認され、カード図には見本4問しか無いままだったことに気づく。脱脂手術FAQの残り4問をカード図に追加し、全8問を実際に表示。「残り4問は設計書参照」の注意書きは不要になったため削除。</div>
@@ -415,7 +416,7 @@
 5. 各パターンのCard3「おすすめのクリニックを見る」CTAタップ → <strong>PRカルーセル（7.5章・各5枚、ここで初めてTCBブランド・料金・実績を開示）</strong>
 6. PRカルーセルCard5の最終CTA、または途中離脱ユーザー向けに深掘りハブ（よくある質問／施術までの流れ）→ 無料カウンセリング予約（アフィリリンク）</div>
     <p class="note-box">違和感チェック: 分岐後の全カードが施術の事実（内容・ダウンタイム・院数）のみで構成されており、行動を断定する主張（安心して選べる等）が無いことを確認済み。3章の報道リスクとも矛盾しない設計になっている。</p>
-    <p><strong>期待効果:</strong> 対象記事が未確定のため試算不可。記事確定後、PU設置台帳の推計値（LP imp等）を用いて再計算する。</p>
+    <p><strong>期待効果:</strong> 対象記事7本が確定（v1.29）。各記事のLP imp等の実績値を用いて試算予定（次アクション）。</p>
     <p><strong>工数:</strong> 5問診断＋結果カルーセル2パターン×3枚＋PRカルーセル2パターン×5枚＋深掘りハブ（FAQ12問＋施術までの流れ5枚）。シミ（5問診断＋1枚結果＋PRカル5枚）と設問数は同水準、カルーセル部分（結果＋PR）はシミより重い。総工数感はシミよりやや重めと想定。</p>
   </div>
 
@@ -423,7 +424,7 @@
     <div class="section-title">15. 次アクション</div>
     <ul style="padding-left: 20px;">
       <li>齋藤（Noa）: 本設計書をRenへ共有・壁打ち（8章のRen確認事項を中心に。論点4・6は解消済み）</li>
-      <li>Ren確認後、対象記事の確定（PU設置台帳の未設置検知データから優先順位付け）</li>
+      <li>対象記事7本は確定済み（v1.29、地域×クマ取りhowto記事）。PU設置台帳に反映</li>
       <li>実装直前: LP1のクーポン表示状態（25,000円OFF/30,000円OFF）、LP2の初回0円キャンペーン表示期間の両方を再確認</li>
       <li>デザイン依頼・LINE実装 → 公開後、PV・CV数値を確認して改善</li>
     </ul>
