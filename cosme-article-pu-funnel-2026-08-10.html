@@ -103,7 +103,7 @@
       </div>
     </div>
     <div class="body">
-      <div class="verdict verdict-red">8/3以降、コスメを含む主要ジャンルの大半でPU計測データ（LP imp・PU imp・クリック）が完全ゼロ化。コスメ固有の異常ではなく、7/7〜7/13に発生した既知障害（t162/t163・GAS「新データ収集」タブ停止）の再発疑い。Renに調査依頼済み（t227）。</div>
+      <div class="verdict verdict-green">【解決済み】8/3〜8/9のコスメ計測ゼロはRenが同日中にバックフィル・復旧完了（t227）。欠損期間の友達14人相当も回復。</div>
       <p>7月確定値は友達45人・PVFR 0.26%（基準0.80%の1/3）。CTRは3診断とも基準クリアでPU文言は機能中だが、追加率（LP・友達追加画面）が基準11%の半分以下で共通ボトルネック。この構造は6月からずっと変わっていない。</p>
     </div>
   </div>
@@ -113,37 +113,34 @@
     <div class="section-head">
       <div class="num num-red">2</div>
       <div>
-        <div class="section-title">【最優先・訂正あり】8月の計測停止はコスメ固有ではない</div>
-        <div class="section-sub">全ジャンルの日次lp_impを洗い直して確認</div>
+        <div class="section-title">【解決済み】8月の計測停止 → Renが同日中に復旧</div>
+        <div class="section-sub">全ジャンルの日次lp_impで復旧を確認（2026-08-10 18:00時点）</div>
       </div>
     </div>
     <div class="body">
       <div class="table-scroll">
         <table>
-          <thead><tr><th>日付</th><th>LP imp</th><th>PU imp</th><th>Click</th><th>友達</th></tr></thead>
+          <thead><tr><th>日付</th><th>LP imp</th><th>PU imp</th><th>Click</th><th>友達</th><th>状態</th></tr></thead>
           <tbody>
-            <tr><td>8/1</td><td>791</td><td>278</td><td>40</td><td>0</td></tr>
-            <tr><td>8/2</td><td>325</td><td>116</td><td>18</td><td>0</td></tr>
-            <tr><td>8/3</td><td class="down">0</td><td class="down">0</td><td class="down">0</td><td>0</td></tr>
-            <tr><td>8/4</td><td class="down">0</td><td class="down">0</td><td class="down">0</td><td>0</td></tr>
-            <tr><td>8/5</td><td class="down">0</td><td class="down">0</td><td class="down">0</td><td>0</td></tr>
-            <tr><td>8/6</td><td class="down">0</td><td class="down">0</td><td class="down">0</td><td>0</td></tr>
-            <tr><td>8/7</td><td class="down">0</td><td class="down">0</td><td class="down">0</td><td>0</td></tr>
-            <tr><td>8/8</td><td class="down">0</td><td class="down">0</td><td class="down">0</td><td>0</td></tr>
-            <tr><td>8/9</td><td class="down">0</td><td class="down">0</td><td class="down">0</td><td>0</td></tr>
+            <tr><td>8/1</td><td>791</td><td>278</td><td>40</td><td>0</td><td><span class="badge badge-gray">正常</span></td></tr>
+            <tr><td>8/2</td><td>884</td><td>327</td><td>56</td><td>0</td><td><span class="badge badge-gray">正常</span></td></tr>
+            <tr><td>8/3</td><td>645</td><td>242</td><td>31</td><td>2</td><td><span class="badge badge-green">復旧済</span></td></tr>
+            <tr><td>8/4</td><td>728</td><td>247</td><td>36</td><td>3</td><td><span class="badge badge-green">復旧済</span></td></tr>
+            <tr><td>8/5</td><td>652</td><td>235</td><td>31</td><td>1</td><td><span class="badge badge-green">復旧済</span></td></tr>
+            <tr><td>8/6</td><td>653</td><td>212</td><td>34</td><td>2</td><td><span class="badge badge-green">復旧済</span></td></tr>
+            <tr><td>8/7</td><td>668</td><td>236</td><td>24</td><td>1</td><td><span class="badge badge-green">復旧済</span></td></tr>
+            <tr><td>8/8</td><td>794</td><td>268</td><td>35</td><td>1</td><td><span class="badge badge-green">復旧済</span></td></tr>
+            <tr><td>8/9</td><td>901</td><td>316</td><td>49</td><td>4</td><td><span class="badge badge-green">復旧済</span></td></tr>
           </tbody>
         </table>
       </div>
       <ul class="check-list" style="list-style:none;">
-        <li style="padding:6px 0;font-size:13px;">・当初「コスメだけゼロ」と報告したが誤り。全ジャンルの日次lp_impを7/27-8/2平均 vs 8/3-8/9平均で突き合わせたところ、<strong>医療ダイエット(glp1_seo/glp1_seo_ava)・ED・ピル・包茎・こいずみ・shimi_seo・看護転職・コスメ</strong>など主要ジャンルの大半で8/3以降lp_imp/pu_impが完全ゼロ化していた</li>
-        <li style="padding:6px 0;font-size:13px;">・一方で<strong>AGA・FAGA・いびき・ほくろ・メンズ脱毛は通常通り収集継続</strong>しており、全滅ではなく部分的な停止</li>
-        <li style="padding:6px 0;font-size:13px;">・友達数（added_friends）だけは影響を受けていない。CSV直接補完など別経路で計上され続けているため、「友達数は動いてるのに計測は止まってる」という見え方になる</li>
+        <li style="padding:6px 0;font-size:13px;">・発生当初「コスメだけゼロ」と報告したが誤り。全ジャンルの日次lp_impを突き合わせたところ、<strong>医療ダイエット(glp1_seo/glp1_seo_ava)・ED・ピル・こいずみ・shimi_seo・コスメ</strong>など主要ジャンルの大半で8/3以降lp_imp/pu_impが完全ゼロ化していた（AGA・FAGA・いびき・ほくろ・メンズ脱毛は無事）</li>
+        <li style="padding:6px 0;font-size:13px;">・7/7〜7/13に発生した既知障害（t162/t163）と同一症状。原因はBQ→スプシ「新データ収集」タブへの書き込みプロセス（Cloud Run）の停止</li>
+        <li style="padding:6px 0;font-size:13px;">・<strong>Renが同日（8/10）中にWinut直収集による手動補完レイヤー＋自動コレクター（毎朝7時cron）を実装し、8/3〜8/9分をバックフィル完了。</strong>コスメは友達14人相当（8/3〜8/9合計）が回復し、他の主要ジャンルも同様に復旧確認済み</li>
+        <li style="padding:6px 0;font-size:13px;">・<strong>看護転職(seo_job_kango)・包茎(seo_phimo)の2ジャンルはこのバックフィル後もほぼゼロのまま。</strong>今回のGAS障害とは別原因の疑いがあり、別タスク（t228）で引き続き調査中</li>
       </ul>
-      <div class="insight insight-red">
-        <strong>7/7〜7/13に発生した既知障害（t162/t163）と全く同じ症状。再発の可能性が高い。</strong>
-        当時の原因は「BQ→スプシ『新データ収集』タブへの書き込みプロセス（Cloud Run）が先方インフラ側で停止」。復旧策として<code>sync_bq_extract_to_sheet.py</code>を毎日17:30の自動cronに登録して直した経緯がある。今回もこのcronが止まっている可能性が高く、まずそこから確認するのが最短。
-      </div>
-      <p class="note">これはPU文言・診断設計の問題ではなく計測/配信パイプライン側の技術異常。line-team t227として登録・訂正済み（ボール：Ren、2026-08-10）。復旧確認まではコスメに限らず全ジャンルの「8月の今の実力」は判定不能で、7月確定値で語るしかない。</p>
+      <p class="note">line-team t227（復旧確認済み・2026-08-10）、t228（看護転職・包茎の残ゼロを別途調査中）。</p>
     </div>
   </div>
 
