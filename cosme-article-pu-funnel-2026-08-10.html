@@ -103,7 +103,7 @@
       </div>
     </div>
     <div class="body">
-      <div class="verdict verdict-red">8/3以降、コスメのPU計測データが全タグで完全ゼロ（LP imp・PU imp・クリック・友達すべて）。他ジャンルは通常通り友達を稼いでおり、コスメだけがピンポイントで死んでいる技術異常。CTOに調査依頼済み（t227・ボールRen）。</div>
+      <div class="verdict verdict-red">8/3以降、コスメを含む主要ジャンルの大半でPU計測データ（LP imp・PU imp・クリック）が完全ゼロ化。コスメ固有の異常ではなく、7/7〜7/13に発生した既知障害（t162/t163・GAS「新データ収集」タブ停止）の再発疑い。Renに調査依頼済み（t227）。</div>
       <p>7月確定値は友達45人・PVFR 0.26%（基準0.80%の1/3）。CTRは3診断とも基準クリアでPU文言は機能中だが、追加率（LP・友達追加画面）が基準11%の半分以下で共通ボトルネック。この構造は6月からずっと変わっていない。</p>
     </div>
   </div>
@@ -113,8 +113,8 @@
     <div class="section-head">
       <div class="num num-red">2</div>
       <div>
-        <div class="section-title">【最優先】8月コスメ計測が8/3から完全停止</div>
-        <div class="section-sub">生データレベルで確認済み</div>
+        <div class="section-title">【最優先・訂正あり】8月の計測停止はコスメ固有ではない</div>
+        <div class="section-sub">全ジャンルの日次lp_impを洗い直して確認</div>
       </div>
     </div>
     <div class="body">
@@ -135,15 +135,15 @@
         </table>
       </div>
       <ul class="check-list" style="list-style:none;">
-        <li style="padding:6px 0;font-size:13px;">・生データを見ると、タグのレコード自体は毎日134件存在する（消えてはいない）が、値（lp_imp/pu_imp/pu_click/added_friends）が全タグで完全ゼロ</li>
-        <li style="padding:6px 0;font-size:13px;">・同時期（8/3〜8/9）、医療ダイエット・AGA等の他ジャンルは通常通り友達を稼いでいる（全体で計77人）。<strong>全体障害ではなく、コスメだけがピンポイントで死んでいる</strong></li>
-        <li style="padding:6px 0;font-size:13px;">・7月ペース（LP imp平均554/日・友達1.45人/日）で換算すると、この7日間だけで<strong>LP imp約3,880・友達約10人相当のロス</strong></li>
+        <li style="padding:6px 0;font-size:13px;">・当初「コスメだけゼロ」と報告したが誤り。全ジャンルの日次lp_impを7/27-8/2平均 vs 8/3-8/9平均で突き合わせたところ、<strong>医療ダイエット(glp1_seo/glp1_seo_ava)・ED・ピル・包茎・こいずみ・shimi_seo・看護転職・コスメ</strong>など主要ジャンルの大半で8/3以降lp_imp/pu_impが完全ゼロ化していた</li>
+        <li style="padding:6px 0;font-size:13px;">・一方で<strong>AGA・FAGA・いびき・ほくろ・メンズ脱毛は通常通り収集継続</strong>しており、全滅ではなく部分的な停止</li>
+        <li style="padding:6px 0;font-size:13px;">・友達数（added_friends）だけは影響を受けていない。CSV直接補完など別経路で計上され続けているため、「友達数は動いてるのに計測は止まってる」という見え方になる</li>
       </ul>
       <div class="insight insight-red">
-        <strong>仮説：GTMタグの配信停止・削除、またはWINUTタグ設定の異常。</strong>
-        7/21にも「PU設置台帳の停止設定とWINUT実反映にラグ・不整合がある」という未解決の問題が確認されている（knowledge/genre-insights.md）。今回はそれよりさらに深刻で、停止指定していないPUも含めて全タグがゼロになっている。
+        <strong>7/7〜7/13に発生した既知障害（t162/t163）と全く同じ症状。再発の可能性が高い。</strong>
+        当時の原因は「BQ→スプシ『新データ収集』タブへの書き込みプロセス（Cloud Run）が先方インフラ側で停止」。復旧策として<code>sync_bq_extract_to_sheet.py</code>を毎日17:30の自動cronに登録して直した経緯がある。今回もこのcronが止まっている可能性が高く、まずそこから確認するのが最短。
       </div>
-      <p class="note">これはPU文言・診断設計の問題ではなく計測/配信側の技術異常。line-team t227として登録済み（ボール：Ren、2026-08-10）。復旧確認まではコスメの「今の実力」は7月確定値でしか語れない。</p>
+      <p class="note">これはPU文言・診断設計の問題ではなく計測/配信パイプライン側の技術異常。line-team t227として登録・訂正済み（ボール：Ren、2026-08-10）。復旧確認まではコスメに限らず全ジャンルの「8月の今の実力」は判定不能で、7月確定値で語るしかない。</p>
     </div>
   </div>
 
