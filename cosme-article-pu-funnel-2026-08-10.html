@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>コスメ 記事別・PU別ファネル分析（2026-08-10）</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 980px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; white-space: nowrap; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; position: sticky; top: 0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    tr.group-row td { background: #f8fafc; font-weight: 700; color: #334155; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-card.warn-card { border-color: #fde68a; background: #fffbeb; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-highest { background: #fee2e2; color: #991b1b; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">数値分析 — コスメ</div>
+    <h1>コスメ 記事別・PU別ファネル分析</h1>
+    <p class="desc">作成: 2026-08-10 ／ 対象: carenacosmetic.co.jp（クレンジング・スキンケア方法・化粧水の3診断）／ データ期間: 2026-07-01〜2026-08-09</p>
+  </div>
+
+  <!-- ① 結論 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">1</div>
+      <div>
+        <div class="section-title">結論</div>
+        <div class="section-sub">最優先の異変＋7月の構造課題</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="verdict verdict-red">8/3以降、コスメのPU計測データが全タグで完全ゼロ（LP imp・PU imp・クリック・友達すべて）。他ジャンルは通常通り友達を稼いでおり、コスメだけがピンポイントで死んでいる技術異常。CTOに調査依頼済み（t227・ボールRen）。</div>
+      <p>7月確定値は友達45人・PVFR 0.26%（基準0.80%の1/3）。CTRは3診断とも基準クリアでPU文言は機能中だが、追加率（LP・友達追加画面）が基準11%の半分以下で共通ボトルネック。この構造は6月からずっと変わっていない。</p>
+    </div>
+  </div>
+
+  <!-- ② 8月の異変 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">2</div>
+      <div>
+        <div class="section-title">【最優先】8月コスメ計測が8/3から完全停止</div>
+        <div class="section-sub">生データレベルで確認済み</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>日付</th><th>LP imp</th><th>PU imp</th><th>Click</th><th>友達</th></tr></thead>
+          <tbody>
+            <tr><td>8/1</td><td>791</td><td>278</td><td>40</td><td>0</td></tr>
+            <tr><td>8/2</td><td>325</td><td>116</td><td>18</td><td>0</td></tr>
+            <tr><td>8/3</td><td class="down">0</td><td class="down">0</td><td class="down">0</td><td>0</td></tr>
+            <tr><td>8/4</td><td class="down">0</td><td class="down">0</td><td class="down">0</td><td>0</td></tr>
+            <tr><td>8/5</td><td class="down">0</td><td class="down">0</td><td class="down">0</td><td>0</td></tr>
+            <tr><td>8/6</td><td class="down">0</td><td class="down">0</td><td class="down">0</td><td>0</td></tr>
+            <tr><td>8/7</td><td class="down">0</td><td class="down">0</td><td class="down">0</td><td>0</td></tr>
+            <tr><td>8/8</td><td class="down">0</td><td class="down">0</td><td class="down">0</td><td>0</td></tr>
+            <tr><td>8/9</td><td class="down">0</td><td class="down">0</td><td class="down">0</td><td>0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="check-list" style="list-style:none;">
+        <li style="padding:6px 0;font-size:13px;">・生データを見ると、タグのレコード自体は毎日134件存在する（消えてはいない）が、値（lp_imp/pu_imp/pu_click/added_friends）が全タグで完全ゼロ</li>
+        <li style="padding:6px 0;font-size:13px;">・同時期（8/3〜8/9）、医療ダイエット・AGA等の他ジャンルは通常通り友達を稼いでいる（全体で計77人）。<strong>全体障害ではなく、コスメだけがピンポイントで死んでいる</strong></li>
+        <li style="padding:6px 0;font-size:13px;">・7月ペース（LP imp平均554/日・友達1.45人/日）で換算すると、この7日間だけで<strong>LP imp約3,880・友達約10人相当のロス</strong></li>
+      </ul>
+      <div class="insight insight-red">
+        <strong>仮説：GTMタグの配信停止・削除、またはWINUTタグ設定の異常。</strong>
+        7/21にも「PU設置台帳の停止設定とWINUT実反映にラグ・不整合がある」という未解決の問題が確認されている（knowledge/genre-insights.md）。今回はそれよりさらに深刻で、停止指定していないPUも含めて全タグがゼロになっている。
+      </div>
+      <p class="note">これはPU文言・診断設計の問題ではなく計測/配信側の技術異常。line-team t227として登録済み（ボール：Ren、2026-08-10）。復旧確認まではコスメの「今の実力」は7月確定値でしか語れない。</p>
+    </div>
+  </div>
+
+  <!-- ③ 7月 全体ファネル -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">3</div>
+      <div>
+        <div class="section-title">7月 全体ファネル（確定・PU経由のみ）</div>
+        <div class="section-sub">2026-07-01〜07-31 満月間データ</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">LP imp</div>
+          <div class="kpi-value">17,191</div>
+          <div class="kpi-sub">PU imp 6,022（表示率35.0%）</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">PU click</div>
+          <div class="kpi-value">847</div>
+          <div class="kpi-sub">CTR 14.07%</div>
+        </div>
+        <div class="kpi-card warn-card">
+          <div class="kpi-label">友達追加</div>
+          <div class="kpi-value">45人</div>
+          <div class="kpi-sub">バナー経由は別途+α</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">PVFR</div>
+          <div class="kpi-value">0.26%</div>
+          <div class="kpi-sub">基準0.80%の約1/3</div>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>指標</th><th>7月確定</th><th>基準</th><th>判定</th></tr></thead>
+          <tbody>
+            <tr><td>PVFR</td><td class="down">0.26%</td><td>0.80%以上</td><td><span class="badge badge-red">🔴基準の約1/3</span></td></tr>
+            <tr><td>IMPFR</td><td class="down">0.75%</td><td>1.40%以上</td><td><span class="badge badge-red">🔴基準の約半分</span></td></tr>
+            <tr><td>CTR</td><td class="up">14.07%</td><td>13%以上</td><td><span class="badge badge-green">✅機能中</span></td></tr>
+            <tr><td>友達追加率</td><td class="down">5.31%</td><td>11%以上</td><td><span class="badge badge-red">🔴基準の半分未満</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-yellow">
+        <strong>CTRは基準クリアで安定。ボトルネックは表示率＋友達追加率（LP・友達追加画面側）。</strong>
+        7/23時点の中間分析（LP imp 12,227・友達29人・PVFR0.24%・CTR14.5%・追加率4.8%）と比べても、月間フルで見た今回の数字（PVFR0.26%・追加率5.31%）はほぼ横ばい。月内で構造は変わっていない。
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 診断別内訳 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">4</div>
+      <div>
+        <div class="section-title">診断カテゴリ別内訳（7月）</div>
+        <div class="section-sub">①クレンジング／②スキンケア方法／③化粧水</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>診断</th><th>LP imp</th><th>PU imp</th><th>Click</th><th>友達</th><th>PVFR</th><th>CTR</th><th>追加率</th></tr></thead>
+          <tbody>
+            <tr><td>①クレンジング診断</td><td>9,101</td><td>2,966</td><td>439</td><td>20</td><td class="down">0.22%</td><td class="up">14.80%</td><td class="down">4.56%</td></tr>
+            <tr><td>②スキンケア方法診断</td><td>6,733</td><td>2,649</td><td>351</td><td>22</td><td class="down">0.33%</td><td class="up">13.25%</td><td class="down">6.27%</td></tr>
+            <tr><td>③化粧水診断</td><td>1,357</td><td>407</td><td>57</td><td>3</td><td class="down">0.22%</td><td class="up">14.0%</td><td class="down">5.26%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-blue">
+        <strong>3診断ともCTRは基準クリア（PU文言は機能）。ボトルネックは一貫して追加率。</strong>
+        診断の種類を問わず同じ構造（LP・友達追加画面側の弱さ）が出ている＝PUを増やしても解決しない。優先着手はLP／友達追加画面の改善。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ 記事別 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">5</div>
+      <div>
+        <div class="section-title">記事別ファネル（7月・全28記事）</div>
+        <div class="section-sub">LP imp降順</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>記事</th><th>LP imp</th><th>PU imp</th><th>Click</th><th>友達</th><th>PVFR</th><th>CTR</th><th>追加率</th></tr></thead>
+          <tbody>
+            <tr><td>脂性肌おすすめ</td><td>3,807</td><td>1,440</td><td>179</td><td>16</td><td class="up">0.42%</td><td>12.43%</td><td>8.94%</td></tr>
+            <tr><td>50代おすすめ</td><td>2,213</td><td>927</td><td>153</td><td>12</td><td class="up">0.54%</td><td>16.50%</td><td>7.84%</td></tr>
+            <tr><td>ドラッグストア</td><td>1,747</td><td>482</td><td>67</td><td>2</td><td class="down">0.11%</td><td>13.90%</td><td>2.99%</td></tr>
+            <tr><td>肌引き締め</td><td>1,285</td><td>534</td><td>82</td><td>2</td><td class="down">0.16%</td><td>15.36%</td><td>2.44%</td></tr>
+            <tr><td>濡れた手OK</td><td>1,119</td><td>363</td><td>52</td><td>1</td><td class="down">0.09%</td><td>14.33%</td><td>1.92%</td></tr>
+            <tr><td>ニキビ肌</td><td>1,018</td><td>374</td><td>43</td><td>3</td><td class="down">0.29%</td><td>11.50%</td><td>6.98%</td></tr>
+            <tr><td>クレ代用品</td><td>931</td><td>235</td><td>26</td><td>0</td><td class="down">0.00%</td><td>11.06%</td><td>0.00%</td></tr>
+            <tr><td>インナースキン</td><td>790</td><td>329</td><td>41</td><td>3</td><td class="down">0.38%</td><td>12.46%</td><td>7.32%</td></tr>
+            <tr><td>思春期スキン</td><td>590</td><td>256</td><td>36</td><td>1</td><td class="down">0.17%</td><td>14.06%</td><td>2.78%</td></tr>
+            <tr><td>マツエク対応</td><td>519</td><td>142</td><td>14</td><td>0</td><td class="down">0.00%</td><td>9.86%</td><td>0.00%</td></tr>
+            <tr><td>拭き取り化粧水</td><td>488</td><td>138</td><td>18</td><td>0</td><td class="down">0.00%</td><td>13.04%</td><td>0.00%</td></tr>
+            <tr><td>毛穴悩み</td><td>483</td><td>118</td><td>20</td><td>2</td><td class="up">0.41%</td><td>16.95%</td><td>10.00%</td></tr>
+            <tr><td>40代おすすめ</td><td>426</td><td>128</td><td>18</td><td>0</td><td class="down">0.00%</td><td>14.06%</td><td>0.00%</td></tr>
+            <tr><td>クレミルク</td><td>323</td><td>93</td><td>14</td><td>0</td><td class="down">0.00%</td><td>15.05%</td><td>0.00%</td></tr>
+            <tr><td>ノーメイク</td><td>322</td><td>104</td><td>32</td><td>0</td><td class="down">0.00%</td><td>30.77%</td><td>0.00%</td></tr>
+            <tr><td>収れん化粧水</td><td>187</td><td>78</td><td>8</td><td>0</td><td class="down">0.00%</td><td>10.26%</td><td>0.00%</td></tr>
+            <tr><td>敏感肌化粧水</td><td>176</td><td>48</td><td>7</td><td>1</td><td class="up">0.57%</td><td>14.58%</td><td>14.29%</td></tr>
+            <tr><td>混合肌スキン</td><td>169</td><td>66</td><td>9</td><td>0</td><td class="down">0.00%</td><td>13.64%</td><td>0.00%</td></tr>
+            <tr><td>ローションパック</td><td>108</td><td>38</td><td>6</td><td>0</td><td class="down">0.00%</td><td>15.79%</td><td>0.00%</td></tr>
+            <tr><td>時短スキンケア</td><td>73</td><td>16</td><td>2</td><td>0</td><td class="down">0.00%</td><td>12.50%</td><td>0.00%</td></tr>
+            <tr><td>ミスト化粧水</td><td>62</td><td>12</td><td>2</td><td>0</td><td class="down">0.00%</td><td>16.67%</td><td>0.00%</td></tr>
+            <tr><td>化粧水ヒリヒリ</td><td>62</td><td>22</td><td>5</td><td>0</td><td class="down">0.00%</td><td>22.73%</td><td>0.00%</td></tr>
+            <tr><td>プチプラ化粧水</td><td>61</td><td>11</td><td>2</td><td>0</td><td class="down">0.00%</td><td>18.18%</td><td>0.00%</td></tr>
+            <tr><td>化粧水ニキビ</td><td>57</td><td>23</td><td>4</td><td>0</td><td class="down">0.00%</td><td>17.39%</td><td>0.00%</td></tr>
+            <tr><td>混合肌化粧水</td><td>44</td><td>14</td><td>3</td><td>1</td><td class="up">2.27%</td><td>21.43%</td><td>33.33%</td></tr>
+            <tr><td>毛穴化粧水</td><td>40</td><td>3</td><td>0</td><td>0</td><td>0.00%</td><td>0.00%</td><td>—</td></tr>
+            <tr><td>デパコス化粧水</td><td>40</td><td>13</td><td>2</td><td>1</td><td class="up">2.50%</td><td>15.38%</td><td>50.00%</td></tr>
+            <tr><td>40代化粧水</td><td>32</td><td>7</td><td>0</td><td>0</td><td>0.00%</td><td>0.00%</td><td>—</td></tr>
+            <tr><td>揺らぎ肌スキン</td><td>19</td><td>8</td><td>2</td><td>0</td><td class="down">0.00%</td><td>25.00%</td><td>0.00%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-yellow">
+        <strong>上位2記事（脂性肌おすすめ・50代おすすめ）だけで友達28人（全体の62%）を稼いでいる。</strong>
+        この2記事はPVFR0.42〜0.54%とコスメ内で頭一つ抜けている。残り26記事はLP impがあってもPVFRがほぼ0〜0.1%台に沈んでおり、母数（imp）の多さが友達数に変換できていない。imp規模が大きいのに友達0人の記事（クレ代用品931imp・マツエク対応519imp・拭き取り化粧水488imp・40代おすすめ426imp・クレミルク323imp・ノーメイク322imp）は個別に追加率の壁を確認する価値がある。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ PU別 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">6</div>
+      <div>
+        <div class="section-title">PU別ファネル（7月・タグ単位、全67本）</div>
+        <div class="section-sub">記事名→PU名の順にソート</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>記事</th><th>PU名</th><th>LP imp</th><th>PU imp</th><th>Click</th><th>友達</th><th>CTR</th><th>追加率</th></tr></thead>
+          <tbody>
+            <tr><td>40代おすすめ</td><td>自信クレ</td><td>237</td><td>78</td><td>13</td><td>0</td><td>16.67%</td><td>0.00%</td></tr>
+            <tr><td>40代おすすめ</td><td>ぴったりのク</td><td>189</td><td>50</td><td>5</td><td>0</td><td>10.00%</td><td>0.00%</td></tr>
+            <tr><td>40代化粧水</td><td>肌に合う化粧水</td><td>14</td><td>5</td><td>0</td><td>0</td><td>0.00%</td><td>—</td></tr>
+            <tr><td>40代化粧水</td><td>肌悩み化粧水</td><td>18</td><td>2</td><td>0</td><td>0</td><td>0.00%</td><td>—</td></tr>
+            <tr><td>50代おすすめ</td><td>ぴったりのク</td><td>893</td><td>362</td><td>71</td><td>7</td><td class="up">19.61%</td><td class="up">9.86%</td></tr>
+            <tr><td>50代おすすめ</td><td>肌に合うクレ</td><td>827</td><td>346</td><td>57</td><td>5</td><td>16.47%</td><td>8.77%</td></tr>
+            <tr><td>50代おすすめ</td><td>自信クレ</td><td>493</td><td>219</td><td>25</td><td>0</td><td>11.42%</td><td>0.00%</td></tr>
+            <tr><td>インナースキン</td><td>肌に合うスキンケア</td><td>334</td><td>151</td><td>20</td><td>1</td><td>13.25%</td><td>5.00%</td></tr>
+            <tr><td>インナースキン</td><td>ぴったりのスキンケア</td><td>301</td><td>111</td><td>17</td><td>2</td><td class="up">15.32%</td><td class="up">11.76%</td></tr>
+            <tr><td>インナースキン</td><td>肌悩みスキンケア</td><td>155</td><td>67</td><td>4</td><td>0</td><td class="down">5.97%</td><td>0.00%</td></tr>
+            <tr><td>クレミルク</td><td>自信クレ</td><td>162</td><td>47</td><td>8</td><td>0</td><td>17.02%</td><td>0.00%</td></tr>
+            <tr><td>クレミルク</td><td>ぴったりのクレ</td><td>161</td><td>46</td><td>6</td><td>0</td><td>13.04%</td><td>0.00%</td></tr>
+            <tr><td>クレ代用品</td><td>ぴったりのクレ</td><td>370</td><td>94</td><td>7</td><td>0</td><td class="down">7.45%</td><td>0.00%</td></tr>
+            <tr><td>クレ代用品</td><td>肌に合うクレ</td><td>357</td><td>80</td><td>13</td><td>0</td><td>16.25%</td><td>0.00%</td></tr>
+            <tr><td>クレ代用品</td><td>自信クレ</td><td>204</td><td>61</td><td>6</td><td>0</td><td class="down">9.84%</td><td>0.00%</td></tr>
+            <tr><td>デパコス化粧水</td><td>肌悩み化粧水</td><td>21</td><td>9</td><td>0</td><td>0</td><td>0.00%</td><td>—</td></tr>
+            <tr><td>デパコス化粧水</td><td>肌に合う化粧</td><td>19</td><td>4</td><td>2</td><td>1</td><td class="up">50.00%</td><td class="up">50.00%</td></tr>
+            <tr><td>ドラッグストア</td><td>自信クレ</td><td>570</td><td>183</td><td>27</td><td>0</td><td>14.75%</td><td>0.00%</td></tr>
+            <tr><td>ドラッグストア</td><td>ぴったりのク</td><td>612</td><td>165</td><td>20</td><td>2</td><td class="down">12.12%</td><td class="up">10.00%</td></tr>
+            <tr><td>ドラッグストア</td><td>肌に合うクレ</td><td>565</td><td>134</td><td>20</td><td>0</td><td>14.93%</td><td>0.00%</td></tr>
+            <tr><td>ニキビ肌</td><td>ぴったりのクレ</td><td>413</td><td>142</td><td>21</td><td>3</td><td>14.79%</td><td class="up">14.29%</td></tr>
+            <tr><td>ニキビ肌</td><td>自信クレ</td><td>379</td><td>135</td><td>14</td><td>0</td><td class="down">10.37%</td><td>0.00%</td></tr>
+            <tr><td>ニキビ肌</td><td>肌に合うクレ</td><td>226</td><td>97</td><td>8</td><td>0</td><td class="down">8.25%</td><td>0.00%</td></tr>
+            <tr><td>ノーメイク</td><td>ぴったりのクレ</td><td>165</td><td>52</td><td>16</td><td>0</td><td class="up">30.77%</td><td>0.00%</td></tr>
+            <tr><td>ノーメイク</td><td>自信クレ</td><td>157</td><td>52</td><td>16</td><td>0</td><td class="up">30.77%</td><td>0.00%</td></tr>
+            <tr><td>プチプラ化粧水</td><td>肌悩み化粧水</td><td>27</td><td>6</td><td>0</td><td>0</td><td>0.00%</td><td>—</td></tr>
+            <tr><td>プチプラ化粧水</td><td>肌に合う化粧</td><td>34</td><td>5</td><td>2</td><td>0</td><td>40.00%</td><td>0.00%</td></tr>
+            <tr><td>マツエク対応</td><td>自信クレ</td><td>251</td><td>74</td><td>6</td><td>0</td><td class="down">8.11%</td><td>0.00%</td></tr>
+            <tr><td>マツエク対応</td><td>ぴったりのクレ</td><td>268</td><td>68</td><td>8</td><td>0</td><td>11.76%</td><td>0.00%</td></tr>
+            <tr><td>ミスト化粧水</td><td>肌に合う化粧水</td><td>31</td><td>9</td><td>2</td><td>0</td><td>22.22%</td><td>0.00%</td></tr>
+            <tr><td>ミスト化粧水</td><td>肌悩み化粧水</td><td>31</td><td>3</td><td>0</td><td>0</td><td>0.00%</td><td>—</td></tr>
+            <tr><td>ローションパック</td><td>肌に合う化粧水</td><td>53</td><td>19</td><td>4</td><td>0</td><td>21.05%</td><td>0.00%</td></tr>
+            <tr><td>ローションパック</td><td>肌悩み化粧水</td><td>55</td><td>19</td><td>2</td><td>0</td><td class="down">10.53%</td><td>0.00%</td></tr>
+            <tr><td>化粧水ニキビ</td><td>肌悩み化粧水</td><td>28</td><td>12</td><td>1</td><td>0</td><td class="down">8.33%</td><td>0.00%</td></tr>
+            <tr><td>化粧水ニキビ</td><td>肌に合う化粧水</td><td>29</td><td>11</td><td>3</td><td>0</td><td>27.27%</td><td>0.00%</td></tr>
+            <tr><td>化粧水ヒリヒリ</td><td>肌悩み化粧水</td><td>35</td><td>13</td><td>3</td><td>0</td><td>23.08%</td><td>0.00%</td></tr>
+            <tr><td>化粧水ヒリヒリ</td><td>肌に合う化粧</td><td>27</td><td>9</td><td>2</td><td>0</td><td>22.22%</td><td>0.00%</td></tr>
+            <tr><td>収れん化粧水</td><td>肌悩み化粧水</td><td>72</td><td>28</td><td>1</td><td>0</td><td class="down">3.57%</td><td>0.00%</td></tr>
+            <tr><td>収れん化粧水</td><td>ぴったりの化粧</td><td>60</td><td>25</td><td>5</td><td>0</td><td>20.00%</td><td>0.00%</td></tr>
+            <tr><td>収れん化粧水</td><td>肌に合う化粧水</td><td>55</td><td>25</td><td>2</td><td>0</td><td class="down">8.00%</td><td>0.00%</td></tr>
+            <tr><td>思春期スキン</td><td>肌に合うスキンケア</td><td>304</td><td>139</td><td>17</td><td>1</td><td>12.23%</td><td>5.88%</td></tr>
+            <tr><td>思春期スキン</td><td>肌悩みスキンケア</td><td>286</td><td>117</td><td>19</td><td>0</td><td>16.24%</td><td>0.00%</td></tr>
+            <tr><td>拭き取り化粧水</td><td>ぴったりの化粧水</td><td>191</td><td>49</td><td>6</td><td>0</td><td>12.24%</td><td>0.00%</td></tr>
+            <tr><td>拭き取り化粧水</td><td>肌に合う化粧</td><td>146</td><td>45</td><td>6</td><td>0</td><td>13.33%</td><td>0.00%</td></tr>
+            <tr><td>拭き取り化粧水</td><td>肌悩み化粧水</td><td>151</td><td>44</td><td>6</td><td>0</td><td>13.64%</td><td>0.00%</td></tr>
+            <tr><td>揺らぎ肌スキン</td><td>肌悩みスキンケア</td><td>9</td><td>5</td><td>1</td><td>0</td><td>20.00%</td><td>0.00%</td></tr>
+            <tr><td>揺らぎ肌スキン</td><td>肌に合うスキンケア</td><td>10</td><td>3</td><td>1</td><td>0</td><td>33.33%</td><td>0.00%</td></tr>
+            <tr><td>敏感肌化粧水</td><td>ぴったりの化粧水</td><td>61</td><td>17</td><td>3</td><td>1</td><td class="up">17.65%</td><td class="up">33.33%</td></tr>
+            <tr><td>敏感肌化粧水</td><td>肌に合う化粧水</td><td>55</td><td>17</td><td>3</td><td>0</td><td>17.65%</td><td>0.00%</td></tr>
+            <tr><td>敏感肌化粧水</td><td>肌悩み化粧水</td><td>60</td><td>14</td><td>1</td><td>0</td><td class="down">7.14%</td><td>0.00%</td></tr>
+            <tr><td>時短スキンケア</td><td>肌悩みスキンケア</td><td>38</td><td>14</td><td>2</td><td>0</td><td>14.29%</td><td>0.00%</td></tr>
+            <tr><td>時短スキンケア</td><td>肌に合うスキンケア</td><td>35</td><td>2</td><td>0</td><td>0</td><td>0.00%</td><td>—</td></tr>
+            <tr><td>毛穴化粧水</td><td>肌悩み化粧水</td><td>23</td><td>2</td><td>0</td><td>0</td><td>0.00%</td><td>—</td></tr>
+            <tr><td>毛穴化粧水</td><td>肌に合う化粧水</td><td>17</td><td>1</td><td>0</td><td>0</td><td>0.00%</td><td>—</td></tr>
+            <tr><td>毛穴悩み</td><td>ぴったりのクレ</td><td>249</td><td>60</td><td>12</td><td>1</td><td class="up">20.00%</td><td>8.33%</td></tr>
+            <tr><td>毛穴悩み</td><td>自信クレ</td><td>234</td><td>58</td><td>8</td><td>1</td><td>13.79%</td><td class="up">12.50%</td></tr>
+            <tr><td>混合肌スキン</td><td>肌悩みスキンケア</td><td>85</td><td>38</td><td>5</td><td>0</td><td>13.16%</td><td>0.00%</td></tr>
+            <tr><td>混合肌スキン</td><td>肌に合うスキンケア</td><td>84</td><td>28</td><td>4</td><td>0</td><td>14.29%</td><td>0.00%</td></tr>
+            <tr><td>混合肌化粧水</td><td>肌悩み化粧水</td><td>23</td><td>9</td><td>1</td><td>0</td><td>11.11%</td><td>0.00%</td></tr>
+            <tr><td>混合肌化粧水</td><td>肌に合う化粧水</td><td>21</td><td>5</td><td>2</td><td>1</td><td class="up">40.00%</td><td class="up">50.00%</td></tr>
+            <tr><td>濡れた手OK</td><td>ぴったりのクレ</td><td>558</td><td>182</td><td>25</td><td>1</td><td>13.74%</td><td>4.00%</td></tr>
+            <tr><td>濡れた手OK</td><td>自信クレ</td><td>561</td><td>181</td><td>27</td><td>0</td><td>14.92%</td><td>0.00%</td></tr>
+            <tr><td>肌引き締め</td><td>肌悩みスキンケア</td><td>653</td><td>271</td><td>37</td><td>0</td><td>13.65%</td><td>0.00%</td></tr>
+            <tr><td>肌引き締め</td><td>肌に合うスキンケア</td><td>632</td><td>263</td><td>45</td><td>2</td><td class="up">17.11%</td><td>4.44%</td></tr>
+            <tr><td>脂性肌おすすめ</td><td>肌に合うスキンケア</td><td>1,532</td><td>578</td><td>68</td><td>6</td><td>11.76%</td><td class="up">8.82%</td></tr>
+            <tr><td>脂性肌おすすめ</td><td>ぴったりのスキンケア</td><td>1,489</td><td>560</td><td>70</td><td>7</td><td>12.50%</td><td class="up">10.00%</td></tr>
+            <tr><td>脂性肌おすすめ</td><td>肌悩みスキンケア</td><td>786</td><td>302</td><td>41</td><td>3</td><td>13.58%</td><td>7.32%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-blue">
+        <strong>「ぴったりの◯◯」系の文言が、同一記事内の兄弟PUより追加率で優位な傾向。</strong>
+        50代おすすめ「ぴったりのク」9.86%・脂性肌おすすめ「ぴったりのスキンケア」10.00%・インナースキン「ぴったりのスキンケア」11.76%と、CTRだけでなく追加率でも「自信クレ」系より安定して上回っている記事が複数ある。ただし絶対数が少なく（多くて7人）、断定するにはもう1ヶ月分の蓄積が必要。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ アクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">7</div>
+      <div>
+        <div class="section-title">次のアクション</div>
+        <div class="section-sub">確認したいこと</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-highest">最優先</span>
+          <div class="action-body">
+            <strong>8/3以降のコスメ計測ゼロの復旧確認（t227・ボールRen）</strong>
+            <span>GTM/WINUTタグの生存確認。復旧しないと8月のコスメ実績は評価不能</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">優先</span>
+          <div class="action-body">
+            <strong>追加率（LP・友達追加画面）の改善に着手</strong>
+            <span>3診断・28記事共通でCTRは基準クリア、追加率だけが基準の半分以下。PU文言でなくLP側から手を付けるのが本筋</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中</span>
+          <div class="action-body">
+            <strong>imp規模はあるのに友達0人の記事を個別確認</strong>
+            <span>クレ代用品・マツエク対応・拭き取り化粧水・40代おすすめ・クレミルク・ノーメイクの6記事（合計LP imp 2,731）は追加率の壁を個別に見る価値あり</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
