@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>週次分析 8月W1 — 2026-08-03〜08-09</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 900px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-card.warn-card { border-color: #fde68a; background: #fffbeb; }
+    .kpi-card.good-card { border-color: #86efac; background: #f0fdf4; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-highest { background: #fee2e2; color: #991b1b; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">週次分析 — 8月W1</div>
+    <h1>2026-08-03〜08-09 週次分析レポート</h1>
+    <p class="desc">作成: 2026-08-10 ／ 前週: 7月W5（7/27〜8/2）</p>
+  </div>
+
+  <!-- ① 結論 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">1</div>
+      <div>
+        <div class="section-title">結論</div>
+        <div class="section-sub">友達は増加も、記事レベルの分析はこの週だけ実施不可</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="verdict verdict-yellow">友達170人（前週+21人・+14.1%）と増加基調。ただしGAS障害（t227）のバックフィル方式の副作用で、PU経由友達119人のうち86%（102人）が特定の記事・PUに紐づかない「補完」扱いになっており、記事レベルのドリルダウンはこの週に限り不可能。ジャンル・全体の合計人数は友だちリストCSVベースのため信頼できる。</div>
+      <p>看護転職(seo_job_kango)・包茎手術(seo_phimo)の2ジャンルは今回のバックフィル後もほぼゼロのまま。詳細は④参照。</p>
+    </div>
+  </div>
+
+  <!-- ② GOAL進捗 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">2</div>
+      <div>
+        <div class="section-title">8月 GOAL進捗</div>
+        <div class="section-sub">目標1,200人 に対する当月累計（10日時点）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card alert">
+          <div class="kpi-label">8月累計</div>
+          <div class="kpi-value">203人</div>
+          <div class="kpi-sub">10日経過（達成率16.9%）</div>
+        </div>
+        <div class="kpi-card warn-card">
+          <div class="kpi-label">日均</div>
+          <div class="kpi-value">20.3人</div>
+          <div class="kpi-sub">残21日の必要日均 47.5人</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">月末予測</div>
+          <div class="kpi-value">629人</div>
+          <div class="kpi-sub">目標比 52.4%</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">GOALギャップ</div>
+          <div class="kpi-value">▲997人</div>
+          <div class="kpi-sub">月末予測ベースで▲571人</div>
+        </div>
+      </div>
+      <div class="insight insight-yellow">
+        <strong>8/3〜8/9はGAS障害でデータ欠損していた期間だが、友だちリストCSVからのバックフィルにより日次人数自体は復元されている。</strong>
+        月末予測629人は現ペースの単純延長で、目標1,200人には届かない見立て。7月同様、バーティカル注力期間中のLINE運用は2割稼働・現状維持ラインという前提を踏まえた数字。
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 週次ファネル -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">3</div>
+      <div>
+        <div class="section-title">8月W1 週次パフォーマンス</div>
+        <div class="section-sub">8/3〜8/9 vs 7/27〜8/2（W5）比較</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>指標</th><th>W1（8/3〜8/9）</th><th>W5（7/27〜8/2）</th><th>前週比</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>友達合計</strong></td>
+              <td><strong>170人</strong>（PU119 + バナー51）</td>
+              <td>149人（PU85 + バナー64）</td>
+              <td class="up">+21人（+14.1%）</td>
+            </tr>
+            <tr><td>LP imp</td><td>27,749</td><td>27,934</td><td>▲0.7%（ほぼ横ばい）</td></tr>
+            <tr><td>PU imp</td><td>10,883</td><td>10,732</td><td class="up">+1.4%</td></tr>
+            <tr><td>PU click</td><td>1,606</td><td>1,473</td><td class="up">+9.0%</td></tr>
+            <tr><td>CTR</td><td class="up">14.76%</td><td>13.73%</td><td class="up">+1.03pt</td></tr>
+            <tr><td>友達追加率（PU）</td><td class="warn">7.41%</td><td>5.77%</td><td class="up">+1.64pt<span class="note">※分子に補完友達を含む、参考値</span></td></tr>
+            <tr><td>PVFR（全体）</td><td class="warn">0.61%</td><td class="warn">0.53%</td><td class="up">+0.08pt（基準0.80%には未達）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-yellow">
+        <strong>CTRは実測（click/pu_imp）ベースで信頼できる改善（+1.03pt）。友達追加率・PVFRの改善幅は補完友達を含むため参考値扱い。</strong>
+        LP impはほぼ横ばいでPU click増加も9%と小幅。友達+21人の中身は主に医療ダイエット・EDの補完友達によるもので、実際のPU起因の転換改善かどうかは来週の通常データで再確認が必要。
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ ジャンル別 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">4</div>
+      <div>
+        <div class="section-title">ジャンル別 W1 vs W5</div>
+        <div class="section-sub">友達増減の内訳（★＝友達の大半が補完バケット経由）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>ジャンル</th><th>W1 友達</th><th>W5 友達</th><th>差</th><th>CTR</th><th>備考</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>医療ダイエット(GLP-1)</strong></td>
+              <td><strong>99人</strong></td>
+              <td>107人</td>
+              <td class="down">▲8人</td>
+              <td class="up">15.63%</td>
+              <td><span class="badge badge-yellow">★補完39+18=57人</span></td>
+            </tr>
+            <tr>
+              <td>ED</td>
+              <td>20人</td>
+              <td>3人</td>
+              <td class="up">+17人</td>
+              <td class="up">17.20%</td>
+              <td><span class="badge badge-red">★補完19人（実質ほぼ全部）</span></td>
+            </tr>
+            <tr>
+              <td>コスメ</td>
+              <td>19人</td>
+              <td>13人</td>
+              <td class="up">+6人</td>
+              <td>13.67%</td>
+              <td><span class="badge badge-yellow">★補完14人</span></td>
+            </tr>
+            <tr>
+              <td>AGA</td>
+              <td>13人</td>
+              <td>8人</td>
+              <td class="up">+5人</td>
+              <td>15.16%</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>オンラインピル</td>
+              <td>9人</td>
+              <td>8人</td>
+              <td class="up">+1人</td>
+              <td>12.63%</td>
+              <td><span class="badge badge-yellow">★補完9人（全部）</span></td>
+            </tr>
+            <tr>
+              <td>FAGA</td>
+              <td>4人</td>
+              <td>3人</td>
+              <td class="up">+1人</td>
+              <td>15.47%</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>クマ取り</td>
+              <td>3人</td>
+              <td>4人</td>
+              <td class="down">▲1人</td>
+              <td>18.43%</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>いびき治療</td>
+              <td>2人</td>
+              <td>1人</td>
+              <td class="up">+1人</td>
+              <td>11.36%</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>ほくろ除去</td>
+              <td>1人</td>
+              <td>1人</td>
+              <td>±0人</td>
+              <td>9.32%</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td class="down"><strong>包茎手術(PLUS)</strong></td>
+              <td class="down">0人</td>
+              <td>0人</td>
+              <td>±0人</td>
+              <td>—</td>
+              <td><span class="badge badge-red">🔴データ欠損疑い(t228)</span></td>
+            </tr>
+            <tr>
+              <td class="down"><strong>看護転職（SEO）</strong></td>
+              <td class="down">0人</td>
+              <td>1人</td>
+              <td class="down">▲1人</td>
+              <td>—</td>
+              <td><span class="badge badge-red">🔴データ欠損疑い(t228)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-red">
+        <strong>ED+17人・医療ダイエット▲8人という増減の実体は「記事別の転換改善/悪化」ではなく、大部分が補完バケットの計上先の違いによる見かけ上の動き。</strong>
+        本当にどの記事が伸びた/落ちたかは、通常のデータ収集に戻る来週以降でないと確認できない。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ 記事レベルの分析について -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">5</div>
+      <div>
+        <div class="section-title">記事レベルの分析ができない理由</div>
+        <div class="section-sub">GASバックフィルの仕組み上の制約</div>
+      </div>
+    </div>
+    <div class="body">
+      <p>8/3〜8/9はスプシ「新データ収集」タブ自体が空だった期間（t227）。Renが友だちリストCSVから「Winut手動補完」レイヤーで人数を復元したが、この経路は<strong>タグ単位の紐付け情報を持たないため、多くの友達が「(友だち補完)ジャンル名」という記事不明のバケットに計上される。</strong></p>
+      <table>
+        <thead><tr><th>ジャンル</th><th>補完バケット人数</th></tr></thead>
+        <tbody>
+          <tr><td>医療ダイエット(glp1_seo)</td><td>39人</td></tr>
+          <tr><td>ED(seo_ed)</td><td>19人</td></tr>
+          <tr><td>医療ダイエット(glp1_seo_ava)</td><td>18人</td></tr>
+          <tr><td>コスメ(seo_cosme)</td><td>14人</td></tr>
+          <tr><td>オンラインピル(pill_seo)</td><td>9人</td></tr>
+          <tr><td>シミ(shimi_seo)</td><td>2人</td></tr>
+          <tr><td>クマ(kuma_seo)</td><td>1人</td></tr>
+        </tbody>
+      </table>
+      <p class="note">PU経由友達119人中102人（86%）がこの補完バケット。ジャンル合計は友だちリストCSV由来のため正しいが、「どの記事・PUが効いたか」はこの週だけ答えが出せない。</p>
+    </div>
+  </div>
+
+  <!-- ⑥ 看護転職・包茎の残存ゼロ -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">6</div>
+      <div>
+        <div class="section-title">看護転職・包茎の残存ゼロ（t228）— 新仮説</div>
+        <div class="section-sub">Renのバックフィル対象から漏れている可能性</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>日付</th><th>包茎 LP imp</th><th>看護転職 LP imp</th></tr></thead>
+          <tbody>
+            <tr><td>7/30</td><td>246</td><td>67</td></tr>
+            <tr><td>7/31</td><td>68</td><td>24</td></tr>
+            <tr><td>8/1</td><td>15</td><td>1</td></tr>
+            <tr><td>8/2</td><td>5</td><td>0</td></tr>
+            <tr><td>8/3〜8/9</td><td class="down">1〜2（ほぼゼロ）</td><td class="down">0（完全ゼロ）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-red">
+        <strong>新仮説：Renのバックフィル対象アカウントに看護転職・包茎が含まれていない可能性が高い。</strong>
+        Renのコミットメッセージに「51タグ以上の<strong>7アカ</strong>でimp/友だちがゼロ化した障害を復元」とあり、対象は限定的な7アカウントだった。看護転職・包茎がこの7アカに含まれていなければ、他ジャンルが復旧してもこの2つだけ取り残される。t228にこの仮説を追記し、Renに対象アカウント一覧（winut_accounts.tsv）に看護転職・包茎が入っているか確認を依頼する。
+      </div>
+      <p class="note">包茎は8/2時点で既にLP imp5まで下がっており、GAS障害の影響が出る前から別の低下が進行していた可能性も残る（7/27週次分析のタグ名空欄記事の件と関連するかは未確認）。</p>
+    </div>
+  </div>
+
+  <!-- ⑦ ネクストアクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">7</div>
+      <div>
+        <div class="section-title">ネクストアクション</div>
+        <div class="section-sub">優先度順</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-highest">最優先</span>
+          <div class="action-body">
+            <strong>t228: 看護転職・包茎がRenのバックフィル対象アカウントに含まれているか確認</strong>
+            <span>含まれていなければ追加のバックフィル依頼が必要</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">高</span>
+          <div class="action-body">
+            <strong>来週（8月W2）は通常収集に戻ったデータで記事レベルの再確認</strong>
+            <span>ED+17人・医療ダイエット▲8人が実体のある動きか、補完バケットのアーティファクトだったかを答え合わせする</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中</span>
+          <div class="action-body">
+            <strong>コスメ「肌タイプ診断」PUの初速確認</strong>
+            <span>8/10設置。GTM設定後の反映状況を来週見る</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ⑧ 総括 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">8</div>
+      <div>
+        <div class="section-title">週次総括</div>
+        <div class="section-sub">W1の因果関係まとめ</div>
+      </div>
+    </div>
+    <div class="body">
+      <p><strong>今週の一言:</strong> 友達170人（前週+21人/+14.1%）。ただしこの週はGAS障害のバックフィルで友達の86%が記事不明の補完バケット経由となっており、「何が効いたか」は語れない週。月次累計203人（8/1〜8/10）、目標1,200人に対し月末予測629人・達成率52.4%見込み。</p>
+      <hr>
+      <p><strong>なぜ記事レベルを語れないか:</strong></p>
+      <p>8/3〜8/9はスプシ「新データ収集」タブが空だった期間（t227）。友だちリストCSVからの手動補完でジャンル合計人数は復元できたが、タグ単位の紐付けが失われ「(友だち補完)ジャンル名」という記事不明の計上になった。ED+17人・医療ダイエット▲8人という見た目の動きも、この補完の影響が大きく実体不明。</p>
+      <hr>
+      <p><strong>月次着地の現実:</strong></p>
+      <p>8月累計203人（目標1,200人 / 達成率16.9%（10日経過）/ 月末予測629人・達成率52.4%）。バーティカル注力期間中でLINEは現状維持ラインが前提。</p>
+      <hr>
+      <p><strong>今週の振り返り:</strong></p>
+      <p>看護転職・包茎の2ジャンルは他ジャンルが復旧した後もゼロのまま。Renのバックフィル対象（7アカウント）に含まれていない可能性が高く、t228として追加確認を依頼する。来週は通常収集に戻ったデータで、今週の見かけの増減が実体を伴うか答え合わせする。</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
