@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>コスメ 記事別・PU別・バナー別ドリルダウン（2026-08-12）</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 980px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; white-space: nowrap; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; position: sticky; top: 0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    tr.hl td { background: #fff7ed; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-card.warn-card { border-color: #fde68a; background: #fffbeb; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-highest { background: #fee2e2; color: #991b1b; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">数値分析 — コスメ</div>
+    <h1>コスメ 記事別・PU別・バナー別ドリルダウン</h1>
+    <p class="desc">作成: 2026-08-12 ／ 対象期間: 2026-07-01〜2026-08-11（6週間・PU経由64人＋バナー11人）</p>
+  </div>
+
+  <!-- ① 結論 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">1</div>
+      <div>
+        <div class="section-title">結論</div>
+        <div class="section-sub">追加率の壁は継続、新発見は「自信クレ」文言そのものの弱さ</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="verdict verdict-red">CTRは基準クリア（14.61%✅）でPU文言は機能中。ボトルネックは変わらず追加率（4.91%、基準11%の半分未満）。新発見：「自信クレ」という文言バリエーションが記事を問わず8記事中7記事で友達0人。文言そのものの問題として即対応可能。</div>
+      <p>32記事中20記事（63%）が友達0人。勝ち組は脂性肌おすすめ・50代おすすめの2記事のみで友達28人（全体の44%）を占める構造は変わっていない。</p>
+    </div>
+  </div>
+
+  <!-- ② 全体ファネル -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">2</div>
+      <div>
+        <div class="section-title">全体ファネル（7/1〜8/11・PU経由）</div>
+        <div class="section-sub">6週間累計</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">LP imp</div>
+          <div class="kpi-value">25,449</div>
+          <div class="kpi-sub">PU imp 8,923（表示率35.0%）</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Click</div>
+          <div class="kpi-value">1,304</div>
+          <div class="kpi-sub">CTR 14.61%✅</div>
+        </div>
+        <div class="kpi-card warn-card">
+          <div class="kpi-label">友達（PU）</div>
+          <div class="kpi-value">64人</div>
+          <div class="kpi-sub">バナー11人は別枠</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">PVFR</div>
+          <div class="kpi-value">0.251%</div>
+          <div class="kpi-sub">基準0.80%の約1/3</div>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>週</th><th>LP imp</th><th>友達</th><th>PVFR</th></tr></thead>
+          <tbody>
+            <tr><td>week0（7/1-7/7）</td><td>2,257</td><td>5人</td><td>0.222%</td></tr>
+            <tr><td>week1（7/8-7/14）</td><td>4,402</td><td>10人</td><td>0.227%</td></tr>
+            <tr><td>week2（7/15-7/21）</td><td>4,137</td><td>12人</td><td>0.290%</td></tr>
+            <tr><td>week3（7/22-7/28）</td><td>4,794</td><td>16人</td><td class="up">0.334%（直近ピーク）</td></tr>
+            <tr><td>week4（7/29-8/4）</td><td>4,649</td><td>7人</td><td class="down">0.151%（GAS障害と重複）</td></tr>
+            <tr><td>week5（8/5-8/11）</td><td>5,210</td><td>14人</td><td>0.269%（回復途中）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-yellow">
+        <strong>week4の急落はt227（GAS新データ収集障害、8/3-8/9）の影響が数値上にも見える。</strong>
+        week5で0.269%まで戻っており、障害の実害はほぼ一時的なものと見られる。
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 診断カテゴリ別 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">3</div>
+      <div>
+        <div class="section-title">診断カテゴリ別</div>
+        <div class="section-sub">①クレンジング／②スキンケア方法／③化粧水／④肌タイプ（8/10設置）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>診断</th><th>LP imp</th><th>PU imp</th><th>Click</th><th>友達</th><th>PVFR</th><th>CTR</th><th>追加率</th></tr></thead>
+          <tbody>
+            <tr><td>②スキンケア方法診断</td><td>10,447</td><td>4,049</td><td>556</td><td>22</td><td>0.211%</td><td class="up">13.73%</td><td>3.96%</td></tr>
+            <tr><td>①クレンジング診断</td><td>12,081</td><td>3,951</td><td>623</td><td>20</td><td>0.166%</td><td class="up">15.77%</td><td>3.21%</td></tr>
+            <tr><td>③化粧水診断</td><td>2,700</td><td>848</td><td>112</td><td>3</td><td class="down">0.111%（最弱）</td><td class="up">13.21%</td><td>2.68%</td></tr>
+            <tr><td>④肌タイプ診断</td><td>221</td><td>75</td><td>13</td><td>0</td><td>—（判断不可）</td><td class="up">17.33%</td><td>0.00%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-blue">
+        <strong>スキンケア方法診断が友達数・PVFRともに僅差で最上位に転じた（従来はクレンジング診断が先行）。</strong>
+        化粧水診断はPVFRが他の約半分と最弱。肌タイプ診断は8/10設置直後でサンプル不足、来週以降に判断。
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 記事別 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">4</div>
+      <div>
+        <div class="section-title">記事別ドリルダウン（全32記事）</div>
+        <div class="section-sub">LP imp降順</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>記事</th><th>LP imp</th><th>PU imp</th><th>Click</th><th>友達</th><th>CTR</th><th>追加率</th><th>PVFR</th></tr></thead>
+          <tbody>
+            <tr class="hl"><td>脂性肌おすすめ</td><td>5,550</td><td>2,071</td><td>250</td><td>16</td><td>12.07%</td><td>6.40%</td><td class="up">0.288%</td></tr>
+            <tr class="hl"><td>50代おすすめ</td><td>2,925</td><td>1,211</td><td>212</td><td>12</td><td>17.51%</td><td>5.66%</td><td class="up">0.410%</td></tr>
+            <tr><td>ドラッグストア</td><td>2,335</td><td>667</td><td>92</td><td>2</td><td>13.79%</td><td>2.17%</td><td>0.086%</td></tr>
+            <tr><td>肌引き締め</td><td>2,227</td><td>898</td><td>150</td><td>2</td><td>16.70%</td><td>1.33%</td><td>0.090%</td></tr>
+            <tr><td>インナースキン</td><td>1,459</td><td>573</td><td>80</td><td>3</td><td>13.96%</td><td>3.75%</td><td>0.206%</td></tr>
+            <tr><td>濡れた手OK</td><td>1,453</td><td>473</td><td>65</td><td>1</td><td>13.74%</td><td>1.54%</td><td>0.069%</td></tr>
+            <tr><td>ニキビ肌</td><td>1,380</td><td>504</td><td>65</td><td>3</td><td>12.90%</td><td>4.62%</td><td>0.217%</td></tr>
+            <tr><td>クレ代用品</td><td>1,304</td><td>345</td><td>48</td><td>0</td><td>13.91%</td><td>0.00%</td><td class="down">0.000%</td></tr>
+            <tr><td>思春期スキン</td><td>891</td><td>408</td><td>63</td><td>1</td><td>15.44%</td><td>1.59%</td><td>0.112%</td></tr>
+            <tr><td>拭き取り化粧水</td><td>815</td><td>241</td><td>22</td><td>0</td><td>9.13%</td><td>0.00%</td><td class="down">0.000%</td></tr>
+            <tr><td>毛穴悩み</td><td>669</td><td>168</td><td>33</td><td>2</td><td>19.64%</td><td>6.06%</td><td class="up">0.299%</td></tr>
+            <tr><td>マツエク対応</td><td>645</td><td>181</td><td>16</td><td>0</td><td>8.84%</td><td>0.00%</td><td class="down">0.000%</td></tr>
+            <tr><td>40代おすすめ</td><td>580</td><td>172</td><td>30</td><td>0</td><td>17.44%</td><td>0.00%</td><td class="down">0.000%</td></tr>
+            <tr><td>クレミルク</td><td>421</td><td>116</td><td>20</td><td>0</td><td>17.24%</td><td>0.00%</td><td class="down">0.000%</td></tr>
+            <tr><td>収れん化粧水</td><td>420</td><td>174</td><td>14</td><td>0</td><td>8.05%</td><td>0.00%</td><td class="down">0.000%</td></tr>
+            <tr><td>ノーメイク</td><td>415</td><td>127</td><td>43</td><td>0</td><td>33.86%</td><td>0.00%</td><td class="down">0.000%</td></tr>
+            <tr><td>敏感肌化粧水</td><td>362</td><td>101</td><td>13</td><td>1</td><td>12.87%</td><td>7.69%</td><td>0.276%</td></tr>
+            <tr><td>混合肌スキン</td><td>241</td><td>84</td><td>14</td><td>0</td><td>16.67%</td><td>0.00%</td><td>0.000%</td></tr>
+            <tr><td>ローションパック</td><td>239</td><td>94</td><td>19</td><td>0</td><td>20.21%</td><td>0.00%</td><td>0.000%</td></tr>
+            <tr><td>化粧水ヒリヒリ</td><td>148</td><td>56</td><td>10</td><td>0</td><td>17.86%</td><td>0.00%</td><td>0.000%</td></tr>
+            <tr><td>プチプラ化粧水</td><td>145</td><td>29</td><td>6</td><td>0</td><td>20.69%</td><td>0.00%</td><td>0.000%</td></tr>
+            <tr><td>化粧水ニキビ</td><td>142</td><td>60</td><td>7</td><td>0</td><td>11.67%</td><td>0.00%</td><td>0.000%</td></tr>
+            <tr><td>時短スキンケア</td><td>122</td><td>30</td><td>3</td><td>0</td><td>10.00%</td><td>0.00%</td><td>0.000%</td></tr>
+            <tr class="hl"><td>デパコス化粧水</td><td>118</td><td>33</td><td>11</td><td>1</td><td class="up">33.33%</td><td class="up">9.09%</td><td class="up">0.847%</td></tr>
+            <tr class="hl"><td>混合肌化粧水</td><td>102</td><td>26</td><td>4</td><td>1</td><td>15.38%</td><td class="up">25.00%</td><td class="up">0.980%</td></tr>
+            <tr><td>ミスト化粧水</td><td>95</td><td>23</td><td>4</td><td>0</td><td>17.39%</td><td>0.00%</td><td>0.000%</td></tr>
+            <tr><td>毛穴化粧水</td><td>71</td><td>6</td><td>2</td><td>0</td><td>33.33%</td><td>0.00%</td><td>0.000%</td></tr>
+            <tr><td>40代化粧水</td><td>69</td><td>14</td><td>2</td><td>0</td><td>14.29%</td><td>0.00%</td><td>0.000%</td></tr>
+            <tr><td>ドラストクレ<span class="note">※肌タイプ診断新設・ドラッグストアと同一記事</span></td><td>43</td><td>16</td><td>2</td><td>0</td><td>12.50%</td><td>0.00%</td><td>0.000%</td></tr>
+            <tr><td>揺らぎ肌スキン</td><td>27</td><td>9</td><td>2</td><td>0</td><td>22.22%</td><td>0.00%</td><td>0.000%</td></tr>
+            <tr><td>濡れた手クレ<span class="note">※肌タイプ診断新設・濡れた手OKと同一記事</span></td><td>21</td><td>7</td><td>0</td><td>0</td><td>0.00%</td><td>—</td><td>0.000%</td></tr>
+            <tr><td>マツエク中クレ<span class="note">※肌タイプ診断新設・マツエク対応と同一記事</span></td><td>15</td><td>6</td><td>2</td><td>0</td><td>33.33%</td><td>0.00%</td><td>0.000%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-yellow">
+        <strong>32記事中20記事（63%）が友達0人。</strong>
+        脂性肌おすすめ・50代おすすめの2記事だけで友達28人（44%）を占める構造は継続。デパコス化粧水・混合肌化粧水はimp規模が小さいながらPVFR0.8〜1.0%と基準超えの高効率で注目に値する（サンプルはまだ小さい）。
+      </div>
+      <p class="note">ドラストクレ・濡れた手クレ・マツエク中クレは8/10設置の「肌タイプ診断」PU用にWINUTが割り振ったタグ内の記事名で、実体は既存のドラッグストア・濡れた手OK・マツエク対応と同一記事。PU設置台帳では統合済みだが、生ログの記事名が異なるため集計上は分離される点に注意。</p>
+    </div>
+  </div>
+
+  <!-- ⑤ PU別：自信クレ問題 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">5</div>
+      <div>
+        <div class="section-title">PU別ドリルダウン — 「自信クレ」文言の系統的な弱さ（新発見）</div>
+        <div class="section-sub">記事内の兄弟PU比較</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>記事</th><th>自信クレ 友達</th><th>兄弟PU</th><th>兄弟PU 友達</th><th>判定</th></tr></thead>
+          <tbody>
+            <tr><td>40代おすすめ</td><td class="down">0人</td><td>ぴったりのク</td><td>0人</td><td><span class="badge badge-gray">両方タイ・判断不可</span></td></tr>
+            <tr><td>クレミルク</td><td class="down">0人</td><td>ぴったりのクレ</td><td>0人</td><td><span class="badge badge-gray">両方タイ・判断不可</span></td></tr>
+            <tr><td>クレ代用品</td><td class="down">0人</td><td>ぴったりのクレ／肌に合うクレ</td><td>0人／0人</td><td><span class="badge badge-gray">全滅・判断不可</span></td></tr>
+            <tr><td>ドラッグストア</td><td class="down">0人</td><td>ぴったりのク</td><td class="up">2人</td><td><span class="badge badge-red">本物の劣後</span></td></tr>
+            <tr><td>ノーメイク</td><td class="down">0人</td><td>ぴったりのクレ</td><td>0人</td><td><span class="badge badge-gray">両方タイ・判断不可</span></td></tr>
+            <tr><td>マツエク対応</td><td class="down">0人</td><td>ぴったりのクレ</td><td>0人</td><td><span class="badge badge-gray">両方タイ・判断不可</span></td></tr>
+            <tr><td>濡れた手OK</td><td class="down">0人</td><td>ぴったりのクレ</td><td class="up">1人</td><td><span class="badge badge-red">本物の劣後</span></td></tr>
+            <tr><td>毛穴悩み</td><td class="up">1人</td><td>ぴったりのクレ</td><td>1人</td><td><span class="badge badge-blue">唯一の例外（タイ）</span></td></tr>
+            <tr><td>50代おすすめ</td><td class="down">0人</td><td>ぴったりのク／肌に合うクレ</td><td class="up">7人／5人</td><td><span class="badge badge-red">本物の劣後（最大差）</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-red">
+        <strong>9記事中4記事（ドラッグストア・濡れた手OK・50代おすすめ）で「実際にPVFRが分岐」＝本物の劣後を確認。</strong>
+        残り5記事は兄弟含め全員0人でタイのため判断不可だが、「自信クレ」が単独で友達を出した記事は毛穴悩み1件のみ（かつ兄弟とタイ）。9記事中8記事で「自信クレ」が友達0〜1人という一貫した弱さは、記事要因ではなく文言そのものの問題を強く示唆する。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ バナー別 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">6</div>
+      <div>
+        <div class="section-title">バナー別ドリルダウン</div>
+        <div class="section-sub">imp/clickが取れないため友達数のみで評価</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>記事</th><th>バナー友達</th></tr></thead>
+          <tbody>
+            <tr><td>脂性肌おすすめ</td><td>7人</td></tr>
+            <tr><td>肌引き締め</td><td>3人</td></tr>
+            <tr><td>インナースキン</td><td>1人</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-blue">
+        <strong>バナー設置は3記事のみ（脂性肌おすすめ7/27〜・肌引き締め7/29〜・インナースキン）、友達合計11人。記事不明の補完計上は0件でクリーン。</strong>
+        肌引き締めはPU経由の追加率が壊滅的（0.090%）な記事だが、バナー経由で友達3人を稼いでおり、PUで機能しない記事の補完チャネルとして有効な可能性がある。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ 推奨アクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">7</div>
+      <div>
+        <div class="section-title">推奨アクション</div>
+        <div class="section-sub">1本</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="verdict verdict-green">「自信クレ」文言を全記事で停止し、浮いたimpをぴったりの◯◯／肌に合う◯◯側に集約する。</div>
+      <p>追加率の壁（LP・友達追加画面）自体は構造課題で一朝一夕には直らないが、これは今すぐ着手可能で下振れリスクがない打ち手。あわせて、クレ代用品・拭き取り化粧水・マツエク対応のような「imp十分・CTR良好・友達0」の記事にバナー展開を広げる（肌引き締めで効果実証済みの型）。</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
