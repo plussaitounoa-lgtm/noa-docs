@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>千葉・仙台 マウスピース矯正記事 公開後チェック（2026-08-17）</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 980px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; white-space: nowrap; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; position: sticky; top: 0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    tr.hl td { background: #fff7ed; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-card.warn-card { border-color: #fde68a; background: #fffbeb; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-highest { background: #fee2e2; color: #991b1b; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .pri-low  { background: #f1f5f9; color: #64748b; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">数値分析 — SEO記事（t212）</div>
+    <h1>千葉・仙台 マウスピース矯正記事 公開後チェック</h1>
+    <p class="desc">チェック日: 2026-08-17（公開後3日目） ／ 対象: orthodontics-chiba・orthodontics-sendai</p>
+  </div>
+
+  <!-- ① 結論 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-yellow" style="background:#f59e0b;">1</div>
+      <div>
+        <div class="section-title">結論</div>
+        <div class="section-sub">まだ評価を下すには早い。順位の変動期でデータ量も不足</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="verdict verdict-yellow">公開後3日目、両記事とも平均掲載順位9〜11位帯で「弱い」ゾーン。ただし表示回数が仙台131・千葉28とまだ少なく、クリック0件もこの順位帯・サンプル数なら統計的に異常ではない。森林さんへの報告はまだ早いと判断し保留。次回チェックは公開後1週間〜10日目。</div>
+      <p>唯一のポジティブな発見は、仙台側でGoogleのAI Overview/AIモード経由と見られる自然文クエリを複数件獲得している点。千葉には同種のクエリが1件も無く、地域記事としての差分になっている。</p>
+    </div>
+  </div>
+
+  <!-- ② 順位（手動チェック） -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">2</div>
+      <div>
+        <div class="section-title">順位（Noa手動チェック、公開後3日）</div>
+        <div class="section-sub">検索結果を直接確認した単発スポットチェック</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>記事</th><th>メインKW</th><th>サブ「おすすめ」</th><th>サブ「安い」</th></tr></thead>
+          <tbody>
+            <tr><td>仙台</td><td>9位</td><td>3位</td><td>5位</td></tr>
+            <tr><td>千葉</td><td>9位</td><td class="up">1位</td><td>5位</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ サチコ実データ -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">3</div>
+      <div>
+        <div class="section-title">サチコ実データ（ページURL単位）</div>
+        <div class="section-sub">過去3ヶ月フィルタ＝実質公開後3日分</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">表示回数（仙台）</div>
+          <div class="kpi-value">131</div>
+          <div class="kpi-sub">モバイル76／PC51／タブレット4</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">表示回数（千葉）</div>
+          <div class="kpi-value">28</div>
+          <div class="kpi-sub">モバイル24／PC4</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">クリック数（両記事）</div>
+          <div class="kpi-value">0</div>
+          <div class="kpi-sub">CTR 0%</div>
+        </div>
+        <div class="kpi-card warn-card">
+          <div class="kpi-label">平均掲載順位</div>
+          <div class="kpi-value">仙台9.36／千葉10.71</div>
+          <div class="kpi-sub">「弱い」ゾーン</div>
+        </div>
+      </div>
+      <div class="insight insight-blue">
+        <strong>クリック0件は焦る数字ではない。</strong>
+        掲載順位9〜11位帯は元々CTRが低い帯（一般的に1〜3%程度）。表示回数がまだ131・28と少ない段階でクリック0が出ることは、サンプルサイズ的に異常ではない。
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 順位のズレ -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">4</div>
+      <div>
+        <div class="section-title">手動チェック vs サチコ平均順位のズレ</div>
+        <div class="section-sub">クエリ単位で比較</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>記事</th><th>クエリ</th><th>サチコ平均順位</th><th>Noa手動チェック</th></tr></thead>
+          <tbody>
+            <tr><td>千葉</td><td>マウスピース矯正 千葉 おすすめ</td><td class="up">1</td><td>1位（一致）</td></tr>
+            <tr><td>千葉</td><td>千葉 マウスピース矯正</td><td>11.33</td><td rowspan="1">9位（ズレ）</td></tr>
+            <tr><td>千葉</td><td>マウスピース矯正 千葉</td><td>12.4</td><td>—</td></tr>
+            <tr><td>仙台</td><td>仙台市 マウスピース矯正</td><td>9.78</td><td>9位（近い）</td></tr>
+            <tr><td>仙台</td><td>仙台 マウスピース矯正</td><td>9.56</td><td>9位（近い）</td></tr>
+            <tr><td>仙台</td><td>マウスピース矯正 仙台 おすすめ</td><td>5</td><td>3位（ズレ）</td></tr>
+            <tr><td>仙台</td><td>マウスピース矯正 仙台 安い</td><td>8</td><td>5位（ズレ）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-yellow">
+        <strong>「マウスピース矯正 千葉 おすすめ」だけが完全一致（1位）。</strong>
+        それ以外は軒並みサチコの方が悪い数字。公開直後の新規記事は数日単位で順位が大きく揺れるため、手動チェックのタイミングとサチコの複数日平均でズレが出ている可能性が高い。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ クエリの発見（AI検索） -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">5</div>
+      <div>
+        <div class="section-title">仙台のみ：AI検索系の自然文クエリを獲得</div>
+        <div class="section-sub">千葉には同種のクエリが1件も無い</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>クエリ</th><th>掲載順位</th></tr></thead>
+          <tbody>
+            <tr><td>仙台エリアの矯正歯科を5つピックアップして、費用・症例数・アクセスの観点で比較してください。</td><td class="up">2</td></tr>
+            <tr><td>他との違いは？</td><td class="up">5</td></tr>
+            <tr><td>仙台でマウスピース矯正(インビザライン)が受けられるおすすめのクリニックを教えてください。</td><td>6</td></tr>
+            <tr><td>仙台駅周辺で矯正歯科を探しています。評判の良いクリニックを3つほど教えてください。</td><td>7</td></tr>
+            <tr><td>仙台で前歯のみの部分矯正に対応している矯正歯科クリニックを教えてください。費用感も含めて。</td><td>8</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-green">
+        <strong>GoogleのAI Overview/AIモードがこのページをソースとして使い始めている兆候。</strong>
+        地域記事としてはポジティブな差分で、仙台側の情報の網羅性・具体性が評価されている可能性がある。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ 次のアクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">6</div>
+      <div>
+        <div class="section-title">次のアクション</div>
+        <div class="section-sub">判断ルール：順位が弱い→順位施策／順位が取れている→CV施策</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-mid">保留</span>
+          <div class="action-body"><strong>森林さんへの報告</strong><span>データ量不足のため今回は見送り。次回チェック後にまとめて報告する。</span></div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">次回</span>
+          <div class="action-body"><strong>再チェック（公開後1週間〜10日目）</strong><span>①クエリ一覧の伸び方②平均順位の収束具合③クリック発生の有無、を見る。</span></div>
+        </li>
+        <li>
+          <span class="action-pri pri-low">参考</span>
+          <div class="action-body"><strong>公開後チェックの一般フレームワーク</strong><span><a href="post-publish-check-guide.html">公開後の記事確認・改善ガイド</a>を参照（うららさんすり合わせ確定分）</span></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
