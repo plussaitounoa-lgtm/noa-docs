@@ -105,6 +105,8 @@
     </div>
     <div class="body">
       <div class="verdict verdict-yellow">公開後3日目、両記事とも平均掲載順位9〜11位帯で「弱い」ゾーン。ただし表示回数が仙台131・千葉28とまだ少なく、クリック0件もこの順位帯・サンプル数なら統計的に異常ではない。森林さんへの報告はまだ早いと判断し保留。次回チェックは公開後1週間〜10日目。</div>
+      <p><b>検索意図の一致率は仙台95%・千葉71%と差が大きい。</b>千葉はブランド名指名検索（スマイルモア）が1/4を占め、比較記事としての狙いとズレている。</p>
+      <p><b>両地域のSERPは個別クリニック公式サイトが主流</b>（千葉86%・仙台71%）で、比較記事型はまだ少数派。ローカル・ナビゲーショナル意図が強いクエリの可能性がある。</p>
       <p>唯一のポジティブな発見は、仙台側でGoogleのAI Overview/AIモード経由と見られる自然文クエリを複数件獲得している点。千葉には同種のクエリが1件も無く、地域記事としての差分になっている。</p>
     </div>
   </div>
@@ -201,10 +203,65 @@
     </div>
   </div>
 
-  <!-- ⑤ クエリの発見（AI検索） -->
+  <!-- ⑤ 検索意図の一致率 -->
   <div class="section">
     <div class="section-head">
-      <div class="num num-purple">5</div>
+      <div class="num num-blue">5</div>
+      <div>
+        <div class="section-title">狙った検索意図で評価されているか</div>
+        <div class="section-sub">クエリを意図別に仕分け</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid" style="grid-template-columns:repeat(2,1fr);">
+        <div class="kpi-card">
+          <div class="kpi-label">千葉：意図一致率</div>
+          <div class="kpi-value down">71%</div>
+          <div class="kpi-sub">ブランド名指名検索（スマイルモア矯正 千葉／成田）が25%を占める</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">仙台：意図一致率</div>
+          <div class="kpi-value up">95%</div>
+          <div class="kpi-sub">サブエリア（宮城野区等）・AI検索プロンプトも意図一致に含む</div>
+        </div>
+      </div>
+      <div class="insight insight-red">
+        <strong>千葉はブランド名指名検索（スマイルモア）が1/4を占め、比較記事としての狙いとズレている。</strong>
+        すでに「スマイルモアに決めた」人がブランド名で来ているため、比較・検討コンテンツとしての価値を発揮しづらいアクセスが混ざっている。仙台はサブエリア（宮城野区等）やAI検索プロンプトまで含めてほぼ全て比較・検討意図で、狙い通りの評価がされている。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ SERP構成 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">6</div>
+      <div>
+        <div class="section-title">メインKWのSERP構成：個別クリニックが主流</div>
+        <div class="section-sub">実際に検索して競合サイトの種類を確認</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th></th><th>個別クリニック公式</th><th>比較・アグリゲーター記事</th></tr></thead>
+          <tbody>
+            <tr><td>千葉（上位7件）</td><td class="down">6件（86%）</td><td>1件（うぐいすだに）</td></tr>
+            <tr><td>仙台（上位7件）</td><td>5件（71%）</td><td class="up">2件（oh-my-teeth・biyou-dental）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-red">
+        <strong>両地域ともSERPは個別クリニック公式サイトが主流で、比較記事型コンテンツはまだ少数派。</strong>
+        Googleがこのクエリを「近くのクリニックを探したい」というローカル・ナビゲーショナル意図寄りに評価している可能性が高い（個別クリニックはGoogleビジネスプロフィール等のローカル信号が強い）。仙台は比較記事型が既に2本割り込んでいるため入り込む余地が大きいが、千葉は比較記事の前例が1本のみで、個別クリニックとの戦いになっている構造的な理由がある可能性。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑦ クエリの発見（AI検索） -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">7</div>
       <div>
         <div class="section-title">仙台のみ：AI検索系の自然文クエリを獲得</div>
         <div class="section-sub">千葉には同種のクエリが1件も無い</div>
@@ -230,10 +287,10 @@
     </div>
   </div>
 
-  <!-- ⑥ 次のアクション -->
+  <!-- ⑧ 次のアクション -->
   <div class="section">
     <div class="section-head">
-      <div class="num num-slate">6</div>
+      <div class="num num-slate">8</div>
       <div>
         <div class="section-title">次のアクション</div>
         <div class="section-sub">判断ルール：順位が弱い→順位施策／順位が取れている→CV施策</div>
@@ -248,6 +305,14 @@
         <li>
           <span class="action-pri pri-high">次回</span>
           <div class="action-body"><strong>再チェック（公開後1週間〜10日目）</strong><span>①クエリ一覧の伸び方②平均順位の収束具合③クリック発生の有無、を見る。</span></div>
+        </li>
+        <li>
+          <span class="action-pri pri-highest">検討</span>
+          <div class="action-body"><strong>千葉：ブランド名指名検索への対応</strong><span>スマイルモア指名検索が25%を占めるのは比較記事として想定外。個別ブランドLPへの内部リンク強化で受け止めるか、あるいは許容範囲として無視するか判断が必要。</span></div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">検討</span>
+          <div class="action-body"><strong>両記事：ローカル信号の強化</strong><span>SERPが個別クリニック優位（ローカル・ナビゲーショナル意図寄り）な可能性があるため、地図埋め込み・NAP情報の精度・構造化データ等のローカルSEO要素を強化できないか検討。</span></div>
         </li>
         <li>
           <span class="action-pri pri-low">参考</span>
