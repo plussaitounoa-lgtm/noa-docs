@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>医療ダイエット(GLP-1) PU状況分析（2026-08-21）</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 980px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; white-space: nowrap; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; position: sticky; top: 0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    tr.group-row td { background: #f8fafc; font-weight: 700; color: #334155; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-card.warn-card { border-color: #fde68a; background: #fffbeb; }
+    .kpi-card.ok-card { border-color: #86efac; background: #f0fdf4; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-highest { background: #fee2e2; color: #991b1b; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .pri-low  { background: #f1f5f9; color: #64748b; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">数値分析 — 医療ダイエット(GLP-1)</div>
+    <h1>医療ダイエット(GLP-1) PU状況分析</h1>
+    <p class="desc">作成: 2026-08-21 ／ 目的: PU改修依頼（啓音さん）の判断材料 ／ データ期間: 2026-08累計（8/1〜8/21、8/3〜8/21は週次分解あり）</p>
+  </div>
+
+  <!-- ① 結論 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">1</div>
+      <div>
+        <div class="section-title">結論</div>
+        <div class="section-sub">PU改修より先にやるべきことがある</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="verdict verdict-yellow">今日「PU改修」を啓音さんに頼むのは時期尚早。CTRは全PUで基準クリア（13〜19%）＝PU文言は機能中。壊れているのは「クリック→友達追加」（追加率4.6%🔴、基準11%の半分未満）だが、<strong>8/3〜8/16の2週間はPU経由友達の100%がどのPUか特定できない「補完バケット」に落ちていて、どのPUが弱いかを数値で名指しできない状態</strong>（t237・記事タグ紐付け不良、Ren裏取り待ちの既知の未解決問題）。</div>
+      <p>啓音さんに頼むなら「PU文言修正」ではなく、①t237（タグ紐付け不良）の解消をRenに再度催促する、②もしくは全PU共通で壊れている「LP・友達追加画面」側の改修、のどちらかが数値的な裏付けがある依頼になる。</p>
+    </div>
+  </div>
+
+  <!-- ② CTR：PUは機能中 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">2</div>
+      <div>
+        <div class="section-title">CTR：全PUで基準クリア（PU文言は機能中）</div>
+        <div class="section-sub">8月累計・特定PUに紐付いた実績（trace可能な範囲）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>サイト</th><th>記事</th><th>PU</th><th>PU imp</th><th>Click</th><th>友達</th><th>CTR</th></tr></thead>
+          <tbody>
+            <tr><td>こいずみ</td><td>BMI</td><td>隠れ肥満のチェックをする</td><td>1,196</td><td>152</td><td>0</td><td class="down">12.7%</td></tr>
+            <tr><td>こいずみ</td><td>更年期太り</td><td>無理なく痩せる方法</td><td>674</td><td>94</td><td>0</td><td class="up">13.9%</td></tr>
+            <tr><td>こいずみ</td><td>更年期太り</td><td>自分に合ったダイエット方法</td><td>705</td><td>94</td><td>0</td><td class="up">13.3%</td></tr>
+            <tr><td>こいずみ</td><td>日本人1番痩せる</td><td>自分に合ったダイエット方法</td><td>347</td><td>61</td><td>0</td><td class="up">17.6%</td></tr>
+            <tr><td>こいずみ</td><td>日本人1番痩せる</td><td>痩せない理由知りたい！</td><td>320</td><td>51</td><td>0</td><td class="up">15.9%</td></tr>
+            <tr><td>渋谷</td><td>本気で痩せたい</td><td>自分に1番合う方法</td><td>1,166</td><td>173</td><td>3</td><td class="up">14.8%</td></tr>
+            <tr><td>渋谷</td><td>ダイエットパッチ</td><td>自分に1番合う方法</td><td>1,624</td><td>220</td><td>2</td><td class="up">13.5%</td></tr>
+            <tr><td>渋谷</td><td>bmi</td><td>隠れ肥満のチェックをする</td><td>285</td><td>45</td><td>0</td><td class="up">15.8%</td></tr>
+            <tr><td>天白</td><td>痩せる方法</td><td>自分に1番合う方法</td><td>389</td><td>61</td><td>0</td><td class="up">15.7%</td></tr>
+            <tr><td>こいずみ</td><td>間食やめられない</td><td>自分に合ったダイエット方法</td><td>331</td><td>51</td><td>0</td><td class="up">15.4%</td></tr>
+            <tr><td>こいずみ</td><td>スルリムマンジャロ</td><td>自分に合ったダイエット薬</td><td>1,097</td><td>135</td><td>2</td><td class="up">12.3%</td></tr>
+            <tr><td>こいずみ</td><td>痩せる薬</td><td>自分に合ったダイエット薬</td><td>596</td><td>111</td><td>2</td><td class="up">18.6%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-blue">
+        <strong>CTRで劣後しているPUは実質ない。「文言を直す」対象を選ぶ数値的根拠は今のところ無い。</strong>
+        全て基準13%前後〜19%台で、記事・サイトを問わず安定している。
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 追加率：全PUで壊滅、しかも"どのPU"かが特定不能 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">3</div>
+      <div>
+        <div class="section-title">追加率：全PUで壊滅、かつ「どのPU」かが特定不能</div>
+        <div class="section-sub">週次（PU経由=バナー除外のみ、8/3〜8/21）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>週</th><th>PU click</th><th>友達(PU経由)</th><th>特定PUに紐付いた友達</th><th>「補完バケット」（記事不明）</th></tr></thead>
+          <tbody>
+            <tr><td>W1(8/3-8/9)</td><td>616</td><td>51</td><td class="down">0人（0%）</td><td class="down">51人（100%）</td></tr>
+            <tr><td>W2(8/10-8/16)</td><td>696</td><td>21</td><td class="down">0人（0%）</td><td class="down">21人（100%）</td></tr>
+            <tr><td>W3(8/17-8/21進行中)</td><td>375</td><td>12</td><td class="up">7人（58%）</td><td>5人（42%）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-red">
+        <strong>8/3〜8/16の2週間、クリック1,312件に対し「どのPUが友達に転換したか」が1件も裏取りできていない。</strong>
+        W3でようやく一部復旧の兆しが出ているが、まだ道半ば。月間で唯一trace出来た7〜13件（渋谷「本気で痩せたい」3人、「ダイエットパッチ」2人、こいずみ「スルリムマンジャロ」2人、「痩せる薬」2人 等）はサンプルが小さすぎて「このPUが弱い」の判断材料にならない。
+      </div>
+      <p class="note">「補完バケット」＝記事タグへの紐付けができず(友だち補完)glp1／(友だち補完)glp1_seoという汎用タグに計上された友達。2026-08-18の週次分析で発覚済みの記事タグ紐付け不良（t237）が今回のデータでも解消していないことを確認。</p>
+    </div>
+  </div>
+
+  <!-- ④ 全体ファネル・CV -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">4</div>
+      <div>
+        <div class="section-title">8月累計 全体ファネル・CV</div>
+        <div class="section-sub">2026-08-01〜08-21</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">友達（全チャネル）</div>
+          <div class="kpi-value">83人</div>
+          <div class="kpi-sub">PU経由90人相当＋バナー等</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">追加率</div>
+          <div class="kpi-value">4.6%</div>
+          <div class="kpi-sub">基準11%の半分未満</div>
+        </div>
+        <div class="kpi-card ok-card">
+          <div class="kpi-label">CTR</div>
+          <div class="kpi-value">15.8%</div>
+          <div class="kpi-sub">基準13%クリア</div>
+        </div>
+        <div class="kpi-card ok-card">
+          <div class="kpi-label">CV・FCVR</div>
+          <div class="kpi-value">6件</div>
+          <div class="kpi-sub">¥108,000／FCVR 7.2%✅</div>
+        </div>
+      </div>
+      <div class="insight insight-green">
+        <strong>友達になった後の成約導線は機能している。</strong>
+        FCVR7.2%は基準3%を大きく上回る。今回の課題（PU改修の是非）はここではなく「友達になる前」の話。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ インパクト -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">5</div>
+      <div>
+        <div class="section-title">インパクト（仮説ベース）</div>
+        <div class="section-sub">追加率を基準まで戻せた場合</div>
+      </div>
+    </div>
+    <div class="body">
+      <p>追加率を基準11%まで戻せれば、8月のPU click（1,894件）換算で友達 <strong>+90人/月相当（現状比+140%）</strong>。ただし「何を直せば11%に戻るか」を特定できるだけのPU単位データが今は無い。t237が解消し記事タグへの紐付けが正常化すれば、まず"本当に弱いPU"が見える状態になる。</p>
+    </div>
+  </div>
+
+  <!-- ⑥ アクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">6</div>
+      <div>
+        <div class="section-title">次のアクション</div>
+        <div class="section-sub">確認したいこと</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-highest">最優先</span>
+          <div class="action-body">
+            <strong>t237（記事タグ紐付け不良）の解消をRenに再度催促</strong>
+            <span>8/3〜8/16は特定PUへの紐付けが0%。これが解消しないと「どのPUが弱いか」は誰にも分からない</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">優先</span>
+          <div class="action-body">
+            <strong>啓音さんへの依頼は「LP・友達追加画面」の見直しに切り替える</strong>
+            <span>CTRは全PUで基準クリア。追加率だけが基準の半分未満で共通ボトルネック。PU文言修正は数値的な根拠が今は無い</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中</span>
+          <div class="action-body">
+            <strong>t237解消後、PU単位で追加率を再集計</strong>
+            <span>紐付けが正常化した時点で本ページのPU別テーブルを更新し、初めて「弱いPU」を数値で名指しする</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
