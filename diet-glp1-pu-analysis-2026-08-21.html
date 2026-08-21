@@ -95,105 +95,99 @@
     <p class="desc">作成: 2026-08-21 ／ 目的: PU改修依頼（啓音さん）の判断材料 ／ データ期間: 2026-08累計（8/1〜8/21、8/3〜8/21は週次分解あり）</p>
   </div>
 
-  <!-- ① 結論 -->
-  <div class="section">
-    <div class="section-head">
-      <div class="num num-red">1</div>
-      <div>
-        <div class="section-title">結論</div>
-        <div class="section-sub">PU改修より先にやるべきことがある</div>
-      </div>
-    </div>
-    <div class="body">
-      <div class="verdict verdict-yellow">今日「PU改修」を啓音さんに頼むのは時期尚早。CTRは全PUで基準クリア（13〜19%）＝PU文言は機能中。壊れているのは「クリック→友達追加」（追加率4.6%🔴、基準11%の半分未満）だが、<strong>8/3〜8/16の2週間はPU経由友達の100%がどのPUか特定できない「補完バケット」に落ちていて、どのPUが弱いかを数値で名指しできない状態</strong>（t237・記事タグ紐付け不良、Ren裏取り待ちの既知の未解決問題）。</div>
-      <p>啓音さんに頼むなら「PU文言修正」ではなく、①t237（タグ紐付け不良）の解消をRenに再度催促する、②もしくは全PU共通で壊れている「LP・友達追加画面」側の改修、のどちらかが数値的な裏付けがある依頼になる。</p>
-    </div>
+  <div class="insight insight-green" style="margin-bottom:18px;">
+    <strong>【update 2026-08-21】記事タグ紐付け不良（t237）はRenが解消済み。</strong>
+    Winut日次計測CSVのタグ単位友達追加数をそのまま補完レイヤーに載せる方式に変更し、8/3〜8/16は特定PUに紐付かなかった友達（旧報告で100%）が全て実タグに紐付くようになった。以下は解消後の値で作り直したもの。
   </div>
 
-  <!-- ② CTR：PUは機能中 -->
+  <!-- ① CTR：PUは機能中 -->
   <div class="section">
     <div class="section-head">
-      <div class="num num-green">2</div>
+      <div class="num num-green">1</div>
       <div>
         <div class="section-title">CTR：全PUで基準クリア（PU文言は機能中）</div>
-        <div class="section-sub">8月累計・特定PUに紐付いた実績（trace可能な範囲）</div>
+        <div class="section-sub">8月累計・実診断PU（click20件以上、追加率降順）</div>
       </div>
     </div>
     <div class="body">
       <div class="table-scroll">
         <table>
-          <thead><tr><th>サイト</th><th>記事</th><th>PU</th><th>PU imp</th><th>Click</th><th>友達</th><th>CTR</th></tr></thead>
+          <thead><tr><th>サイト</th><th>記事</th><th>PU</th><th>PU imp</th><th>Click</th><th>友達</th><th>CTR</th><th>追加率</th></tr></thead>
           <tbody>
-            <tr><td>こいずみ</td><td>BMI</td><td>隠れ肥満のチェックをする</td><td>1,196</td><td>152</td><td>0</td><td class="down">12.7%</td></tr>
-            <tr><td>こいずみ</td><td>更年期太り</td><td>無理なく痩せる方法</td><td>674</td><td>94</td><td>0</td><td class="up">13.9%</td></tr>
-            <tr><td>こいずみ</td><td>更年期太り</td><td>自分に合ったダイエット方法</td><td>705</td><td>94</td><td>0</td><td class="up">13.3%</td></tr>
-            <tr><td>こいずみ</td><td>日本人1番痩せる</td><td>自分に合ったダイエット方法</td><td>347</td><td>61</td><td>0</td><td class="up">17.6%</td></tr>
-            <tr><td>こいずみ</td><td>日本人1番痩せる</td><td>痩せない理由知りたい！</td><td>320</td><td>51</td><td>0</td><td class="up">15.9%</td></tr>
-            <tr><td>渋谷</td><td>本気で痩せたい</td><td>自分に1番合う方法</td><td>1,166</td><td>173</td><td>3</td><td class="up">14.8%</td></tr>
-            <tr><td>渋谷</td><td>ダイエットパッチ</td><td>自分に1番合う方法</td><td>1,624</td><td>220</td><td>2</td><td class="up">13.5%</td></tr>
-            <tr><td>渋谷</td><td>bmi</td><td>隠れ肥満のチェックをする</td><td>285</td><td>45</td><td>0</td><td class="up">15.8%</td></tr>
-            <tr><td>天白</td><td>痩せる方法</td><td>自分に1番合う方法</td><td>389</td><td>61</td><td>0</td><td class="up">15.7%</td></tr>
-            <tr><td>こいずみ</td><td>間食やめられない</td><td>自分に合ったダイエット方法</td><td>331</td><td>51</td><td>0</td><td class="up">15.4%</td></tr>
-            <tr><td>こいずみ</td><td>スルリムマンジャロ</td><td>自分に合ったダイエット薬</td><td>1,097</td><td>135</td><td>2</td><td class="up">12.3%</td></tr>
-            <tr><td>こいずみ</td><td>痩せる薬</td><td>自分に合ったダイエット薬</td><td>596</td><td>111</td><td>2</td><td class="up">18.6%</td></tr>
+            <tr><td>こいずみ</td><td>痩せる薬</td><td>自分に合ったダイエット薬</td><td>596</td><td>111</td><td>25</td><td class="up">18.6%</td><td class="up">22.5%</td></tr>
+            <tr><td>渋谷</td><td>食欲を抑える薬</td><td>自分に合った薬</td><td>291</td><td>44</td><td>6</td><td class="up">15.1%</td><td class="up">13.6%</td></tr>
+            <tr><td>こいずみ</td><td>DMMマンジャロ</td><td>安く手に入れたい</td><td>114</td><td>23</td><td>3</td><td class="up">20.2%</td><td class="up">13.0%</td></tr>
+            <tr><td>こいずみ</td><td>間食やめられない</td><td>自分に合ったダイエット方法</td><td>319</td><td>51</td><td>6</td><td class="up">16.0%</td><td class="up">11.8%</td></tr>
+            <tr><td>こいずみ</td><td>スルリムマンジャロ</td><td>自分に合ったダイエット薬</td><td>1,097</td><td>135</td><td>14</td><td class="up">12.3%</td><td>10.4%</td></tr>
+            <tr><td>渋谷</td><td>本気で痩せたい</td><td>自分に1番合う方法</td><td>1,166</td><td>173</td><td>16</td><td class="up">14.8%</td><td>9.2%</td></tr>
+            <tr><td>こいずみ</td><td>更年期太り</td><td>無理なく痩せる方法</td><td>674</td><td>94</td><td>8</td><td class="up">13.9%</td><td>8.5%</td></tr>
+            <tr><td>こいずみ</td><td>日本人1番痩せる</td><td>痩せない理由知りたい！</td><td>292</td><td>51</td><td>4</td><td class="up">17.5%</td><td class="down">7.8%</td></tr>
+            <tr><td>こいずみ</td><td>リベルサスマンジャロどっち</td><td>費用を抑えて</td><td>367</td><td>61</td><td>4</td><td class="up">16.6%</td><td class="down">6.6%</td></tr>
+            <tr style="background:#fff1f2;"><td>渋谷</td><td>ダイエットパッチ</td><td>自分に1番合う方法</td><td>1,624</td><td>220</td><td>14</td><td class="up">13.5%</td><td class="down">6.4%</td></tr>
+            <tr><td>こいずみ</td><td>メトホル_通販</td><td>できるだけ費用を抑えて</td><td>108</td><td>26</td><td>1</td><td class="up">24.1%</td><td class="down">3.8%</td></tr>
+            <tr style="background:#fff1f2;"><td>こいずみ</td><td>BMI</td><td>隠れ肥満のチェックをする</td><td>1,196</td><td>152</td><td>5</td><td class="down">12.7%</td><td class="down">3.3%</td></tr>
+            <tr><td>こいずみ</td><td>日本人1番痩せる</td><td>自分に合ったダイエット方法</td><td>329</td><td>61</td><td>2</td><td class="up">18.5%</td><td class="down">3.3%</td></tr>
+            <tr><td>こいずみ</td><td>更年期太り</td><td>自分に合ったダイエット方法</td><td>705</td><td>94</td><td>3</td><td class="up">13.3%</td><td class="down">3.2%</td></tr>
+            <tr><td>渋谷</td><td>bmi</td><td>隠れ肥満のチェックをする</td><td>285</td><td>45</td><td>1</td><td class="up">15.8%</td><td class="down">2.2%</td></tr>
+            <tr><td>天白</td><td>痩身エステ効果</td><td>自分に1番合う方法</td><td>104</td><td>21</td><td>0</td><td class="up">20.2%</td><td class="down">0.0%</td></tr>
           </tbody>
         </table>
       </div>
       <div class="insight insight-blue">
-        <strong>CTRで劣後しているPUは実質ない。「文言を直す」対象を選ぶ数値的根拠は今のところ無い。</strong>
-        全て基準13%前後〜19%台で、記事・サイトを問わず安定している。
+        <strong>CTRで劣後しているPUは実質ない（全て12〜24%、基準13%前後）。「文言のクリック力」を直す対象を選ぶ数値的根拠は無い。</strong>
+        赤字ハイライトの2本（渋谷「ダイエットパッチ」、こいずみ「BMI」）はクリック規模が大きい（220件・152件＝ジャンル内1〜2位）のに追加率が基準11%の半分以下。この2本が改修優先度トップ。
       </div>
     </div>
   </div>
 
-  <!-- ③ 追加率：全PUで壊滅、しかも"どのPU"かが特定不能 -->
+  <!-- ② 追加率：全体で基準割れ、記事間で差が大きい -->
   <div class="section">
     <div class="section-head">
-      <div class="num num-red">3</div>
+      <div class="num num-red">2</div>
       <div>
-        <div class="section-title">追加率：全PUで壊滅、かつ「どのPU」かが特定不能</div>
+        <div class="section-title">追加率：ジャンル全体で基準割れ、記事間で差が大きい</div>
         <div class="section-sub">週次（PU経由=バナー除外のみ、8/3〜8/21）</div>
       </div>
     </div>
     <div class="body">
       <div class="table-scroll">
         <table>
-          <thead><tr><th>週</th><th>PU click</th><th>友達(PU経由)</th><th>特定PUに紐付いた友達</th><th>「補完バケット」（記事不明）</th></tr></thead>
+          <thead><tr><th>週</th><th>PU click</th><th>友達(PU経由)</th><th>追加率</th><th>友達(バナー経由)</th></tr></thead>
           <tbody>
-            <tr><td>W1(8/3-8/9)</td><td>616</td><td>51</td><td class="down">0人（0%）</td><td class="down">51人（100%）</td></tr>
-            <tr><td>W2(8/10-8/16)</td><td>696</td><td>21</td><td class="down">0人（0%）</td><td class="down">21人（100%）</td></tr>
-            <tr><td>W3(8/17-8/21進行中)</td><td>375</td><td>12</td><td class="up">7人（58%）</td><td>5人（42%）</td></tr>
+            <tr><td>W1(8/3-8/9)</td><td>616</td><td>52</td><td class="down">8.4%</td><td>42</td></tr>
+            <tr><td>W2(8/10-8/16)</td><td>696</td><td>51</td><td class="down">7.3%</td><td>51</td></tr>
+            <tr><td>W3(8/17-8/21進行中)</td><td>375</td><td>26</td><td class="down">6.9%</td><td>19</td></tr>
           </tbody>
         </table>
       </div>
       <div class="insight insight-red">
-        <strong>8/3〜8/16の2週間、クリック1,312件に対し「どのPUが友達に転換したか」が1件も裏取りできていない。</strong>
-        W3でようやく一部復旧の兆しが出ているが、まだ道半ば。月間で唯一trace出来た7〜13件（渋谷「本気で痩せたい」3人、「ダイエットパッチ」2人、こいずみ「スルリムマンジャロ」2人、「痩せる薬」2人 等）はサンプルが小さすぎて「このPUが弱い」の判断材料にならない。
+        <strong>追加率は基準11%に対し週を追うごとに緩やかに悪化（8.4%→7.3%→6.9%）。全PU共通のLP・友達追加画面側の弱さが継続。</strong>
+        ただしPU単位で見ると差が大きい：こいずみ「痩せる薬」（22.5%✅、基準の2倍）のように機能しているPUもある一方、渋谷「ダイエットパッチ」（6.4%🔴）・こいずみ「BMI」（3.3%🔴）はクリック規模が大きいのに追加率が特に弱い。
       </div>
-      <p class="note">「補完バケット」＝記事タグへの紐付けができず(友だち補完)glp1／(友だち補完)glp1_seoという汎用タグに計上された友達。2026-08-18の週次分析で発覚済みの記事タグ紐付け不良（t237）が今回のデータでも解消していないことを確認。</p>
+      <p class="note">「痩せる薬」（決断層フェーズ・薬名を検討している層）が最強という結果は既存知見（playbooks.md「フェーズが進むほどPVFRが高い」）と一致。</p>
     </div>
   </div>
 
-  <!-- ④ 全体ファネル・CV -->
+  <!-- ③ 全体ファネル・CV -->
   <div class="section">
     <div class="section-head">
-      <div class="num num-amber">4</div>
+      <div class="num num-amber">3</div>
       <div>
         <div class="section-title">8月累計 全体ファネル・CV</div>
-        <div class="section-sub">2026-08-01〜08-21</div>
+        <div class="section-sub">2026-08-01〜08-21（t237解消後の値）</div>
       </div>
     </div>
     <div class="body">
       <div class="kpi-grid">
         <div class="kpi-card">
           <div class="kpi-label">友達（全チャネル）</div>
-          <div class="kpi-value">83人</div>
-          <div class="kpi-sub">PU経由90人相当＋バナー等</div>
+          <div class="kpi-value">267人</div>
+          <div class="kpi-sub">PU経由140人＋バナー127人</div>
         </div>
         <div class="kpi-card alert">
-          <div class="kpi-label">追加率</div>
-          <div class="kpi-value">4.6%</div>
-          <div class="kpi-sub">基準11%の半分未満</div>
+          <div class="kpi-label">追加率（PU経由）</div>
+          <div class="kpi-value">7.4%</div>
+          <div class="kpi-sub">基準11%未達。旧報告の4.6%より実態は良かった</div>
         </div>
         <div class="kpi-card ok-card">
           <div class="kpi-label">CTR</div>
@@ -203,37 +197,38 @@
         <div class="kpi-card ok-card">
           <div class="kpi-label">CV・FCVR</div>
           <div class="kpi-value">6件</div>
-          <div class="kpi-sub">¥108,000／FCVR 7.2%✅</div>
+          <div class="kpi-sub">¥108,000／FCVR 4.3%✅</div>
         </div>
       </div>
       <div class="insight insight-green">
-        <strong>友達になった後の成約導線は機能している。</strong>
-        FCVR7.2%は基準3%を大きく上回る。今回の課題（PU改修の是非）はここではなく「友達になる前」の話。
+        <strong>友達になった後の成約導線は機能している（FCVR4.3%✅基準3%クリア）。</strong>
+        今回の課題（PU改修の是非）は「友達になる前」の話。t237解消により友達数・追加率の実測値は上振れしたが（友達83→140人・追加率4.6%→7.4%）、これはユーザー行動が改善したわけではなく計測精度が上がったため。基準11%にはまだ届いていない。
       </div>
+      <p class="note">Ren注記：タグ単位の値はWinut計測紐付け基準で、友だちリスト生データとの突合でアカウント週合計±2人以内の誤差を確認済み。ジャンル軸の集計は今後account列を軸に行う（タグ名とジャンルの割りがソース間でズレるため）。</p>
     </div>
   </div>
 
-  <!-- ⑤ インパクト -->
+  <!-- ④ インパクト -->
   <div class="section">
     <div class="section-head">
-      <div class="num num-purple">5</div>
+      <div class="num num-purple">4</div>
       <div>
-        <div class="section-title">インパクト（仮説ベース）</div>
-        <div class="section-sub">追加率を基準まで戻せた場合</div>
+        <div class="section-title">インパクト（改修優先2本に絞った場合）</div>
+        <div class="section-sub">渋谷「ダイエットパッチ」＋こいずみ「BMI」を基準11%まで改善できた場合</div>
       </div>
     </div>
     <div class="body">
-      <p>追加率を基準11%まで戻せれば、8月のPU click（1,894件）換算で友達 <strong>+90人/月相当（現状比+140%）</strong>。ただし「何を直せば11%に戻るか」を特定できるだけのPU単位データが今は無い。t237が解消し記事タグへの紐付けが正常化すれば、まず"本当に弱いPU"が見える状態になる。</p>
+      <p>渋谷「ダイエットパッチ」（click220・追加率6.4%）とこいずみ「BMI」（click152・追加率3.3%）の2本だけで、追加率を基準11%まで戻せれば <strong>+22人/月相当</strong>（現状友達合計19人→41人、この2本だけで）。ジャンル全体の8月ペース（友達140人/PU経由）からすると+16%相当のインパクト。この2本はクリック規模が大きく（ジャンル内1〜2位）、改修効果が最も見えやすい。</p>
     </div>
   </div>
 
-  <!-- ⑥ アクション -->
+  <!-- ⑤ アクション -->
   <div class="section">
     <div class="section-head">
-      <div class="num num-green">6</div>
+      <div class="num num-green">5</div>
       <div>
         <div class="section-title">次のアクション</div>
-        <div class="section-sub">確認したいこと</div>
+        <div class="section-sub">啓音さんへの依頼案</div>
       </div>
     </div>
     <div class="body">
@@ -241,22 +236,22 @@
         <li>
           <span class="action-pri pri-highest">最優先</span>
           <div class="action-body">
-            <strong>t237（記事タグ紐付け不良）の解消をRenに再度催促</strong>
-            <span>8/3〜8/16は特定PUへの紐付けが0%。これが解消しないと「どのPUが弱いか」は誰にも分からない</span>
+            <strong>渋谷「ダイエットパッチ」・こいずみ「BMI」の友達追加画面（LP）を見直す</strong>
+            <span>CTRは両方基準クリアでPU文言は機能中。追加率がジャンル内で最も弱く、クリック規模が大きいので改修効果が一番見えやすい2本</span>
           </div>
         </li>
         <li>
           <span class="action-pri pri-high">優先</span>
           <div class="action-body">
-            <strong>啓音さんへの依頼は「LP・友達追加画面」の見直しに切り替える</strong>
-            <span>CTRは全PUで基準クリア。追加率だけが基準の半分未満で共通ボトルネック。PU文言修正は数値的な根拠が今は無い</span>
+            <strong>こいずみ「痩せる薬」の成功要因を他記事に転用できないか検討</strong>
+            <span>追加率22.5%✅で基準の2倍。決断層フェーズ（薬を検討中の層）向けの訴求が強く効いている。同フェーズの記事（スルリムマンジャロ等）への転用余地を確認</span>
           </div>
         </li>
         <li>
           <span class="action-pri pri-mid">中</span>
           <div class="action-body">
-            <strong>t237解消後、PU単位で追加率を再集計</strong>
-            <span>紐付けが正常化した時点で本ページのPU別テーブルを更新し、初めて「弱いPU」を数値で名指しする</span>
+            <strong>追加率の週次悪化（8.4%→7.3%→6.9%）を来週も継続watch</strong>
+            <span>t237解消で実態は見えるようになったが、悪化トレンド自体は止まっていない</span>
           </div>
         </li>
       </ul>
