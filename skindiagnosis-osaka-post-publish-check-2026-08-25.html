@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>肌診断大阪 出稿後チェック（2026-08-25）</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 980px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; white-space: nowrap; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .pri-done { background: #dcfce7; color: #16a34a; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-green { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">出稿後チェック — メガ（mega-clinic.com）</div>
+    <h1>肌診断大阪 出稿後チェック</h1>
+    <p class="desc">作成: 2026-08-25 ／ 対象: https://mega-clinic.com/howto/skindiagnosis-osaka/ （公開: 2026-08-20）／ データ期間: 公開日〜2026-08-25</p>
+  </div>
+
+  <!-- ① 結論 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">1</div>
+      <div>
+        <div class="section-title">結論</div>
+        <div class="section-sub">順位・PV・クエリの3項目チェック</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="verdict verdict-green">狙ったメイン・サブKW全てが上位で評価されている。サブKW「安い」は1位を獲得。公開5日時点で順調な立ち上がり。</div>
+      <p>ただし新規公開直後で順位はまだ変動中のため、この評価は暫定。1週間程度は定点観測を継続する。</p>
+    </div>
+  </div>
+
+  <!-- ② 実績サマリー -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">2</div>
+      <div>
+        <div class="section-title">実績サマリー</div>
+        <div class="section-sub">公開〜8/25</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">GA4セッション</div>
+          <div class="kpi-value">52</div>
+          <div class="kpi-sub">表示回数65（公開〜8/25）</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">GSCクリック</div>
+          <div class="kpi-value">19</div>
+          <div class="kpi-sub">直近7日間累計</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">GSC表示回数</div>
+          <div class="kpi-value">357</div>
+          <div class="kpi-sub">96→107→154と日次で増加中</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">GSC平均順位</div>
+          <div class="kpi-value">7.98</div>
+          <div class="kpi-sub">直近7日間平均</div>
+        </div>
+      </div>
+      <div class="insight insight-blue">
+        GA4セッション(52)がGSCクリック数(19)より多い。自然検索以外（SNS・直接流入等）からの流入も一定数入っている可能性がある。
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 順位 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">3</div>
+      <div>
+        <div class="section-title">順位：目視 vs GSC平均</div>
+        <div class="section-sub">2026-08-25時点</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>KW</th><th>目視順位(8/25)</th><th>GSC7日間平均</th></tr></thead>
+          <tbody>
+            <tr><td>肌診断 大阪（メイン）</td><td class="up">4位</td><td>8.37位</td></tr>
+            <tr><td>肌診断 大阪 おすすめ</td><td class="up">3位</td><td>4.7位</td></tr>
+            <tr><td>肌診断 大阪 安い</td><td class="up">1位</td><td>3.2位</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-yellow">
+        目視順位が全てGSC平均より良い＝直近で急上昇中。GSCの「平均順位」は直近7日間ならしのため、公開直後で急上昇している今はタイムラグが出て当然。まだ「定着した」とは言えない段階。
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ クエリ詳細 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">4</div>
+      <div>
+        <div class="section-title">クエリ詳細</div>
+        <div class="section-sub">GSC過去7日間・全件</div>
+      </div>
+    </div>
+    <div class="body">
+      <p style="font-weight:700; margin-bottom:4px;">狙い通り評価されている層</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>クエリ</th><th>クリック</th><th>imp</th><th>CTR</th><th>順位</th></tr></thead>
+          <tbody>
+            <tr><td>肌診断 大阪（メイン）</td><td>8</td><td>67</td><td class="up">11.94%</td><td>8.37</td></tr>
+            <tr><td>肌診断 大阪 おすすめ</td><td>3</td><td>10</td><td class="up">30%</td><td>4.7</td></tr>
+            <tr><td>肌診断 大阪 安い</td><td>1</td><td>5</td><td>20%</td><td>3.2</td></tr>
+            <tr><td>大阪 肌診断 おすすめ（語順違い）</td><td>1</td><td>5</td><td>20%</td><td>4.2</td></tr>
+            <tr><td>肌質診断 大阪（表記ゆれ）</td><td>1</td><td>5</td><td>20%</td><td>7.6</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="font-weight:700; margin: 16px 0 4px;">好順位なのにクリック0（伸び代あり）</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>クエリ</th><th>imp</th><th>順位</th><th>メモ</th></tr></thead>
+          <tbody>
+            <tr><td>大阪 肌診断 皮膚科</td><td>8</td><td class="up">7.5</td><td>本文に「皮膚科との違い」の明示なし（皮膚科クリニック自体は紹介済み）</td></tr>
+            <tr><td>肌診断 大阪 百貨店</td><td>4</td><td class="up">3.75</td><td>本文に記載あり。imp4件のみでサンプル不足と判断、改修不要</td></tr>
+            <tr><td>大阪 肌診断（語順違いメイン）</td><td>10</td><td>11.2</td><td>-</td></tr>
+            <tr><td>肌診断 大阪 無料</td><td>8</td><td>9.62</td><td>-</td></tr>
+            <tr><td>visia肌診断 大阪 おすすめ／安い</td><td>計13</td><td>4〜11</td><td>東京版のVISIA軸も一定量拾えている</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="font-weight:700; margin: 16px 0 4px;">記事の主眼からズレ気味（対象外候補）</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>クエリ</th><th>imp</th><th>順位</th></tr></thead>
+          <tbody>
+            <tr><td>梅田 肌診断／梅田 肌診断 無料／梅田 肌診断 500円</td><td>計9</td><td>5.5〜11</td></tr>
+            <tr><td>美容皮膚科 大阪 安い（系）</td><td>計7</td><td>21〜25</td></tr>
+            <tr><td>ジェネシス／エレクトロポレーション／ステラm22 大阪（機器名指名）</td><td>計3</td><td>4〜5</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="insight insight-blue">
+        <strong>皮膚科・百貨店・無料の3クエリが好順位（3.75〜9.62位）なのにCTR0%。</strong>
+        このうち「百貨店」は本文に記載済みでimpも4件と少ないためサンプル不足と判断（改修不要）。「皮膚科」は本文に明示がなく、真のコンテンツギャップの可能性が高い。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ デバイス別 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">5</div>
+      <div>
+        <div class="section-title">デバイス別（参考）</div>
+        <div class="section-sub">GSC過去7日間</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>デバイス</th><th>クリック</th><th>imp</th><th>CTR</th><th>順位</th></tr></thead>
+          <tbody>
+            <tr><td>モバイル</td><td>10</td><td>165</td><td>6.06%</td><td class="up">8.18</td></tr>
+            <tr><td>PC</td><td>7</td><td>38</td><td class="up">18.42%</td><td>10.53</td></tr>
+            <tr><td>タブレット</td><td>0</td><td>2</td><td>0%</td><td>7.5</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">PCの方がCTRは高いが順位はモバイルの方が良い。母数が小さいため即断は禁物。</p>
+    </div>
+  </div>
+
+  <!-- ⑥ 判断・決定事項 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">6</div>
+      <div>
+        <div class="section-title">判断・決定事項</div>
+        <div class="section-sub">post-publish-check.mdの基準に沿って判定</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-mid">方針</span>
+          <div class="action-body">
+            <strong>順位施策＋CV施策の並行</strong>
+            <span>サブKW「安い」は1位・「おすすめ」も3〜4位圏でほぼ取れている一方、メインKWはまだ4〜8位圏で伸び代あり</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-done">却下（確定）</span>
+          <div class="action-body">
+            <strong>タイトル変更はしない</strong>
+            <span>公開1週間未満で時期尚早、狙ったKW自体は既にタイトルから出せている。「百貨店」等の長尾クエリ1件に寄せすぎない判断</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">対応中</span>
+          <div class="action-body">
+            <strong>メタディスクリプション修正</strong>
+            <span>ただしGoogleが自動生成スニペットに差し替えることが多いため、確実に反映される保証はない前提で着手</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">検討</span>
+          <div class="action-body">
+            <strong>本文に「皮膚科との違い」を明示する追記</strong>
+            <span>皮膚科系クリニックの紹介はあるが、美容クリニックとの違いという論点は本文で触れていない</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">既知課題</span>
+          <div class="action-body">
+            <strong>診療時間欄のSP表示改善</strong>
+            <span>ONE CLINIC/南森町/フェミー/大美会/Uraraの診療時間・休診日欄がスマホで見づらい。CTO確認待ち</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
