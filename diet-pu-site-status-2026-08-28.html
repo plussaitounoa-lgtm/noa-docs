@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>医療ダイエット サイト別PU状況（こいずみ/渋谷/小田）（2026-08-28）</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 980px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; white-space: nowrap; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; position: sticky; top: 0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    tr.group-row td { background: #f8fafc; font-weight: 700; color: #334155; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-card.warn-card { border-color: #fde68a; background: #fffbeb; }
+    .kpi-card.ok-card { border-color: #86efac; background: #f0fdf4; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight ul { margin: 8px 0 0; padding-left: 18px; }
+    .insight li { margin-bottom: 5px; line-height: 1.6; }
+    .insight li:last-child { margin-bottom: 0; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-highest { background: #fee2e2; color: #991b1b; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .pri-low  { background: #f1f5f9; color: #64748b; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">数値分析 — 医療ダイエット(GLP-1) サイト別</div>
+    <h1>サイト別PU状況：こいずみ／渋谷／小田</h1>
+    <p class="desc">作成: 2026-08-28 ／ 目的: 啓音さんへの共有（ダイエットPU分析の続き） ／ データ期間: 直近90日・稼働中PU（バナー除外）</p>
+  </div>
+
+  <div class="verdict verdict-yellow">
+    結論：こいずみが規模・効率とも頭一つ抜けている。小田は規模が渋谷の20分の1程度で参考値どまり。3サイト共通で「BMI/bmi記事」は追加率が壊滅、「薬名系（決断層）記事」はどのサイトでも高効率という同じパターンが出ている。
+  </div>
+
+  <!-- ① サイト別サマリー -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">1</div>
+      <div>
+        <div class="section-title">サイト別サマリー</div>
+        <div class="section-sub">直近90日累計・PU経由のみ</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card ok-card">
+          <div class="kpi-label">こいずみ</div>
+          <div class="kpi-value">PVFR 0.55%</div>
+          <div class="kpi-sub">LP imp 61,209／PU imp 25,675／CTR14.1%／追加率9.4%</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">渋谷</div>
+          <div class="kpi-value">PVFR 0.41%</div>
+          <div class="kpi-sub">LP imp 28,800／PU imp 9,741／CTR14.3%／追加率8.5%</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">小田</div>
+          <div class="kpi-value">PVFR 0.37%</div>
+          <div class="kpi-sub">LP imp 1,079／PU imp 466／CTR16.3%／追加率5.3%</div>
+        </div>
+      </div>
+      <div class="insight insight-blue">
+        <strong>こいずみが規模（PU imp）・効率（PVFR）ともに最大。小田はPU impがこいずみの1.8%・渋谷の4.8%しかなく、他2サイトと同列で語れる規模ではない。</strong>
+        <ul>
+          <li>いずれも基準0.80%には未達（渋谷・小田は特に遠い）</li>
+          <li>CTRは3サイトとも14〜16%で基準13%クリア、PU文言自体の魅力は共通して問題なし。差が出るのは追加率（クリック後）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② こいずみ -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">2</div>
+      <div>
+        <div class="section-title">こいずみ：記事×PU別</div>
+        <div class="section-sub">PU imp90以上、PVFR降順</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>記事</th><th>PU</th><th>PU imp</th><th>CTR</th><th>追加率</th><th>PVFR</th></tr></thead>
+          <tbody>
+            <tr><td>痩せる薬</td><td>自分に合ったダイエット薬</td><td>2,160</td><td class="up">19.1%</td><td class="up">19.4%</td><td class="up">1.52%</td></tr>
+            <tr><td>メトホル_通販</td><td>できるだけ費用を抑えて</td><td>453</td><td class="up">19.4%</td><td class="up">20.5%</td><td class="up">1.49%</td></tr>
+            <tr><td>リベルサス_通販</td><td>できるだけ費用を抑えて</td><td>94</td><td class="up">26.6%</td><td class="up">16.0%</td><td class="up">1.37%</td></tr>
+            <tr><td>マンジャロ_オンライン</td><td>できるだけ費用を抑えて</td><td>95</td><td class="up">20.0%</td><td class="up">21.1%</td><td class="up">1.22%</td></tr>
+            <tr><td>リベルサスマンジャロどっち</td><td>費用を抑えて</td><td>1,231</td><td class="up">16.5%</td><td>10.3%</td><td>0.93%</td></tr>
+            <tr><td>1日_摂取カロリー</td><td>1日で食べていい量</td><td>2,366</td><td>11.0%</td><td class="up">15.0%</td><td>0.67%</td></tr>
+            <tr><td>日本人1番痩せる</td><td>痩せない理由知りたい！</td><td>1,049</td><td class="up">17.2%</td><td class="up">11.1%</td><td>0.63%</td></tr>
+            <tr><td>更年期太り</td><td>無理なく痩せる方法</td><td>1,972</td><td class="up">14.8%</td><td>6.2%</td><td>0.49%</td></tr>
+            <tr><td>DMMマンジャロ</td><td>安く手に入れたい</td><td>604</td><td>12.1%</td><td>11.0%</td><td>0.53%</td></tr>
+            <tr><td>摂取カロリー</td><td>食べていいのは何？</td><td>2,449</td><td>13.1%</td><td class="up">11.2%</td><td>0.62%</td></tr>
+            <tr><td>スルリムマンジャロ</td><td>自分に合ったダイエット薬</td><td>3,644</td><td>12.5%</td><td>8.3%</td><td>0.42%</td></tr>
+            <tr><td>日本人1番痩せる</td><td>自分に合ったダイエット方法</td><td>1,014</td><td class="up">15.0%</td><td>8.6%</td><td>0.42%</td></tr>
+            <tr><td>間食やめられない</td><td>自分に合ったダイエット方法</td><td>1,009</td><td class="up">15.7%</td><td>5.7%</td><td>0.38%</td></tr>
+            <tr><td>更年期太り</td><td>自分に合ったダイエット方法</td><td>2,049</td><td>13.7%</td><td class="down">3.2%</td><td class="down">0.24%</td></tr>
+            <tr><td>間食やめられない</td><td>食事制限なしで痩せる</td><td>1,062</td><td>13.2%</td><td class="down">3.6%</td><td class="down">0.22%</td></tr>
+            <tr style="background:#fff1f2;"><td>BMI</td><td>隠れ肥満のチェックをする</td><td>2,972</td><td>12.6%</td><td class="down">3.5%</td><td class="down">0.18%</td></tr>
+            <tr style="background:#fff1f2;"><td>bmi</td><td>体質タイプ知りたい</td><td>404</td><td>11.4%</td><td class="down">2.2%</td><td class="down">0.09%</td></tr>
+            <tr style="background:#fff1f2;"><td>bmi</td><td>身体の内側をチェック</td><td>386</td><td>12.2%</td><td class="down">2.1%</td><td class="down">0.09%</td></tr>
+            <tr style="background:#fff1f2;"><td>bmi</td><td>体の本当の状態気になる</td><td>404</td><td>12.9%</td><td class="down">0.0%</td><td class="down">0.00%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-red">
+        <strong>薬名・通販系（決断層）は軒並みPVFR1%超えの高効率。BMI/bmi系4本は全滅（追加率0〜3.5%🔴）。</strong>
+        <ul>
+          <li>赤背景の4本（BMI・bmi×3）はimp規模も合計4,166と大きく、こいずみジャンル内で最もインパクトの大きい改善余地</li>
+          <li>更年期太り「自分に合ったダイエット方法」も追加率3.2%🔴と弱いが、同記事の「無理なく痩せる方法」は6.2%とまだマシ。同一記事内でもPU文言差がある</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 渋谷 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">3</div>
+      <div>
+        <div class="section-title">渋谷：記事×PU別</div>
+        <div class="section-sub">PU imp90以上、PVFR降順</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>記事</th><th>PU</th><th>PU imp</th><th>CTR</th><th>追加率</th><th>PVFR</th></tr></thead>
+          <tbody>
+            <tr><td>食欲を抑える薬</td><td>自分に合った薬</td><td>855</td><td class="up">14.4%</td><td class="up">15.5%</td><td class="up">0.87%</td></tr>
+            <tr><td>本気で痩せたい</td><td>自分に1番合う方法</td><td>3,572</td><td class="up">14.7%</td><td>10.9%</td><td>0.66%</td></tr>
+            <tr style="background:#fff1f2;"><td>ダイエットパッチ</td><td>自分に1番合う方法</td><td>4,369</td><td class="up">13.8%</td><td class="down">6.3%</td><td class="down">0.25%</td></tr>
+            <tr style="background:#fff1f2;"><td>bmi</td><td>体質タイプ知りたい</td><td>141</td><td>13.5%</td><td class="down">0.0%</td><td class="down">0.00%</td></tr>
+            <tr style="background:#fff1f2;"><td>bmi</td><td>身体の内側をチェック</td><td>153</td><td>14.4%</td><td class="down">0.0%</td><td class="down">0.00%</td></tr>
+            <tr style="background:#fff1f2;"><td>bmi</td><td>隠れ肥満のチェックをする</td><td>611</td><td>15.4%</td><td class="down">3.2%</td><td class="down">0.18%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-red">
+        <strong>渋谷は「ダイエットパッチ」がジャンル内最大のimp規模（4,369）なのに追加率6.3%🔴と弱く、ここが最大の改善余地。bmi系3本は追加率0〜3.2%🔴で全滅、こいずみと同じパターン。</strong>
+        <ul>
+          <li>「食欲を抑える薬」は855impと規模は小さいが唯一PVFR0.87%と健闘。渋谷の中では最も機能しているPU</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 小田 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">4</div>
+      <div>
+        <div class="section-title">小田：記事×PU別</div>
+        <div class="section-sub">全件（規模が小さいためPU imp50以上も含む・参考値）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>記事</th><th>PU</th><th>PU imp</th><th>CTR</th><th>追加率</th><th>PVFR</th></tr></thead>
+          <tbody>
+            <tr><td>bmi</td><td>体の本当の状態気になる</td><td>178</td><td class="up">15.2%</td><td class="up">14.8%</td><td>0.91%</td></tr>
+            <tr style="background:#fff1f2;"><td>bmi</td><td>隠れ肥満のチェックをする</td><td>149</td><td class="up">16.1%</td><td class="down">0.0%</td><td class="down">0.00%</td></tr>
+            <tr style="background:#fff1f2;"><td>防風通聖散</td><td>漢方合うか不安</td><td>52</td><td class="up">15.4%</td><td class="down">0.0%</td><td class="down">0.00%</td></tr>
+            <tr style="background:#fff1f2;"><td>防風通聖散</td><td>自分に1番合う方法</td><td>50</td><td>14.0%</td><td class="down">0.0%</td><td class="down">0.00%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-yellow">
+        <strong>サンプルが薄く参考値どまりだが、同じbmi記事内でPU文言による差がはっきり出ている（「体の本当の状態気になる」14.8% vs 「隠れ肥満のチェックをする」0.0%）。こいずみ・渋谷のbmi/BMI記事と同じ傾向。</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ 3サイト共通パターン -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">5</div>
+      <div>
+        <div class="section-title">3サイト共通で見えるパターン</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <div class="action-body">
+            <strong>BMI/bmi記事は3サイト共通で追加率が壊滅（0〜3.5%が大半）</strong>
+            <span>こいずみ・渋谷・小田いずれも「隠れ肥満のチェックをする」「体質タイプ知りたい」「身体の内側をチェック」等のBMI系PUは軒並み低い。唯一の例外は小田「体の本当の状態気になる」(14.8%)</span>
+          </div>
+        </li>
+        <li>
+          <div class="action-body">
+            <strong>薬名・通販系（決断層向け）記事はどのサイトでも高効率</strong>
+            <span>こいずみの「痩せる薬」「メトホル_通販」「リベルサス_通販」、渋谷の「食欲を抑える薬」はいずれもPVFR0.87〜1.52%で基準0.80%に近い〜超え。前回のPU文言タイプ分析（CV記事寄りは感情代弁型だけで基準クリア）とも整合する結果</span>
+          </div>
+        </li>
+        <li>
+          <div class="action-body">
+            <strong>imp規模が大きいのに弱い記事＝改善インパクトが一番大きい</strong>
+            <span>こいずみ「BMI」(2,972imp)、渋谷「ダイエットパッチ」(4,369imp)は、ジャンル内でも屈指の流入規模を持ちながら追加率が最下位クラス。ここを基準11%まで改善できれば、影響度は他のどの改修より大きい</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ⑥ 次のアクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">6</div>
+      <div>
+        <div class="section-title">次のアクション</div>
+        <div class="section-sub">啓音さんへの共有・PU/LP改修方針の提案</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-highest">最優先</span>
+          <div class="action-body">
+            <strong>こいずみ「BMI」・渋谷「ダイエットパッチ」の友だち追加画面（LP）を見直す</strong>
+            <span>両方ともジャンル内最大級のimp規模を持ちながら追加率が最弱クラス。CTRは基準クリアでPU文言は機能中のため、LP・追加画面側の改修効果が最も見えやすい2本</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">優先</span>
+          <div class="action-body">
+            <strong>BMI/bmi系記事のPU文言を、方法診断PU（体質タイプ知りたい等）から別軸に切り替える</strong>
+            <span>3サイト共通で機能していない。既存knowledge/genre-insights.mdでも「BMI記事は訴求軸再設計が必要」と記録済みで今回のデータも同じ結論を再確認</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中</span>
+          <div class="action-body">
+            <strong>こいずみ「痩せる薬」・渋谷「食欲を抑える薬」の成功要因を他の決断層記事に転用できないか検討</strong>
+            <span>薬名系はどのサイトでも安定して高効率。まだ薬名PUを設置していない記事があれば横展開の余地がある</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
