@@ -99,7 +99,7 @@
   </div>
 
   <div class="verdict verdict-yellow">
-    結論：感情代弁型がCTR・追加率・PVFR全てで疑問形をわずかに上回るが、疑問形はサンプル数が少なく（母数が約8分の1）、ジャンルによっては逆転もある。「一律にどちらが刺さる」とは言い切れない。
+    結論：感情代弁型がCTR・追加率・PVFR全てで疑問形をわずかに上回るが、疑問形はサンプル数が少なく（母数が約8分の1）、ジャンルによっては逆転もある。「一律にどちらが刺さる」とは言い切れない。<strong>【8/28追記】疑問形が強いのは実は「ノウハウ記事の中に限った話」と判明（セクション4参照）。</strong>
   </div>
 
   <!-- ① 全体比較 -->
@@ -219,10 +219,69 @@
     </div>
   </div>
 
-  <!-- ④ 分析の限界 -->
+  <!-- ④ 啓音さんの仮説検証：記事タイプ×PU文言タイプ -->
   <div class="section">
     <div class="section-head">
-      <div class="num num-slate">4</div>
+      <div class="num num-blue">4</div>
+      <div>
+        <div class="section-title">啓音さん仮説の検証：記事タイプ（CV記事/ノウハウ記事）×PU文言タイプ</div>
+        <div class="section-sub">啓音さんが本分析をもとに独自にまとめた仮説メモ（<a href="https://plushonmakeito-web.github.io/pu-copy-hypothesis-memo/pu-copy-hypothesis-memo.html" target="_blank">2026-08-28</a>）の仮説②「情報探索段階の違い」をNoa案で検証</div>
+      </div>
+    </div>
+    <div class="body">
+      <p>啓音さんの仮説メモでは「医療ダイエット・包茎＝まだ何が正解か分からない初期探索層、ピル＝既に選択肢が確立された層」という仮説②が提示されていた。ここに「記事自体もCV記事寄り（決断層向け）とノウハウ記事寄り（情報収集層向け）で分けて見るとまた違う結果が出るのでは」というNoaの着眼を掛け合わせて検証。</p>
+      <div class="table-scroll" style="margin-top:12px;">
+        <table>
+          <thead><tr><th>記事タイプ</th><th>PU文言タイプ</th><th>PU imp</th><th>CTR</th><th>追加率</th><th>PVFR</th></tr></thead>
+          <tbody>
+            <tr><td>CV記事寄り（痩せる薬／スルリムマンジャロ 等・決断層）</td><td>感情代弁型</td><td>9,499</td><td>15.1%</td><td class="up">12.95%✅</td><td class="up">0.80%</td></tr>
+            <tr><td>ノウハウ記事寄り（BMI／摂取カロリー／本気で痩せたい 等）</td><td>感情代弁型</td><td>22,964</td><td>14.2%</td><td class="down">7.45%🔴</td><td class="down">0.41%</td></tr>
+            <tr style="background:#f0fdf4;"><td>ノウハウ記事寄り</td><td>疑問形・問いかけ型</td><td>2,990</td><td>13.2%</td><td class="up">10.63%✅</td><td class="up">0.62%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">CV記事寄りには疑問形PUがそもそも設置されておらず比較不可（未検証）。</p>
+      <div class="insight insight-green">
+        <strong>Noaの仮説が的中。「疑問形が強い」のはノウハウ記事に限った話だった。</strong>
+        <ul>
+          <li>CV記事寄り（決断層）は感情代弁型だけで既に追加率12.95%✅・PVFR0.80%✅と両方基準クリア。相当強く機能している</li>
+          <li>ノウハウ記事寄りの中でだけ、疑問形が感情代弁型を追加率で+3.2pt・PVFRで+0.21pt上回る</li>
+          <li>セクション1の全体集計で「医療ダイエットは疑問形優勢」に見えていたのは、実質このノウハウ記事内の差が押し上げていただけだった</li>
+          <li>ジャンル別でも同方向：glp1_seo（疑問形11.21% vs 感情代弁型7.18%）／glp1_seo_ava（疑問形8.11% vs 感情代弁型7.73%、僅差）</li>
+        </ul>
+      </div>
+      <div class="insight insight-blue">
+        <strong>啓音さんの仮説②と整合する。</strong>「まだ何が正解か分からない」ノウハウ記事の読者には問いかけ型（一緒に考えるトーン）が効き、「もう薬を検討している」CV記事の読者にはすでに感情代弁型で十分刺さっている、という構図で説明がつく。
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ GSC検証の状況 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">5</div>
+      <div>
+        <div class="section-title">GSC検証（仮説②の直接検証）：認証の壁で保留</div>
+        <div class="section-sub">啓音さんの最優先アクション「初期探索クエリ比率の比較」</div>
+      </div>
+    </div>
+    <div class="body">
+      <p>医療ダイエット・包茎 vs ピルで、Search Consoleの検索クエリから「〜とは」「初めて」等の初期探索クエリ比率を比較する検証を試みた。</p>
+      <div class="insight insight-yellow">
+        <strong>現在のGSCサービスアカウントには、こいずみ・包茎・ピル各サイトへのアクセス権がなく直接取得できなかった。</strong>
+        <ul>
+          <li>アクセス可能なのは渋谷・天白橋の2サイトのみ（<code>sites().list()</code>で確認）</li>
+          <li>コスメ分析（2026-07-15）の時と同じ制約。PU設置台帳側にも記事URLが未記入のタブが多く、ドメイン特定自体にも手間がかかる状態</li>
+        </ul>
+      </div>
+      <p class="note">対応案：①Renにサービスアカウントへの権限追加を依頼 ②NoaがSearch Console UIから該当サイトの検索クエリをCSVエクスポート、のどちらか。今回は上記④の記事タイプ検証で仮説②を十分に裏付けられたため保留中。</p>
+    </div>
+  </div>
+
+  <!-- ⑥ 分析の限界 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">6</div>
       <div>
         <div class="section-title">分析の限界（共有前に把握しておきたい点）</div>
       </div>
@@ -247,14 +306,20 @@
             <span>各ジャンル1〜2文言だけでの結果のため、「疑問形というタイプ自体が効いている」のか「たまたまその文言が良かった」のか切り分けできていない</span>
           </div>
         </li>
+        <li>
+          <div class="action-body">
+            <strong>記事タイプ（CV記事/ノウハウ記事）の分類はgenre-insights.mdの既存フェーズ分類に基づく手動判定</strong>
+            <span>CV記事寄りは疑問形PUが未設置のため、CV記事で疑問形がどうなるかは今回検証できていない</span>
+          </div>
+        </li>
       </ul>
     </div>
   </div>
 
-  <!-- ⑤ 次のアクション -->
+  <!-- ⑦ 次のアクション -->
   <div class="section">
     <div class="section-head">
-      <div class="num num-green">5</div>
+      <div class="num num-green">7</div>
       <div>
         <div class="section-title">次のアクション</div>
         <div class="section-sub">啓音さんへの共有・PU文言調整方針の提案</div>
@@ -265,22 +330,29 @@
         <li>
           <span class="action-pri pri-highest">最優先</span>
           <div class="action-body">
-            <strong>医療ダイエットの「方法系」PU（自分に合ったダイエット方法／無理なく痩せる方法 等）を優先的に見直す</strong>
-            <span>追加率が非方法系より2〜4pt低い傾向が2ジャンルで一致。CTRは同等〜やや高いため、文言自体の魅力はあるが「クリック後の期待とLPの中身がズレている」可能性を疑う</span>
+            <strong>ノウハウ記事寄り（BMI・摂取カロリー・本気で痩せたい等）に疑問形PUを本格投入する</strong>
+            <span>感情代弁型より追加率+3.2pt・PVFR+0.21pt。現状ノウハウ記事内でも疑問形は2,990impしか回っておらず母数が薄いので、バリエーションを増やして規模を大きくする</span>
           </div>
         </li>
         <li>
           <span class="action-pri pri-high">優先</span>
           <div class="action-body">
-            <strong>感情代弁型・疑問形どちらか一方に決め打ちしない。ABテストは継続</strong>
-            <span>全体では感情代弁型がやや優勢だが差は小さく、ジャンルによって逆転する。「基本は感情代弁型、ただし医療ダイエット・包茎は疑問形も並走させる」形が妥当</span>
+            <strong>CV記事寄り（痩せる薬等）は現状の感情代弁型を維持。疑問形は無理に投入しない</strong>
+            <span>感情代弁型だけで追加率12.95%✅・PVFR0.80%✅と両方基準クリアで強く機能中。触ると崩す可能性がある</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">優先</span>
+          <div class="action-body">
+            <strong>医療ダイエットの「方法系」PU（自分に合ったダイエット方法／無理なく痩せる方法 等）を優先的に見直す</strong>
+            <span>追加率が非方法系より2〜4pt低い傾向が2ジャンルで一致。CTRは同等〜やや高いため、文言自体の魅力はあるが「クリック後の期待とLPの中身がズレている」可能性を疑う</span>
           </div>
         </li>
         <li>
           <span class="action-pri pri-mid">中</span>
           <div class="action-body">
-            <strong>疑問形パターンのバリエーションを増やしてサンプルを厚くする</strong>
-            <span>現状8文言・全体の1割程度のimpしかなく、判断材料として薄い。医療ダイエット・包茎で優勢が出ているので、この2ジャンルに疑問形の新パターンを追加投入し検証精度を上げる</span>
+            <strong>GSC検証（仮説②の直接検証）は権限追加かCSVエクスポートが揃ってから再開</strong>
+            <span>記事タイプ検証で仮説②はある程度裏付けられたため緊急度は下がったが、包茎・ピルへの横展開判断には検索クエリの実データがあった方が確実</span>
           </div>
         </li>
       </ul>
