@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PU文言タイプ別パフォーマンス分析（2026-08-28）</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 980px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; white-space: nowrap; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; position: sticky; top: 0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    tr.group-row td { background: #f8fafc; font-weight: 700; color: #334155; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .warn { color: #f59e0b; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-card.warn-card { border-color: #fde68a; background: #fffbeb; }
+    .kpi-card.ok-card { border-color: #86efac; background: #f0fdf4; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight ul { margin: 8px 0 0; padding-left: 18px; }
+    .insight li { margin-bottom: 5px; line-height: 1.6; }
+    .insight li:last-child { margin-bottom: 0; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-highest { background: #fee2e2; color: #991b1b; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .pri-low  { background: #f1f5f9; color: #64748b; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+    .verdict-yellow { background: #fffbeb; color: #b45309; border-left: 4px solid #f59e0b; }
+    .verdict-green { background: #dcfce7; color: #16a34a; border-left: 4px solid #16a34a; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">数値分析 — PU文言タイプ横断（全SEOジャンル）</div>
+    <h1>PU文言タイプ別パフォーマンス分析</h1>
+    <p class="desc">作成: 2026-08-28 ／ 目的: 啓音さんへのPU文言調整方針の共有 ／ データ期間: 直近90日（2026-05-29〜08-27）・SEO稼働中PU横断</p>
+  </div>
+
+  <div class="verdict verdict-yellow">
+    結論：感情代弁型がCTR・追加率・PVFR全てで疑問形をわずかに上回るが、疑問形はサンプル数が少なく（母数が約8分の1）、ジャンルによっては逆転もある。「一律にどちらが刺さる」とは言い切れない。
+  </div>
+
+  <!-- ① 全体比較 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">1</div>
+      <div>
+        <div class="section-title">感情代弁型 vs 疑問形・問いかけ型：全体比較</div>
+        <div class="section-sub">直近90日・SEO7ジャンル横断・稼働中PU（バナー除外）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>タイプ</th><th>文言バリエーション</th><th>PU imp</th><th>CTR</th><th>追加率</th><th>PVFR</th></tr></thead>
+          <tbody>
+            <tr><td>感情代弁型（「自分に合った〜」「〜知りたい」等）</td><td>52種</td><td>67,741</td><td class="up">13.7%</td><td class="down">7.2%</td><td class="down">0.40%</td></tr>
+            <tr><td>疑問形・問いかけ型（「？」「〜かも」「〜不安」等）</td><td>8種</td><td>8,795</td><td class="up">12.6%</td><td class="down">6.3%</td><td class="down">0.35%</td></tr>
+            <tr><td>その他（単語ラベル・分類困難）</td><td>10種</td><td>10,998</td><td class="up">13.3%</td><td class="down">2.8%</td><td class="down">0.15%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-yellow">
+        <strong>感情代弁型がやや優勢だが、差は小さい（PVFR 0.40% vs 0.35%）。どちらも基準0.80%には遠く及ばない。</strong>
+        <ul>
+          <li>CTR（表示→クリック）はどちらも基準13%前後でほぼ差がない。差が出るのは追加率（クリック→友だち）の段階</li>
+          <li>疑問形は文言バリエーションが8種・PU imp8,795と、感情代弁型（52種・67,741）の約8分の1しかない。統計的に強い結論を出せる規模ではない</li>
+          <li>「その他」の追加率2.8%が突出して低いが、これは分類困難な単語ラベル群（「自信クレ」「夜の自信」等、単独では意味を成さない短縮表記）で、PU文言の型そのものの問題というより文言の具体性・分かりやすさの問題の可能性が高い</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② ジャンル別の逆転 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">2</div>
+      <div>
+        <div class="section-title">ジャンル別では逆転するケースもある</div>
+        <div class="section-sub">pu_imp300以上のジャンル×タイプの組み合わせ</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>ジャンル</th><th>タイプ</th><th>PU imp</th><th>CTR</th><th>追加率</th><th>PVFR</th></tr></thead>
+          <tbody>
+            <tr><td>医療ダイエット(glp1_seo)</td><td>感情代弁型</td><td>20,592</td><td>14.3%</td><td>9.7%</td><td>0.58%</td></tr>
+            <tr style="background:#f0fdf4;"><td>医療ダイエット(glp1_seo)</td><td>疑問形</td><td>2,449</td><td>13.1%</td><td class="up">11.2%✅</td><td class="up">0.62%</td></tr>
+            <tr><td>医療ダイエット(glp1_seo_ava)</td><td>感情代弁型</td><td>11,871</td><td>14.8%</td><td>8.3%</td><td>0.43%</td></tr>
+            <tr style="background:#f0fdf4;"><td>医療ダイエット(glp1_seo_ava)</td><td>疑問形</td><td>541</td><td>13.7%</td><td class="up">8.1%</td><td class="up">0.60%</td></tr>
+            <tr style="background:#f0fdf4;"><td>ピル(pill_seo)</td><td>感情代弁型</td><td>5,315</td><td>12.9%</td><td class="up">12.0%✅</td><td class="up">0.63%</td></tr>
+            <tr><td>ピル(pill_seo)</td><td>疑問形</td><td>2,104</td><td>11.2%</td><td>4.7%</td><td>0.22%</td></tr>
+            <tr><td>包茎(seo_phimo)</td><td>感情代弁型</td><td>4,223</td><td>11.1%</td><td>2.1%</td><td>0.11%</td></tr>
+            <tr style="background:#f0fdf4;"><td>包茎(seo_phimo)</td><td>疑問形</td><td>1,021</td><td>12.4%</td><td class="up">5.5%</td><td class="up">0.26%</td></tr>
+            <tr><td>FAGA(seo_faga)</td><td>感情代弁型</td><td>2,428</td><td>15.1%</td><td>2.7%</td><td>0.23%</td></tr>
+            <tr><td>FAGA(seo_faga)</td><td>疑問形</td><td>2,290</td><td>13.8%</td><td>3.2%</td><td>0.24%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-blue">
+        <strong>医療ダイエット・包茎では疑問形の方が追加率・PVFRが高い。ピルは逆に感情代弁型が明確に優位。</strong>
+        <ul>
+          <li>緑背景＝そのジャンルで優勢な方。医療ダイエット・包茎は疑問形優勢、ピルは感情代弁型優勢、FAGAはほぼ拮抗</li>
+          <li>ただし医療ダイエット・包茎の疑問形は各1〜2文言のみでの結果（「食べていいのは何？」「体質に合うのか不安」等）。文言個別の相性の可能性もあり、タイプそのものの優劣と断定はできない</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 深掘り：方法系PU -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">3</div>
+      <div>
+        <div class="section-title">深掘り：「方法系」PU文言は検討度が浅く追加率が低いか</div>
+        <div class="section-sub">啓音さんMTG(8/27)で出た仮説の検証／PU文言に「方法」「やり方」を含むか否かで比較</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>区分</th><th>文言例</th><th>文言バリエーション</th><th>PU imp</th><th>CTR</th><th>追加率</th><th>PVFR</th></tr></thead>
+          <tbody>
+            <tr><td>方法系PU（全体）</td><td>自分に1番合う方法／自分に合ったダイエット方法 等</td><td>5種</td><td>18,463</td><td>14.2%</td><td>6.6%</td><td>0.37%</td></tr>
+            <tr><td>非方法系PU（全体）</td><td>自分に合ったダイエット薬／ぴったりのスキンケア 等</td><td>65種</td><td>69,071</td><td>13.4%</td><td>6.5%</td><td>0.37%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-blue">
+        <strong>全体合算では方法系・非方法系でほぼ差がない（追加率6.6% vs 6.5%）。ただし医療ダイエットに絞ると方法系の方が明確に低い。</strong>
+      </div>
+      <div class="table-scroll" style="margin-top:16px;">
+        <table>
+          <thead><tr><th>ジャンル</th><th>区分</th><th>PU imp</th><th>CTR</th><th>追加率</th><th>PVFR</th></tr></thead>
+          <tbody>
+            <tr><td>医療ダイエット(glp1_seo)</td><td>方法系</td><td>6,044</td><td>14.6%</td><td class="down">5.6%</td><td class="down">0.38%</td></tr>
+            <tr><td>医療ダイエット(glp1_seo)</td><td>非方法系</td><td>20,574</td><td>13.8%</td><td class="up">10.1%</td><td class="up">0.57%</td></tr>
+            <tr><td>医療ダイエット(glp1_seo_ava)</td><td>方法系</td><td>10,838</td><td>14.8%</td><td class="down">7.6%</td><td class="down">0.39%</td></tr>
+            <tr><td>医療ダイエット(glp1_seo_ava)</td><td>非方法系</td><td>2,338</td><td>14.5%</td><td class="up">9.4%</td><td class="up">0.55%</td></tr>
+            <tr><td>ほくろ(seo_hokuro)</td><td>方法系</td><td>1,581</td><td>8.7%</td><td>2.2%</td><td>0.09%</td></tr>
+            <tr><td>ほくろ(seo_hokuro)</td><td>非方法系</td><td>1,636</td><td>9.2%</td><td>0.0%</td><td>0.00%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-yellow">
+        <strong>医療ダイエット2ジャンルは両方とも「方法系PUの方が追加率が2〜4pt低い」という同じ方向の結果。仮説を支持する材料になる。</strong>
+        <ul>
+          <li>glp1_seo：方法系5.6%🔴 vs 非方法系10.1%（-4.5pt）</li>
+          <li>glp1_seo_ava：方法系7.6% vs 非方法系9.4%（-1.8pt）</li>
+          <li>CTR（表示の魅力度）はむしろ方法系の方が同等かやや高い場合もあり、「クリックはされるが追加に至らない」という形の弱さに見える</li>
+          <li>ほくろは逆方向だが、方法系1文言・非方法系1文言のみのサンプルで参考値どまり</li>
+          <li>医療ダイエット以外のジャンル（ピル・AGA・ED・FAGA等）には方法系PUがほぼ存在せず、検証できる範囲外</li>
+        </ul>
+      </div>
+      <p class="note">記事名（KW）ベースでも同様の検証を試みたが、記事名に「方法」を含むケースは1記事（渋谷「痩せる方法」）のみで、記事単位では有意な比較ができなかった。今回はPU文言側の「方法」表記で検証している。</p>
+    </div>
+  </div>
+
+  <!-- ④ 分析の限界 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">4</div>
+      <div>
+        <div class="section-title">分析の限界（共有前に把握しておきたい点）</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <div class="action-body">
+            <strong>疑問形・方法系はいずれもサンプル数が少ない</strong>
+            <span>疑問形は8文言・PU imp8,795、方法系は5文言・18,463。感情代弁型（52文言・67,741）と比べて母数が薄く、断定的な結論ではなく「傾向」として扱うべき</span>
+          </div>
+        </li>
+        <li>
+          <div class="action-body">
+            <strong>分類はPU設置台帳の「PUコピー」列（正式な文言）を優先し、一部はタグ名末尾（記号省略あり）で代用</strong>
+            <span>タグ名は管理用の短縮ラベルで「？」「！」等の記号が失われているものが多い。「体の本当の状態気になる」等、感情代弁か問いかけか境界的な文言は意味内容から判断しており、主観判定が入っている</span>
+          </div>
+        </li>
+        <li>
+          <div class="action-body">
+            <strong>ジャンル別の逆転（医療ダイエット・包茎で疑問形優勢）は文言個別の相性の可能性がある</strong>
+            <span>各ジャンル1〜2文言だけでの結果のため、「疑問形というタイプ自体が効いている」のか「たまたまその文言が良かった」のか切り分けできていない</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ⑤ 次のアクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">5</div>
+      <div>
+        <div class="section-title">次のアクション</div>
+        <div class="section-sub">啓音さんへの共有・PU文言調整方針の提案</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-highest">最優先</span>
+          <div class="action-body">
+            <strong>医療ダイエットの「方法系」PU（自分に合ったダイエット方法／無理なく痩せる方法 等）を優先的に見直す</strong>
+            <span>追加率が非方法系より2〜4pt低い傾向が2ジャンルで一致。CTRは同等〜やや高いため、文言自体の魅力はあるが「クリック後の期待とLPの中身がズレている」可能性を疑う</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">優先</span>
+          <div class="action-body">
+            <strong>感情代弁型・疑問形どちらか一方に決め打ちしない。ABテストは継続</strong>
+            <span>全体では感情代弁型がやや優勢だが差は小さく、ジャンルによって逆転する。「基本は感情代弁型、ただし医療ダイエット・包茎は疑問形も並走させる」形が妥当</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中</span>
+          <div class="action-body">
+            <strong>疑問形パターンのバリエーションを増やしてサンプルを厚くする</strong>
+            <span>現状8文言・全体の1割程度のimpしかなく、判断材料として薄い。医療ダイエット・包茎で優勢が出ているので、この2ジャンルに疑問形の新パターンを追加投入し検証精度を上げる</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
