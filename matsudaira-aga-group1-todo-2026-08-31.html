@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>松平AGA地域記事 都心5本 改修やることリスト（2026-08-31）</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 980px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; min-width: 52px; text-align: center; }
+    .pri-highest { background: #fee2e2; color: #991b1b; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .pri-low  { background: #f1f5f9; color: #64748b; }
+    .pri-done { background: #dcfce7; color: #16a34a; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-blue { background: #eff6ff; color: #1d4ed8; border-left: 4px solid #3b82f6; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+
+    .article-head { font-size: 15px; font-weight: 800; color: #0f172a; margin: 18px 0 8px; }
+    .article-head:first-child { margin-top: 0; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">進行管理 — バーティカル（松平小児科 AGA地域記事）</div>
+    <h1>松平 都心5本 改修プロジェクト やることリスト</h1>
+    <p class="desc">対象：秋葉原・銀座有楽町・新橋・上野・池袋（グループ1） ／ 期日：2026-09-03（木） ／ 作成: 2026-08-31</p>
+  </div>
+
+  <!-- ① 全体像 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">1</div>
+      <div>
+        <div class="section-title">今どこにいるか</div>
+        <div class="section-sub">今日の作業スコープの確認</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="verdict verdict-blue">今日進めるのはグループ1「都心5本」のみ。グループ2（船橋・柏・大宮・横浜）は別スコープで今回は触れない。松平案件全体の「計21本」の内訳確認は保留のまま、今回の作業には影響しない。</div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>記事</th><th>状態</th><th>備考</th></tr></thead>
+          <tbody>
+            <tr><td><b>池袋</b></td><td><span class="badge badge-blue">進行中</span></td><td>優先度最高（5本中唯一2ページ目・更新日も最古）。構造修正はドラフト完了、価格再検証は5院中4院確定・1院で公式との重大な食い違いを発見</td></tr>
+            <tr><td>秋葉原</td><td><span class="badge badge-gray">未着手</span></td><td>&nbsp;</td></tr>
+            <tr><td>銀座・有楽町</td><td><span class="badge badge-gray">未着手</span></td><td>&nbsp;</td></tr>
+            <tr><td>新橋</td><td><span class="badge badge-gray">未着手</span></td><td>16院を1院1H3に分割する最大変更点あり</td></tr>
+            <tr><td>上野</td><td><span class="badge badge-gray">未着手</span></td><td>閉業院（TCB上野院）の扱い確定が先決</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② 進め方 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">2</div>
+      <div>
+        <div class="section-title">進め方（指示書指定のスケジュール）</div>
+        <div class="section-sub">5本共通の工程順序</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>順</th><th>工程</th><th>期限目安</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>冒頭文</td><td rowspan="5" style="vertical-align:middle;"><span class="badge badge-red">木曜(9/3)まで</span></td></tr>
+            <tr><td>2</td><td>冒頭比較表</td></tr>
+            <tr><td>3</td><td>選び方H2</td></tr>
+            <tr><td>4</td><td>H2の入れ替え／よくある質問とまとめの書き分け</td></tr>
+            <tr><td>5</td><td>おすすめH2の上位3院</td></tr>
+            <tr><td>6</td><td>おすすめH2の4院目以降</td><td rowspan="3" style="vertical-align:middle;"><span class="badge badge-gray">期日なし（目安：9月第2週研修前）</span></td></tr>
+            <tr><td>7</td><td>費用H2・エリアH2・よくある質問・まとめ</td></tr>
+            <tr><td>8</td><td>おすすめH2以降のくどい言い回しチェックと是正</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-yellow">木曜までに1〜5を5本ぶん終わらせるのが最低ライン。6〜8はルーティン扱いでよい。各記事の着手・完了は都度うららさんに報告する運用。</div>
+    </div>
+  </div>
+
+  <!-- ③ 池袋 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">3</div>
+      <div>
+        <div class="section-title">池袋（進行中）</div>
+        <div class="section-sub">優先度最高・先行着手して実工数を測定中</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li><span class="action-pri pri-done">済</span><div class="action-body"><strong>タイトル・H1【2026年】削除</strong><span>「池袋のAGA治療おすすめクリニック15院」に変更</span></div></li>
+        <li><span class="action-pri pri-done">済</span><div class="action-body"><strong>H2②見出し【2026年】削除</strong></div></li>
+        <li><span class="action-pri pri-done">済</span><div class="action-body"><strong>H2③見出し差し替え</strong><span>費用の話→「池袋で処方される薬の種類と1か月の薬代」。本文はほぼそのまま活用可</span></div></li>
+        <li><span class="action-pri pri-done">済</span><div class="action-body"><strong>H3「人目が気になるなら完全個室や男性専門の環境を見る」をPREP化</strong><span>1段落501字→4段落に再構成済み</span></div></li>
+        <li><span class="action-pri pri-done">済</span><div class="action-body"><strong>内部リンク：主力2本ボックス</strong><span>/aga/ /finasteride/、テンプレそのまま流用でドラフト渡し済み</span></div></li>
+        <li><span class="action-pri pri-done">済</span><div class="action-body"><strong>内部リンク：グループ内地域記事ボックス</strong><span>上野・秋葉原・新橋・銀座有楽町へ、ドラフト渡し済み</span></div></li>
+        <li><span class="action-pri pri-done">済</span><div class="action-body"><strong>冒頭比較表：5院の価格を公式で再検証</strong><span>Dr.AGA・イースト駅前・スマイルAGA・ナチュラルAGAは記事の記載と完全一致。クリニックフォアのみ「初回」区分自体が公式に存在しない重大な誤りを発見</span></div></li>
+        <li><span class="action-pri pri-high">要確認</span><div class="action-body"><strong>クリニックフォアの表構成の直し方</strong><span>「初回価格／通常料金」という列自体が合わない。「12ヶ月まとめて定期＝月4,874円(税込5,361円)」「都度都度＝月8,247円」という見せ方への変更案を提示済み、Noa確認待ち</span></div></li>
+        <li><span class="action-pri pri-mid">要確認</span><div class="action-body"><strong>西口エリアH3の指示書ズレ</strong><span>指示書は「1段落の塊」としているが実記事は既に4段落構成で機能済み。修正不要と判断、うららさんへの確認を推奨</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>1年総額の行を追加</strong><span>初回＋2ヶ月目以降×11。クリニックフォアの見せ方確定後に着手</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>禁止語（17/18語）の全文検索</strong></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>くどい言い回し6ブロック是正</strong><span>5本中最多。該当文の指定なし＝自分でkudoi-checkにかける</span></div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ④ 秋葉原 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">4</div>
+      <div>
+        <div class="section-title">秋葉原（未着手）</div>
+        <div class="section-sub">流入の重心：掲載院の商標とレビューがメインKWを超える</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>タイトル変更</strong></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>冒頭文1段落目を全文差し替え</strong><span>2〜3段落目は文末3箇所の修正のみ</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>H2③の3H3をPREP化</strong><span>1段落の塊×3本</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>H2④差し替え</strong><span>エリア→ビル入口とフロア案内。既存写真3〜4枚を活用</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>H2⑤⑥差し替え</strong></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>TCBリンク先修正</strong><span>トップページ→秋葉原院ページへ</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>くどい言い回し4ブロック是正</strong><span>該当文23個・型と直し方は指示書に提示済み</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>冒頭比較表：4院価格再確認・1年総額追加</strong><span>AGAヘアの888円に条件明記が必要</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>禁止語チェック・医療広告ガイドライン注記5箇所の保持確認</strong></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>終了時チェックリスト完走</strong><span>指示書記載の8項目</span></div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ⑤ 銀座・有楽町 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">5</div>
+      <div>
+        <div class="section-title">銀座・有楽町（未着手）</div>
+        <div class="section-sub">条件つき検索が軒並み1位台（初めて1.2位・相談しやすい1.6位等）</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>タイトル変更</strong></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>冒頭文は文末修正のみ</strong><span>1段落目の全文差し替えは不要</span></div></li>
+        <li><span class="action-pri pri-high">未着手</span><div class="action-body"><strong>H2を4本→6本に拡張</strong><span>①「4つの条件」・④「有楽町側／銀座側で通える院」を新設</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>くどい言い回し4ブロック是正</strong><span>最重は費用H2</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>冒頭比較表：価格再確認・1年総額追加</strong></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>禁止語チェック</strong></div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ⑥ 新橋 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">6</div>
+      <div>
+        <div class="section-title">新橋（未着手・最重量）</div>
+        <div class="section-sub">条件つき検索がほぼ1位台。ただし構造の作り直しが必要</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li><span class="action-pri pri-highest">未着手</span><div class="action-body"><strong>16院を1院1H3に分割</strong><span>最大の変更点。紹介H2に院数がなくH3も0本の状態。実院数を数えてタイトル・H2の数字も合わせる</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>H2①書き換え</strong><span>予約の取りやすさ・対面診療・初診の相談・副作用の相談の4条件</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>H2④入れ替え</strong><span>エリア→予約を取る方法と当日受診できる院</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>冒頭比較表：診察料行削除・5院価格再確認・1年総額追加</strong></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>1段落塊H3（1本）をPREP化</strong></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>くどい言い回し5ブロック是正</strong><span>最重は冒頭</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>禁止語チェック</strong></div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ⑦ 上野 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">7</div>
+      <div>
+        <div class="section-title">上野（未着手）</div>
+        <div class="section-sub">閉業院の扱いを最初に確定させる必要あり</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li><span class="action-pri pri-highest">未着手</span><div class="action-body"><strong>【閉業】TCB東京中央美容外科上野院の削除 or 差し替え</strong><span>最優先。院数（9選 or 差し替えて10選維持）の確定がタイトル・本文の全数字に影響する</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>タイトル変更</strong><span>院数確定後に着手。末尾の「まとめ」も削除</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>H2③入れ替え</strong><span>費用→「上野で処方される薬の種類と1か月の薬代」</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>冒頭比較表：診察料行削除・5院価格再確認・1年総額追加</strong></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>1段落塊H3（1本）をPREP化</strong></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>くどい言い回し4ブロック是正</strong><span>最重は費用H2</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>禁止語チェック</strong></div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ⑧ 共通ルール早見表 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">8</div>
+      <div>
+        <div class="section-title">5本共通ルール早見表</div>
+        <div class="section-sub">記事に着手する前に毎回見返す</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>項目</th><th>ルール</th></tr></thead>
+          <tbody>
+            <tr><td>禁止語</td><td>この／その／これ／ここ／そこ／こうした／以下／上記／下記／先ほど／この後／前述／この記事／本記事／把握／判断／合理的／ご覧ください<br><span class="note">指示書は「17語」表記だが数えると18個ある（元指示書側の記載ミス）</span></td></tr>
+            <tr><td>1年総額の計算式</td><td>初回＋2ヶ月目以降×11</td></tr>
+            <tr><td>冒頭比較表の列数</td><td>横スクロール表、主力＋4院の5列まで。6列目からは読まれない</td></tr>
+            <tr><td>タイトル記号ルール</td><td>使える記号は！と（）のみ。【】は削除。30文字前後、院数は本文の実数と一致させる</td></tr>
+            <tr><td>本文の言い回し禁止</td><td>「〜することで〜できる」「最も安い」「最安」は使わない。確かめられる事実で書く（例：「他の4院の1年を下回る」）</td></tr>
+            <tr><td>消してはいけない文</td><td>「医師から入手経路や副作用、リスクについて説明を受けたうえでご検討ください」は医療広告ガイドラインの注記。くどい言い回しの型に該当しても消さない</td></tr>
+            <tr><td>H2/H3構成</td><td>H2は6本維持。H2直下に導入文を1段落必ず置く（H2の次にH3を直接置かない）</td></tr>
+            <tr><td>今回やらないこと</td><td>女性向けキーワードは狙わない。院の写真撮影は対象外</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑨ 未解決の判断事項 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">9</div>
+      <div>
+        <div class="section-title">未解決の判断事項</div>
+        <div class="section-sub">自分では決めない・Noa/うららさんの判断待ち</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li><span class="action-pri pri-highest">要判断</span><div class="action-body"><strong>価格再検証の範囲をどこまでやるか</strong><span>全院公式突合（1院あたり相応の時間）か、明らかにおかしい箇所だけの優先確認か。5本×5院前後で木曜までに収まるか怪しい</span></div></li>
+        <li><span class="action-pri pri-high">要判断</span><div class="action-body"><strong>池袋：クリニックフォアの表構成</strong><span>「初回価格／通常料金」という列自体が合わない。見せ方の変更案を提示済み</span></div></li>
+        <li><span class="action-pri pri-mid">要確認</span><div class="action-body"><strong>西口エリアH3の指示書ズレ</strong><span>実記事は既に4段落構成でPREP的に機能済み。うららさんの認識とズレている可能性</span></div></li>
+        <li><span class="action-pri pri-mid">要確認</span><div class="action-body"><strong>禁止語「17語」表記と実数18個の食い違い</strong><span>指示書側の記載ミス</span></div></li>
+        <li><span class="action-pri pri-low">要判断</span><div class="action-body"><strong>池袋の新規内部リンクを他4本側にも逆リンクするか</strong><span>その4本に着手するタイミングで判断でよい</span></div></li>
+        <li><span class="action-pri pri-low">保留</span><div class="action-body"><strong>「計21本」の内訳の謎</strong><span>今回のグループ1・5本には影響しないため保留のまま</span></div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ⑩ 次のアクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">10</div>
+      <div>
+        <div class="section-title">次のアクション</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li><span class="action-pri pri-done">済</span><div class="action-body"><strong>池袋：構造修正ドラフト作成・5院中4院の価格検算</strong></div></li>
+        <li><span class="action-pri pri-highest">次</span><div class="action-body"><strong>クリニックフォアの表構成をNoaが確認</strong><span>結果を受けて池袋を確定させる</span></div></li>
+        <li><span class="action-pri pri-high">次</span><div class="action-body"><strong>池袋確定後、次点の着手記事を決める</strong><span>新橋（16院分割）か上野（閉業院確定）は重い変更を含むため早めに着手した方が全体のペースが読める</span></div></li>
+        <li><span class="action-pri pri-mid">次</span><div class="action-body"><strong>価格再検証の範囲方針を決める</strong><span>方針が決まらないと残り4本の工数が見積もれない</span></div></li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
