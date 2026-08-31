@@ -1,171 +1,289 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>口コミ収集の手順書｜商標記事の利用者の声の集め方</title>
-<style>
-  :root{
-    --green:#1B7A3D; --green-l:#8FCBA6; --green-bg:#F2F8F4;
-    --ink:#222; --muted:#777; --line:#e3e3e3;
-    --amber:#8A6100; --amber-bg:#FFF4D6; --amber-line:#E8B84B;
-    --red:#9B2C2C; --red-bg:#FDE7E7; --red-line:#E5A0A0;
-    --blue:#1B4E84; --blue-bg:#E8F1FB; --blue-line:#9CC2E8;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:"Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
-    color:var(--ink);line-height:1.75;background:#fafafa}
-  .wrap{max-width:880px;margin:0 auto;padding:0 20px 80px}
-  a.back-link{display:inline-block;margin:20px 0 0;color:var(--green);text-decoration:none;font-weight:700;font-size:14px}
-  header.hero{background:linear-gradient(135deg,#1B7A3D,#2EA85C);color:#fff;padding:40px 20px 34px;text-align:center;margin-top:16px;border-radius:16px}
-  header.hero h1{margin:0 0 8px;font-size:27px;letter-spacing:.02em}
-  header.hero .sub{font-size:15px;font-weight:700;opacity:.95}
-  header.hero .meta{font-size:12.5px;opacity:.85;margin-top:12px}
-  h2{color:var(--green);border-bottom:3px solid var(--green-l);padding-bottom:6px;margin-top:44px;font-size:22px}
-  h3{color:#333;margin-top:26px;font-size:17px}
-  .lead{font-size:15px;color:#444}
-  a{color:var(--green)}
-  .box{border-radius:10px;padding:14px 18px;margin:18px 0;border:1px solid}
-  .box .t{font-weight:700;margin-bottom:4px}
-  .point{background:var(--blue-bg);border-color:var(--blue-line)} .point,.point .t{color:var(--blue)}
-  .warn{background:var(--red-bg);border-color:var(--red-line)} .warn,.warn .t{color:var(--red)}
-  .ok{background:var(--green-bg);border-color:var(--green-l)} .ok,.ok .t{color:var(--green)}
-  .box ul{margin:6px 0 0;padding-left:20px}
-  table.chk{border-collapse:collapse;width:100%;margin:16px 0;font-size:14px}
-  table.chk td,table.chk th{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
-  table.chk th{background:var(--green-bg);color:var(--green)}
-  .flow{margin:18px 0 8px}
-  .flow-step{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-left:5px solid var(--green);border-radius:10px;padding:14px 18px}
-  .flow-step .n{flex:0 0 auto;width:32px;height:32px;background:var(--green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px}
-  .flow-step .body{flex:1}
-  .flow-step .body b{font-size:15.5px;color:var(--green)}
-  .flow-step .body p{margin:4px 0 0;font-size:14px;color:#444}
-  .flow .arrow{text-align:center;color:var(--green);font-size:20px;line-height:1;margin:4px 0}
-  .tip{font-size:13px;color:var(--muted)}
-  hr{border:0;border-top:1px solid var(--line);margin:36px 0}
-  .judge-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
-  @media (max-width:640px){.judge-grid{grid-template-columns:1fr}}
-  code.snip{display:block;background:#2b2b2b;color:#e6e6e6;border-radius:8px;padding:12px 14px;font-size:12.5px;overflow-x:auto;white-space:pre;line-height:1.7;margin-top:8px}
-  ul.chklist{list-style:none;padding:0;margin:16px 0;display:grid;gap:8px}
-  ul.chklist li{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px;display:flex;gap:10px;align-items:flex-start}
-  ul.chklist li::before{content:"□";color:var(--green);font-weight:700}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>口コミ収集の手順書｜商標記事の利用者の声の集め方</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 980px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-yellow { background: #fef9c3; color: #ca8a04; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+    .flow-list { list-style: none; counter-reset: step; }
+    .flow-list li { counter-increment: step; display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid #f1f5f9; }
+    .flow-list li:last-child { border-bottom: none; }
+    .flow-list li::before {
+      content: counter(step);
+      flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+      background: #eff6ff; color: #3b82f6; font-size: 12px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; margin-top: 1px;
+    }
+    .flow-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .flow-body span { font-size: 13px; color: #475569; }
+    .flow-body .ex { display: block; margin-top: 6px; font-size: 12.5px; color: #64748b; background: #f8fafc; border-radius: 6px; padding: 8px 10px; }
+
+    .judge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 640px) { .judge-grid { grid-template-columns: 1fr; } }
+    .judge-card { border-radius: 10px; padding: 16px 18px; }
+    .judge-card.ok { background: #f0fdf4; border: 1.5px solid #bbf7d0; }
+    .judge-card.ng { background: #fff1f2; border: 1.5px solid #fecdd3; }
+    .judge-card ul { padding-left: 18px; font-size: 13px; margin-top: 8px; }
+    .judge-card li { margin-bottom: 8px; }
+    .judge-card li:last-child { margin-bottom: 0; }
+
+    code.snip { display: block; background: #0f172a; color: #e2e8f0; border-radius: 8px; padding: 12px 14px; font-size: 12.5px; overflow-x: auto; white-space: pre; line-height: 1.7; margin-top: 8px; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
-<div class="wrap">
+<div class="container">
 
   <a href="index.html" class="back-link">← トップへ</a>
 
-  <header class="hero">
+  <div class="page-header">
+    <div class="eyebrow">SEO記事制作ガイド — バーティカル</div>
     <h1>口コミ収集の手順書</h1>
-    <div class="sub">商標記事に載せる利用者の声の集め方・掲載判定</div>
-    <div class="meta">t238「レバクリAGA」商標記事の制作プロセスをもとに作成（2026-08-31）</div>
-  </header>
-
-  <div class="box point">
-    <div class="t">💡 このガイドの位置づけ</div>
-    商標記事で利用者の口コミ・評判を掲載する際、新規アンケートを取らずに実在する声を安全に集めるための手順。新卒・記事制作担当は着手前に必ず読む。関連ルール：<code>content/rules/eeat-and-compliance.md</code>
+    <p class="desc">商標記事に載せる利用者の声の集め方・掲載判定 ／ t238「レバクリAGA」商標記事の制作プロセスをもとに作成（2026-08-31）</p>
   </div>
 
-  <h2 id="why">なぜ独自アンケートを取らないのか</h2>
-  <p class="lead">商標記事は新規公開の時点では独自アンケートを実施しない。まず知恵袋やSNSなど実在する声を集めて70〜80点で公開し、順位がついた後にGSCのデータを見ながら改修する方針（うららさん確認済み）。</p>
-  <div class="box warn">
-    <div class="t">⚠ アンケートを急がない理由</div>
-    お金をかけてアンケートを取っても、記事に順位がつかず読まれなければ「取り損」になる。ドメインの強さも含めてどこまで評価されるかを先に確かめるのが優先。
-  </div>
-
-  <h2 id="sources">どこを回るか</h2>
-  <p class="lead">1つのサイトだけでは声が偏る。口コミ系・動画コメント系・Q&amp;A系の3系統は最低でも横断する。</p>
-  <table class="chk">
-    <tr><th>系統</th><th>サイト</th><th>拾えるもの</th></tr>
-    <tr><td>口コミ・比較</td><td>みん評</td><td>サービス体験の生の感想。長文で背景まで語られやすい</td></tr>
-    <tr><td>動画コメント</td><td>YouTube</td><td>紹介動画のコメント欄。率直な使用感が拾える</td></tr>
-    <tr><td>Q&amp;A</td><td>Yahoo!知恵袋</td><td>副作用や不安など「気になる点」側の声が多い</td></tr>
-    <tr><td>SNS</td><td>X（旧Twitter）</td><td>速報性は高いが、Before/After投稿など掲載NGな内容も多い</td></tr>
-    <tr><td>レビュー投稿</td><td>コエシル 等</td><td>効果を断定する体験談が混ざりやすいので特に慎重に見る</td></tr>
-  </table>
-
-  <h2 id="process">収集から掲載までの6ステップ</h2>
-  <div class="flow">
-
-    <div class="flow-step"><span class="n">1</span><div class="body"><b>検索キーワードを当てる</b>
-      <p>「ブランド名＋口コミ／評判／レビュー」に加え、症状名や成分名（例：フィナステリド）を掛け合わせて検索する。ブランド名単体だと公式情報しか出ないことが多い。</p></div></div>
-    <div class="arrow">▼</div>
-
-    <div class="flow-step"><span class="n">2</span><div class="body"><b>プラットフォームを横断して集める</b>
-      <p>上の一覧を上から順に見て、良い声・気になる声をそれぞれメモしていく。この段階では多めに集めて後で絞る。</p></div></div>
-    <div class="arrow">▼</div>
-
-    <div class="flow-step"><span class="n">3</span><div class="body"><b>一次スクリーニングでNGを除外する</b>
-      <p>「効果を断定・保証している声」と「Before/Afterを伴う声」はこの時点で外す。判断基準は下の「OK / NG判定」を参照。</p></div></div>
-    <div class="arrow">▼</div>
-
-    <div class="flow-step"><span class="n">4</span><div class="body"><b>メリットと気になる点の両方をそろえる</b>
-      <p>良い声だけを並べると誇大表現に見えるため、気になる点（副作用や不便さ）の声も必ず1件以上入れる。ただし懸念の提示だけで終わらせず、直後に対処法を書き添える。</p>
-      <p style="color:#555">例：フィナステリドで性欲低下を感じたという声 → 「有効成分の量が同じであれば効果や副作用は基本的に変わりません」と説明 → 「気になる症状は自己判断で服用をやめず医師へ相談」で締める</p></div></div>
-    <div class="arrow">▼</div>
-
-    <div class="flow-step"><span class="n">5</span><div class="body"><b>出典を記録する</b>
-      <p>採用した声は、取得したURLとサイト名を必ず控える。投稿日は本文に載せなくてよいので省略可（正式な取得日時の証跡はリサーチ用スプシ側にメモしておけば足りる）。</p></div></div>
-    <div class="arrow">▼</div>
-
-    <div class="flow-step"><span class="n">6</span><div class="body"><b>記事に実装する</b>
-      <p>件数によって使うパーツを変える。詳細は下の「実装ルール」を参照。</p></div></div>
-  </div>
-
-  <h2 id="judge">OK / NG の判定基準</h2>
-  <p class="lead">医療広告ガイドライン上、効果を保証・断定する体験談は掲載できない。サービス面（対応・利便性・配送など）の声は問題なく使える。</p>
-  <div class="judge-grid">
-    <div class="box ok">
-      <div class="t">✅ OK — 採用</div>
-      <ul>
-        <li>配送・対応などサービス面の感想（例：「薬が届くのが早い」）</li>
-        <li>営業姿勢に関する感想（例：「余計なことは言ってこないし、一方的なセールスも全くなかった」）</li>
-        <li>副作用・不安の実体験（対処法とセットで掲載）（例：「性欲低下を感じた」）</li>
-      </ul>
+  <!-- ① なぜ独自アンケートを取らないか -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">1</div>
+      <div>
+        <div class="section-title">なぜ独自アンケートを取らないのか</div>
+        <div class="section-sub">商標記事の新規公開時の考え方</div>
+      </div>
     </div>
-    <div class="box warn">
-      <div class="t">🚫 NG — 除外</div>
-      <ul>
-        <li>効果を断定・保証する体験談（例：「〇ヶ月で治った／痩せた」）</li>
-        <li>Before/After画像や数値を伴う投稿</li>
-        <li>ステマ・案件感の強い投稿（不自然に絶賛のみで具体性がないもの）</li>
-      </ul>
+    <div class="body">
+      <p>商標記事は新規公開の時点では独自アンケートを実施しない。まず知恵袋やSNSなど実在する声を集めて70〜80点で公開し、順位がついた後にGSCのデータを見ながら改修する方針（うららさん確認済み）。</p>
+      <div class="insight insight-blue">
+        お金をかけてアンケートを取っても、記事に順位がつかず読まれなければ「取り損」になる。ドメインの強さも含めてどこまで評価されるかを先に確かめるのが優先。
+      </div>
     </div>
   </div>
-  <p class="tip">迷ったら「これは効果の話か、サービス・体験の話か」で切り分ける。効果の話なら基本NG。</p>
 
-  <h2 id="citation">出典の書き方</h2>
-  <p class="lead">「どこから取ったか分かるように書く」がルール。装飾的な情報（取得日・投稿者名など）は付けすぎない。</p>
-  <div class="box point">
-    <div class="t">採用が決まった声は、引用元をリンク付きのサイト名だけで示す</div>
-    <code class="snip">&lt;p&gt;&lt;span class="small-text"&gt;引用元：&lt;a href="（投稿URL）"&gt;みん評&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;</code>
+  <!-- ② どこを回るか -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">2</div>
+      <div>
+        <div class="section-title">どこを回るか</div>
+        <div class="section-sub">最低3系統は横断する</div>
+      </div>
+    </div>
+    <div class="body">
+      <p>1つのサイトだけでは声が偏る。口コミ系・動画コメント系・Q&amp;A系は最低でも横断する。</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>系統</th><th>サイト</th><th>拾えるもの</th></tr></thead>
+          <tbody>
+            <tr><td>口コミ・比較</td><td>みん評</td><td>サービス体験の生の感想。長文で背景まで語られやすい</td></tr>
+            <tr><td>動画コメント</td><td>YouTube</td><td>紹介動画のコメント欄。率直な使用感が拾える</td></tr>
+            <tr><td>Q&amp;A</td><td>Yahoo!知恵袋</td><td>副作用や不安など「気になる点」側の声が多い</td></tr>
+            <tr><td>SNS</td><td>X（旧Twitter）</td><td>速報性は高いが、Before/After投稿など掲載NGな内容も多い</td></tr>
+            <tr><td>レビュー投稿</td><td>コエシル 等</td><td>効果を断定する体験談が混ざりやすいので特に慎重に見る</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
-  <h2 id="impl">実装ルール（件数で使い分け）</h2>
-  <table class="chk">
-    <tr><th style="width:120px">採用件数</th><th>使うパーツ</th></tr>
-    <tr><td>2件以上</td><td>横スクロールのカルーセル（複数の声を回遊させる想定のパーツ）</td></tr>
-    <tr><td>1件のみ</td><td>カルーセルにせず単体のカードで置く（1件だけ横スクロール枠に入れると間延びして見える）</td></tr>
-  </table>
-  <ul>
-    <li>投稿日・投稿者属性などの見出し情報は付けない（スマホで縦に長くなりすぎるため）</li>
-    <li>効果を保証する表現に見えるパーツ（引用ボックス等）は使わず、通常のレビュー用パーツで統一する</li>
-  </ul>
+  <!-- ③ 収集〜掲載の6ステップ -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">3</div>
+      <div>
+        <div class="section-title">収集から掲載までの6ステップ</div>
+        <div class="section-sub">実際に着手する順番</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="flow-list">
+        <li>
+          <div class="flow-body">
+            <strong>検索キーワードを当てる</strong>
+            <span>「ブランド名＋口コミ／評判／レビュー」に加え、症状名や成分名（例：フィナステリド）を掛け合わせて検索する。ブランド名単体だと公式情報しか出ないことが多い。</span>
+          </div>
+        </li>
+        <li>
+          <div class="flow-body">
+            <strong>プラットフォームを横断して集める</strong>
+            <span>上の一覧を上から順に見て、良い声・気になる声をそれぞれメモしていく。この段階では多めに集めて後で絞る。</span>
+          </div>
+        </li>
+        <li>
+          <div class="flow-body">
+            <strong>一次スクリーニングでNGを除外する</strong>
+            <span>「効果を断定・保証している声」と「Before/Afterを伴う声」はこの時点で外す。判断基準は次のセクションを参照。</span>
+          </div>
+        </li>
+        <li>
+          <div class="flow-body">
+            <strong>メリットと気になる点の両方をそろえる</strong>
+            <span>良い声だけを並べると誇大表現に見えるため、気になる点（副作用や不便さ）の声も必ず1件以上入れる。懸念の提示だけで終わらせず、直後に対処法を書き添える。</span>
+            <span class="ex">例：フィナステリドで性欲低下を感じたという声 → 「有効成分の量が同じであれば効果や副作用は基本的に変わりません」と説明 → 「気になる症状は自己判断で服用をやめず医師へ相談」で締める</span>
+          </div>
+        </li>
+        <li>
+          <div class="flow-body">
+            <strong>出典を記録する</strong>
+            <span>採用した声は、取得したURLとサイト名を必ず控える。投稿日は本文に載せなくてよいので省略可（正式な取得日時の証跡はリサーチ用スプシ側にメモしておけば足りる）。</span>
+          </div>
+        </li>
+        <li>
+          <div class="flow-body">
+            <strong>記事に実装する</strong>
+            <span>件数によって使うパーツを変える。詳細は下の「実装ルール」を参照。</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
 
-  <hr>
+  <!-- ④ OK/NG判定基準 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">4</div>
+      <div>
+        <div class="section-title">OK / NG の判定基準</div>
+        <div class="section-sub">医療広告ガイドライン準拠</div>
+      </div>
+    </div>
+    <div class="body">
+      <p>効果を保証・断定する体験談は掲載できない。サービス面（対応・利便性・配送など）の声は問題なく使える。</p>
+      <div class="judge-grid">
+        <div class="judge-card ok">
+          <span class="badge badge-green">OK — 採用</span>
+          <ul>
+            <li>配送・対応などサービス面の感想（例：「薬が届くのが早い」）</li>
+            <li>営業姿勢に関する感想（例：「余計なことは言ってこないし、一方的なセールスも全くなかった」）</li>
+            <li>副作用・不安の実体験（対処法とセットで掲載）（例：「性欲低下を感じた」）</li>
+          </ul>
+        </div>
+        <div class="judge-card ng">
+          <span class="badge badge-red">NG — 除外</span>
+          <ul>
+            <li>効果を断定・保証する体験談（例：「〇ヶ月で治った／痩せた」）</li>
+            <li>Before/After画像や数値を伴う投稿</li>
+            <li>ステマ・案件感の強い投稿（不自然に絶賛のみで具体性がないもの）</li>
+          </ul>
+        </div>
+      </div>
+      <div class="insight insight-yellow">
+        迷ったら「これは効果の話か、サービス・体験の話か」で切り分ける。効果の話なら基本NG。
+      </div>
+    </div>
+  </div>
 
-  <h2 id="checklist">掲載前の最終チェック</h2>
-  <ul class="chklist">
-    <li>効果を断定・保証する表現が混ざっていないか</li>
-    <li>Before/After系の内容を含んでいないか</li>
-    <li>良い声・気になる声の両方が入っているか</li>
-    <li>気になる声は「懸念提示」だけで終わらず対処法とセットになっているか</li>
-    <li>出典（リンク付きサイト名）を本文に入れたか</li>
-    <li>件数に応じて正しいパーツ（カルーセル／単体）を選んだか</li>
-  </ul>
+  <!-- ⑤ 出典の書き方 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">5</div>
+      <div>
+        <div class="section-title">出典の書き方</div>
+        <div class="section-sub">装飾しすぎない</div>
+      </div>
+    </div>
+    <div class="body">
+      <p>「どこから取ったか分かるように書く」がルール。取得日・投稿者名などの装飾的な情報は付けすぎない。採用が決まった声は、引用元をリンク付きのサイト名だけで示す。</p>
+      <code class="snip">&lt;p&gt;&lt;span class="small-text"&gt;引用元：&lt;a href="（投稿URL）"&gt;みん評&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;</code>
+    </div>
+  </div>
 
-  <p class="tip">t238「レバクリAGA」商標記事の制作過程をもとに作成。判定に迷う事例が出たら、このドキュメントを更新してチームに共有すること。</p>
+  <!-- ⑥ 実装ルール -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">6</div>
+      <div>
+        <div class="section-title">実装ルール（件数で使い分け）</div>
+        <div class="section-sub">1件と複数件でパーツを変える</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th style="width:110px">採用件数</th><th>使うパーツ</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge-gray">2件以上</span></td><td>横スクロールのカルーセル（複数の声を回遊させる想定のパーツ）</td></tr>
+            <tr><td><span class="badge badge-gray">1件のみ</span></td><td>カルーセルにせず単体のカードで置く（1件だけ横スクロール枠に入れると間延びして見える）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">投稿日・投稿者属性などの見出し情報は付けない（スマホで縦に長くなりすぎるため）。効果を保証する表現に見えるパーツ（引用ボックス等）は使わず、通常のレビュー用パーツで統一する。</p>
+    </div>
+  </div>
+
+  <!-- ⑦ 掲載前チェックリスト -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">7</div>
+      <div>
+        <div class="section-title">掲載前の最終チェック</div>
+        <div class="section-sub">出す直前に必ず確認</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li><span class="badge badge-gray">□</span><div class="action-body"><span>効果を断定・保証する表現が混ざっていないか</span></div></li>
+        <li><span class="badge badge-gray">□</span><div class="action-body"><span>Before/After系の内容を含んでいないか</span></div></li>
+        <li><span class="badge badge-gray">□</span><div class="action-body"><span>良い声・気になる声の両方が入っているか</span></div></li>
+        <li><span class="badge badge-gray">□</span><div class="action-body"><span>気になる声は「懸念提示」だけで終わらず対処法とセットになっているか</span></div></li>
+        <li><span class="badge badge-gray">□</span><div class="action-body"><span>出典（リンク付きサイト名）を本文に入れたか</span></div></li>
+        <li><span class="badge badge-gray">□</span><div class="action-body"><span>件数に応じて正しいパーツ（カルーセル／単体）を選んだか</span></div></li>
+      </ul>
+      <p class="note" style="margin-top:12px;">t238「レバクリAGA」商標記事の制作過程をもとに作成。判定に迷う事例が出たら、このドキュメントを更新してチームに共有すること。</p>
+    </div>
+  </div>
 
 </div>
 </body>
