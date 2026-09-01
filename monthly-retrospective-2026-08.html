@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8月月次振り返り 2026-08</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 980px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-green { background: #10b981; }
+    .num-amber { background: #f59e0b; }
+    .num-red { background: #ef4444; }
+    .num-purple { background: #8b5cf6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; white-space: nowrap; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    tr.total-row td { background: #f8fafc; font-weight: 700; color: #334155; }
+    .up { color: #10b981; font-weight: 700; }
+    .down { color: #ef4444; font-weight: 700; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+    .badge-green { background: #dcfce7; color: #16a34a; }
+    .badge-gray { background: #f1f5f9; color: #64748b; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-card.alert { border-color: #fca5a5; background: #fff1f2; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight ul { margin: 8px 0 0; padding-left: 18px; }
+    .insight li { margin-bottom: 5px; line-height: 1.6; }
+    .insight li:last-child { margin-bottom: 0; }
+    .insight-red { background: #fff1f2; border-left: 3px solid #ef4444; }
+    .insight-green { background: #f0fdf4; border-left: 3px solid #10b981; }
+    .insight-yellow { background: #fffbeb; border-left: 3px solid #f59e0b; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+    .action-list { list-style: none; }
+    .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+    .action-list li:last-child { border-bottom: none; }
+    .action-pri { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; white-space: nowrap; height: fit-content; margin-top: 2px; }
+    .pri-highest { background: #fee2e2; color: #991b1b; }
+    .pri-high { background: #fee2e2; color: #dc2626; }
+    .pri-mid  { background: #fef9c3; color: #ca8a04; }
+    .pri-low  { background: #f1f5f9; color: #64748b; }
+    .action-body strong { display: block; font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+    .action-body span { font-size: 13px; color: #475569; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+
+    .verdict { font-size: 15px; font-weight: 800; padding: 14px 18px; border-radius: 10px; margin-bottom: 16px; }
+    .verdict-red { background: #fee2e2; color: #dc2626; border-left: 4px solid #dc2626; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">数値分析 — 全体</div>
+    <h1>8月月次振り返り 2026-08</h1>
+    <p class="desc">対象期間: 2026-08-01〜08-31（SEO全チャネル、PU+バナー） ／ 比較対象は7月のみ（5・6月はデータ基盤側の欠損により比較対象外）</p>
+  </div>
+
+  <div class="verdict verdict-red">
+    結論：GLP-1の減速（-74人）と「PLUS系」（包茎手術・ICL/レーシック）の完全消滅（-60人）が主犯。他ジャンルの伸びでネットは-39人に圧縮されて見えるが、中身は悪化している。目標1200人に対し達成率63.3%（7月66.6%から後退）。
+  </div>
+
+  <!-- ① GOAL進捗 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">1</div>
+      <div>
+        <div class="section-title">GOAL進捗</div>
+        <div class="section-sub">事業軸（友だち・CV・売上）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card alert">
+          <div class="kpi-label">友だち追加（SEO全体）</div>
+          <div class="kpi-value">760人</div>
+          <div class="kpi-sub">目標1200人／達成率63.3%／7月比-39人(-4.9%)</div>
+        </div>
+        <div class="kpi-card alert">
+          <div class="kpi-label">CV数（SEO）</div>
+          <div class="kpi-value">15件</div>
+          <div class="kpi-sub">7月29件／-14件(-48.3%)</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">売上（判明分のみ）</div>
+          <div class="kpi-value">¥280,680</div>
+          <div class="kpi-sub">7月¥754,080／売上管理シートが8/17以降未更新のため月次確定値ではない</div>
+        </div>
+      </div>
+      <div class="insight insight-yellow">
+        <strong>売上は8/18〜31分が未反映。¥280,680は月次実績として扱えない。</strong>
+        <ul>
+          <li>CV数（15件）は別ソースで8/30まで確認済みのため信頼できる</li>
+          <li>売上管理シートの更新有無をRen側に確認する必要がある</li>
+        </ul>
+      </div>
+      <p class="note">5月・6月は`lp_imp`がデータ基盤側で欠損しており7月・8月と条件が揃わないため、今回は7月とのみ比較する。</p>
+    </div>
+  </div>
+
+  <!-- ② ファネル指標 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-amber">2</div>
+      <div>
+        <div class="section-title">ファネル指標（前月比・基準比）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>指標</th><th>8月</th><th>7月</th><th>基準</th><th>判定</th></tr></thead>
+          <tbody>
+            <tr><td>PVFR（PU経由）</td><td>0.31%</td><td>0.31%</td><td>0.80%</td><td><span class="badge badge-red">基準割れ（横ばい）</span></td></tr>
+            <tr><td>IMPFR</td><td>0.93%</td><td>0.93%</td><td>1.40%</td><td><span class="badge badge-red">基準割れ（横ばい）</span></td></tr>
+            <tr><td>PU CTR</td><td>14.57%</td><td>13.76%</td><td>13.00%</td><td><span class="badge badge-green">基準クリア（改善）</span></td></tr>
+            <tr><td>友だち追加率</td><td>6.41%</td><td>6.74%</td><td>11.00%</td><td><span class="badge badge-red">基準割れ（微悪化）</span></td></tr>
+            <tr><td>FCVR（全体）</td><td>1.97%</td><td>3.63%</td><td>3.00%</td><td><span class="badge badge-red">基準割れ（悪化）</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-blue">
+        <strong>CTR・追加率・PVFRは7月とほぼ同水準。友だち減少の主因はPU文言の劣化ではなく、ジャンル間の流入配分シフト。</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ ジャンル別内訳 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-purple">3</div>
+      <div>
+        <div class="section-title">ジャンル別内訳</div>
+        <div class="section-sub">友だち＝PU+バナー合計、accountを軸に集計</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>ジャンル</th><th>8月</th><th>7月</th><th>増減</th></tr></thead>
+          <tbody>
+            <tr><td>医療ダイエット(GLP-1)</td><td>493</td><td>567</td><td class="down">-74人(-13%)</td></tr>
+            <tr><td>コスメ</td><td>93</td><td>50</td><td class="up">+43人</td></tr>
+            <tr><td>ED</td><td>39</td><td>10</td><td class="up">+29人</td></tr>
+            <tr><td>AGA</td><td>41</td><td>21</td><td class="up">+20人</td></tr>
+            <tr><td>オンラインピル</td><td>36</td><td>65</td><td class="down">-29人(-45%)</td></tr>
+            <tr><td>FAGA</td><td>31</td><td>17</td><td class="up">+14人</td></tr>
+            <tr><td>クマ取り</td><td>16</td><td>5</td><td class="up">+11人</td></tr>
+            <tr><td>いびき治療</td><td>8</td><td>2</td><td class="up">+6人</td></tr>
+            <tr><td>ほくろ除去</td><td>2</td><td>1</td><td class="up">+1人</td></tr>
+            <tr><td>リカバリーウェア</td><td>1</td><td>0</td><td class="up">+1人</td></tr>
+            <tr><td>看護転職(SEO)</td><td>0</td><td>1</td><td class="down">-1人</td></tr>
+            <tr style="background:#fff1f2;"><td>包茎手術(PLUS)</td><td>0</td><td>45</td><td class="down">-45人(-100%)</td></tr>
+            <tr style="background:#fff1f2;"><td>【PLUS】ICL/レーシック</td><td>0</td><td>15</td><td class="down">-15人(-100%)</td></tr>
+            <tr class="total-row"><td>合計</td><td>760</td><td>799</td><td class="down">-39人(-4.9%)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">AGA・クマ取り・いびき治療・ほくろ除去・コスメはCIO管轄の主要7ジャンル外だが、月次GOAL(1200人)の母数には含まれるため参考掲載。</p>
+    </div>
+  </div>
+
+  <!-- ④ 異変：PLUS系の完全消滅 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-red">4</div>
+      <div>
+        <div class="section-title">最大の異変：「PLUS」系2ジャンルが月内ゼロに完全消滅</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>ジャンル</th><th>LP imp（8月）</th><th>LP imp（7月）</th><th>友だち（8月）</th></tr></thead>
+          <tbody>
+            <tr><td>包茎手術(PLUS)</td><td>122</td><td>13,553</td><td>0</td></tr>
+            <tr><td>【PLUS】ICL/レーシック</td><td>0</td><td>1,957</td><td>0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-red">
+        <strong>両ジャンルともLP流入（記事PVそのもの）が消滅している。クリック・友だち追加ではなく、その手前の流入自体がゼロ。</strong>
+        <ul>
+          <li>両方とも「PLUS」を冠する提携先で、同時期に同じ症状が出ている。個別ジャンルの訴求劣化ではなく共通の技術基盤（タグ・ドメイン・計測設定）を疑うべきパターン</li>
+          <li>7月水準（合計60人/月）が9月も戻らなければ、GOALギャップに対しさらに60人/月の機会損失が積み上がる</li>
+        </ul>
+      </div>
+      <p class="note">包茎手術(PLUS)は8/1に急落した後、8月を通して回復していない。既存タスク(t228)が継続監視中だが、月内ゼロ確定は今回新たに判明した事実。</p>
+    </div>
+  </div>
+
+  <!-- ⑤ FCVR悪化の内訳 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-green">5</div>
+      <div>
+        <div class="section-title">FCVR悪化の内訳</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>ジャンル</th><th>友だち</th><th>CV</th><th>FCVR</th></tr></thead>
+          <tbody>
+            <tr><td>医療ダイエット(GLP-1)</td><td>493</td><td>10</td><td>2.03%</td></tr>
+            <tr><td>AGA</td><td>41</td><td>2</td><td>4.88%</td></tr>
+            <tr><td>ED</td><td>39</td><td>1</td><td>2.56%</td></tr>
+            <tr><td>オンラインピル</td><td>36</td><td>1</td><td>2.78%</td></tr>
+            <tr><td>コスメ・クマ取り・いびき治療</td><td>117</td><td>0</td><td>0.00%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="insight insight-yellow">
+        <strong>コスメ・クマ取り・いびき治療はCVトラッキングパイプライン未接続。この3ジャンルの友だち構成比が7月比+60人増えたことが、全体FCVR低下の一因。</strong>
+        <ul>
+          <li>医療ダイエット単体のFCVRも2.03%で基準3%割れ。CV計測範囲の違いだけでは説明しきれない実質的な悪化も含む</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ 次のアクション -->
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">6</div>
+      <div>
+        <div class="section-title">次のアクション</div>
+      </div>
+    </div>
+    <div class="body">
+      <ul class="action-list">
+        <li>
+          <span class="action-pri pri-highest">最優先</span>
+          <div class="action-body">
+            <strong>包茎手術(PLUS)・ICL/レーシックのLP流入消滅を技術面で確認する</strong>
+            <span>9月に入っても続いているか、タグ・ドメイン・計測設定に異常がないかCTOに確認を依頼する</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-high">優先</span>
+          <div class="action-body">
+            <strong>売上管理シートの更新を確認する</strong>
+            <span>8/17以降未更新のため、8月の売上着地が見えない状態</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-mid">中</span>
+          <div class="action-body">
+            <strong>医療ダイエット(GLP-1)の-74人を記事レベルでドリルダウンする</strong>
+            <span>主力の息切れか一時的な変動かを特定する</span>
+          </div>
+        </li>
+        <li>
+          <span class="action-pri pri-low">低</span>
+          <div class="action-body">
+            <strong>オンラインピルの-29人(-45%)を記事レベルで確認する</strong>
+            <span>絶対量は包茎・ICLより小さいため優先度は下げる</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
