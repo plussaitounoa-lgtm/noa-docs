@@ -165,8 +165,16 @@
         <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>1年総額の行を追加</strong><span>初回＋2ヶ月目以降×11。クリニックフォアの見せ方確定後に着手</span></div></li>
         <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>禁止語（17/18語）の全文検索</strong></div></li>
         <li><span class="action-pri pri-done">済</span><div class="action-body"><strong>くどい言い回し：担当スコープ（おすすめH2以降）4ブロック是正</strong><span>Node.js不在のためkudoi-check.jsのロジックをPythonで再実装して実行。おすすめクリニック15院(体言化)・薬の種類と1か月の薬代(効能ぼかし)・通いやすいエリア(断定回避/効能ぼかし/水増し評価語、最重)・よくある質問(体言化/効能ぼかし)の計12+文を修正、反映済み。自分が追加した内部リンクボックスの文言も同時に修正</span></div></li>
-        <li><span class="action-pri pri-mid">うららさん待ち</span><div class="action-body"><strong>くどい言い回し：担当外（冒頭・選び方H2）の扱い</strong><span>Noa判断で「うららさんからもらう」で確定。選び方H2（ことで構文3件）の自作修正案は撤回・未反映。冒頭文は既に反映済みの中に効能ぼかし1件の修正が混ざってしまっており、うららさん確認で差し戻しの可能性あり</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>くどい言い回し：選び方H2のことで構文3件</strong><span>2026-09-01すり合わせで「冒頭・選び方H2もNoa/Claude側で判断してよい」に方針転換（うららさん個別提示の運用は廃止）。一度作った修正案を撤回済みなので再度作り直しが必要</span></div></li>
         <li><span class="action-pri pri-done">済</span><div class="action-body"><strong>冒頭文の修正（指示書1-5の項目1）</strong><span>1段落目「継続しやすさに影響します」（効能ぼかし）・3段落目「15院を調査し」（院数記載）＋「比較しながら選べる内容です」（表への言及＋能力止め締め）を修正、反映済み</span></div></li>
+        <li><span class="action-pri pri-draft">ドラフト</span><div class="action-body"><strong>「通いやすいエリア」ブロックの効能ぼかし1件修正</strong><span>「治療を始めるハードルを下げたい方には利用しやすい特徴です」（イースト駅前クリニックの紹介文）。最新kudoi-checkの再チェックで見落としを発見、修正案は再提示済みだが反映確認できていない</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>「文の連結」カテゴリ（〜のため、等）の人力チェック</strong><span>選び方H2・薬の種類H2・よくある質問H2で基準超過。機械的に全部直すと不自然になるため1文ずつ人が判断する必要あり</span></div></li>
+        <li><span class="action-pri pri-done">済</span><div class="action-body"><strong>③FAQのH2パーツ変更（H3→専用ショートコード）</strong><span>[qa-box01-wrap][qa-box01 title="質問文"]回答文[/qa-box01][/qa-box01-wrap] を問の数だけ繰り返す書式で反映・動作確認済み（詳細は⑧共通ルール早見表）。H2見出しも「池袋の東口西口の違いと完全個室についてよくある質問」に個別化して反映</span></div></li>
+        <li><span class="action-pri pri-done">済</span><div class="action-body"><strong>⑤CTAボタンをオレンジに統一</strong><span>冒頭比較表のイースト駅前・クリニックフォア・スマイルAGA・ナチュラルAGAをbtn-out→btn-recに変更、反映済み（名古屋の実例で確認）</span></div></li>
+        <li><span class="action-pri pri-done">済</span><div class="action-body"><strong>⑥PDFリンクを注釈スタイルに変更</strong><span>名古屋の型（11px・グレー・「独自調査の概要：」で始める）に合わせて反映済み</span></div></li>
+        <li><span class="action-pri pri-mid">要対応（後回しでOKとNoa了承）</span><div class="action-body"><strong>⑦「○選」の数字統一</strong><span>タイトル・H1・H2②・meta description・JSON-LD・実クリニック数（15件）は全て一致、問題なし。ただしページの&lt;title&gt;タグ（SEOタイトル、本文編集とは別のWP設定欄）だけ【2026年】が残っている。Noaがこのサイトの管理画面に不慣れなため保留中</span></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>H2④エリア見出しの重複（19本中14本と同じテンプレ）を直すか判断保留</strong></div></li>
+        <li><span class="action-pri pri-low">未着手</span><div class="action-body"><strong>おすすめH2の上位3院の見直し（指示書1-5の項目4）</strong></div></li>
       </ul>
     </div>
   </div>
@@ -284,6 +292,7 @@
             <tr><td>消してはいけない文</td><td>「医師から入手経路や副作用、リスクについて説明を受けたうえでご検討ください」は医療広告ガイドラインの注記。くどい言い回しの型に該当しても消さない</td></tr>
             <tr><td>H2/H3構成</td><td>H2は6本維持。H2直下に導入文を1段落必ず置く（H2の次にH3を直接置かない）</td></tr>
             <tr><td>今回やらないこと</td><td>女性向けキーワードは狙わない。院の写真撮影は対象外</td></tr>
+            <tr><td>FAQのショートコード書式（確定）</td><td><b>「1問＝1組のwrap+box」を問の数だけ繰り返す。</b>1つのwrapに複数のboxをまとめて入れると、最初の1問しか処理されず全部同じ内容に潰れる<br><code style="font-size:11px;">[qa-box01-wrap][qa-box01 title="質問文"]回答文[/qa-box01][/qa-box01-wrap]</code>を問の数だけ並べる。titleとboxの中身以外は毎回同じ（qa-box01の番号は固定、増やさない）<br><span class="note">2026-09-01：post=634（WP管理画面）のサンプルを池袋で実際に試して確定。H2よくある質問の下、`&lt;!-- wp:html --&gt;`ブロック内にまとめて設置</span></td></tr>
           </tbody>
         </table>
       </div>
