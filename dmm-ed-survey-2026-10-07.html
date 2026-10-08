@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DMMオンラインクリニック ED治療薬 購入者アンケート集計結果</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; background: #f1f5f9; color: #1e293b; line-height: 1.7; }
+    .container { max-width: 980px; margin: 0 auto; padding: 44px 24px 88px; }
+
+    .page-header { margin-bottom: 32px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+    h1 { font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .desc { font-size: 13px; color: #64748b; }
+
+    .section { background: #fff; border-radius: 14px; padding: 28px 32px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .num-blue { background: #3b82f6; }
+    .num-slate { background: #64748b; }
+    .section-title { font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 3px; }
+    .section-sub { font-size: 13px; color: #64748b; }
+    .body { margin-left: 52px; }
+
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+    td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+    tr:last-child td { border-bottom: none; }
+    .num-cell { text-align: right; white-space: nowrap; }
+    .bar-wrap { background: #f1f5f9; border-radius: 3px; overflow: hidden; height: 10px; width: 100%; min-width: 80px; }
+    .bar { background: #3b82f6; height: 10px; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+    .kpi-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; }
+    .kpi-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .kpi-value { font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+    .kpi-sub { font-size: 12px; color: #64748b; }
+
+    .insight { border-radius: 8px; padding: 12px 16px; font-size: 13px; margin-top: 12px; }
+    .insight-blue { background: #eff6ff; border-left: 3px solid #3b82f6; }
+    .note { font-size: 12px; color: #94a3b8; margin-top: 6px; }
+
+    .cross-card { border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; }
+    .cross-card .n { color: #94a3b8; font-size: 12px; font-weight: 400; }
+    .cross-card strong { font-size: 14px; color: #0f172a; }
+
+    p { font-size: 14px; margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .back-link { display: inline-block; margin-bottom: 24px; font-size: 13px; color: #3b82f6; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <a href="index.html" class="back-link">← トップへ</a>
+
+  <div class="page-header">
+    <div class="eyebrow">独自アンケート — 野瀬まごころ DMM ED商標記事</div>
+    <h1>DMMオンラインクリニック ED治療薬 購入者アンケート集計結果</h1>
+    <p class="desc">実施：クラウドワークス／回収数 n=45／実施日 2026年7月</p>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">1</div>
+      <div>
+        <div class="section-title">サマリー</div>
+        <div class="section-sub">記事の口コミH2で使う独自データの要点</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">価格・コスパ満足度</div>
+          <div class="kpi-value">93.3%</div>
+          <div class="kpi-sub">やや＋とても満足（42/45人）</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">配送スピード満足度</div>
+          <div class="kpi-value">95.6%</div>
+          <div class="kpi-sub">やや＋とても早い（43/45人）</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">診察満足度</div>
+          <div class="kpi-value">86.7%</div>
+          <div class="kpi-sub">やや＋とても満足（39/45人）</div>
+        </div>
+      </div>
+      <div class="insight insight-blue">
+        購入薬剤はシルデナフィル系（バイアグラ）が71%で突出。選んだ決め手は「価格の安さ」「プライバシーへの配慮」が同率31%で最多。薬剤別に見ると、決め手の傾向に差がある（詳細は④）。
+      </div>
+      <p class="note">効果の体験談ではなく、利用者の選択傾向・満足度としての事実データ（医療広告ガイドライン対応）</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">2</div>
+      <div>
+        <div class="section-title">回答者属性</div>
+        <div class="section-sub">Q1. 年代／Q6. 利用期間</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="grid2">
+        <div>
+          <table>
+            <tr><th>年代</th><th class="num-cell">人数</th><th class="num-cell">割合</th></tr>
+            <tr><td>40代前半</td><td class="num-cell">11人</td><td class="num-cell">24%</td></tr>
+            <tr><td>30代後半</td><td class="num-cell">11人</td><td class="num-cell">24%</td></tr>
+            <tr><td>30代前半</td><td class="num-cell">7人</td><td class="num-cell">16%</td></tr>
+            <tr><td>40代後半</td><td class="num-cell">5人</td><td class="num-cell">11%</td></tr>
+            <tr><td>20代後半</td><td class="num-cell">4人</td><td class="num-cell">9%</td></tr>
+            <tr><td>20代前半</td><td class="num-cell">3人</td><td class="num-cell">7%</td></tr>
+            <tr><td>50代前半</td><td class="num-cell">2人</td><td class="num-cell">4%</td></tr>
+            <tr><td>60代以上</td><td class="num-cell">2人</td><td class="num-cell">4%</td></tr>
+          </table>
+        </div>
+        <div>
+          <table>
+            <tr><th>利用期間</th><th class="num-cell">人数</th><th class="num-cell">割合</th></tr>
+            <tr><td>3ヶ月〜6ヶ月未満</td><td class="num-cell">15人</td><td class="num-cell">33%</td></tr>
+            <tr><td>1ヶ月〜3ヶ月未満</td><td class="num-cell">15人</td><td class="num-cell">33%</td></tr>
+            <tr><td>6ヶ月〜9ヶ月未満</td><td class="num-cell">6人</td><td class="num-cell">13%</td></tr>
+            <tr><td>1年〜1年半未満</td><td class="num-cell">5人</td><td class="num-cell">11%</td></tr>
+            <tr><td>1ヶ月未満</td><td class="num-cell">2人</td><td class="num-cell">4%</td></tr>
+            <tr><td>9ヶ月〜1年未満</td><td class="num-cell">2人</td><td class="num-cell">4%</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">3</div>
+      <div>
+        <div class="section-title">購入した治療薬・決め手</div>
+        <div class="section-sub">Q4. 購入薬剤（複数選択可）／Q9. 選んだ一番の決め手（単一回答）</div>
+      </div>
+    </div>
+    <div class="body">
+      <h3 style="font-size:14px;color:#0f172a;margin-bottom:8px;">Q4. 購入した治療薬（n=45、複数選択可のため合計は100%を超える）</h3>
+      <table>
+        <tr><th>薬剤</th><th class="num-cell">人数</th><th class="num-cell">割合</th><th>構成比</th></tr>
+        <tr><td>シルデナフィル系（バイアグラ）</td><td class="num-cell">32人</td><td class="num-cell">71%</td><td><div class="bar-wrap"><div class="bar" style="width:71%"></div></div></td></tr>
+        <tr><td>タダラフィル系（シアリス）</td><td class="num-cell">15人</td><td class="num-cell">33%</td><td><div class="bar-wrap"><div class="bar" style="width:33%"></div></div></td></tr>
+        <tr><td>バルデナフィル系（レビトラ）</td><td class="num-cell">5人</td><td class="num-cell">11%</td><td><div class="bar-wrap"><div class="bar" style="width:11%"></div></div></td></tr>
+        <tr><td>バイアグラODフィルム</td><td class="num-cell">5人</td><td class="num-cell">11%</td><td><div class="bar-wrap"><div class="bar" style="width:11%"></div></div></td></tr>
+        <tr><td>アバナフィル系（ステンドラ）</td><td class="num-cell">1人</td><td class="num-cell">2%</td><td><div class="bar-wrap"><div class="bar" style="width:2%"></div></div></td></tr>
+      </table>
+
+      <h3 style="font-size:14px;color:#0f172a;margin:16px 0 8px;">Q9. 選んだ一番の決め手</h3>
+      <table>
+        <tr><th>決め手</th><th class="num-cell">人数</th><th class="num-cell">割合</th></tr>
+        <tr><td>価格の安さ</td><td class="num-cell">14人</td><td class="num-cell">31%</td></tr>
+        <tr><td>プライバシーへの配慮（梱包・伝票表記など）</td><td class="num-cell">14人</td><td class="num-cell">31%</td></tr>
+        <tr><td>口コミや評判</td><td class="num-cell">9人</td><td class="num-cell">20%</td></tr>
+        <tr><td>配送の早さ</td><td class="num-cell">5人</td><td class="num-cell">11%</td></tr>
+        <tr><td>その他</td><td class="num-cell">2人</td><td class="num-cell">4%</td></tr>
+        <tr><td>お試しプランの充実度</td><td class="num-cell">1人</td><td class="num-cell">2%</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-blue">4</div>
+      <div>
+        <div class="section-title">薬剤別クロス集計：決め手の違い</div>
+        <div class="section-sub">単一成分のみ選択した36人で集計（複数成分併用の9人は除外）</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="cross-card">
+        <strong>シルデナフィル系（バイアグラ）</strong> <span class="n">単一選択 n=23</span>
+        <table style="margin-top:8px;">
+          <tr><th>決め手</th><th class="num-cell">人数</th><th class="num-cell">割合</th></tr>
+          <tr><td>口コミや評判</td><td class="num-cell">7人</td><td class="num-cell">30%</td></tr>
+          <tr><td>価格の安さ</td><td class="num-cell">7人</td><td class="num-cell">30%</td></tr>
+          <tr><td>プライバシーへの配慮</td><td class="num-cell">6人</td><td class="num-cell">26%</td></tr>
+          <tr><td>配送の早さ</td><td class="num-cell">2人</td><td class="num-cell">9%</td></tr>
+        </table>
+      </div>
+      <div class="cross-card">
+        <strong>タダラフィル系（シアリス）</strong> <span class="n">単一選択 n=6</span>
+        <table style="margin-top:8px;">
+          <tr><th>決め手</th><th class="num-cell">人数</th><th class="num-cell">割合</th></tr>
+          <tr><td>プライバシーへの配慮</td><td class="num-cell">4人</td><td class="num-cell">67%</td></tr>
+          <tr><td>価格の安さ</td><td class="num-cell">2人</td><td class="num-cell">33%</td></tr>
+        </table>
+      </div>
+      <div class="cross-card">
+        <strong>バルデナフィル系（レビトラ）</strong> <span class="n">単一選択 n=4</span>
+        <table style="margin-top:8px;">
+          <tr><th>決め手</th><th class="num-cell">人数</th><th class="num-cell">割合</th></tr>
+          <tr><td>価格の安さ</td><td class="num-cell">3人</td><td class="num-cell">75%</td></tr>
+          <tr><td>配送の早さ</td><td class="num-cell">1人</td><td class="num-cell">25%</td></tr>
+        </table>
+      </div>
+      <p class="note">タダラフィル系・バルデナフィル系・バイアグラODフィルムはサンプル数が少ないため参考値（断定表現は避ける）</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">5</div>
+      <div>
+        <div class="section-title">満足度3指標の内訳</div>
+        <div class="section-sub">Q13. コスパ／Q15. 配送スピード／Q17. 診察対応</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="grid2">
+        <div>
+          <h3 style="font-size:13px;color:#0f172a;margin-bottom:6px;">Q13. 価格・コスパ満足度</h3>
+          <table>
+            <tr><th>回答</th><th class="num-cell">人数</th><th class="num-cell">割合</th></tr>
+            <tr><td>やや満足している</td><td class="num-cell">23人</td><td class="num-cell">51%</td></tr>
+            <tr><td>とても満足している</td><td class="num-cell">19人</td><td class="num-cell">42%</td></tr>
+            <tr><td>どちらともいえない</td><td class="num-cell">3人</td><td class="num-cell">7%</td></tr>
+          </table>
+        </div>
+        <div>
+          <h3 style="font-size:13px;color:#0f172a;margin-bottom:6px;">Q15. 配送スピード満足度</h3>
+          <table>
+            <tr><th>回答</th><th class="num-cell">人数</th><th class="num-cell">割合</th></tr>
+            <tr><td>とても早いと感じた</td><td class="num-cell">27人</td><td class="num-cell">60%</td></tr>
+            <tr><td>やや早いと感じた</td><td class="num-cell">16人</td><td class="num-cell">36%</td></tr>
+            <tr><td>どちらともいえない</td><td class="num-cell">2人</td><td class="num-cell">4%</td></tr>
+          </table>
+        </div>
+      </div>
+      <h3 style="font-size:13px;color:#0f172a;margin:14px 0 6px;">Q17. 医師対応・オンライン診察満足度</h3>
+      <table>
+        <tr><th>回答</th><th class="num-cell">人数</th><th class="num-cell">割合</th></tr>
+        <tr><td>やや満足している</td><td class="num-cell">23人</td><td class="num-cell">51%</td></tr>
+        <tr><td>とても満足している</td><td class="num-cell">16人</td><td class="num-cell">36%</td></tr>
+        <tr><td>どちらともいえない</td><td class="num-cell">5人</td><td class="num-cell">11%</td></tr>
+        <tr><td>やや不満がある</td><td class="num-cell">1人</td><td class="num-cell">2%</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="num num-slate">6</div>
+      <div>
+        <div class="section-title">その他の回答傾向</div>
+        <div class="section-sub">Q7. 始めたきっかけ／Q11. 申込前の不安／Q2. 購入方法</div>
+      </div>
+    </div>
+    <div class="body">
+      <h3 style="font-size:13px;color:#0f172a;margin-bottom:6px;">Q7. 利用を始めたきっかけ（複数選択可）</h3>
+      <table>
+        <tr><th>きっかけ</th><th class="num-cell">人数</th><th class="num-cell">割合</th></tr>
+        <tr><td>自宅完結・通院不要</td><td class="num-cell">33人</td><td class="num-cell">73%</td></tr>
+        <tr><td>家族・周囲に知られずに治療できる</td><td class="num-cell">13人</td><td class="num-cell">29%</td></tr>
+        <tr><td>スマホ・PCで手軽に診察できる</td><td class="num-cell">11人</td><td class="num-cell">24%</td></tr>
+        <tr><td>薬代が手頃</td><td class="num-cell">7人</td><td class="num-cell">16%</td></tr>
+      </table>
+
+      <h3 style="font-size:13px;color:#0f172a;margin:14px 0 6px;">Q11. 申込前に不安だった点（複数選択可）</h3>
+      <table>
+        <tr><th>不安点</th><th class="num-cell">人数</th><th class="num-cell">割合</th></tr>
+        <tr><td>家族・周囲に知られないか</td><td class="num-cell">20人</td><td class="num-cell">44%</td></tr>
+        <tr><td>副作用</td><td class="num-cell">15人</td><td class="num-cell">33%</td></tr>
+        <tr><td>効果を実感できるか</td><td class="num-cell">11人</td><td class="num-cell">24%</td></tr>
+        <tr><td>オンライン診察で症状が正しく伝わるか</td><td class="num-cell">11人</td><td class="num-cell">24%</td></tr>
+        <tr><td>特に不安はなかった</td><td class="num-cell">5人</td><td class="num-cell">11%</td></tr>
+      </table>
+
+      <h3 style="font-size:13px;color:#0f172a;margin:14px 0 6px;">Q2. 購入方法</h3>
+      <table>
+        <tr><th>購入方法</th><th class="num-cell">人数</th><th class="num-cell">割合</th></tr>
+        <tr><td>まとめ買い・10錠セット</td><td class="num-cell">16人</td><td class="num-cell">36%</td></tr>
+        <tr><td>らくらく定期便（1ヶ月ごと10錠）</td><td class="num-cell">12人</td><td class="num-cell">27%</td></tr>
+        <tr><td>まとめ買い・5錠セット</td><td class="num-cell">8人</td><td class="num-cell">18%</td></tr>
+        <tr><td>お試しプラン</td><td class="num-cell">5人</td><td class="num-cell">11%</td></tr>
+        <tr><td>バラ売り</td><td class="num-cell">3人</td><td class="num-cell">7%</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
